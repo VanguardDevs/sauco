@@ -160,17 +160,41 @@ $(document).ready(function() {
         ]
     });
 
-    /*----------  Datatables type vehicles  ----------*/
-    $('#tTypeVehicles').DataTable({
+    /*----------  Datatables Economic sectors  ----------*/
+    $('#tEconomicSectors').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/vehicles/list",
+        "ajax": baseURL + "/economic-sectors/list",
         "columns": [
-            {data: 'type', name: 'type'},
+            {data: 'id'},
+            {data: 'description'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<a href='"+baseURL +"/vehicles/type-vehicles/"+oData.id+"/edit' title='Editar' class='btn btn-sm btn-warning'><i class='flaticon-edit'></i></a>");
+                }
+            }
+        ]
+    });
+
+    /*----------  Datatables Economic Activities  ----------*/
+    $('#tEconomicActivities').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/economic-activities/list",
+        "columns": [
+            {data: 'id'},
+            {data: 'name'},
+            { data: 'aliquote'},
+            { data: 'min_tax'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

@@ -183,6 +183,12 @@
                             <span class="kt-menu__link-text">Clasificador de inmuebles</span>
                             </a>
                         </li>
+                        <li class="kt-menu__item {{ active('settings/economic-sectors*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/economic-sectors') }}" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">Sectores económicos</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

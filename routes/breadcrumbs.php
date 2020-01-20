@@ -67,86 +67,34 @@ Breadcrumbs::for('geographic-area/communities/update', function ($trail) {
     $trail->push('Editar comunidad', url('geographic-area/communities/update'));
 });
 
-/*------------- Service stations > Create -------------*/
-Breadcrumbs::for('service-stations/create', function ($trail) {
-    $trail->parent('service-stations');
-    $trail->push('Crear', url('service-stations/create'));
-});
-
-/*------------- Service stations > edit -------------*/
-Breadcrumbs::for('service-stations/edit', function ($trail, $row) {
-    $trail->parent('service-stations');
-    $trail->push('Editar Registro '/*.$row->login*/, url('service-stations/edit', $row->id));
-});
-
-/*------------- Configurations -------------*/
-Breadcrumbs::for('configurations', function ($trail) {
+/*------------- Economic activities -------------*/
+Breadcrumbs::for('economic-activities', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Configuraciones', url('configurations'));
+    $trail->push('Actividades económicas', url('economic-activities'));
 });
 
-/*------------- Configurations > Create -------------*/
-Breadcrumbs::for('configurations/create', function ($trail) {
-    $trail->parent('configurations');
-    $trail->push('Crear', url('configurations/create'));
+/*------------- Economic activities > create -------------*/
+Breadcrumbs::for('economic-activities/create', function ($trail) {
+    $trail->parent('economic-activities');
+    $trail->push('Crear actividad económica', url('economic-activities/create'));
 });
 
-/*------------- Configurations > edit -------------*/
-Breadcrumbs::for('configurations/edit', function ($trail, $row) {
-    $trail->parent('configurations');
-    $trail->push('Editar Registro '/*.$row->login*/, url('configurations/edit', $row->id));
-});
 
-/*----------  Register persons  ----------*/
-Breadcrumbs::for('register-persons', function ($trail) {
+
+/*------------- Sectores económicos -------------*/
+Breadcrumbs::for('settings/economic-sectors', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Registrar Responsable de Vehículo', url('register-persons'));
+    $trail->push('Sectores económicos', url('settings/economic-sectors'));
 });
 
-/*----------  Register vehicles  ----------*/
-Breadcrumbs::for('register-vehicles', function ($trail) {
-    $trail->parent('register-persons');
-    $trail->push('Registrar Vehículo', url('register-vehicles'));
+/*------------- Sectores económicos > create -------------*/
+Breadcrumbs::for('settings/economic-sectors/create', function ($trail) {
+    $trail->parent('settings/economic-sectors');
+    $trail->push('Crear sector económico', url('settings/economic-sectors/create'));
 });
 
-/*----------  Validate refuelling  ----------*/
-Breadcrumbs::for('refueling', function ($trail, $id) {
-    $trail->parent('dashboard');
-    $trail->push('Registrar Repostaje '.$id, url('refueling', $id));
-});
-
-/*------------- Persons -------------*/
-Breadcrumbs::for('persons', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Reponsables de Vehículos', url('persons'));
-});
-
-/*------------- Persons > Create -------------*/
-Breadcrumbs::for('persons/create', function ($trail) {
-    $trail->parent('persons');
-    $trail->push('Crear', url('persons/create'));
-});
-
-/*------------- Persons > edit -------------*/
-Breadcrumbs::for('persons/edit', function ($trail, $row) {
-    $trail->parent('persons');
-    $trail->push('Editar Registro '/*.$row->login*/, url('persons/edit', $row->id));
-});
-
-/*------------- Novelties -------------*/
-Breadcrumbs::for('novelties', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Novedades', url('novelties'));
-});
-
-/*------------- Novelties > Create -------------*/
-Breadcrumbs::for('novelties/create', function ($trail) {
-    $trail->parent('novelties');
-    $trail->push('Novedades', url('novelties/create'));
-});
-
-/*------------- Novelties > edit -------------*/
-Breadcrumbs::for('novelties/edit', function ($trail, $row) {
-    $trail->parent('novelties');
-    $trail->push('Editar Registro '/*.$row->login*/, url('novelties/edit', $row->id));
+/*------------- Sectores económicos > update -------------*/
+Breadcrumbs::for('settings/economic-sectors/update', function ($trail) {
+    $trail->parent('settings/economic-sectors');
+    $trail->push('Editar sector económico', url('settings/economic-sectors/update'));
 });

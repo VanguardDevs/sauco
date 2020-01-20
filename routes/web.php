@@ -44,6 +44,14 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('communities/list', 'CommunityController@list')->name('list-communities');
     Route::resource('geographic-area/communities', 'CommunityController');
 
+    /*----------  Routes Settings > Economic sectors  ----------*/
+    Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
+    Route::resource('settings/economic-sectors', 'EconomicSectorController');
+
+    /*----------  Routes economic activities  ----------*/
+    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
+    Route::resource('economic-activities', 'EconomicActivityController');
+
     /*----------  Routes persons ----------*/
     // Route::get('/states/{id}/municipalities', 'PersonController@byStates');
     // Route::get('list-persons', 'PersonController@listPersons');
