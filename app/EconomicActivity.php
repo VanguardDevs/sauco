@@ -14,4 +14,9 @@ class EconomicActivity extends Model
         'aliquote',
         'min_tax'
     ];
+
+    public function taxpayers()
+    {
+        return $this->belongsToMany(EconomicActivity::class);
+    }
 }

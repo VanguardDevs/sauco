@@ -10,7 +10,7 @@ var KTInputmask = function () {
             autoUnmask: true
         });
 
-        $("#date_admission").inputmask("99/99/9999", {
+        $(".date-input-mask").inputmask("99/99/9999", {
             "placeholder": "DD/MM/YYYY",
             autoUnmask: true
         });

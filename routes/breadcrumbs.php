@@ -108,3 +108,21 @@ Breadcrumbs::for('settings/economic-sectors/update', function ($trail) {
     $trail->parent('settings/economic-sectors');
     $trail->push('Editar sector económico', url('settings/economic-sectors/update'));
 });
+
+/*------------- Taxpayers -------------*/
+Breadcrumbs::for('taxpayers', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Contribuyente', url('taxpayers'));
+});
+
+/*------------- Taxpayers > create -------------*/
+Breadcrumbs::for('taxpayers/create', function ($trail) {
+    $trail->parent('taxpayers');
+    $trail->push('Crear contribuyente', url('taxpayers/create'));
+});
+
+/*------------- Taxpayers > update -------------*/
+Breadcrumbs::for('taxpayers/update', function ($trail) {
+    $trail->parent('taxpayers');
+    $trail->push('Editar contribuyente', url('taxpayers/update'));
+});

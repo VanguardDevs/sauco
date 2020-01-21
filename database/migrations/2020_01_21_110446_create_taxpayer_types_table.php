@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEconomicActivitiesTable extends Migration
+class CreateTaxpayerTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateEconomicActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('economic_activities', function (Blueprint $table) {
+        Schema::create('taxpayer_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code');
-            $table->string('name', 500);
-            $table->string('aliquote');
-            $table->string('min_tax');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateEconomicActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('economic_activities');
+        Schema::dropIfExists('taxpayer_types');
     }
 }

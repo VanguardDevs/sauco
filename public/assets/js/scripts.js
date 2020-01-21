@@ -11,7 +11,23 @@ $("#form").closest('form').on('submit', function(e) {
 /*--------- Select Dinamicos ---------*/
 $(function () {
     $('#states').on('change', onSelectMunicipalities);
+    $('#taxpayer_type').on('change', onSelectTaxpayerType);
 });
+
+function onSelectTaxpayerType() {
+    let selected = $(this).children('option:selected').val();
+    let commercialDenomination = $('#hide_form');
+
+    // Show commercial denomination input
+    if (selected === 1) {
+        commercialDenomination.show();
+        $('#rif').val('N-');
+    } else {
+        commercialDenomination.hide();
+        $('#rif').val('J-');
+    }
+}
+
 function onSelectMunicipalities() {
     var state_id = $(this).val();
 
@@ -219,6 +235,27 @@ $(document).ready(function() {
             { data: 'surname'},
             { data: 'address'},
             { data: 'phone' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<a href='"+baseURL +"/vehicles/type-vehicles/"+oData.id+"/edit' title='Editar' class='btn btn-sm btn-warning'><i class='flaticon-edit'></i></a>");
+                }
+            }
+        ]
+    });
+
+    $('#tTaxpayers').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/taxpayers/list",
+        "columns": [
+            { data: 'rif'},
+            { data: 'name'},
+            { data: 'denomination'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

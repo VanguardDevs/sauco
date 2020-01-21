@@ -24,4 +24,9 @@ class Representation extends Model
     {
         return $this->belongsTo(Citizenship::class);
     }
+
+    public function taxpayers()
+    {
+        return $this->hasMany(Taxpayer::class);
+    }
 }

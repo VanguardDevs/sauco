@@ -56,6 +56,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
     Route::resource('representations', 'RepresentationController');
 
+    /*----------  Routes representations ----------*/
+    Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
+    Route::resource('taxpayers', 'TaxpayerController');
 
     /*----------  Routes persons ----------*/
     // Route::get('/states/{id}/municipalities', 'PersonController@byStates');
