@@ -51,7 +51,7 @@
         </li>
 
         @if(@Auth::user()->hasRole('admin'))
-            <li class="kt-menu__item {{ active('representations') }}" aria-haspopup="true" >
+            <li class="kt-menu__item {{ active('representations*') }}" aria-haspopup="true" >
                 <a  href="{{ url('representations') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon-users"></i>
                 <span class="kt-menu__link-text">Representantes</span>

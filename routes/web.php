@@ -52,6 +52,11 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
     Route::resource('economic-activities', 'EconomicActivityController');
 
+    /*----------  Routes representations ----------*/
+    Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
+    Route::resource('representations', 'RepresentationController');
+
+
     /*----------  Routes persons ----------*/
     // Route::get('/states/{id}/municipalities', 'PersonController@byStates');
     // Route::get('list-persons', 'PersonController@listPersons');

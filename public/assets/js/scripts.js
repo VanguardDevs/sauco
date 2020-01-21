@@ -204,69 +204,25 @@ $(document).ready(function() {
         ]
     });
 
-    /*----------  Datatables vehicles  ----------*/
-    $('#tVehicles').DataTable({
+    /*----------  Datatables Representations  ----------*/
+    $('#tRepresentations').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/list-vehicles",
+        "ajax": baseURL + "/representations/list",
         "columns": [
-            {data: 'person.identity_card', name: 'person.identity_card'},
-            {data: 'person.first_name', name: 'person.first_name'},
-            {data: 'person.surname', name: 'person.surname'},
-            {data: 'license_plate', name: 'license_plate'},
-            {data: 'fuel_type.description', name: 'fuel_type.description'},
-            {data: 'fuel_capacity', name: 'fuel_capacity'},
+            { data: 'document'},
+            { data: 'first_name'},
+            { data: 'surname'},
+            { data: 'address'},
+            { data: 'phone' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='"+baseURL +"/vehicles/vehicles/"+oData.id+"/edit' title='Editar' class='btn btn-sm btn-warning'><i class='flaticon-edit'></i></a>");
-                }
-            }
-        ]
-    });
-
-    /*----------  Datatables configurations  ----------*/
-    $('#tConfigurations').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/list-configurations",
-        "columns": [
-            {data: 'sector.description', name: 'sector.description'},
-            {data: 'type_vehicle.type', name: 'type_vehicle.type'},
-            {data: 'amount_fuel', name: 'amount_fuel'},
-            {data: 'refueling_time', name: 'refueling_time'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='"+baseURL +"/configurations/"+oData.id+"/edit' title='Editar' class='btn btn-sm btn-warning'><i class='flaticon-edit'></i></a>");
-                }
-            }
-        ]
-    });
-
-    /*----------  Datatables novelties  ----------*/
-    $('#tNovelties').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/list-novelties",
-        "columns": [
-            {data: 'status', name: 'status'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='"+baseURL +"/novelties/"+oData.id+"/edit' title='Ver' class='btn btn-sm btn-info'><i class='flaticon-visible'></i></a>");
+                    $(nTd).html("<a href='"+baseURL +"/vehicles/type-vehicles/"+oData.id+"/edit' title='Editar' class='btn btn-sm btn-warning'><i class='flaticon-edit'></i></a>");
                 }
             }
         ]

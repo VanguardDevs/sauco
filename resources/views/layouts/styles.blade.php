@@ -1,7 +1,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}" />
 
 <!--begin::Fonts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script>
         WebFont.load({
             google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
@@ -9,7 +9,7 @@
                 sessionStorage.fonts = true;
             }
         });
-    </script>
+    </script> --}}
 <!--end::Fonts -->
 
 <link rel="stylesheet" href="{{ asset('assets/css/login-4.css') }}">

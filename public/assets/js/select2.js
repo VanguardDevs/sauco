@@ -3,8 +3,8 @@ var KTSelect2 = function() {
     // Private functions
     var demos = function() {
         // basic
-        $('#states, #kt_select2_1_validate').select2({
-            placeholder: "======== Seleccione ========"
+        $('.select2').select2({
+            placeholder: " SELECCIONE "
         });
 
         $('#municipalities, #kt_select2_1_validate').select2({

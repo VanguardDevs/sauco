@@ -79,7 +79,17 @@ Breadcrumbs::for('economic-activities/create', function ($trail) {
     $trail->push('Crear actividad económica', url('economic-activities/create'));
 });
 
+/*------------- Economic activities -------------*/
+Breadcrumbs::for('representations', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Representantes', url('representations'));
+});
 
+/*------------- Economic activities > create -------------*/
+Breadcrumbs::for('representations/create', function ($trail) {
+    $trail->parent('representations');
+    $trail->push('Crear representante', url('representations/create'));
+});
 
 /*------------- Sectores económicos -------------*/
 Breadcrumbs::for('settings/economic-sectors', function ($trail) {

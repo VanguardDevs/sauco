@@ -1,0 +1,157 @@
+@extends('cruds.form')
+
+@section('title', 'Registro de Representantes')
+
+@section('form')
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head alert alert-danger">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                        @if ($typeForm == 'create')
+                            Registro de Representantes
+
+                            @section('breadcrumbs')
+                                {{ Breadcrumbs::render('representations/create') }}
+                            @endsection
+                        @else
+                            Editar usuario: {{ @$row->login }}
+
+                            @section('breadcrumbs')
+                                {{ Breadcrumbs::render('representations/edit', $row) }}
+                            @endsection
+                        @endif
+                        </h3>
+                    </div>
+                </div>
+                <!--begin::Form-->
+                @if ($typeForm == 'create')
+                    {!! Form::open(['route' => "representations".'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                @else
+                    {!! Form::model($row, ['route' => ["representations".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                @endif
+                    <div class="kt-portlet__body">
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label>Primer nombre <span class="text-danger">*</span></label>
+
+                                {!! Form::text('first_name', old('first_name', @$row->first_name), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+
+                                @error('first_name')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Segundo nombre </label>
+
+                                {!! Form::text('second_name', old('second_name', @$row->second_name), ['class' => 'form-control', "onkeyup" => "upperCase(this);"]) !!}
+
+                                @error('second_name')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Primer Apellido <span class="text-danger">*</span></label>
+
+                                {!! Form::text('surname', old('surname', @$row->surname), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+
+                                @error('surname')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Segundo apellido </label>
+
+                                {!! Form::text('second_surname', old('second_surname', @$row->second_surname), ['class' => 'form-control', "onkeyup" => "upperCase(this);"]) !!}
+
+                                @error('second_surname')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-4">
+                                <label>Nacionalidad <span class="text-danger">*</span></label>
+
+                                <select name="citizenship" class="form-control select2">
+                                    <option value="">===== SELECCIONE =====</option>
+                                    @foreach ($citizenships as $name)
+                                        <option value="{{ $name->id }}" @if(old('citizenship') == $name->id OR @$row->name->id == $name->id) selected @endif >
+                                        {{ $name->type }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                @error('citizenship')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Cédula de identidad <span class="text-danger">*</span></label>
+
+                                {!! Form::text('document', old('document', @$row->document), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+
+                                @error('document')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-4">
+                                <label>Dirección </label>
+
+                                {!! Form::textarea('address', old('address', @$row->address), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "rows" => 2, "cols" => 2]) !!}
+
+                                @error('address')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Teléfono </label>
+
+                                {!! Form::text('phone', old('phone', @$row->phone), ['class' => 'form-control phone-input-mask', "onkeyup" => "upperCase(this);"]) !!}
+
+                                @error('phone')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Correo electrónico </label>
+
+                                {!! Form::text('email', old('email', @$row->email), ['class' => 'form-control email-input-mask']) !!}
+
+                                @error('email')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <a href="{{ url('administration/users') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
+
+                                    @if($typeForm == 'update')
+                                        <button type="submit" class="btn btn-primary" id="send">
+                                                <i class="flaticon-refresh"></i>
+                                                Actualizar
+                                        </button>
+                                    @else
+                                        <button type="submit" class="btn btn-primary" id="send">
+                                            <i class="fas fa-save"></i>
+                                            Registrar
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {!! Form::close() !!}
+      <!--end::Form-->
+        </div>
+    <!--end::Portlet-->
+    </div>
+@endsection
