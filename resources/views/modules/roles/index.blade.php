@@ -26,7 +26,7 @@
               <th width="20%">Slug</th>
               <th width="30%">Descripción</th>
               <th width="15%">Permiso Especial</th>
-              <th width="10%"></th>
+              <th width="10%">Acciones</th>
             </tr>
             @forelse ($roles as $key => $role)
               <tr>

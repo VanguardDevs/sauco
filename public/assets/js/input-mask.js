@@ -15,21 +15,6 @@ var KTInputmask = function () {
             autoUnmask: true
         });
 
-        $("#public_administration_income").inputmask("99/99/9999", {
-            "placeholder": "DD/MM/YYYY",
-            autoUnmask: true
-        });
-
-        $("#date1").inputmask("99/99/9999", {
-            "placeholder": "DD/MM/YYYY",
-            autoUnmask: true
-        });
-
-        $("#date2").inputmask("99/99/9999", {
-            "placeholder": "DD/MM/YYYY",
-            autoUnmask: true
-        });
-
         // custom placeholder
         $("#kt_inputmask_2").inputmask("99/99/9999", {
             "placeholder": "mm/dd/yyyy",

@@ -1,15 +1,9 @@
 <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}" />
 
 <!--begin::Fonts -->
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
-    <script>
-        WebFont.load({
-            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
-            active: function() {
-                sessionStorage.fonts = true;
-            }
-        });
-    </script> --}}
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,700&display=swap" rel="stylesheet">
+
 <!--end::Fonts -->
 
 <link rel="stylesheet" href="{{ asset('assets/css/login-4.css') }}">

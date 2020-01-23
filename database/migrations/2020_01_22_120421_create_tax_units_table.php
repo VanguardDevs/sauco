@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaxpayerTypesTable extends Migration
+class CreateTaxUnitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateTaxpayerTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taxpayer_types', function (Blueprint $table) {
+        Schema::create('tax_units', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('description');
+            $table->string('law');
+            $table->string('value');
+            $table->date('publication_date');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateTaxpayerTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('taxpayer_types');
+        Schema::dropIfExists('tax_units');
     }
 }

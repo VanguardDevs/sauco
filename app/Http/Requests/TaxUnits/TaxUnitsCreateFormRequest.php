@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\EconomicSectors;
+namespace App\Http\Requests\TaxUnits;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EconomicSectorsCreateFormRequest extends FormRequest
+class TaxUnitsCreateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,21 +24,27 @@ class EconomicSectorsCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required'
+            'law' => 'required',
+            'value' => 'required',
+            'publication_date' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'description' => 'descripción'
+            'law' => 'ley',
+            'value' => 'valor',
+            'publication_date' => 'fecha de publicación'
         ];
     }
 
     public function messages()
     {
         return [
-            'description.required' => 'Ingrese una :attribute'
+            'law.required' => 'Ingrese la :attribute',
+            'value.required' => 'Ingrese un :attribute',
+            'publication_date.required' => 'Ingrese una :attribute'
         ];
     }
 }

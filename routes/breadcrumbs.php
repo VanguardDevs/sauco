@@ -126,3 +126,21 @@ Breadcrumbs::for('taxpayers/update', function ($trail) {
     $trail->parent('taxpayers');
     $trail->push('Editar contribuyente', url('taxpayers/update'));
 });
+
+/*------------- Unidades Tributarias -------------*/
+Breadcrumbs::for('settings/tax-units', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Unidades Tributarias', url('settings/tax-units'));
+});
+
+/*------------- Unidades Tributarias > create -------------*/
+Breadcrumbs::for('settings/tax-units/create', function ($trail) {
+    $trail->parent('settings/tax-units');
+    $trail->push('Crear unidad tributaria', url('settings/tax-units/create'));
+});
+
+/*------------- Unidades Tributarias > update -------------*/
+Breadcrumbs::for('settings/tax-units/update', function ($trail) {
+    $trail->parent('settings/tax-units');
+    $trail->push('Editar unidad tributaria', url('settings/tax-units/update'));
+});

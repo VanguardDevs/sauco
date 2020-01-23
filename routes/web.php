@@ -48,6 +48,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
     Route::resource('settings/economic-sectors', 'EconomicSectorController');
 
+    /*----------  Routes Settings > Tax Units ----------*/
+    Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
+    Route::resource('settings/tax-units', 'TaxUnitController');
+
     /*----------  Routes economic activities  ----------*/
     Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
     Route::resource('economic-activities', 'EconomicActivityController');
@@ -56,32 +60,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
     Route::resource('representations', 'RepresentationController');
 
-    /*----------  Routes representations ----------*/
+    /*----------  Routes taxpayers ----------*/
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
     Route::resource('taxpayers', 'TaxpayerController');
-
-    /*----------  Routes persons ----------*/
-    // Route::get('/states/{id}/municipalities', 'PersonController@byStates');
-    // Route::get('list-persons', 'PersonController@listPersons');
-    // Route::resource('persons', 'PersonController');
-    // Route::get('persons/vehicles/{id}', 'PersonController@listVehicles');
-    // Route::get('register-persons/{identityCard}/{licensePlate}', 'PersonController@registerPerson')->name('register-persons');
-
-    // # -----------  Routes type vehicles  -----------
-    // Route::get('vehicles/list', 'TypeVehicleController@list');
-    // Route::resource('vehicles/type-vehicles', 'TypeVehicleController');
-
-    // # -----------  Routes type vehicles  -----------
-    // Route::get('list-novelties', 'NoveltyController@list');
-    // Route::resource('novelties', 'NoveltyController');
-
-    // # -----------  Routes vehicles -----------
-    // Route::get('list-vehicles', 'VehicleController@list')->name('list-vehicles');
-    // Route::resource('vehicles/vehicles', 'VehicleController');
-
-    // #------------- Routes various ------------
-    // Route::post('validate-refuelling', 'RefuellingController@validateRefuelling')->name('validate-refuelling');
-    // Route::get('register-vehicles/{id}/{lisencePLate}', 'VehicleController@registerVehicle')->name('register-vehicles');
-    // Route::get('refueling/{id}', 'RefuellingController@refuelling')->name('refueling');
-    // Route::post('register-refueling', 'RefuellingController@registerRefueling');
 });

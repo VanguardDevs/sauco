@@ -23,7 +23,7 @@
               <tr>
                 <th width="15%">ID</th>
                 <th width="70%">Nombre</th>
-                <th width="15%"></th>
+                <th width="15%">Acciones</th>
               </tr>
             </thead>
           </table>

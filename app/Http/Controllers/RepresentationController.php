@@ -77,7 +77,8 @@ class RepresentationController extends Controller
      */
     public function show(Representation $representation)
     {
-        //
+        return view('modules.representations.show')
+            ->with('row', $representation);
     }
 
     /**

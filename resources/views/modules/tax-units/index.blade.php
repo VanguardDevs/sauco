@@ -1,9 +1,9 @@
 @extends('layouts.template')
 
-@section('title', 'Control de comunidades')
+@section('title', 'Control de Unidades Tributarias')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('geographic-area/communities') }}
+    {{ Breadcrumbs::render('settings/tax-units') }}
 @endsection
 
 @section('content')
@@ -13,19 +13,20 @@
       <div class="card card-primary card-outline">
         <div class="card-header alert alert-danger">
           <div class="row">
-            <h5 class="m-0">Control de comunidades <b>(</b> <a href="{{ Route("communities".'.create') }}" title="Registrar comunidad">
+            <h5 class="m-0">Control de Unidades Tributarias <b>(</b> <a href="{{ Route("tax-units".'.create') }}" title="Registrar comunidad">
                 <span>Registrar</span>
               </a><b>)</b></h5>
           </div>
         </div>
 
         <div class="card-body">
-          <table id="tCommunities" class="table table-bordered table-striped datatables" style="text-align: center">
+          <table id="tTaxUnits" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="15%">ID</th>
-                <th width="70%">Nombre</th>
-                <th width="15%">Acciones</th>
+                <th width="10%">ID</th>
+                <th width="30%">Ley</th>
+                <th width="30%">Valor</th>
+                <th width="30%">Fecha de publicación</th>
               </tr>
             </thead>
           </table>

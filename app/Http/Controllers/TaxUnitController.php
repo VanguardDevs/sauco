@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Parish;
+use App\Http\Requests\TaxUnits\TaxUnitsCreateFormRequest;
+use App\TaxUnit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class ParishController extends Controller
+class TaxUnitController extends Controller
 {
     public function __construct()
     {
@@ -20,12 +21,12 @@ class ParishController extends Controller
      */
     public function index()
     {
-        return view('modules.parishes.index');
+        return view('modules.tax-units.index');
     }
 
     public function list()
     {
-        $query = Parish::query();
+        $query = TaxUnit::query();
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -37,7 +38,8 @@ class ParishController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.tax-units.register')
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -46,18 +48,25 @@ class ParishController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaxUnitsCreateFormRequest $request)
     {
-        //
+        $create = TaxUnit::create([
+            'law' => $request->input('law'),
+            'value' => $request->input('value'),
+            'publication_date' => $request->input('publication_date')
+        ]);
+        $create->save();
+
+        return redirect('settings/tax-units')->withSuccess('¡Unidad Tributaria actualizada!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Parish  $parish
+     * @param  \App\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
-    public function show(Parish $parish)
+    public function show(TaxUnit $taxUnit)
     {
         //
     }
@@ -65,10 +74,10 @@ class ParishController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Parish  $parish
+     * @param  \App\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
-    public function edit(Parish $parish)
+    public function edit(TaxUnit $taxUnit)
     {
         //
     }
@@ -77,10 +86,10 @@ class ParishController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Parish  $parish
+     * @param  \App\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parish $parish)
+    public function update(Request $request, TaxUnit $taxUnit)
     {
         //
     }
@@ -88,10 +97,10 @@ class ParishController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Parish  $parish
+     * @param  \App\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Parish $parish)
+    public function destroy(TaxUnit $taxUnit)
     {
         //
     }
