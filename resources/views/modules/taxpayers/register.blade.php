@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label class="control-label"> Tipo de contribuyente <span class="text-danger">*</span></label>
+                        <label class="control-label"> Tipo <span class="text-danger">*</span></label>
 
                         <select name="taxpayer_type" class="form-control select2" id="taxpayer_type">
                             @foreach ($types as $taxpayer_type)
@@ -195,6 +195,36 @@
                         ])
                         !!}
                         </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label"> Capital suscrito </label>
+
+                        {!!
+                        Form::text("capital", old('capital', @$row->capital), [
+                            "Placeholder" => "",
+                            "class" => "form-control",
+                            "onkeyup" => "upperCase(this);"
+                        ])
+                        !!}
+
+                        @error('capital')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label"> Conformidad de uso </label>
+
+                        {!!
+                        Form::text("compliance_use", old('compliance_use', @$row->compliance_use), [
+                            "Placeholder" => "",
+                            "class" => "form-control",
+                            "onkeyup" => "upperCase(this);"
+                        ])
+                        !!}
+
+                        @error('compliance_use')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     </div>
                     <div class="kt-separator kt-separator--border-solid kt-separator--portlet-fit kt-separator--space-lg"></div>

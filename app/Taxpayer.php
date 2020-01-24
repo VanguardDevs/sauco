@@ -14,6 +14,8 @@ class Taxpayer extends Model
         'denomination',
         'address',
         'permanent_status',
+        'capital',
+        'compliance_use',
         'phone',
         'email',
         'taxpayer_type_id',

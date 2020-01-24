@@ -75,6 +75,8 @@ class TaxpayerController extends Controller
             'permanent_status' => $request->input('permanent_status'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
+            'compliance_use' => $request->input('compliance_use'),
+            'capital' => $request->input('capital'),
             'taxpayer_type_id' => $request->input('taxpayer_type'),
             'economic_sector_id' => $request->input('economic_sector'),
             'commercial_register_id' => $commercialRegister->id,

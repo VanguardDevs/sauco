@@ -84,6 +84,14 @@
                   <span class="kt-widget__data">{{ $row->address }}</span>
                 </div>
                 <div class="kt-widget__info">
+                    <span class="kt-widget__label">Capital suscrito:</span>
+                    <span class="kt-widget__data">{{ $row->capital ?? "NO REGISTRADO" }}</span>
+                  </div>
+                <div class="kt-widget__info">
+                    <span class="kt-widget__label">Conformidad de uso:</span>
+                    <span class="kt-widget__data">{{ $row->compliance_use ?? "NO REGISTRADO" }}</span>
+                </div>
+                <div class="kt-widget__info">
                   <span class="kt-widget__label">Teléfono:</span>
                   <span class="kt-widget__data">{{ $row->phone ?? "NO REGISTRADO" }}</span>
                 </div>
