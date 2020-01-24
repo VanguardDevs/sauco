@@ -10,6 +10,11 @@ class ApplicationType extends Model
 
     protected $fillable = ['description'];
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return date('d/m/Y', strtotime($value));

@@ -162,3 +162,9 @@ Breadcrumbs::for('settings/application-types/update', function ($trail) {
     $trail->parent('settings/application-types');
     $trail->push('Editar tipo de solicitud', url('settings/application-types/update'));
 });
+
+/*------------- Applications -------------*/
+Breadcrumbs::for('applications', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Solicitudes', url('applications'));
+});

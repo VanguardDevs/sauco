@@ -24,6 +24,20 @@ class ApplicationTypeController extends Controller
         return view('modules.application-types.index');
     }
 
+    public function list()
+    {
+        $query = ApplicationType::query();
+
+        return DataTables::eloquent($query)->toJson();
+    }
+
+    public function listAll()
+    {
+        $data = ApplicationType::get();
+
+        return response()->json($data, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -33,13 +47,6 @@ class ApplicationTypeController extends Controller
     {
         return view('modules.application-types.register')
             ->with('typeForm', 'create');
-    }
-
-    public function list()
-    {
-        $query = ApplicationType::query();
-
-        return DataTables::eloquent($query)->toJson();
     }
 
     /**

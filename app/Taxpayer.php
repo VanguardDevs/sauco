@@ -48,4 +48,9 @@ class Taxpayer extends Model
     {
         return $this->belongsToMany(EconomicActivity::class);
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

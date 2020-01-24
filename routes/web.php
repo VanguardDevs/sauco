@@ -65,6 +65,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers', 'TaxpayerController');
 
     /*----------  Routes application types ----------*/
+    Route::get('application-types/list-all', 'ApplicationTypeController@listAll')->name('list-application-types');
     Route::get('application-types/list', 'ApplicationTypeController@list')->name('list-application-types');
     Route::resource('settings/application-types', 'ApplicationTypeController');
+
+    /*----------  Routes applications ----------*/
+    Route::get('applications/list', 'ApplicationController@list')->name('list-applications');
+    Route::post('applications/taxpayer', 'ApplicationController@addApplicationTaxpayer')->name('add-application-taxpayer');
+    Route::resource('applications', 'ApplicationController');
 });

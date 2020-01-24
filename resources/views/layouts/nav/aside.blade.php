@@ -103,6 +103,13 @@
                 </a>
             </li>
 
+            <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
+                <a  href="{{ url('applications') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon flaticon-paper-plane-1"></i>
+                <span class="kt-menu__link-text">Solicitudes</span>
+                </a>
+            </li>
+
             <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('geographic-area') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
                 <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <i class="kt-menu__link-icon flaticon-earth-globe "></i>

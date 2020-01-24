@@ -28,20 +28,16 @@ function onSelectTaxpayerType() {
     }
 }
 
-function onSelectMunicipalities() {
-    var state_id = $(this).val();
-
-    if (! state_id)
-        $('#municipalities').html('<option value="">===== SELECCIONE =====</option>');
-
-    $.get(baseURL +'/states/'+state_id+'/municipalities', function (data) {
-        var html_select;
+function onClickAddApplication() {
+    $.get(baseURL +'/application-types/list-all', function (data) {
+        let html_select;
         if (data && data.length) {
-            for (var i=0; i<data.length; i++)
-                html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-            $('#municipalities').html(html_select);
+            for (let i=0; i<data.length; i++) {
+                html_select += '<option value="'+data[i].id+'">'+data[i].description+'</option>'
+            }
+            $('#application_types').html(html_select);
         } else {
-            $('#municipalities').html('<option value="">===== SELECCIONE =====</option>');
+            $('#application_types').html('<option value="">===== SELECCIONE =====</option>');
         }
     });
 }
@@ -106,55 +102,6 @@ $(document).ready(function() {
             }
         ]
     });
-    /*----------  Datatables persons  ----------*/
-    $('#tPersons').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/list-persons",
-        "columns": [
-            {data: 'identity_card', name: 'identity_card'},
-            {data: 'first_name', name: 'first_name'},
-            {data: 'surname', name: 'surname'},
-            {data: 'address', name: 'address'},
-            {data: 'municipality.name', name: 'municipality.name'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='"+baseURL +"/persons/"+oData.id+"/edit' title='Editar' class='btn btn-sm btn-warning'><i class='flaticon-edit'></i></a>");
-                }
-            },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='"+baseURL +"/persons/vehicles/"+oData.id+"' title='Vehículos asociados' class='btn btn-sm btn-info'><i class='flaticon-truck'></i></a>");
-                }
-            }
-        ]
-    });
-    //*----------  Datatables services station  ----------*/
-    $('#tParishes').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/parishes/list",
-        "columns": [
-            {data: 'id'},
-            {data: 'name'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='"+baseURL +"/service-stations/"+oData.id+"/edit' title='Editar registro' class='btn btn-sm btn-warning'><i class='flaticon-edit'></i></a>");
-                }
-            }
-        ]
-    });
 
     $('#tCommunities').DataTable({
         "order": [[0, "asc"]],
@@ -192,14 +139,14 @@ $(document).ready(function() {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
-            <div class="btn-group">
-              <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id} title='Ver información'>
-                <i class='btn-sm btn-info flaticon2-file '></i>
-              </a>
-              <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id}/edit title='Editar'>
-                <i class='btn-sm btn-warning flaticon-edit'></i>
-              </a>
-            </div>`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id} title='Ver información'>
+                            <i class='btn-sm btn-info flaticon2-file '></i>
+                        </a>
+                        <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
                     );
                 }
             }
@@ -338,6 +285,35 @@ $(document).ready(function() {
             { data: 'law'},
             { data: 'value'},
             { data: 'publication_date'}
+        ]
+    });
+
+    $('#tApplications').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/applications/list",
+        "columns": [
+            { data: 'id'},
+            { data: 'taxpayer.rif'},
+            { data: 'application_type.description'},
+            { data: 'application_state.description'},
+            { data: 'created_at'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
         ]
     });
 });
