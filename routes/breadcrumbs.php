@@ -127,20 +127,38 @@ Breadcrumbs::for('taxpayers/update', function ($trail) {
     $trail->push('Editar contribuyente', url('taxpayers/update'));
 });
 
-/*------------- Unidades Tributarias -------------*/
+/*------------- Tax units -------------*/
 Breadcrumbs::for('settings/tax-units', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Unidades Tributarias', url('settings/tax-units'));
 });
 
-/*------------- Unidades Tributarias > create -------------*/
+/*------------- Tax units > create -------------*/
 Breadcrumbs::for('settings/tax-units/create', function ($trail) {
     $trail->parent('settings/tax-units');
     $trail->push('Crear unidad tributaria', url('settings/tax-units/create'));
 });
 
-/*------------- Unidades Tributarias > update -------------*/
+/*------------- Tax units > update -------------*/
 Breadcrumbs::for('settings/tax-units/update', function ($trail) {
     $trail->parent('settings/tax-units');
     $trail->push('Editar unidad tributaria', url('settings/tax-units/update'));
+});
+
+/*------------- Application types -------------*/
+Breadcrumbs::for('settings/application-types', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tipos de solicitudes', url('settings/application-types'));
+});
+
+/*------------- Application types > create -------------*/
+Breadcrumbs::for('settings/application-types/create', function ($trail) {
+    $trail->parent('settings/application-types');
+    $trail->push('Crear nuevo tipo de solicitud', url('settings/application-types/create'));
+});
+
+/*------------- Application types > update -------------*/
+Breadcrumbs::for('settings/application-types/update', function ($trail) {
+    $trail->parent('settings/application-types');
+    $trail->push('Editar tipo de solicitud', url('settings/application-types/update'));
 });

@@ -287,14 +287,38 @@ $(document).ready(function() {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
-            <div class="btn-group">
-              <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id} title='Ver información'>
-                <i class='btn-sm btn-info flaticon2-file '></i>
-              </a>
-              <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id}/edit title='Editar'>
-                <i class='btn-sm btn-warning flaticon-edit'></i>
-              </a>
-            </div>`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.id} title='Ver información'>
+                            <i class='btn-sm btn-info flaticon2-file '></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tApplicationTypes').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/application-types/list",
+        "columns": [
+            { data: 'id'},
+            { data: 'description'},
+            { data: 'created_at'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/settings/application-types/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
                     );
                 }
             }

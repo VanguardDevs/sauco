@@ -189,6 +189,12 @@
                             <span class="kt-menu__link-text">Sectores económicos</span>
                             </a>
                         </li>
+                        <li class="kt-menu__item {{ active('settings/application-types*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/application-types') }}" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">Tipos de solicitudes</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>
