@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\ApplicationState;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -105,9 +106,27 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, Application $application)
     {
-        //
+        // $state = ApplicationState::whereDescription('APROBADA')->first();
+
+        // $update = Application::find($application->id);
+        // $update->answer_date = Carbon::now();
+        // $update->application_state_id = $state->id;
+        // $update->save();
+
+        // return redirect('applications')->withSuccess('¡Solicitud aprobada!');
     }
 
+    public function approve($id)
+    {
+        $state = ApplicationState::whereDescription('APROBADA')->first();
+
+        $update = Application::find($id);
+        $update->answer_date = Carbon::now();
+        $update->application_state_id = $state->id;
+        $update->save();
+
+        return redirect('applications')->withSuccess('¡Solicitud aprobada!');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -116,6 +135,6 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
-        //
+        $application->delete();
     }
 }

@@ -48,31 +48,54 @@ function upperCase(e) {
     e.value = e.value.toUpperCase();
 }
 /*---------- Delete confirm chargue --------*/
-function deleteChargue(id) {
+const nullRecord = id => {
     Swal.fire({
-        title: 'Seguro(a) que desea eliminar el registro?',
-        //text: "You won't be able to revert this!",
+        title: '¿Está seguro(a) que desea anular el registro?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Eliminar'
-    }).then((result) => {
+        confirmButtonText: 'Anular'
+    }).then(result => {
         if (result.value) {
             $.ajax({
-                type: 'POST',
-                url: baseURL + '/structure/chargues/' + id,
-                data: {
-                    '_method': 'DELETE',
-                    '_token': $("meta[name='csrf-token']").attr("content")
-                },
-                success: function (response) {
-                    location.reload();
-                }
-            })
+            type: 'POST',
+            url: `${baseURL}/applications/${id}`,
+            data: {
+                '_method': 'DELETE',
+                '_token': $("meta[name='csrf-token']").attr("content")
+            },
+            success: response => location.reload(),
+            error: res => Swal.fire(res.responseJSON)
+            });
         }
-    })
+    });
+}
+
+const checkRecord = id => {
+    Swal.fire({
+        title: '¿Está seguro(a) que desea aprobar la solicitud?',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0abb87',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Aprobar'
+    }).then(result => {
+        if (result.value) {
+            $.ajax({
+            type: 'POST',
+            url: `${baseURL}/applications/${id}/approve`,
+            data: {
+                '_method': 'POST',
+                '_token': $("meta[name='csrf-token']").attr("content")
+            },
+            success: response => location.reload(),
+            error: res => Swal.fire(res.responseJSON)
+            });
+        }
+    });
 }
 
 $(document).ready(function() {
@@ -229,6 +252,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'rif'},
             { data: 'name'},
+            { data: 'commercial_register.num'},
             { data: 'denomination'},
             {
                 data: "id",
@@ -307,6 +331,12 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
+                        <a class="mr-2" onClick='checkRecord(${oData.id})' title='Eliminar'>
+                            <i class='btn-sm btn-success flaticon2-checkmark'></i>
+                        </a>
+                        <a class="mr-2" onClick='nullRecord(${oData.id})' title='Eliminar'>
+                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                        </a>
                         <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning flaticon-edit'></i>
                         </a>

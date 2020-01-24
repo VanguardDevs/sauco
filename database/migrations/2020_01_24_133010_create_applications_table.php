@@ -26,6 +26,7 @@ class CreateApplicationsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
