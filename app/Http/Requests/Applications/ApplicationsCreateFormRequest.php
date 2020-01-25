@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Applications;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class ApplicationsCreateFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,21 @@ class ApplicationsCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'type' => 'required'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'type' => 'tipo de solicitud'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'type.required' => 'Seleccione el :attribute'
         ];
     }
 }

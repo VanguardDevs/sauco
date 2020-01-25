@@ -202,6 +202,12 @@
                             <span class="kt-menu__link-text">Tipos de solicitudes</span>
                             </a>
                         </li>
+                        <li class="kt-menu__item {{ active('settings/charging-methods*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/charging-methods') }}" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">Métodos de cobro</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

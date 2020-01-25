@@ -312,6 +312,21 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tChargingMethods').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/charging-methods/list",
+        "columns": [
+            { data: 'id'},
+            { data: 'name'},
+            { data: 'created_at'}
+        ]
+    });
+
     $('#tApplications').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],

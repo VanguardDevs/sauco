@@ -168,3 +168,15 @@ Breadcrumbs::for('applications', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Solicitudes', url('applications'));
 });
+
+/*------------- Charging Methods -------------*/
+Breadcrumbs::for('settings/charging-methods', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Métodos de cobro', url('settings/charging-methods'));
+});
+
+/*------------- Charging Methods > create -------------*/
+Breadcrumbs::for('settings/charging-methods/create', function ($trail) {
+    $trail->parent('settings/charging-methods');
+    $trail->push('Crear nuevo método de cobro', url('settings/charging-methods/create'));
+});

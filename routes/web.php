@@ -74,4 +74,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('applications/taxpayer', 'ApplicationController@addApplicationTaxpayer')->name('add-application-taxpayer');
     Route::post('applications/{id}/approve', 'ApplicationController@approve')->name('approveApplication');
     Route::resource('applications', 'ApplicationController');
+
+    /*----------  Routes applications ----------*/
+    Route::get('charging-methods/list', 'ChargingMethodController@list')->name('list-charging-methods');
+    Route::resource('settings/charging-methods', 'ChargingMethodController');
 });

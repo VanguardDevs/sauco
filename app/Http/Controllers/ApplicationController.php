@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\ApplicationState;
+use App\Http\Requests\Applications\ApplicationsCreateFormRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,8 @@ class ApplicationController extends Controller
         $query = Application::query()
             ->with('applicationState')
             ->with('applicationType')
-            ->with('taxpayer');
+            ->with('taxpayer')
+            ->orderBy('created_at', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -57,7 +59,7 @@ class ApplicationController extends Controller
         //
     }
 
-    public function addApplicationTaxpayer(Request $request)
+    public function addApplicationTaxpayer(ApplicationsCreateFormRequest $request)
     {
         $state = ApplicationState::whereDescription('PENDIENTE')->first();
         $user = Auth::user();
