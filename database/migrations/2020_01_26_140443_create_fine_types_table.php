@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFinesTable extends Migration
+class CreateFineTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateFinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fines', function (Blueprint $table) {
+        Schema::create('fine_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('value');
+            $table->string('law');
+            $table->string('publication_date');
             $table->string('description');
-            $table->unsignedBigInteger('recollection_method_id');
-            $table->foreign('recollection_method_id')->references('id')->on('recollection_methods');
+            $table->unsignedBigInteger('charging_method_id');
+            $table->foreign('charging_method_id')->references('id')->on('charging_methods');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateFinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fines');
+        Schema::dropIfExists('fine_types');
     }
 }

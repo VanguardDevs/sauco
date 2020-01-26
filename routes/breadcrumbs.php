@@ -180,3 +180,15 @@ Breadcrumbs::for('settings/charging-methods/create', function ($trail) {
     $trail->parent('settings/charging-methods');
     $trail->push('Crear nuevo método de cobro', url('settings/charging-methods/create'));
 });
+
+/*------------- Charging Methods -------------*/
+Breadcrumbs::for('settings/fine-types', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tipos de multas', url('settings/fine-types'));
+});
+
+/*------------- Charging Methods > create -------------*/
+Breadcrumbs::for('settings/fine-types/create', function ($trail) {
+    $trail->parent('settings/fine-types');
+    $trail->push('Crear nuevo tipo de multa', url('settings/fine-types/create'));
+});

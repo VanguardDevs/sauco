@@ -78,4 +78,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     /*----------  Routes applications ----------*/
     Route::get('charging-methods/list', 'ChargingMethodController@list')->name('list-charging-methods');
     Route::resource('settings/charging-methods', 'ChargingMethodController');
+
+    /*----------  Routes applications ----------*/
+    Route::get('fine-types/list', 'FineTypeController@list')->name('list-fine-types');
+    Route::resource('settings/fine-types', 'FineTypeController');
 });

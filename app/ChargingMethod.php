@@ -12,6 +12,11 @@ class ChargingMethod extends Model
         'name'
     ];
 
+    public function fineTypes()
+    {
+        return $this->hasMany(FineType::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return date('d/m/Y', strtotime($value));
