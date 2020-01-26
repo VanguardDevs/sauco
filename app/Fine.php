@@ -14,6 +14,7 @@ class Fine extends Model
     protected $fillable = [
         'observations',
         'fine_type_id',
+        'fine_state_id',
         'user_id',
         'taxpayer_id'
     ];

@@ -20,17 +20,17 @@
     </div>
     <div class="kt-subheader__toolbar">
       <div class="kt-subheader__wrapper">
-        <a class="btn kt-subheader__btn-primary" onClick="onClickAddFine()" data-toggle="modal" data-target="#kt_modal_2">
-            <i class="flaticon2-exclamation"></i>
-        </a>
-        <a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
-            <i class="flaticon-paper-plane"></i>
-        </a>
         <a class="btn kt-subheader__btn-primary" href="{{ url()->previous() }}" title="Regresar">
           <i class='flaticon2-back'></i>
         </a>
         <a class="btn kt-subheader__btn-primary" href="{{ url()->current()."/edit" }}" title="Editar">
           <i class='flaticon-edit'></i>
+        </a>
+        <a class="btn kt-subheader__btn-primary" onClick="onClickAddFine()" data-toggle="modal" data-target="#kt_modal_2">
+            <i class="flaticon-exclamation"></i>
+        </a>
+        <a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
+            <i class="flaticon-paper-plane"></i>
         </a>
       </div>
     </div>

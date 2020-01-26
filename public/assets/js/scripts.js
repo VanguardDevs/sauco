@@ -61,7 +61,7 @@ function upperCase(e) {
     e.value = e.value.toUpperCase();
 }
 /*---------- Delete confirm chargue --------*/
-const nullRecord = id => {
+const nullRecord = (id, url) => {
     Swal.fire({
         title: '¿Está seguro(a) que desea anular el registro?',
         type: 'warning',
@@ -74,7 +74,7 @@ const nullRecord = id => {
         if (result.value) {
             $.ajax({
             type: 'POST',
-            url: `${baseURL}/applications/${id}`,
+            url: `${baseURL}/${url}/${id}`,
             data: {
                 '_method': 'DELETE',
                 '_token': $("meta[name='csrf-token']").attr("content")
@@ -389,7 +389,7 @@ $(document).ready(function() {
                         <a class="mr-2" onClick='checkRecord(${oData.id})' title='Eliminar'>
                             <i class='btn-sm btn-success flaticon2-checkmark'></i>
                         </a>
-                        <a class="mr-2" onClick='nullRecord(${oData.id})' title='Eliminar'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'applications')" title='Eliminar'>
                             <i class='btn-sm btn-danger flaticon-delete'></i>
                         </a>
                         <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
@@ -421,10 +421,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" onClick='checkRecord(${oData.id})' title='Eliminar'>
-                            <i class='btn-sm btn-success flaticon2-checkmark'></i>
-                        </a>
-                        <a class="mr-2" onClick='nullRecord(${oData.id})' title='Eliminar'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger flaticon-delete'></i>
                         </a>
                         <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>

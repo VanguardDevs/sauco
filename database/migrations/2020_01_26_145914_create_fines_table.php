@@ -18,8 +18,10 @@ class CreateFinesTable extends Migration
             $table->string('observations', 500)->nullable();
             // $table->date('answer_date')->nullable();
             $table->unsignedBigInteger('fine_type_id');
+            $table->unsignedBigInteger('fine_state_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('taxpayer_id');
+            $table->foreign('fine_state_id')->references('id')->on('fine_states');
             $table->foreign('fine_type_id')->references('id')->on('fine_types');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
