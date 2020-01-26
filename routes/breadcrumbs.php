@@ -192,3 +192,9 @@ Breadcrumbs::for('settings/fine-types/create', function ($trail) {
     $trail->parent('settings/fine-types');
     $trail->push('Crear nuevo tipo de multa', url('settings/fine-types/create'));
 });
+
+/*------------- Fines -------------*/
+Breadcrumbs::for('fines', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Multas', url('fines'));
+});

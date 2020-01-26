@@ -110,6 +110,13 @@
                 </a>
             </li>
 
+            <li class="kt-menu__item {{ active('fines*') }}" aria-haspopup="true" >
+                <a  href="{{ url('fines') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon flaticon-warning-sign"></i>
+                <span class="kt-menu__link-text">Multas</span>
+                </a>
+            </li>
+
             <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('geographic-area') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
                 <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <i class="kt-menu__link-icon flaticon-earth-globe "></i>

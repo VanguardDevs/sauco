@@ -20,6 +20,9 @@
     </div>
     <div class="kt-subheader__toolbar">
       <div class="kt-subheader__wrapper">
+        <a class="btn kt-subheader__btn-primary" onClick="onClickAddFine()" data-toggle="modal" data-target="#kt_modal_2">
+            <i class="flaticon2-exclamation"></i>
+        </a>
         <a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
             <i class="flaticon-paper-plane"></i>
         </a>
@@ -265,6 +268,44 @@
                                 <label>Tipo de solicitud <span class="text-danger">*</span></label>
                                 {!! Form::select("type", [], "SELECCIONE", [
                                     "id" => "application_types",
+                                    "class" => "form-control select2"
+                                ]) !!}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <label>Observaciones</label>
+                                {!! Form::textarea("description", old('description', @$row->description), ["placeholder" => "Observaciones", "class" => "form-control", "size" => "2x2", "onkeyup" => "upperCase(this);"]) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button  type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    Registrar
+                    </button>
+                </div>
+                    {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registro de multa</h5>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['route' => 'add-fine-taxpayer', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+                    <input type="hidden" value="{{ $row->id }}" name="taxpayer" />
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <label>Multa <span class="text-danger">*</span></label>
+                                {!! Form::select("fine_type", [], "SELECCIONE", [
+                                    "id" => "fine_types",
                                     "class" => "form-control select2"
                                 ]) !!}
                             </div>

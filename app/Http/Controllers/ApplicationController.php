@@ -108,14 +108,7 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, Application $application)
     {
-        // $state = ApplicationState::whereDescription('APROBADA')->first();
-
-        // $update = Application::find($application->id);
-        // $update->answer_date = Carbon::now();
-        // $update->application_state_id = $state->id;
-        // $update->save();
-
-        // return redirect('applications')->withSuccess('¡Solicitud aprobada!');
+        //
     }
 
     public function approve($id)

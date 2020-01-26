@@ -42,6 +42,19 @@ function onClickAddApplication() {
     });
 }
 
+function onClickAddFine() {
+    $.get(baseURL +'/fine-types/list-all', function (data) {
+        let html_select;
+        if (data && data.length) {
+            for (let i=0; i<data.length; i++) {
+                html_select += '<option value="'+data[i].id+'">'+data[i].description+'</option>'
+            }
+            $('#fine_types').html(html_select);
+        } else {
+            $('#fine_types').html('<option value="">===== SELECCIONE =====</option>');
+        }
+    });
+}
 
 /*----------  Uppercase  ----------*/
 function upperCase(e) {
@@ -367,6 +380,41 @@ $(document).ready(function() {
             { data: 'taxpayer.rif'},
             { data: 'application_type.description'},
             { data: 'application_state.description'},
+            { data: 'created_at'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" onClick='checkRecord(${oData.id})' title='Eliminar'>
+                            <i class='btn-sm btn-success flaticon2-checkmark'></i>
+                        </a>
+                        <a class="mr-2" onClick='nullRecord(${oData.id})' title='Eliminar'>
+                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                        </a>
+                        <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tFines').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/fines/list",
+        "columns": [
+            { data: 'id'},
+            { data: 'taxpayer.rif'},
+            { data: 'fine_type.description'},
+            { data: 'fine_state.description'},
             { data: 'created_at'},
             {
                 data: "id",

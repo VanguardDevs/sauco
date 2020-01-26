@@ -31,6 +31,11 @@ class FineTypeController extends Controller
         return DataTables::eloquent($query)->toJson();
     }
 
+    public function listAll()
+    {
+        return response()->json(FineType::get(), 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

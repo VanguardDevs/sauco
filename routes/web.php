@@ -80,6 +80,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('settings/charging-methods', 'ChargingMethodController');
 
     /*----------  Routes applications ----------*/
+    Route::get('fine-types/list-all', 'FineTypeController@listAll')->name('list-fine-types');
     Route::get('fine-types/list', 'FineTypeController@list')->name('list-fine-types');
     Route::resource('settings/fine-types', 'FineTypeController');
+
+    /*----------  Routes fines ----------*/
+    Route::get('fines/list', 'FineController@list')->name('list-fines');
+    Route::post('fines/taxpayer', 'FineController@addFineTaxpayer')->name('add-fine-taxpayer');
+    Route::post('fines/{id}/approve', 'FineController@approve')->name('approveFine');
+    Route::resource('fines', 'FineController');
 });
