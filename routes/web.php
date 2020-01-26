@@ -89,4 +89,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('fines/taxpayer', 'FineController@addFineTaxpayer')->name('add-fine-taxpayer');
     Route::post('fines/{id}/approve', 'FineController@approve')->name('approveFine');
     Route::resource('fines', 'FineController');
+
+    /*----------  Routes bank-accounts ----------*/
+    Route::get('bank-accounts/list', 'BankAccountController@list')->name('list-bank-accounts');
+    Route::resource('settings/bank-accounts', 'BankAccountController');
 });

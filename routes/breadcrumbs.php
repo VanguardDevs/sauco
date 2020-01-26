@@ -198,3 +198,15 @@ Breadcrumbs::for('fines', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Multas', url('fines'));
 });
+
+/*------------- Bank Accounts -------------*/
+Breadcrumbs::for('settings/bank-accounts', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Cuentas bancarias', url('settings/bank-accounts'));
+});
+
+/*------------- Bank Accounts > create -------------*/
+Breadcrumbs::for('settings/bank-accounts/create', function ($trail) {
+    $trail->parent('settings/bank-accounts');
+    $trail->push('Crear nuevo cuenta bancaria', url('settings/bank-accounts/create'));
+});

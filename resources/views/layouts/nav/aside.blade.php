@@ -221,6 +221,12 @@
                             <span class="kt-menu__link-text">Tipos de multas</span>
                             </a>
                         </li>
+                        <li class="kt-menu__item {{ active('settings/bank-accounts*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/bank-accounts') }}" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">Cuentas bancarias</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

@@ -433,4 +433,36 @@ $(document).ready(function() {
             }
         ]
     });
+
+    $('#tBankAccounts').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/bank-accounts/list",
+        "columns": [
+            { data: 'account_num'},
+            { data: 'bank_account_type.denomination'},
+            { data: 'bank_name'},
+            { data: 'budget_account'},
+            { data: 'accounting_account'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'bank-accounts')" title='Anular'>
+                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                        </a>
+                        <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
 });
