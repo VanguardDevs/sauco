@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicationTaxpayerTable extends Migration
+class CreateTaxpayerFineTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateApplicationTaxpayerTable extends Migration
      */
     public function up()
     {
-        Schema::create('application_taxpayer', function (Blueprint $table) {
-            $table->unsignedBigInteger('application_id');
+        Schema::create('taxpayer_fine', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('fine_id');
             $table->unsignedBigInteger('taxpayer_id');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
-            $table->foreign('application_id')->references('id')->on('applications');
+            $table->foreign('fine_id')->references('id')->on('fines');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateApplicationTaxpayerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('application_taxpayer');
+        Schema::dropIfExists('taxpayer_fine');
     }
 }
