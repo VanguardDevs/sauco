@@ -56,14 +56,14 @@
                             <div class="col-lg-6">
                                 <label>Monto<span class="text-danger">*</span></label>
 
-                                {!! Form::text('amount', old('amount', @$row->amount), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+                                {!! Form::text('amount', old('amount', @$row->amount), ['class' => 'form-control decimal-input-mask', "required"]) !!}
 
                                 @error('amount')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-lg-6">
-                                <label>Denominación<span class="text-danger">*</span></label>
+                                <label>Método de cobro<span class="text-danger">*</span></label>
 
                                 <select name="charging_method" class="form-control select2">
                                     <option value="">===== SELECCIONE =====</option>

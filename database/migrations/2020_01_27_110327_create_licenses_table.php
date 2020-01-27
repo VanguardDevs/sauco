@@ -15,6 +15,7 @@ class CreateLicensesTable extends Migration
     {
         Schema::create('licenses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('num');
             $table->unsignedBigInteger('property_id');
             $table->unsignedBigInteger('license_type_id');
             $table->unsignedBigInteger('license_state_id');
@@ -22,6 +23,7 @@ class CreateLicensesTable extends Migration
             $table->foreign('license_type_id')->references('id')->on('license_types');
             $table->foreign('license_state_id')->references('id')->on('license_states');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

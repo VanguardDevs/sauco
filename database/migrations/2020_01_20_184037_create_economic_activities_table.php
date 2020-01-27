@@ -20,6 +20,7 @@ class CreateEconomicActivitiesTable extends Migration
             $table->string('aliquote');
             $table->string('min_tax');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

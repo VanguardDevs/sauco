@@ -20,6 +20,7 @@ class CreateCommercialRegistersTable extends Migration
             $table->string('case_file');
             $table->date('start_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -30,6 +30,7 @@ class CreatePropertiesTable extends Migration
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('property_type_id')->references('id')->on('property_types');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -33,6 +33,7 @@ class CreateTaxpayersTable extends Migration
             $table->foreign('commercial_register_id')->references('id')->on('commercial_registers');
             $table->foreign('representation_id')->references('id')->on('representations');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

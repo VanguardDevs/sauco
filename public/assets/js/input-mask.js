@@ -4,20 +4,20 @@ var KTInputmask = function () {
 
     // Private functions
     var demos = function () {
-        // date format
-        $("#birthdate").inputmask("99/99/9999", {
-            "placeholder": "DD/MM/YYYY",
-            autoUnmask: true
-        });
-
+        // Date format
         $(".date-input-mask").inputmask("99/99/9999", {
-            "placeholder": "DD/MM/YYYY",
+            "placeholder": "DD/MM/AAAA",
             autoUnmask: true
         });
 
-        // custom placeholder
-        $("#kt_inputmask_2").inputmask("99/99/9999", {
-            "placeholder": "mm/dd/yyyy",
+        // Decimal format
+        $(".decimal-input-mask").inputmask({
+            alias: "decimal",
+            integerDigits: 20,
+            digits: 2,
+            allowMinus:false,
+            digitsOptional: false,
+            placeholder: "0"
         });
 
         // phone number format
@@ -25,9 +25,9 @@ var KTInputmask = function () {
             "mask": "(999) 999-9999"
         });
 
-        // empty placeholder
-        $("#kt_inputmask_4").inputmask({
-            "mask": "99-9999999",
+        // RIF format
+        $(".input-mask-rif").inputmask({
+            "mask": "99999999-9",
             placeholder: "" // remove underscores from the input mask
         });
 

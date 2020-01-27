@@ -90,7 +90,6 @@
                             Form::text("rif", old('rif', @$row->rif), [
                                 "class" => "form-control input-mask-rif",
                                 "placeholder" => "RIF del contribuyente",
-                                "onkeyup" => "upperCase(this);",
                                 "id" => 'rif'
                             ])
                             !!}
@@ -202,8 +201,7 @@
                         {!!
                         Form::text("capital", old('capital', @$row->capital), [
                             "Placeholder" => "",
-                            "class" => "form-control",
-                            "onkeyup" => "upperCase(this);"
+                            "class" => "form-control decimal-input-mask"
                         ])
                         !!}
 

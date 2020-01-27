@@ -165,7 +165,7 @@
             </div>
             <div class="kt-portlet__body">
               <div class="kt-widget-4">
-                {{-- @if ($row->properties->count())
+                @if ($row->properties->count())
                   @foreach ($row->properties as $property)
                     <div class="kt-widget4__item">
                       <div class="kt-widget4__info">
@@ -173,8 +173,8 @@
                         <span class="kt-widget4__sub">{{ $property->name }}</span>
                       </div>
                     </div>
-                  @endforeach --}}
-                {{-- @else
+                  @endforeach
+                @else
                   <div class="kt-widget4__item">
                     <div class="kt-widget4__info">
                       <span class="kt-widget4__sub">
@@ -182,7 +182,7 @@
                       </span>
                     </div>
                   </div>
-                @endif --}}
+                @endif
               </div>
             </div>
           </div>
