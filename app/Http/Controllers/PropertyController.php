@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Properties\PropertiesCreateFormRequest;
+use App\OwnershipStatus;
+use App\Parish;
 use App\Property;
+use App\PropertyType;
+use App\Taxpayer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class PropertyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,12 +25,13 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        return view('modules.property-types.index');
+        return view('modules.properties.index');
     }
 
     public function list()
     {
-        $query = Property::query();
+        $query = Property::query()
+            ->with('taxpayer');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -30,9 +41,16 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $taxpayer = Taxpayer::find($id)->first();
+
+        return view('modules.properties.register')
+            ->with('taxpayer', $taxpayer)
+            ->with('ownershipStatus', OwnershipStatus::pluck('description', 'id'))
+            ->with('propertyTypes', PropertyType::pluck('denomination', 'id'))
+            ->with('parishes', Parish::pluck('name', 'id'))
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -41,9 +59,26 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id, PropertiesCreateFormRequest $request)
     {
-        //
+        $taxpayer = Taxpayer::find($id)->first();
+
+        $property = new Property([
+            'local' => $request->input('local'),
+            'street' => $request->input('street'),
+            'floor' => $request->input('floor'),
+            'cadastre_num' => $request->input('local'),
+            'contract' => $request->input('contract'),
+            'document' => $request->input('document'),
+            'ownership_statuses_id' => $request->input('ownership_status'),
+            'taxpayer_id' => $taxpayer->id,
+            'community_id' => $request->input('community'),
+            'property_type_id' => $request->input('property_type')
+        ]);
+        $property->save();
+
+        return redirect('taxpayers/'.$taxpayer->id)
+            ->withSuccess('¡Inmueble creado!');
     }
 
     /**

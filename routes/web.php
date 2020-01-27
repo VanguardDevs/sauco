@@ -98,4 +98,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('property-types/list-all', 'PropertyTypeController@listAll')->name('list-property-types');
     Route::get('property-types/list', 'PropertyTypeController@list')->name('list-property-types');
     Route::resource('settings/property-types', 'PropertyTypeController');
+
+    /*----------  Routes properties ----------*/
+    Route::get('taxpayer/{id}/property/create', 'PropertyController@create')->name('create-property');
+    Route::post('taxpayer/{id}/add-property', 'PropertyController@store')->name('add-property');
+    Route::get('properties/list', 'PropertyController@list')->name('list-properties');
+    Route::resource('properties', 'PropertyController');
+
+    /*----------  Routes parishes ----------*/
+    Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
 });

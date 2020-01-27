@@ -10,8 +10,9 @@ $("#form").closest('form').on('submit', function(e) {
 
 /*--------- Select Dinamicos ---------*/
 $(function () {
-    $('#states').on('change', onSelectMunicipalities);
+    $('#parishes').on('change', onSelectParishes);
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
+    $('#ownership_status').change(onSelectBuildingOwner);
 });
 
 function onSelectTaxpayerType() {
@@ -25,6 +26,42 @@ function onSelectTaxpayerType() {
     } else {
         commercialDenomination.hide();
         $('#rif').val('J-');
+    }
+}
+
+/**
+ * Get all communities for a given parish
+ */
+function onSelectParishes() {
+    let parish_id = $(this).val();
+
+    let html_select = '<option value=""> SELECCIONE </option>';
+
+    $.get('/parishes/'+parish_id+'/communities/', data => {
+
+      for (let i = 0; i < data.length; i++) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+      }
+
+      $('#communities').html(html_select);
+    });
+}
+
+function onSelectBuildingOwner() {
+    let selected = $(this).children('option:selected').html();
+    let contract = $('#contract');
+    let document = $('#document');
+
+    // Show contract input
+    if (selected == "ALQUILADO") {
+        contract.show();
+        document.hide();
+    } else if (selected == "PROPIO") {
+        contract.hide();
+        document.show();
+    } else {
+        contract.hide();
+        document.hide();
     }
 }
 
@@ -485,6 +522,36 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/settings/property-types/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tProperties').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/properties/list",
+        "columns": [
+            { data: 'taxpayer.rif'},
+            { data: 'taxpayer.name'},
+            { data: 'cadastre_num'},
+            { data: 'street'},
+            { data: 'local'},
+            { data: 'floor'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/settings/properties/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning flaticon-edit'></i>
                         </a>
                     </div>`

@@ -30,6 +30,13 @@ class ParishController extends Controller
         return DataTables::eloquent($query)->toJson();
     }
 
+    public function getCommunities($id)
+    {
+        $query = Parish::find($id)->communities()->orderBy('name');
+
+        return $query->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

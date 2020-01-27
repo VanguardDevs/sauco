@@ -222,3 +222,15 @@ Breadcrumbs::for('settings/property-types/create', function ($trail) {
     $trail->parent('settings/property-types');
     $trail->push('Crear nuevo tipo de inmueble', url('settings/property-types/create'));
 });
+
+/*------------- Properties -------------*/
+Breadcrumbs::for('properties', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Inmuebles', url('properties'));
+});
+
+/*------------- Properties > create -------------*/
+Breadcrumbs::for('settings/properties/create', function ($trail) {
+    $trail->parent('taxpayers');
+    $trail->push('Crear inmueble', url('settings/taxpayer/{id}/property/create'));
+});
