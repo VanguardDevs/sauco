@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('identity_card');
             $table->string('first_name');
             $table->string('surname');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('login')->unique();
             $table->string('password');
             $table->string('avatar')->nullable();

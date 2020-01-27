@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ApplicationStatesTableSeeder::class);
         $this->call(FineStatesTableSeeder::class);
         $this->call(BankAccountTypesTableSeeder::class);
+        $this->call(LicenseStatesTableSeeder::class);
+        $this->call(OwnershipStatusesTableSeeder::class);
     }
 }

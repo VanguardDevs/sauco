@@ -14,4 +14,9 @@ class Community extends Model
     {
         return $this->belongsToMany(Parish::class);
     }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
 }

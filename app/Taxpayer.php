@@ -53,4 +53,9 @@ class Taxpayer extends Model
     {
         return $this->hasMany(Application::class);
     }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
 }

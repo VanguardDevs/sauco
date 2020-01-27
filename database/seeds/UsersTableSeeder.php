@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
             'identity_card' =>  '27572434',
             'first_name'    =>  'Jesús',
             'surname'	    =>  'Ordosgoitty',
-            'phone'         =>  '12345678',
             'login'         =>  'admin',
             'password'      =>  bcrypt('jodaz.2602*'),
             'avatar'   	    =>  'admin.png'

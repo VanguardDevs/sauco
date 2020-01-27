@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicationStatesTable extends Migration
+class CreateOwnershipStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateApplicationStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('application_states', function (Blueprint $table) {
+        Schema::create('ownership_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('description');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateApplicationStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('application_states');
+        Schema::dropIfExists('ownership_statuses');
     }
 }
