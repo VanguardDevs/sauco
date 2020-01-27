@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Property;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PropertyController extends Controller
 {
@@ -14,7 +15,14 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.property-types.index');
+    }
+
+    public function list()
+    {
+        $query = Property::query();
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**

@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\ChargingMethod;
+use App\Http\Requests\PropertyTypes\PropertyTypesCreateFormRequest;
 use App\PropertyType;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PropertyTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,15 @@ class PropertyTypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.property-types.index');
+    }
+
+    public function list()
+    {
+        $query = PropertyType::query()
+            ->with('chargingMethod');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -24,7 +40,9 @@ class PropertyTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.property-types.register')
+            ->with('chargingMethods', ChargingMethod::get())
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -33,9 +51,17 @@ class PropertyTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PropertyTypesCreateFormRequest $request)
     {
-        //
+        $create = new PropertyType([
+            'classification' => $request->input('classification'),
+            'denomination' => $request->input('denomination'),
+            'amount' => $request->input('amount'),
+            'charging_method_id' => $request->input('charging_method')
+        ]);
+        $create->save();
+
+        return redirect('settings/property-types')->withSuccess('¡Creado nuevo tipo de inmueble!');
     }
 
     /**

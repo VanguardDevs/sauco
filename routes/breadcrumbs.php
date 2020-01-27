@@ -181,13 +181,13 @@ Breadcrumbs::for('settings/charging-methods/create', function ($trail) {
     $trail->push('Crear nuevo método de cobro', url('settings/charging-methods/create'));
 });
 
-/*------------- Charging Methods -------------*/
+/*------------- Fine Types -------------*/
 Breadcrumbs::for('settings/fine-types', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Tipos de multas', url('settings/fine-types'));
 });
 
-/*------------- Charging Methods > create -------------*/
+/*------------- Fine Types > create -------------*/
 Breadcrumbs::for('settings/fine-types/create', function ($trail) {
     $trail->parent('settings/fine-types');
     $trail->push('Crear nuevo tipo de multa', url('settings/fine-types/create'));
@@ -209,4 +209,16 @@ Breadcrumbs::for('settings/bank-accounts', function ($trail) {
 Breadcrumbs::for('settings/bank-accounts/create', function ($trail) {
     $trail->parent('settings/bank-accounts');
     $trail->push('Crear nuevo cuenta bancaria', url('settings/bank-accounts/create'));
+});
+
+/*------------- Property Types -------------*/
+Breadcrumbs::for('settings/property-types', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tipos de inmuebles', url('settings/property-types'));
+});
+
+/*------------- Property Types > create -------------*/
+Breadcrumbs::for('settings/property-types/create', function ($trail) {
+    $trail->parent('settings/property-types');
+    $trail->push('Crear nuevo tipo de inmueble', url('settings/property-types/create'));
 });

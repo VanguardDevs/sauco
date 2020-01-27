@@ -12,6 +12,11 @@ class ChargingMethod extends Model
         'name'
     ];
 
+    public function propertyTypes()
+    {
+        return $this->hasMany(PropertyType::class);
+    }
+
     public function fineTypes()
     {
         return $this->hasMany(FineType::class);

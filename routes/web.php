@@ -93,4 +93,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     /*----------  Routes bank-accounts ----------*/
     Route::get('bank-accounts/list', 'BankAccountController@list')->name('list-bank-accounts');
     Route::resource('settings/bank-accounts', 'BankAccountController');
+
+    /*----------  Routes property types ----------*/
+    Route::get('property-types/list-all', 'PropertyTypeController@listAll')->name('list-property-types');
+    Route::get('property-types/list', 'PropertyTypeController@list')->name('list-property-types');
+    Route::resource('settings/property-types', 'PropertyTypeController');
 });

@@ -15,6 +15,11 @@ class PropertyType extends Model
         'charging_method_id'
     ];
 
+    public function chargingMethod()
+    {
+        return $this->belongsTo(ChargingMethod::class);
+    }
+
     public function properties()
     {
         return $this->hasMany(Property::class);
