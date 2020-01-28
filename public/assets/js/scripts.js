@@ -330,7 +330,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'id'},
             { data: 'description'},
-            { data: 'created_at'},
+            { data: 'publication_date'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

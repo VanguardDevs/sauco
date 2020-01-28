@@ -8,7 +8,18 @@ class ApplicationType extends Model
 {
     protected $table = 'application_types';
 
-    protected $fillable = ['description'];
+    protected $fillable = [
+        'law',
+        'value',
+        'publication_date',
+        'description',
+        'charging_method_id'
+    ];
+
+    public function chargingMethod()
+    {
+        return $this->belongsTo(ChargingMethod::class);
+    }
 
     public function applications()
     {

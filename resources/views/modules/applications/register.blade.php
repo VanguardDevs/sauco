@@ -45,7 +45,7 @@
                             <div class="col-lg-4">
                                 <label>Valor <span class="text-danger">*</span></label>
 
-                                {!! Form::text('value', old('value', @$row->value), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+                                {!! Form::text('value', old('value', @$row->value), ['class' => 'form-control decimal-input-mask', "required"]) !!}
 
                                 @error('value')
                                     <div class="text text-danger">{{ $message }}</div>

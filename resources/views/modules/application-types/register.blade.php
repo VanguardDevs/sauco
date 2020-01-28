@@ -33,12 +33,57 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <label>Descripción<span class="text-danger">*</span></label>
 
                                 {!! Form::text('description', old('description', @$row->description), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
                                 @error('description')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Método de cobro <span class="text-danger">*</span></label>
+
+                                <select name="charging_method" class="form-control select2">
+                                    <option value="">===== SELECCIONE =====</option>
+                                    @foreach ($chargingMethods as $chargingMethod)
+                                        <option value="{{ $chargingMethod->id }}" @if(old('chargingMethodes') == $chargingMethod->id OR @$row->chargingMethod->id == $chargingMethod->id) selected @endif >
+                                        {{ $chargingMethod->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                @error('charging_method')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-4">
+                                <label>Ley<span class="text-danger">*</span></label>
+
+                                {!! Form::text('law', old('law', @$row->law), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+
+                                @error('law')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Valor <span class="text-danger">*</span></label>
+
+                                {!! Form::text('value', old('value', @$row->value), ['class' => 'form-control decimal-input-mask', "required"]) !!}
+
+                                @error('value')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Fecha de publicación <span class="text-danger">*</span></label>
+
+                                {!! Form::text('publication_date', old('publication_date', @$row->publication_date), ['class' => 'form-control date-input-mask', "onkeyup" => "upperCase(this);", "required"]) !!}
+
+                                @error('publication_date')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

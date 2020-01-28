@@ -24,21 +24,33 @@ class ApplicationTypesCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required'
+            'law' => 'required',
+            'value' => 'required',
+            'publication_date' => 'required',
+            'description' => 'required',
+            'charging_method' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'description' => 'descripción'
+            'law' => 'ley',
+            'value' => 'valor',
+            'publication_date' => 'fecha de publicación',
+            'description' => 'descripción',
+            'charging_method' => 'método de cobro'
         ];
     }
 
     public function messages()
     {
         return [
-            'description.required' => 'Ingrese una :attribute'
+            'law.required' => 'Ingrese la :attribute',
+            'value.required' => 'Ingrese un :attribute',
+            'publication_date.required' => 'Ingrese una :attribute',
+            'description.required' => 'Ingrese una :attribute',
+            'charging_method.required' => 'Seleccione un :attribute'
         ];
     }
 }

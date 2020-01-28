@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ApplicationType;
+use App\ChargingMethod;
 use App\Http\Requests\ApplicationTypes\ApplicationTypesCreateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -46,6 +47,7 @@ class ApplicationTypeController extends Controller
     public function create()
     {
         return view('modules.application-types.register')
+            ->with('chargingMethods', ChargingMethod::get())
             ->with('typeForm', 'create');
     }
 
@@ -58,6 +60,10 @@ class ApplicationTypeController extends Controller
     public function store(ApplicationTypesCreateFormRequest $request)
     {
         $create = ApplicationType::create([
+            'law' => $request->input('law'),
+            'value' => $request->input('value'),
+            'publication_date' => $request->input('publication_date'),
+            'charging_method_id' => $request->input('charging_method'),
             'description' => $request->input('description')
         ]);
         $create->save();

@@ -15,7 +15,12 @@ class CreateApplicationTypesTable extends Migration
     {
         Schema::create('application_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('value');
+            $table->string('law');
+            $table->string('publication_date');
             $table->string('description');
+            $table->unsignedBigInteger('charging_method_id');
+            $table->foreign('charging_method_id')->references('id')->on('charging_methods');
             $table->timestamps();
         });
     }
