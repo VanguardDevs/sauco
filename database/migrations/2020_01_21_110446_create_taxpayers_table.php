@@ -26,12 +26,8 @@ class CreateTaxpayersTable extends Migration
             $table->string('email')->nullable();
             $table->unsignedBigInteger('taxpayer_type_id');
             $table->unsignedBigInteger('economic_sector_id');
-            $table->unsignedBigInteger('commercial_register_id');
-            $table->unsignedBigInteger('representation_id');
             $table->foreign('taxpayer_type_id')->references('id')->on('taxpayer_types');
             $table->foreign('economic_sector_id')->references('id')->on('economic_sectors');
-            $table->foreign('commercial_register_id')->references('id')->on('commercial_registers');
-            $table->foreign('representation_id')->references('id')->on('representations');
             $table->timestamps();
             $table->softDeletes();
         });

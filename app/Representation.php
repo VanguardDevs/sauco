@@ -17,16 +17,17 @@ class Representation extends Model
         'address',
         'phone',
         'email',
-        'citizenship_id'
+        'citizenship_id',
+        'taxpayer_id'
     ];
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
+    }
 
     public function citizenship()
     {
         return $this->belongsTo(Citizenship::class);
-    }
-
-    public function taxpayers()
-    {
-        return $this->hasMany(Taxpayer::class);
     }
 }

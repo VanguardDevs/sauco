@@ -19,6 +19,8 @@ class CreateCommercialRegistersTable extends Migration
             $table->string('volume');
             $table->string('case_file');
             $table->date('start_date');
+            $table->unsignedBigInteger('taxpayer_id');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -16,12 +16,13 @@ class CommercialRegister extends Model
         'num',
         'volume',
         'case_file',
-        'start_date'
+        'start_date',
+        'taxpayer_id'
     ];
 
     public function taxpayer()
     {
-        return $this->hasOne(Taxpayer::class);
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function setStartDateAttribute($value)

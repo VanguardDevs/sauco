@@ -24,6 +24,8 @@ class CreateRepresentationsTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->unsignedBigInteger('citizenship_id');
+            $table->unsignedBigInteger('taxpayer_id');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('citizenship_id')->references('id')->on('citizenships');
             $table->timestamps();
         });

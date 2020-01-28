@@ -23,13 +23,12 @@ class Taxpayer extends Model
         'email',
         'taxpayer_type_id',
         'economic_sector_id',
-        'commercial_register_id',
-        'representation_id'
+        'municipality_id'
     ];
 
     public function representation()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->hasOne(Taxpayer::class);
     }
 
     public function economicSector()
@@ -39,7 +38,7 @@ class Taxpayer extends Model
 
     public function commercialRegister()
     {
-        return $this->belongsTo(CommercialRegister::class);
+        return $this->hasOne(CommercialRegister::class);
     }
 
     public function taxpayerType()
@@ -60,5 +59,10 @@ class Taxpayer extends Model
     public function properties()
     {
         return $this->hasMany(Property::class);
+    }
+
+    public function municipality()
+    {
+        return $this->belongsTo(Municipality::class);
     }
 }
