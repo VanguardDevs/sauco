@@ -21,8 +21,8 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
-    public function applications()
+    public function payments()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Payment::class);
     }
 }

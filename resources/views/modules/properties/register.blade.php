@@ -106,7 +106,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-3" style="display:none;" id="contract">
-                                <label class="control-label"> Número de contrato <span class="text-danger">*</span></label>
+                                <label class="control-label"> No. de contrato <span class="text-danger">*</span></label>
                                 {!! Form::text("contract", old('contract', @$row->contract),
                                 [
                                     "Placeholder" => "No. de contrato",
@@ -118,7 +118,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-3" style="display:none;" id="document">
-                                <label class="control-label"> Número de documento de propiedad <span class="text-danger">*</span></label>
+                                <label class="control-label"> No. de documento de propiedad <span class="text-danger">*</span></label>
                                 {!! Form::text("document", old('document', @$row->document),
                                 [
                                     "Placeholder" => "No. catastral del inmueble",
@@ -130,7 +130,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-3">
-                                <label class="control-label"> Número catastral <span class="text-danger">*</span></label>
+                                <label class="control-label"> No. catastral <span class="text-danger">*</span></label>
                                 {!! Form::text("cadastre_num", old('cadastre_num', @$row->cadastre_num),
                                 [
                                     "Placeholder" => "No. catastral del inmueble",
@@ -156,7 +156,7 @@
                             <div class="form-group col-md-3">
                                 <label class="control-label"> Número o nombre del edificio<span class="text-danger">*</span></label>
                                 {!! Form::text("local", old('local', @$row->local), [
-                                    "Placeholder" => "Número del edificio",
+                                    "Placeholder" => "No. del edificio",
                                     "class" => "form-control",
                                     "onkeyup" => "upperCase(this);"
                                 ]) !!}

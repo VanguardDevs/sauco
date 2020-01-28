@@ -18,7 +18,7 @@ class Property extends Model
         'cadastre_num',
         'contract',
         'document',
-        'ownership_statuses_id',
+        'ownership_status_id',
         'taxpayer_id',
         'community_id',
         'property_type_id'

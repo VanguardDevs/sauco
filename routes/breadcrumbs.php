@@ -112,7 +112,7 @@ Breadcrumbs::for('settings/economic-sectors/update', function ($trail) {
 /*------------- Taxpayers -------------*/
 Breadcrumbs::for('taxpayers', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Contribuyente', url('taxpayers'));
+    $trail->push('Contribuyentes', url('taxpayers'));
 });
 
 /*------------- Taxpayers > create -------------*/

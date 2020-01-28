@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFineStatesTable extends Migration
+class CreatePaymentStatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFineStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fine_states', function (Blueprint $table) {
+        Schema::create('payment_states', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('description');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateFineStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fine_states');
+        Schema::dropIfExists('payment_states');
     }
 }

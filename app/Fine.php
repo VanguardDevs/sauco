@@ -15,8 +15,7 @@ class Fine extends Model
         'observations',
         'fine_type_id',
         'fine_state_id',
-        'user_id',
-        'taxpayer_id'
+        'payment_id'
     ];
 
     public function fineType()
@@ -29,9 +28,9 @@ class Fine extends Model
         return $this->belongsTo(FineState::class);
     }
 
-    public function taxpayer()
+    public function payment()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Payment::class);
     }
 
     public function getCreatedAtAttribute($value)

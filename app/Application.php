@@ -17,7 +17,7 @@ class Application extends Model
         'application_state_id',
         'application_type_id',
         'user_id',
-        'taxpayer_id'
+        'payment_id'
     ];
 
     public function applicationState()
@@ -35,9 +35,9 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function taxpayer()
+    public function payment()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Payment::class);
     }
 
     public function applicationType()

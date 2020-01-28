@@ -70,7 +70,7 @@ class PropertyController extends Controller
             'cadastre_num' => $request->input('local'),
             'contract' => $request->input('contract'),
             'document' => $request->input('document'),
-            'ownership_statuses_id' => $request->input('ownership_status'),
+            'ownership_status_id' => $request->input('ownership_status'),
             'taxpayer_id' => $taxpayer->id,
             'community_id' => $request->input('community'),
             'property_type_id' => $request->input('property_type')
