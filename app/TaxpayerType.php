@@ -8,5 +8,8 @@ class TaxpayerType extends Model
 {
     protected $table = 'taxpayer_types';
 
-    protected $fillable = ['description'];
+    protected $fillable = [
+        'description',
+        'correlative'
+    ];
 }

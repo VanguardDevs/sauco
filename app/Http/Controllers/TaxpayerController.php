@@ -60,17 +60,11 @@ class TaxpayerController extends Controller
      */
     public function store(TaxpayersCreateFormRequest $request)
     {
-        // dd($request->input());
-        // $commercialRegister = new CommercialRegister([
-        //     'num' => $request->input('num'),
-        //     'volume' => $request->input('volume'),
-        //     'case_file' => $request->input('case_file'),
-        //     'start_date' => $request->input('start_date'),
-        // ]);
-        // $commercialRegister->save();
+        $rif = $request->input('rif');
+        $type = TaxpayerType::find($request->input('taxpayer_type'))->first();
 
         $taxpayer = new Taxpayer([
-            'rif' => $request->input('rif'),
+            'rif' => $type->correlative.$rif,
             'name' => $request->input('name'),
             'denomination' => $request->input('denomination'),
             'address' => $request->input('address'),

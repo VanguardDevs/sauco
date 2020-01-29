@@ -6,10 +6,10 @@ use Illuminate\Database\Seeder;
 class TaxpayerTypesTableSeeder extends Seeder
 {
     private $types = Array(
-        'JURÍDICO', // IF CHANGE, MODIFY SCRIPTS.JS
-        'NATURAL',
-        'EXTRANJERO',
-        'GUBERNAMENTAL'
+        'JURÍDICO' => 'J-',
+        'NATURAL' => 'N-',
+        'EXTRANJERO' => 'E-',
+        'GUBERNAMENTAL' => 'G-'
     );
 
     /**
@@ -21,7 +21,8 @@ class TaxpayerTypesTableSeeder extends Seeder
     {
         foreach ($this->types as $key => $value) {
             TaxpayerType::create([
-                'description' => $value
+                'description' => $key,
+                'correlative' => $value
             ]);
         }
     }
