@@ -31,13 +31,13 @@ class TaxpayersCreateFormRequest extends FormRequest
             'economic_sector'  => 'required',
             'permanent_status' => 'required',
             'address' => 'required',
-            'representation' => 'required',
-            'economic_activities' => 'required',
+            // 'representation' => 'required',
+            // 'economic_activities' => 'required',
             // Commercial Register
-            'num'              => 'required|unique:commercial_registers',
-            'volume'           => 'required',
-            'case_file'        => 'required',
-            'start_date'       => 'required'
+            // 'num'              => 'required|unique:commercial_registers',
+            // 'volume'           => 'required',
+            // 'case_file'        => 'required',
+            // 'start_date'       => 'required'
         ];
     }
 
@@ -53,14 +53,14 @@ class TaxpayersCreateFormRequest extends FormRequest
             'economic_sector'  => 'sector económico',
             'permanent_status' => 'estado de permanencia',
             'address' => 'dirección',
-            'economic_activities' => 'actividad económica',
-            'representation' => 'representante',
+            // 'economic_activities' => 'actividad económica',
+            // 'representation' => 'representante',
             'taxpayer_type' => 'tipo de contribuyente',
             // Commercial register
-            'num'              => 'número del registro comercial',
-            'volume'           => 'tomo del registro comercial',
-            'case_file'        => 'expediente',
-            'start_date'       => 'fecha inicio de las actividades'
+            // 'num'              => 'número del registro comercial',
+            // 'volume'           => 'tomo del registro comercial',
+            // 'case_file'        => 'expediente',
+            // 'start_date'       => 'fecha inicio de las actividades'
         ];
     }
 
@@ -76,15 +76,15 @@ class TaxpayersCreateFormRequest extends FormRequest
             'phone.digits'     => 'El :attribute debe ser de 9 dígitos',
             'permanent_status.required' => 'Seleccione el :attribute.',
             'address.required' => 'Ingrese la :attribute del contribuyente',
-            'economic_activities.required' => 'Asigne al menos una :attribute',
-            'representation.required' => 'Seleccione un :attribute',
+            // 'economic_activities.required' => 'Asigne al menos una :attribute',
+            // 'representation.required' => 'Seleccione un :attribute',
             'taxpayer_type' => 'Seleccione un :attribute',
             // Commercial Register
-            'num.required'              => 'Ingrese el :attribute del contribuyente',
-            'num.unique'                => 'Este :attribute se encuentra registrado',
-            'volume.required'           => 'Ingrese el :attribute del contribuyente',
-            'case_file.required'        => 'Ingrese el :attribute del contribuyente',
-            'start_date.required'       => 'Ingrese :attribute del contribuyente'
+            // 'num.required'              => 'Ingrese el :attribute del contribuyente',
+            // 'num.unique'                => 'Este :attribute se encuentra registrado',
+            // 'volume.required'           => 'Ingrese el :attribute del contribuyente',
+            // 'case_file.required'        => 'Ingrese el :attribute del contribuyente',
+            // 'start_date.required'       => 'Ingrese :attribute del contribuyente'
         ];
     }
 }

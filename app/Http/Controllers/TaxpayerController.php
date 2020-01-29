@@ -8,6 +8,7 @@ use App\EconomicSector;
 use App\TaxpayerType;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
 use App\Representation;
+use App\State;
 use App\Taxpayer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -47,8 +48,7 @@ class TaxpayerController extends Controller
         return view('modules.taxpayers.register')
             ->with('types', TaxpayerType::get())
             ->with('sectors', EconomicSector::get())
-            ->with('representations', Representation::get())
-            ->with('economicActivities', EconomicActivity::get())
+            ->with('states', State::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -60,13 +60,14 @@ class TaxpayerController extends Controller
      */
     public function store(TaxpayersCreateFormRequest $request)
     {
-        $commercialRegister = new CommercialRegister([
-            'num' => $request->input('num'),
-            'volume' => $request->input('volume'),
-            'case_file' => $request->input('case_file'),
-            'start_date' => $request->input('start_date'),
-        ]);
-        $commercialRegister->save();
+        // dd($request->input());
+        // $commercialRegister = new CommercialRegister([
+        //     'num' => $request->input('num'),
+        //     'volume' => $request->input('volume'),
+        //     'case_file' => $request->input('case_file'),
+        //     'start_date' => $request->input('start_date'),
+        // ]);
+        // $commercialRegister->save();
 
         $taxpayer = new Taxpayer([
             'rif' => $request->input('rif'),
@@ -80,8 +81,7 @@ class TaxpayerController extends Controller
             'capital' => $request->input('capital'),
             'taxpayer_type_id' => $request->input('taxpayer_type'),
             'economic_sector_id' => $request->input('economic_sector'),
-            'commercial_register_id' => $commercialRegister->id,
-            'representation_id' => $request->input('representation')
+            'municipality_id' => $request->input('municipality')
         ]);
         $taxpayer->save();
 

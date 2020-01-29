@@ -26,6 +26,8 @@ class CreateTaxpayersTable extends Migration
             $table->string('email')->nullable();
             $table->unsignedBigInteger('taxpayer_type_id');
             $table->unsignedBigInteger('economic_sector_id');
+            $table->unsignedBigInteger('municipality_id');
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
             $table->foreign('taxpayer_type_id')->references('id')->on('taxpayer_types');
             $table->foreign('economic_sector_id')->references('id')->on('economic_sectors');
             $table->timestamps();

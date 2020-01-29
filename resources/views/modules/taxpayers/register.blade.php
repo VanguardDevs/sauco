@@ -100,6 +100,36 @@
                         </div>
                         </div>
                     </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label"> Estado <span class="text-danger">*</span></label>
+
+                        {!!
+                            Form::select('state', $states, null, [
+                            'class'=>'col-md-12 form-control select2',
+                            'placeholder' => ' SELECCIONE ',
+                            'id' => 'states'
+                            ])
+                        !!}
+
+                        @error('state')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label"> Municipio <span class="text-danger">*</span></label>
+
+                        {!!
+                            Form::select('municipality', [], null, [
+                            'class'=>'col-md-12 form-control select2',
+                            'placeholder' => ' SELECCIONE ',
+                            'id' => 'municipalities'
+                            ])
+                        !!}
+
+                        @error('municipality')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="form-group col-md-4">
                         <label class="control-label"> Dirección <span class="text-danger">*</span></label>
 
@@ -151,24 +181,6 @@
                         @enderror
                     </div>
                     <div class="col-md-2"></div>
-                    <div class="col-lg-6">
-                        <label> Representante <span class="text-danger">*</span></label>
-
-                        <select name="representation" class="form-control select2" id="economicSector">
-                            @foreach ($representations as $representation)
-                            @if(old('representation_id') == $representation->id OR @$taxpayer->representation->representation_id == $representation->id) selected @endif
-                            <option value="{{ $representation->id }}" >
-                                {{ $representation->first_name }}
-                            </option>
-                            @endforeach
-                        </select>
-
-                        @error('representation')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        </div>
                     <div class="form-group col-md-3">
                         <label class="control-label">Teléfono</label>
                         <div class="input-group">
@@ -226,30 +238,30 @@
                     </div>
                     </div>
                     <div class="kt-separator kt-separator--border-solid kt-separator--portlet-fit kt-separator--space-lg"></div>
-                    <div class="row">
-                    <div class="form-group col-md-12">
-                        <div class="form-group col-lg-12">
-                        <div class="kt-heading kt-heading--md">
-                            Actividades económicas
-                        </div>
-                        </div>
-                        <select name="economic_activities[]" class="form-control select2" multiple="multiple" id="economicActivities">
-                        @foreach ($economicActivities as $activity)
-                        @if(old('economic_activity_id') == $activity->id OR @$taxpayer->economicActivities->economic_activity_id == $activity->id) selected @endif
-                            <option value="{{ $activity->id }}" >
-                            {{ $activity->code."   |   ".$activity->name }}
-                            </option>
-                        @endforeach
-                        </select>
+                    {{-- <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="form-group col-lg-12">
+                            <div class="kt-heading kt-heading--md">
+                                Actividades económicas
+                            </div>
+                            </div>
+                            <select name="economic_activities[]" class="form-control select2" multiple="multiple" id="economicActivities">
+                            @foreach ($economicActivities as $activity)
+                            @if(old('economic_activity_id') == $activity->id OR @$taxpayer->economicActivities->economic_activity_id == $activity->id) selected @endif
+                                <option value="{{ $activity->id }}" >
+                                {{ $activity->code."   |   ".$activity->name }}
+                                </option>
+                            @endforeach
+                            </select>
 
-                        @error('economic_activities')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    </div>
-                    <div class="kt-separator kt-separator--border-solid kt-separator--portlet-fit kt-separator--space-lg"></div>
-                    <div class="row">
-                    <div class="form-group col-lg-12">
+                            @error('economic_activities')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div> --}}
+                    {{-- <div class="kt-separator kt-separator--border-solid kt-separator--portlet-fit kt-separator--space-lg"></div>
+                    <div class="row"> --}}
+                    {{-- <div class="form-group col-lg-12">
                         <div class="kt-heading kt-heading--md">
                         Registro comercial
                         </div>
@@ -266,196 +278,50 @@
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Tomo <span class="text-danger">*</span></label>
-                        {!! Form::text("volume", old('volume', @$row->volume), [
-                        "Placeholder" => "Tomo del registro comercial",
-                        "class" => "form-control"
-                        ]) !!}
-                        @error('volume')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Expediente <span class="text-danger">*</span></label>
-                        {!! Form::text(
-                        "case_file",
-                        old('case_file',
-                        @$row->case_file
-                        ), [
-                        "Placeholder" => "Expediente",
-                        "class" => "form-control",
-                        "onkeyup" => "upperCase(this);"
-                        ]) !!}
-
-                        @error('case_file')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label">Fecha de inicio de actividades <span class="text-danger">*</span></label>
-                        {!! Form::text(
-                        "start_date",
-                        old('start_date', @$row->start_date),
-                        [
-                        "class" => "form-control date-input-mask",
-                        "placeholder" => "DD/MM/AAAA"
-                        ])
-                        !!}
-
-                        <span class="form-text text-muted">Formato de fecha:
-                        <code>DD/MM/AAAA</code>
-                        </span>
-                        @error('start_date')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    </div>
-
-                    <div class="kt-separator kt-separator--border-solid kt-separator--portlet-fit kt-separator--space-lg"></div>
-                    {{-- <div class="row">
-                    <div class="form-group col-lg-12">
-                        <div class="kt-heading kt-heading--md">
-                        Datos generales del inmueble
+                        <div class="form-group col-md-3">
+                            <label class="control-label"> Tomo <span class="text-danger">*</span></label>
+                            {!! Form::text("volume", old('volume', @$row->volume), [
+                            "Placeholder" => "Tomo del registro comercial",
+                            "class" => "form-control"
+                            ]) !!}
+                            @error('volume')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Parroquia <span class="text-danger">*</span></label>
+                        <div class="form-group col-md-3">
+                            <label class="control-label"> Expediente <span class="text-danger">*</span></label>
+                            {!! Form::text(
+                            "case_file",
+                            old('case_file',
+                            @$row->case_file
+                            ), [
+                            "Placeholder" => "Expediente",
+                            "class" => "form-control",
+                            "onkeyup" => "upperCase(this);"
+                            ]) !!}
 
-                        {!!
-                        Form::select('parish', $parishes, null, [
-                            'class'=>'col-md-12 form-control select2',
-                            'placeholder' => ' SELECCIONE ',
-                            'id' => 'parishes'
-                        ])
-                        !!}
+                            @error('case_file')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Fecha de inicio de actividades <span class="text-danger">*</span></label>
+                            {!! Form::text(
+                            "start_date",
+                            old('start_date', @$row->start_date),
+                            [
+                            "class" => "form-control date-input-mask",
+                            "placeholder" => "DD/MM/AAAA"
+                            ])
+                            !!}
 
-                        @error('parish')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Comunidad <span class="text-danger">*</span></label>
-
-                        {!!
-                        Form::select('community', [], null, [
-                            'class'=>'col-md-12 form-control select2',
-                            'placeholder' => ' SELECCIONE ',
-                            'id' => 'communities'
-                        ])
-                        !!}
-
-                        @error('community')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-md-6"></div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label"> Calle <span class="text-danger">*</span></label>
-                        {!! Form::text("street", old('street', @$row->street),
-                        [
-                        "Placeholder" => "Calle/Avenida Ejemplo",
-                        "class" => "form-control",
-                        "onkeyup" => "upperCase(this);"
-                        ]) !!}
-                        @error('street')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Tipo de edificio <span class="text-danger">*</span></label>
-
-                        {!!
-                        Form::select('building_type', [
-                            'RESIDENCIAL' => 'RESIDENCIAL',
-                            'COMERCIAL' => 'COMERCIAL'
-                            ], null, [
-                            'class'=>'col-md-12 form-control select2',
-                            'placeholder' => ' SELECCIONE ',
-                        ])
-                        !!}
-
-                        @error('building_type')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label col-md-12"> Estado de propiedad <span class="text-danger">*</span></label>
-
-                        {!!
-                        Form::select('owner_status', [
-                            'PROPIETARIO' => 'PROPIETARIO',
-                            'ALQUILADO' => 'ALQUILADO'
-                            ], null, [
-                            'class'=>'col-md-12 form-control select2',
-                            'placeholder' => ' SELECCIONE ',
-                            'id' => 'owner_status'
-                        ])
-                        !!}
-
-                        @error('owner_status')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3" style="display:none;" id="contract">
-                        <label class="control-label"> Número de contrato <span class="text-danger">*</span></label>
-                        {!! Form::text("contract", old('contract', @$row->contract),
-                        [
-                        "Placeholder" => "No. de contrato",
-                        "class" => "form-control",
-                        "onkeyup" => "upperCase(this);"
-                        ]) !!}
-                        @error('contract')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3" style="display:none;" id="document">
-                        <label class="control-label"> Número de documento de propiedad <span class="text-danger">*</span></label>
-                        {!! Form::text("document", old('document', @$row->document),
-                        [
-                        "Placeholder" => "No. catastral del inmueble",
-                        "class" => "form-control",
-                        "onkeyup" => "upperCase(this);",
-                        ]) !!}
-                        @error('document')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Número catastral <span class="text-danger">*</span></label>
-                        {!! Form::text("cadastre_num", old('cadastre_num', @$row->cadastre_num),
-                        [
-                        "Placeholder" => "No. catastral del inmueble",
-                        "class" => "form-control",
-                        "onkeyup" => "upperCase(this);"
-                        ]) !!}
-                        @error('cadastre_num')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Piso <span class="text-danger">*</span></label>
-                        {!! Form::text("floor", old('floor', @$row->floor),
-                        [
-                        "Placeholder" => "Piso X",
-                        "class" => "form-control",
-                        "onkeyup" => "upperCase(this);"
-                        ]) !!}
-                        @error('floor')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Número o nombre del edificio<span class="text-danger">*</span></label>
-                        {!! Form::text("local", old('local', @$row->local), [
-                        "Placeholder" => "Número del edificio",
-                        "class" => "form-control",
-                        "onkeyup" => "upperCase(this);"
-                        ]) !!}
-                        @error('local')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                            <span class="form-text text-muted">Formato de fecha:
+                            <code>DD/MM/AAAA</code>
+                            </span>
+                            @error('start_date')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div> --}}
                 </div>
                 <!-- /.card-body -->

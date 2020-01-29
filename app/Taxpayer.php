@@ -28,7 +28,7 @@ class Taxpayer extends Model
 
     public function representation()
     {
-        return $this->hasOne(Taxpayer::class);
+        return $this->hasOne(Representation::class);
     }
 
     public function economicSector()
@@ -43,7 +43,7 @@ class Taxpayer extends Model
 
     public function taxpayerType()
     {
-        return $this->belongsTo(CommercialRegister::class);
+        return $this->belongsTo(TaxpayerType::class);
     }
 
     public function economicActivities()
@@ -64,5 +64,10 @@ class Taxpayer extends Model
     public function municipality()
     {
         return $this->belongsTo(Municipality::class);
+    }
+
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
     }
 }

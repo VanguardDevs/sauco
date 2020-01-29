@@ -107,4 +107,5 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes parishes ----------*/
     Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
+    Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
 });

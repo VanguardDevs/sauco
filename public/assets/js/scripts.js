@@ -13,6 +13,7 @@ $(function () {
     $('#parishes').on('change', onSelectParishes);
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
+    $('#states').on('change', onSelectStates);
 });
 
 function onSelectTaxpayerType() {
@@ -44,6 +45,21 @@ function onSelectParishes() {
       }
 
       $('#communities').html(html_select);
+    });
+}
+
+function onSelectStates() {
+    let state_id = $(this).val();
+
+    let html_select = '<option value=""> SELECCIONE </option>';
+
+    $.get('/state/'+state_id+'/municipalities/', data => {
+
+      for (let i = 0; i < data.length; i++) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+      }
+
+      $('#municipalities').html(html_select);
     });
 }
 

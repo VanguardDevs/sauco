@@ -118,74 +118,98 @@
     <!--Begin:: App Content-->
     <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
         <div class="row">
+            @if ($row->taxpayerType->description == 'JURÍDICO')
             <div class="col-xl-6">
-            <div class="kt-portlet kt-portlet--height-fluid">
-                <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">Actividades económicas</h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    {{-- <button type="button" class="btn btn-label-brand btn-bold btn-sm" data-toggle="modal" data-target="#kt_modal_1">Agregar</button> --}}
-                </div>
-                </div>
-                <div class="kt-portlet__body">
-                <div class="kt-widget4">
-
-                    @if ($row->economicActivities->count())
-                    @foreach ($row->economicActivities as $activity)
-                        <div class="kt-widget4__item">
-                        <div class="kt-widget4__info">
-                            <p class="kt-widget4__title">{{ $activity->code }}</p>
-                            <span class="kt-widget4__sub">{{ $activity->name }}</span>
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Actividades económicas</h3>
                         </div>
-                        </div>
-                    @endforeach
-                    @else
-                    <div class="kt-widget4__item">
-                        <div class="kt-widget4__info">
-                        <span class="kt-widget4__sub">
-                            Este contribuyente no tiene actividades económicas asignadas
-                        </span>
+                        <div class="kt-portlet__head-toolbar">
+                            @if($row->economicActivities->count())
+                            <a href="{{ url("taxpayer/".$row->id."/economic-activity/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            @endif
                         </div>
                     </div>
-                    @endif
-                </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="kt-portlet kt-portlet--height-fluid">
-                <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">Inmueble</h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <a href="{{ url("taxpayer/".$row->id."/property/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
-                </div>
-                </div>
-                <div class="kt-portlet__body">
-                <div class="kt-widget-4">
-                    @if ($row->properties->count())
-                    @foreach ($row->properties as $property)
-                        <div class="kt-widget4__item">
-                        <div class="kt-widget4__info">
-                            <p class="kt-widget4__title">{{ $property->cadastre_num }}</p>
-                            <span class="kt-widget4__sub">{{ $property->name }}</span>
-                        </div>
-                        </div>
-                    @endforeach
-                    @else
-                    <div class="kt-widget4__item">
-                        <div class="kt-widget4__info">
-                        <span class="kt-widget4__sub">
-                            Este contribuyente no tiene inmuebles registrados
-                        </span>
+                    <div class="kt-portlet__body">
+                        <div class="kt-widget4">
+                            @if ($row->economicActivities->count())
+                            @foreach ($row->economicActivities as $activity)
+                                <div class="kt-widget4__item">
+                                    <div class="kt-widget4__info">
+                                        <p class="kt-widget4__title">{{ $activity->code }}</p>
+                                        <span class="kt-widget4__sub">{{ $activity->name }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                            @else
+                            <div class="kt-widget4__item">
+                                <div class="kt-widget4__info">
+                                <span class="kt-widget4__sub">
+                                    Este contribuyente no tiene actividades económicas asignadas
+                                </span>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
-                    @endif
-                </div>
                 </div>
             </div>
+            <div class="col-xl-6">
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Representante</h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            @if(is_null($row->representation))
+                            <a href="{{ url("taxpayer/".$row->id."/representation/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="kt-widget-4">
+                            @if(is_null($row->representation))
+                            Este contribuyente no tiene representante
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <div class="col-xl-6">
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Inmuebles</h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <a href="{{ url("taxpayer/".$row->id."/property/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="kt-widget-4">
+                            @if ($row->properties->count())
+                            @foreach ($row->properties as $property)
+                                <div class="kt-widget4__item">
+                                <div class="kt-widget4__info">
+                                    <p class="kt-widget4__title">{{ $property->cadastre_num }}</p>
+                                    <span class="kt-widget4__sub">{{ $property->name }}</span>
+                                </div>
+                                </div>
+                            @endforeach
+                            @else
+                            <div class="kt-widget4__item">
+                                <div class="kt-widget4__info">
+                                <span class="kt-widget4__sub">
+                                    Este contribuyente no tiene inmuebles registrados
+                                </span>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -193,11 +217,21 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Representante</h3>
+                            <h3 class="kt-portlet__head-title">Registro comercial</h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            @if(is_null($row->commercialRegister))
+                            <a href="{{ url("taxpayer/".$row->id."/commercial-register/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            @endif
                         </div>
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
+                            @if(is_null($row->commercialRegister))
+                            Este contribuyente no tiene registro comercial
+                            @else
+                            <button type="button" class="btn btn-label-brand btn-bold btn-sm">Añadir</button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -206,11 +240,31 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Registro comercial</h3>
+                            <h3 class="kt-portlet__head-title">Vehículos</h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <a href="{{ url("taxpayer/".$row->id."/vehicle/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
                         </div>
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
+                            @if ($row->vehicles->count())
+                            @foreach ($row->vehicles as $vehicle)
+                                <div class="kt-widget4__item">
+                                <div class="kt-widget4__info">
+                                    <p class="kt-widget4__title">{{ $vehicle->plate }}</p>
+                                </div>
+                                </div>
+                            @endforeach
+                            @else
+                            <div class="kt-widget4__item">
+                                <div class="kt-widget4__info">
+                                <span class="kt-widget4__sub">
+                                    Este contribuyente no tiene vehículo registrados
+                                </span>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

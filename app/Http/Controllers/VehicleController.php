@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\State;
+use App\Vehicle;
 use Illuminate\Http\Request;
 
-class StateController extends Controller
+class VehicleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,6 @@ class StateController extends Controller
     public function index()
     {
         //
-    }
-
-    public function getMunicipalities($id)
-    {
-        $query = State::find($id)->municipalities()->orderBy('name');
-
-        return $query->get();
     }
 
     /**
@@ -48,10 +41,10 @@ class StateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\State  $state
+     * @param  \App\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function show(State $state)
+    public function show(Vehicle $vehicle)
     {
         //
     }
@@ -59,10 +52,10 @@ class StateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\State  $state
+     * @param  \App\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function edit(State $state)
+    public function edit(Vehicle $vehicle)
     {
         //
     }
@@ -71,10 +64,10 @@ class StateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\State  $state
+     * @param  \App\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, State $state)
+    public function update(Request $request, Vehicle $vehicle)
     {
         //
     }
@@ -82,10 +75,10 @@ class StateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\State  $state
+     * @param  \App\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(State $state)
+    public function destroy(Vehicle $vehicle)
     {
         //
     }
