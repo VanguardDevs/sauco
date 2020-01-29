@@ -170,6 +170,19 @@
                         <div class="kt-widget-4">
                             @if(is_null($row->representation))
                             Este contribuyente no tiene representante
+                            @else
+                            <table class="table table-bordered table-striped datatables">
+                                <tr>
+                                    <td>Cédula</td>
+                                    <td>Nombre</td>
+                                    <td>Apellido</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ $row->representation->document }}</td>
+                                    <td>{{ $row->representation->first_name }}</td>
+                                    <td>{{ $row->representation->surname }}</td>
+                                </tr>
+                            </table>
                             @endif
                         </div>
                     </div>

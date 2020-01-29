@@ -6,8 +6,8 @@ use Illuminate\Database\Seeder;
 class CitizenshipsTableSeeder extends Seeder
 {
     private $citizenships = Array(
-        'VENEZOLANO',
-        'EXTRANJERO'
+        'VENEZOLANO' => 'V-',
+        'EXTRANJERO' => 'E-'
     );
 
     /**
@@ -19,7 +19,8 @@ class CitizenshipsTableSeeder extends Seeder
     {
         foreach ($this->citizenships as $key => $value) {
             Citizenship::create([
-                'type' => $value
+                'description' => $key,
+                'correlative' => $value
             ]);
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Citizenship;
+use App\Taxpayer;
 use App\Http\Requests\Representations\RepresentationsCreateFormRequest;
 use App\Representation;
 use Illuminate\Http\Request;
@@ -37,10 +38,13 @@ class RepresentationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
+        $taxpayer = Taxpayer::find($id);
+
         return view('modules.representations.register')
-            ->with('citizenships', Citizenship::get())
+            ->with('citizenships', Citizenship::pluck('description', 'id'))
+            ->with('taxpayer', $taxpayer)
             ->with('typeForm', 'create');
     }
 
@@ -50,10 +54,13 @@ class RepresentationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RepresentationsCreateFormRequest $request)
+    public function store($id, RepresentationsCreateFormRequest $request)
     {
+        $document = $request->input('document');
+        $correlative = Citizenship::find($request->input('citizenship'))->correlative;
+
         $create = new Representation([
-            'document' => $request->input('document'),
+            'document' => $correlative.$document,
             'first_name' => $request->input('first_name'),
             'second_name' => $request->input('second_name'),
             'surname' => $request->input('surname'),
@@ -61,11 +68,12 @@ class RepresentationController extends Controller
             'address' => $request->input('address'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
-            'citizenship_id' => $request->input('citizenship')
+            'citizenship_id' => $request->input('citizenship'),
+            'taxpayer_id' => $id
         ]);
         $create->save();
 
-        return redirect('representations')
+        return redirect('taxpayers/'.$id)
             ->withSuccess('¡Representante registrado!');
     }
 

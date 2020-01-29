@@ -25,11 +25,10 @@
                         </h3>
                     </div>
                 </div>
-                <!--begin::Form-->
                 @if ($typeForm == 'create')
-                    {!! Form::open(['route' => "representations".'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::open(['route' => ["add-representation", $taxpayer->id], 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
-                    {!! Form::model($row, ['route' => ["representations".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::model($row, ['route' => ["add-representation".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
@@ -74,14 +73,13 @@
                             <div class="col-lg-4">
                                 <label>Nacionalidad <span class="text-danger">*</span></label>
 
-                                <select name="citizenship" class="form-control select2">
-                                    <option value="">===== SELECCIONE =====</option>
-                                    @foreach ($citizenships as $name)
-                                        <option value="{{ $name->id }}" @if(old('citizenship') == $name->id OR @$row->name->id == $name->id) selected @endif >
-                                        {{ $name->type }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                {!!
+                                    Form::select('citizenship', $citizenships, null, [
+                                    'class'=>'col-md-12 form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    'id' => 'citizenships'
+                                    ])
+                                !!}
 
                                 @error('citizenship')
                                 <div class="text text-danger">{{ $message }}</div>

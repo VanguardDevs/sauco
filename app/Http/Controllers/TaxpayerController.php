@@ -60,10 +60,10 @@ class TaxpayerController extends Controller
     public function store(TaxpayersCreateFormRequest $request)
     {
         $rif = $request->input('rif');
-        $type = TaxpayerType::find($request->input('taxpayer_type'));
+        $correlative = TaxpayerType::find($request->input('taxpayer_type'))->correlative;
 
         $taxpayer = new Taxpayer([
-            'rif' => $type->correlative.$rif,
+            'rif' => $correlative.$rif,
             'name' => $request->input('name'),
             'denomination' => $request->input('denomination'),
             'address' => $request->input('address'),

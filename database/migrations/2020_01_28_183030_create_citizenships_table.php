@@ -15,7 +15,8 @@ class CreateCitizenshipsTable extends Migration
     {
         Schema::create('citizenships', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('type');
+            $table->string('description');
+            $table->string('correlative');
             $table->timestamps();
         });
     }

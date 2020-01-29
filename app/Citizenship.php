@@ -8,7 +8,10 @@ class Citizenship extends Model
 {
     protected $table = 'citizenships';
 
-    protected $fillable = ['type'];
+    protected $fillable = [
+        'description',
+        'correlative'
+    ];
 
     public function representations()
     {
