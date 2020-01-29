@@ -230,7 +230,19 @@ Breadcrumbs::for('properties', function ($trail) {
 });
 
 /*------------- Properties > create -------------*/
-Breadcrumbs::for('settings/properties/create', function ($trail) {
+Breadcrumbs::for('properties/create', function ($trail) {
     $trail->parent('taxpayers');
-    $trail->push('Crear inmueble', url('settings/taxpayer/{id}/property/create'));
+    $trail->push('Crear inmueble', url('taxpayer/{id}/property/create'));
+});
+
+/*------------- Commercial registers -------------*/
+Breadcrumbs::for('commercial-registers', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Registros comerciales', url('commercial-registers'));
+});
+
+/*------------- Commercial registers > create -------------*/
+Breadcrumbs::for('commercial-registers/create', function ($trail) {
+    $trail->parent('taxpayers');
+    $trail->push('Crear inmueble', url('taxpayer/{id}/commercial-registers/create'));
 });

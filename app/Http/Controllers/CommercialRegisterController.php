@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\CommercialRegister;
+use App\Http\Requests\CommercialRegisters\CommercialRegistersCreateFormRequest;
+use App\Taxpayer;
 use Illuminate\Http\Request;
 
 class CommercialRegisterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +29,13 @@ class CommercialRegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $taxpayer = Taxpayer::find($id)->first();
+
+        return view('modules.commercial-registers.register')
+            ->with('taxpayer', $taxpayer)
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -33,9 +44,18 @@ class CommercialRegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id, CommercialRegistersCreateFormRequest $request)
     {
-        //
+        $commercialRegister = new CommercialRegister([
+            'num' => $request->input('num'),
+            'volume' => $request->input('volume'),
+            'case_file' => $request->input('case_file'),
+            'start_date' => $request->input('start_date'),
+            'taxpayer_id' => $id
+        ]);
+        $commercialRegister->save();
+
+        return redirect('taxpayers/'.$id)->withSuccess('¡Registro comercial añadido!');
     }
 
     /**

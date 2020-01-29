@@ -230,7 +230,20 @@
                             @if(is_null($row->commercialRegister))
                             Este contribuyente no tiene registro comercial
                             @else
-                            <button type="button" class="btn btn-label-brand btn-bold btn-sm">Añadir</button>
+                            <table class="table table-bordered table-striped datatables">
+                                <tr>
+                                    <td>Número</td>
+                                    <td>Tomo</td>
+                                    <td>Expediente</td>
+                                    <td>Fecha de inicio</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ $row->commercialRegister->num }}</td>
+                                    <td>{{ $row->commercialRegister->volume }}</td>
+                                    <td>{{ $row->commercialRegister->case_file }}</td>
+                                    <td>{{ $row->commercialRegister->start_date }}</td>
+                                </tr>
+                            </table>
                             @endif
                         </div>
                     </div>

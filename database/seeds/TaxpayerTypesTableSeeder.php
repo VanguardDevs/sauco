@@ -7,7 +7,9 @@ class TaxpayerTypesTableSeeder extends Seeder
 {
     private $types = Array(
         'JURÍDICO', // IF CHANGE, MODIFY SCRIPTS.JS
-        'NATURAL'
+        'NATURAL',
+        'EXTRANJERO',
+        'GUBERNAMENTAL'
     );
 
     /**
