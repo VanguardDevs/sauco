@@ -104,9 +104,9 @@ Breadcrumbs::for('settings/economic-sectors/create', function ($trail) {
 });
 
 /*------------- Sectores económicos > update -------------*/
-Breadcrumbs::for('settings/economic-sectors/update', function ($trail) {
+Breadcrumbs::for('settings/economic-sectors/edit', function ($trail) {
     $trail->parent('settings/economic-sectors');
-    $trail->push('Editar sector económico', url('settings/economic-sectors/update'));
+    $trail->push('Editar sector económico', url('settings/economic-sectors/edit'));
 });
 
 /*------------- Taxpayers -------------*/

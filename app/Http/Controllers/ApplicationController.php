@@ -7,7 +7,6 @@ use App\ApplicationState;
 use App\Http\Requests\Applications\ApplicationsCreateFormRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
@@ -62,14 +61,11 @@ class ApplicationController extends Controller
     public function addApplicationTaxpayer(ApplicationsCreateFormRequest $request)
     {
         $state = ApplicationState::whereDescription('PENDIENTE')->first();
-        $user = Auth::user();
 
-        // Remember to use Laravel has Many through for Properties, Vehicles, Etc
         $application = new Application([
             'description' => $request->input('description'),
             'application_type_id' => $request->input('type'),
             'application_state_id' => $state->id,
-            'user_id' => $user->id,
             'taxpayer_id' => $request->input('taxpayer')
         ]);
         $application->save();

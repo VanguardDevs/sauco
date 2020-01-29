@@ -7,10 +7,6 @@ var KTSelect2 = function() {
             placeholder: " SELECCIONE "
         });
 
-        $('#municipalities, #kt_select2_1_validate').select2({
-            placeholder: "======== Seleccione ========"
-        });
-
         // nested
         $('#kt_select2_2, #kt_select2_2_validate').select2({
             placeholder: "Select a state"

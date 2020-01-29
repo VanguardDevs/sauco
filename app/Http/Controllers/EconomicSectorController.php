@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EconomicSector;
 use App\Http\Requests\EconomicSectors\EconomicSectorsCreateFormRequest;
+use App\Http\Requests\EconomicSectors\EconomicSectorsUpdateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -78,7 +79,9 @@ class EconomicSectorController extends Controller
      */
     public function edit(EconomicSector $economicSector)
     {
-        //
+        return view('modules.economic-sectors.register')
+            ->with('row', $economicSector)
+            ->with('typeForm', 'update');
     }
 
     /**
@@ -88,9 +91,14 @@ class EconomicSectorController extends Controller
      * @param  \App\EconomicSector  $economicSector
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EconomicSector $economicSector)
+    public function update(EconomicSectorsUpdateFormRequest $request, EconomicSector $economicSector)
     {
-        //
+        $row = EconomicSector::find($economicSector->id)->first();
+        $row->description = $request->description;
+        $row->save();
+
+        return redirect('settings/economic-sectors')
+            ->withSuccess('¡Sector económico actualizado!');
     }
 
     /**

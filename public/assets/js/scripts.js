@@ -229,10 +229,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id} title='Ver información'>
+                        <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id} title='Ver información'>
                             <i class='btn-sm btn-info flaticon2-file '></i>
                         </a>
-                        <a class="mr-2" href=${baseURL}/inspection/economic-sectors/${oData.id}/edit title='Editar'>
+                        <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning flaticon-edit'></i>
                         </a>
                     </div>`
@@ -318,7 +318,6 @@ $(document).ready(function() {
         "columns": [
             { data: 'rif'},
             { data: 'name'},
-            { data: 'commercial_register.num'},
             { data: 'denomination'},
             {
                 data: "id",

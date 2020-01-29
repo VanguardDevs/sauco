@@ -16,10 +16,10 @@ class CreateLicensesTable extends Migration
         Schema::create('licenses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('num');
-            $table->unsignedBigInteger('property_id');
+            $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('license_type_id');
             $table->unsignedBigInteger('license_state_id');
-            $table->foreign('property_id')->references('id')->on('properties');
+            $table->foreign('taxpayer_id')->references('id')->on('properties');
             $table->foreign('license_type_id')->references('id')->on('license_types');
             $table->foreign('license_state_id')->references('id')->on('license_states');
             $table->timestamps();
