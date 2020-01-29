@@ -59,7 +59,7 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, PropertiesCreateFormRequest $request)
+    public function store($id, Request $request)
     {
         $taxpayer = Taxpayer::find($id);
 
@@ -72,7 +72,6 @@ class PropertyController extends Controller
             'document' => $request->input('document'),
             'ownership_status_id' => $request->input('ownership_status'),
             'taxpayer_id' => $taxpayer->id,
-            'community_id' => $request->input('community'),
             'property_type_id' => $request->input('property_type')
         ]);
         $property->save();

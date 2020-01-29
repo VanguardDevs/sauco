@@ -33,209 +33,260 @@
                 @endif
                 <div class="card-body">
                     <div class="row">
-                    <div class="form-group col-lg-12">
-                        <div class="kt-heading kt-heading--md">
-                        Datos generales del contribuyente:
+                        <div class="form-group col-lg-12">
+                            <div class="kt-heading kt-heading--md">
+                            Datos generales del contribuyente:
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label class="control-label"> Tipo <span class="text-danger">*</span></label>
+                        <div class="form-group col-md-2">
+                            <label class="control-label"> Tipo <span class="text-danger">*</span></label>
 
-                        <select name="taxpayer_type" class="form-control select2" id="taxpayer_type">
-                            @foreach ($types as $taxpayer_type)
-                                @if(old('taxpayer_type_id') == $taxpayer_type->id OR @$taxpayer->taxpayerType->id == $taxpayer_type->id) selected @endif
-                                <option value="{{ $taxpayer_type->id }}" >
-                                    {{ $taxpayer_type->description }}
-                                </option>
-                            @endforeach
-                        </select>
+                            <select name="taxpayer_type" class="form-control select2" id="taxpayer_type">
+                                @foreach ($types as $taxpayer_type)
+                                    @if(old('taxpayer_type_id') == $taxpayer_type->id OR @$taxpayer->taxpayerType->id == $taxpayer_type->id) selected @endif
+                                    <option value="{{ $taxpayer_type->id }}" >
+                                        {{ $taxpayer_type->description }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-                        @error('taxpayer_type')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-md-10">
-                        <div class="row">
-                        <div class="form-group col-md-4">
-                            <label class="control-label">Nombre (Razón Social)<span class="text-danger">*</span></label>
-                            {!!
-                            Form::text("name", old('name', @$row->name), [
-                                "Placeholder" => "Nombre o Razón social del contribuyente",
-                                "class" => "form-control",
-                                "onkeyup" => "upperCase(this);"
-                            ])
-                            !!}
-
-                            @error('name')
+                            @error('taxpayer_type')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4" id="hide_form" style="display:none;">
-                            <label class="control-label">Denominación comercial (Firma personal)</label>
-                            {!!
-                            Form::text("trade_denomination", old('trade_denomination', @$row->denomination), [
-                                "class" => "form-control",
-                                "onkeyup" => "upperCase(this);"
-                            ])
-                            !!}
+                        <div class="col-md-10">
+                            <div class="row">
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Nombre (Razón Social)<span class="text-danger">*</span></label>
+                                {!!
+                                Form::text("name", old('name', @$row->name), [
+                                    "Placeholder" => "Nombre o Razón social del contribuyente",
+                                    "class" => "form-control",
+                                    "onkeyup" => "upperCase(this);"
+                                ])
+                                !!}
 
-                            @error('trade_denomination')
+                                @error('name')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-4" id="hide_form" style="display:none;">
+                                <label class="control-label">Denominación comercial (Firma personal)</label>
+                                {!!
+                                Form::text("trade_denomination", old('trade_denomination', @$row->denomination), [
+                                    "class" => "form-control",
+                                    "onkeyup" => "upperCase(this);"
+                                ])
+                                !!}
+
+                                @error('trade_denomination')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">RIF <span class="text-danger">*</span></label>
+
+                                {!!
+                                Form::text("rif", old('rif', @$row->rif), [
+                                    "class" => "form-control input-mask-rif",
+                                    "placeholder" => "RIF del contribuyente",
+                                    "id" => 'rif'
+                                ])
+                                !!}
+
+                                @error('rif')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label"> Sector Económico <span class="text-danger">*</span></label>
+
+                            <select name="economic_sector" class="form-control select2">
+                                <option value="">===== SELECCIONE =====</option>
+                                @foreach ($sectors as $sector)
+                                    <option value="{{ $sector->id }}" @if(old('economicSector') == $sector->id OR @$row->sector->id == $sector->id) selected @endif >
+                                    {{ $sector->description }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error('economic_sector')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label">RIF <span class="text-danger">*</span></label>
+                            <label class="control-label"> Estado de permanencia <span class="text-danger">*</span></label>
 
                             {!!
-                            Form::text("rif", old('rif', @$row->rif), [
-                                "class" => "form-control input-mask-rif",
-                                "placeholder" => "RIF del contribuyente",
-                                "id" => 'rif'
+                            Form::select('permanent_status', [
+                                'RESIDENTE' => 'RESIDENTE',
+                                'TRANSEÚNTE' => 'TRANSEÚNTE'
+                                ], null, [
+                                'class'=>'col-md-12 form-control select2',
+                                'placeholder' => ' SELECCIONE ',
                             ])
                             !!}
 
-                            @error('rif')
+                            @error('permanent_status')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Teléfono</label>
+                            <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
+                            {!!
+                                Form::text( "phone", old('phone', @$row->phone), [
+                                "class" => "form-control phone-input-mask",
+                                "placeholder" => "Teléfono del contribuyente"
+                                ])
+                            !!}
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Estado <span class="text-danger">*</span></label>
-
-                        {!!
-                            Form::select('state', $states, null, [
-                            'class'=>'col-md-12 form-control select2',
-                            'placeholder' => ' SELECCIONE ',
-                            'id' => 'states'
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Correo</label>
+                            <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
+                            {!! Form::text(
+                            "email",
+                            old('email', @$row->email),
+                            [
+                                "class" => "form-control email-input-mask",
+                                "placeholder" => "Correo del contribuyente"
                             ])
-                        !!}
-
-                        @error('state')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Municipio <span class="text-danger">*</span></label>
-
-                        {!!
-                            Form::select('municipality', [], null, [
-                            'class'=>'col-md-12 form-control select2',
-                            'placeholder' => ' SELECCIONE ',
-                            'id' => 'municipalities'
-                            ])
-                        !!}
-
-                        @error('municipality')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label class="control-label"> Dirección <span class="text-danger">*</span></label>
-
-                        {!!
-                        Form::textarea("address", old('address', @$row->address), [
-                            "Placeholder" => "Dirección del contribuyente",
-                            "class" => "form-control",
-                            "onkeyup" => "upperCase(this);",
-                            "rows" => 1,
-                            "cols" => 1
-                        ])
-                        !!}
-
-                        @error('address')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Sector Económico <span class="text-danger">*</span></label>
-
-                        <select name="economic_sector" class="form-control select2">
-                            <option value="">===== SELECCIONE =====</option>
-                            @foreach ($sectors as $sector)
-                                <option value="{{ $sector->id }}" @if(old('economicSector') == $sector->id OR @$row->sector->id == $sector->id) selected @endif >
-                                {{ $sector->description }}
-                                </option>
-                            @endforeach
-                        </select>
-
-                        @error('economic_sector')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label"> Estado de permanencia <span class="text-danger">*</span></label>
-
-                        {!!
-                        Form::select('permanent_status', [
-                            'RESIDENTE' => 'RESIDENTE',
-                            'TRANSEÚNTE' => 'TRANSEÚNTE'
-                            ], null, [
-                            'class'=>'col-md-12 form-control select2',
-                            'placeholder' => ' SELECCIONE ',
-                        ])
-                        !!}
-
-                        @error('permanent_status')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-md-2"></div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label">Teléfono</label>
-                        <div class="input-group">
-                        <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                        {!!
-                            Form::text( "phone", old('phone', @$row->phone), [
-                            "class" => "form-control phone-input-mask",
-                            "placeholder" => "Teléfono del contribuyente"
-                            ])
-                        !!}
+                            !!}
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label">Correo</label>
-                        <div class="input-group">
-                        <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                        {!! Form::text(
-                        "email",
-                        old('email', @$row->email),
-                        [
-                            "class" => "form-control email-input-mask",
-                            "placeholder" => "Correo del contribuyente"
-                        ])
-                        !!}
+
+                        <div class="form-group col-md-3">
+                            <label class="control-label"> Estado <span class="text-danger">*</span></label>
+
+                            {!!
+                                Form::select('state', $states, null, [
+                                'class'=>'col-md-12 form-control select2',
+                                'placeholder' => ' SELECCIONE ',
+                                'id' => 'states'
+                                ])
+                            !!}
+
+                            @error('state')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label"> Capital suscrito </label>
+                        <div class="form-group col-md-3">
+                            <label class="control-label"> Municipio <span class="text-danger">*</span></label>
 
-                        {!!
-                        Form::text("capital", old('capital', @$row->capital), [
-                            "Placeholder" => "",
-                            "class" => "form-control decimal-input-mask"
-                        ])
-                        !!}
+                            {!!
+                                Form::select('municipality', [], null, [
+                                'class'=>'col-md-12 form-control select2',
+                                'placeholder' => ' SELECCIONE ',
+                                'id' => 'municipalities'
+                                ])
+                            !!}
 
-                        @error('capital')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label"> Conformidad de uso </label>
+                            @error('municipality')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label"> Origen del contribuyente <span class="text-danger">*</span></label>
 
-                        {!!
-                        Form::text("compliance_use", old('compliance_use', @$row->compliance_use), [
-                            "Placeholder" => "",
-                            "class" => "form-control",
-                            "onkeyup" => "upperCase(this);"
-                        ])
-                        !!}
+                            {!!
+                            Form::textarea("locality", old('locality', @$row->locality), [
+                                "Placeholder" => "Ciudad o población",
+                                "class" => "form-control",
+                                "onkeyup" => "upperCase(this);",
+                                "rows" => 1,
+                                "cols" => 1
+                            ])
+                            !!}
 
-                        @error('compliance_use')
-                        <div class="text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                            @error('locality')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label"> Parroquia <span class="text-danger">*</span></label>
+
+                            {!!
+                                Form::select('parish', $parishes, null, [
+                                'class'=>'col-md-12 form-control select2',
+                                'placeholder' => ' SELECCIONE ',
+                                'id' => 'parishes'
+                                ])
+                            !!}
+
+                            @error('parish')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label"> Comunidad <span class="text-danger">*</span></label>
+
+                            {!!
+                                Form::select('community', [], null, [
+                                'class'=>'col-md-12 form-control select2',
+                                'placeholder' => ' SELECCIONE ',
+                                'id' => 'communities'
+                                ])
+                            !!}
+
+                            @error('community')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label"> Dirección o domicilio <span class="text-danger">*</span></label>
+
+                            {!!
+                            Form::textarea("fiscal_address", old('fiscal_address', @$row->fiscal_address), [
+                                "Placeholder" => "Domicilio",
+                                "class" => "form-control",
+                                "onkeyup" => "upperCase(this);",
+                                "rows" => 1,
+                                "cols" => 1
+                            ])
+                            !!}
+
+                            @error('fiscal_address')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Capital suscrito </label>
+
+                            {!!
+                            Form::text("capital", old('capital', @$row->capital), [
+                                "Placeholder" => "",
+                                "class" => "form-control decimal-input-mask"
+                            ])
+                            !!}
+
+                            @error('capital')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Conformidad de uso </label>
+
+                            {!!
+                            Form::text("compliance_use", old('compliance_use', @$row->compliance_use), [
+                                "Placeholder" => "",
+                                "class" => "form-control",
+                                "onkeyup" => "upperCase(this);"
+                            ])
+                            !!}
+
+                            @error('compliance_use')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <!-- /.card-body -->

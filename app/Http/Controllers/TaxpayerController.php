@@ -6,6 +6,7 @@ use App\EconomicActivity;
 use App\EconomicSector;
 use App\TaxpayerType;
 use App\State;
+use App\Parish;
 use App\Taxpayer;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
@@ -46,6 +47,7 @@ class TaxpayerController extends Controller
     {
         return view('modules.taxpayers.register')
             ->with('types', TaxpayerType::get())
+            ->with('parishes', Parish::pluck('name', 'id'))
             ->with('sectors', EconomicSector::get())
             ->with('states', State::pluck('name', 'id'))
             ->with('typeForm', 'create');
@@ -66,7 +68,8 @@ class TaxpayerController extends Controller
             'rif' => $correlative.$rif,
             'name' => $request->input('name'),
             'denomination' => $request->input('denomination'),
-            'address' => $request->input('address'),
+            'locality' => $request->input('locality'),
+            'fiscal_address' => $request->input('fiscal_address'),
             'permanent_status' => $request->input('permanent_status'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
@@ -74,7 +77,8 @@ class TaxpayerController extends Controller
             'capital' => $request->input('capital'),
             'taxpayer_type_id' => $request->input('taxpayer_type'),
             'economic_sector_id' => $request->input('economic_sector'),
-            'municipality_id' => $request->input('municipality')
+            'municipality_id' => $request->input('municipality'),
+            'community_id' => $request->input('community')
         ]);
         $taxpayer->save();
 

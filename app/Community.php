@@ -15,8 +15,8 @@ class Community extends Model
         return $this->belongsToMany(Parish::class);
     }
 
-    public function properties()
+    public function taxpayers()
     {
-        return $this->hasMany(Property::class);
+        return $this->hasMany(Taxpayer::class);
     }
 }

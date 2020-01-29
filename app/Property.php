@@ -20,7 +20,6 @@ class Property extends Model
         'document',
         'ownership_status_id',
         'taxpayer_id',
-        'community_id',
         'property_type_id'
     );
 
@@ -32,11 +31,6 @@ class Property extends Model
     public function ownershipStatus()
     {
         return $this->belongsTo(OwnershipStatus::class);
-    }
-
-    public function community()
-    {
-        return $this->belongsTo(Community::class);
     }
 
     public function propertyType()

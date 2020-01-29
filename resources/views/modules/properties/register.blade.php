@@ -33,36 +33,6 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="form-group col-md-3">
-                                <label class="control-label"> Parroquia <span class="text-danger">*</span></label>
-
-                                {!!
-                                    Form::select('parish', $parishes, null, [
-                                    'class'=>'col-md-12 form-control select2',
-                                    'placeholder' => ' SELECCIONE ',
-                                    'id' => 'parishes'
-                                    ])
-                                !!}
-
-                                @error('parish')
-                                <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="control-label"> Comunidad <span class="text-danger">*</span></label>
-
-                                {!!
-                                    Form::select('community', [], null, [
-                                    'class'=>'col-md-12 form-control select2',
-                                    'placeholder' => ' SELECCIONE ',
-                                    'id' => 'communities'
-                                    ])
-                                !!}
-
-                                @error('community')
-                                <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
                             <div class="col-md-6"></div>
                             <div class="form-group col-md-6">
                             <label class="control-label"> Calle <span class="text-danger">*</span></label>

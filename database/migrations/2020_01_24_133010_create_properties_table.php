@@ -23,10 +23,8 @@ class CreatePropertiesTable extends Migration
             $table->string('document')->nullable();
             $table->unsignedBigInteger('ownership_status_id');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('community_id');
             $table->unsignedBigInteger('property_type_id');
             $table->foreign('ownership_status_id')->references('id')->on('ownership_statuses');
-            $table->foreign('community_id')->references('id')->on('communities');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('property_type_id')->references('id')->on('property_types');
             $table->timestamps();

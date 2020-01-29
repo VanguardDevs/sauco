@@ -19,10 +19,13 @@ class Taxpayer extends Model
         'permanent_status',
         'capital',
         'compliance_use',
+        'locality',
+        'fiscal_address',
         'phone',
         'email',
         'taxpayer_type_id',
         'economic_sector_id',
+        'community_id',
         'municipality_id'
     ];
 
@@ -64,6 +67,11 @@ class Taxpayer extends Model
     public function municipality()
     {
         return $this->belongsTo(Municipality::class);
+    }
+
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
     }
 
     public function vehicles()

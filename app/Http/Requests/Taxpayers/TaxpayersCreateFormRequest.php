@@ -24,48 +24,56 @@ class TaxpayersCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            // Taxpayer
             'rif'              => 'required',
             'name'    => 'required',
             'taxpayer_type'    => 'required',
             'economic_sector'  => 'required',
             'permanent_status' => 'required',
-            'address' => 'required',
-            // 'representation' => 'required',
+            'community' => 'required',
+            'locality' => 'required',
+            'fiscal_address' => 'required',
+            'state' => 'required',
+            'municipality' => 'required',
+            'parish' => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            // Taxpayer
             'rif'              => 'RIF del contribuyente',
             'name'    => 'nombre o razón social',
-            'address' => 'dirección fiscal',
+            'locality' => 'dirección de origen',
+            'fiscal_address' => 'dirección fiscal',
             'type'    => 'tipo de contribuyente',
             'phone'   => 'número de teléfono del contribuyente',
             'economic_sector'  => 'sector económico',
             'permanent_status' => 'estado de permanencia',
-            'address' => 'dirección',
-            // 'representation' => 'representante',
+            'state' => 'estado',
+            'municipality' => 'municipio',
+            'community' => 'comunidad',
             'taxpayer_type' => 'tipo de contribuyente',
+            'parish' => 'parroquia',
         ];
     }
 
     public function messages()
     {
         return [
-            // Taxpayer
             'rif.required'              => 'Ingrese el :attribute',
             'name.required'    => 'Ingrese el :attribute',
-            'address.required' => 'Ingrese la :attribute',
+            'fiscal_address.required' => 'Ingrese la :attribute',
             'type.required'    => 'Seleccione el :attribute',
             'economic_sector.required'  => 'Seleccione un :attribute',
             'phone.digits'     => 'El :attribute debe ser de 9 dígitos',
             'permanent_status.required' => 'Seleccione el :attribute.',
             'address.required' => 'Ingrese la :attribute del contribuyente',
-            // 'representation.required' => 'Seleccione un :attribute',
-            'taxpayer_type' => 'Seleccione un :attribute'
+            'community.required' => 'Seleccione un :attribute',
+            'taxpayer_type.required' => 'Seleccione una :attribute',
+            'locality.required' => 'Ingrese la :attribute',
+            'state.required' => 'Seleccione un :attribute',
+            'municipality.required' => 'Seleccione un :attribute',
+            'parish.required' => 'Seleccione una :attribute',
         ];
     }
 }
