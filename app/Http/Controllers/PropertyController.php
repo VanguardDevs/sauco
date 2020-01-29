@@ -43,7 +43,7 @@ class PropertyController extends Controller
      */
     public function create($id)
     {
-        $taxpayer = Taxpayer::find($id)->first();
+        $taxpayer = Taxpayer::find($id);
 
         return view('modules.properties.register')
             ->with('taxpayer', $taxpayer)
@@ -61,7 +61,7 @@ class PropertyController extends Controller
      */
     public function store($id, PropertiesCreateFormRequest $request)
     {
-        $taxpayer = Taxpayer::find($id)->first();
+        $taxpayer = Taxpayer::find($id);
 
         $property = new Property([
             'local' => $request->input('local'),

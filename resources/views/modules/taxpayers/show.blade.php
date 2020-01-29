@@ -114,7 +114,6 @@
       <!--end:: Widgets/Applications/User/Profile1-->
     </div>
     <!--End:: App Aside-->
-
     <!--Begin:: App Content-->
     <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
         <div class="row">
@@ -126,8 +125,8 @@
                             <h3 class="kt-portlet__head-title">Actividades económicas</h3>
                         </div>
                         <div class="kt-portlet__head-toolbar">
-                            @if($row->economicActivities->count())
-                            <a href="{{ url("taxpayer/".$row->id."/economic-activity/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            @if(!$row->economicActivities->count())
+                            <a href="{{ url("taxpayer/".$row->id."/economic-activities/add") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
                             @endif
                         </div>
                     </div>
@@ -190,14 +189,22 @@
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
                             @if ($row->properties->count())
-                            @foreach ($row->properties as $property)
-                                <div class="kt-widget4__item">
-                                <div class="kt-widget4__info">
-                                    <p class="kt-widget4__title">{{ $property->cadastre_num }}</p>
-                                    <span class="kt-widget4__sub">{{ $property->name }}</span>
-                                </div>
-                                </div>
-                            @endforeach
+                            <table class="table table-bordered table-striped datatables">
+                                <tr>
+                                    <td>Número catastral</td>
+                                    <td>Calle</td>
+                                    <td>No.</td>
+                                    <td>Piso</td>
+                                </tr>
+                                @foreach ($row->properties as $property)
+                                    <tr>
+                                        <td>{{ $property->cadastre_num }}</td>
+                                        <td>{{ $property->street }}</td>
+                                        <td>{{ $property->local }}</td>
+                                        <td>{{ $property->floor }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
                             @else
                             <div class="kt-widget4__item">
                                 <div class="kt-widget4__info">

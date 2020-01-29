@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialRegister;
 use App\EconomicActivity;
 use App\EconomicSector;
 use App\TaxpayerType;
-use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
-use App\Representation;
 use App\State;
 use App\Taxpayer;
 use Illuminate\Http\Request;
+use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
+use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
 
 class TaxpayerController extends Controller
@@ -61,7 +60,7 @@ class TaxpayerController extends Controller
     public function store(TaxpayersCreateFormRequest $request)
     {
         $rif = $request->input('rif');
-        $type = TaxpayerType::find($request->input('taxpayer_type'))->first();
+        $type = TaxpayerType::find($request->input('taxpayer_type'));
 
         $taxpayer = new Taxpayer([
             'rif' => $type->correlative.$rif,
@@ -79,12 +78,30 @@ class TaxpayerController extends Controller
         ]);
         $taxpayer->save();
 
+        return redirect("taxpayers/".$taxpayer->id)
+            ->withSuccess('¡Contribuyente registrado!');
+    }
+
+    public function activitiesForm($id)
+    {
+        $taxpayer = Taxpayer::find($id);
+
+        return view('modules.taxpayers.register-economic-activities')
+            ->with('taxpayer', $taxpayer)
+            ->with('economicActivities', EconomicActivity::get())
+            ->with('typeForm', 'create');
+    }
+
+    public function addActivities($id, TaxpayerActivitiesFormRequest $request)
+    {
+        $taxpayer = Taxpayer::find($id);
+
         $taxpayer->economicActivities()->attach(
             $request->input('economic_activities')
         );
 
-        return redirect("taxpayers/".$taxpayer->id)
-            ->withSuccess('¡Contribuyente registrado!');
+        return redirect('taxpayers/'.$id)
+            ->withSuccess('¡Actividades económicas añadidas!');
     }
 
     /**

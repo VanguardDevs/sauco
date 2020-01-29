@@ -13,13 +13,13 @@
                             Registro de Inmueble
 
                             @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/properties/create') }}
+                                {{ Breadcrumbs::render('properties/create') }}
                             @endsection
                         @else
                             Editar usuario: {{ @$row->login }}
 
                             @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/properties/edit', $row) }}
+                                {{ Breadcrumbs::render('properties/edit', $row) }}
                             @endsection
                         @endif
                         </h3>

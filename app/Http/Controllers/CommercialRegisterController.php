@@ -31,7 +31,7 @@ class CommercialRegisterController extends Controller
      */
     public function create($id)
     {
-        $taxpayer = Taxpayer::find($id)->first();
+        $taxpayer = Taxpayer::find($id);
 
         return view('modules.commercial-registers.register')
             ->with('taxpayer', $taxpayer)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EconomicActivity;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
+use App\Taxpayer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

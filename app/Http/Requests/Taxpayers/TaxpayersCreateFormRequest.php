@@ -32,7 +32,6 @@ class TaxpayersCreateFormRequest extends FormRequest
             'permanent_status' => 'required',
             'address' => 'required',
             // 'representation' => 'required',
-            // 'economic_activities' => 'required'
         ];
     }
 
@@ -48,7 +47,6 @@ class TaxpayersCreateFormRequest extends FormRequest
             'economic_sector'  => 'sector económico',
             'permanent_status' => 'estado de permanencia',
             'address' => 'dirección',
-            // 'economic_activities' => 'actividad económica',
             // 'representation' => 'representante',
             'taxpayer_type' => 'tipo de contribuyente',
         ];
@@ -66,7 +64,6 @@ class TaxpayersCreateFormRequest extends FormRequest
             'phone.digits'     => 'El :attribute debe ser de 9 dígitos',
             'permanent_status.required' => 'Seleccione el :attribute.',
             'address.required' => 'Ingrese la :attribute del contribuyente',
-            // 'economic_activities.required' => 'Asigne al menos una :attribute',
             // 'representation.required' => 'Seleccione un :attribute',
             'taxpayer_type' => 'Seleccione un :attribute'
         ];
