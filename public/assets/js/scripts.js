@@ -82,7 +82,7 @@ function onSelectBuildingOwner() {
 }
 
 function onClickAddApplication() {
-    $.get(baseURL +'/application-types/list-all', function (data) {
+    $.get(baseURL +'/applications/list-types', function (data) {
         let html_select;
         if (data && data.length) {
             for (let i=0; i<data.length; i++) {

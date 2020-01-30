@@ -75,6 +75,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes applications ----------*/
     Route::get('applications/list', 'ApplicationController@list')->name('list-applications');
+    Route::get('applications/list-types', 'ApplicationController@listTypes')->name('list-application-types');
     Route::post('applications/taxpayer', 'ApplicationController@addApplicationTaxpayer')->name('add-application-taxpayer');
     Route::post('applications/{id}/approve', 'ApplicationController@approve')->name('approveApplication');
     Route::resource('applications', 'ApplicationController');

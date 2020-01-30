@@ -1,6 +1,6 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Tipos de Mutla')
+@section('title', 'Registro de Ordenanzas')
 
 @section('form')
     <div class="row">
@@ -10,7 +10,7 @@
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
-                            Registro de Tipos de Multa
+                            Registro de Ordenanzas
 
                             @section('breadcrumbs')
                                 {{ Breadcrumbs::render('settings/ordinances/create') }}
@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label>Método de cobro <span class="text-danger">*</span></label>
+                                <label>Tipo de ordenanza<span class="text-danger">*</span></label>
 
                                 {!! Form::select('ordinance_type', $ordinanceTypes, null, [
                                     'class' => 'col-md-12 form-control select2',

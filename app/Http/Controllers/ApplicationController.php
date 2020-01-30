@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Application;
-use App\ApplicationState;
+use App\Ordinance;
 use App\Http\Requests\Applications\ApplicationsCreateFormRequest;
+use App\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -29,12 +30,20 @@ class ApplicationController extends Controller
     public function list()
     {
         $query = Application::query()
-            ->with('applicationState')
-            ->with('applicationType')
+            ->with('payment')
             ->with('taxpayer')
             ->orderBy('created_at', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
+    }
+
+    public function listTypes()
+    {
+        $types = Ordinance::whereHas('ordinanceType', function ($query) {
+            $query->where('description', '=', 'SOLICITUDES');
+        })->get();
+
+        return $types;
     }
 
     /**
@@ -58,17 +67,27 @@ class ApplicationController extends Controller
         //
     }
 
-    public function addApplicationTaxpayer(ApplicationsCreateFormRequest $request)
+    public function addApplicationTaxpayer(Request $request)
     {
-        $state = ApplicationState::whereDescription('PENDIENTE')->first();
+        // $ordinance = Ordinance::where('ordinance_type_id', $request->input('type'));
+        // dd($ordinance);
 
-        $application = new Application([
-            'description' => $request->input('description'),
-            'application_type_id' => $request->input('type'),
-            'application_state_id' => $state->id,
-            'taxpayer_id' => $request->input('taxpayer')
-        ]);
-        $application->save();
+        // $payment = new Payment([
+        //     'num' => ,
+        //     'total_amount' => ,
+        //     'amount' => ,
+        //     'payment_state_id' => ,
+        //     'taxpayer_id' => ,
+        //     'user_id' => ,
+        //     'month_id'
+        // ]);
+
+        // $application = new Application([
+        //     'num' => '',
+        //     'object_payment' => $request->input('description'),
+        //     'taxpayer_id' => $request->input('taxpayer')
+        // ]);
+        // $application->save();
 
         return redirect('taxpayers/'.$request->input('taxpayer'))->withSuccess('¡Solicitud enviada!');
     }

@@ -13,36 +13,22 @@ class Application extends Model
 
     protected $fillable = [
         'description',
+        'object_payment',
         'approved_date',
-        'application_state_id',
-        'application_type_id',
-        'user_id',
+        'description',
+        'answer_date',
+        'ordinance_id',
         'payment_id'
     ];
 
-    public function applicationState()
+    public function ordinance()
     {
-        return $this->belongsTo(ApplicationState::class);
-    }
-
-    public function type()
-    {
-        return $this->belongsTo(ApplicationType::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Ordinance::class);
     }
 
     public function payment()
     {
         return $this->belongsTo(Payment::class);
-    }
-
-    public function applicationType()
-    {
-        return $this->belongsTo(ApplicationType::class);
     }
 
     public function getCreatedAtAttribute($value)
