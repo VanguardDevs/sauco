@@ -193,6 +193,12 @@ Breadcrumbs::for('settings/ordinances/create', function ($trail) {
     $trail->push('Crear nueva ordenanza', url('settings/ordinances/create'));
 });
 
+/*------------- Fine Types > edit -------------*/
+Breadcrumbs::for('settings/ordinances/edit', function ($trail) {
+    $trail->parent('settings/ordinances');
+    $trail->push('Editar ordenanza', url('settings/ordinances/edit'));
+});
+
 /*------------- Fines -------------*/
 Breadcrumbs::for('fines', function ($trail) {
     $trail->parent('dashboard');

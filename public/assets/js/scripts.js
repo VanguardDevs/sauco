@@ -374,7 +374,7 @@ $(document).ready(function() {
             { data: 'description'},
             { data: 'value'},
             { data: 'publication_date'},
-            { data: 'charging_method'},
+            { data: 'charging_method.name'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

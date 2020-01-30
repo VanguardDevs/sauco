@@ -55,12 +55,13 @@ class OrdinanceController extends Controller
      */
     public function store(OrdinancesCreateFormRequest $request)
     {
+        // dd($request->input());
         $create = new Ordinance([
             'law' => $request->input('law'),
             'value' => $request->input('value'),
             'description' => $request->input('description'),
-            'ordinance_type_id' => $request->input('ordinance_type'),
             'publication_date' => $request->input('publication_date'),
+            'ordinance_type_id' => $request->input('ordinance_type'),
             'charging_method_id' => $request->input('charging_method')
         ]);
         $create->save();
@@ -88,7 +89,9 @@ class OrdinanceController extends Controller
      */
     public function edit(Ordinance $ordinance)
     {
-        //
+        return view('modules.ordinances.register')
+            ->with('typeForm', 'update')
+            ->with('row', $ordinance);
     }
 
     /**

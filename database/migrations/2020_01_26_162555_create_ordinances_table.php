@@ -18,11 +18,13 @@ class CreateOrdinancesTable extends Migration
             $table->string('law');
             $table->string('description');
             $table->string('value');
+            $table->date('publication_date');
             $table->unsignedBigInteger('ordinance_type_id');
             $table->unsignedBigInteger('charging_method_id');
             $table->foreign('charging_method_id')->references('id')->on('charging_methods');
             $table->foreign('ordinance_type_id')->references('id')->on('ordinance_types');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

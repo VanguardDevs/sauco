@@ -4,17 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Ordinance extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
-    protected $table = 'applications';
+    protected $table = 'ordinances';
 
     protected $fillable = [
         'law',
         'value',
         'description',
+        'publication_date',
         'charging_method_id',
         'ordinance_type_id'
     ];
@@ -29,7 +31,12 @@ class Ordinance extends Model
         return $this->belongsTo(OrdinanceType::class);
     }
 
-    public function getCreatedAtAttribute($value)
+    public function setPublicationDateAttribute($value)
+    {
+        $this->attributes['publication_date'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();
+    }
+
+    public function getPublicationDateAttribute($value)
     {
         return date('d/m/Y', strtotime($value));
     }
