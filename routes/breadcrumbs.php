@@ -182,15 +182,15 @@ Breadcrumbs::for('settings/charging-methods/create', function ($trail) {
 });
 
 /*------------- Fine Types -------------*/
-Breadcrumbs::for('settings/fine-types', function ($trail) {
+Breadcrumbs::for('settings/ordinances', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Tipos de multas', url('settings/fine-types'));
+    $trail->push('Ordenanzas', url('settings/ordinances'));
 });
 
 /*------------- Fine Types > create -------------*/
-Breadcrumbs::for('settings/fine-types/create', function ($trail) {
-    $trail->parent('settings/fine-types');
-    $trail->push('Crear nuevo tipo de multa', url('settings/fine-types/create'));
+Breadcrumbs::for('settings/ordinances/create', function ($trail) {
+    $trail->parent('settings/ordinances');
+    $trail->push('Crear nueva ordenanza', url('settings/ordinances/create'));
 });
 
 /*------------- Fines -------------*/

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ApplicationTypes;
+namespace App\Http\Requests\Ordinances;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ApplicationTypesCreateFormRequest extends FormRequest
+class OrdinancesCreateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,8 @@ class ApplicationTypesCreateFormRequest extends FormRequest
             'value' => 'required',
             'publication_date' => 'required',
             'description' => 'required',
-            'charging_method' => 'required'
+            'charging_method' => 'required',
+            'ordinance_type' => 'required'
         ];
     }
 
@@ -39,7 +40,8 @@ class ApplicationTypesCreateFormRequest extends FormRequest
             'value' => 'valor',
             'publication_date' => 'fecha de publicación',
             'description' => 'descripción',
-            'charging_method' => 'método de cobro'
+            'charging_method' => 'método de cobro',
+            'ordinance_type' => 'tipo de ordenanza'
         ];
     }
 
@@ -50,7 +52,8 @@ class ApplicationTypesCreateFormRequest extends FormRequest
             'value.required' => 'Ingrese un :attribute',
             'publication_date.required' => 'Ingrese una :attribute',
             'description.required' => 'Ingrese una :attribute',
-            'charging_method.required' => 'Seleccione un :attribute'
+            'charging_method.required' => 'Seleccione un :attribute',
+            'ordinance_type.required' => 'Seleccione un :attribute'
         ];
     }
 }

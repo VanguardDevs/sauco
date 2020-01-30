@@ -1,9 +1,9 @@
 @extends('layouts.template')
 
-@section('title', 'Control de Tipos de solicitudes')
+@section('title', 'Control de Ordenanzas')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('settings/application-types') }}
+    {{ Breadcrumbs::render('settings/ordinances') }}
 @endsection
 
 @section('content')
@@ -13,19 +13,21 @@
       <div class="card card-primary card-outline">
         <div class="card-header alert alert-danger">
           <div class="row">
-            <h5 class="m-0">Control de Tipos de solicitudes <b>(</b> <a href="{{ Route("application-types".'.create') }}" title="Registrar comunidad">
+            <h5 class="m-0">Control de Ordenanzas <b>(</b> <a href="{{ Route("ordinances".'.create') }}" title="Registrar comunidad">
                 <span>Registrar</span>
               </a><b>)</b></h5>
           </div>
         </div>
 
         <div class="card-body">
-          <table id="tApplicationTypes" class="table table-bordered table-striped datatables" style="text-align: center">
+          <table id="tOrdinances" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">ID</th>
-                <th width="70%">Descripción</th>
-                <th width="10%">Fecha</th>
+                <th width="20%">Ley</th>
+                <th width="10%">Valor</th>
+                <th width="40%">Descripción</th>
+                <th width="10%">Publicado</th>
+                <th width="10%">Cobro</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

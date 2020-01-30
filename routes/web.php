@@ -68,10 +68,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('taxpayer/{id}/add-economic-activities', 'TaxpayerController@addActivities')->name('add-activities');
     Route::resource('taxpayers', 'TaxpayerController');
 
-    /*----------  Routes application types ----------*/
-    Route::get('application-types/list-all', 'ApplicationTypeController@listAll')->name('list-application-types');
-    Route::get('application-types/list', 'ApplicationTypeController@list')->name('list-application-types');
-    Route::resource('settings/application-types', 'ApplicationTypeController');
+    /*----------  Routes ordinance types ----------*/
+    Route::get('ordinance-types/list-all', 'OrdinanceTypeController@listAll')->name('list-ordinance-types');
+    Route::get('ordinance-types/list', 'OrdinanceTypeController@list')->name('list-ordinance-types');
+    Route::resource('settings/ordinance-types', 'OrdinanceTypeController');
 
     /*----------  Routes applications ----------*/
     Route::get('applications/list', 'ApplicationController@list')->name('list-applications');
@@ -79,14 +79,14 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('applications/{id}/approve', 'ApplicationController@approve')->name('approveApplication');
     Route::resource('applications', 'ApplicationController');
 
-    /*----------  Routes applications ----------*/
+    /*----------  Routes charging methods ----------*/
     Route::get('charging-methods/list', 'ChargingMethodController@list')->name('list-charging-methods');
     Route::resource('settings/charging-methods', 'ChargingMethodController');
 
-    /*----------  Routes applications ----------*/
-    Route::get('fine-types/list-all', 'FineTypeController@listAll')->name('list-fine-types');
-    Route::get('fine-types/list', 'FineTypeController@list')->name('list-fine-types');
-    Route::resource('settings/fine-types', 'FineTypeController');
+    /*----------  Routes Ordinances ----------*/
+    Route::get('ordinances/list-all', 'OrdinanceController@listAll')->name('list-ordinances');
+    Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
+    Route::resource('settings/ordinances', 'OrdinanceController');
 
     /*----------  Routes fines ----------*/
     Route::get('fines/list', 'FineController@list')->name('list-fines');

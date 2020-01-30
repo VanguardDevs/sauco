@@ -5,8 +5,8 @@ use Illuminate\Database\Seeder;
 
 class ChargingMethodsTableSeeder extends Seeder
 {
-    private $methods = Array(
-        'U.T', 'PETRO', 'TASA', 'BS'
+    protected $methods = Array(
+        'U.T', 'TASA', 'BS'
     );
 
     /**

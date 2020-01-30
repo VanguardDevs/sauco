@@ -1,6 +1,6 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Tipos de solicitud')
+@section('title', 'Registro de Tipos de Mutla')
 
 @section('form')
     <div class="row">
@@ -10,16 +10,16 @@
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
-                            Registro de Tipos de solicitud
+                            Registro de Tipos de Multa
 
                             @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/application-types/create') }}
+                                {{ Breadcrumbs::render('settings/ordinances/create') }}
                             @endsection
                         @else
                             Editar usuario: {{ @$row->login }}
 
                             @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/application-types/edit', $row) }}
+                                {{ Breadcrumbs::render('settings/ordinances/edit', $row) }}
                             @endsection
                         @endif
                         </h3>
@@ -27,13 +27,13 @@
                 </div>
                 <!--begin::Form-->
                 @if ($typeForm == 'create')
-                    {!! Form::open(['route' => "application-types".'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::open(['route' => "ordinances".'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
-                    {!! Form::model($row, ['route' => ["application-types".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::model($row, ['route' => ["ordinances".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <label>Descripción<span class="text-danger">*</span></label>
 
                                 {!! Form::text('description', old('description', @$row->description), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
@@ -42,17 +42,29 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-lg-6">
                                 <label>Método de cobro <span class="text-danger">*</span></label>
 
-                                <select name="charging_method" class="form-control select2">
-                                    <option value="">===== SELECCIONE =====</option>
-                                    @foreach ($chargingMethods as $chargingMethod)
-                                        <option value="{{ $chargingMethod->id }}" @if(old('chargingMethodes') == $chargingMethod->id OR @$row->chargingMethod->id == $chargingMethod->id) selected @endif >
-                                        {{ $chargingMethod->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select('ordinance_type', $ordinanceTypes, null, [
+                                    'class' => 'col-md-12 form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    "required"
+                                ]) !!}
+
+                                @error('ordinance_type')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Método de cobro</label>
+
+                                {!! Form::select('charging_method', $chargingMethods, null, [
+                                    'class' => 'col-md-12 form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    "required"
+                                ]) !!}
 
                                 @error('charging_method')
                                 <div class="text text-danger">{{ $message }}</div>

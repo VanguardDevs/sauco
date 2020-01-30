@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Ordinance;
+use App\OrdinanceType;
+use App\ChargingMethod;
+use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class OrdinanceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,15 @@ class OrdinanceController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.ordinances.index');
+    }
+
+    public function list()
+    {
+        $query = Ordinance::query()
+            ->with('chargingMethod');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -24,7 +41,10 @@ class OrdinanceController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.ordinances.register')
+            ->with('ordinanceTypes', OrdinanceType::pluck('description', 'id'))
+            ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -33,9 +53,20 @@ class OrdinanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrdinancesCreateFormRequest $request)
     {
-        //
+        $create = new Ordinance([
+            'law' => $request->input('law'),
+            'value' => $request->input('value'),
+            'description' => $request->input('description'),
+            'ordinance_type_id' => $request->input('ordinance_type'),
+            'publication_date' => $request->input('publication_date'),
+            'charging_method_id' => $request->input('charging_method')
+        ]);
+        $create->save();
+
+        return redirect('settings/ordinances')
+            ->withSuccess('¡Ordenanza creada!');
     }
 
     /**

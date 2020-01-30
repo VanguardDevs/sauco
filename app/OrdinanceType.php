@@ -16,4 +16,9 @@ class OrdinanceType extends Model
     {
         return $this->hasMany(Ordinance::class);
     }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d/m/Y', strtotime($value));
+    }
 }

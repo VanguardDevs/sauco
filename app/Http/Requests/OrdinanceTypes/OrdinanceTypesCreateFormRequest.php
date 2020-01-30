@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Applications;
+namespace App\Http\Requests\OrdinanceTypes;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ApplicationsCreateFormRequest extends FormRequest
+class OrdinanceTypesCreateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,21 +24,21 @@ class ApplicationsCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required'
+            'description' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'type' => 'tipo de solicitud'
+            'description' => 'descripción'
         ];
     }
 
     public function messages()
     {
         return [
-            'type.required' => 'Seleccione el :attribute'
+            'description.required' => 'Ingrese una :attribute',
         ];
     }
 }

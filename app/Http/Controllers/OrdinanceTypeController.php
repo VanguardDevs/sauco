@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrdinanceTypes\OrdinanceTypesCreateFormRequest;
 use App\OrdinanceType;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class OrdinanceTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,14 @@ class OrdinanceTypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.ordinance-types.index');
+    }
+
+    public function list()
+    {
+        $query = OrdinanceType::query();
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -24,7 +38,8 @@ class OrdinanceTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.ordinance-types.register')
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -33,9 +48,15 @@ class OrdinanceTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrdinanceTypesCreateFormRequest $request)
     {
-        //
+        $create = new OrdinanceType([
+            'description' => $request->input('description')
+        ]);
+        $create->save();
+
+        return redirect('settings/ordinance-types')
+            ->withSuccess('¡Nuevo tipo de ordenanza creada!');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ordinance extends Model
 {
@@ -11,16 +12,12 @@ class Ordinance extends Model
     protected $table = 'applications';
 
     protected $fillable = [
+        'law',
+        'value',
         'description',
         'charging_method_id',
-        'ordinance_type_id',
-        'user_id'
+        'ordinance_type_id'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function chargingMethod()
     {

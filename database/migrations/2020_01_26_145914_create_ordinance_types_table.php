@@ -15,6 +15,7 @@ class CreateOrdinanceTypesTable extends Migration
     {
         Schema::create('ordinance_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('description');
             $table->timestamps();
         });
     }
