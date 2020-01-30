@@ -22,6 +22,7 @@ class CreateEconomicActivityLicensesTable extends Migration
             $table->foreign('license_id')->references('id')->on('licenses');
             $table->foreign('correlative_id')->references('id')->on('correlatives');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

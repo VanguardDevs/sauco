@@ -20,7 +20,6 @@ class CreateTaxpayersTable extends Migration
             $table->string('denomination')->nullable();
             $table->string('locality');
             $table->string('fiscal_address');
-            $table->string('permanent_status');
             $table->string('capital')->nullable();
             $table->string('compliance_use')->nullable();
             $table->string('phone')->nullable();

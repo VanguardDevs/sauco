@@ -101,7 +101,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label class="control-label"> Sector Económico <span class="text-danger">*</span></label>
 
                             <select name="economic_sector" class="form-control select2">
@@ -117,24 +117,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-3">
-                            <label class="control-label"> Estado de permanencia <span class="text-danger">*</span></label>
-
-                            {!!
-                            Form::select('permanent_status', [
-                                'RESIDENTE' => 'RESIDENTE',
-                                'TRANSEÚNTE' => 'TRANSEÚNTE'
-                                ], null, [
-                                'class'=>'col-md-12 form-control select2',
-                                'placeholder' => ' SELECCIONE ',
-                            ])
-                            !!}
-
-                            @error('permanent_status')
-                            <div class="text text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label class="control-label">Teléfono</label>
                             <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
@@ -146,7 +129,7 @@
                             !!}
                             </div>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label class="control-label">Correo</label>
                             <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>

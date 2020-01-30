@@ -29,6 +29,8 @@ class PropertiesCreateFormRequest extends FormRequest
             'floor' => 'required',
             'cadastre_num' => 'required',
             'ownership_status' => 'required',
+            'bulletin' => 'required',
+            'land_valuation' => 'required',
             'property_type' => 'required'
         ];
     }
@@ -41,7 +43,9 @@ class PropertiesCreateFormRequest extends FormRequest
             'floor' => 'piso',
             'cadastre_num' => 'número catastral',
             'ownership_status' => 'estado de propiedad',
-            'property_type' => 'tipo de inmueble'
+            'property_type' => 'tipo de inmueble',
+            'bulletin' => 'número de boletín',
+            'land_valuation' => 'avalúo del inmueble',
         ];
     }
 
@@ -53,7 +57,9 @@ class PropertiesCreateFormRequest extends FormRequest
             'floor.required' => 'Ingrese el :attribute',
             'cadastre_num.required' => 'Ingrese el :attribute',
             'ownership_status.required' => 'Seleccione el :attribute',
-            'property_type.required' => 'Seleccione el :attribute'
+            'property_type.required' => 'Seleccione el :attribute',
+            'bulletin.required' => 'Ingrese el :attribute',
+            'land_valuation.required' => 'Ingrese el :attribute',
         ];
     }
 }

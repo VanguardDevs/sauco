@@ -12,6 +12,7 @@ class License extends Model
     protected $table = 'licenses';
 
     protected $fillable = [
+        'num',
         'taxpayer_id',
         'license_state_id'
     ];

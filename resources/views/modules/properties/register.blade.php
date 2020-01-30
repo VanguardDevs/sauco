@@ -33,9 +33,30 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="col-md-6"></div>
-                            <div class="form-group col-md-6">
-                            <label class="control-label"> Calle <span class="text-danger">*</span></label>
+                            <div class="col-md-3">
+                                <label class="control-label"> Nro. de Boletín <span class="text-danger">*</span></label>
+                                {!! Form::number("bulletin", old('bulletin', @$row->bulletin),
+                                [
+                                    "Placeholder" => "Boletín",
+                                    "class" => "form-control",
+                                ]) !!}
+                                @error('bulletin')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label"> Avalúo del inmueble <span class="text-danger">*</span></label>
+                                {!! Form::text("land_valuation", old('land_valuation', @$row->land_valuation),
+                                [
+                                    "placeholder" => "Avalúo",
+                                    "class" => "form-control decimal-input-mask"
+                                ]) !!}
+                                @error('land_valuation')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label"> Calle <span class="text-danger">*</span></label>
                                 {!! Form::text("street", old('street', @$row->street),
                                 [
                                     "Placeholder" => "Calle/Avenida Ejemplo",
@@ -46,7 +67,9 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-3">
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
                                 <label class="control-label"> Tipo de edificio <span class="text-danger">*</span></label>
 
                                 {!!
@@ -60,7 +83,7 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-6">
                                 <label class="control-label col-md-12"> Estado de propiedad <span class="text-danger">*</span></label>
 
                                 {!!
@@ -75,7 +98,9 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-3" style="display:none;" id="contract">
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-group col-md-4" style="display:none;" id="contract">
                                 <label class="control-label"> No. de contrato <span class="text-danger">*</span></label>
                                 {!! Form::text("contract", old('contract', @$row->contract),
                                 [
@@ -87,7 +112,7 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-3" style="display:none;" id="document">
+                            <div class="form-group col-md-4" style="display:none;" id="document">
                                 <label class="control-label"> No. de documento de propiedad <span class="text-danger">*</span></label>
                                 {!! Form::text("document", old('document', @$row->document),
                                 [
@@ -99,7 +124,7 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label class="control-label"> No. catastral <span class="text-danger">*</span></label>
                                 {!! Form::text("cadastre_num", old('cadastre_num', @$row->cadastre_num),
                                 [
@@ -111,7 +136,7 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label class="control-label"> Piso <span class="text-danger">*</span></label>
                                 {!! Form::text("floor", old('floor', @$row->floor),
                                 [

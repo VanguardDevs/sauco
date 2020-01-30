@@ -70,7 +70,6 @@ class TaxpayerController extends Controller
             'denomination' => $request->input('denomination'),
             'locality' => $request->input('locality'),
             'fiscal_address' => $request->input('fiscal_address'),
-            'permanent_status' => $request->input('permanent_status'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
             'compliance_use' => $request->input('compliance_use'),
