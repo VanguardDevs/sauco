@@ -12,19 +12,13 @@ class License extends Model
     protected $table = 'licenses';
 
     protected $fillable = [
-        'license_type_id',
-        'license_state_id',
-        'property_id'
+        'taxpayer_id',
+        'license_state_id'
     ];
 
-    public function property()
+    public function taxpayer()
     {
-        return $this->belongsTo(Property::class);
-    }
-
-    public function licenseType()
-    {
-        return $this->belongsTo(LicenseType::class);
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function licenseState()

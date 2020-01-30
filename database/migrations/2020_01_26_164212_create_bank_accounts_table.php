@@ -23,6 +23,7 @@ class CreateBankAccountsTable extends Migration
             $table->unsignedBigInteger('bank_account_type_id');
             $table->foreign('bank_account_type_id')->references('id')->on('bank_account_types');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

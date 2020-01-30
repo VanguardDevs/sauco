@@ -19,6 +19,8 @@ class CreatePropertiesTable extends Migration
             $table->string('street');
             $table->string('floor');
             $table->string('cadastre_num');
+            $table->string('bulletin');
+            $table->string('land_valuation');
             $table->string('contract')->nullable();
             $table->string('document')->nullable();
             $table->unsignedBigInteger('ownership_status_id');

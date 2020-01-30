@@ -17,14 +17,9 @@ class ChargingMethod extends Model
         return $this->hasMany(PropertyType::class);
     }
 
-    public function fineTypes()
+    public function ordinances()
     {
-        return $this->hasMany(FineType::class);
-    }
-
-    public function applicationTypes()
-    {
-        return $this->hasMany(ApplicationType::class);
+        return $this->hasMany(Ordinance::class);
     }
 
     public function getCreatedAtAttribute($value)

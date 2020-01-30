@@ -17,6 +17,11 @@ class BankAccount extends Model
         'accounting_account',
     ];
 
+    public function references()
+    {
+        return $this->hasMany(Reference::class);
+    }
+
     public function bankAccountType()
     {
         return $this->belongsTo(BankAccountType::class);

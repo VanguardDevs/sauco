@@ -4,26 +4,32 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicationType extends Model
+class Ordinance extends Model
 {
-    protected $table = 'application_types';
+    use SoftDeletes;
+
+    protected $table = 'applications';
 
     protected $fillable = [
-        'law',
-        'value',
-        'publication_date',
         'description',
-        'charging_method_id'
+        'charging_method_id',
+        'ordinance_type_id',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function chargingMethod()
     {
         return $this->belongsTo(ChargingMethod::class);
     }
 
-    public function applications()
+    public function ordinanceType()
     {
-        return $this->hasMany(Application::class);
+        return $this->belongsTo(OrdinanceType::class);
     }
 
     public function getCreatedAtAttribute($value)

@@ -28,6 +28,7 @@ class CreateRepresentationsTable extends Migration
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('citizenship_id')->references('id')->on('citizenships');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

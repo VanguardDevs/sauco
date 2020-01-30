@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLicenseTypesTable extends Migration
+class CreateFiscalYearsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateLicenseTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('license_types', function (Blueprint $table) {
+        Schema::create('fiscal_years', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('description');
+            $table->string('year');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateLicenseTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('license_types');
+        Schema::dropIfExists('fiscal_years');
     }
 }

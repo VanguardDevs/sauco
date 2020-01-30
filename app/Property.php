@@ -18,6 +18,8 @@ class Property extends Model
         'cadastre_num',
         'contract',
         'document',
+        'bulletin',
+        'land_valuation',
         'ownership_status_id',
         'taxpayer_id',
         'property_type_id'

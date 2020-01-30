@@ -17,11 +17,9 @@ class CreateApplicationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('description', 500)->nullable();
             $table->date('answer_date')->nullable();
-            $table->unsignedBigInteger('application_state_id');
-            $table->unsignedBigInteger('application_type_id');
+            $table->unsignedBigInteger('ordinance_id');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->foreign('application_state_id')->references('id')->on('application_states');
-            $table->foreign('application_type_id')->references('id')->on('application_types');
+            $table->foreign('ordinance_id')->references('id')->on('ordinances');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->timestamps();
             $table->softDeletes();

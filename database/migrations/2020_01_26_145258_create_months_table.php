@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSettlementTypesTable extends Migration
+class CreateMonthsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateSettlementTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('settlement_types', function (Blueprint $table) {
+        Schema::create('months', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->unsignedBigInteger('fiscal_year_id');
+            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateSettlementTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settlement_types');
+        Schema::dropIfExists('months');
     }
 }

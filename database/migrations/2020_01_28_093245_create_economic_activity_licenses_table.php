@@ -18,9 +18,9 @@ class CreateEconomicActivityLicensesTable extends Migration
             $table->date('emission_date');
             $table->date('expiration_date');
             $table->unsignedBigInteger('license_id');
-            $table->unsignedBigInteger('settlement_id');
+            $table->unsignedBigInteger('correlative_id');
             $table->foreign('license_id')->references('id')->on('licenses');
-            $table->foreign('settlement_id')->references('id')->on('settlements');
+            $table->foreign('correlative_id')->references('id')->on('correlatives');
             $table->timestamps();
         });
     }

@@ -15,9 +15,15 @@ class CreateSettlementsTable extends Migration
     {
         Schema::create('settlements', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('settlement_type_id');
-            $table->foreign('settlement_type_id')->references('id')->on('settlement_types');
+            $table->string('num');
+            $table->unsignedBigInteger('ordinance_id');
+            $table->unsignedBigInteger('license_id');
+            $table->unsignedBigInteger('payment_id');
+            $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('license_id')->references('id')->on('licenses');
+            $table->foreign('ordinance_id')->references('id')->on('ordinances');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,3 +37,4 @@ class CreateSettlementsTable extends Migration
         Schema::dropIfExists('settlements');
     }
 }
+

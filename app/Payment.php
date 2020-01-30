@@ -12,20 +12,25 @@ class Payment extends Model
         'num',
         'total_amount',
         'amount',
-        'payment_type_id',
         'payment_state_id',
-        'license_id',
-        'user_id'
+        'taxpayer_id',
+        'user_id',
+        'month_id'
     ];
-
-    public function paymentType()
-    {
-        return $this->belongsTo(PaymentType::class);
-    }
 
     public function paymentState()
     {
         return $this->belongsTo(PaymentState::class);
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
+    }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
     }
 
     public function user()
@@ -33,9 +38,9 @@ class Payment extends Model
         return $this->belongsTo(Payment::class);
     }
 
-    public function license()
+    public function references()
     {
-        return $this->belongsTo(License::class);
+        return $this->hasMany(Reference::class);
     }
 
     public function applications()

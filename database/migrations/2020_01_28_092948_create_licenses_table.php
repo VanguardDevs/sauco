@@ -17,10 +17,8 @@ class CreateLicensesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('num');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('license_type_id');
             $table->unsignedBigInteger('license_state_id');
-            $table->foreign('taxpayer_id')->references('id')->on('properties');
-            $table->foreign('license_type_id')->references('id')->on('license_types');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('license_state_id')->references('id')->on('license_states');
             $table->timestamps();
             $table->softDeletes();
