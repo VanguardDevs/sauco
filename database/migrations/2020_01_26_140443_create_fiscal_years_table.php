@@ -16,8 +16,6 @@ class CreateFiscalYearsTable extends Migration
         Schema::create('fiscal_years', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('year');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

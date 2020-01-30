@@ -7,6 +7,12 @@ Breadcrumbs::for('dashboard', function ($trail) {
     $trail->push('Inicio', route('dashboard'));
 });
 
+/*----------  Settings  ----------*/
+Breadcrumbs::for('settings/general', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Configuraciones', url('settings/general'));
+});
+
 /*------------- Users -------------*/
 Breadcrumbs::for('administration/users', function ($trail) {
     $trail->parent('dashboard');

@@ -185,6 +185,12 @@
                 <div class="kt-menu__submenu ">
                     <span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
+                        <li class="kt-menu__item {{ active('settings/general*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/general') }}" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">General</span>
+                            </a>
+                        </li>
                         <li class="kt-menu__item {{ active('settings/tax-units*') }}" aria-haspopup="true" >
                             <a  href="{{ url('settings/tax-units') }}" class="kt-menu__link ">
                             <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>

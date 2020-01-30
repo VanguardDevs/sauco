@@ -3,10 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\FiscalYear;
+use App\Month;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FiscalYearController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    protected $months = Array(
+        'ENERO', 'FEBRERO', 'MARZO', 'ABRIL',
+        'MAYO', 'JUNIO', 'JULIO', 'AGOSTO',
+        'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
+    );
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +48,26 @@ class FiscalYearController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $currYear = Carbon::now()->year;
+        $year = FiscalYear::where('year', $currYear)->first();
+
+        if (!$year) {
+            $fiscalYear = FiscalYear::create([
+                'year' => $currYear
+            ]);
+
+            foreach ($this->months as $key => $value) {
+                Month::create([
+                    'name' => $value,
+                    'fiscal_year_id' => $fiscalYear->id
+                ]);
+            }
+
+            return redirect('settings/general')
+                ->withSuccess('¡Año fiscal abierto!');
+        }
+        return redirect('settings/general')
+            ->withErrors('¡No puede abrir otro año fiscal!');
     }
 
     /**

@@ -139,6 +139,31 @@ const nullRecord = (id, url) => {
     });
 }
 
+const onClickFiscalYear = () => {
+    Swal.fire({
+        title: '¿Está seguro(a) que desea abrir un nuevo año fiscal?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Abrir'
+    }).then(result => {
+        if (result.value) {
+            $.ajax({
+                type: 'POST',
+                url: `${baseURL}/fiscal-year/new`,
+                data: {
+                    '_method': 'POST',
+                    '_token': $("meta[name='csrf-token']").attr("content")
+                },
+                success: response => location.reload(),
+                error: res => Swal.fire(res.responseJSON)
+            });
+        }
+    });
+}
+
 const checkRecord = id => {
     Swal.fire({
         title: '¿Está seguro(a) que desea aprobar la solicitud?',

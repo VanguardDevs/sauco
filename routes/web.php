@@ -119,4 +119,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('taxpayer/{id}/add-commercial-register', 'CommercialRegisterController@store')->name('add-commercial-register');
     Route::get('commercial-registers/list', 'CommercialRegisterController@list')->name('list-commercial-registers');
     Route::resource('commercial-registers', 'CommercialRegisterController');
+
+    /** General Settings */
+    Route::resource('settings/general', 'SettingsController');
+    Route::post('fiscal-year/new', 'FiscalYearController@store');
 });

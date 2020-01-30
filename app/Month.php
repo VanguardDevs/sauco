@@ -10,7 +10,7 @@ class Month extends Model
 
     protected $fillable = [
         'name',
-        'year_id'
+        'fiscal_year_id'
     ];
 
     public function fiscalYear()

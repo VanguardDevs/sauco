@@ -9,8 +9,7 @@ class FiscalYear extends Model
     protected $table = 'fiscal_years';
 
     protected $fillable = [
-        'year',
-        'user_id'
+        'year'
     ];
 
     public function months()
