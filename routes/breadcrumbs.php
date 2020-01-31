@@ -97,6 +97,12 @@ Breadcrumbs::for('representations/create', function ($trail) {
     $trail->push('Crear representante', url('representations/create'));
 });
 
+/*------------- Economic activities > edit -------------*/
+Breadcrumbs::for('representations/edit', function ($trail) {
+    $trail->parent('representations');
+    $trail->push('Editar representante', url('representations/edit'));
+});
+
 /*------------- Sectores económicos -------------*/
 Breadcrumbs::for('settings/economic-sectors', function ($trail) {
     $trail->parent('dashboard');

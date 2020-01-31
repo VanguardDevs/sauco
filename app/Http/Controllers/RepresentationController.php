@@ -97,7 +97,10 @@ class RepresentationController extends Controller
      */
     public function edit(Representation $representation)
     {
-        //
+        return view('modules.representations.register')
+            ->with('row', $representation)
+            ->with('citizenships', Citizenship::pluck('description', 'id'))
+            ->with('typeForm', 'update');
     }
 
     /**

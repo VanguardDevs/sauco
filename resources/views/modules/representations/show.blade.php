@@ -60,7 +60,7 @@
               <div class="kt-widget__content">
                 <div class="kt-widget__section">
                   <a href="#" class="kt-widget__username">
-                    {{ $row->first_name." ".$row->second_name." ".$row->surname." ".$row->second_surname}}
+                    {{ $row->name }}
                   </a>
                   <span class="kt-widget__subtitle">
                     {{ $row->document }}
@@ -72,15 +72,15 @@
               <div class="kt-widget__content">
                 <div class="kt-widget__info">
                   <span class="kt-widget__label">Dirección:</span>
-                  <span class="kt-widget__data">{{ $row->address ?? "NO REGISTRADO" }}</span>
+                  <span class="kt-widget__data">{{ $row->address }}</span>
                 </div>
                 <div class="kt-widget__info">
                   <span class="kt-widget__label">Teléfono:</span>
-                  <span class="kt-widget__data">{{ $row->phone ?? "NO REGISTRADO" }}</span>
+                  <span class="kt-widget__data">{{ $row->phone }}</span>
                 </div>
                 <div class="kt-widget__info">
                   <span class="kt-widget__label">Correo:</span>
-                  <span class="kt-widget__data">{{ $row->email ?? "NO REGISTRADO" }}</span>
+                  <span class="kt-widget__data">{{ $row->email }}</span>
                 </div>
               </div>
             </div>
@@ -108,14 +108,15 @@
             </div>
             <div class="kt-portlet__body">
               <div class="kt-widget-4">
-                @if ($row->taxpayers->count())
-                  @foreach ($row->taxpayers as $taxpayer)
+                @if (!is_null($row->taxpayers))
+                  {{-- @foreach ($row->taxpayers as $taxpayer)
                     <div class="kt-widget4__item">
                       <div class="kt-widget4__info">
                         <p class="kt-widget4__title">{{ $taxpayer->rif }}</p>
                       </div>
                     </div>
-                  @endforeach
+                  @endforeach --}}
+                  {{ $row->taxpayers }}
                 @else
                   <div class="kt-widget4__item">
                     <div class="kt-widget4__info">

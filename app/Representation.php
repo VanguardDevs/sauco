@@ -30,4 +30,24 @@ class Representation extends Model
     {
         return $this->belongsTo(Citizenship::class);
     }
+
+    public function getNameAttribute()
+    {
+        return "{$this->first_name} {$this->second_name} {$this->surname} {$this->second_surname}";
+    }
+
+    public function getAddressAttribute()
+    {
+        return $this->address ?? 'NO REGISTRADO';
+    }
+
+    public function getPhoneAttribute()
+    {
+        return $this->phone ?? 'NO REGISTRADO';
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->email ?? 'NO REGISTRADO';
+    }
 }

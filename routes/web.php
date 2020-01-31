@@ -59,7 +59,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     /*----------  Routes representations ----------*/
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
     Route::get('taxpayer/{id}/representation/create', 'RepresentationController@create')->name('create-representation');
-    Route::post('taxpayer/{id}/add-representation', 'RepresentationController@store')->name('add-representation');
+    Route::post('taxpayer/{id}/add-representation', 'RepresentationController@store')->name('representation.add');
+    Route::post('taxpayer/{id}/update-representation', 'RepresentationController@update')->name('representation.update');
     Route::resource('representations', 'RepresentationController');
 
     /*----------  Routes taxpayers ----------*/

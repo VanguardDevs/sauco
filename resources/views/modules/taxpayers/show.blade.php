@@ -79,15 +79,11 @@
                 </div>
                 <div class="kt-widget__info">
                     <span class="kt-widget__label">Sector económico:</span>
-                    <span class="kt-widget__data">{{ $row->economicSector->name }}</span>
-                </div>
-                <div class="kt-widget__info">
-                    <span class="kt-widget__label">Estado de permanencia:</span>
-                    <span class="kt-widget__data">{{ $row->permanent_status }}</span>
+                    <span class="kt-widget__data">{{ $row->economicSector->description }}</span>
                 </div>
                 <div class="kt-widget__info">
                   <span class="kt-widget__label">Dirección:</span>
-                  <span class="kt-widget__data">{{ $row->address }}</span>
+                  <span class="kt-widget__data">{{ $row->fiscal_address }}</span>
                 </div>
                 <div class="kt-widget__info">
                     <span class="kt-widget__label">Capital suscrito:</span>
