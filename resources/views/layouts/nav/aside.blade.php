@@ -216,10 +216,10 @@
                             <span class="kt-menu__link-text">Sectores económicos</span>
                             </a>
                         </li>
-                        <li class="kt-menu__item {{ active('settings/ordinance-types*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/ordinance-types') }}" class="kt-menu__link ">
+                        <li class="kt-menu__item {{ active('settings/ordinances*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/ordinances') }}" class="kt-menu__link ">
                             <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Tipos de ordenanzas</span>
+                            <span class="kt-menu__link-text">Ordenanzas</span>
                             </a>
                         </li>
                         <li class="kt-menu__item {{ active('settings/charging-methods*') }}" aria-haspopup="true" >
@@ -228,10 +228,10 @@
                             <span class="kt-menu__link-text">Métodos de cobro</span>
                             </a>
                         </li>
-                        <li class="kt-menu__item {{ active('settings/ordinances*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/ordinances') }}" class="kt-menu__link ">
+                        <li class="kt-menu__item {{ active('settings/concepts*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/concepts') }}" class="kt-menu__link ">
                             <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Ordenanzas</span>
+                            <span class="kt-menu__link-text">Conceptos de cobro</span>
                             </a>
                         </li>
                         <li class="kt-menu__item {{ active('settings/bank-accounts*') }}" aria-haspopup="true" >

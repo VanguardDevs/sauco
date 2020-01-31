@@ -11,9 +11,10 @@ class Settlement extends Model
 
     protected $table = [
         'num',
+        'description',
         'license_id',
         'payment_id',
-        'ordinance_id'
+        'concept_id'
     ];
 
     public function license()
@@ -26,8 +27,8 @@ class Settlement extends Model
         return $this->belongsTo(Payment::class);
     }
 
-    public function ordinance()
+    public function concept()
     {
-        return $this->belongsTo(Ordinance::class);
+        return $this->belongsTo(Concept::class);
     }
 }

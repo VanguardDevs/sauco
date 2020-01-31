@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSettlementsTable extends Migration
+class CreateRequisitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,12 @@ class CreateSettlementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settlements', function (Blueprint $table) {
+        Schema::create('requisites', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('num');
-            $table->string('description', 140);
+            $table->string('name');
             $table->unsignedBigInteger('concept_id');
-            $table->unsignedBigInteger('license_id');
-            $table->unsignedBigInteger('payment_id');
-            $table->foreign('payment_id')->references('id')->on('payments');
-            $table->foreign('license_id')->references('id')->on('licenses');
             $table->foreign('concept_id')->references('id')->on('concepts');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,7 +29,6 @@ class CreateSettlementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settlements');
+        Schema::dropIfExists('requisites');
     }
 }
-

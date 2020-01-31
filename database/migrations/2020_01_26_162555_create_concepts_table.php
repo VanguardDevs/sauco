@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdinancesTable extends Migration
+class CreateConceptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateOrdinancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ordinances', function (Blueprint $table) {
+        Schema::create('concepts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('law');
             $table->string('description');
             $table->string('value');
             $table->date('publication_date');
-            $table->unsignedBigInteger('ordinance_type_id');
+            $table->unsignedBigInteger('ordinance_id');
             $table->unsignedBigInteger('charging_method_id');
             $table->foreign('charging_method_id')->references('id')->on('charging_methods');
-            $table->foreign('ordinance_type_id')->references('id')->on('ordinance_types');
+            $table->foreign('ordinance_id')->references('id')->on('ordinances');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +35,6 @@ class CreateOrdinancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ordinances');
+        Schema::dropIfExists('concepts');
     }
 }

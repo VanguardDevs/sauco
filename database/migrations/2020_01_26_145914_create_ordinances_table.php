@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdinanceTypesTable extends Migration
+class CreateOrdinancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateOrdinanceTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ordinance_types', function (Blueprint $table) {
+        Schema::create('ordinances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('description');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateOrdinanceTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ordinance_types');
+        Schema::dropIfExists('ordinances');
     }
 }

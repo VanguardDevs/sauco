@@ -11,11 +11,13 @@ class Payment extends Model
     protected $fillable = [
         'num',
         'total_amount',
+        'description',
         'amount',
         'payment_state_id',
         'taxpayer_id',
         'user_id',
-        'month_id'
+        'month_id',
+        'concept_id'
     ];
 
     public function paymentState()
@@ -31,6 +33,11 @@ class Payment extends Model
     public function month()
     {
         return $this->belongsTo(Month::class);
+    }
+
+    public function concept()
+    {
+        return $this->belongsTo(Concept::class);
     }
 
     public function user()
@@ -51,5 +58,10 @@ class Payment extends Model
     public function fines()
     {
         return $this->hasMany(Fine::class);
+    }
+
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
     }
 }

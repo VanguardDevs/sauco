@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Ordinance;
+use App\OrdinanceType;
+use App\ChargingMethod;
 use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -25,7 +28,8 @@ class OrdinanceController extends Controller
 
     public function list()
     {
-        $query = Ordinance::query();
+        $query = Ordinance::query()
+            ->with('chargingMethod');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -38,6 +42,8 @@ class OrdinanceController extends Controller
     public function create()
     {
         return view('modules.ordinances.register')
+            ->with('ordinanceTypes', OrdinanceType::pluck('description', 'id'))
+            ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -49,22 +55,28 @@ class OrdinanceController extends Controller
      */
     public function store(OrdinancesCreateFormRequest $request)
     {
+        // dd($request->input());
         $create = new Ordinance([
-            'description' => $request->input('description')
+            'law' => $request->input('law'),
+            'value' => $request->input('value'),
+            'description' => $request->input('description'),
+            'publication_date' => $request->input('publication_date'),
+            'ordinance_type_id' => $request->input('ordinance_type'),
+            'charging_method_id' => $request->input('charging_method')
         ]);
         $create->save();
 
         return redirect('settings/ordinances')
-            ->withSuccess('¡Nuevo tipo de ordenanza creada!');
+            ->withSuccess('¡Ordenanza creada!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Ordinance  $ordinance
      * @return \Illuminate\Http\Response
      */
-    public function show(Ordinance $Ordinance)
+    public function show(Ordinance $ordinance)
     {
         //
     }
@@ -72,22 +84,24 @@ class OrdinanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Ordinance  $ordinance
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ordinance $Ordinance)
+    public function edit(Ordinance $ordinance)
     {
-        //
+        return view('modules.ordinances.register')
+            ->with('typeForm', 'update')
+            ->with('row', $ordinance);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Ordinance  $ordinance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ordinance $Ordinance)
+    public function update(Request $request, Ordinance $ordinance)
     {
         //
     }
@@ -95,10 +109,10 @@ class OrdinanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Ordinance  $ordinance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ordinance $Ordinance)
+    public function destroy(Ordinance $ordinance)
     {
         //
     }

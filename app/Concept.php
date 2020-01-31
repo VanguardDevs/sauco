@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
-class Ordinance extends Model
+class Concept extends Model
 {
-    // use SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = 'ordinances';
+    protected $table = 'concepts';
 
     protected $fillable = [
         'law',
@@ -18,7 +18,7 @@ class Ordinance extends Model
         'description',
         'publication_date',
         'charging_method_id',
-        'ordinance_type_id'
+        'ordinance_id'
     ];
 
     public function chargingMethod()
@@ -26,9 +26,14 @@ class Ordinance extends Model
         return $this->belongsTo(ChargingMethod::class);
     }
 
-    public function ordinanceType()
+    public function ordinance()
     {
-        return $this->belongsTo(OrdinanceType::class);
+        return $this->belongsTo(Ordinance::class);
+    }
+
+    public function requisites()
+    {
+        return $this->hasMany(Requisite::class);
     }
 
     public function setPublicationDateAttribute($value)
