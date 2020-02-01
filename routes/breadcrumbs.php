@@ -241,6 +241,12 @@ Breadcrumbs::for('settings/property-types/create', function ($trail) {
     $trail->push('Crear nuevo tipo de inmueble', url('settings/property-types/create'));
 });
 
+/*------------- Property types > edit -------------*/
+Breadcrumbs::for('settings/property-types/edit', function ($trail) {
+    $trail->parent('settings/property-types');
+    $trail->push('Editar tipo de inmueble', url('settings/property-types/edit'));
+});
+
 /*------------- Properties -------------*/
 Breadcrumbs::for('properties', function ($trail) {
     $trail->parent('dashboard');

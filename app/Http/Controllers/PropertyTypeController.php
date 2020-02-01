@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\ChargingMethod;
 use App\Http\Requests\PropertyTypes\PropertyTypesCreateFormRequest;
+use App\Http\Requests\PropertyTypes\PropertyTypesUpdateFormRequest;
 use App\PropertyType;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class PropertyTypeController extends Controller
@@ -41,7 +41,7 @@ class PropertyTypeController extends Controller
     public function create()
     {
         return view('modules.property-types.register')
-            ->with('chargingMethods', ChargingMethod::get())
+            ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -83,7 +83,10 @@ class PropertyTypeController extends Controller
      */
     public function edit(PropertyType $propertyType)
     {
-        //
+        return view('modules.property-types.register')
+            ->with('row', $propertyType)
+            ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
+            ->with('typeForm', 'update');
     }
 
     /**
@@ -93,9 +96,12 @@ class PropertyTypeController extends Controller
      * @param  \App\PropertyType  $propertyType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PropertyType $propertyType)
+    public function update(PropertyTypesUpdateFormRequest $request, PropertyType $propertyType)
     {
-        //
+        $edit = PropertyType::find($propertyType->id);
+        $edit->fill($request->all())->save();
+
+        return redirect('settings/property-types')->withSuccess('¡Clasificación actualizada!');
     }
 
     /**

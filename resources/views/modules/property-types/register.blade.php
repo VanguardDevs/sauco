@@ -16,7 +16,7 @@
                                 {{ Breadcrumbs::render('settings/property-types/create') }}
                             @endsection
                         @else
-                            Editar usuario: {{ @$row->login }}
+                            Editar tipo de inmueble:
 
                             @section('breadcrumbs')
                                 {{ Breadcrumbs::render('settings/property-types/edit', $row) }}
@@ -65,14 +65,14 @@
                             <div class="col-lg-6">
                                 <label>Método de cobro<span class="text-danger">*</span></label>
 
-                                <select name="charging_method" class="form-control select2">
-                                    <option value="">===== SELECCIONE =====</option>
-                                    @foreach ($chargingMethods as $method)
-                                        <option value="{{ $method->id }}" @if(old('method') == $method->id OR @$row->method->id == $method->id) selected @endif >
-                                        {{ $method->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select('charging_method', $chargingMethods,
+                                    (isset($row->chargingMethod) ? ($row->chargingMethod->id) : null),
+                                    [
+                                        'class' => 'col-md-12 form-control select2',
+                                        'placeholder' => ' SELECCIONE ',
+                                        "required"
+                                    ])
+                                !!}
 
                                 @error('charging_method')
                                 <div class="text text-danger">{{ $message }}</div>
