@@ -16,7 +16,7 @@
 			<h5>Editar rol: {{ @$row->name }}</h5>
 
             @section('breadcrumbs')
-                {{ Breadcrumbs::render('roles.edit', $row) }}
+                {{ Breadcrumbs::render('administration/roles/edit', $row) }}
             @endsection
 		@endif
     </div>
@@ -33,8 +33,9 @@
             <label class="control-label"> Nombre <span class="text-danger">*</span></label>
             {!! Form::text("name", old('name', @$row->name), ["Placeholder" => "Nombre", "class" => "form-control", "onkeyup" => "upperCase(this);"]) !!}
 
+
             @error('name')
-              <div class="text text-danger">{{ $message }}</div>
+            <div class="text text-danger">{{ $message }}</div>
             @enderror
           </div>
         </div>
@@ -52,7 +53,7 @@
 
         <div class="row">
           <div class="form-group col-md-12">
-            <label class="control-label"> Descripción <span class="text-danger">*</span></label>
+            <label class="control-label"> Descripción </label>
             {!! Form::text("description", old('description', @$row->description), ["Placeholder" => "Descripción", "class" => "form-control", "onkeyup" => "upperCase(this);"]) !!}
 
             @error('description')
@@ -64,17 +65,16 @@
         <div class="row">
           <div class="form-group col-md-12">
             <label class="control-label"> Lista de Permisos <span class="text-danger">*</span></label>
-            <ul class="list-unstyled">
-              @foreach($permissions as $permission)
-                <li>
-                  <label>
-                    {{ Form::checkbox('permissions[]', $permission->id, null) }}
-                    {{ $permission->name }}
-                    <em>({{ $permission->description ?: 'Sin descripción' }})</em>
-                  </label>
-                </li>
-              @endforeach
-            </ul>
+
+            {!! Form::select('permissions', $permissions,
+                (isset($row->permission) ? ($row->permission->id) : null), [
+                'class'=> 'form-control select2',
+                'multiple'
+            ]) !!}
+
+            @error('permissions')
+              <div class="text text-danger">{{ $message }}</div>
+            @enderror
           </div>
         </div>
       </div>

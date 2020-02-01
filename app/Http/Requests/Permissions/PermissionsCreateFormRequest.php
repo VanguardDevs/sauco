@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Roles;
+namespace App\Http\Requests\Permissions;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleCreateFormRequest extends FormRequest
+class PermissionsCreateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,25 +24,24 @@ class RoleCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        =>  'required|unique:roles,name',
-            'permission'  =>  'required'
+            'name' => 'required|unique:permissions',
+            'slug' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'name'        =>  'Nombre',
-            'permission'  =>  'Permisos'
+            'name' => 'nombre',
+            'slug' => 'slug'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required'         =>  'Ingrese el :attribute del rol',
-            'name.unique'           =>  'El nombre del rol debe ser unico',
-            'permission.required'   =>  'Seleccione los permisos para el rol'
+            'name.required' => 'Ingrese el :attribute',
+            'slug.required' => 'Ingrese el :attribute',
         ];
     }
 }

@@ -23,9 +23,9 @@
         <!-- /.card-header -->
         <!-- form start -->
         @if ($typeForm == 'create')
-            {!! Form::open(['route' => $options['route'].'.store', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['route' => "permissions".'.store', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data']) !!}
         @else
-            {!! Form::model($row, ['route' => [$options['route'].'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
+            {!! Form::model($row, ['route' => ["permissions".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
         @endif
         <div class="card-body">
             <div class="row">

@@ -22,13 +22,12 @@
                 <div class="card-body">
                     <table id="tTaxpayers" class="table table-bordered table-striped datatables" style="text-align: center">
                         <thead>
-                        <tr>
-                            <th width="10%">RIF</th>
-                            <th width="40%">Razón Social</th>
-                            {{-- <th width="20%">Registro comercial</th> --}}
-                            <th width="30%">Denominación comercial</th>
-                            <th width="10%">Acciones</th>
-                        </tr>
+                            <tr>
+                                <th width="10%">RIF</th>
+                                <th width="40%">Razón Social</th>
+                                <th width="30%">Denominación comercial</th>
+                                <th width="10%">Acciones</th>
+                            </tr>
                         </thead>
                     </table>
                 </div>

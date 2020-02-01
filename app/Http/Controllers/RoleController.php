@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Roles\RoleCreateFormRequest;
+use App\Http\Requests\Roles\RolesCreateFormRequest;
 use Illuminate\Http\Request;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
+use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
@@ -21,8 +22,14 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view("modules.roles.index")
-            ->with('roles', Role::get());
+        return view("modules.roles.index");
+    }
+
+    public function list()
+    {
+        $query = Role::query()->orderBy('created_at', 'desc');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -33,7 +40,7 @@ class RoleController extends Controller
     public function create()
     {
         return view("modules.roles.register")
-            ->with('permissions', Permission::get())
+            ->with('permissions', Permission::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -43,7 +50,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleCreateFormRequest $request)
+    public function store(RolesCreateFormRequest $request)
     {
         $role = Role::create($request->all());
         $role->permissions()->sync($request->get('permissions'));
@@ -70,10 +77,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        return view($this->options['route-views']."register")
-            ->with('options', $this->options)
+        return view("modules.roles.register")
             ->with('typeForm', 'update')
-            ->with('permissions', Permission::get())
+            ->with('permissions', Permission::pluck('name', 'id'))
             ->with('row', $role);
     }
 
@@ -89,7 +95,7 @@ class RoleController extends Controller
         $role->update($request->all());
         $role->permissions()->sync($request->get('permissions'));
 
-        return redirect('administration/'.$this->options['route'])->withSuccess('Rol actualizado!!');
+        return redirect('administration/roles')->withSuccess('¡Rol actualizado!');
     }
 
     /**

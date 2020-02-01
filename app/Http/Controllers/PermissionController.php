@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Permissions\PermissionsCreateFormRequest;
+use App\Http\Requests\Permissions\PermissionsUpdateFormRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Caffeinated\Shinobi\Models\Permission;
+use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
 {
@@ -14,10 +15,6 @@ class PermissionController extends Controller
         $this->middleware('auth');
     }
 
-    private $options = [
-        'route' => 'permissions',
-        'route-views' => 'modules.permissions.'
-    ];
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +22,14 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view($this->options['route-views']."index")
-            ->with('permissions', Permission::get())
-            ->with('options', $this->options);
+        return view("modules.permissions.index");
+    }
+
+    public function list()
+    {
+        $query = Permission::query()->orderBy('slug', 'ASC');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -37,8 +39,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view($this->options['route-views']."register")
-            ->with('options', $this->options)
+        return view("modules.permissions.register")
             ->with('typeForm', 'create');
     }
 
@@ -48,16 +49,16 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermissionsCreateFormRequest $request)
     {
-        $create = new Permission();
-        $create->name = $request->input('name');
-        $create->slug = $request->input('slug');
-        $create->description = $request->input('description');
+        $create = new Permission([
+            'name' => $request->input('name'),
+            'slug' => $request->input('slug'),
+            'description' => $request->input('description')
+        ]);
+        $create->save();
 
-        if($create->save()) {
-            return redirect('administration/'.$this->options['route'])->with('success', 'Permiso agregado!!');
-        }
+        return redirect('administration/permissions')->with('success', '¡Permiso agregado!');
     }
 
     /**
@@ -79,8 +80,7 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        return view($this->options['route-views']."register")
-            ->with('options', $this->options)
+        return view("modules.permissions.register")
             ->with('typeForm', 'update')
             ->with('row', $permission);
     }
@@ -92,16 +92,12 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permission $permission)
+    public function update(PermissionsUpdateFormRequest $request, Permission $permission)
     {
         $edit       = Permission::find($permission->id);
-        $edit->name = $request->input('name');
-        $edit->slug = $request->input('slug');
-        $edit->description = $request->input('description');
+        $edit->fill($request->all())->save();
 
-        if($edit->save()) {
-            return redirect('administration/'.$this->options['route'])->withSuccess('Permiso actualizado!!');
-        }
+        return redirect('administration/permissions')->withSuccess('¡Permiso actualizado!');
     }
 
     /**

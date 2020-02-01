@@ -13,7 +13,7 @@
       <div class="card card-primary card-outline">
         <div class="card-header alert alert-danger">
           <div class="row">
-            <h5 class="m-0">Control de Usuarios <b>(</b> <a href="{{ Route($options['route'].'.create') }}" title="Registrar usuario">
+            <h5 class="m-0">Control de Usuarios <b>(</b> <a href="{{ 'users/create' }}" title="Registrar usuario">
               <span>Registrar</span>
             </a><b>)</b></h5>
           </div>

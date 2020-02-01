@@ -27,9 +27,9 @@
                 </div>
                 <!--begin::Form-->
                 @if ($typeForm == 'create')
-                    {!! Form::open(['route' => $options['route'].'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::open(['route' => 'users'.'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
-                    {!! Form::model($row, ['route' => [$options['route'].'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::model($row, ['route' => ['users'.'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
                     <div class="kt-portlet__body">
 
@@ -38,11 +38,8 @@
                                 <label>Cédula de Identidad <span class="text-danger">*</span></label>
                                 {!! Form::number("identity_card", old('identity_card', @$row->identity_card), ["placeholder" => "Cédula de Identidad", "class" => "form-control"]) !!}
 
-
                                 @error('identity_card')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -52,11 +49,8 @@
                                 <label>Nombre <span class="text-danger">*</span></label>
                                 {!! Form::text("first_name", old('first_name', @$row->first_name), ["placeholder" => "Nombre", "class" => "form-control", "onkeyup" => "upperCase(this);"]) !!}
 
-
                                 @error('first_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -66,11 +60,8 @@
                                 <label>Apellido <span class="text-danger">*</span></label>
                                 {!! Form::text("surname", old('surname', @$row->surname), ["placeholder" => "Apellido", "class" => "form-control", "onkeyup" => "upperCase(this);"]) !!}
 
-
                                 @error('surname')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -80,11 +71,8 @@
                                 <label>Teléfono <span class="text-danger">*</span></label>
                                 {!! Form::text("phone", old('phone', @$row->phone), ["class" => "form-control", "data-inputmask" => '"mask": "(999) 999-9999"', "data-mask", "placeholder" => "Teléfono"]) !!}
 
-
-                                @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                @error('surname')
+                                <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -95,9 +83,7 @@
                                 {!! Form::text("login", old('login', @$row->login), ["placeholder" => "Usuario", "class" => "form-control"]) !!}
 
                                 @error('login')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -108,9 +94,7 @@
                                 <input type="password" name="password" class="form-control" placeholder="Clave">
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
+                                <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -131,21 +115,15 @@
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label>Rol <span class="text-danger">*</span></label>
-                                <ul class="list-unstyled">
-                                    @foreach($roles as $role)
-                                    <li>
-                                        <label>
-                                        {{ Form::checkbox('roles[]', $role->id, null) }}
-                                        {{ $role->name }}
-                                        </label>
-                                    </li>
-                                    @endforeach
-                                </ul>
+                                {!! Form::select('rol', $roles,
+                                    (isset($row->roles) ? ($row->roles->id) : null), [
+                                        'class'=> 'form-control select2',
+                                        'multiple'
+                                    ])
+                                !!}
 
                                 @error('rol')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>

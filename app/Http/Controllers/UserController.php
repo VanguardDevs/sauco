@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\UsersCreateFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -19,10 +20,6 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    private $options = [
-        'route' => 'users',
-        'route-views' => 'modules.users.'
-    ];
     /**
      * Display a listing of the resource.
      *
@@ -30,14 +27,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view($this->options['route-views']."index")
-                            ->with('options', $this->options)
-                            ->with('array', User::get());
+        return view('modules.users.index');
     }
 
-    public function listUsers()
+    public function list()
     {
         $query = User::query();
+
         return DataTables::eloquent($query)
             ->toJson();
     }
@@ -49,10 +45,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view($this->options['route-views']."register")
-                            ->with('options', $this->options)
-                            ->with('roles', Role::get())
-                            ->with('typeForm', 'create');
+        return view("modules.users.register")
+            ->with('roles', Role::pluck('name', 'id'))
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -61,37 +56,22 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersCreateFormRequest $request)
     {
-        /***/
-        $file = $request->avatar;
-        $name = $request->identity_card.'.'.$file->extension();
-        /***/
-        $create                 = new User();
-        $create->identity_card  = $request->input('identity_card');
-        $create->first_name     = $request->input('first_name');
-        $create->surname        = $request->input('surname');
-        $create->phone          = $request->input('phone');
-        $create->login          = $request->input('login');
-        $create->password       = bcrypt($request->input('password'));
-        $create->avatar         = $name;
+        $create = new User([
+            'identity_card' => $request->input('identity_card'),
+            'first_name' => $request->input('first_name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'surname' => $request->input('surname'),
+            'phone' => $request->input('phone'),
+            'login' => $request->input('login')
+        ]);
+        $create->save();
 
-        if($create->save()) {
+        $create->roles()->sync($request->get('roles'));
 
-            $create->roles()->sync($request->get('roles'));
-            /**
-             *
-             */
-            $path = public_path('/uploads/ticket-technical-support/');
-                if (!File::exists($path)) {
-                    File::makeDirectory($path, 0775, true, true);
-                }
-            $file->move(public_path().'/uploads/users/', $name);
-            /**
-             *
-             */
-            return redirect('administration/'.$this->options['route'])->withSuccess('Usuario agregado!!');
-        }
+        return redirect('administration/users')->withSuccess('¡Usuario agregado!');
     }
 
     /**
@@ -111,7 +91,7 @@ class UserController extends Controller
      */
     public function profile($id)
     {
-        return view($this->options['route-views']."profile");
+        return view("modules.users.profile");
     }
 
     /**
@@ -122,10 +102,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view($this->options['route-views']."register")
-            ->with('options', $this->options)
+        return view("modules.users.register")
             ->with('typeForm', 'update')
-            ->with('roles', Role::get())
+            ->with('roles', Role::pluck('name', 'id'))
             ->with('row', $user);
     }
 

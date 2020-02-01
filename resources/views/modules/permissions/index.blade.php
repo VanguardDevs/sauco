@@ -13,44 +13,21 @@
             <div class="card card-primary card-outline">
                 <div class="card-header alert alert-danger">
                     <div class="row">
-                        <h5 class="m-0">Registro de Permisos <b>(</b> <a href="{{ Route($options['route'].'.create') }}" title="Registrar parroquia">
+                        <h5 class="m-0">Registro de Permisos <b>(</b> <a href="{{ Route('permissions'.'.create') }}" title="Registrar parroquia">
                                 <span>Registrar</span>
                             </a><b>)</b></h5>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <table class="table table-bordered table-striped datatables" style="text-align: center">
+                    <table id="tPermissions" class="table table-bordered table-striped datatables" style="text-align: center">
                         <thead>
                         <tr>
-                            <th width="35%">Nombre</th>
+                            <th width="30%">Nombre</th>
                             <th width="10%">Slug</th>
                             <th width="50%">Descripción</th>
-                            <th width="5%"></th>
+                            <th width="10%">Acciones</th>
                         </tr>
-                        </thead>
-                        @forelse($permissions as $permission)
-                            <tr>
-                                <td>
-                                    {{ $permission->name }}
-                                </td>
-                                <td>
-                                    {{ $permission->slug }}
-                                </td>
-                                <td>
-                                    {{ $permission->description }}
-                                </td>
-                                <td>
-                                    <a href="/administration/permissions/{{ $permission->id }}/edit" class="btn btn-sm btn-warning" title="Editar registro"><i class='flaticon-edit'></i></a>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4">
-                                    <p>No hay registros asociados!</p>
-                                </td>
-                            </tr>
-                        @endforelse
                     </table>
                 </div>
 

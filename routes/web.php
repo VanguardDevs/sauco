@@ -25,13 +25,15 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::group(['middleware' => ['has.role:admin']], function () {
         /*----------  Routes permissions  ----------*/
+        Route::get('permissions/list', 'PermissionController@list');
         Route::resource('administration/permissions', 'PermissionController');
 
         /*----------  Routes roles  ----------*/
+        Route::get('roles/list', 'RoleController@list');
         Route::resource('administration/roles', 'RoleController');
 
         /*----------  Routes users  ----------*/
-        Route::get('administration/list-users', 'UserController@listUsers');
+        Route::get('users/list', 'UserController@list');
         Route::resource('administration/users', 'UserController');
 
     });
