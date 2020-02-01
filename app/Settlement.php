@@ -31,4 +31,9 @@ class Settlement extends Model
     {
         return $this->belongsTo(Concept::class);
     }
+
+    public function economicActivitySettlement()
+    {
+        return $this->hasOne(EconomicActivitySettlement::class);
+    }
 }

@@ -22,4 +22,9 @@ class EconomicActivity extends Model
     {
         return $this->belongsToMany(EconomicActivity::class);
     }
+
+    public function economicActivitySettlements()
+    {
+        return $this->hasMany(EconomicActivitySettlement::class);
+    }
 }

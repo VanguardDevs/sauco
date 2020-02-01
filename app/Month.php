@@ -22,4 +22,9 @@ class Month extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function months()
+    {
+        return $this->hasMany(Month::class);
+    }
 }
