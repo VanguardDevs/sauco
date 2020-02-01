@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Concept;
 use App\Ordinance;
-use App\OrdinanceType;
 use App\ChargingMethod;
-use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
+use App\Listing;
+use App\Http\Requests\Concepts\ConceptsCreateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class OrdinanceController extends Controller
+class ConceptController extends Controller
 {
     public function __construct()
     {
@@ -23,12 +24,12 @@ class OrdinanceController extends Controller
      */
     public function index()
     {
-        return view('modules.ordinances.index');
+        return view('modules.concepts.index');
     }
 
     public function list()
     {
-        $query = Ordinance::query()
+        $query = Concept::query()
             ->with('chargingMethod');
 
         return DataTables::eloquent($query)->toJson();
@@ -41,8 +42,8 @@ class OrdinanceController extends Controller
      */
     public function create()
     {
-        return view('modules.ordinances.register')
-            ->with('ordinanceTypes', OrdinanceType::pluck('description', 'id'))
+        return view('modules.concepts.register')
+            ->with('ordinances', Ordinance::pluck('description', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
@@ -53,30 +54,29 @@ class OrdinanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrdinancesCreateFormRequest $request)
+    public function store(ConceptsCreateFormRequest $request)
     {
-        // dd($request->input());
-        $create = new Ordinance([
+        $create = new Concept([
             'law' => $request->input('law'),
             'value' => $request->input('value'),
             'description' => $request->input('description'),
             'publication_date' => $request->input('publication_date'),
-            'ordinance_type_id' => $request->input('ordinance_type'),
+            'ordinance_id' => $request->input('ordinance'),
             'charging_method_id' => $request->input('charging_method')
         ]);
         $create->save();
 
-        return redirect('settings/ordinances')
-            ->withSuccess('¡Ordenanza creada!');
+        return redirect('settings/concepts')
+            ->withSuccess('¡Concepto de recaudación creada!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Ordinance  $ordinance
+     * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function show(Ordinance $ordinance)
+    public function show(Concept $Concept)
     {
         //
     }
@@ -84,24 +84,26 @@ class OrdinanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Ordinance  $ordinance
+     * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ordinance $ordinance)
+    public function edit(Concept $concept)
     {
-        return view('modules.ordinances.register')
+        return view('modules.concepts.register')
             ->with('typeForm', 'update')
-            ->with('row', $ordinance);
+            ->with('ordinances', Ordinance::pluck('description', 'id'))
+            ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
+            ->with('row', $concept);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ordinance  $ordinance
+     * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ordinance $ordinance)
+    public function update(Request $request, Concept $Concept)
     {
         //
     }
@@ -109,10 +111,10 @@ class OrdinanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Ordinance  $ordinance
+     * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ordinance $ordinance)
+    public function destroy(Concept $Concept)
     {
         //
     }

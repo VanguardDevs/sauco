@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Ordinances;
+namespace App\Http\Requests\Concepts;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrdinancesCreateFormRequest extends FormRequest
+class ConceptsCreateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class OrdinancesCreateFormRequest extends FormRequest
             'publication_date' => 'required',
             'description' => 'required',
             'charging_method' => 'required',
-            'ordinance_type' => 'required'
+            'ordinance' => 'required'
         ];
     }
 
@@ -41,7 +41,7 @@ class OrdinancesCreateFormRequest extends FormRequest
             'publication_date' => 'fecha de publicación',
             'description' => 'descripción',
             'charging_method' => 'método de cobro',
-            'ordinance_type' => 'tipo de ordenanza'
+            'ordinance' => 'tipo de ordenanza'
         ];
     }
 
@@ -53,7 +53,7 @@ class OrdinancesCreateFormRequest extends FormRequest
             'publication_date.required' => 'Ingrese una :attribute',
             'description.required' => 'Ingrese una :attribute',
             'charging_method.required' => 'Seleccione un :attribute',
-            'ordinance_type.required' => 'Seleccione un :attribute'
+            'ordinance.required' => 'Seleccione un :attribute'
         ];
     }
 }

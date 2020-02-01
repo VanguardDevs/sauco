@@ -23,11 +23,9 @@
           <table id="tOrdinances" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="20%">Ley</th>
-                <th width="10%">Valor</th>
-                <th width="40%">Descripción</th>
-                <th width="10%">Publicado</th>
-                <th width="10%">Cobro</th>
+                <th width="10%">ID</th>
+                <th width="70%">Descripción</th>
+                <th width="10%">Fecha</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

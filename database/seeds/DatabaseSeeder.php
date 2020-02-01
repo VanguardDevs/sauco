@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(EconomicSectorsTableSeeder::class);
         $this->call(ChargingMethodsTableSeeder::class);
         $this->call(ColorsTableSeeder::class);
+        $this->call(OrdinancesTableSeeder::class);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Ordinances;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrdinancesCreateFormRequest extends FormRequest
+class OrdinancesUpdateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

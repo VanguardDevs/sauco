@@ -193,22 +193,22 @@ Breadcrumbs::for('settings/charging-methods/create', function ($trail) {
     $trail->push('Crear nuevo método de cobro', url('settings/charging-methods/create'));
 });
 
-/*------------- Fine Types -------------*/
-Breadcrumbs::for('settings/ordinances', function ($trail) {
+/*------------- Concepts -------------*/
+Breadcrumbs::for('settings/concepts', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Ordenanzas', url('settings/ordinances'));
+    $trail->push('Conceptos de recaudación', url('settings/concepts'));
 });
 
-/*------------- Fine Types > create -------------*/
-Breadcrumbs::for('settings/ordinances/create', function ($trail) {
-    $trail->parent('settings/ordinances');
-    $trail->push('Crear nueva ordenanza', url('settings/ordinances/create'));
+/*------------- Concepts > create -------------*/
+Breadcrumbs::for('settings/concepts/create', function ($trail) {
+    $trail->parent('settings/concepts');
+    $trail->push('Crear nueva concepto de recaudación', url('settings/concepts/create'));
 });
 
-/*------------- Fine Types > edit -------------*/
-Breadcrumbs::for('settings/ordinances/edit', function ($trail) {
-    $trail->parent('settings/ordinances');
-    $trail->push('Editar ordenanza', url('settings/ordinances/edit'));
+/*------------- Concepts > edit -------------*/
+Breadcrumbs::for('settings/concepts/edit', function ($trail) {
+    $trail->parent('settings/concepts');
+    $trail->push('Editar concepto de recaudación', url('settings/concepts/edit'));
 });
 
 /*------------- Fines -------------*/
@@ -263,4 +263,22 @@ Breadcrumbs::for('commercial-registers', function ($trail) {
 Breadcrumbs::for('commercial-registers/create', function ($trail) {
     $trail->parent('taxpayers');
     $trail->push('Crear inmueble', url('taxpayer/{id}/commercial-registers/create'));
+});
+
+/*------------- Ordinances -------------*/
+Breadcrumbs::for('settings/ordinances', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Ordenanzas', url('settings/ordinances'));
+});
+
+/*------------- Ordinances > create -------------*/
+Breadcrumbs::for('settings/ordinances/create', function ($trail) {
+    $trail->parent('settings/ordinances');
+    $trail->push('Crear nueva ordenanza', url('settings/ordinances/create'));
+});
+
+/*------------- Ordinances > edit -------------*/
+Breadcrumbs::for('settings/ordinances/edit', function ($trail) {
+    $trail->parent('settings/ordinances');
+    $trail->push('Editar ordenanza', url('settings/ordinances/edit'));
 });

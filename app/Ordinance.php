@@ -4,17 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrdinanceType extends Model
+class Ordinance extends Model
 {
-    protected $table = 'ordinance_types';
+    protected $table = 'ordinances';
 
     protected $fillable = [
         'description'
     ];
 
-    public function ordinances()
+    public function concepts()
     {
-        return $this->hasMany(Ordinance::class);
+        return $this->hasMany(Concept::class);
     }
 
     public function getCreatedAtAttribute($value)

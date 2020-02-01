@@ -359,33 +359,6 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tOrdinanceTypes').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/ordinance-types/list",
-        "columns": [
-            { data: 'id'},
-            { data: 'description'},
-            { data: 'created_at'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/settings/ordinance-types/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
     $('#tOrdinances').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
@@ -395,9 +368,36 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/ordinances/list",
         "columns": [
-            { data: 'law'},
+            { data: 'id'},
             { data: 'description'},
+            { data: 'created_at'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/settings/ordinances/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tConcepts').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/concepts/list",
+        "columns": [
+            { data: 'law'},
             { data: 'value'},
+            { data: 'description'},
             { data: 'publication_date'},
             { data: 'charging_method.name'},
             {
@@ -405,7 +405,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/settings/ordinances/${oData.id}/edit title='Editar'>
+                        <a class="mr-2" href=${baseURL}/settings/concepts/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning flaticon-edit'></i>
                         </a>
                     </div>`

@@ -1,9 +1,9 @@
 @extends('layouts.template')
 
-@section('title', 'Control de Tipos de Ordenanzas')
+@section('title', 'Control de Conceptos de Recaudación')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('settings/application-types') }}
+    {{ Breadcrumbs::render('settings/concepts') }}
 @endsection
 
 @section('content')
@@ -13,19 +13,21 @@
       <div class="card card-primary card-outline">
         <div class="card-header alert alert-danger">
           <div class="row">
-            <h5 class="m-0">Control de Tipos de Ordenanzas <b>(</b> <a href="{{ Route("ordinance-types".'.create') }}" title="Registrar comunidad">
+            <h5 class="m-0">Control de Conceptos de Recaudación <b>(</b> <a href="{{ Route("concepts".'.create') }}" title="Registrar comunidad">
                 <span>Registrar</span>
               </a><b>)</b></h5>
           </div>
         </div>
 
         <div class="card-body">
-          <table id="tOrdinanceTypes" class="table table-bordered table-striped datatables" style="text-align: center">
+          <table id="tConcepts" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">ID</th>
-                <th width="70%">Descripción</th>
-                <th width="10%">Fecha</th>
+                <th width="20%">Ley</th>
+                <th width="10%">Valor</th>
+                <th width="40%">Descripción</th>
+                <th width="10%">Publicado</th>
+                <th width="10%">Cobro</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

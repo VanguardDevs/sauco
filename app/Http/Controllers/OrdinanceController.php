@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Ordinance;
 use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Ordinances\OrdinancesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrdinanceController extends Controller
@@ -77,7 +78,9 @@ class OrdinanceController extends Controller
      */
     public function edit(Ordinance $Ordinance)
     {
-        //
+        return view('modules.ordinances.register')
+            ->with('typeForm', 'update')
+            ->with('row', $Ordinance);
     }
 
     /**
@@ -87,9 +90,14 @@ class OrdinanceController extends Controller
      * @param  \App\Ordinance  $Ordinance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ordinance $Ordinance)
+    public function update(OrdinancesUpdateFormRequest $request, Ordinance $Ordinance)
     {
-        //
+        $edit = Ordinance::find($Ordinance->id);
+        $edit->description = $request->input('description');
+        $edit->save();
+
+        return redirect('settings/ordinances')
+            ->withSuccess('¡Ordenanza actualizada!');
     }
 
     /**

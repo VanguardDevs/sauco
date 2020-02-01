@@ -70,9 +70,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers', 'TaxpayerController');
 
     /*----------  Routes ordinance types ----------*/
-    Route::get('ordinance-types/list-all', 'OrdinanceTypeController@listAll')->name('list-ordinance-types');
-    Route::get('ordinance-types/list', 'OrdinanceTypeController@list')->name('list-ordinance-types');
-    Route::resource('settings/ordinance-types', 'OrdinanceTypeController');
+    Route::get('ordinances/list-all', 'OrdinanceController@listAll')->name('list-ordinances');
+    Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
+    Route::resource('settings/ordinances', 'OrdinanceController');
 
     /*----------  Routes applications ----------*/
     Route::get('applications/list', 'ApplicationController@list')->name('list-applications');
@@ -86,9 +86,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('settings/charging-methods', 'ChargingMethodController');
 
     /*----------  Routes Ordinances ----------*/
-    Route::get('ordinances/list-all', 'OrdinanceController@listAll')->name('list-ordinances');
-    Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
-    Route::resource('settings/ordinances', 'OrdinanceController');
+    Route::get('concepts/list-all', 'ConceptController@listAll')->name('list-concepts');
+    Route::get('concepts/list', 'ConceptController@list')->name('list-concepts');
+    Route::resource('settings/concepts', 'ConceptController');
 
     /*----------  Routes fines ----------*/
     Route::get('fines/list', 'FineController@list')->name('list-fines');
