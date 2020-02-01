@@ -24,6 +24,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
     Route::group(['middleware' => ['has.role:admin']], function () {
+        /** General Settings */
+        Route::resource('settings/general', 'SettingsController');
+        Route::post('fiscal-year/new', 'FiscalYearController@store');
+
         /*----------  Routes permissions  ----------*/
         Route::get('permissions/list', 'PermissionController@list');
         Route::resource('administration/permissions', 'PermissionController');
@@ -36,34 +40,35 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('users/list', 'UserController@list');
         Route::resource('administration/users', 'UserController');
 
+        /*----------  Routes Settings > Economic sectors  ----------*/
+        Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
+        Route::resource('settings/economic-sectors', 'EconomicSectorController');
+
+        /*----------  Routes Settings > Tax Units ----------*/
+        Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
+        Route::resource('settings/tax-units', 'TaxUnitController');
+
+        /*----------  Routes economic activities  ----------*/
+        Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
+        Route::resource('economic-activities', 'EconomicActivityController');
     });
 
-    /*----------  Routes parishes  ----------*/
-    Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
-    Route::resource('geographic-area/parishes', 'ParishController');
+    Route::group(['middleware' => 'has.role:admin,analyst'], function () {
+        /*----------  Routes parishes  ----------*/
+        Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
+        Route::resource('geographic-area/parishes', 'ParishController');
 
-    /*----------  Routes communities  ----------*/
-    Route::get('communities/list', 'CommunityController@list')->name('list-communities');
-    Route::resource('geographic-area/communities', 'CommunityController');
-
-    /*----------  Routes Settings > Economic sectors  ----------*/
-    Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
-    Route::resource('settings/economic-sectors', 'EconomicSectorController');
-
-    /*----------  Routes Settings > Tax Units ----------*/
-    Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
-    Route::resource('settings/tax-units', 'TaxUnitController');
-
-    /*----------  Routes economic activities  ----------*/
-    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
-    Route::resource('economic-activities', 'EconomicActivityController');
+        /*----------  Routes communities  ----------*/
+        Route::get('communities/list', 'CommunityController@list')->name('list-communities');
+        Route::resource('geographic-area/communities', 'CommunityController');
+    });
 
     /*----------  Routes representations ----------*/
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
     Route::get('taxpayer/{id}/representation/create', 'RepresentationController@create')->name('create-representation');
     Route::post('taxpayer/{id}/add-representation', 'RepresentationController@store')->name('representation.add');
     Route::post('taxpayer/{id}/update-representation', 'RepresentationController@update')->name('representation.update');
-    Route::resource('representations', 'RepresentationController');
+    Route::resource('representations', 'RepresentationController')->except(['create', 'store']);
 
     /*----------  Routes taxpayers ----------*/
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
@@ -122,8 +127,4 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('taxpayer/{id}/add-commercial-register', 'CommercialRegisterController@store')->name('add-commercial-register');
     Route::get('commercial-registers/list', 'CommercialRegisterController@list')->name('list-commercial-registers');
     Route::resource('commercial-registers', 'CommercialRegisterController');
-
-    /** General Settings */
-    Route::resource('settings/general', 'SettingsController');
-    Route::post('fiscal-year/new', 'FiscalYearController@store');
 });

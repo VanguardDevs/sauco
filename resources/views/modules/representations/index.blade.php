@@ -13,9 +13,7 @@
       <div class="card card-primary card-outline">
         <div class="card-header alert alert-danger">
           <div class="row">
-            <h5 class="m-0">Control de representantes <b>(</b> <a href="{{ Route("representations".'.create') }}" title="Registrar comunidad">
-                <span>Registrar</span>
-              </a><b>)</b></h5>
+            <h5 class="m-0">Control de representantes</h5>
           </div>
         </div>
 

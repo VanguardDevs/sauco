@@ -50,80 +50,82 @@
             </a>
         </li>
 
-        @if(@Auth::user()->hasRole('admin'))
-            <li class="kt-menu__item {{ active('representations*') }}" aria-haspopup="true" >
-                <a  href="{{ url('representations') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-users"></i>
-                <span class="kt-menu__link-text">Representantes</span>
-                </a>
-            </li>
 
-            <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('taxpayers') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
-                <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <i class="kt-menu__link-icon flaticon-network "></i>
-                    <span class="kt-menu__link-text">Contribuyentes</span>
-                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="kt-menu__submenu ">
-                    <span class="kt-menu__arrow"></span>
-                    <ul class="kt-menu__subnav">
-                        <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('taxpayers') }}" class="kt-menu__link ">
+        <li class="kt-menu__item {{ active('representations*') }}" aria-haspopup="true" >
+            <a  href="{{ url('representations') }}" class="kt-menu__link">
+            <i class="kt-menu__link-icon flaticon-users"></i>
+            <span class="kt-menu__link-text">Representantes</span>
+            </a>
+        </li>
+
+        <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('taxpayers') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
+            <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                <i class="kt-menu__link-icon flaticon-network "></i>
+                <span class="kt-menu__link-text">Contribuyentes</span>
+                <i class="kt-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="kt-menu__submenu ">
+                <span class="kt-menu__arrow"></span>
+                <ul class="kt-menu__subnav">
+                    <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
+                        <a  href="{{ url('taxpayers') }}" class="kt-menu__link ">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <span class="kt-menu__link-text">Registro</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('properties') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
+            <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                <i class="kt-menu__link-icon flaticon2-position"></i>
+                <span class="kt-menu__link-text">Inmuebles</span>
+                <i class="kt-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="kt-menu__submenu ">
+                <span class="kt-menu__arrow"></span>
+                <ul class="kt-menu__subnav">
+                    <li class="kt-menu__item {{ active('properties*') }}" aria-haspopup="true" >
+                        <a  href="{{ url('properties') }}" class="kt-menu__link ">
                             <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Registro</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                            <span class="kt-menu__link-text">Listado</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
 
-            <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('properties') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
-                <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <i class="kt-menu__link-icon flaticon2-position"></i>
-                    <span class="kt-menu__link-text">Inmuebles</span>
-                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="kt-menu__submenu ">
-                    <span class="kt-menu__arrow"></span>
-                    <ul class="kt-menu__subnav">
-                        <li class="kt-menu__item {{ active('properties*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('properties') }}" class="kt-menu__link ">
-                                <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                                <span class="kt-menu__link-text">Listado</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
+        @if (@Auth::user()->hasRole('admin'))
             <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
                 <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon-coins"></i>
                 <span class="kt-menu__link-text">Actividades económicas</span>
                 </a>
             </li>
+        @endif
 
-            <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
-                <a  href="{{ url('applications') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-paper-plane-1"></i>
-                <span class="kt-menu__link-text">Solicitudes</span>
-                </a>
-            </li>
+        <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
+            <a  href="{{ url('applications') }}" class="kt-menu__link">
+            <i class="kt-menu__link-icon flaticon-paper-plane-1"></i>
+            <span class="kt-menu__link-text">Solicitudes</span>
+            </a>
+        </li>
 
-            <li class="kt-menu__item {{ active('fines*') }}" aria-haspopup="true" >
-                <a  href="{{ url('fines') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-warning-sign"></i>
-                <span class="kt-menu__link-text">Multas</span>
-                </a>
-            </li>
+        <li class="kt-menu__item {{ active('fines*') }}" aria-haspopup="true" >
+            <a  href="{{ url('fines') }}" class="kt-menu__link">
+            <i class="kt-menu__link-icon flaticon-warning-sign"></i>
+            <span class="kt-menu__link-text">Multas</span>
+            </a>
+        </li>
 
-            <li class="kt-menu__item {{ active('cashbox*') }}" aria-haspopup="true" >
-                <a  href="{{ url('cashbox') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon2-box"></i>
-                <span class="kt-menu__link-text">Caja</span>
-                </a>
-            </li>
-
+        <li class="kt-menu__item {{ active('cashbox*') }}" aria-haspopup="true" >
+            <a  href="{{ url('cashbox') }}" class="kt-menu__link">
+            <i class="kt-menu__link-icon flaticon2-box"></i>
+            <span class="kt-menu__link-text">Caja</span>
+            </a>
+        </li>
+        @if (@Auth::user()->hasRole('admin'))
             <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('geographic-area') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
                 <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <i class="kt-menu__link-icon flaticon-earth-globe "></i>
