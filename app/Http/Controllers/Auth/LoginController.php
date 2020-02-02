@@ -19,7 +19,7 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-   
+
     public function username()
     {
         return 'login';
@@ -45,7 +45,11 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request) {
-      Auth::logout();
-      return redirect('/login');
+        Auth::logout();
+        return redirect('/login');
+    }
+
+    public function index(Request $request) {
+        return view('auth.login');
     }
 }

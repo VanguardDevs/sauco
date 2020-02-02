@@ -12,16 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if (Auth::check()) {
+        return redirect('dashboard');
+    } else {
+        return redirect('login');
+    }
 });
 
 Auth::routes();
 
+Route::get('login', 'Auth\LoginController@index')->name('login');
+Route::get('logout', 'Auth\LoginController@logout');
+
 Route::prefix('/')->middleware('auth')->group(function()
 {
 	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-
-    Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
     Route::group(['middleware' => ['has.role:admin']], function () {
         /** General Settings */
