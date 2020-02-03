@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('dashboard');
@@ -19,8 +21,6 @@ Route::get('/', function () {
     }
 });
 
-Auth::routes();
-
 Route::get('login', 'Auth\LoginController@index')->name('login');
 Route::get('logout', 'Auth\LoginController@logout');
 
@@ -28,7 +28,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 {
 	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-    Route::group(['middleware' => ['has.role:admin']], function () {
+    Route::group(['middleware' => ['has.role:root']], function () {
         /** General Settings */
         Route::resource('settings/general', 'SettingsController');
         Route::post('fiscal-year/new', 'FiscalYearController@store');
@@ -58,7 +58,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('economic-activities', 'EconomicActivityController');
     });
 
-    Route::group(['middleware' => 'has.role:admin,analyst'], function () {
+    Route::group(['middleware' => 'has.role:root,analyst'], function () {
         /*----------  Routes parishes  ----------*/
         Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
         Route::resource('geographic-area/parishes', 'ParishController');

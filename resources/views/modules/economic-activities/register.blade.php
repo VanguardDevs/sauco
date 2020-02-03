@@ -16,10 +16,10 @@
                                 {{ Breadcrumbs::render('economic-activities/create') }}
                             @endsection
                         @else
-                            Editar usuario: {{ @$row->login }}
+                            Editar actividad económica: {{ @$row->login }}
 
                             @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/economic-activities/edit', $row) }}
+                                {{ Breadcrumbs::render('economic-activities/edit', $row) }}
                             @endsection
                         @endif
                         </h3>
@@ -33,17 +33,21 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
+
+                            @if ($typeForm == 'create')
                             <div class="col-lg-3">
                                 <label>Código <span class="text-danger">*</span></label>
 
-                                {!! Form::text('code', old('code', @$row->code), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+                                {!! Form::text('code', null, ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
                                 @error('code')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="col-lg-9">
+                            @else
+                            <div class="col-lg-12">
+                            @endif
                                 <label> Nombre <span class="text-danger">*</span></label>
 
                                 {!! Form::text('name', old('name', @$row->name), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}

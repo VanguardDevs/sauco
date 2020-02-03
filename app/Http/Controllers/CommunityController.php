@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Community;
 use App\Http\Requests\Communities\CommunitiesCreateFormRequest;
+use App\Http\Requests\Communities\CommunitiesUpdateFormRequest;
 use App\Parish;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class CommunityController extends Controller
@@ -83,7 +83,10 @@ class CommunityController extends Controller
      */
     public function edit(Community $community)
     {
-        //
+        return view('modules.communities.register')
+            ->with('typeForm', 'update')
+            ->with('parishes', Parish::pluck('name', 'id'))
+            ->with('row', $community);
     }
 
     /**
@@ -93,9 +96,16 @@ class CommunityController extends Controller
      * @param  \App\Community  $community
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Community $community)
+    public function update(CommunitiesUpdateFormRequest $request, Community $community)
     {
-        //
+        $parishes = $request->input('parishes');
+        $row = Community::find($community->id);
+        $row->name = $request->input('name');
+
+        $row->parishes()->sync($parishes);
+
+        return redirect('geographic-area/communities')
+            ->withSuccess('¡Comunidad actualizada!');
     }
 
     /**

@@ -16,7 +16,7 @@
                                 {{ Breadcrumbs::render('geographic-area/communities/create') }}
                             @endsection
                         @else
-                            Editar usuario: {{ @$row->login }}
+                            Editar comunidad: {{ @$row->name }}
 
                             @section('breadcrumbs')
                                 {{ Breadcrumbs::render('geographic-area/communities/edit', $row) }}
@@ -47,14 +47,14 @@
                             <div class="col-lg-12">
                                 <label>Parroquias <span class="text-danger">*</span></label>
 
-                                <select name="parishes[]" class="form-control multiselect" multiple="multiple">
-                                    <option value="">===== SELECCIONE =====</option>
-                                    @foreach ($parishes as $parish)
-                                        <option value="{{ $parish->id }}" @if(old('parishes') == $parish->id OR @$row->parish->id == $parish->id) selected @endif >
-                                        {{ $parish->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                {!!
+                                    Form::select('parishes[]', $parishes,
+                                    (isset($row->parishes) ? ($row->parishes) : null), [
+                                        'class' => 'col-md-12 form-control select2',
+                                        'placeholder' => ' SELECCIONE ',
+                                        "required", 'multiple'
+                                    ])
+                                !!}
 
                                 @error('parishes')
                                 <div class="text text-danger">{{ $message }}</div>
@@ -67,7 +67,7 @@
                         <div class="kt-form__actions">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="{{ url('administration/users') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
+                                    <a href="{{ url('geographic-area/communities') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
 
                                     @if($typeForm == 'update')
                                         <button type="submit" class="btn btn-primary" id="send">

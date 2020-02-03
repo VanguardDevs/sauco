@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EconomicActivity;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
-use App\Taxpayer;
-use Illuminate\Http\Request;
+use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
 
 class EconomicActivityController extends Controller
@@ -82,7 +81,9 @@ class EconomicActivityController extends Controller
      */
     public function edit(EconomicActivity $economicActivity)
     {
-        //
+        return view('modules.economic-activities.register')
+            ->with('typeForm', 'update')
+            ->with('row', $economicActivity);
     }
 
     /**
@@ -92,9 +93,14 @@ class EconomicActivityController extends Controller
      * @param  \App\EconomicActivity  $economicActivity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EconomicActivity $economicActivity)
+    public function update(EconomicActivitiesUpdateFormRequest $request, EconomicActivity $economicActivity)
     {
-        //
+        $row = EconomicActivity::find($economicActivity->id);
+        $row->fill($request->all())
+            ->save();
+
+        return redirect('economic-activities')
+            ->withSuccess('¡Actividad económica actualizada!');
     }
 
     /**

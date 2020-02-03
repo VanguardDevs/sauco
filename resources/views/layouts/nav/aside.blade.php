@@ -96,7 +96,7 @@
             </div>
         </li>
 
-        @if (@Auth::user()->hasRole('admin'))
+        @if (@Auth::user()->hasRole('root'))
             <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
                 <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon-coins"></i>
@@ -125,7 +125,7 @@
             <span class="kt-menu__link-text">Caja</span>
             </a>
         </li>
-        @if (@Auth::user()->hasRole('admin'))
+        @if (@Auth::user()->hasRole('root'))
             <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('geographic-area') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
                 <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <i class="kt-menu__link-icon flaticon-earth-globe "></i>

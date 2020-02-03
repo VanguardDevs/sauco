@@ -115,14 +115,14 @@
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label>Rol <span class="text-danger">*</span></label>
-                                {!! Form::select('rol', $roles,
-                                    (isset($row->roles) ? ($row->roles->id) : null), [
+
+                                {!! Form::select('roles[]', $roles,
+                                    (isset($row->roles) ? ($row->roles) : null), [
                                         'class'=> 'form-control select2',
                                         'multiple'
                                     ])
                                 !!}
-
-                                @error('rol')
+                                @error('roles')
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

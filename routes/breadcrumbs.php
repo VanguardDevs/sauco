@@ -67,10 +67,10 @@ Breadcrumbs::for('geographic-area/communities/create', function ($trail) {
     $trail->push('Crear comunidad', url('geographic-area/communities/create'));
 });
 
-/*------------- Communities > update -------------*/
-Breadcrumbs::for('geographic-area/communities/update', function ($trail) {
+/*------------- Communities > edit -------------*/
+Breadcrumbs::for('geographic-area/communities/edit', function ($trail) {
     $trail->parent('geographic-area/communities');
-    $trail->push('Editar comunidad', url('geographic-area/communities/update'));
+    $trail->push('Editar comunidad', url('geographic-area/communities/edit'));
 });
 
 /*------------- Economic activities -------------*/
@@ -83,6 +83,12 @@ Breadcrumbs::for('economic-activities', function ($trail) {
 Breadcrumbs::for('economic-activities/create', function ($trail) {
     $trail->parent('economic-activities');
     $trail->push('Crear actividad económica', url('economic-activities/create'));
+});
+
+/*------------- Economic activities > edit -------------*/
+Breadcrumbs::for('economic-activities/edit', function ($trail) {
+    $trail->parent('economic-activities');
+    $trail->push('Editar actividad económica', url('economic-activities/edit'));
 });
 
 /*------------- Economic activities -------------*/
