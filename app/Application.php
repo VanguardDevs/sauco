@@ -15,15 +15,14 @@ class Application extends Model
         'description',
         'object_payment',
         'approved_date',
-        'description',
         'answer_date',
-        'ordinance_id',
+        'concept_id',
         'payment_id'
     ];
 
-    public function ordinance()
+    public function concept()
     {
-        return $this->belongsTo(Ordinance::class);
+        return $this->belongsTo(Concept::class);
     }
 
     public function payment()

@@ -356,11 +356,21 @@
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label>Tipo de solicitud <span class="text-danger">*</span></label>
-                                {!! Form::select("type", [], "SELECCIONE", [
-                                    "id" => "application_types",
+                                {!! Form::select("ordinance", [], "SELECCIONE", [
+                                    "id" => "ordinance",
                                     "class" => "form-control select2"
                                 ]) !!}
                             </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <label>Concepto de recaudación <span class="text-danger">*</span></label>
+                                {!!
+                                    Form::select("concept", [], "SELECCIONE", [
+                                        "id" => 'concepts',
+                                        "class" => "form-control select2"
+                                    ])
+                                !!}
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-12">

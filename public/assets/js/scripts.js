@@ -11,6 +11,7 @@ $("#form").closest('form').on('submit', function(e) {
 /*--------- Select Dinamicos ---------*/
 $(function () {
     $('#parishes').on('change', onSelectParishes);
+    $('#ordinance').on('change', onSelectOrdinance);
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#states').on('change', onSelectStates);
@@ -63,6 +64,21 @@ function onSelectStates() {
     });
 }
 
+function onSelectOrdinance() {
+    let ordinance_id = $(this).val();
+
+    let html_select = '<option value=""> SELECCIONE </option>';
+
+    $.get(`${baseURL}/ordinances/${ordinance_id}/concepts`, data => {
+
+      for (let i = 0; i < data.length; i++) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].description+'</option>'
+      }
+
+      $('#concepts').html(html_select);
+    });
+}
+
 function onSelectBuildingOwner() {
     let selected = $(this).children('option:selected').html();
     let contract = $('#contract');
@@ -82,15 +98,13 @@ function onSelectBuildingOwner() {
 }
 
 function onClickAddApplication() {
-    $.get(baseURL +'/applications/list-types', function (data) {
-        let html_select;
+    $.get(baseURL +'/ordinances/list-all', function (data) {
+        let html_select = '<option value="">===== SELECCIONE =====</option>';
         if (data && data.length) {
             for (let i=0; i<data.length; i++) {
                 html_select += '<option value="'+data[i].id+'">'+data[i].description+'</option>'
             }
-            $('#application_types').html(html_select);
-        } else {
-            $('#application_types').html('<option value="">===== SELECCIONE =====</option>');
+            $('#ordinance').html(html_select);
         }
     });
 }

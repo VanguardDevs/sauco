@@ -22,8 +22,6 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('payment_state_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('concept_id');
-            $table->foreign('concept_id')->references('id')->on('concepts');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('payment_state_id')->references('id')->on('payment_states');

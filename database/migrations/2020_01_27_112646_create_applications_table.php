@@ -15,13 +15,12 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('num');
+            $table->string('num');
             $table->string('object_payment');
-            $table->string('description', 500)->nullable();
             $table->date('answer_date')->nullable();
-            $table->unsignedBigInteger('ordinance_id');
+            $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('payment_id');
-            $table->foreign('ordinance_id')->references('id')->on('ordinances');
+            $table->foreign('concept_id')->references('id')->on('concepts');
             $table->foreign('payment_id')->references('id')->on('payments');
             $table->timestamps();
             $table->softDeletes();

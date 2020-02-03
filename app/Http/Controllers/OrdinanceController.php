@@ -31,6 +31,11 @@ class OrdinanceController extends Controller
         return DataTables::eloquent($query)->toJson();
     }
 
+    public function listAll()
+    {
+        return Ordinance::get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

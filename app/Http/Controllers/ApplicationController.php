@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Application;
-use App\Ordinance;
 use App\Http\Requests\Applications\ApplicationsCreateFormRequest;
 use App\Payment;
+use App\PaymentState;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
-    public function __construct()
+    public function __construct(Payment $payment)
     {
         $this->middleware('auth');
+        $this->payment = $payment;
     }
 
     /**
@@ -25,25 +27,6 @@ class ApplicationController extends Controller
     public function index()
     {
         return view('modules.applications.index');
-    }
-
-    public function list()
-    {
-        $query = Application::query()
-            ->with('payment')
-            ->with('taxpayer')
-            ->orderBy('created_at', 'DESC');
-
-        return DataTables::eloquent($query)->toJson();
-    }
-
-    public function listTypes()
-    {
-        $types = Ordinance::whereHas('ordinanceType', function ($query) {
-            $query->where('description', '=', 'SOLICITUDES');
-        })->get();
-
-        return $types;
     }
 
     /**
@@ -69,6 +52,28 @@ class ApplicationController extends Controller
 
     public function addApplicationTaxpayer(Request $request)
     {
+        if (Payment::lastPayment()->count()) {
+            $lastNum = Payment::lastPayment()->num;
+            $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
+            $payNum = str_pad($newNum,8,"0",STR_PAD_LEFT);
+        } else {
+            $payNum = "00000001";
+        }
+
+        $state = PaymentState::whereDescription('PENDIENTE')->first();
+
+        $payment = new Payment([
+            'num' => $payNum,
+            'amount' => '0',
+            'total_amount' => '0',
+            'description' => '0',
+            'payment_state_id' => $state->id,
+            'taxpayer_id' => $request->input('taxpayer'),
+            'user_id' => Auth::id()
+        ]);
+        $payment->save();
+
+        dd($payment);
         // $ordinance = Ordinance::where('ordinance_type_id', $request->input('type'));
         // dd($ordinance);
 
@@ -89,7 +94,8 @@ class ApplicationController extends Controller
         // ]);
         // $application->save();
 
-        return redirect('taxpayers/'.$request->input('taxpayer'))->withSuccess('¡Solicitud enviada!');
+        // return redirect('taxpayers/'.$request->input('taxpayer'))
+        //     ->withSuccess('¡Solicitud enviada!');
     }
 
     /**

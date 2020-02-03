@@ -15,8 +15,7 @@ class Payment extends Model
         'amount',
         'payment_state_id',
         'taxpayer_id',
-        'user_id',
-        'concept_id'
+        'user_id'
     ];
 
     public function paymentState()
@@ -27,11 +26,6 @@ class Payment extends Model
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);
-    }
-
-    public function concept()
-    {
-        return $this->belongsTo(Concept::class);
     }
 
     public function user()
@@ -57,5 +51,10 @@ class Payment extends Model
     public function economicActivitySettlements()
     {
         return $this->hasMany(EconomicActivitySettlement::class);
+    }
+
+    public function scopeLastPayment($query)
+    {
+        return $query->latest()->first();
     }
 }

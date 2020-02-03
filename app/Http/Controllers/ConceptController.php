@@ -35,6 +35,13 @@ class ConceptController extends Controller
         return DataTables::eloquent($query)->toJson();
     }
 
+    public function byOrdinance($id)
+    {
+        $query = Concept::whereOrdinanceId($id);
+
+        return $query->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
