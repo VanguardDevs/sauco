@@ -33,7 +33,7 @@ class CommunityController extends Controller
     public function create()
     {
         return view('modules.communities.register')
-            ->with('parishes', Parish::get())
+            ->with('parishes', Parish::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 

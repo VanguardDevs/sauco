@@ -50,9 +50,8 @@
                                 {!!
                                     Form::select('parishes[]', $parishes,
                                     (isset($row->parishes) ? ($row->parishes) : null), [
-                                        'class' => 'col-md-12 form-control select2',
-                                        'placeholder' => ' SELECCIONE ',
-                                        "required", 'multiple'
+                                    'class'=>'form-control multiselect',
+                                    'multiple', 'required'
                                     ])
                                 !!}
 

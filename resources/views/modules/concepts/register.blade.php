@@ -67,8 +67,6 @@
                                     "required"
                                 ]) !!}
 
-                                {{ $row->chargingMethod }}
-
                                 @error('charging_method')
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
