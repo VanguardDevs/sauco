@@ -21,12 +21,10 @@ class CreatePaymentsTable extends Migration
             $table->float('total_amount', 20, 2);
             $table->unsignedBigInteger('payment_state_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('month_id');
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('concept_id');
             $table->foreign('concept_id')->references('id')->on('concepts');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
-            $table->foreign('month_id')->references('id')->on('months');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('payment_state_id')->references('id')->on('payment_states');
             $table->timestamps();

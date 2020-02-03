@@ -23,8 +23,8 @@ class UsersTableSeeder extends Seeder
         ]);
 
         Role::create([
-            'name'     =>  'ADMIN',
-            'slug'     =>  'admin',
+            'name'     =>  'ROOT',
+            'slug'     =>  'root',
             'special'  =>  'all-access'
         ]);
         /**

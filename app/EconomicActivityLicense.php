@@ -12,19 +12,31 @@ class EconomicActivityLicense extends Model
     protected $table = 'economic_activity_licenses';
 
     protected $fillable = [
+        'num',
         'emission_date',
         'expiration_date',
-        'license_id',
-        'correlative_id'
+        'taxpayer_id',
+        'correlative_id',
+        'license_state_id'
     ];
 
-    public function license()
+    public function taxpayer()
     {
-        return $this->belongsTo(License::class);
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function correlative()
     {
         return $this->belongsTo(Correlative::class);
+    }
+
+    public function licenseState()
+    {
+        return $this->belongsTo(LicenseState::class);
+    }
+
+    public function economicActivitySettlements()
+    {
+        return $this->hasMany(EconomicActivitySettlement::class);
     }
 }

@@ -16,7 +16,6 @@ class Payment extends Model
         'payment_state_id',
         'taxpayer_id',
         'user_id',
-        'month_id',
         'concept_id'
     ];
 
@@ -28,11 +27,6 @@ class Payment extends Model
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);
-    }
-
-    public function month()
-    {
-        return $this->belongsTo(Month::class);
     }
 
     public function concept()
@@ -60,8 +54,8 @@ class Payment extends Model
         return $this->hasMany(Fine::class);
     }
 
-    public function settlements()
+    public function economicActivitySettlements()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->hasMany(EconomicActivitySettlement::class);
     }
 }
