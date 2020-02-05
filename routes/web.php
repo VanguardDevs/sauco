@@ -131,4 +131,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('taxpayer/{id}/add-commercial-register', 'CommercialRegisterController@store')->name('add-commercial-register');
     Route::get('commercial-registers/list', 'CommercialRegisterController@list')->name('list-commercial-registers');
     Route::resource('commercial-registers', 'CommercialRegisterController');
+
+    /**---------- Routes Payments ----------*/
+    Route::get('cashbox/list', 'PaymentController@list');
+    Route::resource('payments', 'PaymentController');
 });

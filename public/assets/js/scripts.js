@@ -709,4 +709,33 @@ $(document).ready(function() {
             }
         ]
     });
+
+    $('#tCashbox').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/cashbox/list",
+        "columns": [
+            { data: 'num'},
+            { data: 'payment_state.description'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>
+                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                        </a>
+                        <a class="mr-2" href=${baseURL}/payments/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
 });

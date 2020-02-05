@@ -294,3 +294,9 @@ Breadcrumbs::for('settings/ordinances/edit', function ($trail) {
     $trail->parent('settings/ordinances');
     $trail->push('Editar ordenanza', url('settings/ordinances/edit'));
 });
+
+/*------------- Cashbox -------------*/
+Breadcrumbs::for('cashbox', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Caja', url('cashbox'));
+});

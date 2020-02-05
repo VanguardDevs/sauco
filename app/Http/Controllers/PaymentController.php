@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentController extends Controller
 {
@@ -19,7 +20,15 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.cashbox.index');
+    }
+
+    public function list()
+    {
+        $query = Payment::query()
+            ->with('paymentState');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -85,6 +94,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        $payment->delete();
     }
 }

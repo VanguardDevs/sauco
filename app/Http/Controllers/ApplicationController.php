@@ -77,6 +77,9 @@ class ApplicationController extends Controller
             $settlementNum = "00000001";
         }
 
+        /**
+         * Step 2: Look for data
+         */
         $concept = Concept::find($request->input('concept'));
         $state = PaymentState::whereDescription('PENDIENTE')->first();
         $type = PaymentType::whereDescription('S/N')->first();
