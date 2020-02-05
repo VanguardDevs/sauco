@@ -36,6 +36,11 @@ class Concept extends Model
         return $this->hasMany(Requisite::class);
     }
 
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
+    }
+
     public function setPublicationDateAttribute($value)
     {
         $this->attributes['publication_date'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();

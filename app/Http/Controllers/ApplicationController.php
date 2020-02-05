@@ -6,6 +6,12 @@ use App\Application;
 use App\Http\Requests\Applications\ApplicationsCreateFormRequest;
 use App\Payment;
 use App\PaymentState;
+use App\PaymentType;
+use App\Concept;
+use App\Month;
+use App\Taxpayer;
+use App\Settlement;
+use App\TaxUnit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +58,9 @@ class ApplicationController extends Controller
 
     public function addApplicationTaxpayer(Request $request)
     {
+        /**
+         * Step 1: Look for settlement and payment num
+         */
         if (Payment::lastPayment()->count()) {
             $lastNum = Payment::lastPayment()->num;
             $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
@@ -60,42 +69,59 @@ class ApplicationController extends Controller
             $payNum = "00000001";
         }
 
-        $state = PaymentState::whereDescription('PENDIENTE')->first();
+        if (Settlement::lastSettlement()->count()) {
+            $lastNum = Settlement::lastSettlement()->num;
+            $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
+            $settlementNum = str_pad($newNum,8,"0",STR_PAD_LEFT);
+        } else {
+            $settlementNum = "00000001";
+        }
 
-        $payment = new Payment([
+        $concept = Concept::find($request->input('concept'));
+        $state = PaymentState::whereDescription('PENDIENTE')->first();
+        $type = PaymentType::whereDescription('S/N')->first();
+        $taxpayer = Taxpayer::find($request->input('taxpayer'));
+        $month = Month::find(Carbon::now()->month);
+        $currentUT = TaxUnit::latest()->first();
+
+        /**
+         * Step 3: Check if concept is for Economic Activity License OR has charging Method as U.T
+         */
+        if ($concept->chargingMethod->name == 'U.T' && $currentUT->value) {
+            $amount = $concept->value * $currentUT->value;
+        } elseif ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
+            $amount = $taxpayer->capital * $concept->value;
+        } else {
+            return redirect()->back()->withError('¡Error!');
+        }
+
+        /**
+         * Make a payment
+         */
+        $payment = Payment::create([
             'num' => $payNum,
-            'amount' => '0',
-            'total_amount' => '0',
-            'description' => '0',
+            'amount' => $amount,
+            'total_amount' => $amount,
             'payment_state_id' => $state->id,
-            'taxpayer_id' => $request->input('taxpayer'),
+            'payment_type_id' => $type->id,
             'user_id' => Auth::id()
         ]);
-        $payment->save();
 
-        dd($payment);
-        // $ordinance = Ordinance::where('ordinance_type_id', $request->input('type'));
-        // dd($ordinance);
+        /**
+         * Make a settlement
+         */
+        $settlement = new Settlement([
+            'num' => $settlementNum,
+            'amount' => $amount,
+            'payment_id' => $payment->id,
+            'taxpayer_id' => $taxpayer->id,
+            'month_id' => $month->id,
+            'concept_id' => $concept->id
+        ]);
+        $settlement->save();
 
-        // $payment = new Payment([
-        //     'num' => ,
-        //     'total_amount' => ,
-        //     'amount' => ,
-        //     'payment_state_id' => ,
-        //     'taxpayer_id' => ,
-        //     'user_id' => ,
-        //     'month_id'
-        // ]);
-
-        // $application = new Application([
-        //     'num' => '',
-        //     'object_payment' => $request->input('description'),
-        //     'taxpayer_id' => $request->input('taxpayer')
-        // ]);
-        // $application->save();
-
-        // return redirect('taxpayers/'.$request->input('taxpayer'))
-        //     ->withSuccess('¡Solicitud enviada!');
+        return redirect('taxpayers/'.$request->input('taxpayer'))
+            ->withSuccess('¡Solicitud enviada!');
     }
 
     /**

@@ -20,6 +20,8 @@ class CreateSettlementsTable extends Migration
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('concept_id');
+            $table->unsignedBigInteger('month_id');
+            $table->foreign('month_id')->references('id')->on('months');
             $table->foreign('payment_id')->references('id')->on('payments');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('concept_id')->references('id')->on('concepts');

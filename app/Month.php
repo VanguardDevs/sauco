@@ -22,9 +22,4 @@ class Month extends Model
     {
         return $this->hasMany(Settlement::class);
     }
-
-    public function months()
-    {
-        return $this->hasMany(Month::class);
-    }
 }

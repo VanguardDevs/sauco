@@ -6,7 +6,8 @@ use Illuminate\Database\Seeder;
 class OrdinancesTableSeeder extends Seeder
 {
     protected $names = Array(
-        'ACTIVIDAD ECONÓMICA'
+        'ACTIVIDAD ECONÓMICA',
+        'INMUEBLES',
     );
 
     /**
