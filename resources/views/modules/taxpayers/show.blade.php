@@ -154,7 +154,7 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Representante</h3>
+                            <h3 class="kt-portlet__head-title">Representante(s)</h3>
                         </div>
                         <div class="kt-portlet__head-toolbar">
                             @if(is_null($row->representation))
@@ -371,6 +371,7 @@
                                         "class" => "form-control select2"
                                     ])
                                 !!}
+                            </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-12">

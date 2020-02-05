@@ -13,18 +13,16 @@ class CreateEconomicActivitySettlementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('economic_activity_settlements', function (Blueprint $table) {
+        Schema::create('settlements', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('num');
-            $table->string('description', 140);
-            $table->unsignedBigInteger('economic_activity_id');
-            $table->unsignedBigInteger('month_id');
+            $table->string('amount');
+            $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('payment_id');
-            $table->unsignedBigInteger('economic_activity_license_id');
-            $table->foreign('economic_activity_license_id', 'license_id')->references('id')->on('economic_activity_licenses');
+            $table->unsignedBigInteger('concept_id');
             $table->foreign('payment_id')->references('id')->on('payments');
-            $table->foreign('month_id')->references('id')->on('months');
-            $table->foreign('economic_activity_id')->references('id')->on('economic_activities');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
+            $table->foreign('concept_id')->references('id')->on('concepts');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -37,6 +35,6 @@ class CreateEconomicActivitySettlementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('economic_activity_settlements');
+        Schema::dropIfExists('settlements');
     }
 }

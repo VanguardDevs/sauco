@@ -18,9 +18,9 @@ class Month extends Model
         return $this->belongsTo(FiscalYear::class);
     }
 
-    public function payments()
+    public function settlements()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Settlement::class);
     }
 
     public function months()

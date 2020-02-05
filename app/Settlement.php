@@ -9,20 +9,20 @@ class EconomicActivitySettlement extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'economic_activity_settlements';
+    protected $table = 'settlements';
 
     protected $fillable = [
         'num',
-        'description',
+        'amount',
         'payment_id',
-        'economic_activity_id',
-        'economic_activity_license_id',
+        'concept_id',
+        'taxpayer_id',
         'month_id'
     ];
 
-    public function economicActivity()
+    public function taxpayer()
     {
-        return $this->belongsTo(EconomicActivity::class);
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function month()
@@ -35,8 +35,13 @@ class EconomicActivitySettlement extends Model
         return $this->belongsTo(Payment::class);
     }
 
-    public function economicActivityLicense()
+    public function concept()
     {
-        return $this->belongsTo(EconomicActivityLicense::class);
+        return $this->belongsTo(Concept::class);
+    }
+
+    public function scopeLastSettlement($query)
+    {
+        return $query->latest()->first();
     }
 }

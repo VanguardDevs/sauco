@@ -17,12 +17,7 @@ class CreateFinesTable extends Migration
     {
         Schema::create('fines', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('num');
-            $table->string('observations', 500)->nullable();
-            // $table->date('answer_date')->nullable();
-            $table->unsignedBigInteger('ordinance_id');
             $table->unsignedBigInteger('payment_id');
-            $table->foreign('ordinance_id')->references('id')->on('ordinances');
             $table->foreign('payment_id')->references('id')->on('payments');
             $table->softDeletes();
             $table->timestamps();

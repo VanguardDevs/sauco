@@ -16,14 +16,8 @@ class Application extends Model
         'object_payment',
         'approved_date',
         'answer_date',
-        'concept_id',
         'payment_id'
     ];
-
-    public function concept()
-    {
-        return $this->belongsTo(Concept::class);
-    }
 
     public function payment()
     {

@@ -13,20 +13,8 @@ class Fine extends Model
 
     protected $fillable = [
         'observations',
-        'fine_type_id',
-        'fine_state_id',
         'payment_id'
     ];
-
-    public function fineType()
-    {
-        return $this->belongsTo(FineType::class);
-    }
-
-    public function fineState()
-    {
-        return $this->belongsTo(FineState::class);
-    }
 
     public function payment()
     {

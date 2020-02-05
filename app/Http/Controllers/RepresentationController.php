@@ -42,6 +42,11 @@ class RepresentationController extends Controller
     {
         $taxpayer = Taxpayer::find($id);
 
+        if ($taxpayer->taxpayerType->description != 'JURÍDICO') {
+            return redirect('taxpayers/'.$id)
+                ->withError('¡Este contribuyente no admite un representante!');
+        }
+
         return view('modules.representations.register')
             ->with('citizenships', Citizenship::pluck('description', 'id'))
             ->with('taxpayer', $taxpayer)
