@@ -726,6 +726,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/payments/${oData.id}/ title='Ver factura'>
+                            <i class='btn-sm btn-info flaticon2-file'></i>
+                        </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>
                             <i class='btn-sm btn-danger flaticon-delete'></i>
                         </a>

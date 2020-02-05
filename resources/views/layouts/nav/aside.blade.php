@@ -105,7 +105,7 @@
             </li>
         @endif
 
-        <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
+        {{-- <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
             <a  href="{{ url('applications') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-paper-plane-1"></i>
             <span class="kt-menu__link-text">Solicitudes</span>
@@ -117,10 +117,10 @@
             <i class="kt-menu__link-icon flaticon-warning-sign"></i>
             <span class="kt-menu__link-text">Multas</span>
             </a>
-        </li>
+        </li> --}}
 
-        <li class="kt-menu__item {{ active('cashbox*') }}" aria-haspopup="true" >
-            <a  href="{{ url('cashbox') }}" class="kt-menu__link">
+        <li class="kt-menu__item {{ active('payments*') }}" aria-haspopup="true" >
+            <a  href="{{ url('payments') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon2-box"></i>
             <span class="kt-menu__link-text">Caja</span>
             </a>
@@ -244,6 +244,12 @@
                         </li>
                     </ul>
                 </div>
+            </li>
+            <li class="kt-menu__item {{ active('about*') }}" aria-haspopup="true" >
+                <a  href="{{ url('about') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon flaticon-information"></i>
+                <span class="kt-menu__link-text">Acerca de</span>
+                </a>
             </li>
         @endif
     </ul>

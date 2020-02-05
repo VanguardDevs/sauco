@@ -68,6 +68,16 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('geographic-area/communities', 'CommunityController');
     });
 
+    Route::group(['middleware' => 'has.role:root,operator,suboperator'], function() {
+        /**---------- Routes Payments ----------*/
+        Route::get('cashbox/list', 'PaymentController@list');
+        Route::resource('payments', 'PaymentController');
+    });
+
+    Route::group(['middleware' => 'has.role:root'], function () {
+        Route::resource('about', 'AboutController');
+    });
+
     /*----------  Routes representations ----------*/
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
     Route::get('taxpayer/{id}/representation/create', 'RepresentationController@create')->name('create-representation');

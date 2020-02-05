@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Payment;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
-class PaymentController extends Controller
+class AboutController extends Controller
 {
     public function __construct()
     {
@@ -20,15 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return view('modules.payments.index');
-    }
-
-    public function list()
-    {
-        $query = Payment::query()
-            ->with('paymentState');
-
-        return DataTables::eloquent($query)->toJson();
+        return view('modules.about.index');
     }
 
     /**
@@ -55,22 +45,21 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Payment  $payment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show($id)
     {
-        return view('modules.payments.show')
-            ->with('row', $payment);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Payment  $payment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payment $payment)
+    public function edit($id)
     {
         //
     }
@@ -79,10 +68,10 @@ class PaymentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payment  $payment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -90,11 +79,11 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Payment  $payment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy($id)
     {
-        $payment->delete();
+        //
     }
 }

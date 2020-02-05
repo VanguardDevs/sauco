@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
+use App\Taxpayer;
+use App\Payment;
 
 class DashboardController extends Controller
 {
@@ -14,6 +14,11 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('modules.dashboard.index');
+        $taxpayerCount = Taxpayer::count();
+        $settlementCount = Payment::count();
+
+        return view('modules.dashboard.index')
+            ->with('taxpayerCount', $taxpayerCount)
+            ->with('settlementCount', $settlementCount);
     }
 }

@@ -1,6 +1,6 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Unidades Tributarias')
+@section('title', 'Pagos')
 
 @section('form')
     <div class="row">
@@ -10,16 +10,16 @@
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
-                            Registro de Unidades Tributarias
+                            Pago {{ @$row->num }}
 
                             @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/tax-units/create') }}
+                                {{ Breadcrumbs::render('settings/payments/create') }}
                             @endsection
                         @else
                             Editar usuario: {{ @$row->login }}
 
                             @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/tax-units/edit', $row) }}
+                                {{ Breadcrumbs::render('settings/payments/edit', $row) }}
                             @endsection
                         @endif
                         </h3>
@@ -27,9 +27,9 @@
                 </div>
                 <!--begin::Form-->
                 @if ($typeForm == 'create')
-                    {!! Form::open(['route' => "tax-units".'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::open(['route' => "payments".'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
-                    {!! Form::model($row, ['route' => ["tax-units".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::model($row, ['route' => ["payments".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
@@ -67,12 +67,12 @@
                         <div class="kt-form__actions">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="{{ url('administration/users') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
+                                    <a href="{{ url('payments') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
 
                                     @if($typeForm == 'update')
                                         <button type="submit" class="btn btn-primary" id="send">
-                                                <i class="flaticon-refresh"></i>
-                                                Actualizar
+                                            <i class="flaticon-refresh"></i>
+                                            Actualizar
                                         </button>
                                     @else
                                         <button type="submit" class="btn btn-primary" id="send">
