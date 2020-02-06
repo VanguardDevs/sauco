@@ -110,7 +110,7 @@ class PaymentController extends Controller
         }
         $payment->save();
 
-        return redirect('payments');
+        return redirect('payments')->withSuccess('¡Liquidación pagada!');
     }
 
     /**

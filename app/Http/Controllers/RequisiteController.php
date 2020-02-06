@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Concept;
+use App\Http\Requests\Requisites\RequisitesCreateFormRequest;
 use App\Requisite;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class RequisiteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,15 @@ class RequisiteController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.requisites.index');
+    }
+
+    public function list()
+    {
+        $query = Requisite::query()
+            ->with('concept');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -24,7 +40,9 @@ class RequisiteController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.requisites.register')
+            ->with('typeForm', 'create')
+            ->with('concepts', Concept::pluck('description', 'id'));
     }
 
     /**
@@ -33,9 +51,16 @@ class RequisiteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequisitesCreateFormRequest $request)
     {
-        //
+        $requisite = new Requisite([
+            'description' => $request->input('description'),
+            'concept_id' => $request->input('concept')
+        ]);
+        $requisite->save();
+
+        return redirect('settings/requisites')
+            ->with('¡Requisito creado!');
     }
 
     /**

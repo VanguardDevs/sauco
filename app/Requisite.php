@@ -9,7 +9,7 @@ class Requisite extends Model
     protected $table = 'requisites';
 
     protected $fillable = [
-        'name',
+        'description',
         'concept_id'
     ];
 

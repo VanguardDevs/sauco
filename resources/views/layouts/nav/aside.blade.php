@@ -242,6 +242,12 @@
                             <span class="kt-menu__link-text">Cuentas bancarias</span>
                             </a>
                         </li>
+                        <li class="kt-menu__item {{ active('settings/requisites*') }}" aria-haspopup="true" >
+                            <a  href="{{ url('settings/requisites') }}" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">Requisitos</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

@@ -15,10 +15,11 @@ class CreateRequisitesTable extends Migration
     {
         Schema::create('requisites', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('description');
             $table->unsignedBigInteger('concept_id');
             $table->foreign('concept_id')->references('id')->on('concepts');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

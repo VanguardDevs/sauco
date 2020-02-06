@@ -680,6 +680,32 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tRequisites').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/requisites/list",
+        "columns": [
+            { data: 'description'},
+            { data: 'concept.description'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/settings/requisites/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
     $('#tProperties').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
