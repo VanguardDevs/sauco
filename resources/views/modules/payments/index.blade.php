@@ -3,7 +3,7 @@
 @section('title', 'Caja')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('cashbox') }}
+    {{ Breadcrumbs::render('payments') }}
 @endsection
 
 @section('content')

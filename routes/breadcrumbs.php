@@ -296,7 +296,14 @@ Breadcrumbs::for('settings/ordinances/edit', function ($trail) {
 });
 
 /*------------- Cashbox -------------*/
-Breadcrumbs::for('cashbox', function ($trail) {
+Breadcrumbs::for('payments', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Caja', url('cashbox'));
+    $trail->push('Caja', url('payments'));
 });
+
+/*------------- Payments > edit -------------*/
+Breadcrumbs::for('payments/edit', function ($trail) {
+    $trail->parent('payments');
+    $trail->push('Procesar liquidación', url('payments/edit'));
+});
+

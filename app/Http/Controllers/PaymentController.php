@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\BankAccount;
 use App\Payment;
+use App\PaymentState;
+use App\PaymentType;
+use App\Reference;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -60,8 +64,13 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
+        $paymentTypes = PaymentType::exceptNull();
+
         return view('modules.payments.show')
-            ->with('row', $payment);
+            ->with('row', $payment)
+            ->with('paymentTypes', $paymentTypes)
+            ->with('bankAccounts', BankAccount::pluck('bank_name', 'id'))
+            ->with('typeForm', 'update');
     }
 
     /**
@@ -84,7 +93,24 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        //
+        $paymentState = PaymentState::whereDescription('PAGADA')->first();
+        $paymentType = PaymentType::whereId($request->input('payment_type'))->first();
+
+        $payment = Payment::find($payment->id);
+        $payment->payment_state_id = $paymentState->id;
+        $payment->payment_type_id = $paymentType->id;
+
+        if ($paymentType->description != 'DEPÓSITO') {
+            $reference = new Reference([
+                'reference' => '',
+                'bank_account_id' => $request->input('bank_account'),
+                'payment_id' => $payment->id
+            ]);
+            $reference->save();
+        }
+        $payment->save();
+
+        return redirect('payments');
     }
 
     /**

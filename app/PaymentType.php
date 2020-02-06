@@ -16,4 +16,9 @@ class PaymentType extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function scopeExceptNull($query)
+    {
+        return $query->where('description', '!=', 'S/N')->pluck('description', 'id');
+    }
 }
