@@ -57,7 +57,7 @@ class Payment extends Model
 
     public function taxpayer()
     {
-        return $this->hasOneThrough(Taxpayer::class, Settlement::class);
+        return $this->belongsTo(Taxpayer::class, Settlement::class);
     }
 
     public function scopeLastPayment($query)

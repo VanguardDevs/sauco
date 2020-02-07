@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 class LicenseStatesTableSeeder extends Seeder
 {
     private $states = Array(
-        'INACTIVA', 'ACTIVA'
+        'PENDIENTE', 'INACTIVA', 'ACTIVA'
     );
 
     /**

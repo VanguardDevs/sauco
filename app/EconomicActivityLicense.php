@@ -12,7 +12,6 @@ class EconomicActivityLicense extends Model
     protected $table = 'economic_activity_licenses';
 
     protected $fillable = [
-        'num',
         'emission_date',
         'expiration_date',
         'taxpayer_id',

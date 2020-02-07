@@ -31,6 +31,7 @@ class PaymentController extends Controller
     {
         $query = Payment::query()
             ->with('paymentState');
+            // ->with('taxpayer');
 
         return DataTables::eloquent($query)->toJson();
     }

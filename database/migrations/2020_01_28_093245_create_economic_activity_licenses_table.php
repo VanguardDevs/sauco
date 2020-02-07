@@ -15,12 +15,13 @@ class CreateEconomicActivityLicensesTable extends Migration
     {
         Schema::create('economic_activity_licenses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('num');
             $table->date('emission_date');
             $table->date('expiration_date');
             $table->unsignedBigInteger('correlative_id');
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('license_state_id');
+            $table->unsignedBigInteger('settlement_id');
+            $table->foreign('settlement_id')->references('id')->on('settlements');
             $table->foreign('license_state_id')->references('id')->on('license_states');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('correlative_id')->references('id')->on('correlatives');

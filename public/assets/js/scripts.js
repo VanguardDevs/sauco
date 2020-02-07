@@ -210,7 +210,7 @@ $(document).ready(function() {
     /*----------  Datatables users  ----------*/
     $('#tUsers').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -239,7 +239,7 @@ $(document).ready(function() {
 
     $('#tPermissions').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -266,7 +266,7 @@ $(document).ready(function() {
 
     $('#tRoles').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -293,7 +293,7 @@ $(document).ready(function() {
 
     $('#tCommunities').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -321,7 +321,7 @@ $(document).ready(function() {
 
     $('#tParishes').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -347,7 +347,7 @@ $(document).ready(function() {
     /*----------  Datatables Economic sectors  ----------*/
     $('#tEconomicSectors').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -377,7 +377,7 @@ $(document).ready(function() {
     /*----------  Datatables Economic Activities  ----------*/
     $('#tEconomicActivities').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -409,7 +409,7 @@ $(document).ready(function() {
     /*----------  Datatables Representations  ----------*/
     $('#tRepresentations').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -441,7 +441,7 @@ $(document).ready(function() {
 
     $('#tTaxpayers').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -468,7 +468,7 @@ $(document).ready(function() {
 
     $('#tOrdinances').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -495,7 +495,7 @@ $(document).ready(function() {
 
     $('#tConcepts').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -524,7 +524,7 @@ $(document).ready(function() {
 
     $('#tTaxUnits').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -540,7 +540,7 @@ $(document).ready(function() {
 
     $('#tChargingMethods').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -555,7 +555,7 @@ $(document).ready(function() {
 
     $('#tApplications').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -590,7 +590,7 @@ $(document).ready(function() {
 
     $('#tFines').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -622,7 +622,7 @@ $(document).ready(function() {
 
     $('#tBankAccounts').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -654,7 +654,7 @@ $(document).ready(function() {
 
     $('#tPropertyTypes').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -682,7 +682,7 @@ $(document).ready(function() {
 
     $('#tRequisites').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -708,7 +708,7 @@ $(document).ready(function() {
 
     $('#tProperties').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -738,7 +738,7 @@ $(document).ready(function() {
 
     $('#tCashbox').DataTable({
         "order": [[0, "asc"]],
-        "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
@@ -747,6 +747,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'num'},
             { data: 'payment_state.description'},
+            { data: 'total_amount'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
