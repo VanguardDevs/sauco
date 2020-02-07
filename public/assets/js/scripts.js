@@ -562,9 +562,9 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/applications/list",
         "columns": [
-            { data: 'id'},
+            { data: 'settlement.num'},
             { data: 'taxpayer.rif'},
-            { data: 'application_type.description'},
+            { data: 'taxpayer.name'},
             { data: 'application_state.description'},
             { data: 'created_at'},
             {
@@ -572,14 +572,8 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" onClick='checkRecord(${oData.id})' title='Eliminar'>
-                            <i class='btn-sm btn-success flaticon2-checkmark'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'applications')" title='Eliminar'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        <a class="mr-2" href=${baseURL}/applications/${oData} title='Editar'>
+                            <i class='btn-sm btn-info flaticon-doc'></i>
                         </a>
                     </div>`
                     );

@@ -15,6 +15,7 @@ class CreateEconomicActivityLicensesTable extends Migration
     {
         Schema::create('economic_activity_licenses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('num');
             $table->date('emission_date');
             $table->date('expiration_date');
             $table->unsignedBigInteger('correlative_id');

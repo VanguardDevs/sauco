@@ -10,6 +10,7 @@ use App\PaymentState;
 use App\PaymentType;
 use App\Concept;
 use App\Month;
+use App\OldLicense;
 use App\Taxpayer;
 use App\Settlement;
 use App\TaxUnit;
@@ -34,6 +35,16 @@ class ApplicationController extends Controller
     public function index()
     {
         return view('modules.applications.index');
+    }
+
+    public function list()
+    {
+        $query = Application::query()
+            ->with('taxpayer')
+            ->with('settlement')
+            ->with('applicationState');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
@@ -126,7 +137,8 @@ class ApplicationController extends Controller
 
         $application = new Application([
             'settlement_id' => $settlement->id,
-            'application_state_id' => $applicationState->id
+            'application_state_id' => $applicationState->id,
+            'taxpayer_id' => $taxpayer->id
         ]);
         $application->save();
 
@@ -142,7 +154,16 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        //
+        $concept = $application->settlement->concept->description;
+        $taxpayer = $application->taxpayer;
+        $oldLicense = OldLicense::whereRif($taxpayer->rif)->first();
+
+        if ($concept == "SOLICITUD DE RENOVACION DE LICENCIA DE ACTIVIDADES ECONOMICAS") {
+            return view('modules.applications.register')
+                ->with('typeForm', 'old-license')
+                ->with('row', $oldLicense)
+                ->with('taxpayer', $taxpayer);
+        }
     }
 
     /**

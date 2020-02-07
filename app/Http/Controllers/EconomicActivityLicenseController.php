@@ -74,6 +74,9 @@ class EconomicActivityLicenseController extends Controller
             'settlement_id' => '1'
         ]);
         $license->save();
+
+        return redirect('applications')
+            ->withSucces('¡Licencia aprobada!');
     }
 
     /**
@@ -82,9 +85,14 @@ class EconomicActivityLicenseController extends Controller
      * @param  \App\EconomicActivityLicense  $economicActivityLicense
      * @return \Illuminate\Http\Response
      */
-    public function show(EconomicActivityLicense $economicActivityLicense)
+    public function show($economicActivityLicense, $taxpayer)
     {
-        //
+        $taxpayer = Taxpayer::find($taxpayer);
+        $economicActivityLicense = EconomicActivityLicense::find($economicActivityLicense);
+
+        return view('modules.licenses.show')
+            ->with('row', $economicActivityLicense)
+            ->with('taxpayer', $taxpayer);
     }
 
     /**

@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 class ApplicationStatesTableSeeder extends Seeder
 {
     protected $states = Array(
-        'APROBADA', 'DENEGADA'
+        'APROBADA', 'DENEGADA', 'PENDIENTE'
     );
 
     /**

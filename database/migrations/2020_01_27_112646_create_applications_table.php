@@ -18,6 +18,8 @@ class CreateApplicationsTable extends Migration
             $table->date('answer_date')->nullable();
             $table->unsignedBigInteger('settlement_id');
             $table->unsignedBigInteger('application_state_id');
+            $table->unsignedBigInteger('taxpayer_id');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->foreign('application_state_id')->references('id')->on('application_states');
             $table->foreign('settlement_id')->references('id')->on('settlements');
             $table->timestamps();

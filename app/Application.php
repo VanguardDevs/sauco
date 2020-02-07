@@ -14,7 +14,8 @@ class Application extends Model
     protected $fillable = [
         'answer_date',
         'application_state_id',
-        'settlement_id'
+        'settlement_id',
+        'taxpayer_id'
     ];
 
     public function settlement()
@@ -25,6 +26,11 @@ class Application extends Model
     public function applicationState()
     {
         return $this->belongsTo(ApplicationState::class);
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function getCreatedAtAttribute($value)
