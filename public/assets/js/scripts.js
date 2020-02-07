@@ -1,4 +1,4 @@
-const baseURL = window.location.origin;
+const baseURL = $('#base_url').val();
 
 /*Fuction disable button before sumit*/
 $("#form").closest('form').on('submit', function(e) {
