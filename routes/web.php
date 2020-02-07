@@ -81,7 +81,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /*----------  Routes representations ----------*/
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
     Route::get('taxpayer/{id}/representation/create', 'RepresentationController@create')->name('create-representation');
-    Route::post('taxpayer/{id}/add-representation', 'RepresentationController@store')->name('representation.add');
+    Route::post('taxpayer/{id}/add-representation', 'RepresentationController@store')->name('add-representation');
     Route::post('taxpayer/{id}/update-representation', 'RepresentationController@update')->name('representation.update');
     Route::resource('representations', 'RepresentationController')->except(['create', 'store']);
 
@@ -149,4 +149,14 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**---------- Routes Requisites ----------*/
     Route::get('requisites/list', 'RequisiteController@list');
     Route::resource('settings/requisites', 'RequisiteController');
+
+    /**---------- Routes Old Licenses ----------*/
+    Route::get('old-licenses/list', 'OldLicenseController@list');
+    Route::resource('old-licenses', 'OldLicenseController');
+
+    /**
+     * Renew Licenses
+     */
+    Route::post('economic-activity-license/renew-2019/{id}/{taxpayerID}', 'EconomicActivityLicenseController@renewOldLicense')->name('old-license-renew');
+    Route::resource('economic-activity-licenses', 'EconomicActivityLicenseController');
 });

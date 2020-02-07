@@ -307,3 +307,9 @@ Breadcrumbs::for('payments/edit', function ($trail) {
     $trail->push('Procesar liquidación', url('payments/edit'));
 });
 
+/*------------- Old Licenses -------------*/
+Breadcrumbs::for('old-licenses', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Renovación de licencias 2019', url('old-licenses'));
+});
+

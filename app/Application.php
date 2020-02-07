@@ -12,16 +12,19 @@ class Application extends Model
     protected $table = 'applications';
 
     protected $fillable = [
-        'description',
-        'object_payment',
-        'approved_date',
         'answer_date',
-        'payment_id'
+        'application_state_id',
+        'settlement_id'
     ];
 
-    public function payment()
+    public function settlement()
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsTo(Settlement::class);
+    }
+
+    public function applicationState()
+    {
+        return $this->belongsTo(ApplicationState::class);
     }
 
     public function getCreatedAtAttribute($value)

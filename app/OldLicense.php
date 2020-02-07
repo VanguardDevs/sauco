@@ -13,4 +13,9 @@ class OldLicense extends Model
         'num',
         'correlative'
     ];
+
+    public function oldSettlements()
+    {
+        return $this->hasMany(OldSettlement::class);
+    }
 }

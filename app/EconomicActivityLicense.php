@@ -16,7 +16,8 @@ class EconomicActivityLicense extends Model
         'expiration_date',
         'taxpayer_id',
         'correlative_id',
-        'license_state_id'
+        'license_state_id',
+        'settlement_id'
     ];
 
     public function taxpayer()

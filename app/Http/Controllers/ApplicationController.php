@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\ApplicationState;
 use App\Http\Requests\Applications\ApplicationsCreateFormRequest;
 use App\Payment;
 use App\PaymentState;
@@ -82,6 +83,7 @@ class ApplicationController extends Controller
          */
         $concept = Concept::find($request->input('concept'));
         $state = PaymentState::whereDescription('PENDIENTE')->first();
+        $applicationState = ApplicationState::whereDescription('PENDIENTE')->first();
         $type = PaymentType::whereDescription('S/N')->first();
         $taxpayer = Taxpayer::find($request->input('taxpayer'));
         $month = Month::find(Carbon::now()->month);
@@ -113,7 +115,7 @@ class ApplicationController extends Controller
         /**
          * Make a settlement
          */
-        $settlement = new Settlement([
+        $settlement = Settlement::create([
             'num' => $settlementNum,
             'amount' => $amount,
             'payment_id' => $payment->id,
@@ -121,7 +123,12 @@ class ApplicationController extends Controller
             'month_id' => $month->id,
             'concept_id' => $concept->id
         ]);
-        $settlement->save();
+
+        $application = new Application([
+            'settlement_id' => $settlement->id,
+            'application_state_id' => $applicationState->id
+        ]);
+        $application->save();
 
         return redirect('taxpayers/'.$request->input('taxpayer'))
             ->withSuccess('¡Solicitud enviada!');

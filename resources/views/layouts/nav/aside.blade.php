@@ -103,6 +103,12 @@
                 <span class="kt-menu__link-text">Actividades económicas</span>
                 </a>
             </li>
+            <li class="kt-menu__item {{ active('old-licenses*') }}" aria-haspopup="true" >
+                <a  href="{{ url('old-licenses') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon flaticon-coins"></i>
+                <span class="kt-menu__link-text">Licencias 2019</span>
+                </a>
+            </li>
         @endif
 
         {{-- <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
