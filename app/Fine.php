@@ -12,6 +12,7 @@ class Fine extends Model
     protected $table = 'fines';
 
     protected $fillable = [
+        'fine_state_id',
         'settlement_id'
     ];
 

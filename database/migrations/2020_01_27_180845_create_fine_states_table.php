@@ -1,12 +1,10 @@
-
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFinesTable extends Migration
+class CreateFineStatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,13 +13,9 @@ class CreateFinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fines', function (Blueprint $table) {
+        Schema::create('fine_states', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('settlement_id');
-            $table->unsignedBigInteger('fine_id');
-            $table->foreign('fine_id')->references('id')->on('fines');
-            $table->foreign('settlement_id')->references('id')->on('settlements');
-            $table->softDeletes();
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -33,7 +27,7 @@ class CreateFinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fines');
+        Schema::dropIfExists('fine_states');
     }
 }
 
