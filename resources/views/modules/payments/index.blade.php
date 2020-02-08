@@ -21,9 +21,10 @@
           <table id="tCashbox" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">No. Liquidación</th>
+                <th width="10%">No. Factura</th>
                 <th width="40%">Razón social</th>
                 <th width="10%">Estado</th>
+                <th width="10%">Monto Total</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

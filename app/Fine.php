@@ -12,13 +12,17 @@ class Fine extends Model
     protected $table = 'fines';
 
     protected $fillable = [
-        'observations',
-        'payment_id'
+        'settlement_id'
     ];
 
-    public function payment()
+    public function settlement()
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsTo(Settlement::class);
+    }
+
+    public function fineState()
+    {
+        return $this->belongsTo(FineState::class);
     }
 
     public function getCreatedAtAttribute($value)

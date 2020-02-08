@@ -113,7 +113,7 @@
     <!--Begin:: App Content-->
     <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
         <div class="row">
-            @if ($row->taxpayerType->description == 'JURÍDICO')
+            @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->denomination))
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
@@ -188,13 +188,13 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Licencias de actividad económica</h3>
+                            <h3 class="kt-portlet__head-title">Licencias de actividads económicas</h3>
                         </div>
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
-                            @if(is_null($row->economicActivityLicenses))
-                            Este contribuyente no tiene licencia de actividad económica activa
+                            @if(!is_null($row->economicActivityLicenses))
+                                Este contribuyente no tiene licencia de actividad económica activa
                             @else
                             @foreach ($row->economicActivityLicenses as $activity)
                                 <div class="kt-widget4__item">

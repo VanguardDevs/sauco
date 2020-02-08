@@ -40,16 +40,6 @@ class Payment extends Model
         return $this->hasMany(Reference::class);
     }
 
-    public function applications()
-    {
-        return $this->hasMany(Application::class);
-    }
-
-    public function fines()
-    {
-        return $this->hasMany(Fine::class);
-    }
-
     public function settlements()
     {
         return $this->hasMany(Settlement::class);

@@ -39,10 +39,10 @@ class ApplicationController extends Controller
 
     public function list()
     {
-        $query = Application::query()
-            ->with('taxpayer')
-            ->with('settlement')
-            ->with('applicationState');
+        $query = Application::with([
+            'settlement.concept',
+            'settlement.taxpayer',
+            'applicationState'])->select('applications.*');
 
         return DataTables::eloquent($query)->toJson();
     }

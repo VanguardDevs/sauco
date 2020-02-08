@@ -561,16 +561,17 @@ $(document).ready(function() {
         "ajax": baseURL + "/applications/list",
         "columns": [
             { data: 'settlement.num'},
-            { data: 'taxpayer.rif'},
-            { data: 'taxpayer.name'},
+            { data: 'settlement.taxpayer.rif'},
+            { data: 'settlement.concept.description'},
             { data: 'application_state.description'},
             { data: 'created_at'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    console.log(oData);
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/applications/${oData} title='Editar'>
+                        <a class="mr-2" href=${baseURL}/applications/${oData.id} title='Editar'>
                             <i class='btn-sm btn-info flaticon-doc'></i>
                         </a>
                     </div>`
@@ -738,6 +739,7 @@ $(document).ready(function() {
         "ajax": baseURL + "/cashbox/list",
         "columns": [
             { data: 'num'},
+            { data: 'settlements[0].taxpayer.name'},
             { data: 'payment_state.description'},
             { data: 'total_amount'},
             {

@@ -21,11 +21,12 @@
           <table id="tApplications" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="8%">ID</th>
-                <th width="12%">RIF</th>
+                <th width="10%">Nro. Liquidación</th>
+                <th width="10%">RIF</th>
                 <th width="50%">Tipo de solicitud</th>
                 <th width="10%">Estado</th>
                 <th width="10%">Publicado</th>
+                <th width="10%">Respuesta</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

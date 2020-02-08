@@ -77,7 +77,7 @@
             </div>
         </li>
 
-        <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('properties') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
+        {{-- <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('properties') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
             <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                 <i class="kt-menu__link-icon flaticon2-position"></i>
                 <span class="kt-menu__link-text">Inmuebles</span>
@@ -94,7 +94,7 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> --}}
 
         @if (@Auth::user()->hasRole('root'))
             <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
@@ -109,21 +109,15 @@
                 <span class="kt-menu__link-text">Licencias 2019</span>
                 </a>
             </li>
-            <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
-                <a  href="{{ url('applications') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-coins"></i>
-                <span class="kt-menu__link-text">Solicitudes</span>
-                </a>
-            </li>
         @endif
 
-        {{-- <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
+        <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
             <a  href="{{ url('applications') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-paper-plane-1"></i>
             <span class="kt-menu__link-text">Solicitudes</span>
             </a>
         </li>
-
+{{--
         <li class="kt-menu__item {{ active('fines*') }}" aria-haspopup="true" >
             <a  href="{{ url('fines') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-warning-sign"></i>

@@ -40,9 +40,14 @@ class Settlement extends Model
         return $this->belongsTo(Concept::class);
     }
 
-    public function applications()
+    public function application()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasOne(Application::class);
+    }
+
+    public function fine()
+    {
+        return $this->hasOne(Fine::class);
     }
 
     public function scopeLastSettlement($query)
