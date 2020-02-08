@@ -46,9 +46,9 @@ class TaxpayerController extends Controller
     public function create()
     {
         return view('modules.taxpayers.register')
-            ->with('types', TaxpayerType::get())
+            ->with('types', TaxpayerType::pluck('description', 'id'))
             ->with('parishes', Parish::pluck('name', 'id'))
-            ->with('sectors', EconomicSector::get())
+            ->with('sectors', EconomicSector::pluck('description', 'id'))
             ->with('states', State::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
@@ -67,7 +67,7 @@ class TaxpayerController extends Controller
         $taxpayer = new Taxpayer([
             'rif' => $correlative.$rif,
             'name' => $request->input('name'),
-            'denomination' => $request->input('denomination'),
+            'denomination' => $request->input('trade_denomination'),
             'locality' => $request->input('locality'),
             'fiscal_address' => $request->input('fiscal_address'),
             'phone' => $request->input('phone'),

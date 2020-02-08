@@ -19,15 +19,13 @@ $(function () {
 
 function onSelectTaxpayerType() {
     let selected = $(this).children('option:selected').val();
-    let commercialDenomination = $('#hide_form');
+    let commercialDenomination = $('#commercial_denomination');
 
     // Show commercial denomination input
-    if (selected === 1) {
+    if (selected !== "1") {
         commercialDenomination.show();
-        $('#rif').val('N-');
     } else {
         commercialDenomination.hide();
-        $('#rif').val('J-');
     }
 }
 
