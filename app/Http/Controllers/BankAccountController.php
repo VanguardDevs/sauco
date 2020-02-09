@@ -59,8 +59,6 @@ class BankAccountController extends Controller
             'bank_account_type_id' => $request->input('account_type'),
             'account_num' => $request->input('account_num'),
             'description' => $request->input('description'),
-            'budget_account' => $request->input('budget_account'),
-            'accounting_account' => $request->input('accounting_account'),
         ]);
         $create->save();
 

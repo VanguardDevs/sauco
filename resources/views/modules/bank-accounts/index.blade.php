@@ -23,11 +23,9 @@
           <table id="tBankAccounts" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">Número de cuenta</th>
-                <th width="10%">Tipo de cuenta</th>
-                <th width="50%">Banco</th>
-                <th width="10%">Cuenta contable</th>
-                <th width="10%">Cuenta presupuestaria</th>
+                <th width="15%">Número de cuenta</th>
+                <th width="15%">Tipo de cuenta</th>
+                <th width="60%">Banco</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

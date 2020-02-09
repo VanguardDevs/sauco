@@ -13,10 +13,8 @@ class Concept extends Model
     protected $table = 'concepts';
 
     protected $fillable = [
-        'law',
         'value',
         'description',
-        'publication_date',
         'charging_method_id',
         'ordinance_id'
     ];

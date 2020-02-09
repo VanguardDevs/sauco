@@ -15,10 +15,8 @@ class CreateConceptsTable extends Migration
     {
         Schema::create('concepts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('law');
             $table->string('description');
             $table->string('value');
-            $table->date('publication_date');
             $table->unsignedBigInteger('ordinance_id');
             $table->unsignedBigInteger('charging_method_id');
             $table->foreign('charging_method_id')->references('id')->on('charging_methods');

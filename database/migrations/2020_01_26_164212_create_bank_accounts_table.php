@@ -18,8 +18,6 @@ class CreateBankAccountsTable extends Migration
             $table->string('bank_name');
             $table->string('account_num');
             $table->string('description');
-            $table->string('budget_account');
-            $table->string('accounting_account');
             $table->unsignedBigInteger('bank_account_type_id');
             $table->foreign('bank_account_type_id')->references('id')->on('bank_account_types');
             $table->timestamps();

@@ -28,8 +28,6 @@ class BankAccountsCreateFormRequest extends FormRequest
             'account_type' => 'required',
             'account_num' => 'required',
             'description' => 'required',
-            'budget_account' => 'required',
-            'accounting_account' => 'required',
         ];
     }
 
@@ -40,8 +38,6 @@ class BankAccountsCreateFormRequest extends FormRequest
             'account_type' => 'tipo de cuenta',
             'account_num' => 'número de cuenta',
             'description' => 'descripción',
-            'budget_account' => 'cuenta presupuestaria',
-            'accounting_account' => 'cuenta contable',
         ];
     }
 
@@ -52,8 +48,6 @@ class BankAccountsCreateFormRequest extends FormRequest
             'account_type.required' => 'Seleccione el :attribute',
             'account_num.required'=> 'Ingrese el :attribute',
             'description.required' => 'Ingrese el :attribute',
-            'budget_account.required' => 'Ingrese el :attribute',
-            'accounting_account.required' => 'Ingrese el :attribute',
         ];
     }
 }

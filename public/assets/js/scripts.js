@@ -500,10 +500,8 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/concepts/list",
         "columns": [
-            { data: 'law'},
             { data: 'value'},
             { data: 'description'},
-            { data: 'publication_date'},
             { data: 'charging_method.name'},
             {
                 data: "id",
@@ -625,8 +623,6 @@ $(document).ready(function() {
             { data: 'account_num'},
             { data: 'bank_account_type.denomination'},
             { data: 'bank_name'},
-            { data: 'budget_account'},
-            { data: 'accounting_account'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

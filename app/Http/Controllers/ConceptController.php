@@ -64,10 +64,8 @@ class ConceptController extends Controller
     public function store(ConceptsCreateFormRequest $request)
     {
         $create = new Concept([
-            'law' => $request->input('law'),
-            'value' => $request->input('value'),
+	    'value' => $request->input('value'),
             'description' => $request->input('description'),
-            'publication_date' => $request->input('publication_date'),
             'ordinance_id' => $request->input('ordinance'),
             'charging_method_id' => $request->input('charging_method')
         ]);

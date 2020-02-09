@@ -73,16 +73,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-4">
-                                <label>Ley<span class="text-danger">*</span></label>
-
-                                {!! Form::text('law', old('law', @$row->law), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
-
-                                @error('law')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-lg-4">
+                           <div class="col-lg-12">
                                 <label>Valor <span class="text-danger">*</span></label>
 
                                 {!! Form::text('value', old('value', @$row->value), ['class' => 'form-control decimal-input-mask', "required"]) !!}
@@ -91,16 +82,7 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
-                                <label>Fecha de publicación <span class="text-danger">*</span></label>
-
-                                {!! Form::text('publication_date', old('publication_date', @$row->publication_date), ['class' => 'form-control date-input-mask', "onkeyup" => "upperCase(this);", "required"]) !!}
-
-                                @error('publication_date')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
+                       </div>
                     </div>
 
                     <div class="kt-portlet__foot">

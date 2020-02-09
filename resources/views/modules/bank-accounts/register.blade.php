@@ -33,7 +33,7 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label>Nombre del Banco<span class="text-danger">*</span></label>
 
                                 {!! Form::text('bank_name', old('bank_name', @$row->bank), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
@@ -42,7 +42,7 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label>Número de cuenta <span class="text-danger">*</span></label>
 
                                 {!! Form::text('account_num', old('account_num', @$row->account_num), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
@@ -51,7 +51,7 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label>Tipo de cuenta <span class="text-danger">*</span></label>
 
                                 <select name="account_type" class="form-control">
@@ -67,30 +67,12 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label>Descripción <span class="text-danger">*</span></label>
 
                                 {!! Form::text('description', old('description', @$row->description), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
                                 @error('description')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-lg-4">
-                                <label>Cuenta Presupuestaria <span class="text-danger">*</span></label>
-
-                                {!! Form::text('budget_account', old('budget_account', @$row->budget_account), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
-
-                                @error('budget_account')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-lg-4">
-                                <label>Cuenta contable <span class="text-danger">*</span></label>
-
-                                {!! Form::text('accounting_account', old('accounting_account', @$row->accounting_account), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
-
-                                @error('accounting_account')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
