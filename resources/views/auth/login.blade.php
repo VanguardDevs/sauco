@@ -1,6 +1,6 @@
 @extends('auth.app')
 
-@section('title', 'Inicio de Sesión')
+@section('title', 'Inicio ')
 
 @section('content')
 
@@ -10,7 +10,7 @@
             <div class="kt-login__container">
                 <div class="kt-login__logo">
                     <a href="#">
-                        <img class="img-responsive" src="{{ asset('assets/images/sascom-1.png') }}">
+                        <img class="img-responsive" src="{{ asset('assets/images/logo1.png') }}">
                     </a>
                 </div>
                 <div class="kt-login__signin row">

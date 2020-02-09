@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-      <title>@yield('title') || SIRETRI </title>
+      <title>@yield('title') - SIRIM </title>
 
     @include('layouts.styles')
 
