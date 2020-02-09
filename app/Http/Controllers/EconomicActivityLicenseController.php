@@ -18,6 +18,7 @@ use App\Settlement;
 use App\TaxUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Yajra\DataTables\Facades\DataTables;
 
 class EconomicActivityLicenseController extends Controller
 {
@@ -28,7 +29,15 @@ class EconomicActivityLicenseController extends Controller
      */
     public function index()
     {
-        //
+    	return view('modules.economic-activity-licenses.index');
+    }
+
+    public function list()
+    {
+        $query = EconomicActivityLicense::query()
+		    ->with('taxpayer');
+
+	return DataTables::eloquent($query)->toJson();
     }
 
     /**
