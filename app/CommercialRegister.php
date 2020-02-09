@@ -5,10 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
 
-class CommercialRegister extends Model
+class CommercialRegister extends Model implements Auditable
 {
     use SoftDeletes;
+    use Audit;
 
     protected $table = 'commercial_registers';
 
