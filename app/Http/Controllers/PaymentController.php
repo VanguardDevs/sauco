@@ -125,8 +125,7 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         if ($payment->paymentState->description == "PAGADA") {
-            return redirect('payments')
-                ->withError('¡No puede anular una factura pagada!');
+            return response()->json([], 400);
         }
 
         foreach($payment->settlements as $model) {

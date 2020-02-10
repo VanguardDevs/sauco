@@ -184,17 +184,14 @@ class ApplicationController extends Controller
         $state = ApplicationState::whereDescription('APROBADA')->first();
 
         $update = Application::find($id);
-        $update->fill([
-            'answer_date' => Carbon::now(),
-            'application_state_id' =>$state->id
-        ])->save();
+        $update->answer_date = Carbon::now();
+        $update->application_state_id = $state->id;
+        // $update->save();
 
         // Update payment
         $payState = PaymentState::whereDescription('PROCESADA')->first();
-        $payment = Payment::find($update->settlement->payment_id);
-        $payment->fill([
-            'payment_state_id' => $payState->id
-        ])->save();
+        dd($payment = Payment::find($update->settlement->payment_id));
+        $payment->payment_state_id = $payState->id;
 
         return Session::flash('success', '¡Solicitud aprobada!');
     }
