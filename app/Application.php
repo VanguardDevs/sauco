@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
-use Carbon\Carbon;
 
 class Application extends Model implements Auditable
 {
@@ -32,14 +31,9 @@ class Application extends Model implements Auditable
         return $this->belongsTo(ApplicationState::class);
     }
 
-    public function setAnswerDateAttribute($value)
-    {
-        $this->attributes['answer_date'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();
-    }
-
     public function getAnswerDateAttribute($value)
     {
-        return date('d/m/Y', strtotime($value));
+        return isset($value) ? date('d/m/Y', strtotime($value)) : 'S/N';
     }
 
     public function getCreatedAtAttribute($value)

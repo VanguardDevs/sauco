@@ -22,10 +22,9 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
-    public function __construct(Payment $payment)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->payment = $payment;
     }
 
     /**
@@ -145,9 +144,11 @@ class ApplicationController extends Controller
     {
         $concept = $application->settlement->concept->description;
         $taxpayer = $application->taxpayer;
-        $oldLicense = OldLicense::whereRif($taxpayer->rif)->first();
 
         if ($concept == "SOLICITUD DE RENOVACION DE LICENCIA DE ACTIVIDADES ECONOMICAS") {
+
+            $oldLicense = OldLicense::whereRif($taxpayer->rif)->first();
+
             return view('modules.applications.register')
                 ->with('typeForm', 'old-license')
                 ->with('row', $oldLicense)
@@ -183,11 +184,19 @@ class ApplicationController extends Controller
         $state = ApplicationState::whereDescription('APROBADA')->first();
 
         $update = Application::find($id);
-        $update->answer_date = Carbon::now();
-        $update->application_state_id = $state->id;
-        $update->save();
+        $update->fill([
+            'answer_date' => Carbon::now(),
+            'application_state_id' =>$state->id
+        ])->save();
 
-        return redirect('applications')->withSuccess('¡Solicitud aprobada!');
+        // Update payment
+        $payState = PaymentState::whereDescription('PROCESADA')->first();
+        $payment = Payment::find($update->settlement->payment_id);
+        $payment->fill([
+            'payment_state_id' => $payState->id
+        ])->save();
+
+        return Session::flash('success', '¡Solicitud aprobada!');
     }
 
     /**

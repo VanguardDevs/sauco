@@ -176,7 +176,7 @@ const onClickFiscalYear = () => {
     });
 }
 
-const checkRecord = id => {
+const checkRecord = (id, url) => {
     Swal.fire({
         title: '¿Está seguro(a) que desea aprobar la solicitud?',
         type: 'question',
@@ -189,12 +189,12 @@ const checkRecord = id => {
         if (result.value) {
             $.ajax({
             type: 'POST',
-            url: `${baseURL}/applications/${id}/approve`,
+            url: `${baseURL}/${url}/${id}/approve`,
             data: {
                 '_method': 'POST',
                 '_token': $("meta[name='csrf-token']").attr("content")
             },
-            success: response => location.reload(),
+            success: response => location.reload(), 
             error: res => Swal.fire(res.responseJSON)
             });
         }
@@ -569,6 +569,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
+                        <a class="mr-2" onClick="checkRecord(${oData.id},'applications')" title='Aprobar'>
+                            <i class='btn-sm btn-success flaticon2-checkmark'></i>
+                        </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'applications')" title='Anular'>
                             <i class='btn-sm btn-danger flaticon-delete'></i>
                         </a>
