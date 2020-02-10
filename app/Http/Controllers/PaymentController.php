@@ -118,8 +118,7 @@ class PaymentController extends Controller
 
     public function download($id)
     {
-        //
-        //
+        $pdf = null;
     }
 
     /**
