@@ -15,6 +15,7 @@ use App\Taxpayer;
 use App\Settlement;
 use App\TaxUnit;
 use Carbon\Carbon;
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
