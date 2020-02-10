@@ -103,9 +103,9 @@ class PaymentController extends Controller
         $payment->payment_state_id = $paymentState->id;
         $payment->payment_type_id = $paymentType->id;
 
-        if ($paymentType->description != 'DEPÓSITO') {
+        if ($paymentType->description != 'EFECTIVO') {
             $reference = new Reference([
-                'reference' => '',
+                'reference' => $request->input('reference'),
                 'bank_account_id' => $request->input('bank_account'),
                 'payment_id' => $payment->id
             ]);
@@ -114,6 +114,12 @@ class PaymentController extends Controller
         $payment->save();
 
         return redirect('payments')->withSuccess('¡Liquidación pagada!');
+    }
+
+    public function download($id)
+    {
+        //
+        //
     }
 
     /**
