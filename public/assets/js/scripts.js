@@ -558,19 +558,19 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/applications/list",
         "columns": [
-            { data: 'settlement.num'},
+            { data: 'num'},
             { data: 'settlement.taxpayer.rif'},
             { data: 'settlement.concept.description'},
             { data: 'application_state.description'},
-            { data: 'created_at'},
+            { data: 'created_at' },
+            { data: 'answer_date'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    console.log(oData);
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/applications/${oData.id} title='Editar'>
-                            <i class='btn-sm btn-info flaticon-doc'></i>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'applications')" title='Anular'>
+                            <i class='btn-sm btn-danger flaticon-delete'></i>
                         </a>
                     </div>`
                     );

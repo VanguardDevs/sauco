@@ -50,8 +50,20 @@ class Settlement extends Model
         return $this->hasOne(Fine::class);
     }
 
+    public static function getNum()
+    {
+        if (self::lastSettlement()->count()) {
+           $lastNum = self::lastSettlement()->num;
+           $newNum = ltrim($lastNum, "0") + 1;
+           $newNum  = str_pad($newNum, 8, "0", STR_PAD_LEFT);
+        } else {
+            $newNum = "00000001";
+        }
+        return $newNum;
+    }
+
     public function scopeLastSettlement($query)
     {
-        return $query->latest()->first();
+        return $query->withTrashed()->latest()->first();
     }
 }

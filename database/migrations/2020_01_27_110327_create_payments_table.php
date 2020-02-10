@@ -15,9 +15,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('num');
+            $table->string('num');
             $table->float('amount', 20, 2);
             $table->float('total_amount', 20, 2);
+            $table->date('pay_date')->nullable();
             $table->unsignedBigInteger('payment_type_id');
             $table->unsignedBigInteger('payment_state_id');
             $table->unsignedBigInteger('user_id');

@@ -73,27 +73,15 @@ class ApplicationController extends Controller
         /**
          * Step 1: Look for settlement and payment num
          */
-        if (Payment::lastPayment()->count()) {
-            $lastNum = Payment::lastPayment()->num;
-            $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
-            $payNum = str_pad($newNum,8,"0",STR_PAD_LEFT);
-        } else {
-            $payNum = "00000001";
-        }
-
-        if (Settlement::lastSettlement()->count()) {
-            $lastNum = Settlement::lastSettlement()->num;
-            $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
-            $settlementNum = str_pad($newNum,8,"0",STR_PAD_LEFT);
-        } else {
-            $settlementNum = "00000001";
-        }
-
+        $payNum = Payment::getNum();
+        $settlementNum = Settlement::getNum();
+        $applicationNum = Application::getNum();
+   
         /**
          * Step 2: Look for data
          */
         $concept = Concept::find($request->input('concept'));
-        $state = PaymentState::whereDescription('PENDIENTE')->first();
+        $paymentState = PaymentState::whereDescription('PENDIENTE')->first();
         $applicationState = ApplicationState::whereDescription('PENDIENTE')->first();
         $type = PaymentType::whereDescription('S/N')->first();
         $taxpayer = Taxpayer::find($request->input('taxpayer'));
@@ -118,7 +106,7 @@ class ApplicationController extends Controller
             'num' => $payNum,
             'amount' => $amount,
             'total_amount' => $amount,
-            'payment_state_id' => $state->id,
+            'payment_state_id' => $paymentState->id,
             'payment_type_id' => $type->id,
             'user_id' => Auth::id()
         ]);
@@ -136,9 +124,9 @@ class ApplicationController extends Controller
         ]);
 
         $application = new Application([
+            'num' => $applicationNum,
             'settlement_id' => $settlement->id,
             'application_state_id' => $applicationState->id,
-            'taxpayer_id' => $taxpayer->id
         ]);
         $application->save();
 
@@ -200,6 +188,7 @@ class ApplicationController extends Controller
 
         return redirect('applications')->withSuccess('¡Solicitud aprobada!');
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -208,6 +197,18 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
+        $state = $application->applicationState->description;
+
+        if ($state == 'PROCESADA' || $state == 'APROBADA') {
+            return Session::flash('error', '¡La solicitud no puede ser anulada!');
+        }
+
+        $settlement = Settlement::find($application->settlement->id);
+        $payment = Payment::find($settlement->payment->id);
         $application->delete();
+        $settlement->delete();
+        $payment->delete();
+        
+        return Session::flash('success','¡Solicitud anulada!');
     }
 }

@@ -15,6 +15,7 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('num');
             $table->date('answer_date')->nullable();
             $table->unsignedBigInteger('settlement_id');
             $table->unsignedBigInteger('application_state_id');

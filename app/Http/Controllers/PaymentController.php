@@ -7,8 +7,12 @@ use App\Payment;
 use App\PaymentState;
 use App\PaymentType;
 use App\Reference;
+use App\Settlement;
+use App\Application;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Redirect;
+use Session;
 
 class PaymentController extends Controller
 {
@@ -120,6 +124,22 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
+        if ($payment->paymentState->description == "PAGADA") {
+            return redirect('payments')
+                ->withError('¡No puede anular una factura pagada!');
+        }
+
+        foreach($payment->settlements as $model) {
+            $settlement = Settlement::find($model->id);
+
+            if (isset($settlement->application)) {
+                $application = Application::find($settlement->application->id);
+                $application->delete();
+            }
+            $settlement->delete();
+        }
         $payment->delete();
+        
+        return Session::flash('success', '¡Factura anulada!');
     }
 }

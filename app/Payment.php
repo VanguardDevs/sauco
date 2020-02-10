@@ -53,8 +53,20 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(Taxpayer::class, Settlement::class);
     }
 
+    public static function getNum()
+    {
+        if (self::lastPayment()->count()) {
+            $lastNum = Payment::lastPayment()->num;
+            $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
+            $payNum = str_pad($newNum,8,"0",STR_PAD_LEFT);
+        } else {
+            $payNum = "00000001";
+        }
+        return $payNum;
+    }
+
     public function scopeLastPayment($query)
     {
-        return $query->latest()->first();
+        return $query->withTrashed()->latest()->first();
     }
 }
