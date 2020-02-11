@@ -51,7 +51,7 @@
                             <div class="col-lg-12">
                                 <label class="control-label">Cuenta bancaria</label>
                                 {!! Form::select('bank_account', $bankAccounts, null, [
-                                        'class' => 'form-control select2',
+                                        'class' => 'form-control select2 col-lg-12',
                                         'placeholder' => ' SELECCIONE ',
                                     ])
                                 !!}

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use App\TaxUnit;
 
 class Concept extends Model
 {
@@ -39,13 +40,16 @@ class Concept extends Model
         return $this->hasMany(Settlement::class);
     }
 
-    public function setPublicationDateAttribute($value)
+    public function scopeGetAmount($query, Taxpayer $taxpayer, Concept $concept)
     {
-        $this->attributes['publication_date'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();
-    }
+        if ($concept->chargingMethod->name == 'U.T') {
+            // Get amount according to taxpayer and concept
+            $currentUT = TaxUnit::latest()->first();
+            $amount = $concept->value * $currentUT->value;
+        } elseif ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
+            $amount = $taxpayer->capital * $concept->value;
+        }
 
-    public function getPublicationDateAttribute($value)
-    {
-        return date('d/m/Y', strtotime($value));
+        return $amount;
     }
 }

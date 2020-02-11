@@ -112,8 +112,7 @@ class ApplicationController extends Controller
                         ->withError('¡El contribuyente no tiene asignado su capital!');
                 } else {
                     // Also check if taxpayer already has an application for a license
-                    $amount = $this->getAmount($concept, $taxpayer);
-                    $settlement = $this->makeSettlement($taxpayer, $concept, $amount);
+                    $settlement = $this->makeSettlement($taxpayer, $concept);
 
                     // Saves application
                     return $this->storeApplication($settlement);
@@ -122,21 +121,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function getAmount(Concept $concept, Taxpayer $taxpayer)
-    {
-        // Get amount according to taxpayer and concept
-        $currentUT = TaxUnit::latest()->first();
-
-        if ($concept->chargingMethod->name == 'U.T' && $currentUT->value) {
-            $amount = $concept->value * $currentUT->value;
-        } elseif ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
-            $amount = $taxpayer->capital * $concept->value;
-        }
-
-        return $amount;
-    }
-
-    public function makeSettlement(Taxpayer $taxpayer, Concept $concept, $amount)
+    public function makeSettlement(Taxpayer $taxpayer, Concept $concept)
     {
         /**
          * Make a payment and a settlement
@@ -148,7 +133,9 @@ class ApplicationController extends Controller
         $type = PaymentType::whereDescription('S/N')->first();
         $paymentState = PaymentState::whereDescription('PENDIENTE')->first();
         $month = Month::find(Carbon::now()->month);
-
+        
+        $amount = Concept::getAmount($taxpayer, $concept);
+        
         $payment = Payment::create([
             'num' => $payNum,
             'amount' => $amount,
