@@ -72,17 +72,35 @@ class ApplicationController extends Controller
         $concept = Concept::find($request->input('concept'));
         $taxpayer = Taxpayer::find($request->input('taxpayer'));
 
-        return $this->verifyApplication($concept, $taxpayer);
-
-        // if ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
-        //     //
-        // } else if ($concept->description == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
-        //     //
-        // }
+        if ($ordinance->description == 'ACTIVIDAD ECONÓMICA') {
+            return $this->verifyEconomicActivityApplication($concept, $taxpayer);
+        }
     }
 
-    public function verifyApplication(Concept $concept, Taxpayer $taxpayer)
+    public function applicationExist(Concept $concept, Taxpayer $taxpayer)
     {
+        $applicationState = ApplicationState::whereDescription('APROBADA')->first();
+        $applications = $taxpayer->applications->where('application_state_id', '!=', $applicationState->id);
+
+        if (!empty($applications)) {
+            foreach($applications as $application) {
+                $settlementConcept = $application->settlement->concept->description;
+
+                if ($settlementConcept == $concept->description) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function verifyEconomicActivityApplication(Concept $concept, Taxpayer $taxpayer)
+    {
+        if ($this->applicationExist($concept, $taxpayer)) {
+            return redirect('taxpayers/'.$taxpayer->id)
+                ->withError('¡El contribuyente tiene una solicitud activa por este concepto!');
+        }
+
         if ($concept->description == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
             // dd("yes");
         } else if ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
@@ -93,6 +111,7 @@ class ApplicationController extends Controller
                     return redirect('taxpayers/'.$taxpayer->id)
                         ->withError('¡El contribuyente no tiene asignado su capital!');
                 } else {
+                    // Also check if taxpayer already has an application for a license
                     $amount = $this->getAmount($concept, $taxpayer);
                     $settlement = $this->makeSettlement($taxpayer, $concept, $amount);
 

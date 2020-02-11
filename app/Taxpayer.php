@@ -56,11 +56,6 @@ class Taxpayer extends Model implements Auditable
         return $this->belongsToMany(EconomicActivity::class);
     }
 
-    public function applications()
-    {
-        return $this->hasMany(Application::class);
-    }
-
     public function economicActivityLicenses()
     {
         return $this->hasMany(EconomicActivityLicense::class);
@@ -84,5 +79,10 @@ class Taxpayer extends Model implements Auditable
     public function vehicles()
     {
         return $this->hasMany(Vehicle::class);
+    }
+
+    public function applications()
+    {
+        return $this->hasManyThrough(Application::class, Settlement::class);
     }
 }
