@@ -18,4 +18,9 @@ class OldLicense extends Model
     {
         return $this->hasMany(OldSettlement::class);
     }
+
+    public function scopeGetRawLicense($query, $rif)
+    {
+        return $query->where('rif', $rif);
+    }
 }

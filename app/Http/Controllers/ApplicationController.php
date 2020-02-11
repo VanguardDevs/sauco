@@ -9,8 +9,10 @@ use App\Payment;
 use App\PaymentState;
 use App\PaymentType;
 use App\Concept;
+use App\EconomicActivityLicense;
 use App\Month;
 use App\OldLicense;
+use App\Ordinance;
 use App\Taxpayer;
 use App\Settlement;
 use App\TaxUnit;
@@ -19,6 +21,7 @@ use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Redirect;
 
 class ApplicationController extends Controller
 {
@@ -65,43 +68,68 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ordinance = Ordinance::find($request->input('ordinance'));
+        $concept = Concept::find($request->input('concept'));
+        $taxpayer = Taxpayer::find($request->input('taxpayer'));
+
+        return $this->verifyApplication($concept, $taxpayer);
+
+        // if ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
+        //     //
+        // } else if ($concept->description == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
+        //     //
+        // }
     }
 
-    public function addApplicationTaxpayer(Request $request)
+    public function verifyApplication(Concept $concept, Taxpayer $taxpayer)
     {
-        /**
-         * Step 1: Look for settlement and payment num
-         */
-        $payNum = Payment::getNum();
-        $settlementNum = Settlement::getNum();
-        $applicationNum = Application::getNum();
-   
-        /**
-         * Step 2: Look for data
-         */
-        $concept = Concept::find($request->input('concept'));
-        $paymentState = PaymentState::whereDescription('PENDIENTE')->first();
-        $applicationState = ApplicationState::whereDescription('PENDIENTE')->first();
-        $type = PaymentType::whereDescription('S/N')->first();
-        $taxpayer = Taxpayer::find($request->input('taxpayer'));
-        $month = Month::find(Carbon::now()->month);
+        if ($concept->description == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
+            // dd("yes");
+        } else if ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
+            if (EconomicActivityLicense::getLastLicense($taxpayer)) {
+                return Session::flash('error', 'El contribuyente tiene una licencia por renovar.');
+            } else {
+                if (empty($taxpayer->capital)) {
+                    return redirect('taxpayers/'.$taxpayer->id)
+                        ->withError('¡El contribuyente no tiene asignado su capital!');
+                } else {
+                    $amount = $this->getAmount($concept, $taxpayer);
+                    $settlement = $this->makeSettlement($taxpayer, $concept, $amount);
+
+                    // Saves application
+                    return $this->storeApplication($settlement);
+                }
+            }
+        }
+    }
+
+    public function getAmount(Concept $concept, Taxpayer $taxpayer)
+    {
+        // Get amount according to taxpayer and concept
         $currentUT = TaxUnit::latest()->first();
 
-        /**
-         * Step 3: Check if concept is for Economic Activity License OR has charging Method as U.T
-         */
         if ($concept->chargingMethod->name == 'U.T' && $currentUT->value) {
             $amount = $concept->value * $currentUT->value;
         } elseif ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
             $amount = $taxpayer->capital * $concept->value;
-        } else {
-            return redirect()->back()->withError('¡Error!');
         }
 
+        return $amount;
+    }
+
+    public function makeSettlement(Taxpayer $taxpayer, Concept $concept, $amount)
+    {
         /**
-         * Make a payment
+         * Make a payment and a settlement
          */
+        $payNum = Payment::getNum();
+        $settlementNum = Settlement::getNum();
+
+        $month = Month::find(Carbon::now()->month);
+        $type = PaymentType::whereDescription('S/N')->first();
+        $paymentState = PaymentState::whereDescription('PENDIENTE')->first();
+        $month = Month::find(Carbon::now()->month);
+
         $payment = Payment::create([
             'num' => $payNum,
             'amount' => $amount,
@@ -111,9 +139,6 @@ class ApplicationController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        /**
-         * Make a settlement
-         */
         $settlement = Settlement::create([
             'num' => $settlementNum,
             'amount' => $amount,
@@ -123,6 +148,14 @@ class ApplicationController extends Controller
             'concept_id' => $concept->id
         ]);
 
+        return $settlement;
+    }
+
+    public function storeApplication(Settlement $settlement)
+    {
+        $applicationNum = Application::getNum();
+        $applicationState = ApplicationState::whereDescription('PENDIENTE')->first();
+
         $application = new Application([
             'num' => $applicationNum,
             'settlement_id' => $settlement->id,
@@ -130,7 +163,7 @@ class ApplicationController extends Controller
         ]);
         $application->save();
 
-        return redirect('taxpayers/'.$request->input('taxpayer'))
+        return redirect('taxpayers/'.$settlement->taxpayer_id)
             ->withSuccess('¡Solicitud enviada!');
     }
 
@@ -183,15 +216,16 @@ class ApplicationController extends Controller
     {
         $state = ApplicationState::whereDescription('APROBADA')->first();
 
-        $update = Application::find($id);
-        $update->answer_date = Carbon::now();
-        $update->application_state_id = $state->id;
-        // $update->save();
+        $application = Application::find($id);
+        $application->answer_date = Carbon::now();
+        $application->application_state_id = $state->id;
+        $application->save();
 
         // Update payment
         $payState = PaymentState::whereDescription('PROCESADA')->first();
-        dd($payment = Payment::find($update->settlement->payment_id));
+        $payment = Payment::find($application->settlement->payment_id);
         $payment->payment_state_id = $payState->id;
+        $payment->save();
 
         return Session::flash('success', '¡Solicitud aprobada!');
     }
@@ -215,7 +249,7 @@ class ApplicationController extends Controller
         $application->delete();
         $settlement->delete();
         $payment->delete();
-        
+
         return Session::flash('success','¡Solicitud anulada!');
     }
 }

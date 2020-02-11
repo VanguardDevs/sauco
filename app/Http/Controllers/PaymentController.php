@@ -143,7 +143,7 @@ class PaymentController extends Controller
             $settlement->delete();
         }
         $payment->delete();
-        
+
         return Session::flash('success', '¡Factura anulada!');
     }
 }

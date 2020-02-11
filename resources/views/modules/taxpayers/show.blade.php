@@ -380,27 +380,27 @@
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-lg-12">
-                                <label>Tipo de solicitud <span class="text-danger">*</span></label>
+                                <label class="control-label col-lg-12">Tipo de solicitud <span class="text-danger">*</span></label>
                                 {!! Form::select("ordinance", [], "SELECCIONE", [
                                     "id" => "ordinance",
-                                    "class" => "form-control select2"
+                                    "class" => "form-control select2 col-lg-12"
                                 ]) !!}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-12">
-                                <label>Concepto de recaudación <span class="text-danger">*</span></label>
+                                <label class="control-label col-lg-12">Concepto de recaudación <span class="text-danger">*</span></label>
                                 {!!
                                     Form::select("concept", [], "SELECCIONE", [
                                         "id" => 'concepts',
-                                        "class" => "form-control select2"
+                                        "class" => "form-control select2 col-lg-12"
                                     ])
                                 !!}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-12">
-                                <label>Observaciones</label>
+                                <label class="control-label col-lg-12">Observaciones</label>
                                 {!! Form::textarea("description", old('description', @$row->description), ["placeholder" => "Observaciones", "class" => "form-control", "size" => "2x2", "onkeyup" => "upperCase(this);"]) !!}
                             </div>
                         </div>
