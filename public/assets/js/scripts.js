@@ -15,6 +15,7 @@ $(function () {
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#states').on('change', onSelectStates);
+    $('#payment_types').on('change', onSelectPaymentType);
 });
 
 function onSelectTaxpayerType() {
@@ -29,6 +30,17 @@ function onSelectTaxpayerType() {
     }
 }
 
+function onSelectPaymentType() {
+    let selected = $(this).children('option:selected').html();
+    let bankAccount = $('#bank_accounts');
+    
+    // Show commercial denomination input
+    if (selected !== "EFECTIVO") {
+        bankAccount.show();
+    } else {
+        bankAccount.hide();
+    }
+}
 /**
  * Get all communities for a given parish
  */
@@ -194,7 +206,7 @@ const checkRecord = (id, url) => {
                 '_method': 'POST',
                 '_token': $("meta[name='csrf-token']").attr("content")
             },
-            success: response => location.reload(), 
+            success: response => console.log(response),
             error: res => Swal.fire(res.responseJSON)
             });
         }

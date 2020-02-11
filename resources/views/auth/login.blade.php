@@ -14,8 +14,7 @@
                     </a>
                 </div>
                 <div class="kt-login__signin row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="kt-login__head">
                             <h3 class="kt-login__title">Inicio de Sesión</h3>
                         </div>
@@ -47,7 +46,6 @@
                         </div>
                     </form>    
                     </div>
-                    <div class="col-md-2"></div>
                 </div>
             </div>
         </div>

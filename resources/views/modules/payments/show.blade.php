@@ -17,7 +17,9 @@
                         </h3>
                     </div>
                 </div>
+                @if ($row->paymentState->description != 'PAGADA')
                 {!! Form::model($row, ['route' => ["payments".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                @endif
                     <div class="kt-portlet__body">
                         <table class="table table-bordered table-striped datatables">
                             <tr>
@@ -36,17 +38,28 @@
 
                         <div class="kt-separator kt-separator--border-solid kt-separator--portlet-fit kt-separator--space-lg"></div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 {!! Form::select('payment_type', $paymentTypes, [], [
                                         'class' => 'form-control select2',
-                                        'placeholder' => ' SELECCIONE '
+                                        'placeholder' => ' SELECCIONE ',
+                                        'id' => 'payment_types'
                                     ])
                                 !!}
                             </div>
-                            <div class="col-lg-6">
-                                {!! Form::select('bank_account', $bankAccounts, [], [
+                        </div>
+                        <div id="bank_accounts" style="display:none;" class="form-group row">
+                            <div class="col-lg-12">
+                                <label class="control-label">Cuenta bancaria</label>
+                                {!! Form::select('bank_account', $bankAccounts, null, [
                                         'class' => 'form-control select2',
-                                        'placeholder' => ' SELECCIONE '
+                                        'placeholder' => ' SELECCIONE ',
+                                    ])
+                                !!}
+                            </div>
+                            <div class="col-lg-12">
+                                <label class="control-label">Referencia</label>
+                                {!! Form::text('reference', null, [
+                                        'class' => 'form-control',
                                     ])
                                 !!}
                             </div>
@@ -62,11 +75,6 @@
                                     @if($typeForm == 'update')
                                         <button type="submit" class="btn btn-primary" id="send">
                                             <i class="flaticon-refresh"></i>
-                                            Actualizar
-                                        </button>
-                                    @else
-                                        <button type="submit" class="btn btn-primary" id="send">
-                                            <i class="fas fa-save"></i>
                                             Registrar
                                         </button>
                                     @endif
