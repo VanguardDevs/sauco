@@ -75,7 +75,7 @@
               <div class="kt-widget__content">
                 <div class="kt-widget__info">
                     <span class="kt-widget__label">Denominación comercial:</span>
-                    <span class="kt-widget__data">{{ $row->denomination  ?? 'NO REGISTRADO'}}</span>
+                    <span class="kt-widget__data">{{ $row->commercialDenomination->name  ?? 'NO REGISTRADO'}}</span>
                 </div>
                 <div class="kt-widget__info">
                     <span class="kt-widget__label">Sector económico:</span>
@@ -113,7 +113,7 @@
     <!--Begin:: App Content-->
     <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
         <div class="row">
-            @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->denomination))
+            @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination->name))
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">

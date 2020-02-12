@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CommercialDenomination;
 use App\EconomicActivity;
 use App\EconomicSector;
 use App\TaxpayerType;
@@ -64,10 +65,9 @@ class TaxpayerController extends Controller
         $rif = $request->input('rif');
         $correlative = TaxpayerType::find($request->input('taxpayer_type'))->correlative;
 
-        $taxpayer = new Taxpayer([
+        $taxpayer = Taxpayer::create([
             'rif' => $correlative.$rif,
             'name' => $request->input('name'),
-            'denomination' => $request->input('trade_denomination'),
             'locality' => $request->input('locality'),
             'fiscal_address' => $request->input('fiscal_address'),
             'phone' => $request->input('phone'),
@@ -79,7 +79,15 @@ class TaxpayerController extends Controller
             'municipality_id' => $request->input('municipality'),
             'community_id' => $request->input('community')
         ]);
-        $taxpayer->save();
+
+        $denomination = $request->input('trade_denomination');
+
+        if (!empty($denomination)) {
+            CommercialDenomination::create([
+                'name' => $denomination,
+                'taxpayer_id' => $taxpayer->id
+            ]);
+        }
 
         return redirect("taxpayers/".$taxpayer->id)
             ->withSuccess('¡Contribuyente registrado!');

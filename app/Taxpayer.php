@@ -16,7 +16,6 @@ class Taxpayer extends Model implements Auditable
     protected $fillable = [
         'rif',
         'name',
-        'denomination',
         'address',
         'permanent_status',
         'capital',
@@ -59,6 +58,11 @@ class Taxpayer extends Model implements Auditable
     public function economicActivityLicenses()
     {
         return $this->hasMany(EconomicActivityLicense::class);
+    }
+
+    public function commercialDenomination()
+    {
+        return $this->hasOne(CommercialDenomination::class);
     }
 
     public function properties()
