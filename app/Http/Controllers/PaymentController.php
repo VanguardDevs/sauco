@@ -9,6 +9,7 @@ use App\PaymentType;
 use App\Reference;
 use App\Settlement;
 use App\Application;
+use App\ApplicationState;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
@@ -34,7 +35,9 @@ class PaymentController extends Controller
 
     public function list()
     {
-        $query = Payment::with(['paymentState', 'settlements.taxpayer']);
+        $status = PaymentState::whereDescription('PENDIENTE')->first();
+        $query = Payment::with(['paymentState', 'settlements.taxpayer'])
+            ->where('payment_state_id', '!=', $status->id);
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -68,7 +71,10 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        // For 'show' view
+        if ($payment->paymentState->description == 'PAGADA') {
+            return redirect('payments');
+        }
+        return $this->edit($payment);
     }
 
     /**
@@ -124,9 +130,19 @@ class PaymentController extends Controller
         return redirect('payments')->withSuccess('¡Liquidación pagada!');
     }
 
-    public function download($id)
+    public function download(Payment $payment)
     {
-        $pdf = null;
+        // if ($payment->paymentState->description != 'PAGADA') {
+        //    return Session::flash('error', '¡La factura no ha sido pagada!');
+        // }
+    }
+
+    public function checkApplication(Settlement $settlement)
+    {
+        if (isset($settlement->application)) {
+            $application = Application::find($settlement->application->id);
+            $application->delete();
+        }
     }
 
     /**
@@ -143,11 +159,7 @@ class PaymentController extends Controller
 
         foreach($payment->settlements as $model) {
             $settlement = Settlement::find($model->id);
-
-            if (isset($settlement->application)) {
-                $application = Application::find($settlement->application->id);
-                $application->delete();
-            }
+            $this->checkApplication($settlement);
             $settlement->delete();
         }
         $payment->delete();

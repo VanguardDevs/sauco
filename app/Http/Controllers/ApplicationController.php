@@ -45,7 +45,9 @@ class ApplicationController extends Controller
         $query = Application::with([
             'settlement.concept',
             'settlement.taxpayer',
-            'applicationState'])->select('applications.*');
+            'applicationState'])
+            ->orderBy('created_at', 'DESC')
+            ->select('applications.*');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -111,16 +113,18 @@ class ApplicationController extends Controller
                 return $this->storeApplication($taxpayer, $concept);
             }  
         } else if ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
-            if (EconomicActivityLicense::getLastLicense($taxpayer)) {
-                return Session::flash('error', 'El contribuyente tiene una licencia por renovar.');
-            } else {
-                if (empty($taxpayer->capital)) {
-                    return redirect('taxpayers/'.$taxpayer->id)
-                        ->withError('¡El contribuyente no tiene asignado su capital!');
-                } else {
-                    return $this->storeApplication($taxpayer, $concept);
-                }
+            if (empty($taxpayer->capital)) {
+                return redirect('taxpayers/'.$taxpayer->id)
+                    ->withError('¡El contribuyente no tiene asignado su capital!');
             }
+            
+            if (EconomicActivityLicense::getLastLicense($taxpayer)) {
+                // Forget to check if it has an active licence
+                return redirect('taxpayers/'.$taxpayer->id)
+                    ->withError('¡El contribuyente posee una licencia activada!');
+            }
+
+            return $this->storeApplication($taxpayer, $concept);
         }
     }
 
@@ -211,12 +215,13 @@ class ApplicationController extends Controller
         //
     }
 
-    public function approve($id)
+    public function approve(Application $application)
     {
+        if ($application->applicationState->description == 'APROBADA') {
+            return response::json([], 400);
+        }
         $state = ApplicationState::whereDescription('APROBADA')->first();
 
-        $application = Application::find($id);
-        $application->answer_date = Carbon::now();
         $application->application_state_id = $state->id;
         $application->save();
 
@@ -240,7 +245,7 @@ class ApplicationController extends Controller
         $state = $application->applicationState->description;
 
         if ($state == 'PROCESADA' || $state == 'APROBADA') {
-            return Session::flash('error', '¡La solicitud no puede ser anulada!');
+            return response::json([], 400);
         }
 
         $settlement = Settlement::find($application->settlement->id);

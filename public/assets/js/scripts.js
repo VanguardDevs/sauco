@@ -150,14 +150,19 @@ const nullRecord = (id, url) => {
     }).then(result => {
         if (result.value) {
             $.ajax({
-            type: 'POST',
-            url: `${baseURL}/${url}/${id}`,
-            data: {
-                '_method': 'DELETE',
-                '_token': $("meta[name='csrf-token']").attr("content")
-            },
-            success: response => location.reload(),
-            error: res => Swal.fire(res.responseJSON)
+                type: 'POST',
+                url: `${baseURL}/${url}/${id}`,
+                data: {
+                    '_method': 'DELETE',
+                    '_token': $("meta[name='csrf-token']").attr("content")
+                },
+                success: response => location.reload(),
+                error: res => Swal.fire({
+                    title: 'Esta acción no puede ser procesada.',
+                    type: 'info',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                })
             });
         }
     });
@@ -200,14 +205,19 @@ const checkRecord = (id, url) => {
     }).then(result => {
         if (result.value) {
             $.ajax({
-            type: 'POST',
-            url: `${baseURL}/${url}/${id}/approve`,
-            data: {
-                '_method': 'POST',
-                '_token': $("meta[name='csrf-token']").attr("content")
-            },
-            success: response => console.log(response),
-            error: res => Swal.fire(res.responseJSON)
+                type: 'POST',
+                url: `${baseURL}/${url}/${id}/approve`,
+                data: {
+                    '_method': 'POST',
+                    '_token': $("meta[name='csrf-token']").attr("content")
+                },
+                success: response => location.reload(),
+                error: res => Swal.fire({
+                    title: '¡La acción no puede ser procesada!',
+                    type: 'info',
+                    confirmButtonColor: '#0abb87',
+                    confirmButtonText: 'OK'
+                })
             });
         }
     });
