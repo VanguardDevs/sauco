@@ -144,6 +144,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /**---------- Routes Payments ----------*/
     Route::get('cashbox/list', 'PaymentController@list');
+    Route::get('payments/{id}/download', 'PaymentController@download');
     Route::resource('payments', 'PaymentController');
 
     /**---------- Routes Requisites ----------*/
