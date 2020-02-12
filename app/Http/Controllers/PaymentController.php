@@ -68,13 +68,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        $paymentTypes = PaymentType::exceptNull();
-
-        return view('modules.payments.show')
-            ->with('row', $payment)
-            ->with('paymentTypes', $paymentTypes)
-            ->with('bankAccounts', BankAccount::pluck('bank_name', 'id'))
-            ->with('typeForm', 'update');
+        // For 'show' view
     }
 
     /**
@@ -85,7 +79,13 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
-        //
+       $paymentTypes = PaymentType::exceptNull();
+
+        return view('modules.payments.show')
+            ->with('row', $payment)
+            ->with('paymentTypes', $paymentTypes)
+            ->with('bankAccounts', BankAccount::pluck('bank_name', 'id'))
+            ->with('typeForm', 'update');
     }
 
     /**

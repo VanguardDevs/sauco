@@ -72,9 +72,16 @@ class ApplicationController extends Controller
         $concept = Concept::find($request->input('concept'));
         $taxpayer = Taxpayer::find($request->input('taxpayer'));
 
+        if ($this->applicationExist($concept, $taxpayer)) {
+            return redirect('taxpayers/'.$taxpayer->id)
+                ->withError('¡El contribuyente tiene una solicitud activa por este concepto!');
+        }
+
         if ($ordinance->description == 'ACTIVIDAD ECONÓMICA') {
             return $this->verifyEconomicActivityApplication($concept, $taxpayer);
         }
+
+        return $this->storeApplication($taxpayer, $concept);
     }
 
     public function applicationExist(Concept $concept, Taxpayer $taxpayer)
@@ -96,13 +103,13 @@ class ApplicationController extends Controller
 
     public function verifyEconomicActivityApplication(Concept $concept, Taxpayer $taxpayer)
     {
-        if ($this->applicationExist($concept, $taxpayer)) {
-            return redirect('taxpayers/'.$taxpayer->id)
-                ->withError('¡El contribuyente tiene una solicitud activa por este concepto!');
-        }
-
         if ($concept->description == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
-            // dd("yes");
+            if (!EconomicActivityLicense::getLastLicense($taxpayer)) {
+                return redirect('taxpayers/'.$taxpayer->id)
+                        ->withError('¡El contribuyente no tiene licencia por renovar!');
+            } else {
+                return $this->storeApplication($taxpayer, $concept);
+            }  
         } else if ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
             if (EconomicActivityLicense::getLastLicense($taxpayer)) {
                 return Session::flash('error', 'El contribuyente tiene una licencia por renovar.');
@@ -111,11 +118,7 @@ class ApplicationController extends Controller
                     return redirect('taxpayers/'.$taxpayer->id)
                         ->withError('¡El contribuyente no tiene asignado su capital!');
                 } else {
-                    // Also check if taxpayer already has an application for a license
-                    $settlement = $this->makeSettlement($taxpayer, $concept);
-
-                    // Saves application
-                    return $this->storeApplication($settlement);
+                    return $this->storeApplication($taxpayer, $concept);
                 }
             }
         }
@@ -157,17 +160,18 @@ class ApplicationController extends Controller
         return $settlement;
     }
 
-    public function storeApplication(Settlement $settlement)
+    public function storeApplication(Taxpayer $taxpayer, Concept $concept)
     {
         $applicationNum = Application::getNum();
         $applicationState = ApplicationState::whereDescription('PENDIENTE')->first();
+        
+        $settlement = $this->makeSettlement($taxpayer, $concept);
 
-        $application = new Application([
+        Application::create([
             'num' => $applicationNum,
             'settlement_id' => $settlement->id,
             'application_state_id' => $applicationState->id,
         ]);
-        $application->save();
 
         return redirect('taxpayers/'.$settlement->taxpayer_id)
             ->withSuccess('¡Solicitud enviada!');
@@ -181,18 +185,7 @@ class ApplicationController extends Controller
      */
     public function show(Application $application)
     {
-        $concept = $application->settlement->concept->description;
-        $taxpayer = $application->taxpayer;
-
-        if ($concept == "SOLICITUD DE RENOVACION DE LICENCIA DE ACTIVIDADES ECONOMICAS") {
-
-            $oldLicense = OldLicense::whereRif($taxpayer->rif)->first();
-
-            return view('modules.applications.register')
-                ->with('typeForm', 'old-license')
-                ->with('row', $oldLicense)
-                ->with('taxpayer', $taxpayer);
-        }
+        //
     }
 
     /**

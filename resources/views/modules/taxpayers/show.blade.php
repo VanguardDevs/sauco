@@ -4,7 +4,7 @@
 <script src="{{ asset('assets/js/profile.js') }}"></script>
 @endpush
 
-@section('title', 'SUMAT | Ficha del Contribuyente')
+@section('title', 'SIRIM | Ficha del Contribuyente')
 
 @section('content')
 
@@ -20,7 +20,7 @@
     </div>
     <div class="kt-subheader__toolbar">
       <div class="kt-subheader__wrapper">
-        <a class="btn kt-subheader__btn-primary" href="{{ url()->previous() }}" title="Regresar">
+        <a class="btn kt-subheader__btn-primary" href="{{ url('taxpayers') }}" title="Regresar">
           <i class='flaticon2-back'></i>
         </a>
         <a class="btn kt-subheader__btn-primary" href="{{ url()->current()."/edit" }}" title="Editar">
