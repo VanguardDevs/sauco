@@ -585,7 +585,7 @@ $(document).ready(function() {
                             <i class='btn-sm btn-success flaticon2-checkmark'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'applications')" title='Anular'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                            <i class='btn-sm btn-danger flaticon2-delete'></i>
                         </a>
                     </div>`
                     );
@@ -762,10 +762,10 @@ $(document).ready(function() {
                             <i class='btn-sm btn-info flaticon2-file'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                            <i class='btn-sm btn-danger flaticon2-delete'></i>
                         </a>
-                        <a class="mr-2" href=${baseURL}/payments/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                         <a class="mr-2" href=${baseURL}/payments/${oData.id}/download title='Descargar'>
+                            <i class='btn-sm btn-success flaticon-download-1'></i>
                         </a>
                     </div>`
                     );

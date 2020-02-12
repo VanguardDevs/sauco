@@ -11,6 +11,7 @@ use App\Settlement;
 use App\Application;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Payments\PaymentsFormRequest;
 use Redirect;
 use Session;
 
@@ -94,7 +95,7 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(PaymentsFormRequest $request, Payment $payment)
     {
         $paymentState = PaymentState::whereDescription('PAGADA')->first();
         $paymentType = PaymentType::whereId($request->input('payment_type'))->first();
@@ -104,12 +105,19 @@ class PaymentController extends Controller
         $payment->payment_type_id = $paymentType->id;
 
         if ($paymentType->description != 'EFECTIVO') {
-            $reference = new Reference([
+            $reference = $request->input('reference');
+            $bankAccount = $request->input('bank_account');
+
+            if (empty($reference) || empty($bankAccount)) {
+                return redirect('payments/'.$payment->id)
+                        ->withError('¡Faltan datos!');
+            }
+
+            $reference = Reference::create([
                 'reference' => $request->input('reference'),
                 'bank_account_id' => $request->input('bank_account'),
                 'payment_id' => $payment->id
             ]);
-            $reference->save();
         }
         $payment->save();
 
