@@ -99,7 +99,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /*----------  Routes applications ----------*/
     Route::get('applications/list', 'ApplicationController@list')->name('list-applications');
     Route::post('applications/taxpayer', 'ApplicationController@store')->name('add-application-taxpayer');
-    Route::post('applications/{id}/approve', 'ApplicationController@approve')->name('approveApplication');
+    Route::post('applications/{application}/approve', 'ApplicationController@approve')->name('approveApplication');
     Route::resource('applications', 'ApplicationController');
 
     /*----------  Routes charging methods ----------*/
@@ -144,7 +144,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /**---------- Routes Payments ----------*/
     Route::get('cashbox/list', 'PaymentController@list');
-    Route::get('payments/{id}/download', 'PaymentController@download');
+    Route::get('payments/{payment}/download', 'PaymentController@download');
     Route::resource('payments', 'PaymentController');
 
     /**---------- Routes Requisites ----------*/
@@ -161,10 +161,4 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('economic-activity-license/{licenseID}/{taxpayerID}', 'EconomicActivityLicenseController@show');
     Route::post('economic-activity-license/renew-2019/{id}/{taxpayerID}', 'EconomicActivityLicenseController@renewOldLicense')->name('old-license-renew');
     Route::resource('economic-activity-licenses', 'EconomicActivityLicenseController');
-
-    /**
-     * Applications
-     */
-    Route::get('applications/list', 'ApplicationController@list');
-    Route::resource('applications', 'ApplicationController');
 });

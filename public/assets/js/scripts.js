@@ -137,6 +137,7 @@ function onClickAddFine() {
 function upperCase(e) {
     e.value = e.value.toUpperCase();
 }
+
 /*---------- Delete confirm chargue --------*/
 const nullRecord = (id, url) => {
     Swal.fire({
@@ -187,7 +188,12 @@ const onClickFiscalYear = () => {
                     '_token': $("meta[name='csrf-token']").attr("content")
                 },
                 success: response => location.reload(),
-                error: res => Swal.fire(res.responseJSON)
+                error: res => Swal.fire({ 
+                    title: 'Esta acción no puede ser procesada.',
+                    type: 'info',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                })
             });
         }
     });

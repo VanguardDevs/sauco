@@ -218,7 +218,9 @@ class ApplicationController extends Controller
     public function approve(Application $application)
     {
         if ($application->applicationState->description == 'APROBADA') {
-            return response::json([], 400);
+            return response()->json([
+                'message' => '¡No puede anular una solicitud aprobada!'
+            ], 400);
         }
         $state = ApplicationState::whereDescription('APROBADA')->first();
 
@@ -242,10 +244,10 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
-        $state = $application->applicationState->description;
-
-        if ($state == 'PROCESADA' || $state == 'APROBADA') {
-            return response::json([], 400);
+        if ($application->applicationState->description == 'APROBADA') {
+            return response()->json([
+                'message' => '¡Debe anular el pago asociado a esta solicitu a esta solicitud!'
+            ], 400);
         }
 
         $settlement = Settlement::find($application->settlement->id);

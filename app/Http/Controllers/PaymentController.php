@@ -132,9 +132,10 @@ class PaymentController extends Controller
 
     public function download(Payment $payment)
     {
-        // if ($payment->paymentState->description != 'PAGADA') {
-        //    return Session::flash('error', '¡La factura no ha sido pagada!');
-        // }
+        if ($payment->paymentState->description != 'PAGADA') {
+            return redirect('payments/'.$payment->id)
+                ->withError('¡La factura no ha sido pagada!');
+        }
     }
 
     public function checkApplication(Settlement $settlement)
@@ -154,7 +155,9 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         if ($payment->paymentState->description == "PAGADA") {
-            return response()->json([], 400);
+            return response()->json([
+                'message' => '¡La factura ya fue pagada!'
+            ], 400);
         }
 
         foreach($payment->settlements as $model) {

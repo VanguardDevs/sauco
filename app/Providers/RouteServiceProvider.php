@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Application;
+use App\Payment;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,9 +25,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::model('application', Application::class);
+        Route::model('payment', Payment::class);
     }
 
     /**
