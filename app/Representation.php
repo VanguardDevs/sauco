@@ -13,16 +13,9 @@ class Representation extends Model implements Auditable
     protected $table = 'representations';
 
     protected $fillable = [
-        'document',
-        'first_name',
-        'second_name',
-        'surname',
-        'second_surname',
-        'address',
-        'phone',
-        'email',
-        'citizenship_id',
-        'taxpayer_id'
+        'taxpayer_id',
+        'representation_type_id',
+        'person_id'
     ];
 
     public function taxpayer()
@@ -30,28 +23,13 @@ class Representation extends Model implements Auditable
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function citizenship()
+    public function representationType()
     {
-        return $this->belongsTo(Citizenship::class);
+        return $this->belongsTo(RepresentationType::class);
     }
 
-    public function getNameAttribute()
+    public function person()
     {
-        return "{$this->first_name} {$this->second_name} {$this->surname} {$this->second_surname}";
-    }
-
-    public function getAddressAttribute()
-    {
-        return $this->address ?? 'NO REGISTRADO';
-    }
-
-    public function getPhoneAttribute()
-    {
-        return $this->phone ?? 'NO REGISTRADO';
-    }
-
-    public function getEmailAttribute()
-    {
-        return $this->email ?? 'NO REGISTRADO';
+        return $this->belongsTo(Person::class);
     }
 }

@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CorrelativeTypesTableSeeder::class);
         $this->call(ApplicationStatesTableSeeder::class);
         $this->call(FineStatesTableSeeder::class);
+        $this->call(RepresentationTypesTableSeeder::class);
     }
 }
