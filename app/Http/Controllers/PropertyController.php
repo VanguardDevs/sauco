@@ -63,20 +63,26 @@ class PropertyController extends Controller
     {
         $taxpayer = Taxpayer::find($id);
 
-        $property = new Property([
+        $ownerStatus = $request->input('ownership_status');
+
+        if ($ownerStatus == '2') {
+            $document = $request->input('document');
+        } else {
+            $document = $request->input('contract');
+        }
+
+        $property = Property::create([
             'local' => $request->input('local'),
             'street' => $request->input('street'),
             'floor' => $request->input('floor'),
             'cadastre_num' => $request->input('local'),
-            'contract' => $request->input('contract'),
-            'document' => $request->input('document'),
+            'document' => $document, 
             'bulletin' => $request->input('bulletin'),
             'land_valuation' => $request->input('land_valuation'),
             'ownership_status_id' => $request->input('ownership_status'),
             'taxpayer_id' => $taxpayer->id,
             'property_type_id' => $request->input('property_type')
         ]);
-        $property->save();
 
         return redirect('taxpayers/'.$taxpayer->id)
             ->withSuccess('¡Inmueble creado!');
