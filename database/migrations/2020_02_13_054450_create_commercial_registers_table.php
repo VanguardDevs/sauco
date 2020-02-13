@@ -22,7 +22,6 @@ class CreateCommercialRegistersTable extends Migration
             $table->unsignedBigInteger('taxpayer_id');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

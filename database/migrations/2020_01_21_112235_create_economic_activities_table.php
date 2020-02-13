@@ -19,6 +19,8 @@ class CreateEconomicActivitiesTable extends Migration
             $table->string('name', 500);
             $table->string('aliquote');
             $table->string('min_tax');
+            $table->unsignedBigInteger('activity_classification_id');
+            $table->foreign('activity_classification_id')->references('id')->on('activity_classifications');
             $table->timestamps();
             $table->softDeletes();
         });
