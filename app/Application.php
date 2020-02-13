@@ -16,7 +16,6 @@ class Application extends Model implements Auditable
 
     protected $fillable = [
         'num',
-        'answer_date',
         'application_state_id',
         'settlement_id'
     ];
@@ -31,14 +30,14 @@ class Application extends Model implements Auditable
         return $this->belongsTo(ApplicationState::class);
     }
 
-    public function getAnswerDateAttribute($value)
+    public function getUpdatedAtAttribute($value)
     {
-        return isset($value) ? date('d/m/Y', strtotime($value)) : 'S/N';
+        return date('d/m/Y', strtotime($value));
     }
 
     public function getCreatedAtAttribute($value)
     {
-        return date('d/m/Y', strtotime($value)) ?? 'S/N';
+        return date('d/m/Y', strtotime($value));
     }
 
     public static function getNum()

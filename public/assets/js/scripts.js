@@ -591,7 +591,7 @@ $(document).ready(function() {
             { data: 'settlement.concept.description'},
             { data: 'application_state.description'},
             { data: 'created_at' },
-            { data: 'answer_date'},
+            { data: 'updated_at'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

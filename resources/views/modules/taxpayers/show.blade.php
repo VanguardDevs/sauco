@@ -398,12 +398,6 @@
                                 !!}
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <label class="control-label col-lg-12">Observaciones</label>
-                                {!! Form::textarea("description", old('description', @$row->description), ["placeholder" => "Observaciones", "class" => "form-control", "size" => "2x2", "onkeyup" => "upperCase(this);"]) !!}
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

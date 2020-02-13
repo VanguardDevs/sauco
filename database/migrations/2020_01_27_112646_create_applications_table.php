@@ -16,11 +16,12 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('num');
-            $table->date('answer_date')->nullable();
             $table->unsignedBigInteger('settlement_id');
             $table->unsignedBigInteger('application_state_id');
-            $table->foreign('application_state_id')->references('id')->on('application_states');
-            $table->foreign('settlement_id')->references('id')->on('settlements');
+            $table->foreign('application_state_id')->references('id')->on('application_states')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('settlement_id')->references('id')->on('settlements')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

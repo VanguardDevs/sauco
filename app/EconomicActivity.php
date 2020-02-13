@@ -15,7 +15,8 @@ class EconomicActivity extends Model
         'code',
         'name',
         'aliquote',
-        'min_tax'
+        'min_tax',
+        'activity_classification_id'
     ];
 
     public function taxpayers()
@@ -26,5 +27,10 @@ class EconomicActivity extends Model
     public function economicActivitySettlements()
     {
         return $this->hasMany(EconomicActivitySettlement::class);
+    }
+
+    public function activityClassification()
+    {
+        return $this->belongsTo(ActivityClassification::class);
     }
 }
