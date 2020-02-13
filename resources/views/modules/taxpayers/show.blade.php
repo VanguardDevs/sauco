@@ -158,7 +158,7 @@
                         </div>
                         <div class="kt-portlet__head-toolbar">
                             @if(is_null($row->representation))
-                            <a href="{{ url("taxpayer/".$row->id."/representation/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            <a href="{{ url("taxpayers/".$row->id."/representation/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
                             @endif
                         </div>
                     </div>

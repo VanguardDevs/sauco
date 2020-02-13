@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Application;
 use App\Payment;
+use App\Taxpayer;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::model('application', Application::class);
         Route::model('payment', Payment::class);
+        Route::model('taxpayer', Taxpayer::class);
     }
 
     /**

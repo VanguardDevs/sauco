@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\RepresentationState;
+use App\Representation;
+use App\Taxpayer;
 use Illuminate\Http\Request;
+use App\Citizenship;
 
-class RepresentationStateController extends Controller
+class RepresentationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +24,17 @@ class RepresentationStateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Taxpayer $taxpayer)
     {
-        //
+        if ($taxpayer->taxpayerType->description != 'JURÍDICO') {
+            return redirect('taxpayers/'.$taxpayer->id)
+                ->withError('¡Este contribuyente no admite un representante!');
+        }
+
+        return view('modules.representations.register')
+            ->with('citizenships', Citizenship::pluck('description', 'id'))
+            ->with('taxpayer', $taxpayer)
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -33,18 +43,18 @@ class RepresentationStateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Taxpayer $taxpayer)
     {
-        //
+        dd($request->input());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\RepresentationState  $representationState
+     * @param  \App\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
-    public function show(RepresentationState $representationState)
+    public function show(Representation $Representation)
     {
         //
     }
@@ -52,10 +62,10 @@ class RepresentationStateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\RepresentationState  $representationState
+     * @param  \App\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
-    public function edit(RepresentationState $representationState)
+    public function edit(Representation $Representation)
     {
         //
     }
@@ -64,10 +74,10 @@ class RepresentationStateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RepresentationState  $representationState
+     * @param  \App\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RepresentationState $representationState)
+    public function update(Request $request, Representation $Representation)
     {
         //
     }
@@ -75,10 +85,10 @@ class RepresentationStateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\RepresentationState  $representationState
+     * @param  \App\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RepresentationState $representationState)
+    public function destroy(Representation $Representation)
     {
         //
     }
