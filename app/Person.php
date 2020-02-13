@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 
-class People extends Model implements Auditable
+class Person extends Model implements Auditable
 {
     use Audit;
 
@@ -47,5 +47,10 @@ class People extends Model implements Auditable
     public function getEmailAttribute()
     {
         return $this->email ?? 'NO REGISTRADO';
+    }
+    
+    public function representations()
+    {
+        return $this->hasMany(Representation::class);
     }
 }

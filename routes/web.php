@@ -80,6 +80,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes representations ----------*/
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
+    Route::post('people/{taxpayer}', 'RepresentationController@storePerson')->name('person.store');
     Route::get('taxpayers/{taxpayer}/representation/create', 'RepresentationController@create');
     Route::post('taxpayers/{taxpayer}/representation/add', 'RepresentationController@store')->name('representation.store');
     Route::post('taxpayers/{id}/update-representation', 'RepresentationController@update')->name('representation.update');

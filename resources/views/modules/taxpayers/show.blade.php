@@ -157,27 +157,27 @@
                             <h3 class="kt-portlet__head-title">Representante(s)</h3>
                         </div>
                         <div class="kt-portlet__head-toolbar">
-                            @if(is_null($row->representation))
                             <a href="{{ url("taxpayers/".$row->id."/representation/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
-                            @endif
                         </div>
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
-                            @if(is_null($row->representation))
+                            @if(!is_null($row->representation))
                             Este contribuyente no tiene representante
                             @else
                             <table class="table table-bordered table-striped datatables">
                                 <tr>
                                     <td>Cédula</td>
                                     <td>Nombre</td>
-                                    <td>Apellido</td>
+                                    <td>Posición</td>
                                 </tr>
+                                @foreach ($row->representations as $representation)
                                 <tr>
-                                    <td>{{ $row->representation->document }}</td>
-                                    <td>{{ $row->representation->first_name }}</td>
-                                    <td>{{ $row->representation->surname }}</td>
+                                    <td>{{ $representation->person->document }}</td>
+                                    <td>{{ $representation->person->name }}</td>
+                                    <td>{{ $representation->representationType->name }}</td>
                                 </tr>
+                                @endforeach
                             </table>
                             @endif
                         </div>

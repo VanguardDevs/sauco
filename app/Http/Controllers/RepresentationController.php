@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Representation;
 use App\Taxpayer;
 use Illuminate\Http\Request;
+use App\Person;
+use App\RepresentationType;
 use App\Citizenship;
 
 class RepresentationController extends Controller
@@ -32,6 +34,7 @@ class RepresentationController extends Controller
         }
 
         return view('modules.representations.register')
+            ->with('representationTypes', RepresentationType::pluck('name', 'id'))
             ->with('citizenships', Citizenship::pluck('description', 'id'))
             ->with('taxpayer', $taxpayer)
             ->with('typeForm', 'create');
@@ -45,7 +48,68 @@ class RepresentationController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        dd($request->input());
+        $correlative = Citizenship::find($request->input('citizenship'))->correlative;
+        $document = $request->input('document');
+        $person = Person::whereDocument($correlative.$document)->first();
+        $type = $request->input('representation_type');
+        
+        if ($person) {
+            $hasAssociation = Representation::wherePersonId($person->id)
+                ->whereTaxpayerId($taxpayer->id)
+                ->get();
+
+            if ($hasAssociation) {
+                return redirect('taxpayers/'.$taxpayer->id)
+                    ->withError('¡Esta persona está registrada como representante!');
+            }
+
+            $representation = Representation::create([
+                'person_id' => $person->id,
+                'representation_type_id' => $type->id,
+                'taxpayer_id' => $taxpayer->id
+            ]);        
+        }
+
+        $citizenship = $request->input('citizenship');
+        return $this->createPerson($taxpayer, $type, $citizenship, $document);
+    }
+
+    public function createPerson(Taxpayer $taxpayer, $representationType, $citizenship, $document)
+    {
+        return view('modules.people.register')
+            ->with('taxpayer', $taxpayer)
+            ->with('representationTypes', RepresentationType::pluck('name', 'id'))
+            ->with('type', $representationType)
+            ->with('citizenships', Citizenship::pluck('description', 'id'))
+            ->with('citizen', $citizenship)
+            ->with('document', $document)
+            ->with('typeForm', 'create');
+    }
+
+    public function storePerson(Request $request, Taxpayer $taxpayer)
+    {
+        $correlative = Citizenship::find($request->input('citizenship'))->correlative;
+
+        $person = Person::create([
+            'document' => $correlative.$request->input('document'),
+            'first_name' => $request->input('first_name'),
+            'second_name' => $request->input('second_name'),
+            'surname' => $request->input('surname'),
+            'second_surname' => $request->input('second_surname'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'email' => $request->input('email'),
+            'citizenship_id' => $request->input('citizenship'),
+        ]);
+        
+        $representation = Representation::create([
+            'person_id' => $person->id,
+            'representation_type_id' => $request->input('representation_type'),
+            'taxpayer_id' => $taxpayer->id
+        ]);      
+
+        return redirect('taxpayers/'.$taxpayer->id)
+            ->withSuccess('¡Representante registrado!');
     }
 
     /**

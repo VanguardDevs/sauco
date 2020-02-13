@@ -30,9 +30,9 @@ class Taxpayer extends Model implements Auditable
         'municipality_id'
     ];
 
-    public function representation()
+    public function representations()
     {
-        return $this->hasOne(Representation::class);
+        return $this->hasMany(Representation::class);
     }
 
     public function economicSector()

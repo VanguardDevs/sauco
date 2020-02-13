@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 @if ($typeForm == 'create')
-                    {!! Form::open(['route' => ["add-representation", $taxpayer->id], 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::open(['url' => route('person.store', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
                     {!! Form::model($row, ['route' => ["representation".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
@@ -74,7 +74,8 @@
                                 <label>Nacionalidad <span class="text-danger">*</span></label>
 
                                 {!!
-                                    Form::select('citizenship', $citizenships, null, [
+                                    Form::select('citizenship', $citizenships, 
+                                    (isset($citizen) ? $citizen : null), [
                                     'class'=>'col-md-12 form-control select2',
                                     'placeholder' => ' SELECCIONE ',
                                     'id' => 'citizenships'
@@ -88,9 +89,24 @@
                             <div class="col-lg-4">
                                 <label>Cédula de identidad <span class="text-danger">*</span></label>
 
-                                {!! Form::text('document', old('document', @$row->document), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+                                {!! Form::text('document', old('document', @$document), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
                                 @error('document')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Tipo de representante<span class="text-danger">*</span></label>
+
+                                {!!
+                                    Form::select('representation_type', $representationTypes, 
+                                    (isset($type) ? $type: null), [
+                                    'class'=>'col-md-12 form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    ])
+                                !!}
+
+                                @error('representation_type')
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

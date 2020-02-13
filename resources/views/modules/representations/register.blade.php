@@ -1,6 +1,6 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de sectores económicos')
+@section('title', 'Registro de representantes')
 
 @section('form')
     <div class="row">
@@ -21,13 +21,13 @@
                 </div>
                 <!--begin::Form-->
                 @if ($typeForm == 'create')
-                    {!! Form::open(['route' => "representation.".'store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::open(['url' => route('representation.store', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
                     {!! Form::model($row, ['route' => ["representation".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>Nacionalidad <span class="text-danger">*</span></label>
 
                                 {!!
@@ -42,12 +42,26 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label>Cédula de identidad <span class="text-danger">*</span></label>
 
                                 {!! Form::text('document', old('document', @$row->document), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
                                 @error('document')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Tipo de representante<span class="text-danger">*</span></label>
+
+                                {!!
+                                    Form::select('representation_type', $representationTypes, null, [
+                                    'class'=>'form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    ])
+                                !!}
+
+                                @error('representation_type')
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
