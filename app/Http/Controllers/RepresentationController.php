@@ -59,7 +59,7 @@ class RepresentationController extends Controller
                 ->whereTaxpayerId($taxpayer->id)
                 ->get();
 
-            if (!empty($hasAssociation)) {
+            if (!empty($hasAssociation->count())) {
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡Esta persona está registrada como representante!');
             }

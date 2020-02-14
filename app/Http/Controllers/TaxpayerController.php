@@ -98,9 +98,10 @@ class TaxpayerController extends Controller
     {
         $taxpayer = Taxpayer::find($id);
 
-        if ($taxpayer->taxpayerType->description != 'JURÍDICO' && isset($taxpayer->commercialDenomination)) {
-            return redirect('taxpayers/'.$id)
-                ->withError('¡Este contribuyente no admite actividades económicas!');
+        if (($taxpayer->taxpayerType->description != 'JURÍDICO') && 
+            (!$taxpayer->commercialDenomination->exists())) {
+                return redirect('taxpayers/'.$id)
+                    ->withError('¡Este contribuyente no admite actividades económicas!');
         }
 
         return view('modules.taxpayers.register-economic-activities')

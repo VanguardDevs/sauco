@@ -1,5 +1,3 @@
-
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -17,12 +15,6 @@ class CreateFinesTable extends Migration
     {
         Schema::create('fines', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('num');
-            $table->unsignedBigInteger('settlement_id');
-            $table->unsignedBigInteger('fine_id');
-            $table->foreign('fine_id')->references('id')->on('fines');
-            $table->foreign('settlement_id')->references('id')->on('settlements');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -37,4 +29,3 @@ class CreateFinesTable extends Migration
         Schema::dropIfExists('fines');
     }
 }
-

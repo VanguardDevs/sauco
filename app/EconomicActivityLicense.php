@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
-use App\OldLicense;
 
 class EconomicActivityLicense extends Model implements Auditable
 {
@@ -51,13 +50,6 @@ class EconomicActivityLicense extends Model implements Auditable
 
         if ($license->count()) {
             return $license;
-        } else {
-            return OldLicense::getRawLicense($taxpayer->rif)->count();
-        }
+        }    
     }
-
-    // public function scopeActive($query, Taxpayer $taxpayer)
-    // {
-
-    // }
 }

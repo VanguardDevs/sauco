@@ -16,11 +16,8 @@ class CreateCorrelativesTable extends Migration
         Schema::create('correlatives', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('num');
-            $table->unsignedBigInteger('correlative_type_id');
-            $table->unsignedBigInteger('fiscal_year_id');
-            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years');
-            $table->foreign('correlative_type_id')->references('id')->on('correlative_types');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

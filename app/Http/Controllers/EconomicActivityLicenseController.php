@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\CorrelativeState;
 use App\Correlative;
 use App\CorrelativeType;
 use App\EconomicActivityLicense;
 use App\FiscalYear;
 use App\LicenseState;
-use App\OldLicense;
 use App\Taxpayer;
 use App\Payment;
 use App\PaymentState;
@@ -56,26 +56,26 @@ class EconomicActivityLicenseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Taxpayer $taxpayer, Settlement $settlement)
     {
-        //
+        $currYear = FiscalYear::where('year', Carbon::now()->year)->first();
+        $licenseState = LicenseState::whereDescription('ACTIVA')->first();
+        $correlativeType = CorrelativeType::whereDescription('R-')->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = $emissionDate->copy()->endOfYear();
+        
+        dd(Correlative::getNum());
+
+        $correlative = Correlative::create([
+            'num' => Correlative::getNum(),
+        ]);
+        
     }
 
     public function renewOldLicense($licenseID, $taxpayerID)
     {
         $taxpayer = Taxpayer::find($taxpayerID);
-        $oldCorrelative = OldLicense::find($licenseID)->correlative;
-        $correlativeType = CorrelativeType::whereDescription('R-')->first();
-        $currYear = FiscalYear::where('year', '2020')->first();
-        $licenseState = LicenseState::whereDescription('ACTIVA')->first();
-        $oldLicense = OldLicense::find($licenseID);
-
-        $correlative = Correlative::create([
-            'num' => $oldCorrelative,
-            'correlative_type_id' => $correlativeType->id,
-            'fiscal_year_id' => $currYear->id
-        ]);
-
+        
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->endOfYear();
         $num = $oldLicense->num;
