@@ -34,7 +34,8 @@ class TaxpayerController extends Controller
     public function list()
     {
         $query = Taxpayer::query()
-            ->with('commercialRegister');
+            ->with('commercialDenomination:id,name,taxpayer_id')
+            ->with('commercialRegister:id,num,taxpayer_id');
 
         return DataTables::eloquent($query)->toJson();
     }

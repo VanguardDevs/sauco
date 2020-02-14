@@ -28,9 +28,10 @@ class RepresentationController extends Controller
      */
     public function create(Taxpayer $taxpayer)
     {
-        if ($taxpayer->taxpayerType->description != 'JURÍDICO') {
-            return redirect('taxpayers/'.$taxpayer->id)
-                ->withError('¡Este contribuyente no admite un representante!');
+        if (($taxpayer->taxpayerType->description != 'JURÍDICO') && 
+            (!$taxpayer->commercialDenomination->exists())) {
+                return redirect('taxpayers/'.$taxpayer->id)
+                    ->withError('¡Este contribuyente no admite un representante!');
         }
 
         return view('modules.representations.register')
@@ -58,14 +59,14 @@ class RepresentationController extends Controller
                 ->whereTaxpayerId($taxpayer->id)
                 ->get();
 
-            if ($hasAssociation) {
+            if (!empty($hasAssociation)) {
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡Esta persona está registrada como representante!');
             }
 
             $representation = Representation::create([
                 'person_id' => $person->id,
-                'representation_type_id' => $type->id,
+                'representation_type_id' => $type,
                 'taxpayer_id' => $taxpayer->id
             ]);        
         }

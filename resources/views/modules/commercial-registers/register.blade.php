@@ -1,6 +1,6 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Inmueble')
+@section('title', 'Añadir registro mercantil')
 
 @section('form')
     <div class="row">
@@ -10,7 +10,7 @@
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
-                            Registro de registro comercial
+                            Añadir registro mercantil
 
                             @section('breadcrumbs')
                                 {{ Breadcrumbs::render('commercial-registers/create') }}

@@ -103,6 +103,11 @@ Breadcrumbs::for('representations/create', function ($trail) {
     $trail->push('Crear representante', url('representations/create'));
 });
 
+Breadcrumbs::for('representations/add', function ($trail) {
+    $trail->parent('representations');
+    $trail->push('Añadir representante', url('representations/add'));
+});
+
 /*------------- Economic activities > edit -------------*/
 Breadcrumbs::for('representations/edit', function ($trail) {
     $trail->parent('representations');

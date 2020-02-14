@@ -162,9 +162,7 @@
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
-                            @if(!is_null($row->representation))
-                            Este contribuyente no tiene representante
-                            @else
+                            @if($row->representations->count())
                             <table class="table table-bordered table-striped datatables">
                                 <tr>
                                     <td>Cédula</td>
@@ -179,6 +177,8 @@
                                 </tr>
                                 @endforeach
                             </table>
+                            @else
+                                Este contribuyente no tiene representante
                             @endif
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Licencias de actividads económicas</h3>
+                            <h3 class="kt-portlet__head-title">Licencias</h3>
                         </div>
                     </div>
                     <div class="kt-portlet__body">
@@ -209,6 +209,7 @@
                     </div>
                 </div>
             </div>
+            @if (Auth::user()->hasRole('root'))
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
@@ -252,6 +253,8 @@
                 </div>
             </div>
             @endif
+
+            @if (Auth::user()->hasRole('root'))
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
@@ -294,7 +297,9 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
+       @endif 
         <div class="row">
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
@@ -332,6 +337,7 @@
                     </div>
                 </div>
             </div>
+            @if (Auth::user()->hasRole('root'))
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
@@ -365,6 +371,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 
