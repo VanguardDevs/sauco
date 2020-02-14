@@ -43,13 +43,6 @@
     >
 
     <ul class="kt-menu__nav ">
-        <li class="kt-menu__item {{ active('representations*') }}" aria-haspopup="true" >
-            <a  href="{{ url('representations') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon-users"></i>
-            <span class="kt-menu__link-text">Representantes</span>
-            </a>
-        </li>
-
         <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
             <a  href="{{ url('taxpayers') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-network"></i>
@@ -81,12 +74,6 @@
                 <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon-coins"></i>
                 <span class="kt-menu__link-text">Actividades económicas</span>
-                </a>
-            </li>
-            <li class="kt-menu__item {{ active('old-licenses*') }}" aria-haspopup="true" >
-                <a  href="{{ url('old-licenses') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon2-file"></i>
-                <span class="kt-menu__link-text">Licencias</span>
                 </a>
             </li>
         @endif

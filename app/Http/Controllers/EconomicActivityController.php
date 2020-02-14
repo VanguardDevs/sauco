@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EconomicActivity;
 use App\EconomicActivityLicense;
+use App\ActivityClassification;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -40,6 +41,7 @@ class EconomicActivityController extends Controller
     public function create()
     {
         return view('modules.economic-activities.register')
+            ->with('classifications', ActivityClassification::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -51,13 +53,13 @@ class EconomicActivityController extends Controller
      */
     public function store(EconomicActivitiesCreateFormRequest $request)
     {
-        $create = new EconomicActivity([
+        $create = EconomicActivity::create([
             'code' => $request->input('code'),
             'name' => $request->input('name'),
             'aliquote' => $request->input('aliquote'),
-            'min_tax' => $request->input('min_tax')
+            'min_tax' => $request->input('min_tax'),
+            'activity_classification_id' => $request->input('classification')
         ]);
-        $create->save();
 
         return redirect('economic-activities')
             ->withSuccess('¡Actividad económica registrada!');

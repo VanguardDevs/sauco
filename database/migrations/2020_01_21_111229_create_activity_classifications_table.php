@@ -15,6 +15,7 @@ class CreateActivityClassificationsTable extends Migration
     {
         Schema::create('activity_classifications', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code');
             $table->string('name', 300);
             $table->timestamps();
             $table->softDeletes();

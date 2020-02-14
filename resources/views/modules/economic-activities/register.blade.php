@@ -33,7 +33,16 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-
+                            <div class="col-lg-12">
+                                <label class="control-label">Clasificación <span class="text-danger">*</span></label>
+                                {!! Form::select('classification', @$classifications, null, ['class' => 'form-control select2', 'required']) !!}
+                                
+                                @error('classification')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror 
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             @if ($typeForm == 'create')
                             <div class="col-lg-3">
                                 <label>Código <span class="text-danger">*</span></label>

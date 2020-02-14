@@ -27,10 +27,12 @@ class DatabaseSeeder extends Seeder
         $this->call(ChargingMethodsTableSeeder::class);
         $this->call(ColorsTableSeeder::class);
         $this->call(OrdinancesTableSeeder::class);
-        $this->call(OldLicensesTableSeeder::class);
         $this->call(CorrelativeTypesTableSeeder::class);
         $this->call(ApplicationStatesTableSeeder::class);
         $this->call(FineStatesTableSeeder::class);
         $this->call(RepresentationTypesTableSeeder::class);
+        $this->call(CommunitiesTableSeeder::class);
+        $this->call(CommunityParishTableSeeder::class);
+        $this->call(ActivityClassificationsTableSeeder::class);
     }
 }

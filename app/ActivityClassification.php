@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ActivityClassification extends Model
 {
-    use SoftDeletes();
+    use SoftDeletes;
 
     protected $table = 'activity_classifications';
     

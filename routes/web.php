@@ -151,15 +151,4 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**---------- Routes Requisites ----------*/
     Route::get('requisites/list', 'RequisiteController@list');
     Route::resource('settings/requisites', 'RequisiteController');
-
-    /**---------- Routes Old Licenses ----------*/
-    Route::get('old-licenses/list', 'OldLicenseController@list');
-    Route::resource('old-licenses', 'OldLicenseController');
-
-    /**
-     * Renew Licenses
-     */
-    Route::get('economic-activity-license/{licenseID}/{taxpayerID}', 'EconomicActivityLicenseController@show');
-    Route::post('economic-activity-license/renew-2019/{id}/{taxpayerID}', 'EconomicActivityLicenseController@renewOldLicense')->name('old-license-renew');
-    Route::resource('economic-activity-licenses', 'EconomicActivityLicenseController');
 });
