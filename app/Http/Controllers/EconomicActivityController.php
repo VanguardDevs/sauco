@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\ActivityClassification;
 use App\EconomicActivity;
 use App\EconomicActivityLicense;
-use App\ActivityClassification;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -58,7 +58,7 @@ class EconomicActivityController extends Controller
             'name' => $request->input('name'),
             'aliquote' => $request->input('aliquote'),
             'min_tax' => $request->input('min_tax'),
-            'activity_classification_id' => $request->input('classification')
+            'activity_classification_id' => $request->input('activity_classification_id')
         ]);
 
         return redirect('economic-activities')
@@ -85,6 +85,7 @@ class EconomicActivityController extends Controller
     public function edit(EconomicActivity $economicActivity)
     {
         return view('modules.economic-activities.register')
+            ->with('classifications', ActivityClassification::pluck('name', 'id'))
             ->with('typeForm', 'update')
             ->with('row', $economicActivity);
     }
@@ -99,6 +100,7 @@ class EconomicActivityController extends Controller
     public function update(EconomicActivitiesUpdateFormRequest $request, EconomicActivity $economicActivity)
     {
         $row = EconomicActivity::find($economicActivity->id);
+        
         $row->fill($request->all())
             ->save();
 

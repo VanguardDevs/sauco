@@ -26,7 +26,7 @@ class EconomicActivitiesUpdateFormRequest extends FormRequest
         return [
             'name' => 'required',
             'aliquote' => 'required',
-            'min_tax' => 'required'
+            'min_tax' => 'required',
         ];
     }
 

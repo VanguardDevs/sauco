@@ -27,7 +27,8 @@ class EconomicActivitiesCreateFormRequest extends FormRequest
             'code' => 'required',
             'name' => 'required',
             'aliquote' => 'required',
-            'min_tax' => 'required'
+            'min_tax' => 'required',
+            'activity_classification_id' => 'required'
         ];
     }
 
@@ -37,7 +38,8 @@ class EconomicActivitiesCreateFormRequest extends FormRequest
             'code' => 'código',
             'name' => 'nombre',
             'aliquote' => 'alícuota',
-            'min_tax' => 'mínimo tributable'
+            'min_tax' => 'mínimo tributable',
+            'activity_classification_id' => 'clasificación'
         ];
     }
 
@@ -48,6 +50,7 @@ class EconomicActivitiesCreateFormRequest extends FormRequest
             'name.required' => 'Ingrese un :attribute',
             'aliquote.required' => 'Ingrese una :attribute',
             'min_tax.required' => 'Ingrese un :attribute',
+            'activity_classification_id.required' => 'Seleccione una :attribute'
         ];
     }
 }

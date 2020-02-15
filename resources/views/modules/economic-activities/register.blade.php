@@ -35,9 +35,13 @@
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label class="control-label">Clasificación <span class="text-danger">*</span></label>
-                                {!! Form::select('classification', @$classifications, null, ['class' => 'form-control select2', 'required']) !!}
                                 
-                                @error('classification')
+                                    {!! 
+                                        Form::select('activity_classification_id', @$classifications, 
+                                        (isset($row->activityClassification) ? $row->activityClassification->id : null),                                            ['class' => 'form-control select2', 'required', 'placeholder' => 'SELECCIONE']) 
+                                    !!}
+                                
+                                @error('activity_classification_id')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror 
                             </div>
