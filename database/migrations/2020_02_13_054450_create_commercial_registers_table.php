@@ -16,8 +16,8 @@ class CreateCommercialRegistersTable extends Migration
         Schema::create('commercial_registers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('num')->unique();
-            // $table->string('volume');
-            // $table->string('case_file');
+            $table->string('volume');
+            $table->string('case_file');
             $table->date('start_date');
             $table->unsignedBigInteger('taxpayer_id');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers');

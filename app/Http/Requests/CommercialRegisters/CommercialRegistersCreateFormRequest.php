@@ -25,8 +25,8 @@ class CommercialRegistersCreateFormRequest extends FormRequest
     {
         return [
             'num'              => 'required|unique:commercial_registers',
-            // 'volume'           => 'required',
-            // 'case_file'        => 'required',
+            'volume'           => 'required',
+            'case_file'        => 'required',
             'start_date'       => 'required'
         ];
     }
