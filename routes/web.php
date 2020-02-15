@@ -138,8 +138,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
 
     /*----------  Routes commercial registers ----------*/
-    Route::get('taxpayer/{id}/commercial-register/create', 'CommercialRegisterController@create')->name('create-commercial-regster');
-    Route::post('taxpayer/{id}/add-commercial-register', 'CommercialRegisterController@store')->name('add-commercial-register');
+    Route::get('taxpayer/{taxpayer}/commercial-register/create', 'CommercialRegisterController@create')->name('create-commercial-regster');
+    Route::post('taxpayer/{taxpayer}/add-commercial-register', 'CommercialRegisterController@store')->name('add-commercial-register');
     Route::get('commercial-registers/list', 'CommercialRegisterController@list')->name('list-commercial-registers');
     Route::resource('commercial-registers', 'CommercialRegisterController');
 

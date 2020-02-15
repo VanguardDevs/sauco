@@ -29,10 +29,8 @@ class CommercialRegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Taxpayer $taxpayer)
     {
-        $taxpayer = Taxpayer::find($id);
-
         return view('modules.commercial-registers.register')
             ->with('taxpayer', $taxpayer)
             ->with('typeForm', 'create');
@@ -44,18 +42,20 @@ class CommercialRegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, CommercialRegistersCreateFormRequest $request)
+    public function store(CommercialRegistersCreateFormRequest $request, Taxpayer $taxpayer)
     {
-        $commercialRegister = new CommercialRegister([
+        $data = [
             'num' => $request->input('num'),
             'volume' => $request->input('volume'),
             'case_file' => $request->input('case_file'),
             'start_date' => $request->input('start_date'),
-            'taxpayer_id' => $id
-        ]);
-        $commercialRegister->save();
+        ];
+        
+        $taxpayer->commercialRegister()
+            ->create($data);
 
-        return redirect('taxpayers/'.$id)->withSuccess('¡Registro comercial añadido!');
+        return redirect('taxpayers/'.$taxpayer->id)
+            ->withSuccess('¡Registro comercial añadido!');
     }
 
     /**

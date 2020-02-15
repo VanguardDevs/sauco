@@ -15,13 +15,7 @@ class CommercialRegister extends Model implements Auditable
 
     protected $table = 'commercial_registers';
 
-    protected $fillable = [
-        'num',
-        'volume',
-        'case_file',
-        'start_date',
-        'taxpayer_id'
-    ];
+    protected $guarded = [];
 
     public function taxpayer()
     {
