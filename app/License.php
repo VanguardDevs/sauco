@@ -15,13 +15,10 @@ class EconomicActivityLicense extends Model implements Auditable
     protected $table = 'economic_activity_licenses';
 
     protected $fillable = [
-        'num',
         'emission_date',
-        'expiration_date',
         'taxpayer_id',
         'correlative_id',
-        'license_state_id',
-        'settlement_id'
+        'ordinance_id'
     ];
 
     public function taxpayer()
@@ -34,14 +31,9 @@ class EconomicActivityLicense extends Model implements Auditable
         return $this->belongsTo(Correlative::class);
     }
 
-    public function licenseState()
+    public function ordinance()
     {
-        return $this->belongsTo(LicenseState::class);
-    }
-
-    public function economicActivitySettlements()
-    {
-        return $this->hasMany(EconomicActivitySettlement::class);
+        return $this->belongsTo(Ordinance::class);
     }
 
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)

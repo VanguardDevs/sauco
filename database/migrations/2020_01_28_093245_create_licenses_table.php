@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCorrelativesTable extends Migration
+class CreateLicensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateCorrelativesTable extends Migration
      */
     public function up()
     {
-        Schema::create('correlatives', function (Blueprint $table) {
+        Schema::create('licenses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('correlative_number_id');
-            $table->unsignedBigInteger('correlative_type_id');
-            $table->unsignedBigInteger('fiscal_year_id');
-            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years')
+            $table->date('emission_date');
+            $table->unsignedBigInteger('correlative_id');
+            $table->unsignedBigInteger('taxpayer_id');
+            $table->unsignedBigInteger('ordinance_id');
+            $table->foreign('ordinance_id')->references('id')->on('ordinances')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('correlative_number_id')->references('id')->on('correlative_numbers')
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('correlative_type_id')->references('id')->on('correlative_types')
+            $table->foreign('correlative_id')->references('id')->on('correlatives')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
@@ -36,6 +37,6 @@ class CreateCorrelativesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('correlatives');
+        Schema::dropIfExists('licenses');
     }
 }

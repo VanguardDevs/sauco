@@ -17,6 +17,11 @@ class Ordinance extends Model
         return $this->hasMany(Concept::class);
     }
 
+    public function licenses()
+    {
+        return $this->hasMany(License::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return date('d/m/Y', strtotime($value));

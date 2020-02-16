@@ -9,29 +9,23 @@ class Correlative extends Model
     protected $table = 'correlatives';
 
     protected $fillable = [
-        'num'
+        'correlative_num_id',
+        'correlative_type_id',
+        'fiscal_year_id'
     ];
 
-    public function correlativeStates()
+    public function correlativeType()
     {
-        return $this->hasMany(CorrelativeState::class);
+        return $this->belongsTo(CorrelativeType::class);
     }
 
-    public static function getNum()
+    public function fiscalYear()
     {
-        if (self::lastCorrelative()->count()) {
-            $lastNum = self::lastCorrelative()->num;
-            $newNum = ltrim($lastNum, 0) + 1;
-            $newNum = str_pad($newNum, 5, "0", STR_PAD_LEFT);
-        } else {
-            $newNum = "00001";
-        }
-
-        return $newNum;
+        return $this->belongsTo(FiscalYear::class);
     }
 
-    public function scopeLastCorrelative($query)
+    public function correlativeNumber()
     {
-        return $query->withTrashed()->latest()->first();
+        return $this->belongsTo(CorrelativeNumber::class);
     }
 }
