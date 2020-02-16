@@ -64,12 +64,12 @@ class Taxpayer extends Model implements Auditable
     {
         return $this->hasOne(CommercialDenomination::class);
     }
-
+/**
     public function properties()
     {
         return $this->hasMany(Property::class);
     }
-
+    **/
     public function municipality()
     {
         return $this->belongsTo(Municipality::class);
