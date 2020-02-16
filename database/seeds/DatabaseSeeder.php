@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CommunitiesTableSeeder::class);
         $this->call(CommunityParishTableSeeder::class);
         $this->call(ActivityClassificationsTableSeeder::class);
+        $this->call(ListsTableSeeder::class);
         $this->call(EconomicActivitiesTableSeeder::class);
     }
 }
