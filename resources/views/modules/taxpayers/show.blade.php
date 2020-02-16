@@ -193,13 +193,13 @@
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
-                            @if(!is_null($row->economicActivityLicenses))
+                            @if(!is_null($row->licenses))
                                 Este contribuyente no tiene licencia de actividad económica activa
                             @else
-                            @foreach ($row->economicActivityLicenses as $activity)
+                            @foreach ($row->license as $license)
                                 <div class="kt-widget4__item">
                                     <div class="kt-widget4__info">
-                                        Licencia nº <a href="{{ url('economic-activity-license/'.$activity->id.'/'.$row->id) }}" class="kt-widget4__title">{{ $activity->num }} | </a>
+                                        Licencia nº <a href="{{ url('economic-activity-license/'.$activity->id.'/'.$row->id) }}" class="kt-widget4__title">{{ $license->num }} | </a>
                                         <span class="kt-widget4__sub">Vigente desde {{ $activity->emission_date }}</span>
                                     </div>
                                 </div>

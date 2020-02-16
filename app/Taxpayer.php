@@ -55,9 +55,9 @@ class Taxpayer extends Model implements Auditable
         return $this->belongsToMany(EconomicActivity::class);
     }
 
-    public function economicActivityLicenses()
+    public function licenses()
     {
-        return $this->hasMany(EconomicActivityLicense::class);
+        return $this->hasMany(License::class);
     }
 
     public function commercialDenomination()
