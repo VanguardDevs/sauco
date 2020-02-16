@@ -6,7 +6,9 @@ use Illuminate\Database\Seeder;
 class EconomicSectorsTableSeeder extends Seeder
 {
     private $sectors = Array(
-        'INDUSTRIA', 'COMERCIO', 'INMUEBLES', 'TURISMO', 'LICORES'
+        'INDUSTRIAL', 'SALUD', 'TURISMO', 'INMOBILIARIOS',
+        'BANCA', 'TELECOMUNICACIONES E INFORMÁTICA',
+        'INDUSTRIAS BÁSICAS', 'COMERCIO'
     );
 
     /**
