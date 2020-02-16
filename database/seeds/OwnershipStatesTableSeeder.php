@@ -1,9 +1,9 @@
 <?php
 
-use App\OwnershipStatus;
+use App\OwnershipState;
 use Illuminate\Database\Seeder;
 
-class OwnershipStatusesTableSeeder extends Seeder
+class OwnershipStatesTableSeeder extends Seeder
 {
     private $statuses = Array(
         'ALQUILADO', 'PROPIO'
@@ -17,7 +17,7 @@ class OwnershipStatusesTableSeeder extends Seeder
     public function run()
     {
         foreach ($this->statuses as $key => $value) {
-            OwnershipStatus::create([
+            OwnershipState::create([
                 'description' => $value
             ]);
         }

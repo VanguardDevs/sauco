@@ -14,10 +14,14 @@ class Concept extends Model
     protected $table = 'concepts';
 
     protected $fillable = [
-        'value',
-        'description',
+        'min_value',
+        'max_value',
+        'has_range',
+        'name',
+        'observations',
         'charging_method_id',
-        'ordinance_id'
+        'ordinance_id',
+        'list_id'
     ];
 
     public function chargingMethod()
@@ -38,6 +42,11 @@ class Concept extends Model
     public function settlements()
     {
         return $this->hasMany(Settlement::class);
+    }
+
+    public function list()
+    {
+        return $this->belongsTo(List::class);
     }
 
     public function scopeGetAmount($query, Taxpayer $taxpayer, Concept $concept)

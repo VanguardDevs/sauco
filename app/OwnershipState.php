@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OwnershipStatus extends Model
+class OwnershipState extends Model
 {
-    protected $table = 'ownership_statuses';
+    protected $table = 'ownership_states';
 
     protected $fillable = [
         'description'
     ];
 
-    public function properties()
+    public function taxpayerProperty()
     {
         return $this->hasMany(Property::class);
     }

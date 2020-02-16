@@ -21,13 +21,10 @@ class CreatePropertiesTable extends Migration
             $table->string('cadastre_num');
             $table->string('bulletin');
             $table->string('land_valuation');
-            $table->string('document');
-            $table->unsignedBigInteger('ownership_status_id');
-            $table->unsignedBigInteger('taxpayer_id');
+            $table->string('square_meters');
             $table->unsignedBigInteger('property_type_id');
-            $table->foreign('ownership_status_id')->references('id')->on('ownership_statuses');
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
-            $table->foreign('property_type_id')->references('id')->on('property_types');
+            $table->foreign('property_type_id')->references('id')->on('property_types')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
