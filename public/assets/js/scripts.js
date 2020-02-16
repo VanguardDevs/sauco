@@ -476,8 +476,8 @@ $(document).ready(function() {
         "columns": [
             { data: 'rif'},
             { data: 'name'},
-            { data: 'commercial_denomination'},
-            { data: 'commercial_register'},
+            { data: 'community.name'},
+            { data: 'fiscal_address'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

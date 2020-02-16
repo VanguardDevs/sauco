@@ -25,8 +25,8 @@
                             <tr>
                                 <th width="10%">RIF</th>
                                 <th width="40%">Razón Social</th>
-                                <th width="40%">Denominación comercial</th>
-                                <th width="20%">Registro mercantil</th>
+                                <th width="20%">Comunidad</th>
+                                <th width="20%">Dirección fiscal</th>
                                 <th width="10%">Acciones</th>
                             </tr>
                         </thead>
