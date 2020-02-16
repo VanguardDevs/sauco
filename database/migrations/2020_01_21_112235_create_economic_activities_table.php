@@ -20,7 +20,8 @@ class CreateEconomicActivitiesTable extends Migration
             $table->string('aliquote');
             $table->string('min_tax');
             $table->unsignedBigInteger('activity_classification_id');
-            $table->foreign('activity_classification_id')->references('id')->on('activity_classifications');
+            $table->foreign('activity_classification_id')->references('id')->on('activity_classifications')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

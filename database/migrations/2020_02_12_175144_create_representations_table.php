@@ -18,9 +18,12 @@ class CreateRepresentationsTable extends Migration
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('person_id');
             $table->unsignedBigInteger('representation_type_id');
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
-            $table->foreign('person_id')->references('id')->on('people');
-            $table->foreign('representation_type_id')->references('id')->on('representation_types');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('person_id')->references('id')->on('people')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('representation_type_id')->references('id')->on('representation_types')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

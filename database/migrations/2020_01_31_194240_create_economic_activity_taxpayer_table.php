@@ -17,8 +17,10 @@ class CreateEconomicActivityTaxpayerTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('economic_activity_id');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->foreign('economic_activity_id')->references('id')->on('economic_activities');
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
+            $table->foreign('economic_activity_id')->references('id')->on('economic_activities')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

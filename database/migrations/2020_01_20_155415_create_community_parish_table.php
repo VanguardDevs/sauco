@@ -17,8 +17,10 @@ class CreateCommunityParishTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('community_id');
             $table->unsignedBigInteger('parish_id');
-            $table->foreign('community_id')->references('id')->on('communities');
-            $table->foreign('parish_id')->references('id')->on('parishes');
+            $table->foreign('community_id')->references('id')->on('communities')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('parish_id')->references('id')->on('parishes')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

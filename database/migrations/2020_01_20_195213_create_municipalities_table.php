@@ -17,7 +17,8 @@ class CreateMunicipalitiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedBigInteger('state_id');
-            $table->foreign('state_id')->references('id')->on('states');
+            $table->foreign('state_id')->references('id')->on('states')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -17,7 +17,8 @@ class CreateMonthsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedBigInteger('fiscal_year_id');
-            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years');
+            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -18,8 +18,10 @@ class CreateReferencesTable extends Migration
             $table->string('reference');
             $table->unsignedBigInteger('bank_account_id');
             $table->unsignedBigInteger('payment_id');
-            $table->foreign('payment_id')->references('id')->on('payments');
-            $table->foreign('bank_account_id')->references('id')->on('bank_accounts');
+            $table->foreign('payment_id')->references('id')->on('payments')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('bank_account_id')->references('id')->on('bank_accounts')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

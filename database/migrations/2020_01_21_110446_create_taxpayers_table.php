@@ -17,7 +17,6 @@ class CreateTaxpayersTable extends Migration
             $table->bigIncrements('id');
             $table->string('rif');
             $table->string('name');
-            $table->string('locality');
             $table->string('fiscal_address');
             $table->string('capital')->nullable();
             $table->string('compliance_use')->nullable();
@@ -27,10 +26,14 @@ class CreateTaxpayersTable extends Migration
             $table->unsignedBigInteger('economic_sector_id');
             $table->unsignedBigInteger('municipality_id');
             $table->unsignedBigInteger('community_id');
-            $table->foreign('community_id')->references('id')->on('communities');
-            $table->foreign('municipality_id')->references('id')->on('municipalities');
-            $table->foreign('taxpayer_type_id')->references('id')->on('taxpayer_types');
-            $table->foreign('economic_sector_id')->references('id')->on('economic_sectors');
+            $table->foreign('community_id')->references('id')->on('communities')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('municipality_id')->references('id')->on('municipalities')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('taxpayer_type_id')->references('id')->on('taxpayer_types')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('economic_sector_id')->references('id')->on('economic_sectors')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

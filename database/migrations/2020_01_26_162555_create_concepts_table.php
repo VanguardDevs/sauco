@@ -19,8 +19,10 @@ class CreateConceptsTable extends Migration
             $table->string('value');
             $table->unsignedBigInteger('ordinance_id');
             $table->unsignedBigInteger('charging_method_id');
-            $table->foreign('charging_method_id')->references('id')->on('charging_methods');
-            $table->foreign('ordinance_id')->references('id')->on('ordinances');
+            $table->foreign('charging_method_id')->references('id')->on('charging_methods')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('ordinance_id')->references('id')->on('ordinances')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

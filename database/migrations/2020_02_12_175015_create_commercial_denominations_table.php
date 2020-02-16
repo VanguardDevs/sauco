@@ -17,7 +17,8 @@ class CreateCommercialDenominationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
