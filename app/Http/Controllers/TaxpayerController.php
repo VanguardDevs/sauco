@@ -69,7 +69,6 @@ class TaxpayerController extends Controller
         $taxpayer = Taxpayer::create([
             'rif' => $correlative.$rif,
             'name' => $request->input('name'),
-            'locality' => $request->input('locality'),
             'fiscal_address' => $request->input('fiscal_address'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
@@ -94,13 +93,11 @@ class TaxpayerController extends Controller
             ->withSuccess('¡Contribuyente registrado!');
     }
 
-    public function activitiesForm($id)
+    public function activitiesForm(Taxpayer $taxpayer)
     {
-        $taxpayer = Taxpayer::find($id);
-
         if (($taxpayer->taxpayerType->description != 'JURÍDICO') && 
-            (!$taxpayer->commercialDenomination->exists())) {
-                return redirect('taxpayers/'.$id)
+            (!$taxpayer->commercialDenomination)) {
+                return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡Este contribuyente no admite actividades económicas!');
         }
 
@@ -110,15 +107,13 @@ class TaxpayerController extends Controller
             ->with('typeForm', 'create');
     }
 
-    public function addActivities($id, TaxpayerActivitiesFormRequest $request)
+    public function addActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
     {
-        $taxpayer = Taxpayer::find($id);
-
         $taxpayer->economicActivities()->attach(
             $request->input('economic_activities')
         );
 
-        return redirect('taxpayers/'.$id)
+        return redirect('taxpayers/'.$taxpayer->id)
             ->withSuccess('¡Actividades económicas añadidas!');
     }
 

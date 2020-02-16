@@ -88,8 +88,8 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes taxpayers ----------*/
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
-    Route::get('taxpayer/{id}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('activities');
-    Route::post('taxpayer/{id}/add-economic-activities', 'TaxpayerController@addActivities')->name('add-activities');
+    Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('activities');
+    Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('add-activities');
     Route::resource('taxpayers', 'TaxpayerController');
 
     /*----------  Routes ordinance types ----------*/

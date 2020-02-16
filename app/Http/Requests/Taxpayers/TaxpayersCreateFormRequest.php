@@ -29,7 +29,6 @@ class TaxpayersCreateFormRequest extends FormRequest
             'taxpayer_type'    => 'required',
             'economic_sector'  => 'required',
             'community' => 'required',
-            'locality' => 'required',
             'fiscal_address' => 'required',
             'state' => 'required',
             'municipality' => 'required',
@@ -42,7 +41,6 @@ class TaxpayersCreateFormRequest extends FormRequest
         return [
             'rif'              => 'RIF del contribuyente',
             'name'    => 'nombre o razón social',
-            'locality' => 'dirección de origen',
             'fiscal_address' => 'dirección fiscal',
             'type'    => 'tipo de contribuyente',
             'phone'   => 'número de teléfono del contribuyente',
@@ -67,7 +65,6 @@ class TaxpayersCreateFormRequest extends FormRequest
             'address.required' => 'Ingrese la :attribute del contribuyente',
             'community.required' => 'Seleccione un :attribute',
             'taxpayer_type.required' => 'Seleccione una :attribute',
-            'locality.required' => 'Ingrese la :attribute',
             'state.required' => 'Seleccione un :attribute',
             'municipality.required' => 'Seleccione un :attribute',
             'parish.required' => 'Seleccione una :attribute',

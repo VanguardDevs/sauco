@@ -137,8 +137,12 @@
                             !!}
                             </div>
                         </div>
-
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-lg-12">
+                            <div class="kt-heading kt-heading--md">
+                            Dirección de origen
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
                             <label class="control-label"> Estado <span class="text-danger">*</span></label>
 
                             {!!
@@ -154,7 +158,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="control-label"> Municipio <span class="text-danger">*</span></label>
 
                             {!!
@@ -169,24 +173,12 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4">
-                            <label class="control-label"> Origen del contribuyente <span class="text-danger">*</span></label>
-
-                            {!!
-                            Form::textarea("locality", old('locality', @$row->locality), [
-                                "Placeholder" => "Ciudad o población",
-                                "class" => "form-control",
-                                "onkeyup" => "upperCase(this);", 'required',
-                                "rows" => 1,
-                                "cols" => 1
-                            ])
-                            !!}
-
-                            @error('locality')
-                            <div class="text text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="form-group col-lg-12">
+                            <div class="kt-heading kt-heading--md">
+                            Dirección fiscal 
+                            </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="control-label"> Parroquia <span class="text-danger">*</span></label>
 
                             {!!
@@ -202,7 +194,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="control-label"> Comunidad <span class="text-danger">*</span></label>
 
                             {!!
@@ -218,16 +210,14 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4">
-                            <label class="control-label"> Dirección o domicilio <span class="text-danger">*</span></label>
+                        <div class="form-group col-md-12">
+                            <label class="control-label"> Dirección <span class="text-danger">*</span></label>
 
                             {!!
-                            Form::textarea("fiscal_address", old('fiscal_address', @$row->fiscal_address), [
+                            Form::text("fiscal_address", old('fiscal_address', @$row->fiscal_address), [
                                 "Placeholder" => "Domicilio",
                                 "class" => "form-control",
                                 "onkeyup" => "upperCase(this);",
-                                "rows" => 1,
-                                "cols" => 1,
                                 'required'
                             ])
                             !!}
