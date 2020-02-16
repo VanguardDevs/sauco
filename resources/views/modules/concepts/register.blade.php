@@ -34,11 +34,11 @@
                     <div class="kt-portlet__body">
                         <div class="form-group row">
                             <div class="col-lg-12">
-                                <label>Descripción<span class="text-danger">*</span></label>
+                                <label>Nombre del concepto <span class="text-danger">*</span></label>
 
-                                {!! Form::text('description', old('description', @$row->description), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+                                {!! Form::text('name', old('description', @$row->description), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
-                                @error('description')
+                                @error('name')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
