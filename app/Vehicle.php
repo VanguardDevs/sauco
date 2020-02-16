@@ -8,9 +8,7 @@ class Vehicle extends Model
 {
     protected $table = 'vehicles';
 
-    protected $fillable = [
-        'plate'
-    ];
+    protected $guarded = [];
 
     public function taxpayer()
     {

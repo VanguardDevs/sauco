@@ -21,9 +21,6 @@ class CreatePaymentsTable extends Migration
             $table->date('pay_date')->nullable();
             $table->unsignedBigInteger('payment_type_id');
             $table->unsignedBigInteger('payment_state_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('payment_type_id')->references('id')->on('payment_types')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('payment_state_id')->references('id')->on('payment_states')

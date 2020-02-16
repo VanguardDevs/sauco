@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 
-class EconomicActivityLicense extends Model implements Auditable
+class License extends Model implements Auditable
 {
     use Audit;
     use SoftDeletes;
 
-    protected $table = 'economic_activity_licenses';
+    protected $table = 'licenses';
 
     protected $fillable = [
         'emission_date',

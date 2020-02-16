@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Correlative extends Model
 {
+    use SoftDeletes;
     protected $table = 'correlatives';
 
     protected $fillable = [

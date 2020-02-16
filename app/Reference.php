@@ -3,9 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Reference extends Model
+class Reference extends Model implements Auditable
 {
+    use Audit;
+    use SoftDeletes;
+
     protected $table = 'references';
 
     protected $fillable = [
