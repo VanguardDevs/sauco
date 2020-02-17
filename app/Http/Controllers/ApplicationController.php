@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LicenseService;
 use App\Application;
 use App\ApplicationState;
 use App\Http\Requests\Applications\ApplicationsCreateFormRequest;
@@ -24,9 +25,12 @@ use Illuminate\Support\Facades\Redirect;
 
 class ApplicationController extends Controller
 {
-    public function __construct()
+    protected $licenseService;
+
+    public function __construct(LicenseService $licenseService)
     {
         $this->middleware('auth');
+        $this->licenseService = $licenseService; 
     }
 
     /**
@@ -105,12 +109,15 @@ class ApplicationController extends Controller
     public function verifyEconomicActivityApplication(Concept $concept, Taxpayer $taxpayer)
     {
         if ($concept->name == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
-            if (!License::getLastLicense($taxpayer)) {
+            /* Uncomment when payments are applied
+             * if (!License::getLastLicense($taxpayer)) {
                 return redirect('taxpayers/'.$taxpayer->id)
                         ->withError('¡El contribuyente no tiene licencia por renovar!');
             } else {
                 return $this->storeApplication($taxpayer, $concept);
             }  
+             */
+            dd($this->licenseService->makeLicense('R-', $taxpayer->id));
         } else if ($concept->name == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
             if (empty($taxpayer->capital)) {
                 return redirect('taxpayers/'.$taxpayer->id)
@@ -122,8 +129,11 @@ class ApplicationController extends Controller
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡El contribuyente posee una licencia activada!');
             }
-
-            return $this->storeApplication($taxpayer, $concept);
+            dd($this->licenseService->makeLicense('I-', $taxpayer->id)); 
+            /*
+             * Commented until payments are activated
+             * return $this->storeApplication($taxpayer, $concept);
+             */
         }
     }
 

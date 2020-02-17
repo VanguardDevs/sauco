@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Correlative extends Model
 {
@@ -10,7 +11,7 @@ class Correlative extends Model
     protected $table = 'correlatives';
 
     protected $fillable = [
-        'correlative_num_id',
+        'correlative_number_id',
         'correlative_type_id',
         'fiscal_year_id'
     ];
