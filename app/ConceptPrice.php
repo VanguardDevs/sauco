@@ -8,11 +8,7 @@ class ConceptPrice extends Model
 {
     protected $table = 'concept_prices';
 
-    protected $fillable = [
-        'value',
-        'concept_id',
-        'charging_method_id',
-    ];
+    protected $guarded = [];
 
     public function concept()
     {

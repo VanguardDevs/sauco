@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ConceptPrice;
 use App\Concept;
 use App\Ordinance;
 use App\ChargingMethod;
@@ -30,7 +31,7 @@ class ConceptController extends Controller
     public function list()
     {
         $query = Concept::query()
-            ->with('chargingMethod');
+            ->with('conceptPrices');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -51,6 +52,7 @@ class ConceptController extends Controller
     {
         return view('modules.concepts.register')
             ->with('ordinances', Ordinance::pluck('description', 'id'))
+            ->with('listings', Listing::pluck('name', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
@@ -63,16 +65,22 @@ class ConceptController extends Controller
      */
     public function store(ConceptsCreateFormRequest $request)
     {
-        $create = new Concept([
-	    'value' => $request->input('value'),
-            'description' => $request->input('description'),
+	    $concept = Concept::create([
+            'name' => $request->input('name'),
+            'law' => $request->input('law'),
+            'observations' => $request->input('observations'),
             'ordinance_id' => $request->input('ordinance'),
+            'list_id' => $request->input('list')
+        ]);
+
+        $conceptPrice = ConceptPrice::create([
+            'value' => $request->input('value'),
+            'concept_id' => $concept->id,
             'charging_method_id' => $request->input('charging_method')
         ]);
-        $create->save();
 
         return redirect('settings/concepts')
-            ->withSuccess('¡Concepto de recaudación creada!');
+            ->withSuccess('¡Concepto de recaudación creado!');
     }
 
     /**
@@ -98,6 +106,7 @@ class ConceptController extends Controller
             ->with('typeForm', 'update')
             ->with('ordinances', Ordinance::pluck('description', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
+            ->with('listings', Listing::pluck('name', 'id'))
             ->with('row', $concept);
     }
 

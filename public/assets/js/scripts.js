@@ -529,9 +529,9 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/concepts/list",
         "columns": [
-            { data: 'value'},
-            { data: 'description'},
-            { data: 'charging_method.name'},
+            { data: 'id'},
+            { data: 'name'},
+            { data: 'id'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -783,33 +783,6 @@ $(document).ready(function() {
                         </a>
                          <a class="mr-2" href=${baseURL}/payments/${oData.id}/download title='Descargar'>
                             <i class='btn-sm btn-success flaticon-download-1'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tOldLicenses').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/old-licenses/list",
-        "columns": [
-            { data: 'rif'},
-            { data: 'num'},
-            { data: 'correlative'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/old-licenses/${oData.id} title='Aprobar licencia'>
-                            <i class='btn-sm btn-success flaticon2-reload'></i>
                         </a>
                     </div>`
                     );

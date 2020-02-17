@@ -13,12 +13,7 @@ class Concept extends Model
 
     protected $table = 'concepts';
 
-    protected $fillable = [
-        'name',
-        'observations',
-        'ordinance_id',
-        'list_id'
-    ];
+    protected $guarded = [];
 
     public function ordinance()
     {
@@ -32,7 +27,7 @@ class Concept extends Model
 
     public function conceptPrices()
     {
-        return $this->hasMany(ConcepPrice::class);
+        return $this->hasMany(ConceptPrice::class);
     }
 
     public function settlements()

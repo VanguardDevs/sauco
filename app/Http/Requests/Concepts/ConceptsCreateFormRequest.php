@@ -25,9 +25,11 @@ class ConceptsCreateFormRequest extends FormRequest
     {
         return [
             'value' => 'required',
-            'description' => 'required',
+            'name' => 'required',
             'charging_method' => 'required',
-            'ordinance' => 'required'
+            'ordinance' => 'required',
+            'law' => 'required',
+            'list' => 'required'
         ];
     }
 
@@ -35,9 +37,11 @@ class ConceptsCreateFormRequest extends FormRequest
     {
         return [
             'value' => 'valor',
-            'description' => 'descripción',
+            'name' => 'nombre',
             'charging_method' => 'método de cobro',
-            'ordinance' => 'tipo de ordenanza'
+            'ordinance' => 'tipo de ordenanza',
+            'law' => 'ley u ordenanza',
+            'list' => 'listado'
         ];
     }
 
@@ -45,9 +49,11 @@ class ConceptsCreateFormRequest extends FormRequest
     {
         return [
             'value.required' => 'Ingrese un :attribute',
-            'description.required' => 'Ingrese una :attribute',
+            'name.required' => 'Ingrese un :attribute',
             'charging_method.required' => 'Seleccione un :attribute',
-            'ordinance.required' => 'Seleccione un :attribute'
+            'ordinance.required' => 'Seleccione un :attribute',
+            'list.required' => 'Seleccione un :attribute',
+            'law.required' => 'Ingrese una :attribute'
         ];
     }
 }
