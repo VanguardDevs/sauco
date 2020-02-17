@@ -151,4 +151,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**---------- Routes Requisites ----------*/
     Route::get('requisites/list', 'RequisiteController@list');
     Route::resource('settings/requisites', 'RequisiteController');
+    
+    /**
+     *  Personal firm routes
+     */
+    Route::get('personal-firms/list', 'PersonalFirmController@list');
+    Route::resource('settings/personal-firms', 'PersonalFirmController');
 });

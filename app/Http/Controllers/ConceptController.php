@@ -73,7 +73,7 @@ class ConceptController extends Controller
             'list_id' => $request->input('list')
         ]);
 
-        $conceptPrice = ConceptPrice::create([
+        ConceptPrice::create([
             'value' => $request->input('value'),
             'concept_id' => $concept->id,
             'charging_method_id' => $request->input('charging_method')
