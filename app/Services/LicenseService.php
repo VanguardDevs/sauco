@@ -21,6 +21,9 @@ class LicenseService {
         $type = CorrelativeType::whereDescription($type)->first();
         $currYear = FiscalYear::where('year', Carbon::now()->year)->first();
         $correlativeNum = CorrelativeNumber::getNum();
+        // Maybe for other kind of licenses, I would inject
+        // Ordinances in this method and make licences without searching for
+        // a model
         $ordinance = Ordinance::whereDescription('ACTIVIDAD ECONÓMICA')->first();
         $emissionDate = Carbon::now();
         $taxpayer = Taxpayer::find($taxpayerID);

@@ -154,6 +154,38 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Licencias</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="kt-widget4">
+                            @if ($row->licences)
+                            @foreach ($row->licenses as $license)
+                                <div class="kt-widget4__item">
+                                    <div class="kt-widget4__info">
+                                        <p class="kt-widget4__title">Emitida el día: {{ $license->emission_date }}</p>
+
+                                        <span class="kt-widget4__sub">Por concepto de: {{ $license->ordinance->description }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                            @else
+                            <div class="kt-widget4__item">
+                                <div class="kt-widget4__info">
+                                    <span class="kt-widget4__sub">
+                                        Este contribuyente no tiene licencias asignadas
+                                    </span>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">Representante(s)</h3>
                         </div>
                         <div class="kt-portlet__head-toolbar">
