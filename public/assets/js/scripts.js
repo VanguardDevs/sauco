@@ -82,7 +82,7 @@ function onSelectOrdinance() {
     $.get(`${baseURL}/ordinances/${ordinance_id}/concepts`, data => {
 
       for (let i = 0; i < data.length; i++) {
-        html_select += '<option value="'+data[i].id+'">'+data[i].description+'</option>'
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
       }
 
       $('#concepts').html(html_select);

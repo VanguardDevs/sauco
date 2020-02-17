@@ -38,10 +38,9 @@ class License extends Model implements Auditable
 
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)
     {
-        $license = self::whereTaxpayerId($taxpayer->id);
-
-        if ($license->count()) {
+        if (self::whereTaxpayerId($taxpayer->id)->exists()) {
             return $license;
-        }    
+        }
+        return false;
     }
 }

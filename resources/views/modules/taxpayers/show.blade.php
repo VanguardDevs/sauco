@@ -303,6 +303,11 @@
                                     "id" => "ordinance",
                                     "class" => "form-control select2 col-lg-12"
                                 ]) !!}
+
+                                @error('ordinance')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+
                             </div>
                         </div>
                         <div class="form-group row">
@@ -314,44 +319,10 @@
                                         "class" => "form-control select2 col-lg-12"
                                     ])
                                 !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button  type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    Registrar
-                    </button>
-                </div>
-                    {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registro de multa</h5>
-                </div>
-                <div class="modal-body">
-                    {!! Form::open(['route' => 'add-fine-taxpayer', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
-                    <input type="hidden" value="{{ $row->id }}" name="taxpayer" />
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <label>Multa <span class="text-danger">*</span></label>
-                                {!! Form::select("fine_type", [], "SELECCIONE", [
-                                    "id" => "fine_types",
-                                    "class" => "form-control select2"
-                                ]) !!}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <label>Observaciones</label>
-                                {!! Form::textarea("description", old('description', @$row->description), ["placeholder" => "Observaciones", "class" => "form-control", "size" => "2x2", "onkeyup" => "upperCase(this);"]) !!}
+
+                                @error('concept')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>

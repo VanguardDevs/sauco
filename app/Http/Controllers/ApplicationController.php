@@ -9,9 +9,8 @@ use App\Payment;
 use App\PaymentState;
 use App\PaymentType;
 use App\Concept;
-use App\EconomicActivityLicense;
+use App\License;
 use App\Month;
-use App\OldLicense;
 use App\Ordinance;
 use App\Taxpayer;
 use App\Settlement;
@@ -68,7 +67,7 @@ class ApplicationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ApplicationsCreateFormRequest $request)
     {
         $ordinance = Ordinance::find($request->input('ordinance'));
         $concept = Concept::find($request->input('concept'));
@@ -95,7 +94,7 @@ class ApplicationController extends Controller
             foreach($applications as $application) {
                 $settlementConcept = $application->settlement->concept->description;
 
-                if ($settlementConcept == $concept->description) {
+                if ($settlementConcept == $concept->name) {
                     return true;
                 }
             }
@@ -105,20 +104,20 @@ class ApplicationController extends Controller
 
     public function verifyEconomicActivityApplication(Concept $concept, Taxpayer $taxpayer)
     {
-        if ($concept->description == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
-            if (!EconomicActivityLicense::getLastLicense($taxpayer)) {
+        if ($concept->name == 'SOLICITUD DE RENOVACIÓN DE LICENCIAS DE ACTIVIDADES ECONÓMICAS') {
+            if (!License::getLastLicense($taxpayer)) {
                 return redirect('taxpayers/'.$taxpayer->id)
                         ->withError('¡El contribuyente no tiene licencia por renovar!');
             } else {
                 return $this->storeApplication($taxpayer, $concept);
             }  
-        } else if ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
+        } else if ($concept->name == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
             if (empty($taxpayer->capital)) {
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡El contribuyente no tiene asignado su capital!');
             }
             
-            if (EconomicActivityLicense::getLastLicense($taxpayer)) {
+            if (License::getLastLicense($taxpayer)) {
                 // Forget to check if it has an active licence
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡El contribuyente posee una licencia activada!');
