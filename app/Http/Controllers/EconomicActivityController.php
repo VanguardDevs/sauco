@@ -116,6 +116,11 @@ class EconomicActivityController extends Controller
      */
     public function destroy(EconomicActivity $economicActivity)
     {
-        //
+        $economicActivity->delete();
+
+        return response()->json([
+            'success' => '¡Actividad económica eliminada!'
+        ]);
     }
 }
+

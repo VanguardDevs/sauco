@@ -12,6 +12,10 @@ use App\Ordinance;
 use App\Taxpayer;
 
 class LicenseService {
+    /*
+     * General service for Licenses manipulation
+     */
+
     public function makeLicense($type, $taxpayerID)
     {
         $type = CorrelativeType::whereDescription($type)->first();
@@ -20,12 +24,12 @@ class LicenseService {
         $ordinance = Ordinance::whereDescription('ACTIVIDAD ECONÓMICA')->first();
         $emissionDate = Carbon::now();
         $taxpayer = Taxpayer::find($taxpayerID);
-
-        // Create Correlative
+        
+         
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
         ]);
-        
+
         $correlative = Correlative::create([
             'fiscal_year_id' => $currYear->id,
             'correlative_type_id' => $type->id,

@@ -425,6 +425,9 @@ $(document).ready(function() {
                             <a class="mr-2" href=${baseURL}/economic-activities/${oData.id}/edit title='Editar'>
                                 <i class='btn-sm btn-warning flaticon-edit'></i>
                             </a>
+                            <a class="mr-2" onClick="nullRecord(${oData.id},'economic-activities')" title='Editar'>
+                                <i class='btn-sm btn-danger flaticon-delete'></i>
+                            </a>
                         </div>`
                     );
                 }
