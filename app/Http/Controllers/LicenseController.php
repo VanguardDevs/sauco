@@ -21,7 +21,7 @@ class LicenseController extends Controller
      */
     public function index()
     {
-    	return view('modules.economic-activity-licenses.index');
+    	return view('modules.licenses.index');
     }
 
     public function list()
@@ -59,9 +59,10 @@ class LicenseController extends Controller
      * @param  \App\License  $License
      * @return \Illuminate\Http\Response
      */
-    public function show($License, $taxpayer)
+    public function show(License $license)
     {
-        //
+        return view('modules.licenses.show')
+            ->with('row', $license);
     }
 
     public function download(License $license)

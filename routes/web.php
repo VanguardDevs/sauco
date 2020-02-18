@@ -151,7 +151,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**---------- Routes Requisites ----------*/
     Route::get('requisites/list', 'RequisiteController@list');
     Route::resource('settings/requisites', 'RequisiteController');
-    
+
+    /**
+     * Licenses routes
+     */
+    Route::resource('licenses', 'LicenseController');
+
     /**
      *  Personal firm routes
      */
