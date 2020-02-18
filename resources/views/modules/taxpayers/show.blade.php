@@ -150,6 +150,7 @@
                     </div>
                 </div>
             </div>
+            @if ($row->licenses)
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
@@ -159,30 +160,21 @@
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget4">
-                            @if ($row->licenses)
                             @foreach ($row->licenses as $license)
-                                <div class="kt-widget4__item">
-                                    <div class="kt-widget4__info">
-                                            <a href="{{ url("licenses/{$license->id}") }}">
-                                                <p class="kt-widget4__title">Licencia por concepto de {{ $license->ordinance->description }}</p>
-                                            </a>
-                                        <span class="kt-widget4__sub">Emitida el día: {{ $license->emission_date }}</span>
-                                    </div>
-                                </div>
-                            @endforeach
-                            @else
                             <div class="kt-widget4__item">
                                 <div class="kt-widget4__info">
-                                    <span class="kt-widget4__sub">
-                                        Este contribuyente no tiene licencias asignadas
-                                    </span>
+                                        <a href="{{ url("licenses/{$license->id}/download") }}">
+                                            <p class="kt-widget4__title">Licencia por concepto de {{ $license->ordinance->description }}</p>
+                                        </a>
+                                    <span class="kt-widget4__sub">Emitida el día: {{ $license->emission_date }}</span>
                                 </div>
                             </div>
-                            @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">

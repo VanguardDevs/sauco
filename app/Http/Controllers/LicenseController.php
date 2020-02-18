@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\CorrelativeNum;
-use App\Correlative;
-use App\CorrelativeType;
 use App\License;
-use App\FiscalYear;
-use App\Taxpayer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
+use PDF;
 
 class LicenseController extends Controller
 {
@@ -67,7 +63,16 @@ class LicenseController extends Controller
 
     public function download(License $license)
     {
-        dd($license);
+        $taxpayer = $license->taxpayer;
+        $endOfYear = date('d-m-Y', strtotime(Carbon::now()->copy()->endOfYear()));
+        $licenseNum = preg_replace('~\D~', '', $taxpayer->rif);
+        $correlative = $license->correlative;
+        $licenseCorrelative = $correlative->correlativeType->description.
+                            $correlative->fiscalYear->year.'-'
+                            .$correlative->correlativeNumber->num;
+
+        $pdf = PDF::LoadView('modules.licenses.pdf.economic-activity-license', compact(['endOfYear', 'licenseNum', 'license', 'licenseCorrelative']));
+        return $pdf->stream('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**

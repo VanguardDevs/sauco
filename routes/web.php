@@ -155,6 +155,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Licenses routes
      */
+    Route::get('licenses/{license}/download', 'LicenseController@download');
     Route::resource('licenses', 'LicenseController');
 
     /**
