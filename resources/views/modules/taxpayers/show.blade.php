@@ -23,15 +23,21 @@
         <a class="btn kt-subheader__btn-primary" href="{{ url('taxpayers') }}" title="Regresar">
           <i class='flaticon2-back'></i>
         </a>
+        @if (Auth::user()->hasRole('admin'))        
         <a class="btn kt-subheader__btn-primary" href="{{ url()->current()."/edit" }}" title="Editar">
           <i class='flaticon-edit'></i>
         </a>
+        @endif
+        <!--
         <a class="btn kt-subheader__btn-primary" onClick="onClickAddFine()" data-toggle="modal" data-target="#kt_modal_2">
             <i class="flaticon-exclamation"></i>
         </a>
+        -->
+        @if (Auth::user()->hasRole('liquidator') || Auth::user()->hasRole('settlements-chief'))
         <a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
             <i class="flaticon-paper-plane"></i>
-        </a>
+        </a> 
+        @endif        
       </div>
     </div>
   </div>
@@ -150,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            @if ($row->licenses)
+            @if ($row->licenses()->exists())
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
@@ -187,7 +193,7 @@
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
-                            @if($row->representations->count())
+                            @if($row->representations()->exists())
                             <table class="table table-bordered table-striped datatables">
                                 <tr>
                                     <td>Cédula</td>
@@ -211,79 +217,6 @@
             </div>
        </div>
        @endif
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Registro comercial</h3>
-                        </div>
-                        <div class="kt-portlet__head-toolbar">
-                            @if(is_null($row->commercialRegister))
-                            <a href="{{ url("taxpayer/".$row->id."/commercial-register/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body">
-                        <div class="kt-widget-4">
-                            @if(is_null($row->commercialRegister))
-                            Este contribuyente no tiene registro comercial
-                            @else
-                            <table class="table table-bordered table-striped datatables">
-                                <tr>
-                                    <td>Número</td>
-                                    <td>Tomo</td>
-                                    <td>Expediente</td>
-                                    <td>Fecha de inicio</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ $row->commercialRegister->num }}</td>
-                                    <td>{{ $row->commercialRegister->volume }}</td>
-                                    <td>{{ $row->commercialRegister->case_file }}</td>
-                                    <td>{{ $row->commercialRegister->start_date }}</td>
-                                </tr>
-                            </table>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @if (Auth::user()->hasRole('root'))
-            <div class="col-xl-6">
-                <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Vehículos</h3>
-                        </div>
-                        <div class="kt-portlet__head-toolbar">
-                            <a href="{{ url("taxpayer/".$row->id."/vehicle/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body">
-                        <div class="kt-widget-4">
-                            @if ($row->vehicles->count())
-                            @foreach ($row->vehicles as $vehicle)
-                                <div class="kt-widget4__item">
-                                <div class="kt-widget4__info">
-                                    <p class="kt-widget4__title">{{ $vehicle->plate }}</p>
-                                </div>
-                                </div>
-                            @endforeach
-                            @else
-                            <div class="kt-widget4__item">
-                                <div class="kt-widget4__info">
-                                <span class="kt-widget4__sub">
-                                    Este contribuyente no tiene vehículo registrados
-                                </span>
-                                </div>
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-        </div>
     </div>
 
     <div class="modal fade" id="kt_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

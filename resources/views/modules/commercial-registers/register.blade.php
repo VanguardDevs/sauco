@@ -93,7 +93,8 @@
                         <div class="kt-form__actions">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="{{ url('administration/users') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
+                                    <a href="{{ url('taxpayers/'.$taxpayer->id) }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
+
 
                                     @if($typeForm == 'update')
                                         <button type="submit" class="btn btn-primary" id="send">

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\ActivityClassification;
 use App\EconomicActivity;
-use App\EconomicActivityLicense;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -13,6 +12,7 @@ class EconomicActivityController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('can:access.economic-activities')->only('index');
         return $this->middleware('auth');
     }
 
