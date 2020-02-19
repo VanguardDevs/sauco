@@ -117,7 +117,7 @@ class ApplicationController extends Controller
                 return $this->storeApplication($taxpayer, $concept);
             }  
              */
-            dd($this->licenseService->makeLicense('R-', $taxpayer->id));
+            return $this->licenseService->makeLicense('R-', $taxpayer->id);
         } else if ($concept->name == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
             if (empty($taxpayer->capital)) {
                 return redirect('taxpayers/'.$taxpayer->id)
@@ -129,12 +129,15 @@ class ApplicationController extends Controller
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡El contribuyente posee una licencia activada!');
             }
-            dd($this->licenseService->makeLicense('I-', $taxpayer->id)); 
+            return $this->licenseService->makeLicense('I-', $taxpayer->id); 
             /*
              * Commented until payments are activated
              * return $this->storeApplication($taxpayer, $concept);
              */
         }
+
+        return redirect('taxpayers/'.$taxpayer->id)
+            ->withSuccess('¡Licencia creada!');
     }
 
     public function makeSettlement(Taxpayer $taxpayer, Concept $concept)

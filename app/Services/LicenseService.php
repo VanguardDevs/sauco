@@ -10,14 +10,25 @@ use App\FiscalYear;
 use Carbon\Carbon;
 use App\Ordinance;
 use App\Taxpayer;
+use Illuminate\Support\Facades\Redirect;
 
 class LicenseService {
     /*
      * General service for Licenses manipulation
      */
+    public function hasLicense($id)
+    {
+        $taxpayer = Taxpayer::find($id);
+        return $taxpayer->licenses()->exists();
+    }
 
     public function makeLicense($type, $taxpayerID)
     {
+        if ($this->hasLicense($taxpayerID)) {
+            return redirect('taxpayers/'.$taxpayerID)
+                ->withError('¡El contribuyente tiene una licencia!');
+        }
+
         $type = CorrelativeType::whereDescription($type)->first();
         $currYear = FiscalYear::where('year', Carbon::now()->year)->first();
         $correlativeNum = CorrelativeNumber::getNum();
@@ -46,6 +57,7 @@ class LicenseService {
             'taxpayer_id' => $taxpayer->id
         ]);
 
-        return $license;
+        return redirect('taxpayers/', $taxpayer-id)
+            ->withSuccess('¡Licencia creada!');
     }
 }

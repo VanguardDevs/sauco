@@ -14,9 +14,13 @@
             <div class="card card-primary card-outline">
                 <div class="card-header alert alert-danger">
                     <div class="row">
-                    <h5 class="m-0">Control de Contribuyentes <b>(</b> <a href="{{ Route("taxpayers".'.create') }}" title="Registrar comunidad">
+                    <h5 class="m-0">Control de Contribuyentes 
+                        @if (Auth::user()->hasRole('analyst'))
+                        <b>(</b> <a href="{{ Route("taxpayers".'.create') }}" title="Registrar comunidad">
                         <span>Registrar</span>
-                        </a><b>)</b></h5>
+                        </a><b>)</b>
+                        @endif
+                    </h5>
                     </div>
                 </div>
                 <div class="card-body">
