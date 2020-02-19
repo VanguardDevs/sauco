@@ -54,19 +54,20 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('settings/tax-units', 'TaxUnitController');
    });
 
-    Route::group(['middleware' => 'has.role:admin,analyst'], function () {
+    Route::group(['middleware' => 'has.role:admin|analyst'], function () {
         /*----------  Routes economic activities  ----------*/
         Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
         Route::resource('economic-activities', 'EconomicActivityController');
- 
-        /*----------  Routes parishes  ----------*/
-        Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
-        Route::resource('geographic-area/parishes', 'ParishController');
+     });
+    
+    /*----------  Routes parishes  ----------*/
+    Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
+    Route::resource('geographic-area/parishes', 'ParishController');
 
-        /*----------  Routes communities  ----------*/
-        Route::get('communities/list', 'CommunityController@list')->name('list-communities');
-        Route::resource('geographic-area/communities', 'CommunityController');
-    });
+    /*----------  Routes communities  ----------*/
+    Route::get('communities/list', 'CommunityController@list')->name('list-communities');
+    Route::resource('geographic-area/communities', 'CommunityController');
+
 
     Route::group(['middleware' => 'has.role:admin,operator,suboperator'], function() {
         /**---------- Routes Payments ----------*/
