@@ -139,6 +139,32 @@ function upperCase(e) {
 }
 
 /*---------- Delete confirm chargue --------*/
+const onClickCalculateSettlements = (id) => {
+    $.ajax({
+        type: 'POST',
+        url: `${baseURL}/economic-activity-settlements/${id}`,
+        data: {
+            '_method': 'POST',
+            '_token': $("meta[name='csrf-token']").attr("content")
+        },
+        success: res => Swal.fire({
+            title: '¡Liquidaciones realizadas!',
+            message: 'Pase a la caja para procesar las liquidaciones',
+            type: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        }),
+        error: res => Swal.fire({
+            title: 'Esta acción no puede ser procesada',
+            message: 'El contribuyente tiene liquidaciones por pagar',
+            type: 'info',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        })
+    });
+}
+
+/*---------- Delete confirm chargue --------*/
 const nullRecord = (id, url) => {
     Swal.fire({
         title: '¿Está seguro(a) que desea anular el registro?',

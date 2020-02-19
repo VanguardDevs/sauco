@@ -144,15 +144,17 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('commercial-registers/list', 'CommercialRegisterController@list')->name('list-commercial-registers');
     Route::resource('commercial-registers', 'CommercialRegisterController');
 
-    /**---------- Routes Payments ----------*/
-    Route::get('cashbox/list', 'PaymentController@list');
-    Route::get('payments/{payment}/download', 'PaymentController@download');
-    Route::resource('payments', 'PaymentController');
-
+    Route::group(['middleware' => 'has.role:admin|liquidator'], function () {
+        /**---------- Routes Payments ----------*/
+        Route::get('cashbox/list', 'PaymentController@list');
+        Route::get('payments/{payment}/download', 'PaymentController@download');
+        Route::resource('payments', 'PaymentController');
+    });
+    
     /**---------- Routes Requisites ----------*/
     Route::get('requisites/list', 'RequisiteController@list');
     Route::resource('settings/requisites', 'RequisiteController');
-
+    
     /**
      * Licenses routes
      */
@@ -164,4 +166,9 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('personal-firms/list', 'PersonalFirmController@list');
     Route::resource('settings/personal-firms', 'PersonalFirmController');
+    
+    /**
+     * Economic activity settlements
+     */
+    Route::post('economic-activity-settlements/{taxpayer}/', 'PaymentController@settlements');
 });

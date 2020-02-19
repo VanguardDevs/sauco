@@ -148,7 +148,6 @@ class ApplicationController extends Controller
         $payNum = Payment::getNum();
         $settlementNum = Settlement::getNum();
 
-        $month = Month::find(Carbon::now()->month);
         $type = PaymentType::whereDescription('S/N')->first();
         $paymentState = PaymentState::whereDescription('PENDIENTE')->first();
         $month = Month::find(Carbon::now()->month);

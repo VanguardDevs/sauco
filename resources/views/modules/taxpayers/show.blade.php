@@ -36,6 +36,9 @@
         @if (Auth::user()->hasRole('liquidator'))        
         <a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
             <i class="flaticon-paper-plane"></i>
+        </a>         
+        <a class="btn kt-subheader__btn-primary" onClick="onClickCalculateSettlements({{ $row->id }})">
+            <i class="flaticon-paper-plane"></i>
         </a> 
         @endif        
       </div>

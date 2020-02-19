@@ -93,7 +93,7 @@
             </a>
         </li> --}}
         
-        @if (@Auth::user()->hasRole('admin'))
+        @if (@Auth::user()->hasRole('admin') || @Auth::user()->hasRole('liquidator') || @Auth::user()->hasRole('collector'))
         <li class="kt-menu__item {{ active('payments*') }}" aria-haspopup="true" >
             <a  href="{{ url('payments') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon2-box"></i>

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\EconomicActivitySettlement;
+use App\Month;
+use App\Concept;
+use App\Taxpayer;
 use App\BankAccount;
 use App\Payment;
 use App\PaymentState;
@@ -15,11 +19,13 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
 use Redirect;
 use Session;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('has.role:admin')->only('destroy');
         $this->middleware('auth');
     }
 
@@ -144,6 +150,45 @@ class PaymentController extends Controller
             $application = Application::find($settlement->application->id);
             $application->delete();
         }
+    }
+
+    public function settlements(Taxpayer $taxpayer)
+    {
+        $concept = Concept::find(3); 
+        $month = Month::find(Carbon::now()->month - 1);
+    
+        $payNum = Payment::getNum();
+        $type = PaymentType::whereDescription('S/N')->first();
+        $paymentState = PaymentState::whereDescription('PENDIENTE')->first();
+
+        // Make payments
+        $payment = Payment::create([
+            'num' => $payNum,
+            'amount' => 0.0,
+            'total_amount' => 0.0,
+            'payment_state_id' => $paymentState->id,
+            'payment_type_id' => $type->id,
+        ]);
+
+        foreach ($taxpayer->economicActivities as $activity) {
+            $settlementNum = Settlement::getNum();
+            
+            $settlement = Settlement::create([
+                'num' => $settlementNum,
+                'amount' => 0.0,
+                'concept_id' => $concept->id,
+                'payment_id' => $payment->id,
+                'month_id' => $month->id,
+                'taxpayer_id' => $taxpayer->id
+            ]); 
+
+            EconomicActivitySettlement::create([
+                'economic_activity_id' => $activity->id,
+                'settlement_id' => $settlement->id
+            ]); 
+        }
+
+        return Session::flash('success', '¡El contribuyente tiene liquidaciones pendientes!');
     }
 
     /**

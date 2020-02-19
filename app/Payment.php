@@ -20,7 +20,7 @@ class Payment extends Model implements Auditable
         'total_amount',
         'payment_state_id',
         'payment_type_id',
-        'user_id'
+        'pay_date'
     ];
 
     public function paymentState()
