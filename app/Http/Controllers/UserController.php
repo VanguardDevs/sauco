@@ -118,7 +118,6 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $edit             = User::find($user->id);
-        $avatar_old       = $edit->avatar;
         $edit->first_name = $request->input('name');
         $edit->surname    = $request->input('surname');
         //$edit->login      = $request->input('login');
@@ -129,15 +128,6 @@ class UserController extends Controller
         if($edit->save()) {
 
             $edit->roles()->sync($request->get('roles'));
-
-            if($request->file('avatar') != null) {
-
-                $path = public_path('/uploads/users/');
-                $img_path = public_path('/uploads/users/'.$avatar_old.'.png');
-                File::delete($img_path);
-
-                Image::make($request->file('avatar'))->save($path.$edit->avatar.'.png');
-            }
 
             return Redirect::back()->withSuccess('Usuario actualizado!!');
         }

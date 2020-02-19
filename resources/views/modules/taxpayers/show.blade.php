@@ -33,7 +33,7 @@
             <i class="flaticon-exclamation"></i>
         </a>
         -->
-        @if (Auth::user()->hasRole('liquidator') || Auth::user()->hasRole('settlements-chief'))
+        @if (Auth::user()->hasRole('liquidator'))        
         <a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
             <i class="flaticon-paper-plane"></i>
         </a> 

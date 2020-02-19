@@ -28,7 +28,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 {
 	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-    Route::group(['middleware' => ['has.role:root']], function () {
+    Route::group(['middleware' => ['has.role:admin']], function () {
         /** General Settings */
         Route::resource('settings/general', 'SettingsController');
         Route::post('fiscal-year/new', 'FiscalYearController@store');
@@ -52,13 +52,13 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*----------  Routes Settings > Tax Units ----------*/
         Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
         Route::resource('settings/tax-units', 'TaxUnitController');
+   });
 
+    Route::group(['middleware' => 'has.role:admin,analyst'], function () {
         /*----------  Routes economic activities  ----------*/
         Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
         Route::resource('economic-activities', 'EconomicActivityController');
-    });
-
-    Route::group(['middleware' => 'has.role:root,analyst'], function () {
+ 
         /*----------  Routes parishes  ----------*/
         Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
         Route::resource('geographic-area/parishes', 'ParishController');
@@ -68,13 +68,13 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('geographic-area/communities', 'CommunityController');
     });
 
-    Route::group(['middleware' => 'has.role:root,operator,suboperator'], function() {
+    Route::group(['middleware' => 'has.role:admin,operator,suboperator'], function() {
         /**---------- Routes Payments ----------*/
         Route::get('cashbox/list', 'PaymentController@list');
         Route::resource('payments', 'PaymentController');
     });
 
-    Route::group(['middleware' => 'has.role:root'], function () {
+    Route::group(['middleware' => 'has.role:admin,analyst'], function () {
         Route::resource('about', 'AboutController');
     });
 
