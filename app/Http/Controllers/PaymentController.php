@@ -41,9 +41,9 @@ class PaymentController extends Controller
 
     public function list()
     {
-        $status = PaymentState::whereDescription('PENDIENTE')->first();
-        $query = Payment::with(['paymentState', 'settlements.taxpayer'])
-            ->where('payment_state_id', '!=', $status->id);
+        // $status = PaymentState::whereDescription('PENDIENTE')->first();
+        $query = Payment::with(['paymentState', 'settlements.taxpayer']);
+            // ->where('payment_state_id', '!=', $status->id);
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -91,7 +91,15 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
-       $paymentTypes = PaymentType::exceptNull();
+        $paymentTypes = PaymentType::exceptNull();
+        
+        $listingName = $payment->settlements->first()
+                        ->concept->listing->name;
+
+        if ($listingName == 'LIQUIDACIONES') {
+            return view('modules.payments.register')
+                ->with('row', $payment);            
+        }
 
         return view('modules.payments.show')
             ->with('row', $payment)
@@ -188,7 +196,9 @@ class PaymentController extends Controller
             ]); 
         }
 
-        return Session::flash('success', '¡El contribuyente tiene liquidaciones pendientes!');
+        return Response()->json([
+            'El liquidador tiene nuevas liquidaciones por pagar'
+        ]);
     }
 
     /**
