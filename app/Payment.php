@@ -14,14 +14,7 @@ class Payment extends Model implements Auditable
 
     protected $table = 'payments';
 
-    protected $fillable = [
-        'num',
-        'amount',
-        'total_amount',
-        'payment_state_id',
-        'payment_type_id',
-        'pay_date'
-    ];
+    protected $guarded = [];
 
     public function paymentState()
     {

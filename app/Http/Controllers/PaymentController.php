@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\PaymentMethod;
+use App\Services\SettlementService;
 use App\EconomicActivitySettlement;
 use App\Month;
 use App\Concept;
@@ -23,9 +25,12 @@ use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
-    public function __construct()
+    protected $settlementService;
+
+    public function __construct(SettlementService $settlementService)
     {
         $this->middleware('has.role:admin')->only('destroy');
+        $this->settlementService = $settlementService;
         $this->middleware('auth');
     }
 
@@ -41,9 +46,8 @@ class PaymentController extends Controller
 
     public function list()
     {
-        // $status = PaymentState::whereDescription('PENDIENTE')->first();
-        $query = Payment::with(['paymentState', 'settlements.taxpayer']);
-            // ->where('payment_state_id', '!=', $status->id);
+        $query = Payment::with(['paymentState', 'settlements.taxpayer'])
+            ->query();
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -77,10 +81,13 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if ($payment->paymentState->description == 'PAGADA') {
-            return redirect('payments');
+        if (Auth()->user()->can('update-settlements')) {
+            return view('modules.payments.update-payment');
+        } else if (Auth()->user()->can('process-payments')) {
+            return view('modules.payments.process-payment');
+        } else {
+            return view('modules.payments.show');
         }
-        return $this->edit($payment);
     }
 
     /**
@@ -141,7 +148,8 @@ class PaymentController extends Controller
         }
         $payment->save();
 
-        return redirect('payments')->withSuccess('¡Liquidación pagada!');
+        return redirect('payments')
+            ->withSuccess('¡Liquidación pagada!');
     }
 
     public function download(Payment $payment)
@@ -162,39 +170,21 @@ class PaymentController extends Controller
 
     public function settlements(Taxpayer $taxpayer)
     {
-        $concept = Concept::find(3); 
-        $month = Month::find(Carbon::now()->month - 1);
-    
         $payNum = Payment::getNum();
         $type = PaymentType::whereDescription('S/N')->first();
-        $paymentState = PaymentState::whereDescription('PENDIENTE')->first();
+        $state = PaymentState::whereDescription('PENDIENTE')->first();
+        $method = PaymentMethod::whereName('S/N')->first();
 
         // Make payments
         $payment = Payment::create([
             'num' => $payNum,
             'amount' => 0.0,
-            'total_amount' => 0.0,
-            'payment_state_id' => $paymentState->id,
+            'payment_method_id' => $method->id,
+            'payment_state_id' => $state->id,
             'payment_type_id' => $type->id,
         ]);
 
-        foreach ($taxpayer->economicActivities as $activity) {
-            $settlementNum = Settlement::getNum();
-            
-            $settlement = Settlement::create([
-                'num' => $settlementNum,
-                'amount' => 0.0,
-                'concept_id' => $concept->id,
-                'payment_id' => $payment->id,
-                'month_id' => $month->id,
-                'taxpayer_id' => $taxpayer->id
-            ]); 
-
-            EconomicActivitySettlement::create([
-                'economic_activity_id' => $activity->id,
-                'settlement_id' => $settlement->id
-            ]); 
-        }
+        dd($this->settlementService->makeSettlements($taxpayer, $payment));
 
         return Response()->json([
             'El liquidador tiene nuevas liquidaciones por pagar'
