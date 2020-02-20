@@ -13,9 +13,13 @@
       <div class="card card-primary card-outline">
         <div class="card-header alert alert-danger">
           <div class="row">
-            <h5 class="m-0">Control de actividades económicas <b>(</b> <a href="{{ Route("economic-activities".'.create') }}" title="Registrar comunidad">
+            <h5 class="m-0">Control de actividades económicas
+               @if (Auth()->user()->hasRole('admin'))
+                 <b>(</b> <a href="{{ Route("economic-activities".'.create') }}" title="Registrar comunidad">
                 <span>Registrar</span>
-              </a><b>)</b></h5>
+              </a><b>)</b>
+               @endif
+            </h5>
           </div>
         </div>
 

@@ -54,11 +54,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('settings/tax-units', 'TaxUnitController');
    });
 
-    Route::group(['middleware' => 'has.role:admin|analyst'], function () {
-        /*----------  Routes economic activities  ----------*/
-        Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
-        Route::resource('economic-activities', 'EconomicActivityController');
-     });
+    /*----------  Routes economic activities  ----------*/
+    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
+    Route::resource('economic-activities', 'EconomicActivityController');
+
     
     /*----------  Routes parishes  ----------*/
     Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
@@ -81,16 +80,19 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes representations ----------*/
     Route::get('representations/list', 'RepresentationController@list')->name('list-representations');
-    Route::post('people/{taxpayer}', 'RepresentationController@storePerson')->name('person.store');
-    Route::get('taxpayers/{taxpayer}/representation/create', 'RepresentationController@create');
-    Route::post('taxpayers/{taxpayer}/representation/add', 'RepresentationController@store')->name('representation.store');
-    Route::post('taxpayers/{id}/update-representation', 'RepresentationController@update')->name('representation.update');
+    Route::group(['middleware' => 'has.role:analyst'], function () {
+        Route::post('people/{taxpayer}', 'RepresentationController@storePerson')->name('person.store');
+        Route::get('taxpayers/{taxpayer}/representation/create', 'RepresentationController@create');
+        Route::post('taxpayers/{taxpayer}/representation/add', 'RepresentationController@store')->name('representation.store');
+    });
     Route::resource('representations', 'RepresentationController')->except(['create', 'store']);
 
     /*----------  Routes taxpayers ----------*/
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
-    Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('activities');
-    Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('add-activities');
+    Route::group(['middleware' => 'has.role:analyst'], function () {
+        Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('activities');
+        Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('add-activities');
+    });
     Route::resource('taxpayers', 'TaxpayerController');
 
     /*----------  Routes ordinance types ----------*/
