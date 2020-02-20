@@ -35,5 +35,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ActivityClassificationsTableSeeder::class);
         $this->call(ListsTableSeeder::class);
         $this->call(EconomicActivitiesTableSeeder::class);
+        $this->call(PaymentMethodsTableSeeder::class);
     }
 }

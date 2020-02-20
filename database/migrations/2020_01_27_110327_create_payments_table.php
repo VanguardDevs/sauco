@@ -20,6 +20,9 @@ class CreatePaymentsTable extends Migration
             $table->float('total_amount', 20, 2);
             $table->date('pay_date')->nullable();
             $table->unsignedBigInteger('payment_type_id');
+            $table->unsignedBigInteger('payment_method_id');
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('payment_state_id');
             $table->foreign('payment_type_id')->references('id')->on('payment_types')
                 ->onUpdate('cascade')->onDelete('cascade');

@@ -53,6 +53,11 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(Taxpayer::class, Settlement::class);
     }
 
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
+
     public static function getNum()
     {
         if (self::lastPayment()->count()) {

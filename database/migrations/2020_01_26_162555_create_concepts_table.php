@@ -15,6 +15,7 @@ class CreateConceptsTable extends Migration
     {
         Schema::create('concepts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('code');
             $table->string('name');
             $table->string('law');
             $table->string('observations')->nullable();
