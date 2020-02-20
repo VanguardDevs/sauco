@@ -61,18 +61,26 @@ class RepresentationController extends Controller
 
             if (!empty($hasAssociation->count())) {
                 return redirect('taxpayers/'.$taxpayer->id)
-                    ->withError('¡Esta persona está registrada como representante!');
+                    ->withError('¡La persona está registrada como representante de este contribuyente!');
             }
-
-            $representation = Representation::create([
-                'person_id' => $person->id,
-                'representation_type_id' => $type,
-                'taxpayer_id' => $taxpayer->id
-            ]);        
+            
+            return $this->registerRep($taxpayer, $person, $type);
         }
 
         $citizenship = $request->input('citizenship');
         return $this->createPerson($taxpayer, $type, $citizenship, $document);
+    }
+
+    public function registerRep(Taxpayer $taxpayer, Person $person, $type)
+    {
+        Representation::create([
+            'person_id' => $person->id,
+            'representation_type_id' => $type,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+        return redirect('taxpayers/'.$taxpayer->id)
+                ->withSuccess('¡Representante registrado!');
     }
 
     public function createPerson(Taxpayer $taxpayer, $representationType, $citizenship, $document)
@@ -90,7 +98,6 @@ class RepresentationController extends Controller
     public function storePerson(Request $request, Taxpayer $taxpayer)
     {
         $correlative = Citizenship::find($request->input('citizenship'))->correlative;
-
         $person = Person::create([
             'document' => $correlative.$request->input('document'),
             'first_name' => $request->input('first_name'),
@@ -102,15 +109,8 @@ class RepresentationController extends Controller
             'email' => $request->input('email'),
             'citizenship_id' => $request->input('citizenship'),
         ]);
-        
-        $representation = Representation::create([
-            'person_id' => $person->id,
-            'representation_type_id' => $request->input('representation_type'),
-            'taxpayer_id' => $taxpayer->id
-        ]);      
-
-        return redirect('taxpayers/'.$taxpayer->id)
-            ->withSuccess('¡Representante registrado!');
+       
+        return $this->registerRep($taxpayer, $person, $request->input('representation_type'));
     }
 
     /**
