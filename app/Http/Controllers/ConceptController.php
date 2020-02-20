@@ -65,7 +65,8 @@ class ConceptController extends Controller
      */
     public function store(ConceptsCreateFormRequest $request)
     {
-	    $concept = Concept::create([
+        $concept = Concept::create([
+            'code' => $request->input('code'),
             'name' => $request->input('name'),
             'law' => $request->input('law'),
             'observations' => $request->input('observations'),
@@ -73,11 +74,13 @@ class ConceptController extends Controller
             'list_id' => $request->input('list')
         ]);
 
-        ConceptPrice::create([
-            'value' => $request->input('value'),
-            'concept_id' => $concept->id,
-            'charging_method_id' => $request->input('charging_method')
-        ]);
+        if ($concept->code != 1) { 
+            ConceptPrice::create([
+                'value' => $request->input('value'),
+                'concept_id' => $concept->id,
+                'charging_method_id' => $request->input('charging_method')
+            ]);
+        }
 
         return redirect('settings/concepts')
             ->withSuccess('¡Concepto de recaudación creado!');

@@ -24,9 +24,7 @@ class ConceptsCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'value' => 'required',
             'name' => 'required',
-            'charging_method' => 'required',
             'ordinance' => 'required',
             'law' => 'required',
             'list' => 'required'
@@ -36,9 +34,7 @@ class ConceptsCreateFormRequest extends FormRequest
     public function attributes()
     {
         return [
-            'value' => 'valor',
             'name' => 'nombre',
-            'charging_method' => 'método de cobro',
             'ordinance' => 'tipo de ordenanza',
             'law' => 'ley u ordenanza',
             'list' => 'listado'
@@ -48,9 +44,7 @@ class ConceptsCreateFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'value.required' => 'Ingrese un :attribute',
             'name.required' => 'Ingrese un :attribute',
-            'charging_method.required' => 'Seleccione un :attribute',
             'ordinance.required' => 'Seleccione un :attribute',
             'list.required' => 'Seleccione un :attribute',
             'law.required' => 'Ingrese una :attribute'

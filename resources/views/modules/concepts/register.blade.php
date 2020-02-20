@@ -33,7 +33,16 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-2">
+                                <label>Código <span class="text-danger">*</span></label>
+
+                                {!! Form::text('code', old('description', @$row->code), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+
+                                @error('code')
+                                    <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-lg-10">
                                 <label>Nombre del concepto <span class="text-danger">*</span></label>
 
                                 {!! Form::text('name', old('description', @$row->description), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
@@ -44,7 +53,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label>Tipo de ordenanza<span class="text-danger">*</span></label>
 
                                 {!! Form::select('ordinance', $ordinances,
@@ -58,7 +67,7 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label>Incluir en el listado <span class="text-danger">*</span></label>
 
                                 {!! Form::select('list', $listings,
@@ -72,31 +81,30 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
                                 <label>Método de cobro</label>
                                 {!! Form::select('charging_method', $chargingMethods,
                                     (isset($row->chargingMethod) ? ($row->chargingMethod->id) : null), [
                                     'class' => 'col-md-12 form-control select2',
                                     'placeholder' => ' SELECCIONE ',
-                                    "required"
                                 ]) !!}
 
                                 @error('charging_method')
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group row">
-                           <div class="col-lg-3">
-                                <label>Valor <span class="text-danger">*</span></label>
+                           <div class="col-lg-6">
+                                <label>Valor</label>
 
-                                {!! Form::text('value', old('value', @$row->value), ['class' => 'form-control decimal-input-mask', "required"]) !!}
+                                {!! Form::text('value', old('value', @$row->value), ['class' => 'form-control decimal-input-mask']) !!}
 
                                 @error('value')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-9">
+                            <div class="col-lg-12">
                                 <label>Ley, ordenanza o decreto <span class="text-danger">*</span></label>
 
                                 {!! Form::text('law', old('law', @$row->law), ['class' => 'form-control'])!!}

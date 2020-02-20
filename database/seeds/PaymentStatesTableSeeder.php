@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 class PaymentStatesTableSeeder extends Seeder
 {
     protected $states = Array(
-        'PENDIENTE', 'PROCESADA', 'PAGADA'
+        'PENDIENTE', 'PROCESADA' 
     );
 
     /**
