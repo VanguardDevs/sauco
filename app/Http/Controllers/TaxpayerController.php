@@ -19,7 +19,7 @@ class TaxpayerController extends Controller
     public function __construct()
     {
         $this->middleware('has.role:analyst')->only(['create','store']);
-        $this->middleware('has.role:analyst|admin')->only(['show']);
+        $this->middleware('has.role:analyst|admin|liquidator')->only(['show']);
         $this->middleware('has.role:admin')->only(['edit', 'update']);
         $this->middleware('auth');
     }

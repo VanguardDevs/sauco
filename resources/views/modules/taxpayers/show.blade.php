@@ -34,11 +34,11 @@
         </a>
         -->
         @if (Auth::user()->hasRole('liquidator'))        
-        <a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
+        <!--<a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
             <i class="flaticon-paper-plane"></i>
-        </a>         
+        </a> -->        
         <a class="btn kt-subheader__btn-primary" onClick="onClickCalculateSettlements({{ $row->id }})">
-            <i class="flaticon-paper-plane"></i>
+            <i class="flaticon-price-tag"></i>
         </a> 
         @endif        
       </div>
@@ -190,9 +190,11 @@
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">Representante(s)</h3>
                         </div>
+                        @if(Auth()->user()->hasRole('analyst'))
                         <div class="kt-portlet__head-toolbar">
                             <a href="{{ url("taxpayers/".$row->id."/representation/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
                         </div>
+                        @endif
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget-4">
