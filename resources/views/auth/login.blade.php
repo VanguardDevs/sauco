@@ -4,48 +4,45 @@
 
 @section('content')
 
-<div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v4 kt-login--signin" id="kt_login">
-    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-        <div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper">
-            <div class="kt-login__container">
+<div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v1" id="kt_login">
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid__item--order--table-and-mobile-1 kt-login__wrapper">
+            <div class="kt-login__body" style="justify-content:space-evenly">
                 <div class="kt-login__logo">
-                    <a href="#">
+                    <a href="">
                         <img class="img-responsive" src="{{ asset('assets/images/logo1.png') }}">
                     </a>
                 </div>
-                <div class="kt-login__signin row">
-                    <div class="col-md-12">
-                        <div class="kt-login__head">
-                            <h3 class="kt-login__title">Inicio de Sesión</h3>
-                        </div>
-
-                        <form class="kt-form" method="POST" action="{{ route('login') }}" autocomplete="off">
+                <div class="kt-login__form">
+                    <div class="kt-login__title">
+                       <h3>Inicio de Sesión</h3>
+                    </div>
+                    <form class="kt-form" method="POST" action="{{ route('login') }}" autocomplete="off">
                         @csrf
-                        <div class="input-group">
-                            <input id="login" type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Usuario">
+                        <div class="form-group">
+                            <input type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Usuario">
 
                             @error('login')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    {{ $message }}
                                 </span>
                             @enderror
                         </div>
-                        <div class="input-group">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Clave">
+                        <div class="form-group">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Clave">
 
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    {{ $message }}
                                 </span>
                             @enderror
                         </div>
                         <div class="kt-login__actions">
-                            <button type="submit" class="btn buttons-add-up btn-pill kt-login__btn-primary">
-                                {{ __('Login') }}
+                            <button type="submit" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">
+                                {{ ('Login') }}
                             </button>
                         </div>
-                    </form>    
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
