@@ -47,7 +47,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label>Nombre <span class="text-danger">*</span></label>
-                                {!! Form::text("first_name", old('first_name', @$row->first_name), ["placeholder" => "Nombre", "class" => "form-control", "onkeyup" => "upperCase(this);"]) !!}
+                                {!! Form::text("first_name", old('first_name', @$row->first_name), ["placeholder" => "Nombre", "class" => "form-control" ])!!}
 
                                 @error('first_name')
                                 <div class="text text-danger">{{ $message }}</div>
@@ -58,7 +58,7 @@
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label>Apellido <span class="text-danger">*</span></label>
-                                {!! Form::text("surname", old('surname', @$row->surname), ["placeholder" => "Apellido", "class" => "form-control", "onkeyup" => "upperCase(this);"]) !!}
+                                {!! Form::text("surname", old('surname', @$row->surname), ["placeholder" => "Apellido", "class" => "form-control"]) !!}
 
                                 @error('surname')
                                 <div class="text text-danger">{{ $message }}</div>

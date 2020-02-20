@@ -139,6 +139,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if (Auth()->user()->hasRole('admin')) {
+            return Response()->json('¡Accion no permitida!', 401);
+        }
         $user->delete();
     }
 }
