@@ -120,51 +120,16 @@ class UserController extends Controller
         $edit             = User::find($user->id);
         $edit->first_name = $request->input('name');
         $edit->surname    = $request->input('surname');
-        //$edit->login      = $request->input('login');
+        
         if ($request->input('password') != NULL) {
             $edit->password   = bcrypt($request->input('password'));
         }
+        $edit->roles()->sync($request->get('roles'));
 
-        if($edit->save()) {
-
-            $edit->roles()->sync($request->get('roles'));
-
-            return Redirect::back()->withSuccess('Usuario actualizado!!');
-        }
+        return Redirect::back()
+            ->withSuccess('¡Usuario actualizado!');
     }
-    /**
-     *
-     * Update profile
-     *
-     */
-    public function updateProfile(Request $request, User $user)
-    {
-        dd($request->file('avatar'));
-        $edit             = User::find($user->id);
-        $avatar_old       = $edit->avatar;
-        //$edit->first_name = $request->input('name');
-        //$edit->surname    = $request->input('surname');
-        //$edit->login      = $request->input('login');
-        if ($request->input('password') != NULL) {
-            $edit->password   = bcrypt($request->input('password'));
-        }
-
-        if($edit->save()) {
-
-            $edit->roles()->sync($request->get('roles'));
-
-            if($request->file('avatar') != null) {
-
-                $path = public_path('/uploads/users/');
-                $img_path = public_path('/uploads/users/'.$avatar_old.'.png');
-                File::delete($img_path);
-
-                Image::make($request->file('avatar'))->save($path.$edit->avatar.'.png');
-            }
-
-            return Redirect::back()->withSuccess('Usuario actualizado!!');
-        }
-    }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -172,8 +137,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
     }
 }
