@@ -21,9 +21,9 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(PaymentState::class);
     }
 
-    public function user()
+    public function month
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsTo(Month::class);
     }
 
     public function paymentType()

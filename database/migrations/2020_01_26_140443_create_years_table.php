@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFiscalYearsTable extends Migration
+class CreateYearsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFiscalYearsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fiscal_years', function (Blueprint $table) {
+        Schema::create('years', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('year');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateFiscalYearsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fiscal_years');
+        Schema::dropIfExists('years');
     }
 }

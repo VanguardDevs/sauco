@@ -10,6 +10,7 @@ use App\Month;
 use App\Ordinance;
 use App\Payment;
 use Carbon\Carbon;
+use App\Http\Traits\NumberTrait;
 
 class SettlementService {
     public function makeSettlements(Taxpayer $taxpayer, Payment $payment)
@@ -23,6 +24,7 @@ class SettlementService {
 
     private function storePendingSettlement($taxpayer, $payment, $concept)
     {
+        dd(NumberTrait::getNewNum);        
         $month = Month::find(Carbon::now()->month - 1);
         /**
          * Return a new settlement (not processed yet)

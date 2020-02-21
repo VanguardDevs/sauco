@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FiscalYear extends Model
+class Year extends Model
 {
-    protected $table = 'fiscal_years';
+    protected $table = 'years';
 
     protected $fillable = [
         'year'

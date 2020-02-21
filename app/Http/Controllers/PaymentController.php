@@ -30,6 +30,7 @@ class PaymentController extends Controller
     public function __construct(SettlementService $settlementService)
     {
         $this->middleware('has.role:admin')->only('destroy');
+        $this->middleware('has.role:liquidator|collector|admin')->only(['index', 'list']);
         $this->settlementService = $settlementService;
         $this->middleware('auth');
     }
@@ -81,6 +82,9 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
+        // First let me know what are the permissions given for
+        // This user's role
+        dd(Auth()->user()->roles()->permissions);
         if (Auth()->user()->can('update-settlements')) {
             return view('modules.payments.update-payment');
         } else if (Auth()->user()->can('process-payments')) {
@@ -98,21 +102,7 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
-        $paymentTypes = PaymentType::exceptNull();
-        
-        $listingName = $payment->settlements->first()
-                        ->concept->listing->name;
-
-        if ($listingName == 'LIQUIDACIONES') {
-            return view('modules.payments.register')
-                ->with('row', $payment);            
-        }
-
-        return view('modules.payments.show')
-            ->with('row', $payment)
-            ->with('paymentTypes', $paymentTypes)
-            ->with('bankAccounts', BankAccount::pluck('bank_name', 'id'))
-            ->with('typeForm', 'update');
+        //
     }
 
     /**
@@ -155,8 +145,9 @@ class PaymentController extends Controller
     public function download(Payment $payment)
     {
         if ($payment->paymentState->description != 'PAGADA') {
-            return redirect('payments/'.$payment->id)
-                ->withError('¡La factura no ha sido pagada!');
+            return response()->json([
+                '¡La factura no ha sido pagada!', 400
+            ]);
         }
     }
 
@@ -168,29 +159,6 @@ class PaymentController extends Controller
         }
     }
 
-    public function settlements(Taxpayer $taxpayer)
-    {
-        $payNum = Payment::getNum();
-        $type = PaymentType::whereDescription('S/N')->first();
-        $state = PaymentState::whereDescription('PENDIENTE')->first();
-        $method = PaymentMethod::whereName('S/N')->first();
-
-        // Make payments
-        $payment = Payment::create([
-            'num' => $payNum,
-            'amount' => 0.0,
-            'payment_method_id' => $method->id,
-            'payment_state_id' => $state->id,
-            'payment_type_id' => $type->id,
-        ]);
-
-        dd($this->settlementService->makeSettlements($taxpayer, $payment));
-
-        return Response()->json([
-            'El liquidador tiene nuevas liquidaciones por pagar'
-        ]);
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -199,12 +167,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        if ($payment->paymentState->description == "PAGADA") {
-            return response()->json([
-                'message' => '¡La factura ya fue pagada!'
-            ], 400);
-        }
-
         foreach($payment->settlements as $model) {
             $settlement = Settlement::find($model->id);
             $this->checkApplication($settlement);

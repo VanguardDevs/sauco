@@ -16,8 +16,8 @@ class CreateMonthsTable extends Migration
         Schema::create('months', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedBigInteger('fiscal_year_id');
-            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years')
+            $table->unsignedBigInteger('year_id');
+            $table->foreign('year_id')->references('id')->on('years')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

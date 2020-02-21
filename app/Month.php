@@ -10,16 +10,16 @@ class Month extends Model
 
     protected $fillable = [
         'name',
-        'fiscal_year_id'
+        'year_id'
     ];
 
-    public function fiscalYear()
+    public function year()
     {
-        return $this->belongsTo(FiscalYear::class);
+        return $this->belongsTo(Year::class);
     }
 
-    public function settlements()
+    public function payments()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->hasMany(Payment::class);
     }
 }

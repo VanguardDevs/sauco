@@ -17,8 +17,8 @@ class CreateCorrelativesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('correlative_number_id');
             $table->unsignedBigInteger('correlative_type_id');
-            $table->unsignedBigInteger('fiscal_year_id');
-            $table->foreign('fiscal_year_id')->references('id')->on('fiscal_years')
+            $table->unsignedBigInteger('year_id');
+            $table->foreign('year_id')->references('id')->on('years')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('correlative_number_id')->references('id')->on('correlative_numbers')
                 ->onUpdate('cascade')->onDelete('cascade');

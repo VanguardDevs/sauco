@@ -13,7 +13,7 @@ class Correlative extends Model
     protected $fillable = [
         'correlative_number_id',
         'correlative_type_id',
-        'fiscal_year_id'
+        'year_id'
     ];
 
     public function correlativeType()
@@ -21,9 +21,9 @@ class Correlative extends Model
         return $this->belongsTo(CorrelativeType::class);
     }
 
-    public function fiscalYear()
+    public function year()
     {
-        return $this->belongsTo(FiscalYear::class);
+        return $this->belongsTo(Year::class);
     }
 
     public function correlativeNumber()
