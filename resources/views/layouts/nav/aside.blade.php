@@ -49,7 +49,7 @@
             <span class="kt-menu__link-text">Contribuyentes</span>
             </a>
         </li>
- 
+
         {{-- <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('properties') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
             <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                 <i class="kt-menu__link-icon flaticon2-position"></i>
@@ -69,7 +69,7 @@
             </div>
         </li> --}}
 
-        @if (@Auth::user()->hasRole('admin') || @Auth::user()->hasPermissionTo('access.economic-activities'))
+        @if (@Auth::user()->hasRole('admin') || @Auth::user()->hasPermissionTo('list.economic-activities'))
             <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
                 <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon-coins"></i>
@@ -92,7 +92,7 @@
             <span class="kt-menu__link-text">Multas</span>
             </a>
         </li> --}}
-        
+
         @if (@Auth::user()->hasRole('admin') || @Auth::user()->hasRole('liquidator') || @Auth::user()->hasRole('collector'))
         <li class="kt-menu__item {{ active('payments*') }}" aria-haspopup="true" >
             <a  href="{{ url('payments') }}" class="kt-menu__link">

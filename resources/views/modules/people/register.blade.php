@@ -74,7 +74,7 @@
                                 <label>Nacionalidad <span class="text-danger">*</span></label>
 
                                 {!!
-                                    Form::select('citizenship', $citizenships, 
+                                    Form::select('citizenship', $citizenships,
                                     (isset($citizen) ? $citizen : null), [
                                     'class'=>'col-md-12 form-control select2',
                                     'placeholder' => ' SELECCIONE ',
@@ -99,7 +99,7 @@
                                 <label>Tipo de representante<span class="text-danger">*</span></label>
 
                                 {!!
-                                    Form::select('representation_type', $representationTypes, 
+                                    Form::select('representation_type', $representationTypes,
                                     (isset($type) ? $type: null), [
                                     'class'=>'col-md-12 form-control select2',
                                     'placeholder' => ' SELECCIONE ',
@@ -146,7 +146,7 @@
                         <div class="kt-form__actions">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="{{ url('administration/users') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
+                                    <a href="{{ url('taxpayers/'.$taxpayer->id) }}" class="btn btn-danger"><i class="flaticon-cancel"></i> Regresar</a>
 
                                     @if($typeForm == 'update')
                                         <button type="submit" class="btn btn-primary" id="send">

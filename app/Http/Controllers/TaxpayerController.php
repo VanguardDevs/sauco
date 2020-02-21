@@ -97,7 +97,7 @@ class TaxpayerController extends Controller
 
     public function activitiesForm(Taxpayer $taxpayer)
     {
-        if (($taxpayer->taxpayerType->description != 'JURÍDICO') && 
+        if (($taxpayer->taxpayerType->description != 'JURÍDICO') &&
             (!$taxpayer->commercialDenomination)) {
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡Este contribuyente no admite actividades económicas!');
