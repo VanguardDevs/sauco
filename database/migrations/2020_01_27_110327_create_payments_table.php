@@ -20,9 +20,6 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('payment_type_id');
             $table->unsignedBigInteger('payment_method_id');
             $table->unsignedBigInteger('payment_state_id');
-            $table->unsignedBigInteger('month_id');
-            $table->foreign('month_id')->references('id')->on('months')
-                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('payment_method_id')->references('id')->on('payment_methods')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('payment_type_id')->references('id')->on('payment_types')

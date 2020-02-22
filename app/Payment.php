@@ -20,12 +20,7 @@ class Payment extends Model implements Auditable
     {
         return $this->belongsTo(PaymentState::class);
     }
-
-    public function month()
-    {
-        return $this->belongsTo(Month::class);
-    }
-
+ 
     public function paymentType()
     {
         return $this->belongsTo(PaymentType::class);
@@ -38,12 +33,7 @@ class Payment extends Model implements Auditable
 
     public function settlements()
     {
-        return $this->hasMany(Settlement::class);
-    }
-
-    public function taxpayer()
-    {
-        return $this->belongsTo(Taxpayer::class, Settlement::class);
+        return $this->belongsTo(Settlement::class, Receivable::class);
     }
 
     public function paymentMethod()
