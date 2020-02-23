@@ -32,6 +32,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         /** General Settings */
         Route::get('settings', 'ShowSettings');
         
+        /**
+        * Settings > Open new year
+        */
+        Route::post('settings/new-year', 'OpenNewYear');
+
        /**
         *  Settings > Property types
         */ 

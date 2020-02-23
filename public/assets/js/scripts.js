@@ -16,6 +16,7 @@ $(function () {
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#states').on('change', onSelectStates);
     $('#payment_types').on('change', onSelectPaymentType);
+    $('#openNewYear').on('click', openNewYear);
 });
 
 function onSelectTaxpayerType() {
@@ -195,32 +196,26 @@ const nullRecord = (id, url) => {
     });
 }
 
-const onClickFiscalYear = () => {
-    Swal.fire({
-        title: '¿Está seguro(a) que desea abrir un nuevo año fiscal?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Abrir'
-    }).then(result => {
-        if (result.value) {
-            $.ajax({
-                type: 'POST',
-                url: `${baseURL}/fiscal-year/new`,
-                data: {
-                    '_method': 'POST',
-                    '_token': $("meta[name='csrf-token']").attr("content")
-                },
-                success: response => location.reload(),
-                error: res => Swal.fire({ 
-                    title: 'Esta acción no puede ser procesada.',
-                    type: 'info',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                })
-            });
+const token = $("meta[name='csrf-token']").attr("content");
+ 
+const openNewYear = () => {
+    fetch(`${baseURL}/settings/new-year`, {
+        method: 'POST',
+        headers: {
+            "X-CSRF-TOKEN": token    
+        }
+    }).then(response => response.json())
+    .then(data => {
+        if (!data.ok) {
+            Swal.fire({
+                title: data.message,
+                type: 'error'
+            })
+        } else {
+            Swal.fire({
+                title: data.message,
+                type: 'success'
+            })
         }
     });
 }
