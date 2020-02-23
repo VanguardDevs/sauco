@@ -30,9 +30,14 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::group(['middleware' => ['has.role:admin']], function () {
         /** General Settings */
-        Route::resource('settings/general', 'SettingsController');
-        Route::post('fiscal-year/new', 'FiscalYearController@store');
-
+        Route::get('settings', 'ShowSettings');
+        
+        /**
+         * Ordinance settings
+         */
+        Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
+        Route::resource('settings/ordinances', 'OrdinanceController');
+        
         /*----------  Routes permissions  ----------*/
         Route::get('permissions/list', 'PermissionController@list');
         Route::resource('administration/permissions', 'PermissionController');
@@ -97,8 +102,6 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes ordinance types ----------*/
     Route::get('ordinances/list-all', 'OrdinanceController@listAll')->name('list-ordinances');
-    Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
-    Route::resource('settings/ordinances', 'OrdinanceController');
 
     /*----------  Routes applications ----------*/
     Route::get('applications/list', 'ApplicationController@list')->name('list-applications');
