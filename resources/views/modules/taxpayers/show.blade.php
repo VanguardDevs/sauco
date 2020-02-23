@@ -137,24 +137,23 @@
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-widget4">
-                            @if ($row->economicActivities->count())
-                            @foreach ($row->economicActivities as $activity)
+                            @forelse($row->economicActivities as $activity) 
                                 <div class="kt-widget4__item">
+                                    <div class="kt-widget4__icon">
+                                         <i class="flaticon2-percentage"></i>
+                                    </div>
                                     <div class="kt-widget4__info">
-                                        <p class="kt-widget4__title">{{ $activity->code }}</p>
-                                        <span class="kt-widget4__sub">{{ $activity->name }}</span>
+                                        <a class="kt-widget4__username">
+                                            {{ $activity->code }}
+                                        </a>
+                                        <p class="kt-widget4__text">
+                                            {{ $activity->name  }}
+                                        </p>
                                     </div>
                                 </div>
-                            @endforeach
-                            @else
-                            <div class="kt-widget4__item">
-                                <div class="kt-widget4__info">
-                                <span class="kt-widget4__sub">
-                                    Este contribuyente no tiene actividades económicas asignadas
-                                </span>
-                                </div>
-                            </div>
-                            @endif
+                            @empty 
+                                Este contribuyente no tiene actividades económicas asignadas
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -197,25 +196,24 @@
                         @endif
                     </div>
                     <div class="kt-portlet__body">
-                        <div class="kt-widget-4">
-                            @if($row->representations()->exists())
-                            <table class="table table-bordered table-striped datatables">
-                                <tr>
-                                    <td>Cédula</td>
-                                    <td>Nombre</td>
-                                    <td>Posición</td>
-                                </tr>
-                                @foreach ($row->representations as $representation)
-                                <tr>
-                                    <td>{{ $representation->person->document }}</td>
-                                    <td>{{ $representation->person->name }}</td>
-                                    <td>{{ $representation->representationType->name }}</td>
-                                </tr>
-                                @endforeach
-                            </table>
-                            @else
+                        <div class="kt-widget4">
+                            @forelse ($row->representations as $representation)
+                                <div class="kt-widget4__item">
+                                    <div class="kt-widget4__pic kt-widget4__pic--pic">
+                                        <img src="{{ asset('assets/images/user-default.png') }}" alt="" />
+                                    </div>
+                                    <div class="kt-widget4__info">
+                                        <a class="kt-widget4__username">
+                                            {{ $representation->person->name }}
+                                        </a>
+                                        <p class="kt-widget4__text">
+                                            {{ $representation->representationType->name  }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @empty
                                 Este contribuyente no tiene representante
-                            @endif
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -223,60 +221,7 @@
        </div>
        @endif
     </div>
-
-    <div class="modal fade" id="kt_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registro de Solicitudes</h5>
-                </div>
-                <div class="modal-body">
-                    {!! Form::open(['route' => 'add-application-taxpayer', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
-                    <input type="hidden" value="{{ $row->id }}" name="taxpayer" />
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <label class="control-label col-lg-12">Tipo de solicitud <span class="text-danger">*</span></label>
-                                {!! Form::select("ordinance", [], "SELECCIONE", [
-                                    "id" => "ordinance",
-                                    "class" => "form-control select2 col-lg-12"
-                                ]) !!}
-
-                                @error('ordinance')
-                                <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <label class="control-label col-lg-12">Concepto de recaudación <span class="text-danger">*</span></label>
-                                {!!
-                                    Form::select("concept", [], "SELECCIONE", [
-                                        "id" => 'concepts',
-                                        "class" => "form-control select2 col-lg-12"
-                                    ])
-                                !!}
-
-                                @error('concept')
-                                <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button  type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    Registrar
-                    </button>
-                </div>
-                    {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-    <!--End:: App Content-->
+   <!--End:: App Content-->
   </div>
   <!--End::App-->
 </div>
