@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 class ChargingMethodsTableSeeder extends Seeder
 {
     protected $methods = Array(
-        'U.T', 'TASA', 'BS'
+        'U.T', 'TASA', 'DIVISA'
     );
 
     /**

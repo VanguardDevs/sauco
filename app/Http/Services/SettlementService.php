@@ -24,7 +24,6 @@ class SettlementService {
 
     private function storePendingSettlement($taxpayer, $payment, $concept)
     {
-        dd(NumberTrait::getNewNum);        
         $month = Month::find(Carbon::now()->month - 1);
         /**
          * Return a new settlement (not processed yet)
@@ -35,7 +34,6 @@ class SettlementService {
            'num' => $settlementNum,
            'amount' => 0.0,
            'concept_id' => $concept->id,
-           'payment_id' => $payment->id,
            'month_id' => $month->id,
            'taxpayer_id' => $taxpayer->id
         ]);
@@ -43,19 +41,25 @@ class SettlementService {
         return $settlement; 
     }
 
-    protected function economicActivitySettlements(Taxpayer $taxpayer, Payment $payment)
+    public function calculateSettlements(Taxpayer $taxpayer)
+    {
+        // According to its type, determine when was the last time a taxpayer
+        // Received a settlement and generate N settlements per month.
+    }
+
+    protected function economicActivitySettlements(Taxpayer $taxpayer)
     {
         /**
          * Check economic activity license status first calling Services\License
          */
         $concept = Concept::whereCode(1)->first();
+        $settlement = $this->storePendingSettlement($taxpayer, $payment, $concept);
 
-        foreach ($taxpayer->economicActivities as $activity) {
-            $settlement = $this->storePendingSettlement($taxpayer, $payment, $concept);
-
+        foreach ($taxpayer->economicActivities as $activity) { 
             EconomicActivitySettlement::create([
                 'economic_activity_id' => $activity->id,
-                'settlement_id' => $settlement->id
+                'settlement_id' => $settlement->id,
+                'amount' => $amount
             ]); 
         }
     }

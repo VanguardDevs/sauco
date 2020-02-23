@@ -18,9 +18,12 @@ class CreateSettlementsTable extends Migration
             $table->string('num');
             $table->float('amount');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('payment_id');
+            $table->unsignedBigInteger('reduction_id');
             $table->unsignedBigInteger('concept_id');
-            $table->foreign('payment_id')->references('id')->on('payments')
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('status')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('reduction_id')->references('id')->on('reductions')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');

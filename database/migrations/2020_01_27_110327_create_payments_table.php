@@ -19,12 +19,12 @@ class CreatePaymentsTable extends Migration
             $table->float('amount');
             $table->unsignedBigInteger('payment_type_id');
             $table->unsignedBigInteger('payment_method_id');
-            $table->unsignedBigInteger('payment_state_id');
+            $table->unsignedBigInteger('state_id');
             $table->foreign('payment_method_id')->references('id')->on('payment_methods')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('payment_type_id')->references('id')->on('payment_types')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('payment_state_id')->references('id')->on('payment_states')
+            $table->foreign('state_id')->references('id')->on('status')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

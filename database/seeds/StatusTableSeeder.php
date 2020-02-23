@@ -1,9 +1,9 @@
 <?php
 
-use App\PaymentState;
+use App\Status;
 use Illuminate\Database\Seeder;
 
-class PaymentStatesTableSeeder extends Seeder
+class StatusTableSeeder extends Seeder
 {
     protected $states = Array(
         'PENDIENTE', 'PROCESADA' 
@@ -17,8 +17,8 @@ class PaymentStatesTableSeeder extends Seeder
     public function run()
     {
         foreach ($this->states as $key => $value) {
-            PaymentState::create([
-                'description' => $value
+            Status::create([
+                'name' => $value
             ]);
         }
     }

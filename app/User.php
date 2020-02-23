@@ -25,14 +25,4 @@ class User extends Authenticatable
         'avatar',
         'login'
     ];
-
-    public function payments()
-    {
-        return $this->hasMany(Payment::class);
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
 }

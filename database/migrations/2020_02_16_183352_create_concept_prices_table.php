@@ -15,7 +15,7 @@ class CreateConceptPricesTable extends Migration
     {
         Schema::create('concept_prices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('value');
+            $table->float('value');
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('charging_method_id');
             $table->foreign('concept_id')->references('id')->on('concepts')
