@@ -10,6 +10,11 @@ class EconomicActivitySettlement extends Model
 
     protected $guarded = [];
 
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
+    }
+
     public function economicActivity()
     {
         return $this->belongsTo(EconomicActivity::class);

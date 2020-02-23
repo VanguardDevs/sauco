@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\FiscalYear;
+use App\Year;
 use App\Month;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class FiscalYearController extends Controller
+class YearController extends Controller
 {
     public function __construct()
     {
@@ -49,23 +49,24 @@ class FiscalYearController extends Controller
     public function store(Request $request)
     {
         $currYear = Carbon::now()->year;
-        $year = FiscalYear::where('year', $currYear)->first();
+        $year = Year::where('year', $currYear)->first();
 
         if (!$year) {
-            $fiscalYear = FiscalYear::create([
+            $year = Year::create([
                 'year' => $currYear
             ]);
 
             foreach ($this->months as $key => $value) {
                 Month::create([
                     'name' => $value,
-                    'fiscal_year_id' => $fiscalYear->id
+                    'fiscal_year_id' => $year->id
                 ]);
             }
 
             return redirect('settings/general')
                 ->withSuccess('¡Año fiscal abierto!');
         }
+    
         return redirect('settings/general')
             ->withErrors('¡No puede abrir otro año fiscal!');
     }
@@ -73,10 +74,10 @@ class FiscalYearController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\FiscalYear  $fiscalYear
+     * @param  \App\Year  $year
      * @return \Illuminate\Http\Response
      */
-    public function show(FiscalYear $fiscalYear)
+    public function show(Year $year)
     {
         //
     }
@@ -84,10 +85,10 @@ class FiscalYearController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\FiscalYear  $fiscalYear
+     * @param  \App\Year  $year
      * @return \Illuminate\Http\Response
      */
-    public function edit(FiscalYear $fiscalYear)
+    public function edit(Year $year)
     {
         //
     }
@@ -96,10 +97,10 @@ class FiscalYearController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\FiscalYear  $fiscalYear
+     * @param  \App\Year  $year
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FiscalYear $fiscalYear)
+    public function update(Request $request, Year $year)
     {
         //
     }
@@ -107,10 +108,10 @@ class FiscalYearController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\FiscalYear  $fiscalYear
+     * @param  \App\Year  $year
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FiscalYear $fiscalYear)
+    public function destroy(Year $year)
     {
         //
     }

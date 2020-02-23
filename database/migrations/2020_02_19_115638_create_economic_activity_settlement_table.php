@@ -15,12 +15,16 @@ class CreateEconomicActivitySettlementTable extends Migration
     {
         Schema::create('economic_activity_settlement', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->float('amount');
             $table->unsignedBigInteger('economic_activity_id');
             $table->unsignedBigInteger('settlement_id');
+            $table->unsignedBigInteger('month_id');
+            $table->foreign('month_id')->references('id')->on('months')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('economic_activity_id')->references('id')
-                ->on('economic_activities');
+                ->on('economic_activities')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('settlement_id')->references('id')
-                ->on('settlements');
+                ->on('settlements')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

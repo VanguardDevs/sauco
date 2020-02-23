@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaxUnitsTable extends Migration
+class CreateWorkersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateTaxUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tax_units', function (Blueprint $table) {
+        Schema::create('workers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('law');
-            $table->float('value');
-            $table->date('publication_date');
+            $table->integer('num');
+            $table->unsignedBigInteger('taxpayer_id');
+            $table->foreign('taxpayer_id')->references('id')
+                ->on('taxpayers')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateTaxUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tax_units');
+        Schema::dropIfExists('workers');
     }
 }
