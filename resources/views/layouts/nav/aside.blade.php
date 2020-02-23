@@ -72,7 +72,7 @@
         @if (@Auth::user()->hasRole('admin') || @Auth::user()->hasPermissionTo('list.economic-activities'))
             <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
                 <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-coins"></i>
+                <i class="kt-menu__link-icon flaticon2-percentage"></i>
                 <span class="kt-menu__link-text">Actividades económicas</span>
                 </a>
             </li>
