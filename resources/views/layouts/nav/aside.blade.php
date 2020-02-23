@@ -162,72 +162,13 @@
                 </div>
             </li>
 
-            <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('settings') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
-                <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <i class="kt-menu__link-icon flaticon-settings"></i>
-                    <span class="kt-menu__link-text">Configuraciones</span>
-                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
+            <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
+                <a  href="{{ url('settings') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon flaticon-settings"></i>
+                <span class="kt-menu__link-text">Configuraciones</span>
                 </a>
-                <div class="kt-menu__submenu ">
-                    <span class="kt-menu__arrow"></span>
-                    <ul class="kt-menu__subnav">
-                        <li class="kt-menu__item {{ active('settings/general*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/general') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">General</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/tax-units*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/tax-units') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Unidades tributarias</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/property-types*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/property-types') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Clasificador de inmuebles</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/economic-sectors*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/economic-sectors') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Sectores económicos</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/ordinances*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/ordinances') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Ordenanzas</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/charging-methods*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/charging-methods') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Métodos de cobro</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/concepts*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/concepts') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Conceptos de cobro</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/bank-accounts*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/bank-accounts') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Cuentas bancarias</span>
-                            </a>
-                        </li>
-                        <li class="kt-menu__item {{ active('settings/requisites*') }}" aria-haspopup="true" >
-                            <a  href="{{ url('settings/requisites') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Requisitos</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </li>
+
             <li class="kt-menu__item {{ active('about*') }}" aria-haspopup="true" >
                 <a  href="{{ url('about') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon-information"></i>

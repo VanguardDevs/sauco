@@ -32,11 +32,37 @@ Route::prefix('/')->middleware('auth')->group(function()
         /** General Settings */
         Route::get('settings', 'ShowSettings');
         
+       /**
+        *  Settings > Property types
+        */ 
+        Route::get('property-types/list', 'PropertyTypeController@list')->name('list-property-types');
+        Route::resource('settings/property-types', 'PropertyTypeController');      
+        
         /**
          * Ordinance settings
          */
         Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
         Route::resource('settings/ordinances', 'OrdinanceController');
+
+        /*----------  Routes Settings > Economic sectors  ----------*/
+        Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
+        Route::resource('settings/economic-sectors', 'EconomicSectorController');
+
+        /**
+         *  Personal firm routes
+         */
+        Route::get('personal-firms/list', 'PersonalFirmController@list');
+        Route::resource('settings/personal-firms', 'PersonalFirmController');
+
+        /**
+         * Routes Settings > Concepts
+         */
+        Route::get('concepts/list', 'ConceptController@list')->name('list-concepts');
+        Route::resource('settings/concepts', 'ConceptController');
+
+        /*----------  Routes Settings > Tax Units ----------*/
+        Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
+        Route::resource('settings/tax-units', 'TaxUnitController');
         
         /*----------  Routes permissions  ----------*/
         Route::get('permissions/list', 'PermissionController@list');
@@ -49,14 +75,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*----------  Routes users  ----------*/
         Route::get('users/list', 'UserController@list');
         Route::resource('administration/users', 'UserController');
-
-        /*----------  Routes Settings > Economic sectors  ----------*/
-        Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
-        Route::resource('settings/economic-sectors', 'EconomicSectorController');
-
-        /*----------  Routes Settings > Tax Units ----------*/
-        Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
-        Route::resource('settings/tax-units', 'TaxUnitController');
    });
 
     /*----------  Routes economic activities  ----------*/
@@ -109,15 +127,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('applications/{application}/approve', 'ApplicationController@approve')->name('approveApplication');
     Route::resource('applications', 'ApplicationController');
 
-    /*----------  Routes charging methods ----------*/
-    Route::get('charging-methods/list', 'ChargingMethodController@list')->name('list-charging-methods');
-    Route::resource('settings/charging-methods', 'ChargingMethodController');
-
     /*----------  Routes Ordinances ----------*/
     Route::get('ordinances/{id}/concepts', 'ConceptController@byOrdinance')->name('list-concepts');
-    Route::get('concepts/list', 'ConceptController@list')->name('list-concepts');
-    Route::resource('settings/concepts', 'ConceptController');
-
+    
     /*----------  Routes fines ----------*/
     Route::get('fines/list', 'FineController@list')->name('list-fines');
     Route::post('fines/taxpayer', 'FineController@addFineTaxpayer')->name('add-fine-taxpayer');
@@ -130,8 +142,6 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes property types ----------*/
     Route::get('property-types/list-all', 'PropertyTypeController@listAll')->name('list-property-types');
-    Route::get('property-types/list', 'PropertyTypeController@list')->name('list-property-types');
-    Route::resource('settings/property-types', 'PropertyTypeController');
 
     /*----------  Routes properties ----------*/
     Route::get('taxpayer/{id}/property/create', 'PropertyController@create')->name('create-property');
@@ -165,12 +175,6 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('licenses/{license}/download', 'LicenseController@download');
     Route::resource('licenses', 'LicenseController');
-
-    /**
-     *  Personal firm routes
-     */
-    Route::get('personal-firms/list', 'PersonalFirmController@list');
-    Route::resource('settings/personal-firms', 'PersonalFirmController');
     
     /**
      * Economic activity settlements

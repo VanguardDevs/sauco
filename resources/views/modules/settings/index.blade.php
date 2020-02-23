@@ -7,26 +7,81 @@
 @endsection
 
 @section('content')
-	<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-        <div class="kt-portlet kt-portlet--mobile">
+	<div class="col-xl-12">
+        <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head kt-portlet__head--lg">
                 <div class="kt-portlet__head-label">
                     <span class="kt-portlet__head-icon">
                         <i class="kt-font-brand flaticon-settings-1"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        @if(@Auth::user()->hasRole('admin'))
-                            Configuraciones
-                        @endif
+                        Configuraciones
                     </h3>
                 </div>
             </div>
 
-            <div class="kt-portlet">
-                <div class="kt-portlet__body">
-                    <button class="btn btn-info" onClick="onClickFiscalYear()">
-                        <i class="flaticon-rocket"></i> Año fiscal
-                    </button>
+            <div class="kt-portlet__body">
+                <div class="kt-notification">
+                    <a class="kt-notification__item" href="{{ url('settings/economic-sectors') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-graphic"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Sectores Económicos 
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ url('settings/ordinances') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-file-1"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Ordenanzas
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ url('settings/tax-units') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon-coins"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Unidades Tributarias
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ url('settings/property-types') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-protection"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                               Tipos de inmuebles
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ url('settings/personal-firms') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-zig-zag-line-sign"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                               Firmas personales 
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ url('settings/concepts') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-shopping-cart-1"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Conceptos de recaudación
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
