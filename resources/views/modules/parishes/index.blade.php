@@ -2,10 +2,6 @@
 
 @section('title', 'Control de Parroquias')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('geographic-area/parishes') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

@@ -26,8 +26,15 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 Route::prefix('/')->middleware('auth')->group(function()
 {
-	Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    /**
+     * Available for all users logged in
+     */
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('about', 'ShowAbout')->name('about');
 
+    /**
+     * Only Admin routes
+     */
     Route::group(['middleware' => ['has.role:admin']], function () {
         /** General Settings */
         Route::get('settings', 'ShowSettings')->name('settings.index');
@@ -81,29 +88,28 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('users/list', 'UserController@list');
         Route::resource('administration/users', 'UserController');
    });
-
-    /*----------  Routes economic activities  ----------*/
-    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
-    Route::resource('economic-activities', 'EconomicActivityController');
-
     
-    /*----------  Routes parishes  ----------*/
-    Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
-    Route::resource('geographic-area/parishes', 'ParishController');
+    /**
+     * Routes available for admin, chief of inspection, inspectors and superintendent
+     */
+    Route::group(['middleware' => 'has.role:admin'], function() {
+        /*----------  Routes economic activities  ----------*/
+        Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
+        Route::resource('economic-activities', 'EconomicActivityController');
 
-    /*----------  Routes communities  ----------*/
-    Route::get('communities/list', 'CommunityController@list')->name('list-communities');
-    Route::resource('geographic-area/communities', 'CommunityController');
+       /*----------  Routes parishes  ----------*/
+        Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
+        Route::resource('geographic-area/parishes', 'ParishController');
 
-
-    Route::group(['middleware' => 'has.role:admin,operator,suboperator'], function() {
+        /*----------  Routes communities  ----------*/
+        Route::get('communities/list', 'CommunityController@list')->name('list-communities');
+        Route::resource('geographic-area/communities', 'CommunityController');
+    });
+    
+    Route::group(['middleware' => 'has.role:liquidator'], function() {
         /**---------- Routes Payments ----------*/
         Route::get('cashbox/list', 'PaymentController@list');
         Route::resource('payments', 'PaymentController');
-    });
-
-    Route::group(['middleware' => 'has.role:admin,analyst'], function () {
-        Route::resource('about', 'AboutController');
     });
 
     /*----------  Routes representations ----------*/
@@ -126,63 +132,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     /*----------  Routes ordinance types ----------*/
     Route::get('ordinances/list-all', 'OrdinanceController@listAll')->name('list-ordinances');
 
-    /*----------  Routes applications ----------*/
-    Route::get('applications/list', 'ApplicationController@list')->name('list-applications');
-    Route::post('applications/taxpayer', 'ApplicationController@store')->name('add-application-taxpayer');
-    Route::post('applications/{application}/approve', 'ApplicationController@approve')->name('approveApplication');
-    Route::resource('applications', 'ApplicationController');
-
     /*----------  Routes Ordinances ----------*/
     Route::get('ordinances/{id}/concepts', 'ConceptController@byOrdinance')->name('list-concepts');
-    
-    /*----------  Routes fines ----------*/
-    Route::get('fines/list', 'FineController@list')->name('list-fines');
-    Route::post('fines/taxpayer', 'FineController@addFineTaxpayer')->name('add-fine-taxpayer');
-    Route::post('fines/{id}/approve', 'FineController@approve')->name('approveFine');
-    Route::resource('fines', 'FineController');
-
-    /*----------  Routes bank-accounts ----------*/
-    Route::get('bank-accounts/list', 'BankAccountController@list')->name('list-bank-accounts');
-    Route::resource('settings/bank-accounts', 'BankAccountController');
 
     /*----------  Routes property types ----------*/
     Route::get('property-types/list-all', 'PropertyTypeController@listAll')->name('list-property-types');
 
-    /*----------  Routes properties ----------*/
-    Route::get('taxpayer/{id}/property/create', 'PropertyController@create')->name('create-property');
-    Route::post('taxpayer/{id}/add-property', 'PropertyController@store')->name('add-property');
-    Route::get('properties/list', 'PropertyController@list')->name('list-properties');
-    Route::resource('properties', 'PropertyController');
-
     /*----------  Routes parishes ----------*/
     Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
     Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
-
-    /*----------  Routes commercial registers ----------*/
-    Route::get('taxpayer/{taxpayer}/commercial-register/create', 'CommercialRegisterController@create')->name('create-commercial-regster');
-    Route::post('taxpayer/{taxpayer}/add-commercial-register', 'CommercialRegisterController@store')->name('add-commercial-register');
-    Route::get('commercial-registers/list', 'CommercialRegisterController@list')->name('list-commercial-registers');
-    Route::resource('commercial-registers', 'CommercialRegisterController');
-
-    Route::group(['middleware' => 'has.role:admin|liquidator'], function () {
-        /**---------- Routes Payments ----------*/
-        Route::get('cashbox/list', 'PaymentController@list');
-        Route::get('payments/{payment}/download', 'PaymentController@download');
-        Route::resource('payments', 'PaymentController');
-    });
-    
-    /**---------- Routes Requisites ----------*/
-    Route::get('requisites/list', 'RequisiteController@list');
-    Route::resource('settings/requisites', 'RequisiteController');
-    
-    /**
-     * Licenses routes
-     */
-    Route::get('licenses/{license}/download', 'LicenseController@download');
-    Route::resource('licenses', 'LicenseController');
-    
-    /**
-     * Economic activity settlements
-     */
-    Route::post('economic-activity-settlements/{taxpayer}/', 'PaymentController@settlements');
 });

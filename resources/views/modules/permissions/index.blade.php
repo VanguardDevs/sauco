@@ -2,10 +2,6 @@
 
 @section('title', 'Registro de Permisos')
 
-{{-- @section('breadcrumbs')
-    {{ Breadcrumbs::render('roles.index') }}
-@endsection --}}
-
 @section('content')
 
     <div class="row" style="margin-top: 20px;">

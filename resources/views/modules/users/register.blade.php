@@ -11,17 +11,9 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de Usuarios
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('administration/users/create') }}
-                            @endsection
-                        @else
+                       @else
                             Editar usuario: {{ @$row->login }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('administration/users/edit', $row) }}
-                            @endsection
-                        @endif
+                       @endif
                         </h3>
                     </div>
                 </div>

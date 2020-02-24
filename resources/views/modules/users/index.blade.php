@@ -2,10 +2,6 @@
 
 @section('title', 'Control de Usuarios')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('administration/users') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

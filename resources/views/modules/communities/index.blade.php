@@ -2,10 +2,6 @@
 
 @section('title', 'Control de comunidades')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('geographic-area/communities') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

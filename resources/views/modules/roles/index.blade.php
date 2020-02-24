@@ -2,10 +2,6 @@
 
 @section('title', 'Roles')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('administration/roles') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

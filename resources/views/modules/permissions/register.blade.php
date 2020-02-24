@@ -8,17 +8,9 @@
         <div class="card-header alert alert-danger">
             @if ($typeForm == 'create')
                 <h5 class="card-title">Registro de Permisos</h5>
-
-                {{--@section('breadcrumbs')
-                  {{ Breadcrumbs::render('departments.create') }}
-                @endsection--}}
-            @else
+           @else
                 <h5>Editar registro: {{ @$row->name }}</h5>
-
-                {{--@section('breadcrumbs')
-                  {{ Breadcrumbs::render('departments.edit', $row) }}
-                @endsection--}}
-            @endif
+           @endif
         </div>
         <!-- /.card-header -->
         <!-- form start -->

@@ -11,17 +11,9 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de Comunidades
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('geographic-area/communities/create') }}
-                            @endsection
-                        @else
+                       @else
                             Editar comunidad: {{ @$row->name }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('geographic-area/communities/edit', $row) }}
-                            @endsection
-                        @endif
+                       @endif
                         </h3>
                     </div>
                 </div>

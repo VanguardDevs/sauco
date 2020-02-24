@@ -2,10 +2,6 @@
 
 @section('title', 'Dashboard')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('dashboard') }}
-@endsection
-
 @section('content')
 <div class="col-xl-4">
     <!--Begin::Portlet-->

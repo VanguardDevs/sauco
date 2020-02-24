@@ -8,16 +8,8 @@
     <div class="card-header alert alert-danger">
         @if ($typeForm == 'create')
             <h5 class="card-title">Registro de Roles</h5>
-
-            @section('breadcrumbs')
-                {{ Breadcrumbs::render('administration/roles/create') }}
-            @endsection
 		@else
 			<h5>Editar rol: {{ @$row->name }}</h5>
-
-            @section('breadcrumbs')
-                {{ Breadcrumbs::render('administration/roles/edit', $row) }}
-            @endsection
 		@endif
     </div>
     <!-- /.card-header -->
