@@ -2,10 +2,6 @@
 
 @section('title', 'Contribuyentes')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('taxpayers') }}
-@endsection
-
 @section('content')
   <!-- end:: Subheader -->
   <!-- begin:: Table -->

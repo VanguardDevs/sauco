@@ -133,21 +133,29 @@ Breadcrumbs::for('settings/economic-sectors/edit', function ($trail) {
 });
 
 /*------------- Taxpayers -------------*/
-Breadcrumbs::for('taxpayers', function ($trail) {
+Breadcrumbs::for('taxpayers.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Contribuyentes', url('taxpayers'));
 });
 
 /*------------- Taxpayers > create -------------*/
-Breadcrumbs::for('taxpayers/create', function ($trail) {
-    $trail->parent('taxpayers');
+Breadcrumbs::for('taxpayers.create', function ($trail) {
+    $trail->parent('taxpayers.index');
     $trail->push('Crear contribuyente', url('taxpayers/create'));
 });
 
 /*------------- Taxpayers > update -------------*/
-Breadcrumbs::for('taxpayers/update', function ($trail) {
-    $trail->parent('taxpayers');
+Breadcrumbs::for('taxpayers.update', function ($trail) {
+    $trail->parent('taxpayers.index');
     $trail->push('Editar contribuyente', url('taxpayers/update'));
+});
+
+/**
+ * Taxpayers > show
+ */
+Breadcrumbs::for('taxpayers.show', function ($trail, $row) {
+    $trail->parent('taxpayers.index');
+    $trail->push('Contribuyente '.$row->id, url('taxpayers', $row->id));
 });
 
 /*------------- Tax units -------------*/

@@ -11,16 +11,8 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de Contribuyente
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('taxpayers/create') }}
-                            @endsection
                         @else
                             Editar contribuyente: {{ @$row->rif }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('taxpayers/edit', $row) }}
-                            @endsection
                         @endif
                         </h3>
                     </div>

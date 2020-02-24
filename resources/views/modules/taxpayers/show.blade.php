@@ -6,45 +6,11 @@
 
 @section('title', 'Ficha del Contribuyente '.$row->rif)
 
+@section('subheader__title', $row->rif)
+
 @section('content')
 
 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-
-  <!-- begin:: Subheader -->
-  <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-    <div class="kt-subheader__main">
-      <button class="kt-subheader__mobile-toggle kt-subheader__mobile-toggle--left" id="kt_subheader_mobile_toggle"><span></span></button>
-      <h3 class="kt-subheader__title">
-        Contribuyente #{{ $row->id }}
-      </h3>
-    </div>
-    <div class="kt-subheader__toolbar">
-      <div class="kt-subheader__wrapper">
-        <a class="btn kt-subheader__btn-primary" href="{{ url('taxpayers') }}" title="Regresar">
-          <i class='flaticon2-back'></i>
-        </a>
-        @if (Auth::user()->hasRole('admin'))        
-        <a class="btn kt-subheader__btn-primary" href="{{ url()->current()."/edit" }}" title="Editar">
-          <i class='flaticon-edit'></i>
-        </a>
-        @endif
-        <!--
-        <a class="btn kt-subheader__btn-primary" onClick="onClickAddFine()" data-toggle="modal" data-target="#kt_modal_2">
-            <i class="flaticon-exclamation"></i>
-        </a>
-        -->
-        @if (Auth::user()->hasRole('liquidator'))        
-        <!--<a class="btn kt-subheader__btn-primary" onClick="onClickAddApplication()" data-toggle="modal" data-target="#kt_modal_1">
-            <i class="flaticon-paper-plane"></i>
-        </a> -->        
-        <a class="btn kt-subheader__btn-primary" onClick="onClickCalculateSettlements({{ $row->id }})">
-            <i class="flaticon-price-tag"></i>
-        </a> 
-        @endif        
-      </div>
-    </div>
-  </div>
-  <!-- end:: Subheader -->
   <!-- begin:: Content -->
   <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
 	<!--Begin::App-->

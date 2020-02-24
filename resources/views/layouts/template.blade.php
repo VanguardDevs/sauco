@@ -29,16 +29,15 @@
   <div class="kt-grid kt-grid--hor kt-grid--root">
     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
       @include('layouts.nav.aside')
-      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-        {{-- Top Bar --}}
-        @include('layouts.nav.top')
+      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper"> 
+       @include('layouts.nav.top')
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-          <!-- begin:: Breadcrumbs -->
-          {{--@include('partials.breadcrumbs')--}}
-          @yield('breadcrumbs')
-          <!-- end:: Breadcrumbs -->
           <!-- begin:: Content -->
           <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+             <!-- begin:: subheader -->
+            @include('layouts.nav.subheader')
+            <!-- end:: subheader -->
+
                 <input type="hidden" id="base_url" value="{{ url('/') }}">
             @yield('content')
           </div>

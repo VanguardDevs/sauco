@@ -167,8 +167,8 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-	OwenIt\Auditing\AuditingServiceProvider::class,
-	RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+    	OwenIt\Auditing\AuditingServiceProvider::class,
+	    RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -229,8 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-	'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-	'Audit' => OwenIt\Auditing\Auditable::class,
+	    'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+	    'Audit' => OwenIt\Auditing\Auditable::class,
     ],
 
 ];
