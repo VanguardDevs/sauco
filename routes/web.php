@@ -30,7 +30,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::group(['middleware' => ['has.role:admin']], function () {
         /** General Settings */
-        Route::get('settings', 'ShowSettings');
+        Route::get('settings', 'ShowSettings')->name('settings.index');
         
         /**
         * Settings > Open new year

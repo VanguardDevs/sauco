@@ -2,10 +2,6 @@
 
 @section('title', 'Configuraciones')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('settings/general') }}
-@endsection
-
 @section('content')
 	<div class="col-xl-12">
         <div class="kt-portlet kt-portlet--height-fluid">

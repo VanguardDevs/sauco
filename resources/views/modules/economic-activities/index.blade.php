@@ -2,10 +2,6 @@
 
 @section('title', 'Control de actividades económicas')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('economic-activities') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

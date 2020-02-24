@@ -8,9 +8,9 @@ Breadcrumbs::for('dashboard', function ($trail) {
 });
 
 /*----------  Settings  ----------*/
-Breadcrumbs::for('settings/general', function ($trail) {
+Breadcrumbs::for('settings.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Configuraciones', url('settings/general'));
+    $trail->push('Configuraciones', url('settings'));
 });
 
 /*------------- Users -------------*/
@@ -74,20 +74,20 @@ Breadcrumbs::for('geographic-area/communities/edit', function ($trail) {
 });
 
 /*------------- Economic activities -------------*/
-Breadcrumbs::for('economic-activities', function ($trail) {
+Breadcrumbs::for('economic-activities.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Actividades económicas', url('economic-activities'));
 });
 
 /*------------- Economic activities > create -------------*/
-Breadcrumbs::for('economic-activities/create', function ($trail) {
-    $trail->parent('economic-activities');
+Breadcrumbs::for('economic-activities.create', function ($trail) {
+    $trail->parent('economic-activities.index');
     $trail->push('Crear actividad económica', url('economic-activities/create'));
 });
 
 /*------------- Economic activities > edit -------------*/
-Breadcrumbs::for('economic-activities/edit', function ($trail) {
-    $trail->parent('economic-activities');
+Breadcrumbs::for('economic-activities.edit', function ($trail) {
+    $trail->parent('economic-activities.index');
     $trail->push('Editar actividad económica', url('economic-activities/edit'));
 });
 
@@ -115,20 +115,20 @@ Breadcrumbs::for('representations/edit', function ($trail) {
 });
 
 /*------------- Sectores económicos -------------*/
-Breadcrumbs::for('settings/economic-sectors', function ($trail) {
-    $trail->parent('dashboard');
+Breadcrumbs::for('economic-sectors.index', function ($trail) {
+    $trail->parent('settings.index');
     $trail->push('Sectores económicos', url('settings/economic-sectors'));
 });
 
 /*------------- Sectores económicos > create -------------*/
-Breadcrumbs::for('settings/economic-sectors/create', function ($trail) {
-    $trail->parent('settings/economic-sectors');
+Breadcrumbs::for('economic-sectors.create', function ($trail) {
+    $trail->parent('economic-sectors.index');
     $trail->push('Crear sector económico', url('settings/economic-sectors/create'));
 });
 
 /*------------- Sectores económicos > update -------------*/
-Breadcrumbs::for('settings/economic-sectors/edit', function ($trail) {
-    $trail->parent('settings/economic-sectors');
+Breadcrumbs::for('economic-sectors.edit', function ($trail) {
+    $trail->parent('economic-sectors.index');
     $trail->push('Editar sector económico', url('settings/economic-sectors/edit'));
 });
 
@@ -318,11 +318,5 @@ Breadcrumbs::for('payments', function ($trail) {
 Breadcrumbs::for('payments/edit', function ($trail) {
     $trail->parent('payments');
     $trail->push('Procesar liquidación', url('payments/edit'));
-});
-
-/*------------- Old Licenses -------------*/
-Breadcrumbs::for('old-licenses', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Renovación de licencias 2019', url('old-licenses'));
 });
 

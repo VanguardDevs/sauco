@@ -11,17 +11,9 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de Actividad Económica
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('economic-activities/create') }}
-                            @endsection
-                        @else
+                       @else
                             Editar actividad económica: {{ @$row->login }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('economic-activities/edit', $row) }}
-                            @endsection
-                        @endif
+                       @endif
                         </h3>
                     </div>
                 </div>
