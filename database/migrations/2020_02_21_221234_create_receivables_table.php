@@ -15,6 +15,7 @@ class CreateReceivablesTable extends Migration
     {
         Schema::create('receivables', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('object_payment', 140);
             $table->unsignedBigInteger('settlement_id');
             $table->unsignedBigInteger('payment_id');
             $table->foreign('payment_id')->references('id')

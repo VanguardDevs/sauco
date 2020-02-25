@@ -15,12 +15,15 @@ class CreateSettlementsTable extends Migration
     {
         Schema::create('settlements', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('num');
+            $table->string('num', 10);
             $table->float('amount');
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('reduction_id');
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('state_id');
+            $table->unsignedBigInteger('month_id');
+            $table->foreign('month_id')->references('id')->on('months')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('status')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('reduction_id')->references('id')->on('reductions')
