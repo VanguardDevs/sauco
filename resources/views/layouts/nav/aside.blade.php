@@ -57,16 +57,7 @@
                 </a>
             </li>
         @endif
-    
-        @if (@Auth::user()->can('access.applications'))
-        <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
-            <a  href="{{ url('applications') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon-paper-plane-1"></i>
-            <span class="kt-menu__link-text">Solicitudes</span>
-            </a>
-        </li>
-        @endif
-
+        
         @if (@Auth::user()->can('access.cashbox'))
         <li class="kt-menu__item {{ active('cashbox*') }}" aria-haspopup="true" >
             <a  href="{{ url('cashbox') }}" class="kt-menu__link">

@@ -9,51 +9,42 @@
     <title>@yield('title') - SIRIM </title>
     @include('layouts.styles')
 </head>
-<body  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+<body  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed">
 
   <!-- begin:: Header Mobile -->
-<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed " >
-    <div class="kt-header-mobile__logo">
-      <a href="{{ url('dashboard') }}">
-        <img alt="Logo" class="logo" src="{{ asset('assets/images/logo1.png') }}"/>
-      </a>
-    </div>
-    <div class="kt-header-mobile__toolbar">
-      <button class="kt-header-mobile__toggler kt-header-mobile__toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
-      <button class="kt-header-mobile__topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
-    </div>
-</div>
-
-  <input type="hidden" id="base_url" value="{{ url('/') }}">
-
-  <div class="kt-grid kt-grid--hor kt-grid--root">
-    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-      @include('layouts.nav.aside')
-      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper"> 
-       @include('layouts.nav.top')
-        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-          <!-- begin:: Content -->
-          <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-             <!-- begin:: subheader -->
-            @include('layouts.nav.subheader')
-            <!-- end:: subheader -->
-
-                <input type="hidden" id="base_url" value="{{ url('/') }}">
-            @yield('content')
-          </div>
-          <!-- end:: Content -->
+    <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed " >
+        <div class="kt-header-mobile__logo">
+          <a href="{{ url('dashboard') }}">
+            <img alt="Logo" class="logo" src="{{ asset('assets/images/logo1.png') }}"/>
+          </a>
         </div>
-        @include('layouts.nav.footer')
-      </div>
+        <div class="kt-header-mobile__toolbar">
+          <button class="kt-header-mobile__toggler kt-header-mobile__toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
+          <button class="kt-header-mobile__topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
+        </div>
     </div>
-  </div>
-  <!-- begin::Scrolltop -->
-  <div id="kt_scrolltop" class="kt-scrolltop">
-      <i class="fa fa-arrow-up"></i>
-  </div>
-  <!-- end::Scrolltop -->
 
-  @include('layouts.scripts')
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+          @include('layouts.nav.aside')
+          <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper"> 
+           @include('layouts.nav.top')
+              <!-- begin:: Content -->
+                @include('layouts.nav.subheader')
+                <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+                    @yield('content')
+                </div>
+              <!-- end:: Content -->
+            @include('layouts.nav.footer')
+          </div>
+        </div>
+    </div>
+    <!-- begin::Scrolltop -->
+    <div id="kt_scrolltop" class="kt-scrolltop">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+    <!-- end::Scrolltop -->
+
+    @include('layouts.scripts')
 
 </body>
 </html>

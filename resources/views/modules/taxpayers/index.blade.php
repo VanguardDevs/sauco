@@ -2,6 +2,8 @@
 
 @section('title', 'Contribuyentes')
 
+@section('subheader__title', 'Contribuyentes')
+
 @section('content')
   <!-- end:: Subheader -->
   <!-- begin:: Table -->
