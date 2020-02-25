@@ -49,27 +49,7 @@
             <span class="kt-menu__link-text">Contribuyentes</span>
             </a>
         </li>
-
-        {{-- <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('properties') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
-            <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                <i class="kt-menu__link-icon flaticon2-position"></i>
-                <span class="kt-menu__link-text">Inmuebles</span>
-                <i class="kt-menu__ver-arrow la la-angle-right"></i>
-            </a>
-            <div class="kt-menu__submenu ">
-                <span class="kt-menu__arrow"></span>
-                <ul class="kt-menu__subnav">
-                    <li class="kt-menu__item {{ active('properties*') }}" aria-haspopup="true" >
-                        <a  href="{{ url('properties') }}" class="kt-menu__link ">
-                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                            <span class="kt-menu__link-text">Listado</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li> --}}
-
-        @if (@Auth::user()->hasRole('admin') || @Auth::user()->hasPermissionTo('list.economic-activities'))
+        @if (@Auth::user()->can('access.economic-activities'))
             <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
                 <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon2-percentage"></i>
@@ -77,7 +57,8 @@
                 </a>
             </li>
         @endif
-        @if (@Auth::user()->hasRole('admin'))
+    
+        @if (@Auth::user()->can('access.applications'))
         <li class="kt-menu__item {{ active('applications*') }}" aria-haspopup="true" >
             <a  href="{{ url('applications') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-paper-plane-1"></i>
@@ -85,24 +66,17 @@
             </a>
         </li>
         @endif
-{{--
-        <li class="kt-menu__item {{ active('fines*') }}" aria-haspopup="true" >
-            <a  href="{{ url('fines') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon-warning-sign"></i>
-            <span class="kt-menu__link-text">Multas</span>
-            </a>
-        </li> --}}
 
-        @if (@Auth::user()->hasRole('admin') || @Auth::user()->hasRole('liquidator') || @Auth::user()->hasRole('collector'))
-        <li class="kt-menu__item {{ active('payments*') }}" aria-haspopup="true" >
-            <a  href="{{ url('payments') }}" class="kt-menu__link">
+        @if (@Auth::user()->can('access.cashbox'))
+        <li class="kt-menu__item {{ active('cashbox*') }}" aria-haspopup="true" >
+            <a  href="{{ url('cashbox') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon2-box"></i>
             <span class="kt-menu__link-text">Caja</span>
             </a>
         </li>
         @endif
 
-        @if (@Auth::user()->hasRole('admin'))
+        @if (@Auth::user()->can('access.geographic-area'))
             <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('geographic-area') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
                 <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <i class="kt-menu__link-icon flaticon-earth-globe "></i>
@@ -128,7 +102,9 @@
                     </ul>
                 </div>
             </li>
+        @endif
 
+        @if (@Auth::user()->hasRole('admin'))
             <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('administration') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
                 <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
                     <i class="kt-menu__link-icon flaticon-user-settings"></i>
@@ -168,14 +144,14 @@
                 <span class="kt-menu__link-text">Configuraciones</span>
                 </a>
             </li>
-
-            <li class="kt-menu__item {{ active('about*') }}" aria-haspopup="true" >
-                <a  href="{{ url('about') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-information"></i>
-                <span class="kt-menu__link-text">Acerca de</span>
-                </a>
-            </li>
         @endif
+        
+        <li class="kt-menu__item {{ active('about*') }}" aria-haspopup="true" >
+            <a  href="{{ url('about') }}" class="kt-menu__link">
+            <i class="kt-menu__link-icon flaticon-information"></i>
+            <span class="kt-menu__link-text">Acerca de</span>
+            </a>
+        </li>
     </ul>
   </div>
 </div>

@@ -92,7 +92,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
-    Route::group(['middleware' => 'has.role:admin'], function() {
+    Route::group(['middleware' => 'has.role:admin|inspector|superintendent|chief-inspection'], function() {
         /*----------  Routes economic activities  ----------*/
         Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
         Route::resource('economic-activities', 'EconomicActivityController');
@@ -106,10 +106,8 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('geographic-area/communities', 'CommunityController');
     });
     
-    Route::group(['middleware' => 'has.role:liquidator'], function() {
-        /**---------- Routes Payments ----------*/
-        Route::get('cashbox/list', 'PaymentController@list');
-        Route::resource('payments', 'PaymentController');
+    Route::group(['middleware' => 'has.role:liquidator|superintendent|admin|auditor|collection-chief|liquidation-chief|collector'], function() {
+       Route::get('cashbox', 'Cashbox')->name('cashbox');
     });
 
     /*----------  Routes representations ----------*/

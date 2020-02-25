@@ -58,7 +58,7 @@
           <div class="form-group col-md-12">
             <label class="control-label"> Lista de Permisos <span class="text-danger">*</span></label>
 
-            {!! Form::select('permissions', $permissions,
+            {!! Form::select('permissions[]', $permissions,
                 (isset($row->permission) ? ($row->permission->id) : null), [
                 'class'=> 'form-control select2',
                 'multiple'
