@@ -36,7 +36,6 @@
               <!-- end:: Content -->
             @include('layouts.nav.footer')
           </div>
-        </div>
     </div>
     <!-- begin::Scrolltop -->
     <div id="kt_scrolltop" class="kt-scrolltop">

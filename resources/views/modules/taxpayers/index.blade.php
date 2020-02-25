@@ -5,7 +5,6 @@
 @section('subheader__title', 'Contribuyentes')
 
 @section('content')
-  <!-- end:: Subheader -->
   <!-- begin:: Table -->
     <div class="row" style="margin-top: 20px;">
         <div class="col-lg-12">
@@ -13,7 +12,7 @@
                 <div class="card-header alert alert-danger">
                     <div class="row">
                     <h5 class="m-0">Control de Contribuyentes 
-                        @if (Auth::user()->hasRole('analyst'))
+                        @if (Auth::user()->can('create.taxpayers'))
                         <b>(</b> <a href="{{ Route("taxpayers".'.create') }}" title="Registrar comunidad">
                         <span>Registrar</span>
                         </a><b>)</b>

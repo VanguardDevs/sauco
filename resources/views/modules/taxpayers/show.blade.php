@@ -96,7 +96,7 @@
                             <h3 class="kt-portlet__head-title">Actividades económicas</h3>
                         </div>
                         <div class="kt-portlet__head-toolbar">
-                            @if(!$row->economicActivities->count())
+                            @if((!$row->economicActivities->count()) && (@Auth::user()->can('add.economic-activities')))
                             <a href="{{ url("taxpayer/".$row->id."/economic-activities/add") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
                             @endif
                         </div>
@@ -124,38 +124,13 @@
                     </div>
                 </div>
             </div>
-            @if ($row->licenses()->exists())
-            <div class="col-xl-6">
-                <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Licencias</h3>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body">
-                        <div class="kt-widget4">
-                            @foreach ($row->licenses as $license)
-                            <div class="kt-widget4__item">
-                                <div class="kt-widget4__info">
-                                        <a href="{{ url("licenses/{$license->id}/download") }}">
-                                            <p class="kt-widget4__title">Licencia por concepto de {{ $license->ordinance->description }}</p>
-                                        </a>
-                                    <span class="kt-widget4__sub">Emitida el día: {{ $license->emission_date }}</span>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-            <div class="col-xl-6">
+           <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title">Representante(s)</h3>
                         </div>
-                        @if(Auth()->user()->hasRole('analyst'))
+                        @if(Auth()->user()->can('add.representations'))
                         <div class="kt-portlet__head-toolbar">
                             <a href="{{ url("taxpayers/".$row->id."/representation/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
                         </div>
@@ -184,7 +159,38 @@
                     </div>
                 </div>
             </div>
-       </div>
+            <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
+                <div class="kt-portlet kt-portlet--height-fluid">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Liquidaciones</h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
+                                <li role="tablist">
+                                    <a class="nav-link active" data-toggle="tab" href="#kt_widget6_tab1_content" role="tab" aria-selected="false">
+                                        Pendientes
+                                    </a>
+                                </li>
+                                <li role="tablist"> 
+                                    <a class="nav-link" data-toggle="tab" href="#kt_widget6_tab2_content" role="tab" aria-selected="false">
+                                        Pagadas 
+                                    </a>
+                                </li>
+                            <ul>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                       <div class="tab-content">
+                            <div id="kt_widget6_tab1_content" class="tab-pane active" aria-expanded="true">
+                            </div>
+                            <div id="kt_widget6_tab2_content" class="tab-pane active" aria-expanded="true">
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
        @endif
     </div>
    <!--End:: App Content-->
