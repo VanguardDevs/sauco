@@ -89,7 +89,7 @@
     <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
         <div class="row">
             @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
-            <div class="col-xl-6">
+            <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
@@ -124,7 +124,7 @@
                     </div>
                 </div>
             </div>
-           <div class="col-xl-6">
+           <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">

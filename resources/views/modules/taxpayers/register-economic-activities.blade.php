@@ -11,23 +11,15 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de Contribuyente
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('taxpayers/create') }}
-                            @endsection
-                        @else
-                            Editar usuario: {{ @$row->login }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('taxpayers/edit', $row) }}
-                            @endsection
-                        @endif
+                       @else
+                            Editar actividades económicas: {{ @$row->rif }}
+                       @endif
                         </h3>
                     </div>
                 </div>
                 <!-- form start -->
                 @if ($typeForm == 'create')
-                {!! Form::open(['route' => ["add-activities", $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+                {!! Form::open(['route' => ["taxpayer-activities.store", $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
                 @else
                 {!! Form::model($row, ['route' => ['taxpayers'.'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
                 @endif

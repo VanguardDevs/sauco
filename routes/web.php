@@ -146,9 +146,9 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes taxpayers ----------*/
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
-    Route::group(['middleware' => 'has.role:analyst'], function () {
-        Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('activities');
-        Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('add-activities');
+    Route::group(['middleware' => 'can:add.economic-activities'], function () {
+        Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('add.activities');
+        Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
     });
     Route::resource('taxpayers', 'TaxpayerController');
 });

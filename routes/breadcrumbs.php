@@ -190,6 +190,14 @@ Breadcrumbs::for('taxpayers.show', function ($trail, $row) {
 });
 
 /**
+ * Economic activities > add to taxpayer
+ */
+Breadcrumbs::for('add.activities', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Añadir actividades económicas', url('taxpayers'.$row->id.'economic-activities/add'));
+});
+
+/**
  * Representations > add
  */
 Breadcrumbs::for('representations.add', function ($trail, $row) {
