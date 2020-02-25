@@ -11,7 +11,14 @@ class Settlement extends Model
 
     protected $table = 'settlements';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'num',
+        'amount',
+        'concept_id',
+        'state_id',
+        'taxpayer_id',
+        'reduction_id'
+    ];
 
     public function taxpayer()
     {

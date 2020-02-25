@@ -43,12 +43,15 @@
     >
 
     <ul class="kt-menu__nav ">
+        @if (@Auth::user()->can('access.taxpayers'))
         <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
             <a  href="{{ url('taxpayers') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-network"></i>
             <span class="kt-menu__link-text">Contribuyentes</span>
             </a>
         </li>
+        @endif
+
         @if (@Auth::user()->can('access.economic-activities'))
             <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
                 <a  href="{{ url('economic-activities') }}" class="kt-menu__link">

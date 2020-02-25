@@ -42,12 +42,12 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return view('modules.payments.index');
+        return view('modules.cashbox.payments');
     }
 
     public function list()
     {
-        $query = Payment::with(['paymentState', 'settlements.taxpayer'])
+        $query = Payment::with(['paymentState', 'settlements'])
             ->query();
 
         return DataTables::eloquent($query)->toJson();

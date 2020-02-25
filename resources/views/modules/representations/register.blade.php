@@ -11,11 +11,7 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de representantes
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('representations/add') }}
-                            @endsection
-                        @endif
+                       @endif
                         </h3>
                     </div>
                 </div>

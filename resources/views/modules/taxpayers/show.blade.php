@@ -132,7 +132,7 @@
                         </div>
                         @if(Auth()->user()->can('add.representations'))
                         <div class="kt-portlet__head-toolbar">
-                            <a href="{{ url("taxpayers/".$row->id."/representation/create") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            <a href="{{ url("taxpayers/".$row->id."/representation/add") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
                         </div>
                         @endif
                     </div>

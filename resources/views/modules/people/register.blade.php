@@ -1,6 +1,6 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Representantes')
+@section('title', 'Nuevo representante')
 
 @section('form')
     <div class="row">
@@ -10,17 +10,9 @@
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
-                            Registro de Representantes
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('representations/create') }}
-                            @endsection
+                            Datos generales de la persona
                         @else
                             Editar usuario: {{ @$row->login }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('representations/edit', $row) }}
-                            @endsection
                         @endif
                         </h3>
                     </div>

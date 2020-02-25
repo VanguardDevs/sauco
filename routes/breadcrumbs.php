@@ -145,29 +145,6 @@ Breadcrumbs::for('economic-activities.edit', function ($trail) {
     $trail->push('Editar actividad económica', url('economic-activities/edit'));
 });
 
-/*------------- Economic activities -------------*/
-Breadcrumbs::for('representations', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Representantes', url('representations'));
-});
-
-/*------------- Economic activities > create -------------*/
-Breadcrumbs::for('representations/create', function ($trail) {
-    $trail->parent('representations');
-    $trail->push('Crear representante', url('representations/create'));
-});
-
-Breadcrumbs::for('representations/add', function ($trail) {
-    $trail->parent('representations');
-    $trail->push('Añadir representante', url('representations/add'));
-});
-
-/*------------- Economic activities > edit -------------*/
-Breadcrumbs::for('representations/edit', function ($trail) {
-    $trail->parent('representations');
-    $trail->push('Editar representante', url('representations/edit'));
-});
-
 /*------------- Sectores económicos -------------*/
 Breadcrumbs::for('economic-sectors.index', function ($trail) {
     $trail->parent('settings.index');
@@ -210,6 +187,22 @@ Breadcrumbs::for('taxpayers.update', function ($trail) {
 Breadcrumbs::for('taxpayers.show', function ($trail, $row) {
     $trail->parent('taxpayers.index');
     $trail->push('Contribuyente '.$row->id, url('taxpayers', $row->id));
+});
+
+/**
+ * Representations > add
+ */
+Breadcrumbs::for('representations.add', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Añadir representante', url('taxpayers'.$row->id.'representation/add'));
+});
+
+/**
+ * Representations > store person
+ */
+Breadcrumbs::for('representation.store', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Añadir representante', url('taxpayers'.$row->id.'representation/add'));
 });
 
 /*------------- Tax units -------------*/
