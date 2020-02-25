@@ -4,10 +4,9 @@
           <button class="kt-subheader__mobile-toggle kt-subheader__mobile-toggle--left" id="kt_subheader_mobile_toggle"><span></span></button>
         @section('subheader__title')
         <h3 class="kt-subheader__title">
-            @yield('subheader_title', 'Titulo')
+<!--            @yield('subheader_title'.'  ', '') -->
         </h3>
         @show
-        <span class="kt-subheader__separator kt-subheader__separator--v"></span>
 
         <!-- Begin:: Breadcrumbs -->
         {{ Breadcrumbs::render() }}

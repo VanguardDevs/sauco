@@ -2,12 +2,42 @@
 
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
+/*----------  Cashbox ----------*/
+Breadcrumbs::for('cashbox', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Caja', route('cashbox'));
+});
+
+/*----------  Cashbox > Settlements ----------*/
+Breadcrumbs::for('settlements.index', function ($trail) {
+    $trail->parent('cashbox');
+    $trail->push('Listado de liquidaciones', url('cashbox/settlements'));
+});
+
+/*----------  Cashbox > Payments ----------*/
+Breadcrumbs::for('payments.index', function ($trail) {
+    $trail->parent('cashbox');
+    $trail->push('Listado de pagos', url('cashbox/payments'));
+});
+
+/*----------  Cashbox > Null payments ----------*/
+Breadcrumbs::for('payments.null', function ($trail) {
+    $trail->parent('cashbox');
+    $trail->push('Listado de pagos anulados', url('cashbox/null-payments'));
+});
+
+/*----------  Cashbox > Null Settlements ----------*/
+Breadcrumbs::for('settlements.null', function ($trail) {
+    $trail->parent('cashbox');
+    $trail->push('Listado de liquidaciones anuladas', url('cashbox/null-settlements'));
+});
+
 /*----------  Dashboard  ----------*/
 Breadcrumbs::for('dashboard', function ($trail) {
     $trail->push('Inicio', route('dashboard'));
 });
 
-/*----------  Settings  ----------*/
+/*----------  About  ----------*/
 Breadcrumbs::for('about', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Acerca de', url('about'));

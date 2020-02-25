@@ -105,9 +105,24 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('communities/list', 'CommunityController@list')->name('list-communities');
         Route::resource('geographic-area/communities', 'CommunityController');
     });
-    
+
+    /**
+    * Cashbox's routes
+     */  
     Route::group(['middleware' => 'has.role:liquidator|superintendent|admin|auditor|collection-chief|liquidation-chief|collector'], function() {
-       Route::get('cashbox', 'Cashbox')->name('cashbox');
+        Route::get('cashbox', 'Cashbox')->name('cashbox');
+        
+        /**
+         * Settlements' routes
+         */
+        Route::get('settlements/list', 'SettlementController@list');
+        Route::resource('cashbox/settlements', 'SettlementController');
+
+        /*
+        * Payment's route
+         */ 
+        Route::get('payments/list', 'PaymentController@list');
+        Route::resource('cashbox/payments', 'PaymentController');
     });
 
     /*----------  Routes representations ----------*/

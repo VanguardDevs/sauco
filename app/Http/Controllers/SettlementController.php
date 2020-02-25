@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Settlement;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class SettlementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,32 @@ class SettlementController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.cashbox.settlements'); 
+    }
+
+    /**
+     * Display all null settlements
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexNull()
+    {
+        return view('modules.cashbox.null-settlements');
+    }
+
+    /**
+     * List all settlements, no matter what view
+     */
+    public function list(Request $request)
+    {
+        if (!$request->input('onlyNull')) {
+            $query = Settlement::with(['state', 'concept']);
+        } else {
+            $query = Settlement::onlyTrashed()
+                ->with(['concept']);
+        }
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**

@@ -108,61 +108,9 @@ function onSelectBuildingOwner() {
     }
 }
 
-function onClickAddApplication() {
-    $.get(baseURL +'/ordinances/list-all', function (data) {
-        let html_select = '<option value="">===== SELECCIONE =====</option>';
-        if (data && data.length) {
-            for (let i=0; i<data.length; i++) {
-                html_select += '<option value="'+data[i].id+'">'+data[i].description+'</option>'
-            }
-            $('#ordinance').html(html_select);
-        }
-    });
-}
-
-function onClickAddFine() {
-    $.get(baseURL +'/fine-types/list-all', function (data) {
-        let html_select;
-        if (data && data.length) {
-            for (let i=0; i<data.length; i++) {
-                html_select += '<option value="'+data[i].id+'">'+data[i].description+'</option>'
-            }
-            $('#fine_types').html(html_select);
-        } else {
-            $('#fine_types').html('<option value="">===== SELECCIONE =====</option>');
-        }
-    });
-}
-
 /*----------  Uppercase  ----------*/
 function upperCase(e) {
     e.value = e.value.toUpperCase();
-}
-
-/*---------- Delete confirm chargue --------*/
-const onClickCalculateSettlements = (id) => {
-    $.ajax({
-        type: 'POST',
-        url: `${baseURL}/economic-activity-settlements/${id}`,
-        data: {
-            '_method': 'POST',
-            '_token': $("meta[name='csrf-token']").attr("content")
-        },
-        success: res => Swal.fire({
-            title: '¡Liquidaciones realizadas!',
-            message: 'Pase a la caja para procesar las liquidaciones',
-            type: 'success',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-        }),
-        error: res => Swal.fire({
-            title: 'Esta acción no puede ser procesada',
-            message: 'El contribuyente tiene liquidaciones por pagar',
-            type: 'info',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-        })
-    });
 }
 
 /*---------- Delete confirm chargue --------*/
@@ -216,36 +164,6 @@ const openNewYear = () => {
                 title: data.message,
                 type: 'success'
             })
-        }
-    });
-}
-
-const checkRecord = (id, url) => {
-    Swal.fire({
-        title: '¿Está seguro(a) que desea aprobar la solicitud?',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#0abb87',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Aprobar'
-    }).then(result => {
-        if (result.value) {
-            $.ajax({
-                type: 'POST',
-                url: `${baseURL}/${url}/${id}/approve`,
-                data: {
-                    '_method': 'POST',
-                    '_token': $("meta[name='csrf-token']").attr("content")
-                },
-                success: response => location.reload(),
-                error: res => Swal.fire({
-                    title: '¡La acción no puede ser procesada!',
-                    type: 'info',
-                    confirmButtonColor: '#0abb87',
-                    confirmButtonText: 'OK'
-                })
-            });
         }
     });
 }
@@ -590,83 +508,19 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tChargingMethods').DataTable({
+    $('#tSettlements').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/charging-methods/list",
-        "columns": [
-            { data: 'id'},
-            { data: 'name'},
-            { data: 'created_at'}
-        ]
-    });
-
-    $('#tApplications').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/applications/list",
+        "ajax": baseURL + "/settlements/list?onlyNull=false",
         "columns": [
             { data: 'num'},
-            { data: 'settlement.taxpayer.rif'},
-            { data: 'settlement.concept.description'},
-            { data: 'application_state.description'},
-            { data: 'created_at' },
-            { data: 'updated_at'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" onClick="checkRecord(${oData.id},'applications')" title='Aprobar'>
-                            <i class='btn-sm btn-success flaticon2-checkmark'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'applications')" title='Anular'>
-                            <i class='btn-sm btn-danger flaticon2-delete'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tFines').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/fines/list",
-        "columns": [
-            { data: 'id'},
-            { data: 'taxpayer.rif'},
-            { data: 'fine_type.description'},
-            { data: 'fine_state.description'},
-            { data: 'created_at'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
+            { data: 'concept.description'},
+            { data: 'state.name'},
+            { data: 'created_at'}
         ]
     });
 

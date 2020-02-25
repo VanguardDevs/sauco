@@ -18,7 +18,6 @@ class Cashbox extends Controller
      */
     public function __invoke(Request $request)
     {
-        dd("USTED ESTA EN LA CAJA");
         return view('modules.cashbox.index');
     }
 }
