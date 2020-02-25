@@ -145,6 +145,26 @@ Breadcrumbs::for('economic-activities.edit', function ($trail) {
     $trail->push('Editar actividad económica', url('economic-activities/edit'));
 });
 
+/**
+ * Settings > reductions
+ */
+Breadcrumbs::for('reductions.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Descuentos', url('settings/reductions'));
+});
+
+/*------------- Sectores económicos > create -------------*/
+Breadcrumbs::for('reductions.create', function ($trail) {
+    $trail->parent('reductions.index');
+    $trail->push('Crear descuento', url('settings/reductions/create'));
+});
+
+/*------------- Sectores económicos > update -------------*/
+Breadcrumbs::for('reductions.edit', function ($trail, $row) {
+    $trail->parent('reductions.index');
+    $trail->push('Editar descuento', url('settings/economic-sectors/'.$row->id.'/edit'));
+});
+
 /*------------- Sectores económicos -------------*/
 Breadcrumbs::for('economic-sectors.index', function ($trail) {
     $trail->parent('settings');

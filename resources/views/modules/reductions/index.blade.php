@@ -1,10 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Control de comunidades')
-
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('geographic-area/communities') }}
-@endsection
+@section('title', 'Control de descuentos')
 
 @section('content')
 
@@ -13,19 +9,19 @@
       <div class="card card-primary card-outline">
         <div class="card-header alert alert-danger">
           <div class="row">
-            <h5 class="m-0">Control de comunidades <b>(</b> <a href="{{ Route("communities".'.create') }}" title="Registrar comunidad">
+            <h5 class="m-0">Control de descuentos<b>(</b> <a href="{{ Route("reductions".'.create') }}" title="Registrar comunidad">
                 <span>Registrar</span>
               </a><b>)</b></h5>
           </div>
         </div>
 
         <div class="card-body">
-          <table id="tCommunities" class="table table-bordered table-striped datatables" style="text-align: center">
+          <table id="tReductions" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="15%">ID</th>
-                <th width="70%">Nombre</th>
-                <th width="15%">Acciones</th>
+                <th width="10%">Código</th>
+                <th width="80%">Nombre</th>
+                <th width="10%">Acciones</th>
               </tr>
             </thead>
           </table>

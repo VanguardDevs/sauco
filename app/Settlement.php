@@ -17,7 +17,6 @@ class Settlement extends Model
         'concept_id',
         'state_id',
         'taxpayer_id',
-        'reduction_id'
     ];
 
     public function taxpayer()
@@ -30,9 +29,9 @@ class Settlement extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function reduction()
+    public function reductions()
     {
-        return $this->belongsTo(Reduction::class);
+        return $this->belongsToMany(Reduction::class);
     }
 
     public function concept()
