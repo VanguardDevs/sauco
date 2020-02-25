@@ -18,7 +18,7 @@ class CreateTaxpayersTable extends Migration
             $table->string('rif');
             $table->string('name');
             $table->string('fiscal_address');
-            $table->string('capital')->nullable();
+            $table->float('capital')->nullable();
             $table->string('compliance_use')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
