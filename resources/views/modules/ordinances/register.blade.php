@@ -11,17 +11,9 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de Ordenanzas y Licencias
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/ordinances/create') }}
-                            @endsection
-                        @else
+                       @else
                             Editar ordenanza: {{ @$row->login }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/ordinances/edit', $row) }}
-                            @endsection
-                        @endif
+                       @endif
                         </h3>
                     </div>
                 </div>

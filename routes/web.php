@@ -37,7 +37,7 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::group(['middleware' => ['has.role:admin']], function () {
         /** General Settings */
-        Route::get('settings', 'ShowSettings')->name('settings.index');
+        Route::get('settings', 'ShowSettings')->name('settings');
         
         /**
         * Settings > Open new year
@@ -59,6 +59,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*----------  Routes Settings > Economic sectors  ----------*/
         Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
         Route::resource('settings/economic-sectors', 'EconomicSectorController');
+
+        /*----------  Routes Settings > Economic sectors  ----------*/
+        Route::get('reductions/list', 'ReductionController@list')->name('list-reductions');
+        Route::resource('settings/reductions', 'ReductionController');
 
         /**
          *  Personal firm routes

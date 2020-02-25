@@ -2,10 +2,6 @@
 
 @section('title', 'Control de Ordenanzas')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('settings/ordinances') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

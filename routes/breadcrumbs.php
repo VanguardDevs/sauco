@@ -44,7 +44,7 @@ Breadcrumbs::for('about', function ($trail) {
 });
 
 /*----------  Settings  ----------*/
-Breadcrumbs::for('settings.index', function ($trail) {
+Breadcrumbs::for('settings', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Configuraciones', url('settings'));
 });
@@ -147,7 +147,7 @@ Breadcrumbs::for('economic-activities.edit', function ($trail) {
 
 /*------------- Sectores económicos -------------*/
 Breadcrumbs::for('economic-sectors.index', function ($trail) {
-    $trail->parent('settings.index');
+    $trail->parent('settings');
     $trail->push('Sectores económicos', url('settings/economic-sectors'));
 });
 
@@ -346,21 +346,21 @@ Breadcrumbs::for('commercial-registers/create', function ($trail) {
 });
 
 /*------------- Ordinances -------------*/
-Breadcrumbs::for('settings/ordinances', function ($trail) {
-    $trail->parent('dashboard');
+Breadcrumbs::for('ordinances.index', function ($trail) {
+    $trail->parent('settings');
     $trail->push('Ordenanzas', url('settings/ordinances'));
 });
 
 /*------------- Ordinances > create -------------*/
-Breadcrumbs::for('settings/ordinances/create', function ($trail) {
-    $trail->parent('settings/ordinances');
+Breadcrumbs::for('ordinances.create', function ($trail) {
+    $trail->parent('ordinances.index');
     $trail->push('Crear nueva ordenanza', url('settings/ordinances/create'));
 });
 
 /*------------- Ordinances > edit -------------*/
-Breadcrumbs::for('settings/ordinances/edit', function ($trail) {
-    $trail->parent('settings/ordinances');
-    $trail->push('Editar ordenanza', url('settings/ordinances/edit'));
+Breadcrumbs::for('ordinances.edit', function ($trail, $row) {
+    $trail->parent('ordinances.index');
+    $trail->push('Editar ordenanza', url('settings/ordinances/edit'.$row->id));
 });
 
 /*------------- Cashbox -------------*/
