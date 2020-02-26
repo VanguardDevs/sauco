@@ -21,13 +21,33 @@ class SettlementService
     }
 
     /**
+     * Creates a new num from last model
+     * @return str
+     */ 
+    public function getNewNum()
+    {
+        $id = 1;
+        $lastModel = $this->model->withTrashed()->latest()->first();
+
+        if ($lastModel) {
+            $id = strval($lastModel->id + 1);
+        }
+
+        $num = str_pad($id, 8, "0", STR_PAD_LEFT);
+
+        return $num;
+    }
+
+    /**
      * Creates an economic activity settlement for a given taxpayer
      * @param Taxpayer $taxpayer
      */
     public function create(Taxpayer $taxpayer)
     {
+        $num = $this->getNewNum();
+
         $settlement = Settlement::create([
-            'num' => '00000001',
+            'num' => $num,
             'amount' => 0.00,
             'taxpayer_id' => $taxpayer->id,
             'month_id' => 1,
