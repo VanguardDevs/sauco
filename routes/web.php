@@ -96,7 +96,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
-    Route::group(['middleware' => 'has.role:admin|inspector|superintendent|chief-inspection'], function() {
+    Route::group(['middleware' => 'has.role:admin|inspector|superintendent|analyst|chief-inspection'], function() {
         /*----------  Routes economic activities  ----------*/
         Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
         Route::resource('economic-activities', 'EconomicActivityController');
