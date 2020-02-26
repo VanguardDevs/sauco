@@ -12,7 +12,7 @@ class EconomicActivityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:list.economic-activities')->only('index');
+        $this->middleware('can:access.economic-activities')->only('index');
         $this->middleware('has.role:admin')->only([
             'create', 'store', 'edit', 'update', 'destroy'
         ]);
