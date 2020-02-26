@@ -16,7 +16,7 @@
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-toolbar">
-                        <a class="btn btn-outline-dark btn-pill btn-sm btn-icon btn-icon-md" title="Abrir nuevo año" id="openNewYear">
+                        <a class="btn btn-outline-dark btn-pill btn-sm btn-icon btn-icon-md" title="Abrir nuevo año" onClick="handleRequest('settings/new-year')">
                             <i class="flaticon2-rocket-1"></i>
                         </a> 
                     </div>

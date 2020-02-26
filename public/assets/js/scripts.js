@@ -16,8 +16,31 @@ $(function () {
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#states').on('change', onSelectStates);
     $('#payment_types').on('change', onSelectPaymentType);
-    $('#openNewYear').on('click', openNewYear);
 });
+
+const token = $("meta[name='csrf-token']").attr("content");
+ 
+const handleRequest = url => {
+    fetch(`${baseURL}/${url}`, {
+        method: 'POST',
+        headers: {
+            "X-CSRF-TOKEN": token    
+        }
+    }).then(response => response.json())
+    .then(data => {
+        if (!data.ok) {
+            Swal.fire({
+                title: data.message,
+                type: 'error'
+            })
+        } else {
+            Swal.fire({
+                title: data.message,
+                type: 'success'
+            })
+        }
+    });
+}
 
 function onSelectTaxpayerType() {
     let selected = $(this).children('option:selected').val();
@@ -140,30 +163,6 @@ const nullRecord = (id, url) => {
                     confirmButtonText: 'OK'
                 })
             });
-        }
-    });
-}
-
-const token = $("meta[name='csrf-token']").attr("content");
- 
-const openNewYear = () => {
-    fetch(`${baseURL}/settings/new-year`, {
-        method: 'POST',
-        headers: {
-            "X-CSRF-TOKEN": token    
-        }
-    }).then(response => response.json())
-    .then(data => {
-        if (!data.ok) {
-            Swal.fire({
-                title: data.message,
-                type: 'error'
-            })
-        } else {
-            Swal.fire({
-                title: data.message,
-                type: 'success'
-            })
         }
     });
 }
