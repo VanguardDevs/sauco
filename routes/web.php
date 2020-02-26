@@ -139,6 +139,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
         Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
     });
+    
+    /**
+     * Handle settlements and payments
+     */
+    Route::post('settlements/create-settlements/{id}', 'SettlementController@createSettlements');
 
     /*----------  Routes representations ----------*/
     Route::group(['middleware' => 'can:add.representations'], function () {

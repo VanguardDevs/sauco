@@ -178,6 +178,11 @@
                                     </a>
                                 </li>
                             <ul>
+                            @if(Auth()->user()->can('create.settlements'))
+                            <div class="kt-portlet__head-toolbar">
+                                <a onClick="handleRequest('settlements/create-settlements/{{ $row->id  }}')" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="kt-portlet__body">

@@ -49,26 +49,27 @@ class SettlementController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Entry poin for settlement creation.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createSettlements(Request $request)
     {
-        //
-    }
+        $hasSettlements = false;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if ($hasSettlements) {
+            return response()->json([
+                'message' => '¡El contribuyente tiene liquidaciones por pagar!',
+                'ok' => false
+            ], 400);
+        }
 
+        return response()->json([
+            'message' => '¡Liquidaciones realizadas!',
+            'ok' => true
+        ], 200);
+    }
+    
     /**
      * Display the specified resource.
      *
