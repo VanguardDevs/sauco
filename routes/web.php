@@ -143,7 +143,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Handle settlements and payments
      */
-    Route::post('settlements/create-settlements/{id}', 'SettlementController@createSettlements');
+    Route::post('settlements/create-settlements/{taxpayer}', 'SettlementController@createSettlements');
 
     /*----------  Routes representations ----------*/
     Route::group(['middleware' => 'can:add.representations'], function () {

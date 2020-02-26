@@ -17,7 +17,13 @@ class Settlement extends Model
         'concept_id',
         'state_id',
         'taxpayer_id',
+        'month_id'
     ];
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
+    }
 
     public function taxpayer()
     {

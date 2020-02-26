@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Taxpayer;
 use App\Settlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -53,11 +54,13 @@ class SettlementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createSettlements(Request $request)
+    public function createSettlements(Request $request, Taxpayer $taxpayer)
     {
-        $hasSettlements = false;
-
-        if ($hasSettlements) {
+        // Check if taxpayer has pending settlements
+        $hasSettlements = Settlement::whereTaxpayerId($taxpayer->id)
+            ->whereStateId(1);
+        
+        if ($hasSettlements->first()) {
             return response()->json([
                 'message' => '¡El contribuyente tiene liquidaciones por pagar!',
                 'ok' => false
