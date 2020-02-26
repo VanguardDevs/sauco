@@ -2,10 +2,6 @@
 
 @section('title', 'Control de Conceptos de Recaudación')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('settings/concepts') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

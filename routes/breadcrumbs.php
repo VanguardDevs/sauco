@@ -288,21 +288,21 @@ Breadcrumbs::for('settings/charging-methods/create', function ($trail) {
 });
 
 /*------------- Concepts -------------*/
-Breadcrumbs::for('settings/concepts', function ($trail) {
-    $trail->parent('dashboard');
+Breadcrumbs::for('concepts.index', function ($trail) {
+    $trail->parent('settings');
     $trail->push('Conceptos de recaudación', url('settings/concepts'));
 });
 
 /*------------- Concepts > create -------------*/
-Breadcrumbs::for('settings/concepts/create', function ($trail) {
-    $trail->parent('settings/concepts');
+Breadcrumbs::for('concepts.create', function ($trail) {
+    $trail->parent('concepts.index');
     $trail->push('Crear nueva concepto de recaudación', url('settings/concepts/create'));
 });
 
 /*------------- Concepts > edit -------------*/
-Breadcrumbs::for('settings/concepts/edit', function ($trail) {
-    $trail->parent('settings/concepts');
-    $trail->push('Editar concepto de recaudación', url('settings/concepts/edit'));
+Breadcrumbs::for('concepts.edit', function ($trail, $row) {
+    $trail->parent('concepts.index');
+    $trail->push('Editar concepto de recaudación', url('settings/concepts/'.$row->id.'/edit'));
 });
 
 /*------------- Fines -------------*/
