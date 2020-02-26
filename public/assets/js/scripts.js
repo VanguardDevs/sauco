@@ -517,7 +517,7 @@ $(document).ready(function() {
         "ajax": baseURL + "/settlements/list?onlyNull=false",
         "columns": [
             { data: 'num'},
-            { data: 'concept.description'},
+            { data: 'concept.name'},
             { data: 'state.name'},
             { data: 'created_at'}
         ]

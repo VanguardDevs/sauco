@@ -50,13 +50,8 @@ class SettlementController extends Controller
      */
     public function list(Request $request)
     {
-        if (!$request->input('onlyNull')) {
-            $query = Settlement::with(['state', 'concept']);
-        } else {
-            $query = Settlement::onlyTrashed()
-                ->with(['concept']);
-        }
-
+        $query = Settlement::with(['state', 'concept']);
+        
         return DataTables::eloquent($query)->toJson();
     }
 
