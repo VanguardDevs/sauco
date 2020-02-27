@@ -2,26 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\PaymentMethod;
-use App\Services\SettlementService;
-use App\EconomicActivitySettlement;
-use App\Month;
-use App\Concept;
-use App\Taxpayer;
-use App\BankAccount;
-use App\Payment;
-use App\PaymentState;
-use App\PaymentType;
-use App\Reference;
-use App\Settlement;
-use App\Application;
-use App\ApplicationState;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
-use Redirect;
-use Session;
-use Carbon\Carbon;
 
 class PaymentController extends Controller
 {

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Services\SettlementService;
+use App\Services\PaymentService;
 use App\Taxpayer;
 use App\Settlement;
+use App\Receivable;
 use App\Concept;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Services\ReceivableService;
 
 class SettlementController extends Controller
 {
@@ -15,14 +18,18 @@ class SettlementController extends Controller
      * @var SettlementService;
      */
     protected $settlement;
-    
+    protected $payment;
+    protected $receivable;
+
     /**
      * Constructor method
      * @param SettlementService $settlementService
      */
-    public function __construct(SettlementService $settlement)
+    public function __construct(ReceivableService $receivable, PaymentService $payment, SettlementService $settlement)
     {
+        $this->payment = $payment;
         $this->settlement = $settlement;
+        $this->receivable = $receivable;
         $this->middleware('auth');
     }
 
@@ -121,6 +128,10 @@ class SettlementController extends Controller
     {
         $activitySettlements = $request->input('activity_settlements');
         $settlement = $this->settlement->handleUpdate($settlement, $activitySettlements);
+
+        // Create receivable
+        $payment = $this->payment->make();
+        $receivable = $this->receivable->make($settlement, $payment);
 
         return redirect('cashbox/settlements')
             ->withSuccess('¡Liquidación procesada!');

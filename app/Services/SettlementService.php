@@ -38,10 +38,12 @@ class SettlementService
     public function handleUpdate($settlement, $data)
     {
         $totalAmount = $this->activitySettlement->update($settlement, $data);
-        $this->update($settlement, [
+        $settlement = $this->update($settlement, [
             'amount' => $totalAmount,
             'state_id' => 2
         ]);
+
+        return $settlement;
     }
 
 
@@ -70,6 +72,8 @@ class SettlementService
     {
         $settlement = Settlement::find($settlement->id);
         $settlement->update($data);
+
+        return $settlement;
     }
 }
 
