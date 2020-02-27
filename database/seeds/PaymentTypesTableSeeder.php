@@ -6,7 +6,7 @@ use App\PaymentType;
 class PaymentTypesTableSeeder extends Seeder
 {
     protected $types = Array(
-        'S/N', 'BOLÍVARES', 'DÉBITO', 'CRÉDITO', 'DEPÓSITO'
+        'S/N', 'DIVISA', 'DÉBITO', 'CRÉDITO', 'DEPÓSITO'
     );
 
     /**

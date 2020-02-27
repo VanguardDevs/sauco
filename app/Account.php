@@ -4,17 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BankAccount extends Model
+class Account extends Model
 {
-    protected $table = 'bank_accounts';
+    protected $table = 'accounts';
 
     protected $fillable = [
-        'bank_name',
-        'bank_account_type_id',
+        'name',
+        'account_type_id',
         'account_num',
         'description',
-        'budget_account',
-        'accounting_account',
     ];
 
     public function references()
@@ -22,9 +20,9 @@ class BankAccount extends Model
         return $this->hasMany(Reference::class);
     }
 
-    public function bankAccountType()
+    public function accountType()
     {
-        return $this->belongsTo(BankAccountType::class);
+        return $this->belongsTo(AccountType::class);
     }
 
     public function getCreatedAtAttribute($value)

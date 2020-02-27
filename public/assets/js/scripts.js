@@ -571,18 +571,20 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tBankAccounts').DataTable({
+    $('#tAccounts').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/bank-accounts/list",
+        "ajax": baseURL + "/accounts/list",
         "columns": [
             { data: 'account_num'},
-            { data: 'bank_account_type.denomination'},
-            { data: 'bank_name'},
+            { data: 'account_type.denomination'},
+            { data: 'account.name' },
+            { data: 'account.description' },
+            { data: 'name'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

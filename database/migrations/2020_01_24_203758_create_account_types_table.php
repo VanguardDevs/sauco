@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBankAccountTypesTable extends Migration
+class CreateAccountTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBankAccountTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('bank_account_types', function (Blueprint $table) {
+        Schema::create('account_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('denomination');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateBankAccountTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bank_account_types');
+        Schema::dropIfExists('account_types');
     }
 }

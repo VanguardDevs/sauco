@@ -71,6 +71,12 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('settings/personal-firms', 'PersonalFirmController');
 
         /**
+         * Finance Accounts
+         */
+        Route::get('accounts/list', 'AccountController@list');
+        Route::resource('settings/accounts', 'AccountController');
+
+        /**
          * Routes Settings > Concepts
          */
         Route::get('concepts/list', 'ConceptController@list')->name('list-concepts');

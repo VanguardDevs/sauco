@@ -153,6 +153,26 @@ Breadcrumbs::for('economic-activities.edit', function ($trail) {
 });
 
 /**
+ * Settings > accounts 
+ */
+Breadcrumbs::for('accounts.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Cuentas', url('settings/accounts'));
+});
+
+/*------------- Accounts > create -------------*/
+Breadcrumbs::for('accounts.create', function ($trail) {
+    $trail->parent('accounts.index');
+    $trail->push('Crear cuenta', url('settings/accounts/create'));
+});
+
+/*------------- Accounts > update -------------*/
+Breadcrumbs::for('accounts.edit', function ($trail, $row) {
+    $trail->parent('accounts.index');
+    $trail->push('Editar cuenta', url('settings/accounts/'.$row->id.'/edit'));
+});
+
+/**
  * Settings > reductions
  */
 Breadcrumbs::for('reductions.index', function ($trail) {

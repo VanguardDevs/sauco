@@ -1,9 +1,9 @@
 <?php
 
-use App\BankAccountType;
+use App\AccountType;
 use Illuminate\Database\Seeder;
 
-class BankAccountTypesTableSeeder extends Seeder
+class AccountTypesTableSeeder extends Seeder
 {
     public $types = Array(
         'CORRIENTE', 'AHORRO'
@@ -17,7 +17,7 @@ class BankAccountTypesTableSeeder extends Seeder
     public function run()
     {
         foreach ($this->types as $key => $value) {
-            BankAccountType::create([
+            AccountType::create([
                 'denomination' => $value
             ]);
         }

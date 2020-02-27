@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\BankAccount;
-use App\BankAccountType;
-use App\Http\Requests\BankAccounts\BankAccountsCreateFormRequest;
+use App\Account;
+use App\AccountType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class BankAccountController extends Controller
+class AccountController extends Controller
 {
     public function __construct()
     {
@@ -22,13 +21,13 @@ class BankAccountController extends Controller
      */
     public function index()
     {
-        return view('modules.bank-accounts.index');
+        return view('modules.accounts.index');
     }
 
     public function list()
     {
-        $query = BankAccount::query()
-            ->with('bankAccountType');
+        $query = Account::query()
+            ->with('accountType');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -40,8 +39,8 @@ class BankAccountController extends Controller
      */
     public function create()
     {
-        return view('modules.bank-accounts.register')
-            ->with('accountTypes', BankAccountType::get())
+        return view('modules.accounts.register')
+            ->with('types', AccountType::pluck('denomination', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -51,28 +50,21 @@ class BankAccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BankAccountsCreateFormRequest $request)
+    public function store(Request $request)
     {
-        // dd($request->input());
-        $create = new BankAccount([
-            'bank_name' => $request->input('bank_name'),
-            'bank_account_type_id' => $request->input('account_type'),
-            'account_num' => $request->input('account_num'),
-            'description' => $request->input('description'),
-        ]);
-        $create->save();
+        $create = Account::create($request->all());
 
-        return redirect('settings/bank-accounts')->withSuccess('¡Cuenta bancaria agregada!');
+        return redirect('settings/accounts')->withSuccess('¡Cuenta bancaria agregada!');
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\BankAccount  $bankAccount
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function show(BankAccount $bankAccount)
+    public function show(Account $account)
     {
         //
     }
@@ -80,10 +72,10 @@ class BankAccountController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BankAccount  $bankAccount
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function edit(BankAccount $bankAccount)
+    public function edit(Account $account)
     {
         //
     }
@@ -92,10 +84,10 @@ class BankAccountController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BankAccount  $bankAccount
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BankAccount $bankAccount)
+    public function update(Request $request, Account $account)
     {
         //
     }
@@ -103,11 +95,11 @@ class BankAccountController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\BankAccount  $bankAccount
+     * @param  \App\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BankAccount $bankAccount)
+    public function destroy(Account $account)
     {
-        $bankAccount->delete();
+        $account->delete();
     }
 }
