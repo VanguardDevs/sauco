@@ -40,7 +40,7 @@ class SettlementController extends Controller
      */
     public function index()
     {
-        return view('modules.cashbox.settlements'); 
+        return view('modules.cashbox.list-settlements'); 
     }
 
     /**

@@ -517,7 +517,7 @@ $(document).ready(function() {
         "ajax": baseURL + "/payments/list",
         "columns": [
             { data: 'id'},
-            { data: 'taxpayer.rif' },
+            // { data: 'taxpayer.rif' },
             { data: 'object_payment'},
             { data: 'concept.name'},
             { data: 'state.name'},
@@ -529,6 +529,9 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group"> 
                         <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver liquidación'>
+                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                        </a> 
+                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id}/download title='Ver factura'>
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>
                     </div>`
