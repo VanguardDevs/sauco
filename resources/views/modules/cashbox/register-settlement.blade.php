@@ -20,9 +20,16 @@
         <div class="card-body">
 
             @foreach($row->economicActivitySettlements as $activitySettlement)
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label class="control-label"> Liquidación n° {{ $activitySettlement->id }}</label>
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label>Código</label>
+                        <div class="col-md-12">{{ $activitySettlement->economicActivity->code  }}</div>
+                    </div>
+                    <div class="col-md-8">
+                        <label>Nombre de la actividad</label>
+                        <div class="col-md-12"> {{ $activitySettlement->economicActivity->name }}</div>
+                    </div>
+                    <div class="col-md-12">
                         {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["Placeholder" => "Monto", "class" => "form-control decimal-input-mask", "required"]) !!}
                     </div>
                 </div>
