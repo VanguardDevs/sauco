@@ -15,7 +15,7 @@ $(function () {
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#states').on('change', onSelectStates);
-    $('#payment_types').on('change', onSelectPaymentType);
+    $('#payment_methods').on('change', onSelectPaymentType);
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
@@ -56,13 +56,13 @@ function onSelectTaxpayerType() {
 
 function onSelectPaymentType() {
     let selected = $(this).children('option:selected').html();
-    let bankAccount = $('#bank_accounts');
+    let reference = $('#reference');
     
     // Show commercial denomination input
     if (selected !== "EFECTIVO") {
-        bankAccount.show();
+        reference.show();
     } else {
-        bankAccount.hide();
+        reference.hide();
     }
 }
 /**
@@ -517,9 +517,7 @@ $(document).ready(function() {
         "ajax": baseURL + "/payments/list",
         "columns": [
             { data: 'id'},
-            // { data: 'taxpayer.rif' },
             { data: 'object_payment'},
-            { data: 'concept.name'},
             { data: 'state.name'},
             { data: 'amount' },
             { data: 'created_at'},
@@ -528,10 +526,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group"> 
-                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver liquidación'>
-                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
-                        </a> 
-                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id}/download title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/cashbox/payment/${oData.id}/download title='Ver factura'>
+                            <i class='btn-sm btn-success flaticon2-download'></i>
+                        </a>
+                        <a class="mr-2" href=${baseURL}/cashbox/payment/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>
                     </div>`
@@ -595,117 +593,6 @@ $(document).ready(function() {
                         </a>
                         <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning flaticon-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tPropertyTypes').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/property-types/list",
-        "columns": [
-            { data: 'classification'},
-            { data: 'denomination'},
-            { data: 'amount'},
-            { data: 'charging_method.name'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/settings/property-types/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tRequisites').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/requisites/list",
-        "columns": [
-            { data: 'description'},
-            { data: 'concept.description'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/settings/requisites/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tProperties').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/properties/list",
-        "columns": [
-            { data: 'taxpayer.rif'},
-            { data: 'taxpayer.name'},
-            { data: 'cadastre_num'},
-            { data: 'street'},
-            { data: 'local'},
-            { data: 'floor'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/settings/properties/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tPersonalFirms').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/personal-firms/list",
-        "columns": [
-            { data: 'firm'},
-            { data: 'chargue'},
-            { data: 'resolution_date'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/payments/${oData.id}/ title='Editar'>
-                            <i class='btn-sm btn-warning flaticon2-edit'></i>
                         </a>
                     </div>`
                     );

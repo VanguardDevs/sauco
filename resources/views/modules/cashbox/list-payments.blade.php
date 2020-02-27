@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Control de Liquidaciones')
+@section('title', 'Control de Facturas')
 
 @section('content')
 
@@ -10,7 +10,7 @@
         <div class="card-header alert alert-danger">
           <div class="row">
             <h5 class="m-0">
-                Liquidaciones
+                Facturas
             </h5>
           </div>
         </div>
@@ -20,7 +20,7 @@
             <thead>
               <tr>
                 <th width="10%">ID</th>
-                <th width="50%">Por concepto de</th>
+                <th width="50%">Objecto de Pago</th>
                 <th width="10%">Estado</th>
                 <th width="10%">Monto</th>
                 <th width="10%">Creada</th>

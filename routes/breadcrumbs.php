@@ -27,6 +27,13 @@ Breadcrumbs::for('payments.index', function ($trail) {
     $trail->push('Listado de pagos', url('cashbox/payments'));
 });
 
+/*----------  Cashbox > Paymentss > show ----------*/
+Breadcrumbs::for('payments.show', function ($trail, $row) {
+    $trail->parent('payments.index');
+    $trail->push('Liquidación n°'.$row->id, url('cashbox/payments/'.$row->id));
+});
+
+
 /*----------  Cashbox > Null payments ----------*/
 Breadcrumbs::for('payments.null', function ($trail) {
     $trail->parent('cashbox');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PaymentMethod;
 use App\PaymentType;
+use App\Payment;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
@@ -29,8 +30,8 @@ class PaymentController extends Controller
 
     public function list()
     {
-        $query = Payment::with(['paymentState', 'settlements'])
-            ->query();
+        $query = Payment::with(['state'])
+            ->orderBy('created_at', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -64,9 +65,11 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if ($payment->state->id == 1) {
-            return view('modules.cashbox.show-payment');
-        }
+        return view('modules.cashbox.register-payment')
+            ->with('row', $payment)
+            ->with('types', PaymentType::exceptNull())
+            ->with('methods', PaymentMethod::exceptNull())
+            ->with('typeForm', 'edit');
     }
 
     /**
@@ -89,33 +92,28 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        /*
-         * For later use
-        $paymentState = PaymentState::whereDescription('PAGADA')->first();
-        $paymentType = PaymentType::whereId($request->input('payment_type'))->first();
-
         $payment = Payment::find($payment->id);
-        $payment->payment_state_id = $paymentState->id;
-        $payment->payment_type_id = $paymentType->id;
+        $payment->state_id = 2;
+        $payment->payment_type_id = $request->input('type');
+        $payment->payment_method_id = $request->input('method');
 
-        if ($paymentType->description != 'EFECTIVO') {
+        if ($request->input('method') != '3') {
             $reference = $request->input('reference');
-            $bankAccount = $request->input('bank_account');
 
-            if (empty($reference) || empty($bankAccount)) {
+            if (empty($reference)){
                 return redirect('payments/'.$payment->id)
                         ->withError('¡Faltan datos!');
             }
 
             $reference = Reference::create([
                 'reference' => $request->input('reference'),
-                'bank_account_id' => $request->input('bank_account'),
+                'account_id' => 1,
                 'payment_id' => $payment->id
             ]);
         }
         $payment->save();
 
-        return redirect('payments')
+        return redirect('cashbox/payments')
             ->withSuccess('¡Liquidación pagada!');
     }
 
@@ -126,7 +124,7 @@ class PaymentController extends Controller
                 '¡La factura no ha sido pagada!', 400
             ]);
         }
-         */
+         
     }
 
     /**

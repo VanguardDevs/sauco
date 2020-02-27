@@ -15,6 +15,11 @@ class ReceivableService
             'settlement_id' => $settlement->id,
             'payment_id' => $payment->id
         ]);
+        
+        $payment->update([
+            'amount' => $settlement->amount
+        ]);
+ 
 
         return $receivable;
     }

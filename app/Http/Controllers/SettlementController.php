@@ -58,7 +58,8 @@ class SettlementController extends Controller
      */
     public function list(Request $request)
     {
-        $query = Settlement::with(['state', 'concept', 'taxpayer']);
+        $query = Settlement::with(['state', 'concept', 'taxpayer'])
+            ->orderBy('created_at', 'DESC');
         
         return DataTables::eloquent($query)->toJson();
     }

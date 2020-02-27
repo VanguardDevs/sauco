@@ -38,6 +38,11 @@ class Payment extends Model implements Auditable
         return $this->hasMany(Reference::class);
     }
 
+    public function receivables()
+    {
+        return $this->hasMany(Receivable::class);
+    }
+
     public function getNumAttribute()
     {
         return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
