@@ -519,6 +519,7 @@ $(document).ready(function() {
             { data: 'num'},
             { data: 'concept.name'},
             { data: 'state.name'},
+            { data: 'amount' },
             { data: 'created_at'},
             {
                 data: "id",
