@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\SettlementService;
 use App\Taxpayer;
 use App\Settlement;
+use App\Concept;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,15 +14,15 @@ class SettlementController extends Controller
     /**
      * @var SettlementService;
      */
-    protected $settlementHandler;
+    protected $settlement;
     
     /**
      * Constructor method
      * @param SettlementService $settlementService
      */
-    public function __construct(SettlementService $settlementHandler)
+    public function __construct(SettlementService $settlement)
     {
-        $this->settlementHandler = $settlementHandler;
+        $this->settlement = $settlement;
         $this->middleware('auth');
     }
 
@@ -74,7 +75,8 @@ class SettlementController extends Controller
         }
 
         // Create economic activity settlements
-        $this->settlementHandler->create($taxpayer);
+        $concept = Concept::whereCode('1')->first();
+        $this->settlement->make($taxpayer, $concept);
 
         return response()->json([
             'message' => '¡Liquidaciones realizadas!',

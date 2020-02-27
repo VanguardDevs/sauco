@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Concept;
 use App\Settlement;
-use App\EconomicActivitySettlement;
 use App\Taxpayer;
+use App\Services\EconomicActivitySettlementService;
 
 class SettlementService extends ModelService 
 {
@@ -14,17 +14,31 @@ class SettlementService extends ModelService
      */
     protected $model;
 
-    public function __construct(Settlement $model, Concept $concept)
+    public function __construct(Settlement $model, EconomicActivitySettlementService $activitySettlement)
     {
         $this->model = $model;
-        $this->concept = $concept->whereCode('1')->first();
+        $this->activitySettlement = $activitySettlement;
+    }
+
+    /**
+     * Handle all settlements
+     * @param Taxpayer $taxpayer, Concept $concept
+     */
+    public function make(Taxpayer $taxpayer, Concept $concept)
+    {
+        $settlement = $this->create($taxpayer, $concept);
+        $code = $concept->code;
+
+        if ($code == 1) {
+            $this->activitySettlement->make($settlement);
+        }
     }
 
     /**
      * Creates an economic activity settlement for a given taxpayer
      * @param Taxpayer $taxpayer
      */
-    public function create(Taxpayer $taxpayer)
+    public function create($taxpayer, $concept)
     {
         $settlement = Settlement::create([
             'num' => $this->getNewNum(),
@@ -32,7 +46,7 @@ class SettlementService extends ModelService
             'taxpayer_id' => $taxpayer->id,
             'month_id' => 1,
             'state_id' => 1,
-            'concept_id' => $this->concept->id
+            'concept_id' => $concept->id
         ]);
 
         return $settlement;

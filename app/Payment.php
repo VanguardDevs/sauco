@@ -40,9 +40,4 @@ class Payment extends Model implements Auditable
     {
         return $this->belongsTo(Settlement::class, Receivable::class);
     }
-
-    public function scopeLastPayment($query)
-    {
-        return $query->withTrashed()->latest()->first();
-    }
 }
