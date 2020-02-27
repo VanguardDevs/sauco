@@ -132,6 +132,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         * Payment's routes modules
          */ 
         Route::get('payments/list', 'PaymentController@list');
+        Route::get('cashbox/payments/{payment}/download', 'PaymentController@download');
         Route::resource('cashbox/payments', 'PaymentController');
     });
 

@@ -8,6 +8,7 @@ use App\Payment;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
+use PDF;
 
 class PaymentController extends Controller
 {
@@ -73,17 +74,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,13 +109,10 @@ class PaymentController extends Controller
 
     public function download(Payment $payment)
     {
-        if ($payment->state->id != 2) {
-            return response()->json([
-                '¡La factura no ha sido pagada!', 400
-            ]);
-        }
-         
+        $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['payment']));
+        return $pdf->stream('Licencia '.$payment->id.'.pdf');
     }
+
 
     /**
      * Remove the specified resource from storage.
