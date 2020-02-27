@@ -70,9 +70,9 @@ class SettlementController extends Controller
      */
     public function createSettlements(Request $request, Taxpayer $taxpayer)
     {
-        // Check if taxpayer has pending settlements
+        // Check if taxpayer has pending settlements for any month
         $hasSettlements = Settlement::whereTaxpayerId($taxpayer->id)
-            ->whereStateId(1);
+            ->whereMonthId(1);
         
         if ($hasSettlements->first()) {
             return response()->json([
