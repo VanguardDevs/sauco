@@ -43,6 +43,11 @@ class Settlement extends Model
         return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
     }
 
+    public function economicActivitySettlements()
+    {
+        return $this->hasMany(EconomicActivitySettlement::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Date('d/m/Y', strtotime($value)); 

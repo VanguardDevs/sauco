@@ -32,6 +32,20 @@ class SettlementService
     }
 
     /**
+     * Handle updates
+     * @param Settlement $settlement,  array $data
+     */
+    public function handleUpdate($settlement, $data)
+    {
+        $totalAmount = $this->activitySettlement->update($settlement, $data);
+        $this->update($settlement, [
+            'amount' => $totalAmount,
+            'state_id' => 2
+        ]);
+    }
+
+
+    /**
      * Creates an economic activity settlement for a given taxpayer
      * @param Taxpayer $taxpayer
      */
@@ -46,6 +60,16 @@ class SettlementService
         ]);
 
         return $settlement;
+    }
+
+    /**
+     * Update settlement for a given taxpayer
+     * @param Settlement $settlement, array $data
+     */
+    public function update($settlement, array $data)
+    {
+        $settlement = Settlement::find($settlement->id);
+        $settlement->update($data);
     }
 }
 

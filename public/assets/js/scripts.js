@@ -507,6 +507,37 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tPayments').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/payments/list",
+        "columns": [
+            { data: 'id'},
+            { data: 'taxpayer.rif' },
+            { data: 'object_payment'},
+            { data: 'concept.name'},
+            { data: 'state.name'},
+            { data: 'amount' },
+            { data: 'created_at'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group"> 
+                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver liquidación'>
+                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
     $('#tSettlements').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -527,7 +558,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group"> 
-                        <a class="mr-2" href=${baseURL}/settlements/${oData.id} title='Ver liquidación'>
+                        <a class="mr-2" href=${baseURL}/cashbox/settlements/${oData.id} title='Ver liquidación'>
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>
                     </div>`

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\EconomicActivitySettlement;
 use App\Settlement;
+use App\TaxUnit;
 
 class EconomicActivitySettlementService
 {
@@ -27,5 +28,37 @@ class EconomicActivitySettlementService
         }
 
         EconomicActivitySettlement::insert($data);
+    }
+
+    public function update(Settlement $settlement, array $amounts)
+    {
+        $settlements = $settlement->economicActivitySettlements;
+        $bruteAmounts = $amounts;
+        $totalAmounts = Array();
+
+        foreach($settlements as $settlement) {
+            $amount = array_shift($bruteAmounts);
+            $updateSettlement = $this->calculateTax($settlement, $amount);
+            array_push($totalAmounts, $updateSettlement->amount);
+        }
+        
+        return array_sum($totalAmounts);
+    }
+
+    public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount)
+    {
+        $activity = $activitySettlement->economicActivity;
+        $taxUnit = TaxUnit::latest()->first();
+        $total = $activity->min_tax * $taxUnit->value;
+        
+        if ($amount > $total) {
+            $total = $amount * $activity->aliquote;
+        }
+        
+        $settlement = EconomicActivitySettlement::find($activitySettlement->id);
+        $settlement->update([
+            'amount' => $total
+        ]);
+        return $settlement;
     }
 }

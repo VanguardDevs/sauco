@@ -92,7 +92,11 @@ class SettlementController extends Controller
      */
     public function show(Settlement $settlement)
     {
-        //
+        if ($settlement->state->id == 1) {
+            return view('modules.cashbox.register-settlement')
+                ->with('typeForm', 'edit')
+                ->with('row', $settlement);
+        }
     }
 
     /**
@@ -115,7 +119,11 @@ class SettlementController extends Controller
      */
     public function update(Request $request, Settlement $settlement)
     {
-        //
+        $activitySettlements = $request->input('activity_settlements');
+        $settlement = $this->settlement->handleUpdate($settlement, $activitySettlements);
+
+        return redirect('cashbox/settlements')
+            ->withSuccess('¡Liquidación procesada!');
     }
 
     /**
