@@ -519,7 +519,19 @@ $(document).ready(function() {
             { data: 'num'},
             { data: 'concept.name'},
             { data: 'state.name'},
-            { data: 'created_at'}
+            { data: 'created_at'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group"> 
+                        <a class="mr-2" href=${baseURL}/settlements/${oData.id} title='Ver liquidación'>
+                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
         ]
     });
 
@@ -629,40 +641,6 @@ $(document).ready(function() {
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/settings/properties/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning flaticon-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tCashbox').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/cashbox/list",
-        "columns": [
-            { data: 'num'},
-            { data: 'settlements[0].taxpayer.name'},
-            { data: 'payment_state.description'},
-            { data: 'total_amount'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/payments/${oData.id}/ title='Ver factura'>
-                            <i class='btn-sm btn-info flaticon2-file'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>
-                            <i class='btn-sm btn-danger flaticon2-delete'></i>
-                        </a>
-                         <a class="mr-2" href=${baseURL}/payments/${oData.id}/download title='Descargar'>
-                            <i class='btn-sm btn-success flaticon-download-1'></i>
                         </a>
                     </div>`
                     );

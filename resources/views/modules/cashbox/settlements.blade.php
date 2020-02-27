@@ -20,8 +20,9 @@
             <thead>
               <tr>
                 <th width="10%">Núm.</th>
-                <th width="70%">Por concepto de</th>
+                <th width="60%">Por concepto de</th>
                 <th width="10%">Estado</th>
+                <th width="10%">Creada</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

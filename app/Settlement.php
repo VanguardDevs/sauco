@@ -45,6 +45,11 @@ class Settlement extends Model
         return $this->belongsTo(Concept::class);
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        return Date('d/m/Y', strtotime($value)); 
+    }
+
     public function scopeLastSettlement($query)
     {
         return $query->withTrashed()->latest()->first();
