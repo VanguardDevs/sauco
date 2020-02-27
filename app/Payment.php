@@ -15,6 +15,8 @@ class Payment extends Model implements Auditable
     protected $table = 'payments';
 
     protected $guarded = [];
+    
+    protected $appends = ['num'];
 
     public function state()
     {
@@ -34,6 +36,11 @@ class Payment extends Model implements Auditable
     public function references()
     {
         return $this->hasMany(Reference::class);
+    }
+
+    public function getNumAttribute()
+    {
+        return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
     }
 
     public function settlements()

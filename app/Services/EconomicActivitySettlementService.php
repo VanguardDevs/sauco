@@ -5,15 +5,8 @@ namespace App\Services;
 use App\EconomicActivitySettlement;
 use App\Settlement;
 
-class EconomicActivitySettlementService extends ModelService 
+class EconomicActivitySettlementService
 {
-    protected $model;
-
-    public function __construct(EconomicActivitySettlement $model)
-    {
-        $this->model = $model;
-    }
-    
     /**
      * Create economic activity settlements for every activity
      * @param $settlement
@@ -23,14 +16,13 @@ class EconomicActivitySettlementService extends ModelService
         $activities = $settlement->taxpayer->economicActivities;
         $data = Array();
         
-        $nums = $this->getNums(count($activities));
-        
         foreach($activities as $activity) {
             array_push($data, Array(
-                'num' => array_shift($nums), 
                 'amount' => 0.00,
                 'settlement_id' => $settlement->id,
-                'economic_activity_id' => $activity->id
+                'economic_activity_id' => $activity->id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
             ));
         }
 

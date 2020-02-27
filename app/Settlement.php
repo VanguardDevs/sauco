@@ -11,14 +11,7 @@ class Settlement extends Model
 
     protected $table = 'settlements';
 
-    protected $fillable = [
-        'num',
-        'amount',
-        'concept_id',
-        'state_id',
-        'taxpayer_id',
-        'month_id'
-    ];
+    protected $guarded = [];
 
     public function month()
     {
@@ -43,6 +36,11 @@ class Settlement extends Model
     public function concept()
     {
         return $this->belongsTo(Concept::class);
+    }
+
+    public function getNum()
+    {
+        return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
     }
 
     public function getCreatedAtAttribute($value)

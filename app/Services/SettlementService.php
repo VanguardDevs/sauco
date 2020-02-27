@@ -7,16 +7,13 @@ use App\Settlement;
 use App\Taxpayer;
 use App\Services\EconomicActivitySettlementService;
 
-class SettlementService extends ModelService 
+class SettlementService
 {
     /**
      * @var Settlement Model
      */
-    protected $model;
-
-    public function __construct(Settlement $model, EconomicActivitySettlementService $activitySettlement)
+    public function __construct(EconomicActivitySettlementService $activitySettlement)
     {
-        $this->model = $model;
         $this->activitySettlement = $activitySettlement;
     }
 
@@ -41,7 +38,6 @@ class SettlementService extends ModelService
     public function create($taxpayer, $concept)
     {
         $settlement = Settlement::create([
-            'num' => $this->getNewNum(),
             'amount' => 0.00,
             'taxpayer_id' => $taxpayer->id,
             'month_id' => 1,

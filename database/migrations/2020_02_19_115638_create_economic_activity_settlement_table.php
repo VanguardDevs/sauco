@@ -15,7 +15,6 @@ class CreateEconomicActivitySettlementTable extends Migration
     {
         Schema::create('economic_activity_settlement', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('num', 8);
             $table->float('amount');
             $table->unsignedBigInteger('economic_activity_id');
             $table->unsignedBigInteger('settlement_id');
