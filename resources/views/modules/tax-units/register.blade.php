@@ -11,16 +11,6 @@
                         <h3 class="kt-portlet__head-title">
                         @if ($typeForm == 'create')
                             Registro de Unidades Tributarias
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/tax-units/create') }}
-                            @endsection
-                        @else
-                            Editar usuario: {{ @$row->login }}
-
-                            @section('breadcrumbs')
-                                {{ Breadcrumbs::render('settings/tax-units/edit', $row) }}
-                            @endsection
                         @endif
                         </h3>
                     </div>

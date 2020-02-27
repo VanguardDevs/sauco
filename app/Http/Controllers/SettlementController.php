@@ -51,7 +51,7 @@ class SettlementController extends Controller
      */
     public function list(Request $request)
     {
-        $query = Settlement::with(['state', 'concept']);
+        $query = Settlement::with(['state', 'concept', 'taxpayer']);
         
         return DataTables::eloquent($query)->toJson();
     }

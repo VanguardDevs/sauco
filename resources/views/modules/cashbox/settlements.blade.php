@@ -19,8 +19,9 @@
           <table id="tSettlements" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">Núm.</th>
-                <th width="50%">Por concepto de</th>
+                <th width="10%">ID</th>
+                <th width="10%">Contribuyente</th>
+                <th width="40%">Por concepto de</th>
                 <th width="10%">Estado</th>
                 <th width="10%">Monto</th>
                 <th width="10%">Creada</th>

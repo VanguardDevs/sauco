@@ -14,6 +14,13 @@ Breadcrumbs::for('settlements.index', function ($trail) {
     $trail->push('Listado de liquidaciones', url('cashbox/settlements'));
 });
 
+/*----------  Cashbox > Settlements > show ----------*/
+Breadcrumbs::for('settlements.show', function ($trail, $row) {
+    $trail->parent('settlements.index');
+    $trail->push('Liquidación n°'.$row->id, url('cashbox/settlements'.$row->id));
+});
+
+
 /*----------  Cashbox > Payments ----------*/
 Breadcrumbs::for('payments.index', function ($trail) {
     $trail->parent('cashbox');
@@ -234,21 +241,15 @@ Breadcrumbs::for('representation.store', function ($trail, $row) {
 });
 
 /*------------- Tax units -------------*/
-Breadcrumbs::for('settings/tax-units', function ($trail) {
-    $trail->parent('dashboard');
+Breadcrumbs::for('tax-units.index', function ($trail) {
+    $trail->parent('settings');
     $trail->push('Unidades Tributarias', url('settings/tax-units'));
 });
 
 /*------------- Tax units > create -------------*/
-Breadcrumbs::for('settings/tax-units/create', function ($trail) {
-    $trail->parent('settings/tax-units');
+Breadcrumbs::for('tax-units.create', function ($trail) {
+    $trail->parent('tax-units.index');
     $trail->push('Crear unidad tributaria', url('settings/tax-units/create'));
-});
-
-/*------------- Tax units > update -------------*/
-Breadcrumbs::for('settings/tax-units/update', function ($trail) {
-    $trail->parent('settings/tax-units');
-    $trail->push('Editar unidad tributaria', url('settings/tax-units/update'));
 });
 
 /*------------- Application types -------------*/

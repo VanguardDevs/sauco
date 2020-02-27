@@ -2,10 +2,6 @@
 
 @section('title', 'Control de Unidades Tributarias')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('settings/tax-units') }}
-@endsection
-
 @section('content')
 
   <div class="row" style="margin-top: 20px;">

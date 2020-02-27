@@ -516,7 +516,8 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/settlements/list?onlyNull=false",
         "columns": [
-            { data: 'num'},
+            { data: 'id'},
+            { data: 'taxpayer.rif' },
             { data: 'concept.name'},
             { data: 'state.name'},
             { data: 'amount' },
