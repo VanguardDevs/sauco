@@ -166,7 +166,7 @@
                             <h3 class="kt-portlet__head-title">Liquidaciones</h3>
                         </div>
                         <div class="kt-portlet__head-toolbar">
-                            <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
+   {{--                         <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
                                 <li role="tablist">
                                     <a class="nav-link active" data-toggle="tab" href="#kt_widget6_tab1_content" role="tab" aria-selected="false">
                                         Pendientes
@@ -178,13 +178,15 @@
                                     </a>
                                 </li>
                             <ul>
+--}}
                             @if(Auth()->user()->can('create.settlements'))
                             <div class="kt-portlet__head-toolbar">
-                                <a onClick="handleRequest('settlements/create-settlements/{{ $row->id  }}')" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                                <a onClick="handleRequest('settlements/create-settlements/{{ $row->id  }}')" class="btn btn-label-brand btn-bold btn-sm">CALCULAR</a>
                             </div>
                             @endif
                         </div>
                     </div>
+{{--
                     <div class="kt-portlet__body">
                        <div class="tab-content">
                             <div id="kt_widget6_tab1_content" class="tab-pane active" aria-expanded="true">
@@ -193,6 +195,7 @@
                             </div>
                         </div> 
                     </div>
+--}}
                 </div>
             </div>
         </div>

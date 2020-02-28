@@ -10,20 +10,21 @@
             }
             body {
                 font-family: 'Arial';
+                font-size: 14px;
             }
             .header {
                 width: 100%;
                 font-size: 8px;
             }
-            .bill-num . {
-                font-size: 12px;
-                font-weight: 700;
+            .footer {
+                padding: 0;
+                box-sizing: content-box;
             }
-            .header {
+            .header, .footer {
                 position: relative;
                 display:block;
             }
-            .header div {
+            .header div, .footer div {
                 display: inline-block;
             }
             #mayorLOGO {
@@ -31,6 +32,13 @@
             }
             tr, td, th {
                 border: 1px #000 solid;
+            }
+            td, td, th, tr {
+                margin: 0;
+                border-collapse: collapse;
+            }
+            td {
+                font-size: 12px;
             }
             table {
                 width: 100%;
@@ -40,6 +48,21 @@
             }
             .tables {
                 display:block;
+            }
+            .bill-num {
+                padding-left: 5px;
+                box-sizing: content-box;
+                width: 60%;
+                font-weight: bold;
+            } 
+            .total {
+                width:37%;
+                float: right;
+                padding-left: 0;
+            }
+            .table-title {
+                text-align: center;
+                font-weight: bold;
             }
         </style>
     </head>
@@ -54,13 +77,13 @@
                 REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
                 ESTADO SUCRE<br>
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
-                GERENCIA DE RENTAS Y FINANZAS<br>
+                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
                 RIF: G-20000222-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('assets/images/logo.png') }}" height="75px" width="125px" alt="logo" />
+                <img src="{{ asset('assets/images/logo.png') }}" height="65px" width="120px" alt="logo" />
             </div>
         </div>
         <div class="tables">
@@ -78,6 +101,9 @@
                     </tr>
                 </tbody>
              </table>
+            <div class="table-title">
+                OBJETO DE PAGO
+            </div>
             <table class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
@@ -94,6 +120,9 @@
                     </tr>
                 </tbody>
              </table>
+            <div class="table-title">
+               DETALLES DEL PAGO 
+            </div>
             <table class="" style="text-align: center">
                 <thead>
                   <tr>
@@ -112,7 +141,11 @@
                 @endforeach   
              </table>
             <br>
-            <div class="left" style="display:inline;">PAGO TOTAL: {{ $payment->amount }}</div>
+            <div class="footer">
+                <div class="bill-num">
+                    N° DE FACTURA: {{ $billNum }}
+                </div>
+                <div class="total">PAGO TOTAL: {{ $payment->amount }}</div>
         </div>
     </body>
 </html>
