@@ -73,14 +73,14 @@ class ConceptController extends Controller
             'ordinance_id' => $request->input('ordinance'),
             'list_id' => $request->input('list')
         ]);
-
+        /**
         if ($concept->code != 1) { 
             ConceptPrice::create([
                 'value' => $request->input('value'),
                 'concept_id' => $concept->id,
                 'charging_method_id' => $request->input('charging_method')
             ]);
-        }
+        } */
 
         return redirect('settings/concepts')
             ->withSuccess('¡Concepto de recaudación creado!');

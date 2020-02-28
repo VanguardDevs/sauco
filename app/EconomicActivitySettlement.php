@@ -13,6 +13,10 @@ class EconomicActivitySettlement extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'amount' => 'float'
+    ];
+
     public function economicActivity()
     {
         return $this->belongsTo(EconomicActivity::class);

@@ -15,7 +15,11 @@ class Payment extends Model implements Auditable
     protected $table = 'payments';
 
     protected $guarded = [];
-    
+ 
+    protected $casts = [
+        'amount' => 'float'
+    ];  
+
     protected $appends = ['num'];
 
     public function state()

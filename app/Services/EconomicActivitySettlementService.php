@@ -54,9 +54,7 @@ class EconomicActivitySettlementService
         if ($amount > $total) {
             $total = $amount * $activity->aliquote;
         }
-
-        $total = round($total, 2);
-
+        
         $settlement = EconomicActivitySettlement::find($activitySettlement->id);
         $settlement->update([
             'amount' => $total

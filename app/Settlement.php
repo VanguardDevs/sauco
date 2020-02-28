@@ -13,6 +13,10 @@ class Settlement extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'amount' => 'float'
+    ];
+
     public function month()
     {
         return $this->belongsTo(Month::class);
