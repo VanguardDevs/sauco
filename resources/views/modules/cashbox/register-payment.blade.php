@@ -6,7 +6,11 @@
     <!-- general form elements -->
     <div class="card card-primary">
         <div class="card-header alert alert-danger">
+            @if ($typeForm == 'edit')
+            <h5 class="card-title">Procesar factura n° {{ $row->id }}</h5>
+            @else
             <h5 class="card-title">Factura n° {{ $row->id }}</h5>
+            @endif
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -31,7 +35,7 @@
             </tr>
             @endforeach   
           </table>
-        
+        @if ($typeForm == 'edit')        
         <div class="row form-group">
             <div class="col-md-6 form-group">
                 <label class="control-label"> Método de pago <span class="text-danger">*</span></label>
@@ -65,21 +69,18 @@
                 </div>
             </div>
         </div>
-
+        @endif
         <!-- /.card-body -->
         <div class="card-footer">
+             
+            @if($typeForm == 'edit')
             <a href="{{ url('cashbox/payments') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
-
-            @if($typeForm == 'update')
-                <button type="submit" class="btn btn-primary">
-                    <i class="mdi mdi-rotate-3d"></i>
-                    Actualizar
-                </button>
-            @else
-                <button  type="submit" class="btn btn-primary">
+            <button  type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i>
                     Registrar
                 </button>
+            @else
+            <a href="{{ url('cashbox/payments') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
             @endif
         </div>
         {!! Form::close() !!}

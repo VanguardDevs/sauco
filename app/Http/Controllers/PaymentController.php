@@ -9,13 +9,20 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
 use PDF;
+use Auth;
 
 class PaymentController extends Controller
 {
+    /**
+     * Payment form type
+     * @var $typeform
+     */
+    private $typeform = 'show';
+
     public function __construct()
     {
         $this->middleware('has.role:admin')->only('destroy');
-        $this->middleware('has.role:liquidator|collector|admin')->only(['index', 'list']);
+        $this->middleware('has.role:liquidator|collector|admin')->only(['index', 'list','show']);
         $this->middleware('auth');
     }
 
@@ -66,11 +73,14 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
+        if (Auth::user()->hasRole('collector') && $payment->state->id == 1) {
+            $this->typeform = 'edit';
+        }
         return view('modules.cashbox.register-payment')
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
-            ->with('typeForm', 'edit');
+            ->with('typeForm', $this->typeform);
     }
 
     /**
@@ -104,11 +114,16 @@ class PaymentController extends Controller
         $payment->save();
 
         return redirect('cashbox/payments')
-            ->withSuccess('¡Liquidación pagada!');
+            ->withSuccess('¡Factura procesada!');
     }
 
     public function download(Payment $payment)
     {
+        if ($payment->state->id == 1) {
+            return redirect('cashbox/payments')
+                ->withError('¡La factura no ha sido procesada!');
+        }
+
         $taxpayer = $payment->receivables->first()->settlement->taxpayer;
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
