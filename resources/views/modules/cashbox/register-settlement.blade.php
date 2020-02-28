@@ -22,33 +22,37 @@
             @foreach($row->economicActivitySettlements as $activitySettlement)
                 <div class="form-group row">
                     <div class="col-md-2">
-                        <label>Código</label>
+                        <label class="col-md-12">Código</label>
                         <div class="col-md-12">{{ $activitySettlement->economicActivity->code  }}</div>
                     </div>
-                    <div class="col-md-8">
-                        <label>Nombre de la actividad</label>
+                    <div class="col-md-7">
+                        <label class="col-md-12">Nombre de la actividad</label>
                         <div class="col-md-12"> {{ $activitySettlement->economicActivity->name }}</div>
                     </div>
-                    <div class="col-md-12">
-                        {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["Placeholder" => "Monto", "class" => "form-control decimal-input-mask", "required"]) !!}
+                    @if($typeForm == 'edit')
+                    <div class="col-md-3">
+                        <label class="col-md-12">Monto declarado</label>
+                        {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["class" => "form-control decimal-input-mask col-md-12", "required"]) !!}
                     </div>
+                    @else
+                    <div class="col-md-3">
+                        <label class="col-md-12">Monto</label>
+                        <div class="col-md-12">{{ $activitySettlement->amount  }}</div>
+                    </div>
+                    @endif
                 </div>
             @endforeach           
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-            <a href="{{ url('cashbox/settlements') }}" class="btn btn-secondary" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
-
-            @if($typeForm == 'update')
-                <button type="submit" class="btn btn-primary">
-                    <i class="mdi mdi-rotate-3d"></i>
-                    Actualizar
-                </button>
-            @else
-                <button  type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    Registrar
-                </button>
+            @if($typeForm == 'show')
+            <a href="{{ url('cashbox/settlements') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+           @else
+            <a href="{{ url('cashbox/settlements') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
+            <button  type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Registrar
+            </button>
             @endif
         </div>
         {!! Form::close() !!}

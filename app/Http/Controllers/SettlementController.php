@@ -20,6 +20,8 @@ class SettlementController extends Controller
     protected $settlement;
     protected $payment;
     protected $receivable;
+    
+    protected $typeform = 'edit';
 
     /**
      * Constructor method
@@ -59,7 +61,8 @@ class SettlementController extends Controller
     public function list(Request $request)
     {
         $query = Settlement::with(['state', 'concept', 'taxpayer'])
-            ->orderBy('created_at', 'DESC');
+            ->orderBy('id', 'DESC');
+
         
         return DataTables::eloquent($query)->toJson();
     }
@@ -100,11 +103,12 @@ class SettlementController extends Controller
      */
     public function show(Settlement $settlement)
     {
-        if ($settlement->state->id == 1) {
-            return view('modules.cashbox.register-settlement')
-                ->with('typeForm', 'edit')
-                ->with('row', $settlement);
+        if ($settlement->state->id == 2) {
+            $this->typeform = 'show';
         }
+        return view('modules.cashbox.register-settlement')
+            ->with('typeForm', $this->typeform)
+            ->with('row', $settlement);
     }
 
     /**

@@ -139,14 +139,7 @@
                 </a>
             </li>
         @endif
-        
-        <li class="kt-menu__item {{ active('about*') }}" aria-haspopup="true" >
-            <a  href="{{ url('about') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon-information"></i>
-            <span class="kt-menu__link-text">Acerca de</span>
-            </a>
-        </li>
-    </ul>
+   </ul>
   </div>
 </div>
 <!-- end:: Aside Menu -->
