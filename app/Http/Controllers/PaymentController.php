@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\PaymentMethod;
 use App\PaymentType;
 use App\Payment;
+use App\Reference;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
@@ -99,7 +100,7 @@ class PaymentController extends Controller
 
         if ($request->input('method') != '3') {
             $reference = $request->input('reference');
-
+            
             if (empty($reference)){
                 return redirect('payments/'.$payment->id)
                         ->withError('¡Faltan datos!');
@@ -107,7 +108,7 @@ class PaymentController extends Controller
 
             $reference = Reference::create([
                 'reference' => $request->input('reference'),
-                'account_id' => 1,
+                'account_id' => 1, // For later use, select account
                 'payment_id' => $payment->id
             ]);
         }
@@ -127,6 +128,7 @@ class PaymentController extends Controller
         $taxpayer = $payment->receivables->first()->settlement->taxpayer;
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
+        
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
         $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['payment', 'billNum', 'reference', 'taxpayer', 'denomination']));
         return $pdf->stream('Licencia '.$payment->id.'.pdf');
