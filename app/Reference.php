@@ -16,11 +16,11 @@ class Reference extends Model implements Auditable
 
     protected $fillable = [
         'reference',
-        'bank_account_id',
+        'account_id',
         'payment_id'
     ];
 
-    public function bankAccount()
+    public function account()
     {
         return $this->belongsTo(BankAccount::class);
     }

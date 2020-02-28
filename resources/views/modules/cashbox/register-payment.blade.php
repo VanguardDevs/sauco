@@ -18,9 +18,8 @@
             <thead>
               <tr>
                 <th width="10%">ID</th>
-                <th width="50%">Objecto de Pago</th>
+                <th width="80%">Objecto de Pago</th>
                 <th width="10%">Monto</th>
-                <th width="10%">Creada</th>
               </tr>
             </thead>
             <tbody>

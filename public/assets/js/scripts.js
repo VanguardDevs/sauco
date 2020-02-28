@@ -65,6 +65,7 @@ function onSelectPaymentType() {
         reference.hide();
     }
 }
+
 /**
  * Get all communities for a given parish
  */
@@ -526,10 +527,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group"> 
-                        <a class="mr-2" href=${baseURL}/cashbox/payment/${oData.id}/download title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id}/download title='Ver factura'>
                             <i class='btn-sm btn-success flaticon2-download'></i>
                         </a>
-                        <a class="mr-2" href=${baseURL}/cashbox/payment/${oData.id} title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>
                     </div>`

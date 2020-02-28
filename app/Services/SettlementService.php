@@ -54,7 +54,7 @@ class SettlementService
     public function create($taxpayer, $concept)
     {
         $settlement = Settlement::create([
-            'amount' => 0.00,
+            'amount' => "0.00",
             'taxpayer_id' => $taxpayer->id,
             'month_id' => 1,
             'state_id' => 1,
