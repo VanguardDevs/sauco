@@ -109,9 +109,11 @@ class PaymentController extends Controller
 
     public function download(Payment $payment)
     {
+        $taxpayer = $payment->receivables->first()->settlement->taxpayer;
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
-        $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['payment', 'billNum', 'reference']));
+        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
+        $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['payment', 'billNum', 'reference', 'taxpayer', 'denomination']));
         return $pdf->stream('Licencia '.$payment->id.'.pdf');
     }
 

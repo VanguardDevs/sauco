@@ -5,6 +5,9 @@
         <!-- CSRF Token -->
         <title> Factura </title>
         <style>
+            .left {
+                float: right;
+            }
             body {
                 font-family: 'Arial';
             }
@@ -12,7 +15,7 @@
                 width: 100%;
                 font-size: 8px;
             }
-            .bill-num {
+            .bill-num . {
                 font-size: 12px;
                 font-weight: 700;
             }
@@ -22,6 +25,9 @@
             }
             .header div {
                 display: inline-block;
+            }
+            #mayorLOGO {
+                float: right;
             }
             tr, td, th {
                 border: 1px #000 solid;
@@ -57,11 +63,21 @@
                 <img src="{{ asset('assets/images/logo.png') }}" height="75px" width="125px" alt="logo" />
             </div>
         </div>
-        
-        <div class="bill-num">
-            NO° DE FACTURA: {{ $billNum }} 
-        </div>
         <div class="tables">
+             <table class="table table-bordered table-striped datatables" style="text-align: center">
+                <thead>
+                  <tr>
+                    <th width="80%">RAZÓN SOCIAL O DENOMINACIÓN COMERCIAL</th>
+                    <th width="20%">RIF</th>
+                  </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td>{{ $denomination }}</td> 
+                        <td>{{ $taxpayer->rif }}</td>
+                    </tr>
+                </tbody>
+             </table>
             <table class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
@@ -96,15 +112,7 @@
                 @endforeach   
              </table>
             <br>
-            <table>
-                <tr>
-                    <td width="15%"></td>
-                    <td width="5%"></td>
-                    <td width="30%"></td>
-                    <td width="10%" style="display:inline;">PAGO TOTAL</td>
-                    <td width="20%">{{ $payment->amount }}</td>
-                </tr>
-            </table>
+            <div class="left" style="display:inline;">PAGO TOTAL: {{ $payment->amount }}</div>
         </div>
     </body>
 </html>

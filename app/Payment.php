@@ -57,6 +57,11 @@ class Payment extends Model implements Auditable
         return date('d/m/Y H:m:s', strtotime($value));
     }
 
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d/m/Y H:m:s', strtotime($value));
+    }
+
     public function settlements()
     {
         return $this->belongsTo(Settlement::class, Receivable::class);
