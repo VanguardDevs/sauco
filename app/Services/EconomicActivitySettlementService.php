@@ -52,7 +52,7 @@ class EconomicActivitySettlementService
         $total = $activity->min_tax * $taxUnit->value;
         
         if ($amount > $total) {
-            $total = $amount * $activity->aliquote;
+            $total = $amount * $activity->aliquote / 100;
         }
         
         $settlement = EconomicActivitySettlement::find($activitySettlement->id);
