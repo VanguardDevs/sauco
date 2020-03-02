@@ -77,6 +77,7 @@ class PaymentController extends Controller
         if (Auth::user()->hasRole('collector') && $payment->state->id == 1) {
             $this->typeform = 'edit';
         }
+        
         return view('modules.cashbox.register-payment')
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())

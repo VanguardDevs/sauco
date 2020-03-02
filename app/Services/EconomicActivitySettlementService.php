@@ -20,6 +20,7 @@ class EconomicActivitySettlementService
         foreach($activities as $activity) {
             array_push($data, Array(
                 'amount' => 0.00,
+                'brute_amount' => 0.00,
                 'settlement_id' => $settlement->id,
                 'economic_activity_id' => $activity->id,
                 'created_at' => date('Y-m-d H:i:s'),
