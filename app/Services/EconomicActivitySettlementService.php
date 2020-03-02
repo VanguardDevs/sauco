@@ -52,7 +52,7 @@ class EconomicActivitySettlementService
         $taxUnit = TaxUnit::latest()->first();
         $total = $activity->min_tax * $taxUnit->value;
         
-        if ($amount > $total) {
+        if ($amount > $total && $amount != 0.00) {
             $total = $amount * $activity->aliquote / 100;
         }
         
