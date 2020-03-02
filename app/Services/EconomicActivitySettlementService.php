@@ -57,7 +57,8 @@ class EconomicActivitySettlementService
         
         $settlement = EconomicActivitySettlement::find($activitySettlement->id);
         $settlement->update([
-            'amount' => $total
+            'amount' => $total,
+            'brute_amount' => $amount
         ]);
         return $settlement;
     }
