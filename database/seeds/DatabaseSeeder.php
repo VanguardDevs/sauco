@@ -11,26 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);       
-        $this->call(PermissionsTableSeeder::class);
-        $this->call(ParishesTableSeeder::class);
-        $this->call(CitizenshipsTableSeeder::class);
-        $this->call(TaxpayerTypesTableSeeder::class);
         $this->call(AccountTypesTableSeeder::class);
         $this->call(OwnershipStatesTableSeeder::class);
         $this->call(StatusTableSeeder::class);
-        $this->call(StatesTableSeeder::class);
         $this->call(PaymentTypesTableSeeder::class);
-        $this->call(MunicipalitiesTableSeeder::class);
         $this->call(ChargingMethodsTableSeeder::class);
         $this->call(ColorsTableSeeder::class);
         $this->call(OrdinancesTableSeeder::class);
         $this->call(CorrelativeTypesTableSeeder::class);
-        $this->call(RepresentationTypesTableSeeder::class);
-        $this->call(ActivityClassificationsTableSeeder::class);
         $this->call(ListsTableSeeder::class);
         $this->call(PaymentMethodsTableSeeder::class);
-        
+/*        
         // For database's migration
         if (app('env') == "staging") {
             $this->call(StagingSeeder::class);
@@ -40,5 +31,6 @@ class DatabaseSeeder extends Seeder
             $this->call(CommunitiesTableSeeder::class); 
             $this->call(CommunityParishTableSeeder::class);
         }
+ */
     }
 }
