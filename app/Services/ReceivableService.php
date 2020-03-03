@@ -11,8 +11,8 @@ class ReceivableService
     public function make(Settlement $settlement, Payment $payment)
     {
         $month = $settlement->month;
-        $date = $month->name.' - '.$month->year->year;
-        $object = $settlement->concept->name.' '.$date;
+        $date = $month->name.' '.$month->year->year;
+        $object = $settlement->concept->name.': '.$date;
 
         $receivable = Receivable::create([
             'object_payment' => $object, 

@@ -57,6 +57,11 @@ class Settlement extends Model
         return $this->hasMany(EconomicActivitySettlement::class);
     }
 
+    public function receivable()
+    {
+        return $this->hasMany(Receivable::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Date('d/m/Y', strtotime($value)); 
