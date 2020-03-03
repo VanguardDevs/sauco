@@ -14,11 +14,11 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        @if ($typeForm == 'edit')
-            {!! Form::model($row, ['route' => ["settlements".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
+        @if (($typeForm == 'edit-normal') || ($typeForm == 'edit-group'))
+            {!! Form::model($row, ['route' => ["settlements".'.update', $row->id, $typeForm], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
         @endif
         <div class="card-body">
-
+            @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))            
             @foreach($row->economicActivitySettlements as $activitySettlement)
                 <div class="form-group row">
                     <div class="col-md-2">
@@ -29,7 +29,7 @@
                         <label class="col-md-12">Nombre de la actividad</label>
                         <div class="col-md-12"> {{ $activitySettlement->economicActivity->name }}</div>
                     </div>
-                    @if($typeForm == 'edit')
+                    @if($typeForm == 'edit-normal')
                     <div class="col-md-3">
                         <label class="col-md-12">Monto declarado</label>
                         {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["class" => "form-control decimal-input-mask col-md-12", "required"]) !!}
@@ -42,6 +42,12 @@
                     @endif
                 </div>
             @endforeach           
+            @else
+            <div class="form-group row">
+                    <label class="col-md-12">Monto</label>
+                    {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["class" => "form-control decimal-input-mask col-md-12", "required"]) !!}
+            </div>
+            @endif
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
@@ -50,8 +56,8 @@
            @else
             <a href="{{ url('cashbox/settlements') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
             <button  type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i>
-                Registrar
+                <i class="fas fa-calculator"></i>
+                Calcular y guardar
             </button>
             @endif
         </div>

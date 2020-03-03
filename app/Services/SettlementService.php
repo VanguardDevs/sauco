@@ -35,9 +35,14 @@ class SettlementService
      * Handle updates
      * @param Settlement $settlement,  array $data
      */
-    public function handleUpdate($settlement, $data)
+    public function handleUpdate($settlement, $data, $byGroup)
     {
-        $totalAmount = $this->activitySettlement->update($settlement, $data);
+        if ($byGroup) {
+            $totalAmount = $this->activitySettlement->updateByGroup($settlement, $data);    
+        } else {
+            $totalAmount = $this->activitySettlement->update($settlement, $data);
+        }
+
         $settlement = $this->update($settlement, [
             'amount' => $totalAmount,
             'state_id' => 2

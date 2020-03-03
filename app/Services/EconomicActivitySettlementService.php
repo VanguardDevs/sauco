@@ -46,6 +46,28 @@ class EconomicActivitySettlementService
         return array_sum($totalAmounts);
     }
 
+    public function updateByGroup(Settlement $settlement, float $amount)
+    {
+        $settlements = $settlement->economicActivitySettlements;
+        $max = $settlements->first();
+
+        if ($amount == 0.00) {
+            foreach ($settlements as $settlement) {
+                if ($settlement->economicActivity->min_tax > $max->economicActivity->min_tax) {
+                    $max = $settlement;
+                }
+            }
+        } else {
+            foreach ($settlements as $settlement) {
+                if ($settlement->economicActivity->aliquote > $max->economicActivity->aliquote) {
+                    $max = $settlement;
+                }
+            }
+        }
+        
+        return $this->calculateTax($settlement, $amount)->amount;
+    }
+
     public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount)
     {
         $activity = $activitySettlement->economicActivity;

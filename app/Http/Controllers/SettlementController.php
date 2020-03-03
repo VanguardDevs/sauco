@@ -46,16 +46,6 @@ class SettlementController extends Controller
     }
 
     /**
-     * Display all null settlements
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexNull()
-    {
-        return view('modules.cashbox.null-settlements');
-    }
-
-    /**
      * List all settlements, no matter what view
      */
     public function list(Request $request)
@@ -103,11 +93,13 @@ class SettlementController extends Controller
      */
     public function show(Settlement $settlement)
     {
-        if ($settlement->state->id == 2) {
-            $this->typeform = 'show';
+        if ($settlement->state->id == 1) {
+            return view('modules.cashbox.select-settlement')
+                ->with('row', $settlement);
         }
+        // The settlement it's already processed    
         return view('modules.cashbox.register-settlement')
-            ->with('typeForm', $this->typeform)
+            ->with('typeForm', 'show')
             ->with('row', $settlement);
     }
 
@@ -117,9 +109,18 @@ class SettlementController extends Controller
      * @param  \App\Settlement  $settlement
      * @return \Illuminate\Http\Response
      */
-    public function edit(Settlement $settlement)
+    public function groupActivityForm(Settlement $settlement)
     {
-        //
+        return view('modules.cashbox.register-settlement')
+            ->with('row', $settlement)
+            ->with('typeForm', 'edit-group');
+    }
+    
+    public function normalCalcForm(Settlement $settlement)
+    {
+        return view('modules.cashbox.register-settlement')
+            ->with('typeForm', 'edit-normal')
+            ->with('row', $settlement);
     }
 
     /**
@@ -131,14 +132,22 @@ class SettlementController extends Controller
      */
     public function update(Request $request, Settlement $settlement)
     {
-        $activitySettlements = $request->input('activity_settlements');
-        $settlement = $this->settlement->handleUpdate($settlement, $activitySettlements);
+        $isEditGroup = $request->has('edit-group');
+
+        $amounts = $request->input('activity_settlements');
+
+        if ($isEditGroup) {
+            $amount = $amounts[0]; 
+            $settlement = $this->settlement->handleUpdate($settlement, $amount, $isEditGroup); 
+        } else {
+            $settlement = $this->settlement->handleUpdate($settlement, $amounts, $isEditGroup);
+        }
 
         // Create receivable
         $payment = $this->payment->make();
         $receivable = $this->receivable->make($settlement, $payment);
 
-        return redirect('cashbox/settlements')
+        return redirect('cashbox/settlements/'.$settlement->id)
             ->withSuccess('¡Liquidación procesada!');
     }
 
