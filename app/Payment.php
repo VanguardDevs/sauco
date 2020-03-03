@@ -37,9 +37,9 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(PaymentMethod::class);
     }
     
-    public function references()
+    public function reference()
     {
-        return $this->hasMany(Reference::class);
+        return $this->hasOne(Reference::class);
     }
 
     public function receivables()
