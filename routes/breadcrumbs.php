@@ -393,6 +393,24 @@ Breadcrumbs::for('commercial-registers/create', function ($trail) {
     $trail->push('Crear inmueble', url('taxpayer/{id}/commercial-registers/create'));
 });
 
+/*------------- Payment Methods -------------*/
+Breadcrumbs::for('payment-methods.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('payment-methods', url('settings/payment-methods'));
+});
+
+/*------------- Ordinances > create -------------*/
+Breadcrumbs::for('payment-methods.create', function ($trail) {
+    $trail->parent('payment-methods.index');
+    $trail->push('Crear nuevo método de pago', url('settings/payment-methods/create'));
+});
+
+/*------------- Ordinances > edit -------------*/
+Breadcrumbs::for('payment-methods.edit', function ($trail, $row) {
+    $trail->parent('payment-methods.index');
+    $trail->push('Editar método de pago', url('settings/payment-methods/edit'.$row->id));
+});
+
 /*------------- Ordinances -------------*/
 Breadcrumbs::for('ordinances.index', function ($trail) {
     $trail->parent('settings');

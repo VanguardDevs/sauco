@@ -56,6 +56,12 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
         Route::resource('settings/ordinances', 'OrdinanceController');
 
+        /**
+         * Payment methods settings
+         */
+        Route::get('payment-methods/list', 'PaymentMethodController@list')->name('list-payment-methods');
+        Route::resource('settings/payment-methods', 'PaymentMethodController');
+
         /*----------  Routes Settings > Economic sectors  ----------*/
         Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
         Route::resource('settings/economic-sectors', 'EconomicSectorController');

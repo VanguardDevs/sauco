@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\PaymentMethod;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentMethodController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.payment-methods.index');
     }
 
     /**
@@ -24,7 +30,8 @@ class PaymentMethodController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.payment-methods.register')
+            ->with('typeForm', 'create');
     }
 
     /**
@@ -35,7 +42,10 @@ class PaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $method = PaymentMethod::create($request->all());
+
+        return redirect('settings/payment-methods')
+            ->withSuccess('¡Método creado!');
     }
 
     /**
@@ -57,8 +67,18 @@ class PaymentMethodController extends Controller
      */
     public function edit(PaymentMethod $paymentMethod)
     {
-        //
+        return view('modules.payment-methods.register')
+            ->with('typeForm', 'edit')
+            ->with('row', $paymentMethod);
     }
+
+    public function list()
+    {
+        $query = PaymentMethod::query(); 
+
+        return DataTables::eloquent($query)->toJson();
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +89,11 @@ class PaymentMethodController extends Controller
      */
     public function update(Request $request, PaymentMethod $paymentMethod)
     {
-        //
+        $edit = PaymentMethod::find($paymentMethod->id);
+        $edit->update($request->all());
+
+        return redirect('settings/payment-methods')
+            ->withSuccess('¡Método de pago actualizado!');
     }
 
     /**
