@@ -25,4 +25,9 @@ class User extends Authenticatable
         'avatar',
         'login'
     ];
+
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
+    }
 }

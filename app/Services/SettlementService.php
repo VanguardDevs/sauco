@@ -45,7 +45,8 @@ class SettlementService
 
         $settlement = $this->update($settlement, [
             'amount' => $totalAmount,
-            'state_id' => 2
+            'state_id' => 2,
+            'user_id' => auth()->user()->id
         ]);
 
         return $settlement;
@@ -63,6 +64,7 @@ class SettlementService
             'taxpayer_id' => $taxpayer->id,
             'month_id' => 1,
             'state_id' => 1,
+            'user_id' => auth()->user()->id,
             'concept_id' => $concept->id
         ]);
 

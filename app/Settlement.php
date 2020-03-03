@@ -42,6 +42,11 @@ class Settlement extends Model
         return $this->belongsTo(Concept::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function getNum()
     {
         return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
