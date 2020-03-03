@@ -37,7 +37,7 @@
           </table>
         @if ($typeForm == 'edit')        
         <div class="row form-group">
-            <div class="col-md-6 form-group">
+            <div class="col-md-12 form-group">
                 <label class="control-label"> Método de pago <span class="text-danger">*</span></label>
 
                 {!! Form::select('method', $methods,
@@ -48,6 +48,7 @@
                     'required'
                 ]) !!}
             </div>
+            {{--
             <div class="col-md-6 form-group">
                 <label class="control-label"> Tipo de pago <span class="text-danger">*</span></label>
 
@@ -58,9 +59,10 @@
                     'required'
                 ]) !!}
             </div>
+            --}}
             <div class="col-md-12 form-group" id="reference" style="display:none;">
                 <div class="col-md-12">
-                    <label class="control-label">Referencia del pago</label>
+                    <label class="control-label">Referencia del pago <span class="text-danger">*</span></label>
                     {!!
                     Form::text("reference", old('trade_denomination', @$row->denomination), [
                         "class" => "form-control"

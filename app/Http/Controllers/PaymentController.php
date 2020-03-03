@@ -96,7 +96,7 @@ class PaymentController extends Controller
     {
         $payment = Payment::find($payment->id);
         $payment->state_id = 2;
-        $payment->payment_type_id = $request->input('type');
+        $payment->payment_type_id = 2;
         $payment->payment_method_id = $request->input('method');
 
         if ($request->input('method') != '3') {
