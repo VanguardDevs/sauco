@@ -1,15 +1,15 @@
 @extends('cruds.form')
 
-@section('title', 'Factura n° '.$row->id)
+@section('title', 'Factura n° '.$row->num)
 
 @section('form')
     <!-- general form elements -->
     <div class="card card-primary">
         <div class="card-header alert alert-danger">
             @if ($typeForm == 'edit')
-            <h5 class="card-title">Procesar factura n° {{ $row->id }}</h5>
+            <h5 class="card-title">Procesar factura n° {{ $row->num }}</h5>
             @else
-            <h5 class="card-title">Factura n° {{ $row->id }}</h5>
+            <h5 class="card-title">factura n° {{ $row->num }}</h5>
             @endif
         </div>
         <!-- /.card-header -->
@@ -18,20 +18,49 @@
             {!! Form::model($row, ['route' => ["payments".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
         @endif
         <div class="card-body">
+           <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Datos generales del contribuyente
+                </div>
+           </div>
+ 
           <table class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">ID</th>
-                <th width="80%">Objecto de Pago</th>
-                <th width="10%">Monto</th>
+                <th width="10%">rif</th>
+                <th width="45%">nombre</th>
+                <th width="45%">dirección</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $taxpayer->rif }}</td> 
+                    <td>{{ $taxpayer->name  }}</td>   
+                    <td>{{ $taxpayer->fiscal_address }}</td>
+                </tr>
+            </tbody>
+          </table>
+
+           <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Detalles del cobro
+                </div>
+           </div>
+
+          <table class="table table-bordered table-striped datatables" style="text-align: center">
+            <thead>
+              <tr>
+                <th width="10%">id</th>
+                <th width="80%">detalle(s) del pago</th>
+                <th width="10%">monto</th>
               </tr>
             </thead>
             <tbody>
             @foreach($row->receivables as $receivable)
              <tr>
-                <td>{{ $receivable->id }}</td> 
+                <td>{{ $receivable->settlement->numFormat }}</td> 
                 <td>{{ $receivable->object_payment  }}</td>   
-                <td>{{ $receivable->settlement->amount }}</td>
+                <td>{{ $receivable->settlement->amountFormat }}</td>
             </tr>
             @endforeach   
           </table>
@@ -48,18 +77,6 @@
                     'required'
                 ]) !!}
             </div>
-            {{--
-            <div class="col-md-6 form-group">
-                <label class="control-label"> Tipo de pago <span class="text-danger">*</span></label>
-
-                {!! Form::select('type', $types,
-                    (isset($row->economicSector) ? ($row->economicSector->id) : null), [
-                    'class' => 'form-control select2',
-                    'placeholder' => ' SELECCIONE ',
-                    'required'
-                ]) !!}
-            </div>
-            --}}
             <div class="col-md-12 form-group" id="reference" style="display:none;">
                 <div class="col-md-12">
                     <label class="control-label">Referencia del pago <span class="text-danger">*</span></label>

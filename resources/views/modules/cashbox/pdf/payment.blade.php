@@ -5,63 +5,53 @@
         <!-- CSRF Token -->
         <title> Factura </title>
         <style>
-            .left {
-                float: right;
-            }
-            body {
-                font-family: 'Arial';
+           body {
+                font-family: sans-serif, serif;
                 font-size: 14px;
             }
             .header {
                 width: 100%;
-                font-size: 8px;
-            }
-            .footer {
-                padding: 0;
-                box-sizing: content-box;
-            }
-            .header, .footer {
+                font-size: 9px;
                 position: relative;
-                display:block;
+                display: block;
             }
-            .header div, .footer div {
+            .header div {
                 display: inline-block;
             }
             #mayorLOGO {
                 float: right;
             }
-            tr, td, th {
+            table, td, th {
                 border: 1px #000 solid;
             }
-            td, td, th, tr {
-                margin: 0;
-                border-collapse: collapse;
-            }
             td {
-                font-size: 12px;
+                font-size: 11px;
+                padding: 4px;
             }
             table {
-                width: 100%;
-            }
-            .total {
-                float: right;
+                border-collapse: collapse;
+                width: 100%;                
+                margin-top: 5px;
             }
             .tables {
                 display:block;
             }
-            .bill-num {
-                padding-left: 5px;
-                box-sizing: content-box;
-                width: 60%;
+            .bill-info {
+                width: 100%;
+                clear: both;
                 font-weight: bold;
-            } 
-            .total {
-                width:37%;
-                float: right;
-                padding-left: 0;
             }
-            .table-title {
-                text-align: center;
+            .col-bill-info {
+                float: left;
+                width: 50%;
+            }
+            .total-amount {
+                text-align: right;
+            }
+            .miscellaneus {
+                font-size: 10px;
+            }
+            caption {
                 font-weight: bold;
             }
         </style>
@@ -70,7 +60,7 @@
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ asset('assets/images/sumat.png') }}" height="80px" width="210px" alt="sumatlogo"/>
+                <img src="{{ asset('assets/images/sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -83,15 +73,15 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('assets/images/logo.png') }}" height="65px" width="120px" alt="logo" />
+                <img src="{{ asset('assets/images/logo.png') }}" height="70px" width="130px" alt="logo" />
             </div>
         </div>
         <div class="tables">
-             <table class="table table-bordered table-striped datatables" style="text-align: center">
+            <table class="table" style="text-align: center;margin-bottom:0;">
                 <thead>
                   <tr>
-                    <th width="80%">RAZÓN SOCIAL O DENOMINACIÓN COMERCIAL</th>
-                    <th width="20%">RIF</th>
+                    <th width="85%">RAZÓN SOCIAL O DENOMINACIÓN COMERCIAL</th>
+                    <th width="15%">RIF</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -100,30 +90,38 @@
                         <td>{{ $taxpayer->rif }}</td>
                     </tr>
                 </tbody>
-             </table>
-            <div class="table-title">
-                OBJETO DE PAGO
-            </div>
-            <table class="table table-bordered table-striped datatables" style="text-align: center">
+            </table>
+            <table class="table" style="text-align: center;margin-top:0;border-top:none;">
+                <thead>
+                  <tr>
+                    <th width="100%">DIRECCIÓN FISCAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ $taxpayer->fiscal_address.', '.$taxpayer->community->name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table" style="text-align: center">
+                <caption>OBJETO DE PAGO</caption>
                 <thead>
                   <tr>
                     <th width="20%">FECHA</th>
-                    <th width="60%">FORMA DE PAGO</th>
-                    <th width="20%">REFERENCIA</th>
+                    <th width="65%">FORMA DE PAGO</th>
+                    <th width="15%">REFERENCIA</th>
                   </tr>
                 </thead>
                 <tbody>
                      <tr>
                         <td>{{ $payment->updated_at }}</td> 
                         <td>{{ $payment->paymentMethod->name }}</td>   
-                        <td>{{ $reference }}</td>
+                        <td>{{ $payment->reference->reference ?? 'S/N' }}</td>
                     </tr>
                 </tbody>
-             </table>
-            <div class="table-title">
-               DETALLES DEL PAGO 
-            </div>
+            </table>
             <table class="" style="text-align: center">
+                <caption>DETALLES DEL PAGO</caption>
                 <thead>
                   <tr>
                     <th width="20%">NO. LIQUIDACIÓN</th>
@@ -134,18 +132,36 @@
                 <tbody>
                 @foreach($payment->receivables as $receivable)
                  <tr>
-                    <td>{{ $receivable->id }}</td> 
+                    <td>{{ $receivable->settlement->numFormat }}</td> 
                     <td>{{ $receivable->object_payment  }}</td>   
-                    <td>{{ $receivable->settlement->amount }}</td>
+                    <td>{{ $receivable->settlement->amountFormat }}</td>
                 </tr>
                 @endforeach   
              </table>
-            <br>
-            <div class="footer">
-                <div class="bill-num">
-                    N° DE FACTURA: {{ $billNum }}
+        </div>
+        <br>
+        <div class="bill-info">
+            <div class="col-bill-info">
+                N° DE FACTURA: {{ $billNum }}
+            </div>
+            <div class="col-bill-info">
+                <div class="total-amount">
+                    PAGO TOTAL: {{ $payment->totalAmount }}
                 </div>
-                <div class="total">PAGO TOTAL: {{ $payment->amount }}</div>
+            </div>
+        </div>
+        <br>
+        <div class="miscellaneus">
+            <div class="liquidator-info">
+                Liquidador: {{ $user->first_name.' '.$user->surname }}
+            </div>
+            <div class="collector-firm">
+               <span style="width:50%;"></span> 
+            </div>
+            <br>
+            <div class="observations">
+                OBSERVACIONES: {{ $payment->observations }}    
+            </div>
         </div>
     </body>
 </html>

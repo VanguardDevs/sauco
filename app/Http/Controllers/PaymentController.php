@@ -73,7 +73,8 @@ class PaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Payment $payment)
-    {
+    {   
+        $settlement = $payment->receivables->first()->settlement;
         if (Auth::user()->hasRole('collector') && $payment->state->id == 1) {
             $this->typeform = 'edit';
         }
@@ -82,6 +83,7 @@ class PaymentController extends Controller
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
+            ->with('taxpayer', $settlement->taxpayer)
             ->with('typeForm', $this->typeform);
     }
 
@@ -126,12 +128,14 @@ class PaymentController extends Controller
                 ->withError('¡La factura no ha sido procesada!');
         }
 
-        $taxpayer = $payment->receivables->first()->settlement->taxpayer;
+        $settlement = $payment->receivables->first()->settlement;
+        $user = $settlement->user;
+        $taxpayer = $settlement->taxpayer;
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
         
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
-        $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['payment', 'billNum', 'reference', 'taxpayer', 'denomination']));
+        $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['user','payment', 'billNum', 'reference', 'taxpayer', 'denomination']));
         return $pdf->stream('Licencia '.$payment->id.'.pdf');
     }
 

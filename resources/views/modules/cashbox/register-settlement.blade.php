@@ -36,7 +36,7 @@
                     </div>
                     @else
                     <div class="col-md-3">
-                        <label class="col-md-12">Monto</label>
+                        <label class="col-md-12">Monto total</label>
                         <div class="col-md-12">{{ $activitySettlement->amount  }}</div>
                     </div>
                     @endif

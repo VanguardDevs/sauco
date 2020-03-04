@@ -46,7 +46,7 @@ class Payment extends Model implements Auditable
     {
         return $this->hasMany(Receivable::class);
     }
-
+    
     public function getNumAttribute()
     {
         return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
@@ -56,14 +56,19 @@ class Payment extends Model implements Auditable
     {
         return date('d/m/Y H:m:s', strtotime($value));
     }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        return date('d/m/Y H:m:s', strtotime($value));
-    }
-
+    
     public function settlements()
     {
         return $this->belongsTo(Settlement::class, Receivable::class);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y H:m', strtotime($value));
+    }
+
+    public function getTotalAmountAttribute()
+    {
+        return number_format($this->amount, 2)." Bs";
     }
 }

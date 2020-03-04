@@ -47,10 +47,6 @@ class Settlement extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getNum()
-    {
-        return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
-    }
 
     public function economicActivitySettlements()
     {
@@ -70,5 +66,15 @@ class Settlement extends Model
     public function scopeLastSettlement($query)
     {
         return $query->withTrashed()->latest()->first();
+    }
+    
+    public function getNumFormatAttribute()
+    {
+        return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
+    }
+
+    public function getAmountFormatAttribute()
+    {
+        return number_format($this->amount, 2);
     }
 }
