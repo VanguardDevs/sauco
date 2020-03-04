@@ -72,10 +72,11 @@ class EconomicActivitySettlementService
     {
         $activity = $activitySettlement->economicActivity;
         $taxUnit = TaxUnit::latest()->first();
-        $total = $activity->min_tax * $taxUnit->value;
+        $total = $activity->aliquote * $amount / 100;
+        $minTax = $taxUnit->value * $activity->min_tax;
         
-        if ($amount > $total && $amount != 0.00) {
-            $total = $amount * $activity->aliquote / 100;
+        if ($total < $minTax || $amount == 0.00) {
+            $total = $minTax;
         }
         
         $settlement = EconomicActivitySettlement::find($activitySettlement->id);
