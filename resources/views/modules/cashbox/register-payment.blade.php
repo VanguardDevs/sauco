@@ -27,9 +27,9 @@
           <table class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">rif</th>
-                <th width="45%">nombre</th>
-                <th width="45%">dirección</th>
+                <th width="10%">RIF</th>
+                <th width="45%">Nombre</th>
+                <th width="45%">Dirección</th>
               </tr>
             </thead>
             <tbody>
@@ -50,9 +50,9 @@
           <table class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">id</th>
-                <th width="80%">detalle(s) del pago</th>
-                <th width="10%">monto</th>
+                <th width="10%">No. Liquidación</th>
+                <th width="80%">Concepto</th>
+                <th width="10%">Monto</th>
               </tr>
             </thead>
             <tbody>
@@ -86,6 +86,16 @@
                     ])
                     !!}
                 </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="control-label"> Observaciones </label>
+
+                {!!
+                    Form::text("observations", old('trade_denomination', @$row->denomination), [
+                        "class" => "form-control",
+                        "onkeyup" => "upperCase(this);"
+                    ])
+                !!}
             </div>
         </div>
         @endif

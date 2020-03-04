@@ -100,7 +100,8 @@ class PaymentController extends Controller
         $payment->state_id = 2;
         $payment->payment_type_id = 2;
         $payment->payment_method_id = $request->input('method');
-
+        $payment->observations = $request->input('observations');
+        
         if ($request->input('method') != '3') {
             $reference = $request->input('reference');
             
