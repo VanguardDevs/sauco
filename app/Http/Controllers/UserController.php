@@ -61,7 +61,6 @@ class UserController extends Controller
         $create = new User([
             'identity_card' => $request->input('identity_card'),
             'first_name' => $request->input('first_name'),
-            'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             'surname' => $request->input('surname'),
             'phone' => $request->input('phone'),
@@ -118,13 +117,14 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $edit             = User::find($user->id);
-        $edit->first_name = $request->input('name');
+        $edit->first_name = $request->input('first_name');
         $edit->surname    = $request->input('surname');
         
         if ($request->input('password') != NULL) {
             $edit->password   = bcrypt($request->input('password'));
         }
         $edit->roles()->sync($request->get('roles'));
+        $edit->save();
 
         return Redirect::back()
             ->withSuccess('¡Usuario actualizado!');
@@ -139,9 +139,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if (Auth()->user()->hasRole('admin')) {
-            return Response()->json('¡Accion no permitida!', 401);
-        }
         $user->delete();
     }
 }
