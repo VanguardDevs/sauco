@@ -25,7 +25,7 @@
                         <label class="col-md-12">Código</label>
                         <div class="col-md-12">{{ $activitySettlement->economicActivity->code  }}</div>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <label class="col-md-12">Nombre de la actividad</label>
                         <div class="col-md-12"> {{ $activitySettlement->economicActivity->name }}</div>
                     </div>
@@ -35,7 +35,11 @@
                         {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["class" => "form-control decimal-input-mask col-md-12", "required"]) !!}
                     </div>
                     @else
-                    <div class="col-md-3">
+                    <div class="col-md-2">
+                        <label class="col-md-12">Monto declarado</label>
+                        <div class="col-md-12">{{ $activitySettlement->brute_amount  }}</div>
+                    </div>
+                    <div class="col-md-2">
                         <label class="col-md-12">Monto total</label>
                         <div class="col-md-12">{{ $activitySettlement->amount  }}</div>
                     </div>
