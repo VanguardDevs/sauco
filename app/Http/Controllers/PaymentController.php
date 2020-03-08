@@ -10,7 +10,6 @@ use App\Receivable;
 use App\EconomicActivitySettlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\Payments\PaymentsFormRequest;
 use PDF;
 use Auth;
 
@@ -75,11 +74,11 @@ class PaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Payment $payment)
-    {   
+    {
         if (Auth::user()->hasRole('collector') && $payment->state->id == 1) {
             $this->typeform = 'edit';
         }
-        
+
         return view('modules.cashbox.register-payment')
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
@@ -102,10 +101,10 @@ class PaymentController extends Controller
         $payment->payment_type_id = 2;
         $payment->payment_method_id = $request->input('method');
         $payment->observations = $request->input('observations');
-        
+
         if ($request->input('method') != '3') {
             $reference = $request->input('reference');
-            
+
             if (empty($reference)){
                 return redirect('payments/'.$payment->id)
                         ->withError('¡Faltan datos!');
@@ -135,10 +134,10 @@ class PaymentController extends Controller
         $taxpayer = $payment->taxpayer;
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
-        
+
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
         $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['user','payment', 'billNum', 'reference', 'taxpayer', 'denomination']));
-        return $pdf->stream('Licencia '.$payment->id.'.pdf');
+        return $pdf->stream('Factura '.$payment->id.'.pdf');
     }
 
 
@@ -152,7 +151,7 @@ class PaymentController extends Controller
     {
         if (!Auth::user()->hasRole('admin')) {
             return response()->json([
-                'message' => '¡Usuario no permitido!'  
+                'message' => '¡Usuario no permitido!'
             ]);
         }
 

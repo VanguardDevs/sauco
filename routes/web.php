@@ -38,7 +38,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::group(['middleware' => ['has.role:admin']], function () {
         /** General Settings */
         Route::get('settings', 'ShowSettings')->name('settings');
-        
+
         /**
         * Settings > Open new year
         */
@@ -46,10 +46,10 @@ Route::prefix('/')->middleware('auth')->group(function()
 
        /**
         *  Settings > Property types
-        */ 
+        */
         Route::get('property-types/list', 'PropertyTypeController@list')->name('list-property-types');
-        Route::resource('settings/property-types', 'PropertyTypeController');      
-        
+        Route::resource('settings/property-types', 'PropertyTypeController');
+
         /**
          * Ordinance settings
          */
@@ -91,7 +91,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*----------  Routes Settings > Tax Units ----------*/
         Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
         Route::resource('settings/tax-units', 'TaxUnitController');
-        
+
         /*----------  Routes permissions  ----------*/
         Route::get('permissions/list', 'PermissionController@list');
         Route::resource('administration/permissions', 'PermissionController');
@@ -104,7 +104,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('users/list', 'UserController@list');
         Route::resource('administration/users', 'UserController');
    });
-    
+
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
@@ -124,10 +124,10 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /**
     * Cashbox's routes
-     */  
+     */
     Route::group(['middleware' => 'has.role:liquidator|superintendent|admin|auditor|collection-chief|liquidation-chief|collector'], function() {
         Route::get('cashbox', 'Cashbox')->name('cashbox');
-        
+
         /**
          * Settlements' routes module
          */
@@ -140,7 +140,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         /*
         * Payment's routes modules
-         */ 
+         */
         Route::get('payments/list', 'PaymentController@list');
         Route::get('cashbox/payments/{payment}/download', 'PaymentController@download');
         Route::resource('cashbox/payments', 'PaymentController');
@@ -152,11 +152,11 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::group(['middleware' => 'can:create.taxpayers'], function() {
         /**
          * List communities and municipalities
-         */    
+         */
         Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
         Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
     });
-    
+
     /**
      * Handle settlements and payments
      */
@@ -176,5 +176,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('add.activities');
         Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
     });
+    Route::get('taxpayers/{taxpayer}/download', 'TaxpayerController@download');
     Route::resource('taxpayers', 'TaxpayerController');
 });

@@ -16,7 +16,7 @@ class Receivable extends Model implements Auditable
 
     protected $guarded = [];
 
-    public function payments()
+    public function payment()
     {
         return $this->belongsTo(Payment::class);
     }
