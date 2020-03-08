@@ -47,7 +47,6 @@ class Settlement extends Model
         return $this->belongsTo(User::class);
     }
 
-
     public function economicActivitySettlements()
     {
         return $this->hasMany(EconomicActivitySettlement::class);
@@ -68,6 +67,11 @@ class Settlement extends Model
         return $query->withTrashed()->latest()->first();
     }
     
+    public function payment()
+    {
+        return $this->belongsToMany(Payment::class, Receivable::class);
+    }
+    
     public function getNumFormatAttribute()
     {
         return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
@@ -75,6 +79,6 @@ class Settlement extends Model
 
     public function getAmountFormatAttribute()
     {
-        return number_format($this->amount, 2);
+        return number_format($this->amount, 2, ',', '.');
     }
 }

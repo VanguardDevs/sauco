@@ -25,4 +25,9 @@ class Receivable extends Model implements Auditable
     {
         return $this->belongsTo(Settlement::class);
     }
+
+    public function taxpayer()
+    {
+        return $this->hasOneThrough(Taxpayer::class, Settlement::class, 'taxpayer_id', 'id');
+    }
 }

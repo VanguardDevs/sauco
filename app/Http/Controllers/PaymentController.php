@@ -6,6 +6,8 @@ use App\PaymentMethod;
 use App\PaymentType;
 use App\Payment;
 use App\Reference;
+use App\Receivable;
+use App\EconomicActivitySettlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Payments\PaymentsFormRequest;
@@ -39,7 +41,7 @@ class PaymentController extends Controller
 
     public function list()
     {
-        $query = Payment::with(['state'])
+        $query = Payment::with(['state', 'taxpayer'])
             ->orderBy('created_at', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
@@ -74,7 +76,6 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {   
-        $settlement = $payment->receivables->first()->settlement;
         if (Auth::user()->hasRole('collector') && $payment->state->id == 1) {
             $this->typeform = 'edit';
         }
@@ -83,7 +84,7 @@ class PaymentController extends Controller
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
-            ->with('taxpayer', $settlement->taxpayer)
+            ->with('taxpayer', $payment->taxpayer)
             ->with('typeForm', $this->typeform);
     }
 
@@ -131,7 +132,7 @@ class PaymentController extends Controller
 
         $settlement = $payment->receivables->first()->settlement;
         $user = $settlement->user;
-        $taxpayer = $settlement->taxpayer;
+        $taxpayer = $payment->taxpayer;
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
         
@@ -149,6 +150,25 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        if (!Auth::user()->hasRole('admin')) {
+            return response()->json([
+                'message' => '¡Usuario no permitido!'  
+            ]);
+        }
+
+        // First delete each economic Activity Settlement if exists
+        foreach($payment->settlements as $settlement) {
+            if ($settlement->concept->code == 1) {
+                EconomicActivitySettlement::where('settlement_id', $settlement->id)
+                    ->delete();
+            }
+            $settlement->delete();
+        }
+        // Delete receivables and payment
+        Receivable::where('payment_id', $payment->id)->delete();
+        $payment->delete();
+
+        return redirect('cashbox/payments')
+            ->withSuccess('¡Pago anulado!');
     }
 }

@@ -18,6 +18,36 @@
             {!! Form::model($row, ['route' => ["settlements".'.update', $row->id, $typeForm], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
         @endif
         <div class="card-body">
+            <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Datos generales del contribuyente
+                </div>
+            </div>
+
+            <table class="table table-bordered table-striped datatables" style="text-align: center">
+                <thead>
+                  <tr>
+                    <th width="10%">RIF</th>
+                    <th width="45%">Nombre</th>
+                    <th width="45%">Dirección</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ $row->taxpayer->rif }}</td> 
+                        <td>{{ $row->taxpayer->name  }}</td>   
+                        <td>{{ $row->taxpayer->fiscal_address }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            </br>
+            <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Declaraciones por actividad económica
+                </div>
+            </div>
+
             @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))            
             @foreach($row->economicActivitySettlements as $activitySettlement)
                 <div class="form-group row">

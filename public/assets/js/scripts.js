@@ -544,7 +544,7 @@ $(document).ready(function() {
         "ajax": baseURL + "/payments/list",
         "columns": [
             { data: 'id'},
-            { data: 'object_payment'},
+            { data: 'taxpayer.name'},
             { data: 'state.name'},
             { data: 'amount' },
             { data: 'created_at'},
@@ -558,6 +558,9 @@ $(document).ready(function() {
                         </a>
                         <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
+                            <i class='btn-sm btn-danger flaticon-delete'></i>
                         </a>
                     </div>`
                     );
