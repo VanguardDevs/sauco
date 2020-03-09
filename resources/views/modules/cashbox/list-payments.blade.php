@@ -20,10 +20,10 @@
             <thead>
               <tr>
                 <th width="10%">N°</th>
+                <th width="10%">RIF</th>
                 <th width="50%">Razón social</th>
-                <th width="10%">Estado</th>
                 <th width="10%">Monto</th>
-                <th width="10%">Creada</th>
+                <th width="10%">Estado</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>

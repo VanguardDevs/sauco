@@ -42,12 +42,6 @@
             </table>
 
             </br>
-            <div class="form-group col-lg-12">
-                <div class="kt-heading kt-heading--md">
-                    Declaraciones por actividad económica
-                </div>
-            </div>
-
             @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))            
             @foreach($row->economicActivitySettlements as $activitySettlement)
                 <div class="form-group row">
@@ -76,10 +70,31 @@
                     @endif
                 </div>
             @endforeach           
+            @if($typeForm == 'show')
+            <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Declaraciones por actividad económica
+                </div>
+            </div>
+           <table class="table table-bordered table-striped datatables" style="text-align: center">
+                <thead>
+                    <tr>
+                        <th width="50%">Monto total declarado</th>
+                        <th width="50%">Monto total calculado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ $row->economicActivitySettlements->sum('brute_amount')  }}
+                        <td>{{ $row->amountFormat }}
+                    </tr>
+                </tbody>
+            </table>
+            @endif
             @else
             <div class="form-group row">
-                    <label class="col-md-12">Monto</label>
-                    {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["class" => "form-control decimal-input-mask col-md-12", "required"]) !!}
+                <label class="col-md-12">Monto</label>
+                {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["class" => "form-control decimal-input-mask col-md-12", "required"]) !!}
             </div>
             @endif
         </div>

@@ -544,16 +544,16 @@ $(document).ready(function() {
         "ajax": baseURL + "/payments/list",
         "columns": [
             { data: 'id'},
-            { data: 'taxpayer.name'},
-            { data: 'state.name'},
+            { data: 'rif' },
+            { data: 'taxpayer'},
             { data: 'amount' },
-            { data: 'created_at'},
+            { data: 'status' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" target="_blank" href=${baseURL}/cashbox/payments/${oData.id}/download title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id}/download title='Ver factura'>
                             <i class='btn-sm btn-success flaticon2-download'></i>
                         </a>
                         <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
