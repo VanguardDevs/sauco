@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Taxpayer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
@@ -19,8 +20,6 @@ class Payment extends Model implements Auditable
     protected $casts = [
         'amount' => 'float'
     ];  
-
-    protected $appends = ['num'];
 
     public function state()
     {
@@ -52,9 +51,9 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Settlement::class, 'receivables');
     }
 
-    public function taxpayer()
+    public function scopeTaxpayer($query)
     {
-        return $this->hasOneThrough(Taxpayer::class, Receivable::class, 'payment_id', 'id');
+        return "Hello Wolr";
     }
 
     public function getNumAttribute()

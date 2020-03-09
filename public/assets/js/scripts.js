@@ -1,4 +1,4 @@
-const baseURL = window.location.origin; 
+const baseURL = window.location.origin;
 
 /*Fuction disable button before sumit*/
 $("#form").closest('form').on('submit', function(e) {
@@ -19,12 +19,12 @@ $(function () {
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
- 
+
 const handleRequest = url => {
     fetch(`${baseURL}/${url}`, {
         method: 'POST',
         headers: {
-            "X-CSRF-TOKEN": token    
+            "X-CSRF-TOKEN": token
         }
     }).then(response => response.json())
     .then(data => {
@@ -57,7 +57,7 @@ function onSelectTaxpayerType() {
 function onSelectPaymentType() {
     let selected = $(this).children('option:selected').html();
     let reference = $('#reference');
-    
+
     // Show commercial denomination input
     if (selected !== "EFECTIVO") {
         reference.show();
@@ -544,15 +544,15 @@ $(document).ready(function() {
         "ajax": baseURL + "/payments/list",
         "columns": [
             { data: 'id'},
-            { data: 'taxpayer.name'},
-            { data: 'state.name'},
-            { data: 'amount' },
-            { data: 'created_at'},
+            { data: 'taxpayers.rif' },
+            { data: 'taxpayers.name' },
+            { data: 'payments.amount' },
+            { data: 'status.name' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
-                    <div class="btn-group"> 
+                    <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id}/download title='Ver factura'>
                             <i class='btn-sm btn-success flaticon2-download'></i>
                         </a>
@@ -588,7 +588,7 @@ $(document).ready(function() {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
-                    <div class="btn-group"> 
+                    <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/cashbox/settlements/${oData.id} title='Ver liquidación'>
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>

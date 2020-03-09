@@ -26,4 +26,14 @@ class EconomicActivitySettlement extends Model
     {
         return $this->belongsTo(Settlement::class);
     }
+
+    public function getBruteAmountFormatAttribute()
+    {
+        return number_format($this->brute_amount, 2, ',', '.');
+    }
+
+    public function getAmountFormatAttribute()
+    {
+        return number_format($this->amount, 2, ',', '.');
+    }
 }

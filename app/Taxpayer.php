@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -64,12 +65,26 @@ class Taxpayer extends Model implements Auditable
     {
         return $this->hasOne(CommercialDenomination::class);
     }
-/**
-    public function properties()
+
+    public function settlements()
     {
-        return $this->hasMany(Property::class);
+        return $this->hasMany(Settlement::class);
     }
-    **/
+
+    public function receivables()
+    {
+        return $this->hasManyThrough(Receivable::class, Settlement::class);
+    }
+    
+    public function payments()
+    {
+        return Payment
+            ::join('receivables', 'payments.id', '=', 'receivables.payment_id')
+            ->join('settlements', 'receivables.settlement_id', '=', 'settlements.id')
+            ->join('taxpayers', 'settlements.taxpayer_id', '=', 'taxpayers.id')
+            ->where('taxpayers.id',  $this->id);       
+    }
+
     public function municipality()
     {
         return $this->belongsTo(Municipality::class);

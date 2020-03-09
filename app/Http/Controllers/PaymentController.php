@@ -7,10 +7,11 @@ use App\PaymentType;
 use App\Payment;
 use App\Reference;
 use App\Receivable;
+use App\Taxpayer;
 use App\EconomicActivitySettlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\Payments\PaymentsFormRequest;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use Auth;
 
@@ -36,15 +37,34 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        /**
+        return DB::table('taxpayers')
+            ->join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
+            ->join('receivables', 'receivables.settlement_id', 'settlements.id')
+            ->join('payments', 'receivables.payment_id', '=', 'payments.id')
+            ->get();
+         */
         return view('modules.cashbox.list-payments');
     }
 
     public function list()
-    {
-        $query = Payment::with(['state', 'taxpayer'])
-            ->orderBy('created_at', 'DESC');
+    { 
+        $query = DB::table('taxpayers')
+            ->join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
+            ->join('receivables', 'receivables.settlement_id', 'settlements.id')
+            ->join('payments', 'receivables.payment_id', '=', 'payments.id')
+            ->join('status', 'payments.state_id', '=', 'status.id')
+            ->select([
+                'taxpayers.name as taxpayers.name',
+                'taxpayers.rif as taxpayers.rif',
+                'status.name as status.name',
+                'payments.amount as payments.amount',
+                'payments.id',
+            ])
+            ->whereNull('payments.deleted_at')
+            ->orderBy('status', 'ASC');
 
-        return DataTables::eloquent($query)->toJson();
+        return DataTables::of($query)->toJson();
     }
 
     /**
@@ -75,16 +95,18 @@ class PaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Payment $payment)
-    {   
+    {
         if (Auth::user()->hasRole('collector') && $payment->state->id == 1) {
             $this->typeform = 'edit';
         }
-        
+
+        $taxpayer = $payment->settlements->first()->taxpayer;
+
         return view('modules.cashbox.register-payment')
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
-            ->with('taxpayer', $payment->taxpayer)
+            ->with('taxpayer', $taxpayer)
             ->with('typeForm', $this->typeform);
     }
 
@@ -102,10 +124,10 @@ class PaymentController extends Controller
         $payment->payment_type_id = 2;
         $payment->payment_method_id = $request->input('method');
         $payment->observations = $request->input('observations');
-        
+
         if ($request->input('method') != '3') {
             $reference = $request->input('reference');
-            
+
             if (empty($reference)){
                 return redirect('payments/'.$payment->id)
                         ->withError('¡Faltan datos!');
@@ -131,14 +153,14 @@ class PaymentController extends Controller
         }
 
         $settlement = $payment->receivables->first()->settlement;
+        $taxpayer = $settlement->taxpayer;
         $user = $settlement->user;
-        $taxpayer = $payment->taxpayer;
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
-        
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
         $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['user','payment', 'billNum', 'reference', 'taxpayer', 'denomination']));
-        return $pdf->stream('Licencia '.$payment->id.'.pdf');
+
+        return $pdf->download('Factura '.$payment->id.'.pdf');
     }
 
 
@@ -152,7 +174,7 @@ class PaymentController extends Controller
     {
         if (!Auth::user()->hasRole('admin')) {
             return response()->json([
-                'message' => '¡Usuario no permitido!'  
+                'message' => '¡Usuario no permitido!'
             ]);
         }
 

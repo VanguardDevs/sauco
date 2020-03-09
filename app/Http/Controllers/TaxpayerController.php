@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class TaxpayerController extends Controller
 {
@@ -117,6 +118,15 @@ class TaxpayerController extends Controller
 
         return redirect('taxpayers/'.$taxpayer->id)
             ->withSuccess('¡Actividades económicas añadidas!');
+    }
+
+    public function download(Taxpayer $taxpayer)
+    {
+        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
+        $settlements = $taxpayer->settlements;
+
+        $pdf = PDF::LoadView('modules.taxpayers.pdf.declarations', compact(['taxpayer', 'denomination', 'settlements']));
+        return $pdf->stream('Contribuyente '.$taxpayer->rif.'.pdf');
     }
 
     /**
