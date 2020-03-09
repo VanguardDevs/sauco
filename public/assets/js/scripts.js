@@ -544,10 +544,10 @@ $(document).ready(function() {
         "ajax": baseURL + "/payments/list",
         "columns": [
             { data: 'id'},
-            { data: 'rif' },
-            { data: 'taxpayer'},
-            { data: 'amount' },
-            { data: 'status' },
+            { data: 'taxpayers.rif' },
+            { data: 'taxpayers.name' },
+            { data: 'payments.amount' },
+            { data: 'status.name' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

@@ -55,12 +55,13 @@ class PaymentController extends Controller
             ->join('payments', 'receivables.payment_id', '=', 'payments.id')
             ->join('status', 'payments.state_id', '=', 'status.id')
             ->select([
-                'taxpayers.name as taxpayer',
-                'status.name as status',
-                'payments.amount',
-                'payment_id as id',
-                'rif'
+                'taxpayers.name as taxpayers.name',
+                'taxpayers.rif as taxpayers.rif',
+                'status.name as status.name',
+                'payments.amount as payments.amount',
+                'payments.id',
             ])
+            ->whereNull('payments.deleted_at')
             ->orderBy('status', 'ASC');
 
         return DataTables::of($query)->toJson();
