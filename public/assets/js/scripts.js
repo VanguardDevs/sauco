@@ -608,21 +608,17 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/accounts/list",
         "columns": [
-            { data: 'account_num'},
+            { data: 'account_num' },
             { data: 'account_type.denomination'},
-            { data: 'account.name' },
-            { data: 'account.description' },
             { data: 'name'},
+            { data: 'description'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'bank-accounts')" title='Anular'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/applications/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                        <a class="mr-2" href=${baseURL}/settings/accounts/${oData.id}/edit title='Ver liquidación'>
+                            <i class='btn-sm btn-warning flaticon2-pencil'></i>
                         </a>
                     </div>`
                     );
@@ -630,4 +626,5 @@ $(document).ready(function() {
             }
         ]
     });
+
 });

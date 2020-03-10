@@ -55,6 +55,16 @@
                             </div>
                         </div>
                     </a>
+                    <a class="kt-notification__item" href="{{ url('settings/accounts') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon-coins"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Cuentas financieras
+                            </div>
+                        </div>
+                    </a>
                     <a class="kt-notification__item" href="{{ url('settings/payment-methods') }}">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon-coins"></i>
