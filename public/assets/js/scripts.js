@@ -597,6 +597,23 @@ $(document).ready(function() {
             }
         ]
     });
+    
+    $('#tNullSettlements').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/settlements/list-null",
+        "columns": [
+            { data: 'id'},
+            { data: 'taxpayer.rif' },
+            { data: 'concept.name'},
+            { data: 'amount' },
+            { data: 'deleted_at'}
+        ]
+    });
 
     $('#tSettlements').DataTable({
         "order": [[0, "asc"]],
@@ -605,7 +622,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/settlements/list?onlyNull=false",
+        "ajax": baseURL + "/settlements/list",
         "columns": [
             { data: 'id'},
             { data: 'taxpayer.rif' },
@@ -655,5 +672,4 @@ $(document).ready(function() {
             }
         ]
     });
-
 });

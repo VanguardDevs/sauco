@@ -46,6 +46,14 @@ class SettlementController extends Controller
     }
 
     /**
+     * Display null settlements
+     */
+    public function showNullSettlements()
+    {
+        return view('modules.cashbox.list-null-settlements');
+    }
+
+    /**
      * List all settlements, no matter what view
      */
     public function list(Request $request)
@@ -54,6 +62,15 @@ class SettlementController extends Controller
             ->orderBy('id', 'DESC');
 
         
+        return DataTables::eloquent($query)->toJson();
+    }
+
+    public function onlyNull()
+    {
+        $query = Settlement::onlyTrashed()
+            ->with(['taxpayer', 'concept', 'state'])
+            ->orderBy('created_at', 'DESC');
+
         return DataTables::eloquent($query)->toJson();
     }
 

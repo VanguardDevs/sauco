@@ -132,6 +132,8 @@ Route::prefix('/')->middleware('auth')->group(function()
          * Settlements' routes module
          */
         Route::get('settlements/list', 'SettlementController@list');
+        Route::get('settlements/list-null', 'SettlementController@onlyNull');
+        Route::get('cashbox/null-settlements', 'SettlementController@showNullSettlements')->name('null.settlements');
         Route::get('cashbox/settlements/{settlement}/normal', 'SettlementController@normalCalcForm')
             ->name('settlements.show');
         Route::get('cashbox/settlements/{settlement}/group', 'SettlementController@groupActivityForm')

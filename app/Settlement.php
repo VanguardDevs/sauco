@@ -56,10 +56,15 @@ class Settlement extends Model
     {
         return $this->hasMany(Receivable::class);
     }
-
+    
     public function getCreatedAtAttribute($value)
     {
         return Date('d/m/Y', strtotime($value)); 
+    }
+
+    public function getDeletedAtAttribute($value)
+    {
+        return Date('d-m-Y H:m', strtotime($value)); 
     }
 
     public function scopeLastSettlement($query)
