@@ -49,23 +49,23 @@ class EconomicActivitySettlementService
     public function updateByGroup(Settlement $settlement, float $amount)
     {
         $settlements = $settlement->economicActivitySettlements;
-        $max = $settlements->first();
+        $maxDeclaration = $settlements->first();
 
         if ($amount == 0.00) {
             foreach ($settlements as $settlement) {
-                if ($settlement->economicActivity->min_tax > $max->economicActivity->min_tax) {
-                    $max = $settlement;
+                if ($settlement->economicActivity->min_tax > $maxDeclaration->economicActivity->min_tax) {
+                    $maxDeclaration = $settlement;
                 }
             }
         } else {
             foreach ($settlements as $settlement) {
-                if ($settlement->economicActivity->aliquote > $max->economicActivity->aliquote) {
-                    $max = $settlement;
+                if ($settlement->economicActivity->aliquote > $maxDeclaration->economicActivity->aliquote) {
+                    $maxDeclaration = $settlement;
                 }
             }
         }
-        
-        return $this->calculateTax($settlement, $amount)->amount;
+       
+        return $this->calculateTax($maxDeclaration, $amount)->amount;
     }
 
     public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount)
