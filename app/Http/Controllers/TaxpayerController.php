@@ -106,8 +106,22 @@ class TaxpayerController extends Controller
 
         return view('modules.taxpayers.register-economic-activities')
             ->with('taxpayer', $taxpayer)
-            ->with('economicActivities', EconomicActivity::get())
+            ->with('economicActivities', EconomicActivity::pluck('name', 'id'))
             ->with('typeForm', 'create');
+    }
+
+    public function editActivitiesForm(Taxpayer $taxpayer)
+    {
+        if (($taxpayer->taxpayerType->description != 'JURÍDICO') &&
+            (!$taxpayer->commercialDenomination)) {
+                return redirect('taxpayers/'.$taxpayer->id)
+                    ->withError('¡Este contribuyente no admite actividades económicas!');
+        }
+
+        return view('modules.taxpayers.register-economic-activities')
+            ->with('taxpayer', $taxpayer)
+            ->with('economicActivities', EconomicActivity::pluck(['name', 'id']))
+            ->with('typeForm', 'update');
     }
 
     public function addActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
@@ -118,6 +132,16 @@ class TaxpayerController extends Controller
 
         return redirect('taxpayers/'.$taxpayer->id)
             ->withSuccess('¡Actividades económicas añadidas!');
+    }
+
+    public function editActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
+    {
+        $taxpayer->economicActivities()->sync(
+            $request->input('economic_activities')
+        );
+
+        return redirect('taxpayers/'.$taxpayer->id)
+            ->withSuccess('¡Actividades económicas actualizadas!');
     }
 
     public function download(Taxpayer $taxpayer)

@@ -20,24 +20,33 @@ Breadcrumbs::for('settlements.show', function ($trail, $row) {
     $trail->push('Liquidación n°'.$row->id, url('cashbox/settlements'.$row->id));
 });
 
-
 /*----------  Cashbox > Payments ----------*/
 Breadcrumbs::for('payments.index', function ($trail) {
     $trail->parent('cashbox');
-    $trail->push('Listado de pagos', url('cashbox/payments'));
+    $trail->push('Listado de facturas', url('cashbox/payments'));
 });
 
-/*----------  Cashbox > Paymentss > show ----------*/
+Breadcrumbs::for('null.payments', function ($trail) {
+    $trail->parent('cashbox');
+    $trail->push('Listado de facturas anuladas', url('cashbox/null-payments'));
+});
+
+Breadcrumbs::for('null.settlements', function ($trail) {
+    $trail->parent('cashbox');
+    $trail->push('Listado de liquidaciones anuladas', url('cashbox/null-settlements'));
+});
+
+/*----------  Cashbox > Payments > show ----------*/
 Breadcrumbs::for('payments.show', function ($trail, $row) {
     $trail->parent('payments.index');
-    $trail->push('Liquidación n°'.$row->id, url('cashbox/payments/'.$row->id));
+    $trail->push('Factura n°'.$row->id, url('cashbox/payments/'.$row->id));
 });
 
 
 /*----------  Cashbox > Null payments ----------*/
 Breadcrumbs::for('payments.null', function ($trail) {
     $trail->parent('cashbox');
-    $trail->push('Listado de pagos anulados', url('cashbox/null-payments'));
+    $trail->push('Listado de facturas anulados', url('cashbox/null-payments'));
 });
 
 /*----------  Cashbox > Null Settlements ----------*/

@@ -11,7 +11,6 @@ use App\Taxpayer;
 use App\EconomicActivitySettlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\DB;
 use PDF;
 use Auth;
 
@@ -37,33 +36,29 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        /**
-        return DB::table('taxpayers')
-            ->join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
-            ->join('receivables', 'receivables.settlement_id', 'settlements.id')
-            ->join('payments', 'receivables.payment_id', '=', 'payments.id')
-            ->get();
-         */
-        return view('modules.cashbox.list-payments');
+       return view('modules.cashbox.list-payments');
+    }
+
+    public function showNullPayments()
+    {
+        return view('modules.cashbox.list-null-payments');
     }
 
     public function list()
     { 
-        $query = DB::table('taxpayers')
-            ->join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
-            ->join('receivables', 'receivables.settlement_id', 'settlements.id')
-            ->join('payments', 'receivables.payment_id', '=', 'payments.id')
-            ->join('status', 'payments.state_id', '=', 'status.id')
-            ->select([
-                'taxpayers.name as taxpayers.name',
-                'taxpayers.rif as taxpayers.rif',
-                'status.name as status.name',
-                'payments.amount as payments.amount',
-                'payments.id',
-            ])
+        $query = Payment::list() 
             ->whereNull('payments.deleted_at')
             ->orderBy('status', 'ASC');
 
+        return DataTables::of($query)->toJson();
+    }
+
+    public function onlyNull()
+    {
+        $query = Payment::list()
+            ->whereNotNull('payments.deleted_at')
+            ->orderBy('id', 'ASC');
+        
         return DataTables::of($query)->toJson();
     }
 

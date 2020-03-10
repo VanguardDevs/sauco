@@ -141,8 +141,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*
         * Payment's routes modules
          */
+        Route::get('payments/list-null', 'PaymentController@onlyNull');
         Route::get('payments/list', 'PaymentController@list');
         Route::get('cashbox/payments/{payment}/download', 'PaymentController@download');
+        Route::get('cashbox/null-payments', 'PaymentController@showNullPayments')->name('null.payments');
         Route::resource('cashbox/payments', 'PaymentController');
     });
 

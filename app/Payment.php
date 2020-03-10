@@ -5,6 +5,7 @@ namespace App;
 use App\Taxpayer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 
@@ -51,14 +52,25 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Settlement::class, 'receivables');
     }
 
-    public function scopeTaxpayer($query)
-    {
-        return "Hello Wolr";
-    }
-
     public function getNumAttribute()
     {
         return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
+    }
+
+    public static function scopeList()
+    {
+        return DB::table('taxpayers') 
+            ->join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
+            ->join('receivables', 'receivables.settlement_id', 'settlements.id')
+            ->join('payments', 'receivables.payment_id', '=', 'payments.id')
+            ->join('status', 'payments.state_id', '=', 'status.id')
+            ->select([
+                'taxpayers.name as taxpayers.name',
+                'taxpayers.rif as taxpayers.rif',
+                'status.name as status.name',
+                'payments.amount as payments.amount',
+                'payments.id',
+            ]);
     }
 
     public function getCreatedAtAttribute($value)
