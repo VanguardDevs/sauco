@@ -8,6 +8,18 @@ Breadcrumbs::for('cashbox', function ($trail) {
     $trail->push('Caja', route('cashbox'));
 });
 
+/*----------  Reports ----------*/
+Breadcrumbs::for('reports', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Reportes', url('reports'));
+});
+
+/*----------  Reports ----------*/
+Breadcrumbs::for('report.payments', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Reporte de pagos procesados', url('reports/payments'));
+});
+
 /*----------  Cashbox > Settlements ----------*/
 Breadcrumbs::for('settlements.index', function ($trail) {
     $trail->parent('cashbox');

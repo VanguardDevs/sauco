@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use Carbon\Carbon;
 
 class Payment extends Model implements Auditable
 {
@@ -72,6 +73,13 @@ class Payment extends Model implements Auditable
                 'payments.id',
             ]);
     }
+
+    public static function processedByDate()
+    {
+        return self::whereDate('updated_at', Carbon::yesterday()->toDateString())
+            ->whereStateId(2)
+            ->get();
+    } 
 
     public function getCreatedAtAttribute($value)
     {
