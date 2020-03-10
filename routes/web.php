@@ -180,7 +180,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('add.activities');
         Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
     });
-
+    
     Route::get('taxpayers/{taxpayer}/download', 'TaxpayerController@download');
     Route::resource('taxpayers', 'TaxpayerController');
 });
