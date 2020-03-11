@@ -162,14 +162,31 @@
             @if(Auth()->user()->can('create.settlements'))
             <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
                 <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head">
+                    <div class="kt-portlet__head kt-portlet__head--lg">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Liquidaciones</h3>
+                            <span class="kt-portlet__head-icon">
+                                <i class="kt-font-brand flaticon-settings-1"></i>
+                            </span>
+                            <h3 class="kt-portlet__head-title">
+                                Liquidaciones 
+                            </h3>
                         </div>
-                        <div class="kt-portlet__head-toolbar">
-                            <div class="kt-portlet__head-toolbar">
-                                <a onClick="handleRequest('settlements/create-settlements/{{ $row->id  }}')" class="btn btn-label-brand btn-bold btn-sm">CALCULAR</a>
-                            </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="kt-notification">
+                            <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/declarations') }}">
+                                <div class="kt-notification__item-icon">
+                                    <i class="fas fa-book-reader"></i>
+                                </div>
+                                <div class="kt-notification__item-details">
+                                    <div class="kt-notification__item-title">
+                                        Declaración jurada de ingresos    
+                                    </div>
+                                    <div class="kt-notification__item-time">
+                                        Ver declaraciones y realizar liquidaciones
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -144,7 +144,7 @@ class TaxpayerController extends Controller
             ->withSuccess('¡Actividades económicas actualizadas!');
     }
 
-    public function download(Taxpayer $taxpayer)
+    public function downloadDeclarations(Taxpayer $taxpayer)
     {
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
         $settlements = $taxpayer->settlements;

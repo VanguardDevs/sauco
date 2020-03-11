@@ -160,7 +160,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
         Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
     });
-
+    
+    /**
+     * Handle reports
+     */
     Route::post('reports/payment-report', 'ReportController@printPaymentReport')
         ->name('print.payments.report');
     Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
@@ -186,6 +189,8 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
     });
     
-    Route::get('taxpayers/{taxpayer}/download', 'TaxpayerController@download');
+    Route::get('taxpayers/{taxpayer}/declarations/download', 'TaxpayerController@downloadDeclarations');
+    Route::get('taxpayers/{taxpayer}/declarations/list', 'DeclarationController@listDeclarations');
+    Route::get('taxpayers/{taxpayer}/declarations', 'DeclarationController@index')->name('taxpayer.declarations');
     Route::resource('taxpayers', 'TaxpayerController');
 });

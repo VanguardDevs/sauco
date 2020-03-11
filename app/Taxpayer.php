@@ -84,6 +84,16 @@ class Taxpayer extends Model implements Auditable
             ->join('taxpayers', 'settlements.taxpayer_id', '=', 'taxpayers.id')
             ->where('taxpayers.id',  $this->id);       
     }
+    
+    /**
+     * Affidavit incomes
+     */
+    public function declarations()
+    {
+        return $this->settlements()
+            ->with(['state', 'month'])
+            ->where('concept_id', 1);
+    }
 
     public function municipality()
     {

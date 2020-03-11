@@ -644,6 +644,34 @@ $(document).ready(function() {
             }
         ]
     });
+    
+    $('#tDeclarations').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'id'},
+            { data: 'month.name' },
+            { data: 'amount' },
+            { data: 'state.name'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/cashbox/settlements/${oData.id} title='Ver liquidación'>
+                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
 
     $('#tAccounts').DataTable({
         "order": [[0, "asc"]],

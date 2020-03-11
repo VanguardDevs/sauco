@@ -9,6 +9,12 @@ Breadcrumbs::for('cashbox', function ($trail) {
 });
 
 /*----------  Reports ----------*/
+Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Declaraciones', url('taxpayers/'.$row->id.'/declarations'));
+});
+
+/*----------  Reports ----------*/
 Breadcrumbs::for('reports', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Reportes', url('reports'));
@@ -261,7 +267,7 @@ Breadcrumbs::for('taxpayers.update', function ($trail) {
  */
 Breadcrumbs::for('taxpayers.show', function ($trail, $row) {
     $trail->parent('taxpayers.index');
-    $trail->push('Contribuyente '.$row->id, url('taxpayers', $row->id));
+    $trail->push($row->rif, url('taxpayers', $row->id));
 });
 
 /**
