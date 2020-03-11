@@ -58,7 +58,7 @@ class Payment extends Model implements Auditable
 
     public static function scopeList()
     {
-        return Taxpayer()::join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
+        return Taxpayer::join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
             ->join('receivables', 'receivables.settlement_id', 'settlements.id')
             ->join('payments', 'receivables.payment_id', '=', 'payments.id')
             ->join('status', 'payments.state_id', '=', 'status.id')

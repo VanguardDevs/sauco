@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <a href="{{ url('cashbox/payments') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
+            <a href="{{ url('reports') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
             <button type="submit" class="btn btn-success">
                 <i class="flaticon-paper-plane-1"></i>
                Enviar 
