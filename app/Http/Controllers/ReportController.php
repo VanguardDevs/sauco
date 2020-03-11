@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Payment;
+use App\Taxpayer;
 use Carbon\Carbon;
 use PDF;
 
@@ -32,6 +33,15 @@ class ReportController extends Controller
         $total = number_format($payments->sum('amount'), 2, ',', '.')." Bs";
 
         $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
-        return $pdf->stream('reporte-de-pagos.pdf');
+        return $pdf->download('reporte-de-pagos.pdf');
+    }
+
+    public function printTaxpayersReport()
+    {
+        $taxpayers = Taxpayer::get();
+        $emissionDate = Carbon::now()->toDateString();
+        
+        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate']));
+        return $pdf->stream('contribuyentes-registrados.pdf');
     }
 }

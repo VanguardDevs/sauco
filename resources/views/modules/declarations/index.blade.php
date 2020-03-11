@@ -3,6 +3,8 @@
 @section('title', 'Declaraciones del contribuyente '.$taxpayer->rif)
 
 @section('content')
+
+@if(Auth()->user()->can('create.settlements'))
 <div class="col-md-12">
     <div class="kt-portlet kt-portlet--height-fluid">
         <div class="kt-portlet__head kt-portlet__head--lg">
@@ -35,6 +37,7 @@
         </div>
     </div>
 </div>
+@endif
 <div class="col-xl-12">
     <div class="kt-portlet kt-portlet--height-fluid">
         <div class="kt-portlet__body">
