@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Concept;
 use App\Settlement;
 use App\Taxpayer;
+use App\Month;
 use App\Services\EconomicActivitySettlementService;
 
 class SettlementService
@@ -21,9 +22,9 @@ class SettlementService
      * Handle all settlements
      * @param Taxpayer $taxpayer, Concept $concept
      */
-    public function make(Taxpayer $taxpayer, Concept $concept)
+    public function make(Taxpayer $taxpayer, Concept $concept, Month $month)
     {
-        $settlement = $this->create($taxpayer, $concept);
+        $settlement = $this->create($taxpayer, $concept, $month);
         $code = $concept->code;
 
         if ($code == 1) {
@@ -57,12 +58,12 @@ class SettlementService
      * Creates an economic activity settlement for a given taxpayer
      * @param Taxpayer $taxpayer
      */
-    public function create($taxpayer, $concept)
+    public function create($taxpayer, $concept, $month)
     {
         $settlement = Settlement::create([
             'amount' => 0.00,
             'taxpayer_id' => $taxpayer->id,
-            'month_id' => 1,
+            'month_id' => $month->id,
             'state_id' => 1,
             'user_id' => auth()->user()->id,
             'concept_id' => $concept->id
