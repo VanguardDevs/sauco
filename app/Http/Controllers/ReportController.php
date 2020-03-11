@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Payment;
+use Carbon\Carbon;
 use PDF;
 
 class ReportController extends Controller
@@ -25,10 +26,12 @@ class ReportController extends Controller
 
     public function printPaymentReport(Request $request)
     {
-        $payments = Payment::processedByDate();
+        $date = Carbon::parse($request->input('date'));
+        $payments = Payment::processedByDate($date);
+        $dateFormat = date('d-m-Y', strtotime($date)); 
         $total = number_format($payments->sum('amount'), 2, ',', '.')." Bs";
 
-        $pdf = PDF::LoadView('modules.reports.pdf.payment', compact(['payments', 'total']));
+        $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
         return $pdf->stream('reporte-de-pagos.pdf');
     }
 }

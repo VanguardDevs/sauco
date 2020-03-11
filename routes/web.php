@@ -161,7 +161,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
     });
 
-    Route::get('reports/payment-report', 'ReportController@printReport')
+    Route::post('reports/payment-report', 'ReportController@printPaymentReport')
         ->name('print.payments.report');
     Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
     Route::get('reports', 'ReportController@index')->name('reports');

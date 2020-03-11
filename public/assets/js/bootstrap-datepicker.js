@@ -22,7 +22,8 @@ var KTBootstrapDatepicker = function () {
             rtl: KTUtil.isRTL(),
             todayHighlight: true,
             orientation: "bottom left",
-            templates: arrows
+            templates: arrows,
+            language: 'es'
         });
 
         // minimum setup for modal demo

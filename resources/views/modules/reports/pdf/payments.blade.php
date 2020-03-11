@@ -77,13 +77,13 @@
             </div>
         </div>
         <div class="tables">
-           <table class="" style="text-align: center">
-                <caption>REPORTE DE PAGOS</caption>
+           <table style="text-align: center">
+                <caption>REPORTE DE PAGOS PROCESADOS</caption>
                 <thead>
                   <tr>
                     <th width="10%">NO. FACTURA</th>
                     <th width="15%">RIF</th>
-                    <th width="60%">CONTRIBUYENTE</th>
+                    <th width="60%">RAZÓN SOCIAL</th>
                     <th width="15%">MONTO</th>
                   </tr>
                 </thead>
@@ -97,17 +97,17 @@
                 </tr>
                 @endforeach   
              </table>
-             <table class="" style="text-align: center">
-                <thead>
-                  <tr>
-                    <th>MONTO TOTAL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 <tr>
-                    <td>{{ $total }}</td>
-                </tr>
-             </table>
+            <br>
+            <div class="bill-info">
+                <div class="col-bill-info">
+                    FECHA: {{ $dateFormat }}
+                </div>
+                <div class="col-bill-info">
+                    <div class="total-amount">
+                        MONTO TOTAL PROCESADO: {{ $total }}
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

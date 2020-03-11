@@ -5,10 +5,8 @@ namespace App;
 use App\Taxpayer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
-use Carbon\Carbon;
 
 class Payment extends Model implements Auditable
 {
@@ -60,8 +58,7 @@ class Payment extends Model implements Auditable
 
     public static function scopeList()
     {
-        return DB::table('taxpayers') 
-            ->join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
+        return Taxpayer()::join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
             ->join('receivables', 'receivables.settlement_id', 'settlements.id')
             ->join('payments', 'receivables.payment_id', '=', 'payments.id')
             ->join('status', 'payments.state_id', '=', 'status.id')
@@ -74,10 +71,11 @@ class Payment extends Model implements Auditable
             ]);
     }
 
-    public static function processedByDate()
+    public static function processedByDate($date)
     {
-        return self::whereDate('updated_at', Carbon::yesterday()->toDateString())
+        return self::whereDate('updated_at', $date->toDateString())
             ->whereStateId(2)
+            ->orderBy('id', 'ASC')
             ->get();
     } 
 
