@@ -92,7 +92,11 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if (Auth::user()->can('process.payments') && $payment->state->id == 1) {
+        if ($payment->state->id == 1) {
+            if (!Auth::user()->can('process.payments')) {
+                return redirect('cashbox/payments')
+                    ->withError('¡No puede procesar el pago!');
+            }
             $this->typeform = 'edit';
         }
 

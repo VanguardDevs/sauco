@@ -12,6 +12,7 @@ use App\Month;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\ReceivableService;
+use Auth;
 
 class SettlementController extends Controller
 {
@@ -127,6 +128,11 @@ class SettlementController extends Controller
     public function show(Settlement $settlement)
     {
         if ($settlement->state->id == 1) {
+            if (!Auth::user()->can('process.settlements'))  {
+                return redirect('cashbox/settlements')
+                    ->withError('¡No puede procesar la liquidación!');
+            }
+
             return view('modules.cashbox.select-settlement')
                 ->with('row', $settlement);
         }
