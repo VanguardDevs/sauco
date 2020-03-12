@@ -90,28 +90,6 @@ class SettlementController extends Controller
         $settlement = Settlement::whereTaxpayerId($taxpayer->id)
             ->whereMonthId($month->id)
             ->first();
-        
-        // No settlements were found
-        if (!$settlement) {
-            // Last, check if there're more settlements
-            if ($month->id != 1 && $taxpayer->settlements) {
-                return redirect($url)
-                    ->withError('¡Debe generar la liquidación del mes de ENERO!');
-            } else {
-                $this->settlement->make($taxpayer, $concept, $month);
-                return redirect($url)
-                    ->withError('¡El contribuyente fue liquidado en el mes de '.$month->name.'!'); 
-            }
-        }
-
-        // A settlement was found
-        if ($settlement->state->name == 'PROCESADA') {
-            return redirect($url)
-               ->withError('¡El contribuyente fue liquidado en el mes de '.$month->name.'!'); 
-        } else {
-            return redirect($url)
-                ->withError('¡Debe la liquidación del mes de '.$month->name.'!');
-        }
 
         $this->settlement->make($taxpayer, $concept, $month);
         return redirect($url)
