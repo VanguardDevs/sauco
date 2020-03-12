@@ -106,7 +106,7 @@ class TaxpayerController extends Controller
 
         return view('modules.taxpayers.register-economic-activities')
             ->with('taxpayer', $taxpayer)
-            ->with('economicActivities', EconomicActivity::pluck('name', 'id'))
+            ->with('economicActivities', EconomicActivity::get())
             ->with('typeForm', 'create');
     }
 
