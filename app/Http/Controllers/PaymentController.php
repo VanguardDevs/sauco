@@ -26,7 +26,7 @@ class PaymentController extends Controller
     public function __construct()
     {
         $this->middleware('has.role:admin')->only('destroy');
-        $this->middleware('has.role:liquidator|collector|admin')->only(['index', 'list','show']);
+        $this->middleware('has.role:liquidator|collector|admin|liquidation-chief|collection-chief')->only(['index', 'list','show']);
         $this->middleware('auth');
     }
 
@@ -92,7 +92,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if (Auth::user()->hasRole('collector') && $payment->state->id == 1) {
+        if (Auth::user()->can('process.payments') && $payment->state->id == 1) {
             $this->typeform = 'edit';
         }
 
