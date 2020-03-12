@@ -108,7 +108,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
-    Route::group(['middleware' => 'has.role:admin|inspector|superintendent|analyst|chief-inspection'], function() {
+    Route::group(['middleware' => 'has.role:admin|chief-liquidation|inspector|superintendent|analyst|chief-inspection'], function() {
         /*----------  Routes economic activities  ----------*/
         Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
         Route::resource('economic-activities', 'EconomicActivityController');
@@ -127,6 +127,15 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::group(['middleware' => 'has.role:liquidator|superintendent|admin|auditor|collection-chief|liquidation-chief|collector'], function() {
         Route::get('cashbox', 'Cashbox')->name('cashbox');
+        
+        /**
+         * Handle reports
+         */
+        Route::post('reports/payment-report', 'ReportController@printPaymentReport')
+            ->name('print.payments.report');
+        Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
+        Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport');
+        Route::get('reports', 'ReportController@index')->name('reports');
 
         /**
          * Settlements' routes module
@@ -161,15 +170,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
     });
     
-    /**
-     * Handle reports
-     */
-    Route::post('reports/payment-report', 'ReportController@printPaymentReport')
-        ->name('print.payments.report');
-    Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
-    Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport');
-    Route::get('reports', 'ReportController@index')->name('reports');
-
     /**
      * Handle settlements and payments
      */
