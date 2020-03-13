@@ -2,28 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\CorrelativeType;
 use App\License;
+use App\Services\LicenseService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use Carbon\Carbon;
 use PDF;
+use App\Taxpayer;
+use Carbon\Carbon;
 
 class LicenseController extends Controller
 {
+    protected $license;
+
+    public function __construct(LicenseService $license)
+    {
+        $this->license = $license; 
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Taxpayer $taxpayer)
     {
-    	return view('modules.licenses.index');
+        $correlatives = [
+            1 => 'INSTALAR LICENCIA',
+            2 => 'RENOVAR LICENCIA'
+        ];
+
+        return view('modules.licenses.index')
+            ->with('taxpayer', $taxpayer)
+            ->with('correlatives', $correlatives);
     }
 
     public function list()
     {
-        $query = License::query()
-		    ->with('taxpayer');
+        $query = License::query();
 
     	return DataTables::eloquent($query)->toJson();
     }
@@ -44,9 +61,14 @@ class LicenseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, License $license)
+    public function store(Request $request, Taxpayer $taxpayer)
     {
-        //
+        $correlative = CorrelativeType::find($request->input('correlative'));
+
+        $this->license->makeLicense($correlative, $taxpayer);
+        
+        return redirect('taxpayers/'.$taxpayer->id.'/economic-activity-licenses')
+            ->withSuccess('¡Licencia de actividad económica creada!');
     }
 
     /**
@@ -64,14 +86,15 @@ class LicenseController extends Controller
     public function download(License $license)
     {
         $taxpayer = $license->taxpayer;
+        $num = preg_replace("/[^0-9]/", "", $taxpayer->rif);
         $endOfYear = date('d-m-Y', strtotime(Carbon::now()->copy()->endOfYear()));
-        $licenseNum = preg_replace('~\D~', '', $taxpayer->rif);
         $correlative = $license->correlative;
         $licenseCorrelative = $correlative->correlativeType->description.
-                            $correlative->fiscalYear->year.'-'
-                            .$correlative->correlativeNumber->num;
+                             $correlative->year->year.'-'
+                             .$correlative->correlativeNumber->num;
 
-        $pdf = PDF::LoadView('modules.licenses.pdf.economic-activity-license', compact(['endOfYear', 'licenseNum', 'license', 'licenseCorrelative']));
+        $representation = $taxpayer->representations->first()->person->name;
+        $pdf = PDF::LoadView('modules.licenses.pdf.economic-activity-license', compact(['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'endOfYear']));
         return $pdf->stream('Licencia '.$taxpayer->rif.'.pdf');
     }
 

@@ -15,6 +15,12 @@ Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
 });
 
 /*----------  Reports ----------*/
+Breadcrumbs::for('taxpayer.economic-activity-licenses', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Licencias de actividad económica', url('taxpayers/'.$row->id.'/economic-activity-licenses'));
+});
+
+/*----------  Reports ----------*/
 Breadcrumbs::for('reports', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Reportes', url('reports'));

@@ -127,7 +127,7 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::group(['middleware' => 'has.role:liquidator|superintendent|admin|auditor|collection-chief|liquidation-chief|collector'], function() {
         Route::get('cashbox', 'Cashbox')->name('cashbox');
-        
+
         /**
          * Handle reports
          */
@@ -136,6 +136,15 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
         Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport');
         Route::get('reports', 'ReportController@index')->name('reports');
+
+        /**
+         * Licenses
+         */
+        Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@index')->name('taxpayer.economic-activity-licenses');
+        Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@list');
+        Route::get('economic-activity-licenses/{license}/download', 'LicenseController@download');
+        Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
+            ->name('economic-activity-license.create');
 
         /**
          * Settlements' routes module
@@ -169,7 +178,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
         Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
     });
-    
+
     /**
      * Handle settlements and payments
      */
@@ -189,7 +198,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('add.activities');
         Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
     });
-    
+
+    /**
+     * Taxpayer's routes
+     */
     Route::get('taxpayers/{taxpayer}/declarations/download', 'TaxpayerController@downloadDeclarations');
     Route::get('taxpayers/{taxpayer}/declarations/list', 'DeclarationController@listDeclarations');
     Route::get('taxpayers/{taxpayer}/declarations', 'DeclarationController@index')->name('taxpayer.declarations');
