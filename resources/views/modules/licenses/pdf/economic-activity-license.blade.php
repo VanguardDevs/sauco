@@ -12,7 +12,7 @@
                 bottom: 0px;
                 right: 0px;
                 width: 720px;
-                height: 1050px;
+                height: 1030px;
                 opacity: 1;
                 z-index: 1;
             }

@@ -140,7 +140,8 @@ Route::prefix('/')->middleware('auth')->group(function()
         /**
          * Licenses
          */
-        Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@index')->name('taxpayer.economic-activity-licenses');
+        Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@index')
+            ->name('taxpayer.economic-activity-licenses');
         Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@list');
         Route::get('economic-activity-licenses/{license}/download', 'LicenseController@download');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')

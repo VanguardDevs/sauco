@@ -10,7 +10,7 @@
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
                 <span class="kt-portlet__head-icon">
-                    <i class="kt-font-brand flaticon-settings-1"></i>
+                    <i class="kt-font-brand flaticon2-paper"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
                     Emitir licencia 

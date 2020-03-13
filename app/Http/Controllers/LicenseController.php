@@ -38,9 +38,9 @@ class LicenseController extends Controller
             ->with('correlatives', $correlatives);
     }
 
-    public function list()
+    public function list(Taxpayer $taxpayer)
     {
-        $query = License::query();
+        $query = License::whereTaxpayerId($taxpayer->id);
 
     	return DataTables::eloquent($query)->toJson();
     }
