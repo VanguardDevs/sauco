@@ -38,9 +38,17 @@ Breadcrumbs::for('settlements.index', function ($trail) {
     $trail->push('Listado de liquidaciones', url('cashbox/settlements'));
 });
 
-/*----------  Cashbox > Settlements > show ----------*/
-Breadcrumbs::for('settlements.show', function ($trail, $row) {
-    $trail->parent('settlements.index');
+/**
+ * Taxpayer > taxpayer > Affidavits
+ */
+Breadcrumbs::for('affidavits.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Liquidaciones', url('taxpayers/'.$row->id.'/affidavits'));
+});
+
+/*----------  Taxpayers > taxpayer > Affidavits > show ----------*/
+Breadcrumbs::for('affidavits.show', function ($trail, $row) {
+    $trail->parent('affidavits.index', $row->taxpayer);
     $trail->push('Liquidación n°'.$row->id, url('cashbox/settlements'.$row->id));
 });
 

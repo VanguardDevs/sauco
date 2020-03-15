@@ -203,8 +203,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Taxpayer's routes
      */
-    Route::get('taxpayers/{taxpayer}/declarations/download', 'TaxpayerController@downloadDeclarations');
-    Route::get('taxpayers/{taxpayer}/declarations/list', 'DeclarationController@listDeclarations');
-    Route::get('taxpayers/{taxpayer}/declarations', 'DeclarationController@index')->name('taxpayer.declarations');
+    Route::get('taxpayers/{taxpayer}/affidavits/{settlement}/download', 'AffidavitController@download');
+    Route::get('taxpayers/{taxpayer}/affidavits/download', 'TaxpayerController@downloadAffidavits');
+    Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
+    Route::get('affidavits/{settlement}', 'AffidavitController@show')->name('affidavits.show');
+    Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::resource('taxpayers', 'TaxpayerController');
 });

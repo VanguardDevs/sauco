@@ -171,7 +171,7 @@
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-notification">
-                            <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/declarations') }}">
+                            <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/affidavits') }}">
                                 <div class="kt-notification__item-icon">
                                     <i class="fas fa-address-book"></i>
                                 </div>

@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Declaraciones del contribuyente '.$taxpayer->rif)
+@section('title', 'Declaraciones de '.$taxpayer->rif)
 
 @section('content')
 
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="kt-portlet__body">
-            <table id="tDeclarations" class="table table-bordered table-striped datatables" style="text-align: center">
+            <table id="tAffidavits" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
                     <th width="10%">N°</th>
