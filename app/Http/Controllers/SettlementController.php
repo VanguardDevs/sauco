@@ -92,7 +92,7 @@ class SettlementController extends Controller
             ->whereMonthId($month->id)
             ->first();
 
-        $this->settlement->make($taxpayer, $concept, $month);
+        $settlement = $this->settlement->make($taxpayer, $concept, $month);
         return redirect($url)
             ->withSuccess('¡Liquidación del mes de '.$month->name.' realizada!');
     }
