@@ -183,7 +183,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Handle settlements and payments
      */
-    Route::post('settlements/{taxpayer}/create', 'AffidavitController@store')->name('settlements.create');
+    Route::post('settlements/{taxpayer}/create', 'AffidavitController@create')->name('settlements.create');
 
     /*----------  Routes representations ----------*/
     Route::group(['middleware' => 'can:add.representations'], function () {

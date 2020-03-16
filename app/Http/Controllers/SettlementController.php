@@ -83,7 +83,6 @@ class SettlementController extends Controller
      */
     public function createSettlements(Request $request, Taxpayer $taxpayer)
     {
-        $url = 'taxpayers/'.$taxpayer->id.'/declarations';
         $month = Month::find($request->input('month'));
         $concept = Concept::whereCode('1')->first();
         
@@ -93,7 +92,7 @@ class SettlementController extends Controller
             ->first();
 
         $settlement = $this->settlement->make($taxpayer, $concept, $month);
-        return redirect($url)
+        return redirect('affidavits/'.$settlement->id)
             ->withSuccess('¡Liquidación del mes de '.$month->name.' realizada!');
     }
     
