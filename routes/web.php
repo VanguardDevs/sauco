@@ -153,10 +153,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('settlements/list', 'SettlementController@list');
         Route::get('settlements/list-null', 'SettlementController@onlyNull');
         Route::get('cashbox/null-settlements', 'SettlementController@showNullSettlements')->name('null.settlements');
-        Route::get('cashbox/settlements/{settlement}/normal', 'SettlementController@normalCalcForm')
+        Route::get('affidavits/{settlement}/normal', 'AffidavitController@normalCalcForm')
             ->name('settlements.show');
-        Route::get('cashbox/settlements/{settlement}/group', 'SettlementController@groupActivityForm')
-            ->name('settlements.show');
+        Route::get('affidavits/{settlement}/group', 'AffidavitController@groupActivityForm')
+            ->name('affidavits.group');
         Route::resource('cashbox/settlements', 'SettlementController');
 
         /*

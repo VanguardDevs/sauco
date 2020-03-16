@@ -75,27 +75,7 @@ class SettlementController extends Controller
 
         return DataTables::eloquent($query)->toJson();
     }
-
-    /**
-     * Entry poin for settlement creation.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createSettlements(Request $request, Taxpayer $taxpayer)
-    {
-        $month = Month::find($request->input('month'));
-        $concept = Concept::whereCode('1')->first();
-        
-        // Check if taxpayer has a settlement for any month
-        $settlement = Settlement::whereTaxpayerId($taxpayer->id)
-            ->whereMonthId($month->id)
-            ->first();
-
-        $settlement = $this->settlement->make($taxpayer, $concept, $month);
-        return redirect('affidavits/'.$settlement->id)
-            ->withSuccess('¡Liquidación del mes de '.$month->name.' realizada!');
-    }
-    
+   
     /**
      * Display the specified resource.
      *
@@ -120,26 +100,6 @@ class SettlementController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Settlement  $settlement
-     * @return \Illuminate\Http\Response
-     */
-    public function groupActivityForm(Settlement $settlement)
-    {
-        return view('modules.cashbox.register-settlement')
-            ->with('row', $settlement)
-            ->with('typeForm', 'edit-group');
-    }
-    
-    public function normalCalcForm(Settlement $settlement)
-    {
-        return view('modules.cashbox.register-settlement')
-            ->with('typeForm', 'edit-normal')
-            ->with('row', $settlement);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -148,23 +108,7 @@ class SettlementController extends Controller
      */
     public function update(Request $request, Settlement $settlement)
     {
-        $isEditGroup = $request->has('edit-group');
-
-        $amounts = $request->input('activity_settlements');
-
-        if ($isEditGroup) {
-            $amount = $amounts[0]; 
-            $settlement = $this->settlement->handleUpdate($settlement, $amount, $isEditGroup); 
-        } else {
-            $settlement = $this->settlement->handleUpdate($settlement, $amounts, $isEditGroup);
-        }
-
-        // Create receivable
-        $payment = $this->payment->make('LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA');
-        $receivable = $this->receivable->make($settlement, $payment);
-
-        return redirect('cashbox/settlements/'.$settlement->id)
-            ->withSuccess('¡Liquidación procesada!');
+        //
     }
 
     /**

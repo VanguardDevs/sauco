@@ -65,6 +65,31 @@ class AffidavitController extends Controller
             ->with('row', $settlement);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     * @param  \App\Settlement  $settlement
+     * @return \Illuminate\Http\Response
+     */
+    public function groupActivityForm(Settlement $settlement)
+    {
+        return view('modules.cashbox.register-settlement')
+            ->with('row', $settlement)
+            ->with('typeForm', 'edit-group');
+    }
+    
+    /**
+     * Show form for editing the specified resource.
+     * @param \App\Settlement $settlement
+     * @return \Illuminate\Http\Response
+     */
+    public function normalCalcForm(Settlement $settlement)
+    {
+        return view('modules.cashbox.register-settlement')
+            ->with('typeForm', 'edit-normal')
+            ->with('row', $settlement);
+    }
+
+
     public function create(AffidavitsCreateFormRequest $request, Taxpayer $taxpayer)
     {
         $month = Month::find($request->input('month'));
@@ -92,6 +117,7 @@ class AffidavitController extends Controller
         }
 
         // Selected month has already an affidavit created
+        // WE NEED TO IMPROVE VALIDATIONS
         if ($settlement->month->id == $this->month->id) {
             return $this->fireError("La liquidación del mes de ".$this->month->name." esta generada");
         }
@@ -115,6 +141,27 @@ class AffidavitController extends Controller
 
         return redirect('affidavits/'.$settlement->id)
             ->withSuccess('¡Liquidación del mes de '.$this->month->name.' realizada!');
+    }
+
+    public function update(Request $request, Settlement $settlement)
+    {
+        $isEditGroup = $request->has('edit-group');
+
+        $amounts = $request->input('activity_settlements');
+
+        if ($isEditGroup) {
+            $amount = $amounts[0]; 
+            $settlement = $this->settlement->handleUpdate($settlement, $amount, $isEditGroup); 
+        } else {
+            $settlement = $this->settlement->handleUpdate($settlement, $amounts, $isEditGroup);
+        }
+
+        // Create receivable
+        $payment = $this->payment->make('LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA');
+        $receivable = $this->receivable->make($settlement, $payment);
+
+        return redirect('affidavits/'.$settlement->id)
+            ->withSuccess('¡Liquidación procesada!');
     }
 
     /**

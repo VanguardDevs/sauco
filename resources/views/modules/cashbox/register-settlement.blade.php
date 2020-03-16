@@ -101,7 +101,11 @@
         <!-- /.card-body -->
         <div class="card-footer">
             @if($typeForm == 'show')
-            <a href="{{ url('cashbox/settlements') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            <a href="{{ url('taxpayers/'.$row->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            <button  type="submit" class="btn btn-warning">
+                <i class='fas fa-money-check'></i>
+                Facturar 
+            </button>
            @else
             <a href="{{ url('cashbox/settlements') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
             <button  type="submit" class="btn btn-primary">

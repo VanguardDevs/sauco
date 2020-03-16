@@ -49,7 +49,15 @@ Breadcrumbs::for('affidavits.index', function ($trail, $row) {
 /*----------  Taxpayers > taxpayer > Affidavits > show ----------*/
 Breadcrumbs::for('affidavits.show', function ($trail, $row) {
     $trail->parent('affidavits.index', $row->taxpayer);
-    $trail->push('Liquidación n°'.$row->id, url('cashbox/settlements'.$row->id));
+    $trail->push('Liquidación n°'.$row->id, url('affidavits/'.$row->id));
+});
+
+/**
+ * Taxpayers > taxpayer > Affidavits > show > group
+ */
+Breadcrumbs::for('affidavits.group', function ($trail, $row) {
+    $trail->parent('affidavits.show', $row);
+    $trail->push('Cálculo de liquidación agrupada', url('affidavits/'.$row->id.'/group'));
 });
 
 /*----------  Cashbox > Payments ----------*/
