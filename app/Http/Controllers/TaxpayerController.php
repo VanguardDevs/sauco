@@ -66,11 +66,18 @@ class TaxpayerController extends Controller
      */
     public function store(TaxpayersCreateFormRequest $request)
     {
-        $rif = $request->input('rif');
+        $rifNum = $request->input('rif');
         $correlative = TaxpayerType::find($request->input('taxpayer_type'))->correlative;
+        $rif = $correlative.$rifNum;
+
+        if (Taxpayer::existsRif($rif)) {
+            return redirect('taxpayers/create')
+                ->withInput($request->input())
+                ->withError('¡El RIF '.$rif.' se encuentra registrado!');
+        }
 
         $taxpayer = Taxpayer::create([
-            'rif' => $correlative.$rif,
+            'rif' => $rif,
             'name' => $request->input('name'),
             'fiscal_address' => $request->input('fiscal_address'),
             'phone' => $request->input('phone'),
