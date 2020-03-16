@@ -15,16 +15,18 @@ use Auth;
 
 class AffidavitController extends Controller
 {
-    /**
-     * @var settlement
+    /** Initial variables
+     * @var $settlement, $concept, $taxpayer, $month
      */
     protected $settlement;
     protected $concept;
     protected $taxpayer;
+    protected $month;
 
-    public function __construct(SettlementService $settlement, Concept $concept, Taxpayer $taxpayer)
+    public function __construct(SettlementService $settlement, Concept $concept, Taxpayer $taxpayer, Month $month)
     {
         $this->taxpayer = $taxpayer;
+        $this->month = $month;
         $this->concept = Concept::whereCode(1)->first();
         $this->settlement = $settlement;
         $this->middleware('auth');
@@ -66,46 +68,60 @@ class AffidavitController extends Controller
     public function create(AffidavitsCreateFormRequest $request, Taxpayer $taxpayer)
     {
         $month = Month::find($request->input('month'));
+        $this->month = $month;
         $this->taxpayer = $taxpayer;
 
-        return $this->validateStore($month, $taxpayer);
+        return $this->validateStore();
     }
 
-    public function validateStore($month)
+    /**
+     * Validate by month
+     */
+    public function validateStore()
     {
-        $forMonth = $this->settlement->find($this->concept, $this->taxpayer)
-                ->whereMonthId($month->id)
-                ->first();
+        $settlement = $this->settlement->findOneByMonth($this->concept, $this->taxpayer, $this->month);
         $lastSettlement = $this->settlement->find($this->concept, $this->taxpayer)
             ->latest()->first();
 
+        // If taxpayer has no affidavits
         if (!$lastSettlement) {
-            if ($month->id == 1) {
-                return $this->store($month);
+            if ($this->month->id == 1) {
+                return $this->store();
             }
             return $this->fireError("Debe presentar la declaración para el mes de enero");
         }
 
-        if ($lastSettlement->month->id == $month->id) {
-            return $this->fireError("La liquidación del mes de ".$month->name." esta generada");
+        // Selected month has already an affidavit created
+        if ($settlement->month->id == $this->month->id) {
+            return $this->fireError("La liquidación del mes de ".$this->month->name." esta generada");
         }
 
-        if ($lastSettlement->month->id != $month->id) {
+        // If last settlement isn't processed yet
+        if ($lastSettlement->month->id != $this->month->id) {
             if ($lastSettlement->state->id == 1) {
                 return $this->fireError("Debe procesar la liquidación del mes de ".$lastSettlement->month->name);
             }
-            return $this->store($month);
+            return $this->store();
         }
     }
 
-    public function store($month)
+    /**
+     * Make a new Affidavit Settlement
+     * @return Illuminate\Response
+     */
+    public function store()
     {
-        $settlement = $this->settlement->make($this->taxpayer, $this->concept, $month);
+        $settlement = $this->settlement->make($this->taxpayer, $this->concept, $this->month);
 
         return redirect('affidavits/'.$settlement->id)
-            ->withSuccess('¡Liquidación del mes de '.$month->name.' realizada!');
+            ->withSuccess('¡Liquidación del mes de '.$this->month->name.' realizada!');
     }
 
+    /**
+     * Returns an error message
+     * @param $message
+     * @return Illuminate\Response
+     */
     public function fireError($message)
     {
         return redirect('taxpayers/'.$this->taxpayer->id.'/affidavits')
