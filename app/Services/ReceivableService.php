@@ -24,7 +24,6 @@ class ReceivableService
             'amount' => $settlement->amount
         ]);
  
-
         return $receivable;
     }
 }

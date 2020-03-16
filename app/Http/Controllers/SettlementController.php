@@ -161,7 +161,7 @@ class SettlementController extends Controller
         }
 
         // Create receivable
-        $payment = $this->payment->make();
+        $payment = $this->payment->make('LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA');
         $receivable = $this->receivable->make($settlement, $payment);
 
         return redirect('cashbox/settlements/'.$settlement->id)

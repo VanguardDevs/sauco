@@ -17,10 +17,13 @@ class PaymentService
         $this->method = $method;
     }
 
-    public function make()
+    /**
+    * Make a pending payment
+    */    
+    public function make($objectPayment)
     {
         $payment = Payment::create([
-            'object_payment' => 'LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA',
+            'object_payment' => $objectPayment,
             'state_id' => 1,
             'amount' => 0.0,
             'payment_method_id' => 1,

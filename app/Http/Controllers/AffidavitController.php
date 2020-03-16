@@ -8,6 +8,8 @@ use App\Settlement;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;
+use Auth;
 
 class AffidavitController extends Controller
 {
@@ -47,6 +49,12 @@ class AffidavitController extends Controller
         return view('modules.cashbox.register-settlement')
             ->with('typeForm', 'show')
             ->with('row', $settlement);
+    }
+
+    public function store(AffidavitsCreateFormRequest $request, Taxpayer $taxpayer)
+    {
+
+        dd($request->all());
     }
 
     public function download(Settlement $settlement)

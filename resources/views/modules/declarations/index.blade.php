@@ -32,9 +32,13 @@
                         {!!
                             Form::select('month', $months, null, [
                                 'class' => 'col-md-12 select2',
-                                'placeholder' => 'SELECCIONE'
+                                'placeholder' => 'SELECCIONE',
                             ])
                         !!}
+
+                        @error('month')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-lg-2">
                         <button class="btn btn-success" title="Enviar liquidación" type="submit">
