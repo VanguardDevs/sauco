@@ -199,6 +199,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('add.activities');
         Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
     });
+    Route::group(['middleware' => 'can:edit.economic-activities'], function () {
+        Route::patch('taxpayer/{taxpayer}/update-economic-activities', 'TaxpayerController@editActivities')->name('taxpayer-activities.update');
+        Route::get('taxpayers/{taxpayer}/economic-activities/edit', 'TaxpayerController@editActivitiesForm')->name('edit.activities');
+    });
 
     /**
      * Taxpayer's routes

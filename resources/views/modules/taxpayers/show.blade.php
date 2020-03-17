@@ -98,6 +98,8 @@
                         <div class="kt-portlet__head-toolbar">
                             @if((!$row->economicActivities->count()) && (@Auth::user()->can('add.economic-activities')))
                             <a href="{{ url("taxpayer/".$row->id."/economic-activities/add") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            @elseif (@Auth::user()->can('edit.economic-activities'))
+                            <a href="{{ url("taxpayers/".$row->id."/economic-activities/edit") }}" class="btn btn-label-brand btn-bold btn-sm">Editar</a>
                             @endif
                         </div>
                     </div>
@@ -192,9 +194,6 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head kt-portlet__head--lg">
                         <div class="kt-portlet__head-label">
-                            <span class="kt-portlet__head-icon">
-                                <i class="kt-font-brand flaticon-settings-1"></i>
-                            </span>
                             <h3 class="kt-portlet__head-title">
                                 Licencias 
                             </h3>
