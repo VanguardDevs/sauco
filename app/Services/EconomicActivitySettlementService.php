@@ -39,7 +39,13 @@ class EconomicActivitySettlementService
 
         foreach($settlements as $settlement) {
             $amount = array_shift($bruteAmounts);
-            $updateSettlement = $this->calculateTax($settlement, $amount);
+
+            if (($settlements->count() > 2) && ($amount == 0.00)) {
+                $updateSettlement = $this->calculateTax($settlement, $amount, false);
+            } else {
+                $updateSettlement = $this->calculateTax($settlement, $amount, true);
+            } 
+
             array_push($totalAmounts, $updateSettlement->amount);
         }
         
@@ -68,15 +74,18 @@ class EconomicActivitySettlementService
         return $this->calculateTax($maxDeclaration, $amount)->amount;
     }
 
-    public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount)
+    public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount, $update)
     {
-        $activity = $activitySettlement->economicActivity;
-        $taxUnit = TaxUnit::latest()->first();
-        $total = $activity->aliquote * $amount / 100;
-        $minTax = $taxUnit->value * $activity->min_tax;
-        
-        if ($total < $minTax || $amount == 0.00) {
-            $total = $minTax;
+        $total = 0.00;
+        if ($update) {
+            $activity = $activitySettlement->economicActivity;
+            $taxUnit = TaxUnit::latest()->first();
+            $total = $activity->aliquote * $amount / 100;
+            $minTax = $taxUnit->value * $activity->min_tax;
+            
+            if ($total < $minTax || $amount == 0.00) {
+                $total = $minTax;
+            }
         }
         
         $settlement = EconomicActivitySettlement::find($activitySettlement->id);

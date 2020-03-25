@@ -34,7 +34,7 @@
             }
             .dates {
                 position: absolute;
-                top: 165px;
+                top: 170px;
                 left: 140px;
             }
             .correlative {
@@ -52,6 +52,9 @@
             }
            body {
                 font-family: sans-serif, serif;
+            }
+            li {
+                list-style-type: none;
             }
         </style>
     </head>
@@ -71,11 +74,11 @@
                 <div class="taxpayer-information row">{{ $num }}</div>
                 <div class="taxpayer-information row">{{ $taxpayer->name }}</div>
                 <div class="taxpayer-information row">{{ $taxpayer->rif }}</div>
-                <div class="taxpayer-information row">{{ $taxpayer->rif }}</div>
+                <div class="taxpayer-information row">{{ $taxpayer->fiscal_address }}</div>
                 <div class="taxpayer-information row">{{ $representation }}</div>
                 <div class="taxpayer-information row">
                    @foreach($taxpayer->economicActivities as $activity)
-                        <label class="activity">{{ $activity->code.' - '.$activity->name }}</label>
+                        <li class="activity">{{ $activity->code.' - '.$activity->name }}</li>
                    @endforeach 
                 </div>
             </div>
