@@ -70,11 +70,11 @@ class EconomicActivitySettlementService
                 }
             }
         }
-       
+
         return $this->calculateTax($maxDeclaration, $amount)->amount;
     }
 
-    public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount, $update)
+    public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount, $update = false)
     {
         $total = 0.00;
         if ($update) {

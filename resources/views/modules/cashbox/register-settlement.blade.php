@@ -15,7 +15,7 @@
         <!-- /.card-header -->
         <!-- form start -->
         @if (($typeForm == 'edit-normal') || ($typeForm == 'edit-group'))
-            {!! Form::model($row, ['route' => ["settlements".'.update', $row->id, $typeForm], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
+            {!! Form::open(['route' => ["affidavits.update", $row->id, $typeForm], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
         @endif
         <div class="card-body">
             <div class="form-group col-lg-12">
@@ -107,7 +107,7 @@
                 Facturar 
             </button>
            @else
-            <a href="{{ url('cashbox/settlements') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
+            <a href="{{ url('taxpayers/'.$row->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
             <button  type="submit" class="btn btn-primary">
                 <i class="fas fa-calculator"></i>
                 Calcular y guardar

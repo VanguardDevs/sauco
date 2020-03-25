@@ -108,26 +108,15 @@ class AffidavitController extends Controller
         $lastSettlement = $this->settlement->find($this->concept, $this->taxpayer)
             ->latest()->first();
 
-        // If taxpayer has no affidavits
-        if (!$lastSettlement) {
-            if ($this->month->id == 1) {
-                return $this->store();
-            }
-            return $this->fireError("Debe presentar la declaración para el mes de enero");
-        }
-
         // Selected month has already an affidavit created
-        // WE NEED TO IMPROVE VALIDATIONS
-        if ($settlement->month->id == $this->month->id) {
-            return $this->fireError("La liquidación del mes de ".$this->month->name." esta generada");
-        }
-
-        // If last settlement isn't processed yet
-        if ($lastSettlement->month->id != $this->month->id) {
+        if (!$settlement) {
+            // If last month settlement isn't processed yet
             if ($lastSettlement->state->id == 1) {
                 return $this->fireError("Debe procesar la liquidación del mes de ".$lastSettlement->month->name);
             }
             return $this->store();
+        } else {
+            return $this->fireError("La liquidación del mes de ".$this->month->name." esta generada");
         }
     }
 
@@ -155,11 +144,11 @@ class AffidavitController extends Controller
         } else {
             $settlement = $this->settlement->handleUpdate($settlement, $amounts, $isEditGroup);
         }
-
+        /**
         // Create receivable
         $payment = $this->payment->make('LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA');
         $receivable = $this->receivable->make($settlement, $payment);
-
+        */
         return redirect('affidavits/'.$settlement->id)
             ->withSuccess('¡Liquidación procesada!');
     }

@@ -153,10 +153,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('settlements/list', 'SettlementController@list');
         Route::get('settlements/list-null', 'SettlementController@onlyNull');
         Route::get('cashbox/null-settlements', 'SettlementController@showNullSettlements')->name('null.settlements');
-        Route::get('affidavits/{settlement}/normal', 'AffidavitController@normalCalcForm')
-            ->name('settlements.show');
-        Route::get('affidavits/{settlement}/group', 'AffidavitController@groupActivityForm')
-            ->name('affidavits.group');
         Route::resource('cashbox/settlements', 'SettlementController');
 
         /*
@@ -167,7 +163,17 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('cashbox/payments/{payment}/download', 'PaymentController@download');
         Route::get('cashbox/null-payments', 'PaymentController@showNullPayments')->name('null.payments');
         Route::resource('cashbox/payments', 'PaymentController');
-    });
+        
+        /**
+         * Affidavit's routes
+         */
+        Route::get('affidavits/{settlement}/normal', 'AffidavitController@normalCalcForm')
+            ->name('affidavits.show');
+        Route::get('affidavits/{settlement}/group', 'AffidavitController@groupActivityForm')
+            ->name('affidavits.group');
+        Route::post('affidavits/{settlement}/update', 'AffidavitController@update')
+            ->name('affidavits.update');
+   });
 
     /**
      * Only available for certain permissions
