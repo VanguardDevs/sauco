@@ -94,8 +94,12 @@ class LicenseController extends Controller
                              .$correlative->correlativeNumber->num;
 
         $representation = $taxpayer->representations->first()->person->name;
-        $pdf = PDF::LoadView('modules.licenses.pdf.economic-activity-license', compact(['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'endOfYear']));
-        return $pdf->stream('Licencia '.$taxpayer->rif.'.pdf');
+
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'endOfYear'];
+
+        return PDF::setOptions(['isRemoteEnabled' => true])
+            ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 
+            ->stream('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**
