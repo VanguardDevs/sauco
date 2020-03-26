@@ -41,7 +41,7 @@ class EconomicActivitySettlementService
             $amount = array_shift($bruteAmounts);
 
             if (($settlements->count() > 2) && ($amount == 0.00)) {
-                $updateSettlement = $this->calculateTax($settlement, $amount, false);
+                $updateSettlement = $this->calculateTax($settlement, $amount);
             } else {
                 $updateSettlement = $this->calculateTax($settlement, $amount, true);
             } 
@@ -71,7 +71,7 @@ class EconomicActivitySettlementService
             }
         }
 
-        return $this->calculateTax($maxDeclaration, $amount)->amount;
+        return $this->calculateTax($maxDeclaration, $amount, true)->amount;
     }
 
     public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount, $update = false)
