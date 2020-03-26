@@ -19,11 +19,6 @@
                     </small>
                 </h3>
             </div>
-            <div class="kt-portlet__head-toolbar">
-                <a href="{{ url("/") }}" class="btn btn-label-brand btn-bold btn-sm" title="Calcular liquidación de años anteriores">
-                    <i class="fas fa-calculator"></i>
-                </a>
-            </div>
         </div>
         <div class="kt-portlet__body">
             {!! Form::open(['route' => ['settlements.create', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
