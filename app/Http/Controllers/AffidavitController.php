@@ -110,19 +110,34 @@ class AffidavitController extends Controller
     public function validateStore()
     {
         $settlement = $this->settlement->findOneByMonth($this->concept, $this->taxpayer, $this->month);
-        $lastSettlement = $this->settlement->find($this->concept, $this->taxpayer)
-            ->latest()->first();
 
         // Selected month has already an affidavit created
         if (!$settlement) {
-            // If last month settlement isn't processed yet
-            if ($lastSettlement->state->id == 1) {
-                return $this->fireError("Debe procesar la liquidación del mes de ".$lastSettlement->month->name);
+            if ($this->checkLastSettlement()) {
+                return $this->store();
+            } else {
+               return $this->fireError("Debe procesar la liquidación del mes de ".$lastSettlement->month->name);
             }
-            return $this->store();
         } else {
             return $this->fireError("La liquidación del mes de ".$this->month->name." esta generada");
         }
+    }
+
+    /**
+     * Check last settlement status
+     */
+    public function checkLastSettlement()
+    {
+        $lastSettlement = $this->settlement->find($this->concept, $this->taxpayer)
+            ->latest()->first();
+        
+        if ($lastSettlement) {
+            // If last month settlement isn't processed yet
+            if ($lastSettlement->state->id == 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
