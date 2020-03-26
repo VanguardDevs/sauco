@@ -158,10 +158,13 @@ class PaymentController extends Controller
         $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
-        $pdf = PDF::LoadView('modules.cashbox.pdf.payment', compact(['user','payment', 'billNum', 'reference', 'taxpayer', 'denomination']));
 
-        return $pdf->download('Factura '.$payment->id.'.pdf');
-    }
+        $vars = ['user','payment', 'billNum', 'reference', 'taxpayer', 'denomination'];
+        
+        return PDF::setOptions(['isRemoteEnabled' => true])
+            ->loadView('modules.cashbox.pdf.payment', compact($vars)) 
+            ->stream('factura-'.$payment->id.'.pdf');
+   }
 
     /**
      * Remove the specified resource from storage.
