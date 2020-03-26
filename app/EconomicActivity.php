@@ -19,6 +19,8 @@ class EconomicActivity extends Model
         'activity_classification_id'
     ];
 
+    protected $appends = ['fullName'];
+
     public function taxpayers()
     {
         return $this->belongsToMany(EconomicActivity::class);
@@ -32,5 +34,10 @@ class EconomicActivity extends Model
     public function activityClassification()
     {
         return $this->belongsTo(ActivityClassification::class);
+    }
+    
+    public function getFullNameAttribute()
+    {
+        return "{$this->code} - {$this->attributes['name']}";
     }
 }

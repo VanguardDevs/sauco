@@ -38,10 +38,26 @@ Breadcrumbs::for('settlements.index', function ($trail) {
     $trail->push('Listado de liquidaciones', url('cashbox/settlements'));
 });
 
-/*----------  Cashbox > Settlements > show ----------*/
-Breadcrumbs::for('settlements.show', function ($trail, $row) {
-    $trail->parent('settlements.index');
-    $trail->push('Liquidación n°'.$row->id, url('cashbox/settlements'.$row->id));
+/**
+ * Taxpayer > taxpayer > Affidavits
+ */
+Breadcrumbs::for('affidavits.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Liquidaciones', url('taxpayers/'.$row->id.'/affidavits'));
+});
+
+/*----------  Taxpayers > taxpayer > Affidavits > show ----------*/
+Breadcrumbs::for('affidavits.show', function ($trail, $row) {
+    $trail->parent('affidavits.index', $row->taxpayer);
+    $trail->push('Liquidación n°'.$row->id, url('affidavits/'.$row->id));
+});
+
+/**
+ * Taxpayers > taxpayer > Affidavits > show > group
+ */
+Breadcrumbs::for('affidavits.group', function ($trail, $row) {
+    $trail->parent('affidavits.show', $row);
+    $trail->push('Cálculo de liquidación agrupada', url('affidavits/'.$row->id.'/group'));
 });
 
 /*----------  Cashbox > Payments ----------*/
@@ -279,6 +295,11 @@ Breadcrumbs::for('taxpayers.show', function ($trail, $row) {
 /**
  * Economic activities > add to taxpayer
  */
+Breadcrumbs::for('edit.activities', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Editar actividades económicas', url('taxpayers'.$row->id.'economic-activities/edit'));
+});
+
 Breadcrumbs::for('add.activities', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Añadir actividades económicas', url('taxpayers'.$row->id.'economic-activities/add'));

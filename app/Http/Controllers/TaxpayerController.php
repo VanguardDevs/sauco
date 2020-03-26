@@ -66,18 +66,25 @@ class TaxpayerController extends Controller
      */
     public function store(TaxpayersCreateFormRequest $request)
     {
-        $rif = $request->input('rif');
-        $correlative = TaxpayerType::find($request->input('taxpayer_type'))->correlative;
+        $rifNum = $request->input('rif');
+        $type = TaxpayerType::find($request->input('taxpayer_type'));
+        $rif = $type->correlative.$rifNum;
+
+        if (Taxpayer::existsRif($rif)) {
+            return redirect('taxpayers/create')
+                ->withInput($request->input())
+                ->withError('¡El RIF '.$rif.' se encuentra registrado!');
+        }
 
         $taxpayer = Taxpayer::create([
-            'rif' => $correlative.$rif,
+            'rif' => $rif,
             'name' => $request->input('name'),
             'fiscal_address' => $request->input('fiscal_address'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
             'compliance_use' => $request->input('compliance_use'),
             'capital' => $request->input('capital'),
-            'taxpayer_type_id' => $request->input('taxpayer_type'),
+            'taxpayer_type_id' => $type->id,
             'economic_sector_id' => $request->input('economic_sector'),
             'municipality_id' => $request->input('municipality'),
             'community_id' => $request->input('community')
@@ -106,7 +113,7 @@ class TaxpayerController extends Controller
 
         return view('modules.taxpayers.register-economic-activities')
             ->with('taxpayer', $taxpayer)
-            ->with('economicActivities', EconomicActivity::get())
+            ->with('activities', EconomicActivity::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -117,10 +124,11 @@ class TaxpayerController extends Controller
                 return redirect('taxpayers/'.$taxpayer->id)
                     ->withError('¡Este contribuyente no admite actividades económicas!');
         }
+        $activities = EconomicActivity::all()->pluck('fullName','id');
 
         return view('modules.taxpayers.register-economic-activities')
-            ->with('taxpayer', $taxpayer)
-            ->with('economicActivities', EconomicActivity::pluck(['name', 'id']))
+            ->with('row', $taxpayer)
+            ->with('activities', $activities)
             ->with('typeForm', 'update');
     }
 

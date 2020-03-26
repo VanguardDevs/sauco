@@ -89,7 +89,7 @@
     <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
         <div class="row">
             @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
-            <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
+            <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
@@ -98,6 +98,8 @@
                         <div class="kt-portlet__head-toolbar">
                             @if((!$row->economicActivities->count()) && (@Auth::user()->can('add.economic-activities')))
                             <a href="{{ url("taxpayer/".$row->id."/economic-activities/add") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                            @elseif (@Auth::user()->can('edit.economic-activities'))
+                            <a href="{{ url("taxpayers/".$row->id."/economic-activities/edit") }}" class="btn btn-label-brand btn-bold btn-sm">Editar</a>
                             @endif
                         </div>
                     </div>
@@ -124,7 +126,8 @@
                     </div>
                 </div>
             </div>
-           <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
+            @endif
+            <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
@@ -159,14 +162,13 @@
                     </div>
                 </div>
             </div>
-            @if(Auth()->user()->can('access.cashbox'))
-            <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
+        </div>
+        @if(Auth()->user()->can('access.cashbox'))
+        <div class="row">
+            <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head kt-portlet__head--lg">
                         <div class="kt-portlet__head-label">
-                            <span class="kt-portlet__head-icon">
-                                <i class="kt-font-brand flaticon-settings-1"></i>
-                            </span>
                             <h3 class="kt-portlet__head-title">
                                 Liquidaciones 
                             </h3>
@@ -174,9 +176,9 @@
                     </div>
                     <div class="kt-portlet__body">
                         <div class="kt-notification">
-                            <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/declarations') }}">
+                            <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/affidavits') }}">
                                 <div class="kt-notification__item-icon">
-                                    <i class="fas fa-book-reader"></i>
+                                    <i class="fas fa-address-book"></i>
                                 </div>
                                 <div class="kt-notification__item-details">
                                     <div class="kt-notification__item-title">
@@ -191,13 +193,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-6 order-lg-3 order-xl-1">
+            <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head kt-portlet__head--lg">
                         <div class="kt-portlet__head-label">
-                            <span class="kt-portlet__head-icon">
-                                <i class="kt-font-brand flaticon-settings-1"></i>
-                            </span>
                             <h3 class="kt-portlet__head-title">
                                 Licencias 
                             </h3>
@@ -222,10 +221,9 @@
                     </div>
                 </div>
             </div>
-            @endif
         </div>
-       @endif
-    </div>
+        @endif
+   </div>
    <!--End:: App Content-->
   </div>
   <!--End::App-->

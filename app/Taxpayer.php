@@ -110,8 +110,8 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Vehicle::class);
     }
 
-    public function applications()
+    public static function existsRif($rif)
     {
-        return $this->hasManyThrough(Application::class, Settlement::class);
-    }
+        return self::whereRif($rif)->first();
+    } 
 }

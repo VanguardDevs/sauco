@@ -50,10 +50,11 @@ class PersonalFirmController extends Controller
      */
     public function store(PersonalFirmsCreateFormRequest $request)
     {
+        /**
         PersonalFirm::create([
             $request->input(
         ]);
-
+        **/
         return redirect('settings/personal-firms')
            ->withSuccess('¡Firma personal creada!'); 
     }

@@ -153,10 +153,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('settlements/list', 'SettlementController@list');
         Route::get('settlements/list-null', 'SettlementController@onlyNull');
         Route::get('cashbox/null-settlements', 'SettlementController@showNullSettlements')->name('null.settlements');
-        Route::get('cashbox/settlements/{settlement}/normal', 'SettlementController@normalCalcForm')
-            ->name('settlements.show');
-        Route::get('cashbox/settlements/{settlement}/group', 'SettlementController@groupActivityForm')
-            ->name('settlements.show');
         Route::resource('cashbox/settlements', 'SettlementController');
 
         /*
@@ -167,7 +163,21 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('cashbox/payments/{payment}/download', 'PaymentController@download');
         Route::get('cashbox/null-payments', 'PaymentController@showNullPayments')->name('null.payments');
         Route::resource('cashbox/payments', 'PaymentController');
-    });
+        
+        /**
+         * Affidavit's routes
+         */
+        Route::get('affidavits/{settlement}/normal', 'AffidavitController@normalCalcForm')
+            ->name('affidavits.show');
+        Route::get('affidavits/{settlement}/group', 'AffidavitController@groupActivityForm')
+            ->name('affidavits.group');
+        Route::get('affidavits/{settlement}/payment/new', 'AffidavitController@makePayment')
+            ->name('affidavits.payment');
+        Route::post('affidavits/{settlement}/update', 'AffidavitController@update')
+            ->name('affidavits.update');
+        Route::post('affidavits/{settlement}/update', 'AffidavitController@update')
+            ->name('affidavits.update');
+   });
 
     /**
      * Only available for certain permissions
@@ -183,7 +193,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Handle settlements and payments
      */
-    Route::post('settlements/{taxpayer}/create', 'SettlementController@createSettlements')->name('settlements.create');
+    Route::post('settlements/{taxpayer}/create', 'AffidavitController@create')->name('settlements.create');
 
     /*----------  Routes representations ----------*/
     Route::group(['middleware' => 'can:add.representations'], function () {
@@ -199,12 +209,18 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('add.activities');
         Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
     });
+    Route::group(['middleware' => 'can:edit.economic-activities'], function () {
+        Route::patch('taxpayer/{taxpayer}/update-economic-activities', 'TaxpayerController@editActivities')->name('taxpayer-activities.update');
+        Route::get('taxpayers/{taxpayer}/economic-activities/edit', 'TaxpayerController@editActivitiesForm')->name('edit.activities');
+    });
 
     /**
      * Taxpayer's routes
      */
-    Route::get('taxpayers/{taxpayer}/declarations/download', 'TaxpayerController@downloadDeclarations');
-    Route::get('taxpayers/{taxpayer}/declarations/list', 'DeclarationController@listDeclarations');
-    Route::get('taxpayers/{taxpayer}/declarations', 'DeclarationController@index')->name('taxpayer.declarations');
+    Route::get('taxpayers/{taxpayer}/affidavits/{settlement}/download', 'AffidavitController@download');
+    Route::get('taxpayers/{taxpayer}/affidavits/download', 'TaxpayerController@downloadAffidavits');
+    Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
+    Route::get('affidavits/{settlement}', 'AffidavitController@show')->name('affidavits.show');
+    Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::resource('taxpayers', 'TaxpayerController');
 });

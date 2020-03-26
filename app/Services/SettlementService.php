@@ -17,6 +17,27 @@ class SettlementService
     {
         $this->activitySettlement = $activitySettlement;
     }
+    
+    /**
+     * Return a settlement for a given concept and taxpayer
+     * @param $concept, $taxpayer
+     */
+    public function find($concept, $taxpayer)
+    {
+        return Settlement::whereConceptId($concept->id)
+            ->whereTaxpayerId($taxpayer->id);
+    }
+
+    /**
+     * Return a settlement for a given month, taxpayer and concept
+     * @param $concept, $taxpayer, $month
+     */
+    public function findOneByMonth($concept, $taxpayer, $month)
+    {
+        return $this->find($concept, $taxpayer)
+            ->whereMonthId($month->id)
+            ->first();
+    }
 
     /**
      * Handle all settlements
@@ -26,10 +47,12 @@ class SettlementService
     {
         $settlement = $this->create($taxpayer, $concept, $month);
         $code = $concept->code;
-
+        
         if ($code == 1) {
             $this->activitySettlement->make($settlement);
         }
+
+        return $settlement;
     }
 
     /**

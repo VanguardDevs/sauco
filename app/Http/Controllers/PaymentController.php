@@ -163,7 +163,6 @@ class PaymentController extends Controller
         return $pdf->download('Factura '.$payment->id.'.pdf');
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
