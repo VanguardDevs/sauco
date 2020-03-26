@@ -171,6 +171,10 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('affidavits.show');
         Route::get('affidavits/{settlement}/group', 'AffidavitController@groupActivityForm')
             ->name('affidavits.group');
+        Route::get('affidavits/{settlement}/payment/new', 'AffidavitController@makePayment')
+            ->name('affidavits.payment');
+        Route::post('affidavits/{settlement}/update', 'AffidavitController@update')
+            ->name('affidavits.update');
         Route::post('affidavits/{settlement}/update', 'AffidavitController@update')
             ->name('affidavits.update');
    });

@@ -15,7 +15,7 @@
         <!-- /.card-header -->
         <!-- form start -->
         @if (($typeForm == 'edit-normal') || ($typeForm == 'edit-group'))
-            {!! Form::open(['route' => ["affidavits.update", $row->id, $typeForm], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+            {!! Form::open(['route' => ['affidavits.update', $row->id, $typeForm], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
         @endif
         <div class="card-body">
             <div class="form-group col-lg-12">
@@ -101,13 +101,10 @@
         <!-- /.card-body -->
         <div class="card-footer">
             @if($typeForm == 'show')
-            <a href="{{ url('taxpayers/'.$row->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
-            <button  type="submit" class="btn btn-warning">
-                <i class='fas fa-money-check'></i>
-                Facturar 
-            </button>
+            <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            <a href="{{ route('affidavits.payment', $row->id) }}" class="btn btn-success"><i class='fas fa-money-check'></i>Facturar</a>
            @else
-            <a href="{{ url('taxpayers/'.$row->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
+            <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
             <button  type="submit" class="btn btn-primary">
                 <i class="fas fa-calculator"></i>
                 Calcular y guardar

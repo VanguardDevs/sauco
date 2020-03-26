@@ -19,6 +19,7 @@ class PaymentService
 
     /**
     * Make a pending payment
+    * @param var $objectPayment
     */    
     public function make($objectPayment)
     {

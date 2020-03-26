@@ -85,7 +85,7 @@ class SettlementController extends Controller
     public function show(Settlement $settlement)
     {
         if ($settlement->state->id == 1) {
-            if (!Auth::user()->can('process.settlements'))  {
+            if (!Auth::user()->can('process.settlements')) {
                 return redirect('cashbox/settlements')
                     ->withError('¡No puede procesar la liquidación!');
             }

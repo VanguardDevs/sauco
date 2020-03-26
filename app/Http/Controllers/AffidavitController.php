@@ -6,6 +6,8 @@ use App\Taxpayer;
 use App\Month;
 use App\Settlement;
 use App\Concept;
+use App\Services\ReceivableService;
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
@@ -16,18 +18,22 @@ use Auth;
 class AffidavitController extends Controller
 {
     /** Initial variables
-     * @var $settlement, $concept, $taxpayer, $month
+     * @var $settlement, $concept, $taxpayer, $month, $receivable, $payment
      */
     protected $settlement;
     protected $concept;
     protected $taxpayer;
     protected $month;
+    protected $receivable;
+    protected $payment;
 
-    public function __construct(SettlementService $settlement, Concept $concept, Taxpayer $taxpayer, Month $month)
+    public function __construct(ReceivableService $receivable, PaymentService $payment, SettlementService $settlement, Concept $concept, Taxpayer $taxpayer, Month $month)
     {
         $this->taxpayer = $taxpayer;
         $this->month = $month;
         $this->concept = Concept::whereCode(1)->first();
+        $this->payment = $payment;
+        $this->receivable = $receivable;
         $this->settlement = $settlement;
         $this->middleware('auth');
     }
@@ -89,7 +95,6 @@ class AffidavitController extends Controller
             ->with('row', $settlement);
     }
 
-
     public function create(AffidavitsCreateFormRequest $request, Taxpayer $taxpayer)
     {
         $month = Month::find($request->input('month'));
@@ -132,6 +137,10 @@ class AffidavitController extends Controller
             ->withSuccess('¡Liquidación del mes de '.$this->month->name.' realizada!');
     }
 
+    /**
+     * Update affidavit
+     * @return Illuminate\Response
+     */
     public function update(Request $request, Settlement $settlement)
     {
         $isEditGroup = $request->has('edit-group');
@@ -144,11 +153,7 @@ class AffidavitController extends Controller
         } else {
             $settlement = $this->settlement->handleUpdate($settlement, $amounts, $isEditGroup);
         }
-        /**
-        // Create receivable
-        $payment = $this->payment->make('LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA');
-        $receivable = $this->receivable->make($settlement, $payment);
-        */
+        
         return redirect('affidavits/'.$settlement->id)
             ->withSuccess('¡Liquidación procesada!');
     }
@@ -164,8 +169,26 @@ class AffidavitController extends Controller
             ->withError($message);
     }
 
+    /**
+     * Make a payment
+     * @param Settlement $settlement
+     * @return Illuminate\Response
+     */
+    public function makePayment(Settlement $settlement)
+    {
+        if ($settlement->payment->first()) {
+            return redirect('affidavits/'.$settlement->id)
+                ->withError('¡La factura de la liquidación fue realizada!');
+        }
+        $payment = $this->payment->make('LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA');
+        $receivable = $this->receivable->make($settlement, $payment);
+
+        return redirect('affidavits/'.$settlement->id)
+            ->withSuccess('¡Factura realizada!');
+    }
+
     public function download(Settlement $settlement)
     {
-        dd($settlement);
+        //
     }
 }
