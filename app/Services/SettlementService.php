@@ -49,8 +49,9 @@ class SettlementService
         $code = $concept->code;
         
         if ($code == 1) {
-            return $this->activitySettlement->make($settlement);
+            $this->activitySettlement->make($settlement);
         }
+
         return $settlement;
     }
 
