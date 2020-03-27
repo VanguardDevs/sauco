@@ -37,7 +37,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-       return view('modules.cashbox.list-payments');
+        return view('modules.cashbox.list-payments');
     }
 
     public function showNullPayments()
@@ -48,8 +48,9 @@ class PaymentController extends Controller
     public function list()
     { 
         $query = Payment::list() 
+            ->where('status.name', '!=', 'PROCESADA')
             ->whereNull('payments.deleted_at')
-            ->orderBy('status', 'ASC');
+            ->orderBy('id', 'ASC');
 
         return DataTables::of($query)->toJson();
     }

@@ -547,7 +547,6 @@ $(document).ready(function() {
             { data: 'taxpayers.rif' },
             { data: 'taxpayers.name' },
             { data: 'payments.amount' },
-            { data: 'status.name' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -627,7 +626,6 @@ $(document).ready(function() {
             { data: 'id'},
             { data: 'taxpayer.rif' },
             { data: 'concept.name'},
-            { data: 'state.name'},
             { data: 'amount' },
             { data: 'created_at'},
             {

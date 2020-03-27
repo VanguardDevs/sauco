@@ -7,10 +7,10 @@
   <div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
       <div class="card card-primary card-outline">
-        <div class="card-header alert alert-danger">
+        <div class="card-header alert">
           <div class="row">
             <h5 class="m-0">
-                Facturas
+                Pagos pendientes
             </h5>
           </div>
         </div>
@@ -23,7 +23,6 @@
                 <th width="10%">RIF</th>
                 <th width="50%">Razón social</th>
                 <th width="10%">Monto</th>
-                <th width="10%">Estado</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>
