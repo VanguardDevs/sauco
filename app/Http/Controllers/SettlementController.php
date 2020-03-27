@@ -58,12 +58,12 @@ class SettlementController extends Controller
     /**
      * List all settlements, no matter what view
      */
-    public function list(Request $request)
+    public function list()
     {
         $query = Settlement::with(['state', 'concept', 'taxpayer'])
+            ->whereStateId(1)
             ->orderBy('id', 'DESC');
 
-        
         return DataTables::eloquent($query)->toJson();
     }
 
