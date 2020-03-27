@@ -38,6 +38,12 @@ Breadcrumbs::for('settlements.show', function ($trail, $row) {
     $trail->push('Liquidación n° '.$row->id, url('cashbox/settlements'));
 });
 
+/*---------- Settlements ----------*/
+Breadcrumbs::for('settlements.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Liquidaciones pendientes', url('cashbox/settlements'));
+});
+
 /**
  * Taxpayer > taxpayer > Affidavits
  */

@@ -15,19 +15,44 @@ class ReportController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Display reports dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('modules.reports.index');
     }
 
+    /**
+     * Display a listing of processed payments.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function payments()
     {
         return view('modules.reports.payments');
     }
 
+    /**
+     * Display a listing of null payments.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showNullPayments()
     {
         return view('modules.reports.list-null-payments');
+    }
+
+    /**
+     * Display a listing of null settlements.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showNullSettlements()
+    {
+        return view('modules.reports.list-null-settlements');
     }
 
     public function printPaymentReport(Request $request)

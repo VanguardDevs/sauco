@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Control de Facturas')
+@section('title', 'Pagos anulados')
 
 @section('content')
 

@@ -47,15 +47,7 @@ class SettlementController extends Controller
     {
         return view('modules.cashbox.list-settlements'); 
     }
-
-    /**
-     * Display null settlements
-     */
-    public function showNullSettlements()
-    {
-        return view('modules.cashbox.list-null-settlements');
-    }
-
+ 
     /**
      * List all settlements, no matter what view
      */

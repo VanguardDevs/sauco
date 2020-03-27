@@ -134,6 +134,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('reports/payment-report', 'ReportController@printPaymentReport')
             ->name('print.payments.report');
         Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
+        Route::get('reports/null-settlements', 'ReportController@showNullSettlements')->name('null.settlements');
         Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
         Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport');
         Route::get('reports', 'ReportController@index')->name('reports');
@@ -153,7 +154,6 @@ Route::prefix('/')->middleware('auth')->group(function()
          */
         Route::get('settlements/list', 'SettlementController@list');
         Route::get('settlements/list-null', 'SettlementController@onlyNull');
-        Route::get('cashbox/null-settlements', 'SettlementController@showNullSettlements')->name('null.settlements');
         Route::resource('cashbox/settlements', 'SettlementController');
 
         /*

@@ -44,10 +44,30 @@
                         </div>
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
-                               Pagos anulados
+                               Liquidaciones procesadas
                             </div>
                         </div>
-                    </a>
+                     </a>
+                     <a class="kt-notification__item" href="{{ route('null.payments') }}">
+                         <div class="kt-notification__item-icon">
+                             <i class="flaticon2-protection"></i>
+                         </div>
+                         <div class="kt-notification__item-details">
+                             <div class="kt-notification__item-title">
+                                Pagos anulados
+                             </div>
+                         </div>
+                     </a>
+                     <a class="kt-notification__item" href="{{ route('null.settlements') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-protection"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                               Liquidaciones anuladas
+                            </div>
+                        </div>
+                      </a>
                 </div>
             </div>
         </div>
