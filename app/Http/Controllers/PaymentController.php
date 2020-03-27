@@ -169,7 +169,7 @@ class PaymentController extends Controller
         
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.cashbox.pdf.payment', compact($vars)) 
-            ->stream('factura-'.$payment->id.'.pdf');
+            ->download('factura-'.$payment->id.'.pdf');
    }
 
     /**
