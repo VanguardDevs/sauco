@@ -74,7 +74,8 @@ class Settlement extends Model
     
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Receivable::class);
+        return $this->belongsToMany(Payment::class, Receivable::class)
+            ->first();
     }
     
     public function getNumFormatAttribute()

@@ -5,24 +5,31 @@
 @section('form')
     <!-- general form elements -->
     <div class="card card-primary">
-        <div class="card-header alert alert-danger">
-            <h5 class="card-title">Tipo de liquidación</h5>           
-        </div>
-        <!-- /.card-header -->
+        <div class="card card-primary card-outline">
+            <div class="card-header alert">
+                <div class="row">
+                    <h5 class="m-0">
+                        Seleccione el tipo de liquidación
+                    </h5>
+                </div>
+            </div>
+        </card>
+
+
         <!-- form start -->
         <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{{ $row->id }}/group" class="btn btn-secondary">
-                    <i class="fas fa-layer-group"></i>Por actividad económica agrupada 
-                </a> 
-            </div>
-            <div class="col-md-6">
-                <a href="{{ $row->id }}/normal" class="btn btn-secondary">
-                    <i class="fas fa-calculator"></i>Cálculo normal
-                </a>
-            </div>
-        </div> 
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ $row->id }}/group" class="btn btn-secondary">
+                        <i class="fas fa-layer-group"></i>Por actividad económica agrupada 
+                    </a> 
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ $row->id }}/normal" class="btn btn-secondary">
+                        <i class="fas fa-calculator"></i>Cálculo normal
+                    </a>
+                </div>
+            </div> 
         </div>
         <!-- /.card-body -->
         <div class="card-footer">

@@ -102,7 +102,9 @@
         <div class="card-footer">
             @if($typeForm == 'show')
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            @if(!$row->payment())
             <a href="{{ route('affidavits.payment', $row->id) }}" class="btn btn-success"><i class='fas fa-money-check'></i>Facturar</a>
+            @endif
            @else
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
             <button  type="submit" class="btn btn-primary">

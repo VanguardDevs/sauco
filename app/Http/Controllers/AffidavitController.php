@@ -193,7 +193,7 @@ class AffidavitController extends Controller
      */
     public function makePayment(Settlement $settlement)
     {
-        if ($settlement->payment->first()) {
+        if ($settlement->payment()) {
             return redirect('affidavits/'.$settlement->id)
                 ->withError('¡La factura de la liquidación fue realizada!');
         }
