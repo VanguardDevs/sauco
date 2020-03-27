@@ -40,11 +40,6 @@ class PaymentController extends Controller
         return view('modules.cashbox.list-payments');
     }
 
-    public function showNullPayments()
-    {
-        return view('modules.cashbox.list-null-payments');
-    }
-
     public function list()
     { 
         $query = Payment::list() 

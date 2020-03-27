@@ -25,6 +25,11 @@ class ReportController extends Controller
         return view('modules.reports.payments');
     }
 
+    public function showNullPayments()
+    {
+        return view('modules.reports.list-null-payments');
+    }
+
     public function printPaymentReport(Request $request)
     {
         $date = Carbon::parse($request->input('date'));

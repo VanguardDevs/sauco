@@ -134,6 +134,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('reports/payment-report', 'ReportController@printPaymentReport')
             ->name('print.payments.report');
         Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
+        Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
         Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport');
         Route::get('reports', 'ReportController@index')->name('reports');
 
@@ -161,7 +162,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('payments/list-null', 'PaymentController@onlyNull');
         Route::get('payments/list', 'PaymentController@list');
         Route::get('cashbox/payments/{payment}/download', 'PaymentController@download');
-        Route::get('cashbox/null-payments', 'PaymentController@showNullPayments')->name('null.payments');
         Route::resource('cashbox/payments', 'PaymentController');
         
         /**

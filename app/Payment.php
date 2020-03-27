@@ -67,6 +67,7 @@ class Payment extends Model implements Auditable
                 'taxpayers.rif as taxpayers.rif',
                 'status.name as status.name',
                 'payments.amount as payments.amount',
+                'payments.deleted_at as payments.deleted_at',
                 'payments.id',
             ]);
     }

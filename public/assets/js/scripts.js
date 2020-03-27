@@ -582,18 +582,7 @@ $(document).ready(function() {
             { data: 'taxpayers.name' },
             { data: 'payments.amount' },
             { data: 'status.name' },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
-                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
-                        </a>
-                   </div>`
-                    );
-                }
-            }
+            { data: 'payments.deleted_at' }
         ]
     });
     

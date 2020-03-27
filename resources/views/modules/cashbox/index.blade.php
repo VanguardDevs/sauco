@@ -38,17 +38,7 @@
                             </div>
                         </div>
                     </a>
-                    <a class="kt-notification__item" href="{{ url('cashbox/null-payments') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-protection"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                               Pagos anulados
-                            </div>
-                        </div>
-                    </a>
-                </div>
+               </div>
                 @endif
             </div>
         </div>
