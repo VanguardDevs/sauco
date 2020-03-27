@@ -190,7 +190,7 @@ class PaymentController extends Controller
         Receivable::where('payment_id', $payment->id)->delete();
         $payment->delete();
 
-        return redirect('cashbox/payments')
+        return redirect()->back()
             ->withSuccess('¡Pago anulado!');
     }
 }

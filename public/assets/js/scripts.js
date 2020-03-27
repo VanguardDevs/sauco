@@ -650,7 +650,10 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/cashbox/settlements/${oData.id} title='Ver liquidación'>
-                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/settlements')" title='Anular'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
                     );

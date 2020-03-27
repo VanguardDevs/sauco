@@ -9,6 +9,7 @@ use App\Settlement;
 use App\Receivable;
 use App\Concept;
 use App\Month;
+use App\EconomicActivitySettlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\ReceivableService;
@@ -119,6 +120,17 @@ class SettlementController extends Controller
      */
     public function destroy(Settlement $settlement)
     {
-        //
+        if (!Auth::user()->hasRole('admin')) {
+            return response()->json([
+                'message' => '¡Usuario no permitido!'
+            ]);
+        }
+
+        // Delete economic activity settlements and settlement
+        EconomicActivitySettlement::where('settlement_id', $settlement->id)->delete();
+        $settlement->delete();
+
+        return redirect()->back()
+            ->with('success', '¡Liquidación anulada!');   
     }
 }
