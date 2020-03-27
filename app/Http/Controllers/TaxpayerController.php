@@ -37,8 +37,8 @@ class TaxpayerController extends Controller
 
     public function list()
     {
-        $query = Taxpayer::query()
-            ->with('community:id,name');
+        $query = Taxpayer::with('community:id,name')
+            ->orderBy('id', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
     }

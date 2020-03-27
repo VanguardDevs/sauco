@@ -32,10 +32,10 @@ Breadcrumbs::for('report.payments', function ($trail) {
     $trail->push('Pagos procesados', url('reports/payments'));
 });
 
-/*----------  Cashbox > Settlements ----------*/
-Breadcrumbs::for('settlements.index', function ($trail) {
-    $trail->parent('cashbox');
-    $trail->push('Listado de liquidaciones', url('cashbox/settlements'));
+/*---------- Settlements ----------*/
+Breadcrumbs::for('settlements.show', function ($trail, $row) {
+    $trail->parent('dashboard');
+    $trail->push('Liquidación n° '.$row->id, url('cashbox/settlements'));
 });
 
 /**
