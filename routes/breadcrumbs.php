@@ -67,26 +67,19 @@ Breadcrumbs::for('payments.index', function ($trail) {
 });
 
 Breadcrumbs::for('null.payments', function ($trail) {
-    $trail->parent('cashbox');
-    $trail->push('Listado de facturas anuladas', url('cashbox/null-payments'));
+    $trail->parent('reports');
+    $trail->push('Pagos anulados', route('null.payments'));
 });
 
 Breadcrumbs::for('null.settlements', function ($trail) {
-    $trail->parent('cashbox');
-    $trail->push('Listado de liquidaciones anuladas', url('cashbox/null-settlements'));
+    $trail->parent('reports');
+    $trail->push('Liquidaciones anuladas', route('null.settlements'));
 });
 
 /*----------  Cashbox > Payments > show ----------*/
 Breadcrumbs::for('payments.show', function ($trail, $row) {
     $trail->parent('payments.index');
     $trail->push('Factura n°'.$row->id, url('cashbox/payments/'.$row->id));
-});
-
-
-/*----------  Cashbox > Null payments ----------*/
-Breadcrumbs::for('payments.null', function ($trail) {
-    $trail->parent('cashbox');
-    $trail->push('Listado de facturas anulados', url('cashbox/null-payments'));
 });
 
 /*----------  Cashbox > Null Settlements ----------*/
