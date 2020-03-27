@@ -104,13 +104,17 @@
              
             @if($typeForm == 'edit')
             <a href="{{ url('cashbox/payments') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
-            <button  type="submit" class="btn btn-primary">
+                <button  type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i>
                     Registrar
                 </button>
             @else
             <a href="{{ url('cashbox/payments') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
-            @endif
+            <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-success' title='Descargar factura' target='_blank'>
+                <i class='flaticon2-download'></i>
+                Imprimir factura
+            </a>
+        @endif
         </div>
         {!! Form::close() !!}
     </div>

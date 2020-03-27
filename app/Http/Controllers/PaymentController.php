@@ -137,7 +137,7 @@ class PaymentController extends Controller
         }
         $payment->save();
 
-        return redirect('cashbox/payments')
+        return redirect('cashbox/payments/'.$payment->id)
             ->withSuccess('¡Factura procesada!');
     }
 

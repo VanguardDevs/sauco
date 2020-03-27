@@ -161,7 +161,8 @@ Route::prefix('/')->middleware('auth')->group(function()
          */
         Route::get('payments/list-null', 'PaymentController@onlyNull');
         Route::get('payments/list', 'PaymentController@list');
-        Route::get('cashbox/payments/{payment}/download', 'PaymentController@download');
+        Route::get('cashbox/payments/{payment}/download', 'PaymentController@download')
+            ->name('payments.download');
         Route::resource('cashbox/payments', 'PaymentController');
         
         /**

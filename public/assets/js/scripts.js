@@ -284,7 +284,6 @@ $(document).ready(function() {
         ]
     });
 
-
     $('#tCommunities').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -552,9 +551,6 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id}/download title='Descargar factura'>
-                            <i class='btn-sm btn-success flaticon2-download'></i>
-                        </a>
                         <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>
