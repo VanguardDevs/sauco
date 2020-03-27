@@ -563,7 +563,38 @@ $(document).ready(function() {
             }
         ]
     });
-    
+
+    $('#tProcessedPayments').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/payments/processed/list",
+        "columns": [
+            { data: 'id'},
+            { data: 'taxpayers.rif' },
+            { data: 'taxpayers.name' },
+            { data: 'payments.amount' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
+                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
     $('#tNullPayments').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],

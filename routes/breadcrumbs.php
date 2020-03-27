@@ -28,8 +28,8 @@ Breadcrumbs::for('reports', function ($trail) {
 
 /*----------  Reports ----------*/
 Breadcrumbs::for('report.payments', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Reporte de pagos procesados', url('reports/payments'));
+    $trail->parent('reports');
+    $trail->push('Pagos procesados', url('reports/payments'));
 });
 
 /*----------  Cashbox > Settlements ----------*/

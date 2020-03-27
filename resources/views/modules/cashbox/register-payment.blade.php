@@ -109,7 +109,7 @@
                     Registrar
                 </button>
             @else
-            <a href="{{ url('cashbox/payments') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
             <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-success' title='Descargar factura' target='_blank'>
                 <i class='flaticon2-download'></i>
                 Imprimir factura

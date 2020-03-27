@@ -1,9 +1,8 @@
 @extends('layouts.template')
 
-@section('title', 'Control de Facturas')
+@section('title', 'Control de pagos pendientes')
 
 @section('content')
-
   <div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
       <div class="card card-primary card-outline">
