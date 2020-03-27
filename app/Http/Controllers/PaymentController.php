@@ -186,15 +186,7 @@ class PaymentController extends Controller
             ]);
         }
 
-        // First delete each economic Activity Settlement if exists
-        foreach($payment->settlements as $settlement) {
-            if ($settlement->concept->code == 1) {
-                EconomicActivitySettlement::where('settlement_id', $settlement->id)
-                    ->delete();
-            }
-            $settlement->delete();
-        }
-        // Delete receivables and payment
+        // Delete receivables and payment but keep settlements
         Receivable::where('payment_id', $payment->id)->delete();
         $payment->delete();
 
