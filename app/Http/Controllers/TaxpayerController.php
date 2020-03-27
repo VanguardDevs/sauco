@@ -111,9 +111,11 @@ class TaxpayerController extends Controller
                     ->withError('¡Este contribuyente no admite actividades económicas!');
         }
 
+        $activities = EconomicActivity::all()->pluck('fullName','id');
+
         return view('modules.taxpayers.register-economic-activities')
             ->with('taxpayer', $taxpayer)
-            ->with('activities', EconomicActivity::pluck('name', 'id'))
+            ->with('activities', $activities)
             ->with('typeForm', 'create');
     }
 
