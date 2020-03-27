@@ -53,8 +53,17 @@ class SettlementController extends Controller
      */
     public function list()
     {
-        $query = Settlement::with(['state', 'concept', 'taxpayer'])
+        $query = Settlement::with(['concept', 'taxpayer'])
             ->whereStateId(1)
+            ->orderBy('created_at', 'DESC');
+
+        return DataTables::eloquent($query)->toJson();
+    }
+
+    public function listProcessed()
+    {
+        $query = Settlement::with(['concept', 'taxpayer', 'user'])
+            ->whereStateId(2)
             ->orderBy('created_at', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
@@ -86,6 +95,7 @@ class SettlementController extends Controller
             return view('modules.cashbox.select-settlement')
                 ->with('row', $settlement);
         }
+
         // The settlement it's already processed    
         return view('modules.cashbox.register-settlement')
             ->with('typeForm', 'show')

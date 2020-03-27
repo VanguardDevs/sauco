@@ -32,6 +32,11 @@ Breadcrumbs::for('report.payments', function ($trail) {
     $trail->push('Pagos procesados', url('reports/payments'));
 });
 
+Breadcrumbs::for('report.settlements', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Liquidaciones procesadas', url('reports/settlements'));
+});
+
 /*---------- Settlements ----------*/
 Breadcrumbs::for('settlements.show', function ($trail, $row) {
     $trail->parent('dashboard');

@@ -36,6 +36,16 @@ class ReportController extends Controller
     }
 
     /**
+     * Display a listing of processed settlements.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function settlements()
+    {
+        return view('modules.reports.settlements');
+    }
+
+    /**
      * Display a listing of null payments.
      *
      * @return \Illuminate\Http\Response

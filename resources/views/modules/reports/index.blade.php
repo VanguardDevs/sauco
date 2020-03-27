@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </a>
-                    <a class="kt-notification__item" href="{{ route('null.payments') }}">
+                    <a class="kt-notification__item" href="{{ route('report.settlements') }}">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-protection"></i>
                         </div>
