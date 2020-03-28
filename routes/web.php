@@ -202,11 +202,12 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes representations ----------*/
     Route::group(['middleware' => 'can:add.representations'], function () {
+        Route::get('representations/list', 'RepresentationController@list');
         Route::post('people/{taxpayer}', 'RepresentationController@storePerson')->name('person.store');
         Route::get('taxpayers/{taxpayer}/representation/add', 'RepresentationController@create')->name('representations.add');
         Route::post('taxpayers/{taxpayer}/representation/create', 'RepresentationController@store')->name('representation.store');
     });
-    Route::resource('representations', 'RepresentationController')->except(['create', 'store']);
+    Route::resource('taxpayers/representations', 'RepresentationController')->except(['create', 'store']);
 
     /*----------  Routes taxpayers ----------*/
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');

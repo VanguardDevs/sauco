@@ -3,7 +3,29 @@
 @section('title', 'Control de contribuyentes')
 
 @section('content')
-
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__body">
+                <div class="kt-widget4">
+                    <a href="{{ Route('representations.index') }}" class="kt-widget4__item">
+                        <div class="kt-widget4__icon">
+                            <i class="flaticon-users-1"></i>
+                        </div>
+                        <div class="kt-widget4__title kt-widget4__title--dark">
+                            <div class="kt-notification__item-title">
+                                Representantes
+                            </div>
+                            <small>
+                            {{ $numPersons }} personas registradas
+                            </small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="kt-portlet">
@@ -19,7 +41,7 @@
                @if (Auth()->user()->can('create.taxpayers'))
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{ Route('taxpayers.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nueva actividad">
+                        <a href="{{ Route('taxpayers.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nueva contribuyente">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>

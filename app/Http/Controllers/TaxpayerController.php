@@ -8,6 +8,7 @@ use App\EconomicSector;
 use App\TaxpayerType;
 use App\State;
 use App\Parish;
+use App\Person;
 use App\Taxpayer;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
@@ -32,7 +33,10 @@ class TaxpayerController extends Controller
      */
     public function index()
     {
-        return view('modules.taxpayers.index');
+        $numPersons = Person::get()->count();
+
+        return view('modules.taxpayers.index')
+            ->with('numPersons', $numPersons);
     }
 
     public function list()
@@ -171,6 +175,7 @@ class TaxpayerController extends Controller
      */
     public function show(Taxpayer $taxpayer)
     {
+
         return view('modules.taxpayers.show')
             ->with('row', $taxpayer);
     }

@@ -330,6 +330,12 @@ Breadcrumbs::for('add.activities', function ($trail, $row) {
     $trail->push('Añadir actividades económicas', url('taxpayers'.$row->id.'economic-activities/add'));
 });
 
+/*------------- Representations -------------*/
+Breadcrumbs::for('representations.index', function ($trail) {
+    $trail->parent('taxpayers.index');
+    $trail->push('Representantes', url('representations'));
+});
+
 /**
  * Representations > add
  */

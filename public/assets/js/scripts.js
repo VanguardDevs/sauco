@@ -417,21 +417,6 @@ $(document).ready(function() {
             { data: 'surname'},
             { data: 'address'},
             { data: 'phone' },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/representations/${oData.id} title='Ver información'>
-                            <i class='btn-sm btn-info fas fa-eye '></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/representations/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning fas fa-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
         ]
     });
 
