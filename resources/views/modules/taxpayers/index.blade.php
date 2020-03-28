@@ -1,41 +1,46 @@
 @extends('layouts.template')
 
-@section('title', 'Contribuyentes')
-
-@section('subheader__title', 'Contribuyentes')
+@section('title', 'Control de contribuyentes')
 
 @section('content')
-  <!-- begin:: Table -->
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-lg-12">
-            <div class="card card-primary card-outline">
-                <div class="card-header alert alert-danger">
-                    <div class="row">
-                    <h5 class="m-0">Control de Contribuyentes 
-                        @if (Auth::user()->can('create.taxpayers'))
-                        <b>(</b> <a href="{{ Route("taxpayers".'.create') }}" title="Registrar comunidad">
-                        <span>Registrar</span>
-                        </a><b>)</b>
-                        @endif
-                    </h5>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        Control de contribuyentes
+                    </h3>
+                </div>
+               @if (Auth()->user()->can('create.taxpayers'))
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a href="{{ Route('taxpayers.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nueva actividad">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table id="tTaxpayers" class="table table-bordered table-striped datatables" style="text-align: center">
-                        <thead>
-                            <tr>
-                                <th width="10%">RIF</th>
-                                <th width="40%">Razón Social</th>
-                                <th width="20%">Comunidad</th>
-                                <th width="20%">Dirección fiscal</th>
-                                <th width="10%">Acciones</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+                @endif
+            </div>
+            <div class="kt-portlet__body">
+              <table id="tTaxpayers" class="table table-bordered table-striped datatables" style="text-align: center">
+                <thead>
+                    <tr>
+                        <th width="10%">RIF</th>
+                        <th width="40%">Razón Social</th>
+                        <th width="20%">Comunidad</th>
+                        <th width="20%">Dirección fiscal</th>
+                        <th width="10%">Acciones</th>
+                    </tr>
+                </thead>
+            </table>
             </div>
         </div>
     </div>
-  <!-- end:: Table -->
+</div>
 
 @endsection
