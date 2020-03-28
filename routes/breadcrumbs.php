@@ -238,6 +238,22 @@ Breadcrumbs::for('accounts.edit', function ($trail, $row) {
 });
 
 /**
+ * Settings > years 
+ */
+Breadcrumbs::for('years.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Años fiscales', url('settings/accounts'));
+});
+
+/**
+ * Settings > years 
+ */
+Breadcrumbs::for('years.create', function ($trail) {
+    $trail->parent('years.index');
+    $trail->push('Nuevo año fiscal', route('years.index'));
+});
+
+/**
  * Settings > reductions
  */
 Breadcrumbs::for('reductions.index', function ($trail) {

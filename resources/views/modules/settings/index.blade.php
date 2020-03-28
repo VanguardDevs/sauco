@@ -14,17 +14,21 @@
                         Configuraciones
                     </h3>
                 </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-toolbar">
-                        <a class="btn btn-outline-dark btn-pill btn-sm btn-icon btn-icon-md" title="Abrir nuevo año" onClick="handleRequest('settings/new-year')">
-                            <i class="flaticon2-rocket-1"></i>
-                        </a> 
-                    </div>
-                </div>
             </div>
 
             <div class="kt-portlet__body">
                 <div class="kt-notification">
+                    <a class="kt-notification__item" href="{{ url('settings/years') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Años fiscales
+                            </div>
+                        </div>
+                    </a>
+
                     <a class="kt-notification__item" href="{{ url('settings/economic-sectors') }}">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-graphic"></i>

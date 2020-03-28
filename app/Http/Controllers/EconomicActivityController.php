@@ -7,7 +7,6 @@ use App\EconomicActivity;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
-use \Illuminate\Http\Request;
 
 class EconomicActivityController extends Controller
 {

@@ -40,9 +40,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('settings', 'ShowSettings')->name('settings');
 
         /**
-        * Settings > Open new year
+        * Settings > Years
         */
-        Route::post('settings/new-year', 'OpenNewYear');
+        Route::resource('settings/years', 'YearController');
 
        /**
         *  Settings > Property types
