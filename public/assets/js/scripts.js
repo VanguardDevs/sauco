@@ -580,7 +580,7 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
-                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
@@ -611,7 +611,7 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
-                            <i class='btn-sm btn-info flaticon2-medical-records'></i>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>

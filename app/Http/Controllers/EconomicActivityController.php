@@ -83,8 +83,11 @@ class EconomicActivityController extends Controller
      */
     public function show(EconomicActivity $economicActivity)
     {
+        $taxpayersCount = $economicActivity->getTaxpayers()->count();
+
         return view('modules.economic-activities.show')
-            ->with('row', $economicActivity);
+            ->with('row', $economicActivity)
+            ->with('numTaxpayers', $taxpayersCount);
     }
 
     /**

@@ -1,67 +1,91 @@
-@extends('cruds.form')
+@extends('layouts.template')
 
-@section('title', 'Reporte de facturas procesadas')
+@section('title', 'Reporte de la actividad '.$row->code)
 
 @section('content')
-    <!-- general form elements -->
-    <div class="card card-primary">
-        <div class="card-header alert">
-            <h5 class="card-title">{{ $row->name }}</h5>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-       {!! Form::open(['route' => "print.payments.report", 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
-        <div class="card-body">
-            <div class="form-group row">
-                <label class="col-lg-12">Seleccione un día</label>
-                <div class="col-lg-8 col-md-9 col-sm-8">
-                {!!   
-                    Form::text('date', null, [
-                        'class' => 'form-control',
-                        'id' => 'kt_datepicker_1',
-                        'placeholder' => 'Seleccione una fecha',
-                        'readonly' 
-                    ]) 
-                !!}
+<div class="kt-portlet kt-portlet--height-fluid">
+    <div class="kt-portlet__body">
+        <div class="kt-widget kt-widget--user-profile-3">
+            <div class="kt-widget__top">
+                <div class="kt-widget__content">
+                    <div class="kt-widget__head">
+                        <a class="kt-widget__username" href="{{ Route('economic-activities.show', $row->id) }}">
+                            {{ $row->name }}
+                        </a>
+                    </div>
                 </div>
-                <div class="col-lg-4 col-md-9 col-sm-4">
-                    <button type="submit" class="btn btn-success">
-                        <i class="flaticon-paper-plane-1"></i>
-                       Enviar 
-                    </button>
+            </div>
+            <div class="kt-widget__bottom">
+                <div class="kt-widget__item">
+                    <div class="kt-widget__icon">
+                        <i class="flaticon-technology-1"></i>
+                    </div>
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">Código</span>
+                        <span class="kt-widget__value">{{ $row->code }}</span>
+                    </div>
+                </div>
+
+                <div class="kt-widget__item">
+                    <div class="kt-widget__icon">
+                        <i class="flaticon2-percentage"></i>
+                    </div>
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">Alícuota</span>
+                        <span class="kt-widget__value">{{ $row->aliquote }}<span> %</span></span>
+                    </div>
+                </div>
+
+                <div class="kt-widget__item">
+                    <div class="kt-widget__icon">
+                        <i class="flaticon-coins"></i>
+                    </div>
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">Mínimo tributable</span>
+                        <span class="kt-widget__value">{{ $row->min_tax }}</span>
+                    </div>
+                </div>
+
+                <div class="kt-widget__item">
+                    <div class="kt-widget__icon">
+                        <i class="flaticon-users-1"></i>
+                    </div>
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">Contribuyentes</span>
+                        <span class="kt-widget__value">{{ $numTaxpayers }}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        {!! Form::close() !!}
     </div>
-    <!-- /.card -->
-  <div class="row" style="margin-top: 20px;">
+</div>
+
+<div class="row">
     <div class="col-lg-12">
-      <div class="card card-primary card-outline">
-        <div class="card-header alert">
-          <div class="row">
-            <h5 class="m-0">
-                Contribuyentes
-            </h5>
-          </div>
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Contribuyentes con esta actividad 
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+              
+              <table id="tTaxpayersByEconomicActivity" class="table table-bordered table-striped datatables" style="text-align: center">
+                <thead>
+                  <tr>
+                    <th width="10%">RIF</th>
+                    <th width="50%">Razón social</th>
+                    <th width="10%">Comunidad</th>
+                    <th width="20%">Dirección fiscal</th>
+                    <th width="10%">Acciones</th>
+                  </tr>
+                </thead>
+              </table>            
+            </div>
         </div>
-
-        <div class="card-body">
-          <table id="tTaxpayersByEconomicActivity" class="table table-bordered table-striped datatables" style="text-align: center">
-            <thead>
-              <tr>
-                <th width="10%">RIF</th>
-                <th width="50%">Razón social</th>
-                <th width="10%">Comunidad</th>
-                <th width="20%">Dirección fiscal</th>
-                <th width="10%">Acciones</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-
-      </div>
     </div>
-  </div>
+</div>
 
 @endsection

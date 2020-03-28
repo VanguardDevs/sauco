@@ -73,8 +73,8 @@ Breadcrumbs::for('affidavits.group', function ($trail, $row) {
 
 /*----------  Cashbox > Payments ----------*/
 Breadcrumbs::for('payments.index', function ($trail) {
-    $trail->parent('cashbox');
-    $trail->push('Listado de facturas', url('cashbox/payments'));
+    $trail->parent('dashboard');
+    $trail->push('Pagos pendientes', url('cashbox/payments'));
 });
 
 Breadcrumbs::for('null.payments', function ($trail) {
