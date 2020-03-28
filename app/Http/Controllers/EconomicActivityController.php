@@ -7,6 +7,7 @@ use App\EconomicActivity;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
+use \Illuminate\Http\Request;
 
 class EconomicActivityController extends Controller
 {
@@ -34,6 +35,12 @@ class EconomicActivityController extends Controller
         $query = EconomicActivity::query();
 
         return DataTables::eloquent($query)->toJson();
+    }
+
+    public function listTaxpayers(EconomicActivity $economicActivity)
+    {
+        return DataTables::of($economicActivity->getTaxpayers())
+            ->toJson();
     }
 
     /**
@@ -76,7 +83,8 @@ class EconomicActivityController extends Controller
      */
     public function show(EconomicActivity $economicActivity)
     {
-        //
+        return view('modules.economic-activities.show')
+            ->with('row', $economicActivity);
     }
 
     /**

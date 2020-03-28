@@ -193,10 +193,10 @@ $(document).ready(function() {
                     $(nTd).html(
                     `<div class="btn-group">
                         <a class="mr-2" href=${baseURL}/administration/users/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'administration/users')" title='Editar'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
                     );
@@ -223,7 +223,7 @@ $(document).ready(function() {
                     $(nTd).html(
                     `<div class="btn-group">
                         <a class="mr-2" href=${baseURL}/administration/permissions/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`
                     );
@@ -251,7 +251,7 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/administration/roles/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`);
                 }
@@ -276,7 +276,7 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/settings/payment-methods/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`);
                 }
@@ -301,10 +301,10 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/geographic-area/communities/${oData.id} title='Ver información'>
-                            <i class='btn-sm btn-info flaticon2-file '></i>
+                            <i class='btn-sm btn-info fas fa-eye '></i>
                         </a>
                         <a class="mr-2" href=${baseURL}/geographic-area/communities/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`);
                 }
@@ -329,7 +329,7 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/geographic-area/parishes/${oData.id} title='Ver información'>
-                            <i class='btn-sm btn-info flaticon2-file '></i>
+                            <i class='btn-sm btn-info fas fa-eye '></i>
                         </a>
                     </div>`);
                 }
@@ -355,10 +355,10 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id} title='Ver información'>
-                            <i class='btn-sm btn-info flaticon2-file '></i>
+                            <i class='btn-sm btn-info fas fa-eye '></i>
                         </a>
                         <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`
                     );
@@ -377,8 +377,8 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/economic-activities/list",
         "columns": [
-            {data: 'code'},
-            {data: 'name'},
+            { data: 'code'},
+            { data: 'name'},
             { data: 'aliquote'},
             { data: 'min_tax'},
             {
@@ -387,13 +387,13 @@ $(document).ready(function() {
                     $(nTd).html(`
                         <div class="btn-group">
                             <a class="mr-2" href=${baseURL}/economic-activities/${oData.id} title='Ver información'>
-                                <i class='btn-sm btn-info flaticon2-file '></i>
+                                <i class='btn-sm btn-info fas fa-eye'></i>
                             </a>
                             <a class="mr-2" href=${baseURL}/economic-activities/${oData.id}/edit title='Editar'>
-                                <i class='btn-sm btn-warning flaticon-edit'></i>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
                             </a>
-                            <a class="mr-2" onClick="nullRecord(${oData.id},'economic-activities')" title='Editar'>
-                                <i class='btn-sm btn-danger flaticon-delete'></i>
+                            <a class="mr-2" onClick="nullRecord(${oData.id},'economic-activities')" title='Eliminar'>
+                                <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                             </a>
                         </div>`
                     );
@@ -423,10 +423,10 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/representations/${oData.id} title='Ver información'>
-                            <i class='btn-sm btn-info flaticon2-file '></i>
+                            <i class='btn-sm btn-info fas fa-eye '></i>
                         </a>
                         <a class="mr-2" href=${baseURL}/representations/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`
                     );
@@ -481,7 +481,35 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/settings/ordinances/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+    
+    $('#tTaxpayersByEconomicActivity').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/taxpayers/list`,
+        "columns": [
+            { data: 'rif'},
+            { data: 'name'},
+            { data: 'community.name'},
+            { data: 'fiscal_address'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.id} title='Ver información'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`
                     );
@@ -508,7 +536,7 @@ $(document).ready(function() {
                     $(nTd).html(`
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/settings/concepts/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning flaticon-edit'></i>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`
                     );
@@ -555,7 +583,7 @@ $(document).ready(function() {
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
                     );
@@ -586,7 +614,7 @@ $(document).ready(function() {
                             <i class='btn-sm btn-info flaticon2-medical-records'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
-                            <i class='btn-sm btn-danger flaticon-delete'></i>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
                     );

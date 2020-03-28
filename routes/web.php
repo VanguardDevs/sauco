@@ -111,6 +111,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::group(['middleware' => 'has.role:admin|chief-liquidation|inspector|superintendent|analyst|chief-inspection'], function() {
         /*----------  Routes economic activities  ----------*/
         Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
+        Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
         Route::resource('economic-activities', 'EconomicActivityController');
 
        /*----------  Routes parishes  ----------*/

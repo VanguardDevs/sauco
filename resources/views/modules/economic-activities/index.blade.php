@@ -7,11 +7,11 @@
   <div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
       <div class="card card-primary card-outline">
-        <div class="card-header alert alert-danger">
+        <div class="card-header alert">
           <div class="row">
             <h5 class="m-0">Control de actividades económicas
                @if (Auth()->user()->hasRole('admin'))
-                 <b>(</b> <a href="{{ Route("economic-activities".'.create') }}" title="Registrar comunidad">
+                 <b>(</b> <a href="{{ Route("economic-activities".'.create') }}" title="Nueva actividad">
                 <span>Registrar</span>
               </a><b>)</b>
                @endif

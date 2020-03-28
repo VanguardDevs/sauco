@@ -8,6 +8,7 @@ use App\Application;
 use App\Payment;
 use App\License;
 use App\Taxpayer;
+use App\EconomicActivity;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('payment', Payment::class);
         Route::model('taxpayer', Taxpayer::class);
         Route::model('license', License::class);
+        Route::model('activity', EconomicActivity::class);
     }
 
     /**

@@ -200,6 +200,11 @@ Breadcrumbs::for('economic-activities.index', function ($trail) {
     $trail->push('Actividades económicas', url('economic-activities'));
 });
 
+Breadcrumbs::for('economic-activities.show', function ($trail, $row) {
+    $trail->parent('economic-activities.index');
+    $trail->push('Actividad '.$row->code, route('economic-activities.show', $row));
+});
+
 /*------------- Economic activities > create -------------*/
 Breadcrumbs::for('economic-activities.create', function ($trail) {
     $trail->parent('economic-activities.index');
