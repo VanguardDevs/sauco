@@ -144,12 +144,14 @@ Route::prefix('/')->middleware('auth')->group(function()
         /**
          * Licenses
          */
-        Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@index')
+        Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@show')
             ->name('taxpayer.economic-activity-licenses');
-        Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@list');
+        Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@listByTaxpayer');
         Route::get('economic-activity-licenses/{license}/download', 'LicenseController@download');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
+        Route::get('taxpayers/economic-activity-licenses/list', 'LicenseController@list');
+        Route::resource('taxpayers/economic-activity-licenses', 'LicenseController');
 
         /**
          * Settlements' routes module

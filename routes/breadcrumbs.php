@@ -336,6 +336,12 @@ Breadcrumbs::for('representations.index', function ($trail) {
     $trail->push('Representantes', url('representations'));
 });
 
+/*------------- Representations -------------*/
+Breadcrumbs::for('economic-activity-licenses.index', function ($trail) {
+    $trail->parent('taxpayers.index');
+    $trail->push('Patentes de industria y comercio', url('economic-activity-licenses'));
+});
+
 /**
  * Representations > add
  */

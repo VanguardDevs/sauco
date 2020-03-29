@@ -28,17 +28,20 @@ class LicenseController extends Controller
      */
     public function index(Taxpayer $taxpayer)
     {
-        $correlatives = [
-            1 => 'INSTALAR LICENCIA',
-            2 => 'RENOVAR LICENCIA'
-        ];
-
-        return view('modules.licenses.index')
-            ->with('taxpayer', $taxpayer)
-            ->with('correlatives', $correlatives);
+        return view('modules.taxpayers.economic-activity-licenses.index');
     }
 
-    public function list(Taxpayer $taxpayer)
+    public function list()
+    {
+        $query = License::with(['taxpayer', 'correlative'])
+            ->get()
+            ->load(['correlative.correlativeNumber', 'correlative.correlativeType']); 
+
+        return DataTables::of($query)
+            ->toJson();
+    }
+
+    public function listBytaxpayer(Taxpayer $taxpayer)
     {
         $query = License::whereTaxpayerId($taxpayer->id);
 
@@ -74,13 +77,19 @@ class LicenseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\License  $License
+     * @param  \App\Taxpayer $taxpayer
      * @return \Illuminate\Http\Response
      */
-    public function show(License $license)
+    public function show(Taxpayer $taxpayer)
     {
-        return view('modules.licenses.show')
-            ->with('row', $license);
+        $correlatives = [
+            1 => 'INSTALAR LICENCIA',
+            2 => 'RENOVAR LICENCIA'
+        ];
+
+        return view('modules.licenses.index')
+            ->with('taxpayer', $taxpayer)
+            ->with('correlatives', $correlatives);
     }
 
     public function download(License $license)
@@ -99,7 +108,7 @@ class LicenseController extends Controller
 
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 
-            ->stream('Licencia '.$taxpayer->rif.'.pdf');
+            ->download('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**

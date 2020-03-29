@@ -10,6 +10,7 @@ use App\State;
 use App\Parish;
 use App\Person;
 use App\Taxpayer;
+use App\License;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
@@ -34,9 +35,11 @@ class TaxpayerController extends Controller
     public function index()
     {
         $numPersons = Person::get()->count();
+        $numLicenses = License::get()->count();
 
         return view('modules.taxpayers.index')
-            ->with('numPersons', $numPersons);
+            ->with('numPersons', $numPersons)
+            ->with('numLicenses', $numLicenses);
     }
 
     public function list()

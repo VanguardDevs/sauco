@@ -41,7 +41,7 @@
 <div class="col-xl-12">
     <div class="kt-portlet kt-portlet--height-fluid">
         <div class="kt-portlet__body">
-            <table id="tEconomicActivityLicenses" class="table table-bordered table-striped datatables" style="text-align: center">
+            <table id="tEconomicActivityLicensesTaxpayer" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
                     <th width="80%">Fecha de emisión</th>
