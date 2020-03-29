@@ -138,7 +138,8 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('reports/settlements', 'ReportController@settlements')->name('report.settlements');
         Route::get('reports/null-settlements', 'ReportController@showNullSettlements')->name('null.settlements');
         Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
-        Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport');
+        Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport')
+            ->name('print.taxpayers');
         Route::get('reports', 'ReportController@index')->name('reports');
 
         /**

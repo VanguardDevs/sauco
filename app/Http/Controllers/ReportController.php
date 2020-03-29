@@ -79,9 +79,9 @@ class ReportController extends Controller
     public function printTaxpayersReport()
     {
         $taxpayers = Taxpayer::get();
-        $emissionDate = Carbon::now()->toDateString();
-        
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
         $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate']));
-        return $pdf->stream('contribuyentes-registrados.pdf');
+        return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
     }
 }

@@ -62,10 +62,13 @@
                     </h3>
                 </div>
                @if (Auth()->user()->can('create.taxpayers'))
-                <div class="kt-portlet__head-toolbar">
+               <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{ Route('taxpayers.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nueva contribuyente">
+                        <a href="{{ Route('taxpayers.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nuevo contribuyente">
                             <i class="fas fa-plus"></i>
+                        </a>
+                        <a href="{{ Route('print.taxpayers') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Imprimir listado" target='_blank'>
+                            <i class="fas fa-print"></i>
                         </a>
                     </div>
                 </div>
