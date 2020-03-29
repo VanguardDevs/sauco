@@ -18,16 +18,6 @@
 
             <div class="kt-portlet__body">
                 <div class="kt-notification">
-                    <a class="kt-notification__item" href="{{ route('null.payments') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-graphic"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                Contribuyentes registrados   
-                            </div>
-                        </div>
-                    </a>
                     <a class="kt-notification__item" href="{{ url('reports/payments') }}">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-graphic"></i>
