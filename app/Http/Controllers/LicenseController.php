@@ -102,7 +102,11 @@ class LicenseController extends Controller
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
-        $representation = $taxpayer->representations->first()->person->name;
+        $representation = $taxpayer->representations->filter(function ($item, $key) {
+            if ($item->representationType->name == 'PRESIDENTE') {
+                return $item;
+            } 
+        })->first()->person->name;
 
         $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'endOfYear'];
 

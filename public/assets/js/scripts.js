@@ -777,7 +777,6 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'taxpayer.name' },
             { data: 'emission_date' },
             {
                 data: "id",

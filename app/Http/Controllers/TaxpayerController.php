@@ -178,7 +178,6 @@ class TaxpayerController extends Controller
      */
     public function show(Taxpayer $taxpayer)
     {
-
         return view('modules.taxpayers.show')
             ->with('row', $taxpayer);
     }
