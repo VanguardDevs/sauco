@@ -98,8 +98,9 @@ class ReportController extends Controller
         }
 
         $data = compact(['activity', 'emissionDate', 'taxpayers']);
-        $pdf = PDF::loadView('modules.reports.pdf.activity', $data);
 
-        return $pdf->stream('actividad-'.$activity->code.'.pdf');
+        return PDF::setOptions(['isRemoteEnabled' => true])
+            ->loadView('modules.reports.pdf.activity', $data)
+            ->download('reporte-actividad-'.$activity->code.'.pdf');
     }
 }
