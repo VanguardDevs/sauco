@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Contribuyentes registrados </title>
+        <title>Actividad #{{ $activity->code }} </title>
         <style>
            body {
                 font-family: sans-serif, serif;
@@ -78,25 +78,23 @@
         </div>
         <div class="tables">
            <table style="text-align: center">
-                <caption>CONTRIBUYENTES REGISTRADOS</caption>
+                <caption>ACTIVIDAD COD: {{ $activity->code }}. CONTRIBUYENTES: {{ $taxpayers->count() }}</caption>
                 <thead>
                   <tr>
-                    <th width="5%">N°</th>
                     <th width="15%">RIF</th>
                     <th width="35%">RAZÓN SOCIAL</th>
                     <th width="35%">DIRECCIÓN FISCAL</th>
-                    <th width="10%">COMUNIDAD</th>
+                    <th width="15%">COMUNIDAD</th>
                   </tr>
                 </thead>
                 <tbody>
                 @foreach($taxpayers as $taxpayer)
                  <tr>
-                    <td>{{ $taxpayer->id }}</td>
                     <td>{{ $taxpayer->rif }}</td> 
                     <td>{{ $taxpayer->name }}</td>   
                     <td>{{ $taxpayer->fiscal_address }}</td>
                     <td>{{ $taxpayer->community->name }}</td>
-                </tr>
+                 </tr>
                 @endforeach   
              </table>
             <br>

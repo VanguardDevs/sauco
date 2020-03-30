@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Taxpayer;
+use App\EconomicActivity;
 use Carbon\Carbon;
 use PDF;
+use Session;
 
 class ReportController extends Controller
 {
@@ -83,5 +85,21 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate']));
         return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
+    }
+
+    public function printActivityReport(EconomicActivity $activity)
+    {
+        $taxpayers = $activity->taxpayers;
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        if (!$taxpayers->count()) {
+            return redirect()->back()
+                ->withError('¡La actividad no tiene contribuyentes!');
+        }
+
+        $data = compact(['activity', 'emissionDate', 'taxpayers']);
+        $pdf = PDF::loadView('modules.reports.pdf.activity', $data);
+
+        return $pdf->stream('actividad-'.$activity->code.'.pdf');
     }
 }

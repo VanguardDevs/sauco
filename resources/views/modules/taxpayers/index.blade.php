@@ -6,8 +6,7 @@
 
 @section('content')
 <div class="row">
-
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-4 col-sm-12">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__body">
                 <div class="kt-widget4">

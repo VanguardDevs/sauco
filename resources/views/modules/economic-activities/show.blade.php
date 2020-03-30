@@ -71,6 +71,13 @@
                         Contribuyentes con esta actividad 
                     </h3>
                 </div>
+               <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a href="{{ Route('print.activity-report', $row->id) }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Imprimir listado">
+                            <i class="fas fa-print"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="kt-portlet__body">
               
