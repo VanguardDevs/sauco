@@ -1,20 +1,13 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de representantes')
+@section('subheader__title', 'Nuevo representante')
+
+@section('title', 'Nuevo representante')
 
 @section('form')
     <div class="row">
         <div class="col-lg-12">
             <div class="kt-portlet">
-                <div class="kt-portlet__head alert alert-danger">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                        @if ($typeForm == 'create')
-                            Registro de representantes
-                       @endif
-                        </h3>
-                    </div>
-                </div>
                 <!--begin::Form-->
                 @if ($typeForm == 'create')
                     {!! Form::open(['url' => route('representation.store', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}

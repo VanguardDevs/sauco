@@ -1,22 +1,14 @@
 @extends('layouts.template')
 
-@section('title', 'Patentes de industria y comercio')
+@section('subheader__title', 'Patentes de actividad económica')
+
+@section('title', 'Patentes de actividad económica')
 
 @section('content')
 
 <div class="row">
     <div class="col-lg-12">
         <div class="kt-portlet">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <span class="kt-portlet__head-icon">
-                        <i class="flaticon2-medical-records"></i>
-                    </span>
-                    <h3 class="kt-portlet__head-title">
-                        Listado de patentes de industria y comercio
-                    </h3>
-                </div>
-            </div>
             <div class="kt-portlet__body">
               <table id="tEconomicActivityLicenses" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>

@@ -1,5 +1,7 @@
 @extends('layouts.template')
 
+@section('subheader__title', 'Actividades económicas')
+
 @section('title', 'Control de actividades económicas')
 
 @section('content')

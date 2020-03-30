@@ -1,6 +1,8 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de contribuyente')
+@section('subheader__title', 'Registro de actividades económicas')
+
+@section('title', 'Registro de actividades económicas')
 
 @section('form')
     <div class="row">

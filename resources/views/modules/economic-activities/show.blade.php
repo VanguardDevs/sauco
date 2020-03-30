@@ -1,5 +1,7 @@
 @extends('layouts.template')
 
+@section('subheader__title', 'Actividad '.$row->code)
+
 @section('title', 'Reporte de la actividad '.$row->code)
 
 @section('content')

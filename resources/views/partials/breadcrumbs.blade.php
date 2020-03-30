@@ -1,12 +1,11 @@
 @if (count($breadcrumbs))
 <div class="kt-subheader__breadcrumbs">
 @foreach ($breadcrumbs as $breadcrumb)
+    <span class="kt-subheader__breadcrumbs-separator"></span>
     @if ($breadcrumb->url && !$loop->last)
-    <span class="kt-subheader__breadcrumbs-separator"></span>
-        <a href="{{ $breadcrumb->url }}" class="kt-subheader__breadcrumbs-link">{{ $breadcrumb->title }}</a>
+    <a href="{{ $breadcrumb->url }}" class="kt-subheader__breadcrumbs-link">{{ $breadcrumb->title }}</a>
     @else
-    <span class="kt-subheader__breadcrumbs-separator"></span>
-        <a href="" class="kt-subheader__breadcrumbs-link"> {{ $breadcrumb->title }}</a>
+    <a href="" class="kt-subheader__breadcrumbs-link"> {{ $breadcrumb->title }}</a>
     @endif
 @endforeach
 </div>

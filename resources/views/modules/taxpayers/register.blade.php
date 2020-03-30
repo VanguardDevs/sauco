@@ -1,22 +1,17 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de contribuyente')
+@section('subheader__title', 'Nuevo contribuyente')
+
+@if ($typeForm == 'create')
+    @section('title', 'Nuevo contribuyente')
+@else
+    @section('title', 'Actualización de contribuyente')
+@endif
 
 @section('form')
     <div class="row">
         <div class="col-lg-12">
             <div class="kt-portlet">
-                <div class="kt-portlet__head alert alert-danger">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                        @if ($typeForm == 'create')
-                            Registro de Contribuyente
-                        @else
-                            Editar contribuyente: {{ @$row->rif }}
-                        @endif
-                        </h3>
-                    </div>
-                </div>
                 <!-- form start -->
                 @if ($typeForm == 'create')
                 {!! Form::open(['route' => 'taxpayers'.'.store', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}

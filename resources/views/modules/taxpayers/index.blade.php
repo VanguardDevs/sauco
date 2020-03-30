@@ -1,5 +1,7 @@
 @extends('layouts.template')
 
+@section('subheader__title', 'Contribuyentes')
+
 @section('title', 'Control de contribuyentes')
 
 @section('content')
