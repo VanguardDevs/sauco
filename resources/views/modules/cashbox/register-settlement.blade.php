@@ -43,15 +43,15 @@
 
             </br>
             @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))            
-            @foreach($row->economicActivitySettlements as $activitySettlement)
+            @foreach($row->economicActivityAffidavits as $affidavit)
                 <div class="form-group row">
                     <div class="col-md-2">
                         <label class="col-md-12">Código</label>
-                        <div class="col-md-12">{{ $activitySettlement->economicActivity->code  }}</div>
+                        <div class="col-md-12">{{ $affidavit->economicActivity->code  }}</div>
                     </div>
                     <div class="col-md-6">
                         <label class="col-md-12">Nombre de la actividad</label>
-                        <div class="col-md-12"> {{ $activitySettlement->economicActivity->name }}</div>
+                        <div class="col-md-12"> {{ $affidavit->economicActivity->name }}</div>
                     </div>
                     @if($typeForm == 'edit-normal')
                     <div class="col-md-3">
@@ -61,11 +61,11 @@
                     @else
                     <div class="col-md-2">
                         <label class="col-md-12">Monto declarado</label>
-                        <div class="col-md-12">{{ $activitySettlement->brute_amount  }}</div>
+                        <div class="col-md-12">{{ $affidavit->brute_amount  }}</div>
                     </div>
                     <div class="col-md-2">
                         <label class="col-md-12">Monto total</label>
-                        <div class="col-md-12">{{ $activitySettlement->amount  }}</div>
+                        <div class="col-md-12">{{ $affidavit->amount  }}</div>
                     </div>
                     @endif
                 </div>
@@ -85,7 +85,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $row->economicActivitySettlements->sum('brute_amount')  }}
+                        <td>{{ $row->economicActivityAffidavits->sum('brute_amount')  }}
                         <td>{{ $row->amountFormat }}
                     </tr>
                 </tbody>

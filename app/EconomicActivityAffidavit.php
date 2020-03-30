@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EconomicActivitySettlement extends Model
+class EconomicActivityAffidavit extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'economic_activity_settlement';
+    protected $table = 'economic_activity_affidavit';
 
     protected $guarded = [];
 
