@@ -42,7 +42,14 @@
      data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500"
     >
 
-    <ul class="kt-menu__nav ">
+    <ul class="kt-menu__nav">
+        <li class="kt-menu__item {{ active('dashboard*') }}" aria-haspopup="true" >
+            <a  href="{{ url('dashboard') }}" class="kt-menu__link">
+            <i class="kt-menu__link-icon fas fa-home"></i>
+            <span class="kt-menu__link-text">Inicio</span>
+            </a>
+        </li>
+
         @if (@Auth::user()->can('access.taxpayers'))
         <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
             <a  href="{{ url('taxpayers') }}" class="kt-menu__link">
