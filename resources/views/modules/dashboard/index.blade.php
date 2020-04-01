@@ -1,10 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Dashboard')
-
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('dashboard') }}
-@endsection
+@section('title', 'Inicio')
 
 @section('content')
 <div class="row">
@@ -20,7 +16,7 @@
                             <div style="text-align:center; color:aliceblue">
                                 <h3>Sistema Integral de Recaudación de Impuestos Municipales</h3>
                                 <span class="kt-widget17__subtitle">
-                                    <h4>SIRIM-Bermúdez</h4>
+                                    <h4>SIRIM - Bermúdez</h4>
                                 </span>
                             </div>
                         </div>

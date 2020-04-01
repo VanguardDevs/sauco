@@ -53,7 +53,7 @@
         @if (@Auth::user()->can('access.taxpayers'))
         <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
             <a  href="{{ url('taxpayers') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon-network"></i>
+            <i class="kt-menu__link-icon fas fa-user-tie"></i>
             <span class="kt-menu__link-text">Contribuyentes</span>
             </a>
         </li>
@@ -100,7 +100,7 @@
         @if (@Auth::user()->can('access.geographic-area'))
         <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('geographic-area') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
             <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                <i class="kt-menu__link-icon flaticon-earth-globe "></i>
+                <i class="kt-menu__link-icon fas fa-globe-americas"></i>
                 <span class="kt-menu__link-text">Área geográfica</span>
                 <i class="kt-menu__ver-arrow la la-angle-right"></i>
             </a>
@@ -128,7 +128,7 @@
         @if (@Auth::user()->hasRole('admin'))
             <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('administration') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
                 <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <i class="kt-menu__link-icon flaticon-user-settings"></i>
+                    <i class="kt-menu__link-icon fas fa-user-check"></i>
                     <span class="kt-menu__link-text">Administración</span>
                     <i class="kt-menu__ver-arrow la la-angle-right"></i>
                 </a>
@@ -161,7 +161,7 @@
 
             <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
                 <a  href="{{ url('settings') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-settings"></i>
+                <i class="kt-menu__link-icon flaticon2-dashboard"></i>
                 <span class="kt-menu__link-text">Configuraciones</span>
                 </a>
             </li>
