@@ -47,9 +47,9 @@ class Settlement extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function economicActivitySettlements()
+    public function economicActivityAffidavits()
     {
-        return $this->hasMany(EconomicActivitySettlement::class);
+        return $this->hasMany(EconomicActivityAffidavit::class);
     }
 
     public function receivable()

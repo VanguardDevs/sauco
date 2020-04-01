@@ -66,6 +66,7 @@ class AffidavitController extends Controller
             return view('modules.cashbox.select-settlement')
                 ->with('row', $settlement);
         }
+
         // The settlement it's already processed    
         return view('modules.cashbox.register-settlement')
             ->with('typeForm', 'show')

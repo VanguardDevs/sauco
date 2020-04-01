@@ -6,14 +6,14 @@ use App\Concept;
 use App\Settlement;
 use App\Taxpayer;
 use App\Month;
-use App\Services\EconomicActivitySettlementService;
+use App\Services\EconomicActivityAffidavitService;
 
 class SettlementService
 {
     /**
      * @var Settlement Model
      */
-    public function __construct(EconomicActivitySettlementService $activitySettlement)
+    public function __construct(EconomicActivityAffidavitService $activitySettlement)
     {
         $this->activitySettlement = $activitySettlement;
     }

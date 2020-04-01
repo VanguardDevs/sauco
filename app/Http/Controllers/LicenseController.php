@@ -68,10 +68,36 @@ class LicenseController extends Controller
     {
         $correlative = CorrelativeType::find($request->input('correlative'));
 
+        $validator = $this->validateStore($taxpayer);
+
+        if ($validator['error']) {
+            return redirect()->back()->withError($validator['msg']);
+        }
+
         $this->license->makeLicense($correlative, $taxpayer);
         
         return redirect('taxpayers/'.$taxpayer->id.'/economic-activity-licenses')
             ->withSuccess('¡Licencia de actividad económica creada!');
+    }
+
+    public function validateStore(Taxpayer $taxpayer)
+    {
+        $isValid = [
+            'error' => false,
+            'msg' => ''    
+        ];
+
+        if (!$taxpayer->economicActivities->count()) {
+           $isValid['error'] = true;
+           $isValid['msg'] = '¡El contribuyente no tiene actividades económicas!';
+        }
+
+        if (!$taxpayer->president()->count()) {
+            $isValid['error'] = true;
+            $isValid['msg'] = '¡El contribuyente no tiene un representante (PRESIDENTE) registrado!';
+        } 
+
+        return $isValid;
     }
 
     /**
@@ -102,11 +128,7 @@ class LicenseController extends Controller
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
-        $representation = $taxpayer->representations->filter(function ($item, $key) {
-            if ($item->representationType->name == 'PRESIDENTE') {
-                return $item;
-            } 
-        })->first()->person->name;
+        $representation = $taxpayer->president()->first()->person->name;
 
         $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'endOfYear'];
 
