@@ -9,7 +9,7 @@ use App\Settlement;
 use App\Receivable;
 use App\Concept;
 use App\Month;
-use App\EconomicActivitySettlement;
+use App\EconomicActivityAffidavit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\ReceivableService;
@@ -129,7 +129,7 @@ class SettlementController extends Controller
         }
 
         // Delete economic activity settlements and settlement
-        EconomicActivitySettlement::where('settlement_id', $settlement->id)->delete();
+        EconomicActivityAffidavit::where('settlement_id', $settlement->id)->delete();
         $settlement->delete();
 
         return redirect()->back()
