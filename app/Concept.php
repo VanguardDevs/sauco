@@ -37,7 +37,7 @@ class Concept extends Model
 
     public function listing()
     {
-        return $this->belongsTo(Listing::class);
+        return $this->belongsTo(Listing::class, 'list_id');
     }
 
     public function scopeGetAmount($query, Taxpayer $taxpayer, Concept $concept)
