@@ -1,23 +1,18 @@
 @extends('cruds.form')
 
-@section('title', 'Liquidación '.$row->id)
+@section('subheader__title', 'Liquidación # '.$row->num)
+
+@section('title', 'Liquidación '.$row->num)
 
 @section('form')
     <!-- general form elements -->
-    <div class="card card-primary">
-        <div class="card-header alert alert-danger">
-           @if ($typeForm == 'edit')
-                <h5 class="card-title">Calcular liquidación</h5>
-           @else
-                <h5>Liquidación n° {{ $row->id }}</h5>
-           @endif
-        </div>
+    <div class="kt-portlet">
         <!-- /.card-header -->
         <!-- form start -->
         @if (($typeForm == 'edit-normal') || ($typeForm == 'edit-group'))
             {!! Form::open(['route' => ['affidavits.update', $row->id, $typeForm], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
         @endif
-        <div class="card-body">
+        <div class="kt-portlet__body">
             <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
                     Datos generales del contribuyente
@@ -45,11 +40,11 @@
             @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))            
             @foreach($row->economicActivityAffidavits as $affidavit)
                 <div class="form-group row">
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label class="col-md-12">Código</label>
                         <div class="col-md-12">{{ $affidavit->economicActivity->code  }}</div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <label class="col-md-12">Nombre de la actividad</label>
                         <div class="col-md-12"> {{ $affidavit->economicActivity->name }}</div>
                     </div>

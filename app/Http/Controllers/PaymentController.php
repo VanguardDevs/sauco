@@ -11,6 +11,7 @@ use App\Taxpayer;
 use App\EconomicActivitySettlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Services\PaymentService;
 use Carbon\Carbon;
 use PDF;
 use Auth;
@@ -22,9 +23,11 @@ class PaymentController extends Controller
      * @var $typeform
      */
     private $typeform = 'show';
+    private $payment;
 
-    public function __construct()
+    public function __construct(PaymentService $payment)
     {
+        $this->payment = $payment;
         $this->middleware('has.role:admin')->only('destroy');
         $this->middleware('has.role:liquidator|collector|admin|liquidation-chief|collection-chief')->only(['index', 'list','show']);
         $this->middleware('auth');
@@ -45,7 +48,7 @@ class PaymentController extends Controller
         $query = Payment::list() 
             ->where('status.name', '=', 'PROCESADA')
             ->whereNull('payments.deleted_at')
-            ->orderBy('id', 'DESC');
+            ->orderBy('processed_at', 'DESC');
 
         return DataTables::of($query)->toJson();
     }
@@ -55,7 +58,7 @@ class PaymentController extends Controller
         $query = Payment::list() 
             ->where('status.name', '=', 'PENDIENTE')
             ->whereNull('payments.deleted_at')
-            ->orderBy('payments.deleted_at', 'DESC');
+            ->orderBy('payments.created_at', 'DESC');
 
         return DataTables::of($query)->toJson();
     }
@@ -125,12 +128,6 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-        $payment = Payment::find($payment->id);
-        $payment->state_id = 2;
-        $payment->payment_type_id = 2;
-        $payment->payment_method_id = $request->input('method');
-        $payment->observations = $request->input('observations');
-
         if ($request->input('method') != '3') {
             $reference = $request->input('reference');
 
@@ -139,13 +136,15 @@ class PaymentController extends Controller
                         ->withError('¡Faltan datos!');
             }
 
-            $reference = Reference::create([
-                'reference' => $request->input('reference'),
-                'account_id' => 1, // For later use, select account
-                'payment_id' => $payment->id
-            ]);
+            $this->payment->makeReference($payment, $reference);
         }
-        $payment->save();
+
+        $data = Array(
+            'payment_method_id' => $request->input('method'),
+            'observations' => $request->input('observations')
+        );
+        
+        $this->payment->update($payment, $data);
 
         return redirect('cashbox/payments/'.$payment->id)
             ->withSuccess('¡Factura procesada!');
@@ -161,11 +160,10 @@ class PaymentController extends Controller
         $settlement = $payment->receivables->first()->settlement;
         $taxpayer = $settlement->taxpayer;
         $user = $settlement->user;
-        $billNum = str_pad($payment->id, 8, '0', STR_PAD_LEFT);
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
 
-        $vars = ['user','payment', 'billNum', 'reference', 'taxpayer', 'denomination'];
+        $vars = ['user','payment', 'reference', 'taxpayer', 'denomination'];
         
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.cashbox.pdf.payment', compact($vars)) 

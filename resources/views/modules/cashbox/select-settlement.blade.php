@@ -1,6 +1,8 @@
 @extends('cruds.form')
 
-@section('title', 'Liquidación '.$row->id)
+@section('subheader__title', 'Liquidación # '.$row->num)
+
+@section('title', 'Liquidación '.$row->num)
 
 @section('form')
     <!-- general form elements -->

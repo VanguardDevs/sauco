@@ -114,7 +114,7 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>{{ $payment->updated_at }}</td> 
+                        <td>{{ $payment->processed_at }}</td> 
                         <td>{{ $payment->paymentMethod->name }}</td>   
                         <td>{{ $payment->reference->reference ?? 'S/N' }}</td>
                     </tr>
@@ -132,7 +132,7 @@
                 <tbody>
                 @foreach($payment->receivables as $receivable)
                  <tr>
-                    <td>{{ $receivable->settlement->numFormat }}</td> 
+                    <td>{{ $receivable->settlement->num }}</td> 
                     <td>{{ $receivable->object_payment  }}</td>   
                     <td>{{ $receivable->settlement->amountFormat }}</td>
                 </tr>
@@ -142,7 +142,7 @@
         <br>
         <div class="bill-info">
             <div class="col-bill-info">
-                N° DE FACTURA: {{ $billNum }}
+                N° DE FACTURA: {{ $payment->num }}
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">

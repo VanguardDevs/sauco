@@ -15,6 +15,7 @@ class CreateSettlementsTable extends Migration
     {
         Schema::create('settlements', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('num', 8);
             $table->decimal('amount', 15, 2);
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('concept_id');

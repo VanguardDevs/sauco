@@ -6,6 +6,7 @@ use App\Concept;
 use App\Settlement;
 use App\Taxpayer;
 use App\Month;
+use Carbon\Carbon;
 use App\Services\EconomicActivityAffidavitService;
 
 class SettlementService
@@ -67,10 +68,15 @@ class SettlementService
             $totalAmount = $this->activitySettlement->update($settlement, $data);
         }
 
+        $settlementNum = $this->newNum();
+        $processedAt = Carbon::now();
+
         $settlement = $this->update($settlement, [
             'amount' => $totalAmount,
             'state_id' => 2,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+            'processed_at' => $processedAt,
+            'num' => $settlementNum
         ]);
 
         return $settlement;
@@ -89,10 +95,22 @@ class SettlementService
             'month_id' => $month->id,
             'state_id' => 1,
             'user_id' => auth()->user()->id,
-            'concept_id' => $concept->id
+            'concept_id' => $concept->id,
         ]);
 
         return $settlement;
+    }
+
+    private function newNum()
+    {
+        $lastNum = Settlement::withTrashed()
+            ->whereStateId(2)
+            ->orderBy('processed_at', 'DESC')
+            ->first()
+            ->num;
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
     }
 
     /**

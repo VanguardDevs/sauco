@@ -1,21 +1,15 @@
 @extends('cruds.form')
 
+@section('subheader__title', 'Liquidaciones procesadas')
+
 @section('title', 'Reporte de liquidaciones procesadas')
 
 @section('content')
     <!-- /.card -->
   <div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
-      <div class="card card-primary card-outline">
-        <div class="card-header alert">
-          <div class="row">
-            <h5 class="m-0">
-                Control de liquidaciones procesadas
-            </h5>
-          </div>
-        </div>
-
-        <div class="card-body">
+      <div class="kt-portlet">
+        <div class="kt-portlet__body">
           <table id="tProcessedSettlements" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>

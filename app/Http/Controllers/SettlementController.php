@@ -55,7 +55,7 @@ class SettlementController extends Controller
     {
         $query = Settlement::with(['concept', 'taxpayer'])
             ->whereStateId(1)
-            ->orderBy('created_at', 'DESC');
+            ->orderBy('updated_at', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -64,7 +64,7 @@ class SettlementController extends Controller
     {
         $query = Settlement::with(['concept', 'taxpayer', 'user'])
             ->whereStateId(2)
-            ->orderBy('created_at', 'DESC');
+            ->orderBy('processed_at', 'DESC');
 
         return DataTables::eloquent($query)->toJson();
     }

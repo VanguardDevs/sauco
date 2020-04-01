@@ -1,23 +1,22 @@
 @extends('cruds.form')
 
-@section('title', 'Factura n° '.$row->num)
+@if ($typeForm == 'edit')
+@section('title', 'Factura # '.$row->id)
+@else
+@section('subheader__tile', 'Factura N° '.$row->num)
+@endif
+
+@section('title', 'Factura # '.$row->id)
 
 @section('form')
     <!-- general form elements -->
-    <div class="card card-primary">
-        <div class="card-header alert alert-danger">
-            @if ($typeForm == 'edit')
-            <h5 class="card-title">Procesar factura n° {{ $row->num }}</h5>
-            @else
-            <h5 class="card-title">factura n° {{ $row->num }}</h5>
-            @endif
-        </div>
+    <div class="kt-portlet">
         <!-- /.card-header -->
         <!-- form start -->
         @if ($typeForm == 'edit')
             {!! Form::model($row, ['route' => ["payments".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'role' => 'form', 'enctype' => 'multipart/form-data',]) !!}
         @endif
-        <div class="card-body">
+        <div class="kt-portlet__body">
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
                     Datos generales del contribuyente

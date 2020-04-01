@@ -51,7 +51,7 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Settlement::class, 'receivables');
     }
 
-    public function getNumAttribute()
+    public function getNumFormatAttribute()
     {
         return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
     }
@@ -69,12 +69,14 @@ class Payment extends Model implements Auditable
                 'payments.amount as payments.amount',
                 'payments.deleted_at as payments.deleted_at',
                 'payments.id',
+                'payments.num',
+                'payments.processed_at'
             ]);
     }
 
     public static function processedByDate($date)
     {
-        return self::whereDate('updated_at', $date->toDateString())
+        return self::whereDate('processed_at', $date->toDateString())
             ->whereStateId(2)
             ->orderBy('id', 'ASC')
             ->get();
@@ -85,7 +87,7 @@ class Payment extends Model implements Auditable
         return date('d/m/Y H:m:s', strtotime($value));
     }
 
-    public function getUpdatedAtAttribute($value)
+    public function getProcessedAtAttribute($value)
     {
         return date('d-m-Y H:m', strtotime($value));
     }

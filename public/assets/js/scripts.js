@@ -586,7 +586,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/payments/processed/list",
         "columns": [
-            { data: 'id'},
+            { data: 'num'},
             { data: 'taxpayers.rif' },
             { data: 'taxpayers.name' },
             { data: 'payments.amount' },
@@ -681,7 +681,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/settlements/processed/list",
         "columns": [
-            { data: 'id'},
+            { data: 'num'},
             { data: 'taxpayer.rif' },
             { data: 'concept.name'},
             { data: 'user.login' },
@@ -710,7 +710,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'id'},
+            { data: 'num'},
             { data: 'month.name' },
             { data: 'amount' },
             { data: 'state.name'},
