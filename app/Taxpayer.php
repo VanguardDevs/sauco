@@ -114,4 +114,13 @@ class Taxpayer extends Model implements Auditable
     {
         return self::whereRif($rif)->first();
     } 
+
+    public function president()
+    {
+        return $this->representations->filter(function ($item, $key) {
+            if ($item->representationType->name == 'PRESIDENTE') {
+                return $item;
+            } 
+        });
+    }
 }
