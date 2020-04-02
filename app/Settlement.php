@@ -17,6 +17,8 @@ class Settlement extends Model
         'amount' => 'float'
     ];
 
+    protected $appends = ['total_amount', 'brute_amount_affidavit'];
+
     public function month()
     {
         return $this->belongsTo(Month::class);
@@ -47,9 +49,9 @@ class Settlement extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function economicActivityAffidavits()
+    public function affidavits()
     {
-        return $this->hasMany(EconomicActivityAffidavit::class);
+        return $this->hasMany(Affidavit::class);
     }
 
     public function receivable()
@@ -77,13 +79,15 @@ class Settlement extends Model
         return $this->belongsToMany(Payment::class, Receivable::class)
             ->first();
     }
-    
-    public function getNumFormatAttribute()
+
+    public function getBruteAmountAffidavitAttribute($value)
     {
-        return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
+        $totalAffidavit = $this->affidavits->sum('brute_amount');
+
+        return number_format($totalAffidavit, 2, ',', '.');
     }
 
-    public function getAmountFormatAttribute()
+    public function getTotalAmountAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
     }

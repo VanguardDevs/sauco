@@ -7,16 +7,16 @@ use App\Settlement;
 use App\Taxpayer;
 use App\Month;
 use Carbon\Carbon;
-use App\Services\EconomicActivityAffidavitService;
+use App\Services\AffidavitService;
 
 class SettlementService
 {
     /**
      * @var Settlement Model
      */
-    public function __construct(EconomicActivityAffidavitService $activitySettlement)
+    public function __construct(AffidavitService $affidavit)
     {
-        $this->activitySettlement = $activitySettlement;
+        $this->affidavit = $affidavit;
     }
     
     /**
@@ -50,7 +50,7 @@ class SettlementService
         $code = $concept->code;
         
         if ($code == 1) {
-            $this->activitySettlement->make($settlement);
+            $this->affidavit->make($settlement);
         }
 
         return $settlement;
@@ -63,9 +63,9 @@ class SettlementService
     public function handleUpdate($settlement, $data, $byGroup)
     {
         if ($byGroup) {
-            $totalAmount = $this->activitySettlement->updateByGroup($settlement, $data);    
+            $totalAmount = $this->affidavit->updateByGroup($settlement, $data);    
         } else {
-            $totalAmount = $this->activitySettlement->update($settlement, $data);
+            $totalAmount = $this->affidavit->update($settlement, $data);
         }
 
         $settlementNum = $this->newNum();

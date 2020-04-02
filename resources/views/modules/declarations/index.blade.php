@@ -68,9 +68,10 @@
                 <thead>
                   <tr>
                     <th width="10%">N°</th>
-                    <th width="25%">Mes</th>
-                    <th width="25%">Monto Total</th>
-                    <th width="20%">Estado</th>
+                    <th width="15%">Mes</th>
+                    <th width="25%">Declarado</th>
+                    <th width="25%">Calculado</th>
+                    <th width="15%">Estado</th>
                     <th width="10%">Acciones</th>
                   </tr>
                 </thead>

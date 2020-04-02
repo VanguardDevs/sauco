@@ -712,7 +712,8 @@ $(document).ready(function() {
         "columns": [
             { data: 'num'},
             { data: 'month.name' },
-            { data: 'amount' },
+            { data: 'brute_amount_affidavit', name: 'brute_amount_affidavit' },
+            { data: 'total_amount', name: 'total_amount' },
             { data: 'state.name'},
             {
                 data: "id",

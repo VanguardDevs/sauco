@@ -5,16 +5,22 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EconomicActivityAffidavit extends Model
+class Affidavit extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'economic_activity_affidavit';
+    protected $table = 'affidavits';
 
     protected $guarded = [];
 
     protected $casts = [
-        'amount' => 'float'
+        'amount' => 'float',
+        'brute_amount' => 'float' 
+    ];
+
+    protected $appends = [
+        'affidavit_amount',
+        'calc'
     ];
 
     public function economicActivity()
@@ -27,12 +33,12 @@ class EconomicActivityAffidavit extends Model
         return $this->belongsTo(Settlement::class);
     }
 
-    public function getBruteAmountFormatAttribute()
+    public function getAffidavitAmountAttribute($value)
     {
         return number_format($this->brute_amount, 2, ',', '.');
     }
 
-    public function getAmountFormatAttribute()
+    public function getCalcAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
     }

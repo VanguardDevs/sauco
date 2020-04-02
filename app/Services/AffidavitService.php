@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\EconomicActivitySettlement;
+use App\Affidavit;
 use App\Settlement;
 use App\TaxUnit;
 
-class EconomicActivitySettlementService
+class AffidavitService
 {
     /**
      * Create economic activity settlements for every activity
@@ -28,12 +28,12 @@ class EconomicActivitySettlementService
             ));
         }
 
-        EconomicActivitySettlement::insert($data);
+        Affidavit::insert($data);
     }
 
     public function update(Settlement $settlement, array $amounts)
     {
-        $settlements = $settlement->economicActivitySettlements;
+        $settlements = $settlement->affidavits;
         $bruteAmounts = $amounts;
         $totalAmounts = Array();
 
@@ -54,7 +54,7 @@ class EconomicActivitySettlementService
 
     public function updateByGroup(Settlement $settlement, float $amount)
     {
-        $settlements = $settlement->economicActivitySettlements;
+        $settlements = $settlement->affidavits;
         $maxDeclaration = $settlements->first();
 
         if ($amount == 0.00) {
@@ -74,11 +74,11 @@ class EconomicActivitySettlementService
         return $this->calculateTax($maxDeclaration, $amount, true)->amount;
     }
 
-    public function calculateTax(EconomicActivitySettlement $activitySettlement, $amount, $update = false)
+    public function calculateTax(Affidavit $affidavit, $amount, $update = false)
     {
         $total = 0.00;
         if ($update) {
-            $activity = $activitySettlement->economicActivity;
+            $activity = $affidavit->economicActivity;
             $taxUnit = TaxUnit::latest()->first();
             $total = $activity->aliquote * $amount / 100;
             $minTax = $taxUnit->value * $activity->min_tax;
@@ -88,7 +88,7 @@ class EconomicActivitySettlementService
             }
         }
         
-        $settlement = EconomicActivitySettlement::find($activitySettlement->id);
+        $settlement = Affidavit::find($affidavit->id);
         $settlement->update([
             'amount' => $total,
             'brute_amount' => $amount

@@ -43,11 +43,6 @@ var KTInputmask = function () {
             rightAlignNumerics: false
         });
 
-        // currency format
-        $("#kt_inputmask_7").inputmask('€ 999.999.999,99', {
-            numericInput: true
-        }); //123456  =>  € ___.__1.234,56
-
         //ip address
         $("#kt_inputmask_8").inputmask({
             "mask": "999.999.999.999"

@@ -38,7 +38,12 @@
 
             </br>
             @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))            
-            @foreach($row->economicActivityAffidavits as $affidavit)
+            <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Declaraciones por actividad económica
+                </div>
+            </div>
+            @foreach($row->affidavits as $affidavit)
                 <div class="form-group row">
                     <div class="col-md-1">
                         <label class="col-md-12">Código</label>
@@ -50,27 +55,22 @@
                     </div>
                     @if($typeForm == 'edit-normal')
                     <div class="col-md-3">
-                        <label class="col-md-12">Monto declarado</label>
+                        <label class="col-md-12">Declarado</label>
                         {!! Form::text("activity_settlements[]", old('activity_settlement', @$row->name), ["class" => "form-control decimal-input-mask col-md-12", "required"]) !!}
                     </div>
                     @else
                     <div class="col-md-2">
-                        <label class="col-md-12">Monto declarado</label>
-                        <div class="col-md-12">{{ $affidavit->brute_amount  }}</div>
+                        <label class="col-md-12">Declarado</label>
+                        <div class="col-md-12">{{ $affidavit->affidavit_amount  }}</div>
                     </div>
                     <div class="col-md-2">
-                        <label class="col-md-12">Monto total</label>
-                        <div class="col-md-12">{{ $affidavit->amount  }}</div>
+                        <label class="col-md-12">Calculado</label>
+                        <div class="col-md-12">{{ $affidavit->calc  }}</div>
                     </div>
                     @endif
                 </div>
             @endforeach           
             @if($typeForm == 'show')
-            <div class="form-group col-lg-12">
-                <div class="kt-heading kt-heading--md">
-                    Declaraciones por actividad económica
-                </div>
-            </div>
            <table class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                     <tr>
@@ -80,8 +80,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $row->economicActivityAffidavits->sum('brute_amount')  }}
-                        <td>{{ $row->amountFormat }}
+                        <td>{{ $row->bruteAmountAffidavit }}
+                        <td>{{ $row->totalAmount }}
                     </tr>
                 </tbody>
             </table>
