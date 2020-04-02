@@ -46,10 +46,7 @@ class Payment extends Model implements Auditable
     }
 
     public function receivables()
-    {
-        return $this->hasMany(Receivable::class);
-    }
-
+    ;
     public function settlements()
     {
         return $this->belongsToMany(Settlement::class, 'receivables');

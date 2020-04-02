@@ -35,6 +35,13 @@ class PaymentService
         return $payment;
     }
 
+    public function updateAmount($payment)
+    {
+        $totalAmount = $payment->settlements->sum('amount');
+
+        $payment->update(['amount' => $totalAmount]);
+    }
+
     public function update(Payment $payment, Array $data)
     {
         $paymentNum = $this->newNum();

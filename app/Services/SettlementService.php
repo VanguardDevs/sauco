@@ -62,7 +62,7 @@ class SettlementService
             return $concept->name.': '.$month->name.' - '.$month->year->year;
         }
 
-        dd($concept->listing);
+        return $concept->name;
     }
 
     /**
@@ -96,16 +96,16 @@ class SettlementService
      * Creates an economic activity settlement for a given taxpayer
      * @param Taxpayer $taxpayer
      */
-    public function create($taxpayer, $concept, $month)
+    public function create($taxpayer, $concept, $month, $amount = 0.00, $state = 1)
     {
         $objectSettlement = $this->message($concept, $month);
 
         $settlement = Settlement::create([
             'object_payment' => $objectSettlement,
-            'amount' => 0.00,
+            'amount' => $amount,
             'taxpayer_id' => $taxpayer->id,
             'month_id' => $month->id,
-            'state_id' => 1,
+            'state_id' => $state,
             'user_id' => auth()->user()->id,
             'concept_id' => $concept->id,
         ]);
