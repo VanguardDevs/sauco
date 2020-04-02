@@ -5,6 +5,7 @@ namespace app\Services;
 use App\Payment;
 use App\Services\SettlementService;
 use App\Concept;
+use App\Settlement;
 
 class FineService
 {
@@ -20,13 +21,19 @@ class FineService
         $amount = $this->calculateRechargue($settlement);
         $concept = Concept::whereCode(2)->first();
 
-        $fine = $this->settlement->create(
-            $settlement->taxpayer,
-            $concept,
-            $settlement->month,
-            $amount,
-            2 // State
-        );
+        $message = $this->settlement->message($concept, $settlement->month);
+        $num = $this->settlement->newNum();
+
+        $fine = Settlement::create([
+            'num' => $num,
+            'object_payment' => $message,
+            'amount' => $amount,
+            'taxpayer_id' => $settlement->taxpayer->id,
+            'month_id' => $settlement->month->id,
+            'state_id' => 2,
+            'user_id' => auth()->user()->id,
+            'concept_id' => $concept->id
+        ]);
 
         return $fine;
     }

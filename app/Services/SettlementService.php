@@ -113,7 +113,7 @@ class SettlementService
         return $settlement;
     }
 
-    private function newNum()
+    public function newNum()
     {
         $lastNum = Settlement::withTrashed()
             ->whereStateId(2)

@@ -18,10 +18,9 @@ var KTBootstrapDatepicker = function () {
     // Private functions
     var demos = function () {
         // minimum setup
-        $('#kt_datepicker_1, #kt_datepicker_1_validate').datepicker({
+        $('#datepicker, #kt_datepicker_1_validate').datepicker({
             rtl: KTUtil.isRTL(),
-            todayHighlight: true,
-            orientation: "bottom left",
+            orientation: "top left",
             templates: arrows,
             language: 'es'
         });

@@ -17,7 +17,7 @@
                 {!!   
                     Form::text('date', null, [
                         'class' => 'form-control',
-                        'id' => 'kt_datepicker_1',
+                        'id' => 'datepicker',
                         'placeholder' => 'Seleccione una fecha',
                         'readonly' 
                     ]) 
