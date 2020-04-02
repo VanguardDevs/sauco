@@ -46,7 +46,10 @@ class Payment extends Model implements Auditable
     }
 
     public function receivables()
-    ;
+    {
+        return $this->hasMany(Receivable::class);
+    }
+    
     public function settlements()
     {
         return $this->belongsToMany(Settlement::class, 'receivables');
@@ -58,6 +61,7 @@ class Payment extends Model implements Auditable
             ->join('receivables', 'receivables.settlement_id', 'settlements.id')
             ->join('payments', 'receivables.payment_id', '=', 'payments.id')
             ->join('status', 'payments.state_id', '=', 'status.id')
+            ->groupBy('payments.id', 'taxpayers.name', 'taxpayers.rif', 'status.name')
             ->select([
                 'taxpayers.name as taxpayers.name',
                 'taxpayers.rif as taxpayers.rif',
