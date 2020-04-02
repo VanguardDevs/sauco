@@ -3,10 +3,10 @@
 @if ($typeForm == 'edit')
 @section('title', 'Factura # '.$row->id)
 @else
-@section('subheader__tile', 'Factura N° '.$row->num)
+@section('subheader__title', 'Factura N° '.$row->num)
 @endif
 
-@section('title', 'Factura # '.$row->id)
+@section('title', 'Factura # '.(($row->num) ? $row->num : $row->id))
 
 @section('form')
     <!-- general form elements -->
@@ -57,9 +57,9 @@
             <tbody>
             @foreach($row->receivables as $receivable)
              <tr>
-                <td>{{ $receivable->settlement->numFormat }}</td> 
+                <td>{{ $receivable->settlement->num }}</td> 
                 <td>{{ $receivable->object_payment  }}</td>   
-                <td>{{ $receivable->settlement->amountFormat }}</td>
+                <td>{{ $receivable->settlement->total_amount }}</td>
             </tr>
             @endforeach   
           </table>

@@ -685,7 +685,7 @@ $(document).ready(function() {
             { data: 'taxpayer.rif' },
             { data: 'concept.name'},
             { data: 'user.login' },
-            { data: 'amount' },
+            { data: 'total_amount', name: 'total_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

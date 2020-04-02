@@ -134,7 +134,7 @@
                  <tr>
                     <td>{{ $receivable->settlement->num }}</td> 
                     <td>{{ $receivable->object_payment  }}</td>   
-                    <td>{{ $receivable->settlement->amountFormat }}</td>
+                    <td>{{ $receivable->settlement->totalAmount }}</td>
                 </tr>
                 @endforeach   
              </table>

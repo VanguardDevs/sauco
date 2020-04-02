@@ -21,6 +21,10 @@ class Payment extends Model implements Auditable
         'amount' => 'float'
     ];  
 
+    protected $appends = [
+        'total_amount',
+    ];
+
     public function state()
     {
         return $this->belongsTo(Status::class);
@@ -49,11 +53,6 @@ class Payment extends Model implements Auditable
     public function settlements()
     {
         return $this->belongsToMany(Settlement::class, 'receivables');
-    }
-
-    public function getNumFormatAttribute()
-    {
-        return str_pad($this->attributes['id'], 8, '0',STR_PAD_LEFT);
     }
 
     public static function scopeList()
