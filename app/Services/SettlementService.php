@@ -77,7 +77,7 @@ class SettlementService
             $totalAmount = $this->affidavit->update($settlement, $data);
         }
 
-        $settlementNum = $this->newNum();
+        $settlementNum = Settlement::newNum();
         $processedAt = Carbon::now();
 
         $settlement = $this->update($settlement, [
@@ -90,7 +90,6 @@ class SettlementService
 
         return $settlement;
     }
-
 
     /**
      * Creates an economic activity settlement for a given taxpayer
@@ -111,18 +110,6 @@ class SettlementService
         ]);
 
         return $settlement;
-    }
-
-    public function newNum()
-    {
-        $lastNum = Settlement::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('processed_at', 'DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
     }
 
     /**

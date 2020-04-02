@@ -44,8 +44,9 @@ class PaymentService
 
     public function update(Payment $payment, Array $data)
     {
-        $paymentNum = $this->newNum();
+        $paymentNum = Payment::newNum();
         $processedAt = Carbon::now();
+
         $data += [
             'state_id' => 2,
             'payment_type_id' => 2,
@@ -64,18 +65,6 @@ class PaymentService
         ]);
         
         return $reference;
-    }
-
-    private function newNum()
-    {
-        $lastNum = Payment::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('processed_at', 'DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
-    }
+    } 
 }
 

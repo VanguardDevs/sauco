@@ -58,7 +58,19 @@ class Settlement extends Model
     {
         return $this->hasMany(Receivable::class);
     }
-    
+
+    public static function newNum()
+    {
+        $lastNum = Settlement::withTrashed()
+            ->whereStateId(2)
+            ->orderBy('num','DESC')
+            ->first()
+            ->num;
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
+    }   
+
     public function getCreatedAtAttribute($value)
     {
         return Date('d/m/Y', strtotime($value)); 

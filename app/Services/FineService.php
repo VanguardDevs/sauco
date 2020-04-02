@@ -3,29 +3,22 @@
 namespace app\Services;
 
 use App\Payment;
-use App\Services\SettlementService;
 use App\Concept;
 use App\Settlement;
 
 class FineService
 {
-    protected $settlement;
-
-    public function __construct(SettlementService $settlement)
-    {
-        $this->settlement = $settlement;
-    }
-
+    protected $settlement;    
+    
     public function create($settlement)
     {
         $amount = $this->calculateRechargue($settlement);
         $concept = Concept::whereCode(2)->first();
 
-        $message = $this->settlement->message($concept, $settlement->month);
-        $num = $this->settlement->newNum();
+        $message = $concept->name;
 
         $fine = Settlement::create([
-            'num' => $num,
+            'num' => Settlement::newNum(),
             'object_payment' => $message,
             'amount' => $amount,
             'taxpayer_id' => $settlement->taxpayer->id,

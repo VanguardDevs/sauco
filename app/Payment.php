@@ -82,6 +82,18 @@ class Payment extends Model implements Auditable
             ->get();
     } 
 
+    public static function newNum()
+    {
+        $lastNum = Payment::withTrashed()
+            ->whereStateId(2)
+            ->orderBy('num', 'DESC')
+            ->first()
+            ->num;
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
+    } 
+
     public function getCreatedAtAttribute($value)
     {
         return date('d/m/Y H:m:s', strtotime($value));
