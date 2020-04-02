@@ -77,14 +77,19 @@ class AffidavitService
     public function calculateTax(Affidavit $affidavit, $amount, $update = false)
     {
         $total = 0.00;
-        if ($update) {
-            $activity = $affidavit->economicActivity;
-            $taxUnit = TaxUnit::latest()->first();
-            $total = $activity->aliquote * $amount / 100;
-            $minTax = $taxUnit->value * $activity->min_tax;
-            
-            if ($total < $minTax || $amount == 0.00) {
-                $total = $minTax;
+        $activity = $affidavit->economicActivity;
+        
+        if ($activity->code == '123456') {
+            $total = $amount * $activity->aliquote / 100;
+        } else {
+            if ($update) {
+                $taxUnit = TaxUnit::latest()->first();
+                $total = $activity->aliquote * $amount / 100;
+                $minTax = $taxUnit->value * $activity->min_tax;
+                
+                if ($total < $minTax || $amount == 0.00) {
+                    $total = $minTax;
+                }
             }
         }
         
