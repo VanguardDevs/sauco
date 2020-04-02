@@ -53,7 +53,7 @@ class SettlementController extends Controller
      */
     public function list()
     {
-        $query = Settlement::with(['concept', 'taxpayer'])
+        $query = Settlement::with(['taxpayer'])
             ->whereStateId(1)
             ->orderBy('updated_at', 'DESC');
 
@@ -62,7 +62,7 @@ class SettlementController extends Controller
 
     public function listProcessed()
     {
-        $query = Settlement::with(['concept', 'taxpayer', 'user'])
+        $query = Settlement::with(['taxpayer', 'user'])
             ->whereStateId(2)
             ->orderBy('processed_at', 'DESC');
 

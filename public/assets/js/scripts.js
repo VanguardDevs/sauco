@@ -673,7 +673,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'id'},
             { data: 'taxpayer.rif' },
-            { data: 'concept.name'},
+            { data: 'object_payment'},
             { data: 'amount' },
             { data: 'created_at'},
             {
@@ -702,7 +702,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'num'},
             { data: 'taxpayer.rif' },
-            { data: 'concept.name'},
+            { data: 'object_payment'},
             { data: 'user.login' },
             { data: 'total_amount', name: 'total_amount' },
             {

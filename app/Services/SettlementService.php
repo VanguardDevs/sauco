@@ -46,14 +46,23 @@ class SettlementService
      */
     public function make(Taxpayer $taxpayer, Concept $concept, Month $month)
     {
-        $settlement = $this->create($taxpayer, $concept, $month);
         $code = $concept->code;
-        
+
         if ($code == 1) {
+            $settlement = $this->create($taxpayer, $concept, $month);
             $this->affidavit->make($settlement);
         }
 
         return $settlement;
+    }
+
+    public function message($concept, $month)
+    {
+        if ($concept->code == 1) {
+            return $concept->name.': '.$month->name.' - '.$month->year->year;
+        }
+
+        dd($concept->listing);
     }
 
     /**
@@ -89,7 +98,10 @@ class SettlementService
      */
     public function create($taxpayer, $concept, $month)
     {
+        $objectSettlement = $this->message($concept, $month);
+
         $settlement = Settlement::create([
+            'object_payment' => $objectSettlement,
             'amount' => 0.00,
             'taxpayer_id' => $taxpayer->id,
             'month_id' => $month->id,
