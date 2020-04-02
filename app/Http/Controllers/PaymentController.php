@@ -58,7 +58,7 @@ class PaymentController extends Controller
         $query = Payment::list() 
             ->where('status.name', '=', 'PENDIENTE')
             ->whereNull('payments.deleted_at')
-            ->orderBy('payments.created_at', 'DESC');
+            ->orderBy('payments.processed_at', 'DESC');
 
         return DataTables::of($query)->toJson();
     }

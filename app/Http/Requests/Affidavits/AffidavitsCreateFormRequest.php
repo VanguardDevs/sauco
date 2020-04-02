@@ -24,21 +24,24 @@ class AffidavitsCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'month' => 'required'
+            'month' => 'required',
+            'year' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'month' => 'mes'
+            'month' => 'mes',
+            'year' => 'año'
         ];
     }
 
     public function messages()
     {
         return [
-            'month.required' => 'Seleccione un :attribute'
+            'month.required' => 'Seleccione un :attribute',
+            'year.required' => 'Seleccione un :attribute'
         ];
     }
 }

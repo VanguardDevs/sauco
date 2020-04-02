@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Taxpayer;
+use App\Year;
 use App\Month;
 use App\Settlement;
 use App\Concept;
@@ -40,10 +41,10 @@ class AffidavitController extends Controller
 
     public function index(Taxpayer $taxpayer)
     {
-        $months = Month::where('id', '<', Carbon::now()->month);
+        $years = Year::pluck('year', 'id');
 
         return view('modules.declarations.index')
-            ->with('months', $months->pluck('name', 'id'))
+            ->with('years', $years)
             ->with('taxpayer', $taxpayer);
     }
 
@@ -113,16 +114,23 @@ class AffidavitController extends Controller
     {
         $settlement = $this->settlement
             ->findOneByMonth($this->concept, $this->taxpayer, $this->month);
-
-        // Selected month has already an affidavit created
+        
+        // No affidavit found
         if (!$settlement) {
-            if ($this->checkLastSettlement()) {
+            $pendingSettlement = $this->checkLastSettlement();
+
+            if (!$pendingSettlement) {
                 return $this->store();
             } else {
-               return $this->fireError("Debe procesar la liquidación del mes de ".$lastSettlement->month->name);
+               return $this->fireError("Debe procesar la liquidación del mes de ".$pendingSettlement->month->name.' - '.$pendingSettlement->month->year->year);
             }
+        // Selected month has already an affidavit created
         } else {
-            return $this->fireError("La liquidación del mes de ".$this->month->name." esta generada");
+            return $this->fireError("La liquidación del mes de ".
+                $this->month->name." -  ".
+                $this->month->year->year.
+                " esta generada"
+            );
         }
     }
 
@@ -137,7 +145,7 @@ class AffidavitController extends Controller
         if ($lastSettlement) {
             // If last month settlement isn't processed yet
             if ($lastSettlement->state->id == 1) {
-                return false;
+                return $lastSettlement;
             }
         }
         return true;
@@ -152,7 +160,7 @@ class AffidavitController extends Controller
         $settlement = $this->settlement->make($this->taxpayer, $this->concept, $this->month);
 
         return redirect('affidavits/'.$settlement->id)
-            ->withSuccess('¡Liquidación del mes de '.$this->month->name.' realizada!');
+            ->withSuccess('¡Liquidación del mes de '.$this->month->name.' - '.$this->month->year->year.' realizada!');
     }
 
     /**

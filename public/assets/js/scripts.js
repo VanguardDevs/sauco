@@ -16,6 +16,7 @@ $(function () {
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#states').on('change', onSelectStates);
     $('#payment_methods').on('change', onSelectPaymentType);
+    $('#years').on('change', onSelectYears);
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
@@ -81,6 +82,24 @@ function onSelectParishes() {
       }
 
       $('#communities').html(html_select);
+    });
+}
+
+/**
+ * Get all communities for a given parish
+ */
+function onSelectYears() {
+    let parish_id = $(this).val();
+
+    let html_select = '<option value=""> SELECCIONE </option>';
+
+    $.get('/years/'+parish_id+'/months/', data => {
+
+      for (let i = 0; i < data.length; i++) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+      }
+
+      $('#months').html(html_select);
     });
 }
 
@@ -711,6 +730,7 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/list`,
         "columns": [
             { data: 'num'},
+            { data: 'month.year.year' },
             { data: 'month.name' },
             { data: 'brute_amount_affidavit', name: 'brute_amount_affidavit' },
             { data: 'total_amount', name: 'total_amount' },

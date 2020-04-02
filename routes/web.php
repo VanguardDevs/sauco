@@ -234,4 +234,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('affidavits/{settlement}', 'AffidavitController@show')->name('affidavits.show');
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::resource('taxpayers', 'TaxpayerController');
+
+    /** 
+     * Year routes
+     */
+    Route::get('years/{year}/months', 'YearController@listMonths');
 });

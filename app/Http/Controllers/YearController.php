@@ -31,6 +31,17 @@ class YearController extends Controller
             ->with('years', Year::get());
     }
 
+    public function listMonths(Year $year)
+    {
+        if ($year->year == 2020) {
+            return $year->months()
+                ->where('id', '<', Carbon::now()->month)
+                ->get();
+        }
+
+        return $year->months()->orderBy('id', 'ASC')->get(); 
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -91,7 +91,7 @@ class Taxpayer extends Model implements Auditable
     public function declarations()
     {
         return $this->settlements()
-            ->with(['state', 'month'])
+            ->with(['state', 'month', 'month.year'])
             ->where('concept_id', 1);
     }
 
