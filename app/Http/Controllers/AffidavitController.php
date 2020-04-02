@@ -148,7 +148,8 @@ class AffidavitController extends Controller
                 return $lastSettlement;
             }
         }
-        return true;
+
+        return false;
     }
 
     /**
@@ -157,7 +158,8 @@ class AffidavitController extends Controller
      */
     public function store()
     {
-        $settlement = $this->settlement->make($this->taxpayer, $this->concept, $this->month);
+        $settlement = $this->settlement
+            ->make($this->taxpayer, $this->concept, $this->month);
 
         return redirect('affidavits/'.$settlement->id)
             ->withSuccess('¡Liquidación del mes de '.$this->month->name.' - '.$this->month->year->year.' realizada!');
@@ -206,7 +208,8 @@ class AffidavitController extends Controller
             return redirect('affidavits/'.$settlement->id)
                 ->withError('¡La factura de la liquidación fue realizada!');
         }
-        $payment = $this->payment->make('LIQUIDACIÓN POR IMPUESTO DE ACTIVIDAD ECONÓMICA');
+
+        $payment = $this->payment->make();
         $receivable = $this->receivable->make($settlement, $payment);
 
         return redirect('affidavits/'.$settlement->id)

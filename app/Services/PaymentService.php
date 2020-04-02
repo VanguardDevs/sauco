@@ -23,10 +23,9 @@ class PaymentService
     * Make a pending payment
     * @param var $objectPayment
     */    
-    public function make($objectPayment)
+    public function make()
     {
         $payment = Payment::create([
-            'object_payment' => $objectPayment,
             'state_id' => 1,
             'amount' => 0.0,
             'payment_method_id' => 1,
