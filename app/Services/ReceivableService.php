@@ -42,7 +42,7 @@ class ReceivableService
     public function checkForFine($settlement, $payment)
     {
         if (!$this->hasException($settlement)) { 
-            if ($settlement->month->id != 3) {
+            if ($settlement->month->year->year != 2020) {
                 $fine = $this->fine->create($settlement, 2);
                 $this->create($fine, $payment);
             }
