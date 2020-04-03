@@ -22,7 +22,7 @@ class FineService
             'object_payment' => $message,
             'amount' => $amount,
             'taxpayer_id' => $settlement->taxpayer->id,
-            'month_id' => $settlement->month->id,
+            'month_id' => 12,
             'state_id' => 2,
             'user_id' => auth()->user()->id,
             'concept_id' => $concept->id
