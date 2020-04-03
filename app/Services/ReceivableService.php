@@ -24,7 +24,7 @@ class ReceivableService
         $this->create($settlement, $payment); 
 
         // create fine if needed
-        $this->createFine($settlement, $payment);
+        $this->checkForFine($settlement, $payment);
         // Then update amounts
         $this->payment->updateAmount($payment);
     }
@@ -39,12 +39,22 @@ class ReceivableService
         return $receivable;
     }
 
-    public function createFine($settlement, $payment)
+    public function checkForFine($settlement, $payment)
     {
-        if ($settlement->month->year->year != 2020) {
-            $fine = $this->fine->create($settlement);
-            $this->create($fine, $payment);
+        if (!$this->hasException($settlement)) { 
+            if ($settlement->month->id != 3) {
+                $fine = $this->fine->create($settlement, 2);
+                $this->create($fine, $payment);
+            }
         }
+    }
+
+    public function hasException($settlement)
+    {
+        if ($settlement->taxpayer->economicActivities->first()->code == 123456) {
+            return true;
+        }
+        return false;
     }
 }
 

@@ -63,9 +63,20 @@
             </tr>
             @endforeach   
           </table>
+           <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Monto Total: {{ $row->total_amount }}
+                </div>
+                @if ($typeForm == 'show')
+                <div class="kt-heading kt-heading--md">
+                    Método de pago: {{ $row->paymentMethod->name }}
+                </div>
+                @endif
+           </div>
         @if ($typeForm == 'edit')        
         <div class="row form-group">
             <div class="col-md-12 form-group">
+
                 <label class="control-label"> Método de pago <span class="text-danger">*</span></label>
 
                 {!! Form::select('method', $methods,

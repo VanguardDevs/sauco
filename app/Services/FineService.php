@@ -10,10 +10,10 @@ class FineService
 {
     protected $settlement;    
     
-    public function create($settlement)
+    public function create($settlement, $concept_id)
     {
-        $amount = $this->calculateRechargue($settlement);
-        $concept = Concept::whereCode(2)->first();
+        $concept = Concept::find($concept_id);
+        $amount = $this->calculateRechargue($settlement, $concept);
 
         $message = $concept->name;
 
@@ -31,11 +31,12 @@ class FineService
         return $fine;
     }
 
-    public function calculateRechargue($settlement)
+    public function calculateRechargue($settlement, $concept)
     {
-        $concept = $settlement->concept;
-
-        return $settlement->amount * 0.6;
+        if ($concept->code == 2) {
+            return $settlement->amount * 0.6;
+        }
+        return $settlement->amount * 0.3;
     }
 }
 

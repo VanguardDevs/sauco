@@ -212,7 +212,7 @@ class AffidavitController extends Controller
         $payment = $this->payment->make();
         $receivable = $this->receivable->make($settlement, $payment);
 
-        return redirect('affidavits/'.$settlement->id)
+        return redirect('cashbox/payments/'.$payment->id)
             ->withSuccess('¡Factura realizada!');
     }
 
