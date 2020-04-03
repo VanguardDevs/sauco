@@ -120,9 +120,18 @@ class ConceptController extends Controller
      * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Concept $Concept)
+    public function update(Request $request, Concept $concept)
     {
-        //
+        $concept->update([
+            'name' => $request->input('name'),
+            'law' => $request->input('law'),
+            'observations' => $request->input('observations'),
+            'ordinance_id' => $request->input('ordinance'),
+            'list_id' => $request->input('list')
+        ]);
+
+        return redirect('settings/concepts')
+            ->withSuccess('¡Concepto de recaudación actualizado!');
     }
 
     /**

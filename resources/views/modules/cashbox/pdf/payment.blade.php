@@ -7,7 +7,7 @@
         <style>
            body {
                 font-family: sans-serif, serif;
-                font-size: 14px;
+                font-size: 15px;
             }
             .header {
                 width: 100%;
@@ -22,11 +22,11 @@
                 float: right;
             }
             table, td, th {
-                border: 1px #000 solid;
+                border: 1px #000 dashed;
             }
             td {
-                font-size: 11px;
-                padding: 4px;
+                font-size: 12px;
+                padding: 3px;
             }
             table {
                 border-collapse: collapse;
@@ -53,6 +53,9 @@
             }
             caption {
                 font-weight: bold;
+            }
+            th {
+                font-size: 10px;
             }
         </style>
     </head>
