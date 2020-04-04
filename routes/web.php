@@ -108,20 +108,15 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
-    Route::group(['middleware' => 'has.role:admin|chief-liquidation|inspector|superintendent|analyst|chief-inspection'], function() {
-        /*----------  Routes economic activities  ----------*/
-        Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
-        Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
-        Route::resource('economic-activities', 'EconomicActivityController');
+    /*----------  Routes economic activities  ----------*/
+    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
+    Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
+    Route::resource('economic-activities', 'EconomicActivityController');
 
-       /*----------  Routes parishes  ----------*/
-        Route::get('parishes/list', 'ParishController@list')->name('list-parishes');
-        Route::resource('geographic-area/parishes', 'ParishController');
-
-        /*----------  Routes communities  ----------*/
-        Route::get('communities/list', 'CommunityController@list')->name('list-communities');
-        Route::resource('geographic-area/communities', 'CommunityController');
-    });
+    /*----------  Routes communities  ----------*/
+    Route::get('communities/list', 'CommunityController@list')->name('list-communities');
+    Route::get('geographic-area/communities/{community}/taxpayers/list', 'CommunityController@listTaxpayers');
+    Route::resource('geographic-area/communities', 'CommunityController');
 
     /**
     * Cashbox's routes

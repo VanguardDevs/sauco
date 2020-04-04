@@ -312,8 +312,9 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/communities/list",
         "columns": [
-            { data: 'id' },
-            {data: 'name'},
+            { data: 'parish_names', name: 'parish_names' },
+            { data: 'name' },
+            { data: 'num_taxpayers', name: 'num_taxpayers' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -506,6 +507,33 @@ $(document).ready(function() {
             { data: 'rif'},
             { data: 'name'},
             { data: 'community.name'},
+            { data: 'fiscal_address'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.id} title='Ver información'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tTaxpayersByCommunity').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/taxpayers/list`,
+        "columns": [
+            { data: 'rif'},
+            { data: 'name'},
             { data: 'fiscal_address'},
             {
                 data: "id",

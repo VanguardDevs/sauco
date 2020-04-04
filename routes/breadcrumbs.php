@@ -179,7 +179,13 @@ Breadcrumbs::for('parishes.index', function ($trail) {
 /*------------- Communities -------------*/
 Breadcrumbs::for('communities.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Comunidades', url('geographic-area/communities'));
+    $trail->push('Area geográfica', route('communities.index'));
+});
+
+/*------------- Communities > create -------------*/
+Breadcrumbs::for('communities.show', function ($trail, $row) {
+    $trail->parent('communities.index');
+    $trail->push($row->name, route('communities.show', $row->id));
 });
 
 /*------------- Communities > create -------------*/

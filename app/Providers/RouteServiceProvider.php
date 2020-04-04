@@ -10,6 +10,7 @@ use App\License;
 use App\Taxpayer;
 use App\Year;
 use App\EconomicActivity;
+use App\Community;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::model('application', Application::class);
         Route::model('payment', Payment::class);
+        Route::model('community', Community::class);
         Route::model('taxpayer', Taxpayer::class);
         Route::model('license', License::class);
         Route::model('activity', EconomicActivity::class);

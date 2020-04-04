@@ -50,24 +50,27 @@
             </a>
         </li>
 
-        @if (@Auth::user()->can('access.taxpayers'))
         <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
             <a  href="{{ url('taxpayers') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon fas fa-user-tie"></i>
             <span class="kt-menu__link-text">Contribuyentes</span>
             </a>
         </li>
-        @endif
 
-        @if (@Auth::user()->can('access.economic-activities'))
-            <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
-                <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon2-percentage"></i>
-                <span class="kt-menu__link-text">Actividades económicas</span>
-                </a>
-            </li>
-        @endif
-        
+        <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
+            <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
+            <i class="kt-menu__link-icon flaticon2-percentage"></i>
+            <span class="kt-menu__link-text">Actividades económicas</span>
+            </a>
+        </li>
+
+        <li class="kt-menu__item {{ active('geographic-area/communities*') }}" aria-haspopup="true" >
+            <a  href="{{ route('communities.index') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon fas fa-globe-americas"></i>
+                <span class="kt-menu__link-text">Área geográfica</span>
+            </a>
+        </li>
+
         @if (@Auth::user()->can('access.cashbox'))
         <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('cashbox') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
             <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
@@ -89,35 +92,6 @@
                         <a  href="{{ url('cashbox/payments') }}" class="kt-menu__link ">
                         <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                         <span class="kt-menu__link-text">Pagos</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-        @endif
-
-        @if (@Auth::user()->can('access.geographic-area'))
-        <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('geographic-area') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
-            <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                <i class="kt-menu__link-icon fas fa-globe-americas"></i>
-                <span class="kt-menu__link-text">Área geográfica</span>
-                <i class="kt-menu__ver-arrow la la-angle-right"></i>
-            </a>
-            <div class="kt-menu__submenu ">
-                <span class="kt-menu__arrow"></span>
-                <ul class="kt-menu__subnav">
-                    <li class="kt-menu__item {{ active('geographic-area/parishes*') }}" aria-haspopup="true" >
-                        <a  href="{{ url('geographic-area/parishes') }}" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Parroquias</span>
-                        </a>
-                    </li>
-
-                    <li class="kt-menu__item {{ active('geographic-area/communities*') }}" aria-haspopup="true" >
-                        <a  href="{{ url('geographic-area/communities') }}" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Comunidades</span>
                         </a>
                     </li>
                 </ul>
@@ -166,6 +140,7 @@
                 </a>
             </li>
         @endif
+
         @if (@Auth::user()->can('access.reports'))
         <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
             <a  href="{{ url('reports') }}" class="kt-menu__link">

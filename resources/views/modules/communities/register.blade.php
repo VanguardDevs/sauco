@@ -1,23 +1,18 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Comunidades')
+@if ($typeForm == 'create')
+    @section('title', 'Nueva comunidad')
+    @section('subheader__title', 'Nueva comunidad')
+@else
+    @section('title', 'Editar comunidad')
+    @section('subheader__title', 'Editar comunidad')
+@endif
 
 @section('form')
     <div class="row">
         <div class="col-lg-12">
             <div class="kt-portlet">
-                <div class="kt-portlet__head alert alert-danger">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                        @if ($typeForm == 'create')
-                            Registro de Comunidades
-                       @else
-                            Editar comunidad: {{ @$row->name }}
-                       @endif
-                        </h3>
-                    </div>
-                </div>
-                <!--begin::Form-->
+               <!--begin::Form-->
                 @if ($typeForm == 'create')
                     {!! Form::open(['route' => "communities".'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else

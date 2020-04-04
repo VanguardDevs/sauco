@@ -1,27 +1,42 @@
 @extends('layouts.template')
 
-@section('title', 'Control de comunidades')
+@section('title', 'Área geográfica')
+
+@section('subheader__title', 'Área geográfica')
 
 @section('content')
 
-  <div class="row" style="margin-top: 20px;">
+<div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
-      <div class="card card-primary card-outline">
-        <div class="card-header alert alert-danger">
-          <div class="row">
-            <h5 class="m-0">Control de comunidades <b>(</b> <a href="{{ Route("communities".'.create') }}" title="Registrar comunidad">
-                <span>Registrar</span>
-              </a><b>)</b></h5>
-          </div>
+      <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Control de comunidades
+                </h3>
+            </div>
+           @if (Auth()->user()->can('create.communities'))
+           <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-actions">
+                    <a href="{{ Route('communities.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nueva comunidad">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            @endif
         </div>
 
-        <div class="card-body">
+        <div class="kt-portlet__body">
           <table id="tCommunities" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="15%">ID</th>
-                <th width="70%">Nombre</th>
-                <th width="15%">Acciones</th>
+                <th width="30%">Parroquia(s)</th>
+                <th width="40%">Comunidad</th>
+                <th width="10%">Contribuyentes</th>
+                <th width="20%">Acciones</th>
               </tr>
             </thead>
           </table>

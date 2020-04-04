@@ -12,6 +12,8 @@ class CommunityController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('has.role:admin')
+            ->only(['create', 'edit', 'store', 'update']);
         $this->middleware('auth');
     }
 
@@ -39,9 +41,9 @@ class CommunityController extends Controller
 
     public function list()
     {
-        $query = Community::query();
+        $query = Community::get();
 
-        return DataTables::eloquent($query)->toJson();
+        return DataTables::of($query)->toJson();
     }
 
     /**
@@ -72,7 +74,14 @@ class CommunityController extends Controller
      */
     public function show(Community $community)
     {
-        //
+        return view('modules.communities.show')
+            ->with('row', $community);
+    }
+
+    public function listTaxpayers(Community $community)
+    {
+        return DataTables::eloquent($community->taxpayers())
+            ->toJson();
     }
 
     /**
