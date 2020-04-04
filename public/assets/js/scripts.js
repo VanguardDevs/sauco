@@ -451,7 +451,6 @@ $(document).ready(function() {
         "columns": [
             { data: 'rif'},
             { data: 'name'},
-            { data: 'community.name'},
             { data: 'fiscal_address'},
             {
                 data: "id",

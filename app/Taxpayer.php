@@ -84,6 +84,12 @@ class Taxpayer extends Model implements Auditable
             ->join('taxpayers', 'settlements.taxpayer_id', '=', 'taxpayers.id')
             ->where('taxpayers.id',  $this->id);       
     }
+
+    public function getFiscalAddressAttribute()
+    {
+        return $this->attributes['fiscal_address'].
+            ', '.$this->community->name;
+    }
     
     /**
      * Affidavit incomes
