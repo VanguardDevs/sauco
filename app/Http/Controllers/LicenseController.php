@@ -33,9 +33,8 @@ class LicenseController extends Controller
 
     public function list()
     {
-        $query = License::with(['taxpayer', 'correlative'])
-            ->get()
-            ->load(['correlative.correlativeNumber', 'correlative.correlativeType']); 
+        $query = License::with(['taxpayer'])
+            ->get();
 
         return DataTables::of($query)
             ->toJson();

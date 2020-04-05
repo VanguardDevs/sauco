@@ -13,9 +13,7 @@
               <table id="tEconomicActivityLicenses" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                     <tr>
-                        <th width="5%">Tipo</th>
-                        <th width="5%">Número</th>
-                        <th width="5%">Año</th>
+                        <th width="15%">Número</th>
                         <th width="15%">RIF</th>
                         <th width="50%">Razón social</th>
                         <th width="10%">Emisión</th>

@@ -14,8 +14,7 @@
                 <thead>
                     <tr>
                         <th width="10%">Cédula</th>
-                        <th width="20%">Nombre</th>
-                        <th width="20%">Apellido</th>
+                        <th width="40%">Nombre</th>
                         <th width="30%">Dirección</th>
                         <th width="20%">Teléfono</th>
                     </tr>

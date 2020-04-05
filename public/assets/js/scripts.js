@@ -433,8 +433,7 @@ $(document).ready(function() {
         "ajax": baseURL + "/representations/list",
         "columns": [
             { data: 'document'},
-            { data: 'first_name'},
-            { data: 'surname'},
+            { data: 'name'},
             { data: 'address'},
             { data: 'phone' },
         ]
@@ -792,9 +791,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'correlative.correlative_type.description' },
-            { data: 'correlative.correlative_number.num' },
-            { data: 'correlative.year.year' },
+            { data: 'num' },
             { data: 'taxpayer.rif' },
             { data: 'taxpayer.name' },
             { data: 'emission_date' },

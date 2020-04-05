@@ -24,7 +24,7 @@ class RepresentationController extends Controller
 
     public function list()
     {
-        return DataTables::eloquent(Person::query())
+        return DataTables::of(Person::get())
             ->toJson();
     }
 

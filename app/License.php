@@ -21,7 +21,7 @@ class License extends Model implements Auditable
         'ordinance_id'
     ];
 
-    protected $appends = ['full_correlative'];
+    protected $appends = ['num'];
 
     public function taxpayer()
     {
@@ -33,12 +33,12 @@ class License extends Model implements Auditable
         return $this->belongsTo(Correlative::class);
     }
 
-    public function getFullCorrelativeAttribute()
+    public function getNumAttribute()
     {
         $correlative = $this->correlative;
 
-        return $correlative->correlativeType->description.
-                             $correlative->year->year.'-'
+        return $correlative->correlativeType->description
+                             .$correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
     }
 

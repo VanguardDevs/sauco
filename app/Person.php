@@ -24,6 +24,8 @@ class Person extends Model implements Auditable
         'citizenship_id'
     ];
 
+    protected $appends = ['name'];
+
     public function citizenship()
     {
         return $this->belongsTo(Citizenship::class);
