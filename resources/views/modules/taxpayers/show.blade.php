@@ -53,20 +53,8 @@
                     <span class="kt-widget__data">{{ $row->commercialDenomination->name  ?? 'NO REGISTRADO'}}</span>
                 </div>
                 <div class="kt-widget__info">
-                    <span class="kt-widget__label">Sector económico:</span>
-                    <span class="kt-widget__data">{{ $row->economicSector->description }}</span>
-                </div>
-                <div class="kt-widget__info">
                   <span class="kt-widget__label">Dirección:</span>
                   <span class="kt-widget__data">{{ $row->fiscal_address }}</span>
-                </div>
-                <div class="kt-widget__info">
-                    <span class="kt-widget__label">Capital suscrito:</span>
-                    <span class="kt-widget__data">{{ $row->capital ?? "NO REGISTRADO" }}</span>
-                  </div>
-                <div class="kt-widget__info">
-                    <span class="kt-widget__label">Conformidad de uso:</span>
-                    <span class="kt-widget__data">{{ $row->compliance_use ?? "NO REGISTRADO" }}</span>
                 </div>
                 <div class="kt-widget__info">
                   <span class="kt-widget__label">Teléfono:</span>

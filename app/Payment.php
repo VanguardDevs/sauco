@@ -78,7 +78,7 @@ class Payment extends Model implements Auditable
     {
         return self::whereDate('processed_at', $date->toDateString())
             ->whereStateId(2)
-            ->orderBy('id', 'ASC')
+            ->orderBy('processed_at', 'ASC')
             ->get();
     } 
 
