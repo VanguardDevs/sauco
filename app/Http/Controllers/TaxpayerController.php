@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\CommercialDenomination;
 use App\EconomicActivity;
-use App\EconomicSector;
 use App\TaxpayerType;
-use App\State;
-use App\Parish;
 use App\Person;
+use App\Municipality;
 use App\Taxpayer;
 use App\License;
+use App\Community;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
@@ -58,9 +57,7 @@ class TaxpayerController extends Controller
     {
         return view('modules.taxpayers.register')
             ->with('types', TaxpayerType::pluck('description', 'id'))
-            ->with('parishes', Parish::pluck('name', 'id'))
-            ->with('sectors', EconomicSector::pluck('description', 'id'))
-            ->with('states', State::pluck('name', 'id'))
+            ->with('communities', Community::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -70,31 +67,17 @@ class TaxpayerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TaxpayersCreateFormRequest $request)
+    public function store(Request $request)
     {
-        $rifNum = $request->input('rif');
-        $type = TaxpayerType::find($request->input('taxpayer_type'));
-        $rif = $type->correlative.$rifNum;
-
-        if (Taxpayer::existsRif($rif)) {
+        if (Taxpayer::existsRif($request->input('rif'))) {
             return redirect('taxpayers/create')
                 ->withInput($request->input())
-                ->withError('¡El RIF '.$rif.' se encuentra registrado!');
+                ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
         }
 
-        $taxpayer = Taxpayer::create([
-            'rif' => $rif,
-            'name' => $request->input('name'),
-            'fiscal_address' => $request->input('fiscal_address'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
-            'compliance_use' => $request->input('compliance_use'),
-            'capital' => $request->input('capital'),
-            'taxpayer_type_id' => $type->id,
-            'economic_sector_id' => $request->input('economic_sector'),
-            'municipality_id' => $request->input('municipality'),
-            'community_id' => $request->input('community')
-        ]);
+        $taxpayer = Municipality::find(5)->taxpayers()->create(
+            $request->input()
+        );
 
         $denomination = $request->input('trade_denomination');
 
