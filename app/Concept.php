@@ -30,6 +30,11 @@ class Concept extends Model
         return $this->hasMany(ConceptPrice::class);
     }
 
+    public function receivables()
+    {
+        return $this->hasMany(Receivable::class);
+    }
+
     public function settlements()
     {
         return $this->hasMany(Settlement::class);

@@ -90,7 +90,7 @@
                 <tbody>
                      <tr>
                         <td>{{ $denomination }}</td> 
-                        <td>{{ $taxpayer->rif }}</td>
+                        <td>{{ $payment->taxpayer->rif }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -102,7 +102,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $taxpayer->fiscal_address.', '.$taxpayer->community->name }}</td>
+                        <td>{{ $payment->taxpayer->fiscal_address }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -133,7 +133,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($payment->settlements as $settlement)
+                @foreach($payment->receivables as $settlement)
                  <tr>
                     <td>{{ $settlement->num }}</td> 
                     <td>{{ $settlement->object_payment  }}</td>   
@@ -156,7 +156,7 @@
         <br>
         <div class="miscellaneus">
             <div class="liquidator-info">
-                Liquidador: {{ $user->first_name.' '.$user->surname }}
+                Liquidador: {{ $payment->user->first_name.' '.$payment->user->surname }}
             </div>
             <div class="collector-firm">
                <span style="width:50%;"></span> 

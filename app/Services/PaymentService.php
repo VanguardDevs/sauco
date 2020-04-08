@@ -23,13 +23,15 @@ class PaymentService
     * Make a pending payment
     * @param var $objectPayment
     */    
-    public function make()
+    public function make($taxpayer)
     {
         $payment = Payment::create([
             'state_id' => 1,
+            'user_id' => auth()->user()->id,
             'amount' => 0.0,
             'payment_method_id' => 1,
             'payment_type_id' => 1,
+            'taxpayer_id' => $taxpayer->id
         ]);
 
         return $payment;
@@ -37,7 +39,7 @@ class PaymentService
 
     public function updateAmount($payment)
     {
-        $totalAmount = $payment->settlements->sum('amount');
+        $totalAmount = $payment->receivables->sum('amount');
 
         $payment->update(['amount' => $totalAmount]);
     }

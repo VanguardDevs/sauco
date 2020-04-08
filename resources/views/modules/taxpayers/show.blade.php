@@ -155,13 +155,6 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
-                    <div class="kt-portlet__head kt-portlet__head--lg">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Liquidaciones 
-                            </h3>
-                        </div>
-                    </div>
                     <div class="kt-portlet__body">
                         <div class="kt-notification">
                             <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/affidavits') }}">
@@ -181,6 +174,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        @endif
+        <div class="row">
             <div class="col-xl-6">
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head kt-portlet__head--lg">
@@ -210,7 +206,6 @@
                 </div>
             </div>
         </div>
-        @endif
    </div>
    <!--End:: App Content-->
   </div>

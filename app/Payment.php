@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Taxpayer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
@@ -49,29 +48,15 @@ class Payment extends Model implements Auditable
     {
         return $this->hasMany(Receivable::class);
     }
-    
-    public function settlements()
+
+    public function taxpayer()
     {
-        return $this->belongsToMany(Settlement::class, 'receivables');
+        return $this->belongsTo(Taxpayer::class);
     }
 
-    public static function scopeList()
+    public function user()
     {
-        return Taxpayer::join('settlements', 'taxpayers.id', '=', 'settlements.taxpayer_id')
-            ->join('receivables', 'receivables.settlement_id', 'settlements.id')
-            ->join('payments', 'receivables.payment_id', '=', 'payments.id')
-            ->join('status', 'payments.state_id', '=', 'status.id')
-            ->groupBy('payments.id', 'taxpayers.name', 'taxpayers.rif', 'status.name')
-            ->select([
-                'taxpayers.name as taxpayers.name',
-                'taxpayers.rif as taxpayers.rif',
-                'status.name as status.name',
-                'payments.amount as payments.amount',
-                'payments.deleted_at as payments.deleted_at',
-                'payments.id',
-                'payments.num',
-                'payments.processed_at'
-            ]);
+        return $this->belongsTo(User::class);
     }
 
     public static function processedByDate($date)
@@ -100,6 +85,11 @@ class Payment extends Model implements Auditable
     }
 
     public function getProcessedAtAttribute($value)
+    {
+        return date('d-m-Y H:m', strtotime($value));
+    }
+
+    public function getDeletedAtAttribute($value)
     {
         return date('d-m-Y H:m', strtotime($value));
     }

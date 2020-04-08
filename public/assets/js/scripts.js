@@ -600,10 +600,10 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/payments/list",
         "columns": [
-            { data: 'id'},
-            { data: 'taxpayers.rif' },
-            { data: 'taxpayers.name' },
-            { data: 'payments.amount' },
+            { data: 'id' },
+            { data: 'taxpayer.rif' },
+            { data: 'taxpayer.name' },
+            { data: 'amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -631,10 +631,11 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/payments/processed/list",
         "columns": [
-            { data: 'num'},
-            { data: 'taxpayers.rif' },
-            { data: 'taxpayers.name' },
-            { data: 'payments.amount' },
+            { data: 'num', name: 'num' },
+            { data: 'taxpayer.rif', name: 'taxpayer.rif' },
+            { data: 'taxpayer.name', name: 'taxpayer.name' },
+            { data: 'amount', name: 'amount' },
+            { data: 'processed_at', name: 'processed_at' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -663,11 +664,11 @@ $(document).ready(function() {
         "ajax": baseURL + "/payments/list-null",
         "columns": [
             { data: 'id'},
-            { data: 'taxpayers.rif' },
-            { data: 'taxpayers.name' },
-            { data: 'payments.amount' },
-            { data: 'status.name' },
-            { data: 'payments.deleted_at' }
+            { data: 'taxpayer.rif' },
+            { data: 'taxpayer.name' },
+            { data: 'amount' },
+            { data: 'state.name' },
+            { data: 'deleted_at' }
         ]
     });
     

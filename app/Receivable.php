@@ -21,13 +21,13 @@ class Receivable extends Model implements Auditable
         return $this->belongsTo(Payment::class);
     }
 
-    public function settlement()
+    public function concept()
     {
-        return $this->belongsTo(Settlement::class);
+        return $this->belongsTo(Concept::class);
     }
 
-    public function taxpayer()
+    public function getTotalAmountAttribute($value)
     {
-        return $this->hasOneThrough(Taxpayer::class, Settlement::class, 'taxpayer_id', 'id');
+        return number_format($this->amount, 2, ',', '.');
     }
 }

@@ -33,9 +33,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $taxpayer->rif }}</td> 
-                    <td>{{ $taxpayer->name  }}</td>   
-                    <td>{{ $taxpayer->fiscal_address }}</td>
+                    <td>{{ $row->taxpayer->rif }}</td> 
+                    <td>{{ $row->taxpayer->name  }}</td>   
+                    <td>{{ $row->taxpayer->fiscal_address }}</td>
                 </tr>
             </tbody>
           </table>
@@ -55,7 +55,7 @@
               </tr>
             </thead>
             <tbody>
-            @foreach($row->settlements as $settlement)
+            @foreach($row->receivables as $settlement)
              <tr>
                 <td>{{ $settlement->num }}</td> 
                 <td>{{ $settlement->object_payment  }}</td>   
@@ -68,6 +68,9 @@
                     Monto Total: {{ $row->total_amount }}
                 </div>
                 @if ($typeForm == 'show')
+                <div class="kt-heading kt-heading--md">
+                    Liquidador: {{ $row->user->fullName }}
+                </div>
                 <div class="kt-heading kt-heading--md">
                     Método de pago: {{ $row->paymentMethod->name }}
                 </div>
@@ -111,7 +114,6 @@
         @endif
         <!-- /.card-body -->
         <div class="card-footer">
-             
             @if($typeForm == 'edit')
             <a href="{{ url('cashbox/payments') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
                 <button  type="submit" class="btn btn-primary">
@@ -120,10 +122,12 @@
                 </button>
             @else
             <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            @if($typeForm == 'show' && Auth::user()->hasRole('collection-chief'))
             <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-success' title='Descargar factura' target='_blank'>
                 <i class='flaticon2-download'></i>
                 Imprimir factura
             </a>
+            @endif
         @endif
         </div>
         {!! Form::close() !!}

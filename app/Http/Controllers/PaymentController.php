@@ -29,7 +29,7 @@ class PaymentController extends Controller
     {
         $this->payment = $payment;
         $this->middleware('has.role:admin')->only('destroy');
-        $this->middleware('has.role:liquidator|collector|admin|liquidation-chief|collection-chief')->only(['index', 'list','show']);
+        $this->middleware('has.role:collection-chief')->only('update');
         $this->middleware('auth');
     }
 
@@ -45,9 +45,8 @@ class PaymentController extends Controller
 
     public function listProcessed()
     { 
-        $query = Payment::list() 
-            ->where('status.name', '=', 'PROCESADA')
-            ->whereNull('payments.deleted_at')
+        $query = Payment::with('taxpayer') 
+            ->whereStateId(2)
             ->orderBy('num', 'DESC');
 
         return DataTables::of($query)->toJson();
@@ -55,18 +54,17 @@ class PaymentController extends Controller
 
     public function list()
     { 
-        $query = Payment::list() 
-            ->where('status.name', '=', 'PENDIENTE')
-            ->whereNull('payments.deleted_at')
-            ->orderBy('payments.processed_at', 'DESC');
+        $query = Payment::with('taxpayer')
+            ->whereStateId(1)
+            ->orderBy('id', 'DESC');
 
-        return DataTables::of($query)->toJson();
+        return DataTables::eloquent($query)->toJson();
     }
 
     public function onlyNull()
     {
-        $query = Payment::list()
-            ->whereNotNull('payments.deleted_at')
+        $query = Payment::onlyTrashed()
+            ->with(['taxpayer', 'state'])
             ->orderBy('id', 'DESC');
         
         return DataTables::of($query)->toJson();
@@ -102,26 +100,20 @@ class PaymentController extends Controller
     public function show(Payment $payment)
     {
         if ($payment->state->id == 1) {
-            if (!Auth::user()->can('process.payments')) {
-                return redirect('cashbox/payments')
-                    ->withError('¡No puede procesar el pago!');
+            if (auth()->user()->hasRole('collection-chief')) {
+                $this->typeform = 'edit';
             }
-            $this->typeform = 'edit';
         }
-
-        $taxpayer = $payment->settlements->first()->taxpayer;
 
         return view('modules.cashbox.register-payment')
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
-            ->with('taxpayer', $taxpayer)
             ->with('typeForm', $this->typeform);
     }
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
@@ -157,13 +149,11 @@ class PaymentController extends Controller
                 ->withError('¡La factura no ha sido procesada!');
         }
 
-        $settlement = $payment->receivables->first()->settlement;
-        $taxpayer = $settlement->taxpayer;
-        $user = $settlement->user;
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
+        $taxpayer = $payment->taxpayer;
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
 
-        $vars = ['user','payment', 'reference', 'taxpayer', 'denomination'];
+        $vars = ['payment', 'reference', 'denomination'];
         
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.cashbox.pdf.payment', compact($vars)) 

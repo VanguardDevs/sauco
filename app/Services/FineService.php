@@ -36,7 +36,6 @@ class FineService
         if ($concept->code == 2) {
             return $settlement->amount * 0.6;
         }
-        return $settlement->amount * 0.3;
     }
 }
 

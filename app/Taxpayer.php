@@ -18,27 +18,17 @@ class Taxpayer extends Model implements Auditable
         'rif',
         'name',
         'address',
-        'permanent_status',
-        'capital',
-        'compliance_use',
-        'locality',
         'fiscal_address',
         'phone',
         'email',
-        'taxpayer_type_id',
-        'economic_sector_id',
         'community_id',
+        'taxpayer_type_id',
         'municipality_id'
     ];
 
     public function representations()
     {
         return $this->hasMany(Representation::class);
-    }
-
-    public function economicSector()
-    {
-        return $this->belongsTo(EconomicSector::class);
     }
 
     public function commercialRegister()
@@ -73,16 +63,12 @@ class Taxpayer extends Model implements Auditable
 
     public function receivables()
     {
-        return $this->hasManyThrough(Receivable::class, Settlement::class);
+        return $this->hasMany(Receivable::class);
     }
     
     public function payments()
     {
-        return Payment
-            ::join('receivables', 'payments.id', '=', 'receivables.payment_id')
-            ->join('settlements', 'receivables.settlement_id', '=', 'settlements.id')
-            ->join('taxpayers', 'settlements.taxpayer_id', '=', 'taxpayers.id')
-            ->where('taxpayers.id',  $this->id);       
+        return $this->hasMany(Payment::class);
     }
 
     public function getFiscalAddressAttribute()

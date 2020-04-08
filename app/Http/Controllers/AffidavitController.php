@@ -51,9 +51,10 @@ class AffidavitController extends Controller
     public function listAffidavits(Taxpayer $taxpayer)
     {
         $query = $taxpayer->declarations()
-            ->orderBy('id', 'DESC');
+            ->orderBy('id', 'DESC')
+            ->get();
 
-        return DataTables::eloquent($query)->toJson();
+        return DataTables::of($query)->toJson();
     }
 
     public function show(Settlement $settlement)
@@ -209,7 +210,7 @@ class AffidavitController extends Controller
                 ->withError('¡La factura de la liquidación fue realizada!');
         }
 
-        $payment = $this->payment->make();
+        $payment = $this->payment->make($settlement->taxpayer);
         $receivable = $this->receivable->make($settlement, $payment);
 
         return redirect('cashbox/payments/'.$payment->id)

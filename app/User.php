@@ -26,8 +26,19 @@ class User extends Authenticatable
         'login'
     ];
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function settlements()
     {
         return $this->hasMany(Settlement::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['first_name'].' '.
+            $this->attributes['surname'];
     }
 }

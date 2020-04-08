@@ -32,7 +32,12 @@ class ReceivableService
     public function create($settlement, $payment)
     {
         $receivable = Receivable::create([
-            'settlement_id' => $settlement->id,
+            'num' => $settlement->num, // Receivable::newNum();
+            'amount' => $settlement->amount, // Just amount
+            'processed_at' => $settlement->processed_at, // Carbon::now()
+            'object_payment' => $settlement->object_payment,
+            'concept_id' => $settlement->concept->id, // $concept->id from a variable
+            'settlement_id' => $settlement->id, // Delete later
             'payment_id' => $payment->id
         ]);
 
@@ -43,8 +48,8 @@ class ReceivableService
     {
         if (!$this->hasException($settlement)) { 
             if ($settlement->month->year->year != 2020) {
-                $fine = $this->fine->create($settlement, 2);
-                $this->create($fine, $payment);
+                $settlement = $this->fine->create($settlement, 2);
+                $this->create($settlement, $payment);
             }
         }
     }

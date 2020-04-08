@@ -1,5 +1,7 @@
 @extends('layouts.template')
 
+@section('subheader__title', 'Pagos anulados')
+
 @section('title', 'Pagos anulados')
 
 @section('content')
@@ -7,14 +9,6 @@
   <div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
       <div class="card card-primary card-outline">
-        <div class="card-header alert">
-          <div class="row">
-            <h5 class="m-0">
-                Pagos anulados
-            </h5>
-          </div>
-        </div>
-
         <div class="card-body">
           <table id="tNullPayments" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
