@@ -62,20 +62,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('payment-methods/list', 'PaymentMethodController@list')->name('list-payment-methods');
         Route::resource('settings/payment-methods', 'PaymentMethodController');
 
-        /*----------  Routes Settings > Economic sectors  ----------*/
-        Route::get('economic-sectors/list', 'EconomicSectorController@list')->name('list-economic-sectors');
-        Route::resource('settings/economic-sectors', 'EconomicSectorController');
-
-        /*----------  Routes Settings > Economic sectors  ----------*/
-        Route::get('reductions/list', 'ReductionController@list')->name('list-reductions');
-        Route::resource('settings/reductions', 'ReductionController');
-
-        /**
-         *  Personal firm routes
-         */
-        Route::get('personal-firms/list', 'PersonalFirmController@list');
-        Route::resource('settings/personal-firms', 'PersonalFirmController');
-
         /**
          * Finance Accounts
          */
@@ -121,8 +107,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
     * Cashbox's routes
      */
-    Route::group(['middleware' => 'has.role:liquidator|superintendent|admin|auditor|collection-chief|liquidation-chief|collector'], function() {
-        Route::get('cashbox', 'Cashbox')->name('cashbox');
+    Route::group(['middleware' => 'can:access.receivables'], function() {
+        Route::get('receivables/list', 'ReceivableController@list');
+        Route::get('receivables', 'ReceivableController@index')->name('receivables');
 
         /**
          * Handle reports
@@ -163,15 +150,16 @@ Route::prefix('/')->middleware('auth')->group(function()
         * Payment's routes modules
          */
         Route::get('payments/list-null', 'PaymentController@onlyNull');
-        Route::get('payments/list', 'PaymentController@list');
         Route::get('payments/processed/list', 'PaymentController@listProcessed');
         Route::get('cashbox/payments/{payment}/download', 'PaymentController@download')
             ->name('payments.download');
         Route::resource('cashbox/payments', 'PaymentController');
-        
-        /**
-         * Affidavit's routes
-         */
+    });
+   /**
+    * Affidavit's routes
+    */
+
+   Route::group(['middleware' => 'can:create.affidavits'], function () {
         Route::get('affidavits/{settlement}/normal', 'AffidavitController@normalCalcForm')
             ->name('affidavits.show');
         Route::get('affidavits/{settlement}/group', 'AffidavitController@groupActivityForm')

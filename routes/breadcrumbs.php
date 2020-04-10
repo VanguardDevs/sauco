@@ -3,9 +3,9 @@
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 /*----------  Cashbox ----------*/
-Breadcrumbs::for('cashbox', function ($trail) {
+Breadcrumbs::for('receivables', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Caja', route('cashbox'));
+    $trail->push('Cuentas por cobrar', route('receivables'));
 });
 
 /*----------  Reports ----------*/

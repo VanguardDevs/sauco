@@ -171,6 +171,31 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="kt-notification">
+                            <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/affidavits') }}">
+                                <div class="kt-notification__item-icon">
+                                    <i class="fas fa-address-book"></i>
+                                </div>
+                                <div class="kt-notification__item-details">
+                                    <div class="kt-notification__item-title">
+                                        Multas y sanciones
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="kt-notification">
+                            <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/affidavits') }}">
+                                <div class="kt-notification__item-icon">
+                                    <i class="fas fa-address-book"></i>
+                                </div>
+                                <div class="kt-notification__item-details">
+                                    <div class="kt-notification__item-title">
+                                        Solicitudes
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>

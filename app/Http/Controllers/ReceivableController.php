@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Receivable;
+use App\Payment;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ReceivableController extends Controller
-{
+{    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +15,16 @@ class ReceivableController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.receivables.index');
+    }
+
+    public function list()
+    { 
+        $query = Payment::with('taxpayer')
+            ->whereStateId(1)
+            ->orderBy('id', 'DESC');
+
+        return DataTables::eloquent($query)->toJson();
     }
 
     /**
