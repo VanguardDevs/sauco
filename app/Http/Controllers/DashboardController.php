@@ -20,13 +20,12 @@ class DashboardController extends Controller
         $licenseCount = License::count();
         $paymentCount = Payment::whereStateId('2')
             ->count();
-        $settlementCount = Settlement::whereStateId('2')
-            ->count();
+        $affidavitCount = Settlement::count();
 
         return view('modules.dashboard.index')
             ->with('taxpayerCount', $taxpayerCount)
             ->with('paymentCount', $paymentCount)
             ->with('licenseCount', $licenseCount)
-            ->with('settlementCount', $settlementCount);
+            ->with('affidavitCount', $affidavitCount);
     }
 }

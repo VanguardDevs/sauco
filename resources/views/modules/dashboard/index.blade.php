@@ -88,10 +88,10 @@
                                     </svg>
                                 </span>
                                 <span class="kt-widget17__subtitle">
-                                    Liquidaciones procesadas
+                                    Declaraciones recibidas
                                 </span>
                                 <span class="kt-widget17__desc">
-                                    {{ $settlementCount }}
+                                    {{ $affidavitCount }}
                                 </span>
                             </div>
                         </div>
