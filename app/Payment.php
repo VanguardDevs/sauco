@@ -59,6 +59,16 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
+    public function settlement()
+    {
+        return $this->belongsToMany(Settlement::class);
+    }
+
+    public function fine()
+    {
+        return $this->belongsToMany(Fine::class);
+    }
+
     public static function processedByDate($date)
     {
         return self::whereDate('processed_at', $date->toDateString())

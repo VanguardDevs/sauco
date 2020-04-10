@@ -29,21 +29,6 @@ class Settlement extends Model
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function state()
-    {
-        return $this->belongsTo(Status::class);
-    }
-
-    public function reductions()
-    {
-        return $this->belongsToMany(Reduction::class);
-    }
-
-    public function concept()
-    {
-        return $this->belongsTo(Concept::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -54,22 +39,10 @@ class Settlement extends Model
         return $this->hasMany(Affidavit::class);
     }
 
-    public function receivable()
+    public function payment()
     {
-        return $this->hasMany(Receivable::class);
+        return $this->belongsToMany(Payment::class);
     }
-
-    public static function newNum()
-    {
-        $lastNum = Settlement::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('num','DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
-    }   
 
     public function getCreatedAtAttribute($value)
     {
@@ -84,12 +57,6 @@ class Settlement extends Model
     public function scopeLastSettlement($query)
     {
         return $query->withTrashed()->latest()->first();
-    }
-    
-    public function payment()
-    {
-        return $this->belongsToMany(Payment::class, Receivable::class)
-            ->first();
     }
 
     public function getBruteAmountAffidavitAttribute($value)

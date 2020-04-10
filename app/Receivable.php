@@ -21,13 +21,19 @@ class Receivable extends Model implements Auditable
         return $this->belongsTo(Payment::class);
     }
 
-    public function concept()
-    {
-        return $this->belongsTo(Concept::class);
-    }
-
     public function getTotalAmountAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
     }
+
+    public static function newNum()
+    {
+        $lastNum = Receivable::withTrashed()
+            ->orderBy('num','DESC')
+            ->first()
+            ->num;
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
+    }   
 }
