@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Fine;
+use App\Taxpayer;
 use Illuminate\Http\Request;
 
 class FineController extends Controller
@@ -15,6 +16,11 @@ class FineController extends Controller
     public function index()
     {
         //
+    }
+
+    public function indexByTaxpayer(Taxpayer $taxpayer)
+    {
+        dd($taxpayer);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Taxpayer;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -19,6 +20,11 @@ class ApplicationController extends Controller
     public function index()
     {
         return view('modules.applications.index');
+    }
+
+    public function indexByTaxpayer(Taxpayer $taxpayer)
+    {
+        dd($taxpayer);
     }
 
     public function list()

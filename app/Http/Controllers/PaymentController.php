@@ -52,13 +52,13 @@ class PaymentController extends Controller
         return DataTables::of($query)->toJson();
     }
 
-    public function list()
-    { 
-        $query = Payment::with('taxpayer')
-            ->whereStateId(1)
+    public function listByTaxpayer(Taxpayer $taxpayer)
+    {
+        $query = Payment::with('state')
+            ->whereTaxpayerId($taxpayer->id)
             ->orderBy('id', 'DESC');
 
-        return DataTables::eloquent($query)->toJson();
+        return DataTables::of($query)->toJson();
     }
 
     public function onlyNull()
