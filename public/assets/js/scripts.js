@@ -631,16 +631,17 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/payments`,
         "columns": [
-            { data: 'id' },
+            { data: 'num' },
             { data: 'state.name' },
-            { data: 'user_id' },
-            { data: 'amount' },
+            { data: 'user.full_name' },
+            { data: 'created_at' },
+            { data: 'total_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
+                        <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>

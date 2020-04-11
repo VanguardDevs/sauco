@@ -234,6 +234,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
     Route::get('affidavits/{settlement}', 'AffidavitController@show')->name('affidavits.show');
     Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
+    Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::resource('taxpayers', 'TaxpayerController');
 

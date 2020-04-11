@@ -54,9 +54,10 @@ class PaymentController extends Controller
 
     public function listByTaxpayer(Taxpayer $taxpayer)
     {
-        $query = Payment::with('state')
+        $query = Payment::with(['state', 'user'])
             ->whereTaxpayerId($taxpayer->id)
-            ->orderBy('id', 'DESC');
+            ->orderBy('id', 'DESC')
+            ->get();
 
         return DataTables::of($query)->toJson();
     }

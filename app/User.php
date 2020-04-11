@@ -26,6 +26,10 @@ class User extends Authenticatable
         'login'
     ];
 
+    protected $appends = [
+        'full_name'
+    ];
+
     public function payments()
     {
         return $this->hasMany(Payment::class);

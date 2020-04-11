@@ -6,8 +6,6 @@
 
 @section('title', 'Ficha del Contribuyente '.$row->name)
 
-@section('subheader__title', $row->name)
-
 @section('content')
 
 <div class="kt-portlet kt-portlet--height-fluid">
@@ -43,15 +41,21 @@
 <div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
       <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">Pagos</h3>
+            </div>
+        </div>
         <div class="kt-portlet__body">
           <table id="tTaxpayerPayments" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">ID</th>
-                <th width="10%">Estado</th>
-                <th width="50%">Usuario</th>
-                <th width="10%">Monto</th>
-                <th width="10%">Acciones</th>
+                <th width="15%">Nro.</th>
+                <th width="15%">Estado</th>
+                <th width="25%">Liquidador</th>
+                <th width="15%">Creada</th>
+                <th width="15%">Monto</th>
+                <th width="15%">Acciones</th>
               </tr>
             </thead>
           </table>

@@ -106,6 +106,6 @@ class Payment extends Model implements Auditable
 
     public function getTotalAmountAttribute()
     {
-        return number_format($this->amount, 2, ',', '.')." Bs";
+        return number_format($this->amount, 2, ',', '.');
     }
 }
