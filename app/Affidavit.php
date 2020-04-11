@@ -17,6 +17,8 @@ class Affidavit extends Model
         'amount' => 'float'
     ];
 
+    protected $with = [ 'month' ];
+
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
 
     public function month()
@@ -61,7 +63,7 @@ class Affidavit extends Model
 
     public function getBruteAmountAffidavitAttribute($value)
     {
-        $totalAffidavit = $this->affidavits->sum('brute_amount');
+        $totalAffidavit = $this->economicActivityAffidavits->sum('brute_amount');
 
         return number_format($totalAffidavit, 2, ',', '.');
     }

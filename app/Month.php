@@ -13,13 +13,15 @@ class Month extends Model
         'year_id'
     ];
 
+    protected $with = [ 'year' ];
+
     public function year()
     {
         return $this->belongsTo(Year::class);
     }
 
-    public function payments()
+    public function affidavits()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Affidavit::class);
     }
 }

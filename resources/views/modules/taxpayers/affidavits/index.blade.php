@@ -13,7 +13,7 @@
                     <i class="kt-font-brand fas fa-file-medical"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    Realizar liquidación mensual
+                    Realizar declaración mensual
                     <small>
                         Seleccione un mes para procesar una declaración
                     </small>
@@ -70,7 +70,7 @@
                     <i class="kt-font-brand fas fa-folder-open"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    Histórico de liquidaciones
+                    Histórico de declaraciones
                 </h3>
             </div>
             <div class="kt-portlet__head-toolbar">
@@ -83,13 +83,11 @@
             <table id="tAffidavits" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
-                    <th width="10%">N°</th>
-                    <th width="10%">Año</th>
+                    <th width="15%">Año</th>
                     <th width="15%">Mes</th>
-                    <th width="20%">Declarado</th>
-                    <th width="20%">Calculado</th>
-                    <th width="15%">Estado</th>
-                    <th width="15%">Acciones</th>
+                    <th width="25%">Declarado</th>
+                    <th width="25%">Calculado</th>
+                    <th width="20%">Acciones</th>
                   </tr>
                 </thead>
             </table>

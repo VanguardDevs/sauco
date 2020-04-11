@@ -43,14 +43,14 @@ class AffidavitController extends Controller
     {
         $years = Year::pluck('year', 'id');
 
-        return view('modules.declarations.index')
+        return view('modules.taxpayers.affidavits.index')
             ->with('years', $years)
             ->with('taxpayer', $taxpayer);
     }
 
     public function listAffidavits(Taxpayer $taxpayer)
     {
-        $query = $taxpayer->declarations()
+        $query = $taxpayer->affidavits()
             ->orderBy('id', 'DESC')
             ->get();
 

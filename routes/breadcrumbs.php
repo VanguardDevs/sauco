@@ -54,7 +54,7 @@ Breadcrumbs::for('settlements.index', function ($trail) {
  */
 Breadcrumbs::for('affidavits.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
-    $trail->push('Liquidaciones', url('taxpayers/'.$row->id.'/affidavits'));
+    $trail->push('Declaraciones', route('affidavits.index', $row));
 });
 
 /*----------  Taxpayers > taxpayer > Affidavits > show ----------*/

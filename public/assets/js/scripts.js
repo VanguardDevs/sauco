@@ -788,12 +788,10 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'num'},
             { data: 'month.year.year' },
             { data: 'month.name' },
             { data: 'brute_amount_affidavit', name: 'brute_amount_affidavit' },
             { data: 'total_amount', name: 'total_amount' },
-            { data: 'state.name'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
