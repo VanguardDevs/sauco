@@ -71,20 +71,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Payment::class);
     }
 
-    public function getFiscalAddressAttribute()
+    public function affidavits()
     {
-        return $this->attributes['fiscal_address'].
-            ', '.$this->community->name;
-    }
-    
-    /**
-     * Affidavit incomes
-     */
-    public function declarations()
-    {
-        return $this->settlements()
-            ->with(['state', 'month', 'month.year'])
-            ->where('concept_id', 1);
+        return $this->hasMany(Affidavit::class);
     }
 
     public function municipality()
@@ -106,6 +95,11 @@ class Taxpayer extends Model implements Auditable
     {
         return $this->taxpayerType->correlative.$value;
     }
+    public function getFiscalAddressAttribute()
+    {
+        return $this->attributes['fiscal_address'].
+            ', '.$this->community->name;
+    } 
 
     public static function existsRif($rif)
     {

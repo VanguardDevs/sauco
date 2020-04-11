@@ -14,31 +14,59 @@ class Affidavit extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'amount' => 'float',
-        'brute_amount' => 'float' 
+        'amount' => 'float'
     ];
 
-    protected $appends = [
-        'affidavit_amount',
-        'calc'
-    ];
+    protected $appends = ['total_amount', 'brute_amount_affidavit'];
 
-    public function economicActivity()
+    public function month()
     {
-        return $this->belongsTo(EconomicActivity::class);
+        return $this->belongsTo(Month::class);
     }
 
-    public function settlement()
+    public function taxpayer()
     {
-        return $this->belongsTo(Settlement::class);
+        return $this->belongsTo(Taxpayer::class);
     }
 
-    public function getAffidavitAmountAttribute($value)
+    public function user()
     {
-        return number_format($this->brute_amount, 2, ',', '.');
+        return $this->belongsTo(User::class);
     }
 
-    public function getCalcAttribute($value)
+    public function economicActivityAffidavits()
+    {
+        return $this->hasMany(EconomicActivityAffidavit::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsToMany(Payment::class);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Date('d/m/Y', strtotime($value)); 
+    }
+
+    public function getDeletedAtAttribute($value)
+    {
+        return Date('d-m-Y H:m', strtotime($value)); 
+    }
+
+    public function scopeLastSettlement($query)
+    {
+        return $query->withTrashed()->latest()->first();
+    }
+
+    public function getBruteAmountAffidavitAttribute($value)
+    {
+        $totalAffidavit = $this->affidavits->sum('brute_amount');
+
+        return number_format($totalAffidavit, 2, ',', '.');
+    }
+
+    public function getTotalAmountAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
     }

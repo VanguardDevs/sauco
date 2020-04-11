@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Taxpayer;
-use App\Settlement;
+use App\Affidavit;
 use App\Payment;
 use App\License;
 
@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $licenseCount = License::count();
         $paymentCount = Payment::whereStateId('2')
             ->count();
-        $affidavitCount = Settlement::count();
+        $affidavitCount = Affidavit::count();
 
         return view('modules.dashboard.index')
             ->with('taxpayerCount', $taxpayerCount)
