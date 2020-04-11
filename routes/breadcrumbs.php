@@ -310,9 +310,9 @@ Breadcrumbs::for('taxpayers.create', function ($trail) {
 });
 
 /*------------- Taxpayers > update -------------*/
-Breadcrumbs::for('taxpayers.update', function ($trail) {
-    $trail->parent('taxpayers.index');
-    $trail->push('Editar contribuyente', url('taxpayers/update'));
+Breadcrumbs::for('taxpayers.edit', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Editar contribuyente', route('taxpayers.edit', $row));
 });
 
 /**

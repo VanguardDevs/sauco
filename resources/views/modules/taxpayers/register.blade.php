@@ -44,7 +44,7 @@
                             <label class="control-label">RIF <span class="text-danger">*</span></label>
 
                             {!!
-                            Form::text("rif", old('rif', @$row->rif), [
+                            Form::text("rif", (isset($row->rif) ? $row->getOriginal('rif') : null), [
                                 "class" => "form-control input-mask-rif",
                                 "placeholder" => "RIF del contribuyente",
                                 "id" => 'rif'
@@ -56,7 +56,7 @@
                             @enderror
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="control-label">Razón social o nombre<span class="text-danger">*</span></label>
+                            <label class="control-label">Razón social o nombre <span class="text-danger">*</span></label>
                             {!!
                             Form::text("name", old('name', @$row->name), [
                                 "Placeholder" => "Nombre o Razón social del contribuyente",
@@ -69,17 +69,18 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-12" id="commercial_denomination" style="display:none;">
+ 
+                        <div class="form-group col-md-12">
                             <label class="control-label">Firma personal o denominación comercial</label>
 
                             {!!
-                            Form::text("trade_denomination", old('trade_denomination', @$row->denomination), [
+                            Form::text("personal_firm", old('personal_firm', @$row->commercialDenomination->name), [
                                 "class" => "form-control",
                                 "onkeyup" => "upperCase(this);"
                             ])
                             !!}
 
-                            @error('trade_denomination')
+                            @error('personal_firm')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -170,7 +171,7 @@
                             <label class="control-label"> Dirección <span class="text-danger">*</span></label>
 
                             {!!
-                            Form::text("fiscal_address", old('fiscal_address', @$row->fiscal_address), [
+                            Form::text("fiscal_address", (isset($row->fiscal_address) ? $row->getOriginal('fiscal_address') : null), [
                                 "Placeholder" => "Calle o avenida, # Nro. del edificio",
                                 "class" => "form-control",
                                 "onkeyup" => "upperCase(this);",
@@ -188,7 +189,7 @@
                 <div class="card-footer">
                     <a href="{{ url()->previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i> Regresar</a>
 
-                    @if($typeForm == 'update')
+                    @if($typeForm == 'edit')
                     <button type="submit" class="btn btn-primary">
                         <i class="flaticon2-reload"></i>
                         Actualizar

@@ -13,6 +13,7 @@ use App\Community;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
+use App\Http\Requests\Taxpayers\TaxpayersUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
 
@@ -22,7 +23,7 @@ class TaxpayerController extends Controller
     {
         $this->middleware('can:create.taxpayers')->only(['create','store']);
         $this->middleware('can:access.taxpayers')->only(['show', 'index']);
-        $this->middleware('has.role:admin')->only(['edit', 'update']);
+        $this->middleware('can:edit.taxpayers')->only(['edit', 'update']);
         $this->middleware('auth');
     }
 
@@ -172,7 +173,11 @@ class TaxpayerController extends Controller
      */
     public function edit(Taxpayer $taxpayer)
     {
-        //
+        return view('modules.taxpayers.register')
+            ->with('types', TaxpayerType::pluck('description', 'id'))
+            ->with('communities', Community::pluck('name', 'id'))
+            ->with('typeForm', 'edit')
+            ->with('row', $taxpayer);
     }
 
     /**
@@ -182,9 +187,14 @@ class TaxpayerController extends Controller
      * @param  \App\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Taxpayer $taxpayer)
+    public function update(TaxpayersUpdateFormRequest $request, Taxpayer $taxpayer)
     {
-        //
+        $taxpayer->update($request->input());
+        $taxpayer->commercialDenomination->name = $request->input('personal_firm');
+        $taxpayer->push();
+
+        return redirect('taxpayers/'.$taxpayer->id)
+            ->withSuccess('¡Info. general del contribuyente actualizada!');
     }
 
     /**

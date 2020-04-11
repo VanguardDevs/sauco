@@ -15,8 +15,17 @@
                 <div class="kt-widget__content">
                     <div class="kt-widget__head">
                         <a class="kt-widget__username" href="{{ Route('taxpayers.show', $row->id) }}">
-                            {{ $row->name }}
+                            {{ $row->name }}   
+                            </br>
+                            <small> {{ $row->rif }} </small>
                         </a>
+                        @if(Auth::user()->can('edit.taxpayers'))
+                        <div class="kt-widget__action">
+                            <a href="{{ route('taxpayers.edit', $row) }}" class="btn btn-circle btn-icon">
+                                <i class="flaticon2-edit kt-font-warning"></i>
+                            </a>
+                        </div>
+                        @endif
                     </div>
                     <div class="kt-widget__subhead">
                         <a>
