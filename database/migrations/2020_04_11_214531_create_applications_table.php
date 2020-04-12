@@ -16,6 +16,7 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('amount');
+            $table->boolean('active')->default(0);
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('user_id');

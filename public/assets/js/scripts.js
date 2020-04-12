@@ -10,11 +10,9 @@ $("#form").closest('form').on('submit', function(e) {
 
 /*--------- Select Dinamicos ---------*/
 $(function () {
-    $('#parishes').on('change', onSelectParishes);
-    $('#ordinance').on('change', onSelectOrdinance);
+    $('#applications').on('change', onSelectApplications);
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
-    $('#states').on('change', onSelectStates);
     $('#payment_methods').on('change', onSelectPaymentType);
     $('#years').on('change', onSelectYears);
 });
@@ -70,18 +68,18 @@ function onSelectPaymentType() {
 /**
  * Get all communities for a given parish
  */
-function onSelectParishes() {
-    let parish_id = $(this).val();
+function onSelectApplications() {
+    let ordinance_id = $(this).val();
 
     let html_select = '<option value=""> SELECCIONE </option>';
 
-    $.get('/parishes/'+parish_id+'/communities/', data => {
+    $.get('/applications/'+ordinance_id+'/concepts/', data => {
 
       for (let i = 0; i < data.length; i++) {
         html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
       }
 
-      $('#communities').html(html_select);
+      $('#concepts').html(html_select);
     });
 }
 
@@ -89,47 +87,17 @@ function onSelectParishes() {
  * Get all communities for a given parish
  */
 function onSelectYears() {
-    let parish_id = $(this).val();
+    let year_id = $(this).val();
 
     let html_select = '<option value=""> SELECCIONE </option>';
 
-    $.get('/years/'+parish_id+'/months/', data => {
+    $.get('/years/'+year_id+'/months/', data => {
 
       for (let i = 0; i < data.length; i++) {
         html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
       }
 
       $('#months').html(html_select);
-    });
-}
-
-function onSelectStates() {
-    let state_id = $(this).val();
-
-    let html_select = '<option value=""> SELECCIONE </option>';
-
-    $.get('/state/'+state_id+'/municipalities/', data => {
-
-      for (let i = 0; i < data.length; i++) {
-        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-      }
-
-      $('#municipalities').html(html_select);
-    });
-}
-
-function onSelectOrdinance() {
-    let ordinance_id = $(this).val();
-
-    let html_select = '<option value=""> SELECCIONE </option>';
-
-    $.get(`${baseURL}/ordinances/${ordinance_id}/concepts`, data => {
-
-      for (let i = 0; i < data.length; i++) {
-        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-      }
-
-      $('#concepts').html(html_select);
     });
 }
 

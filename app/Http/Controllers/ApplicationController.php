@@ -14,6 +14,7 @@ class ApplicationController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,6 +36,11 @@ class ApplicationController extends Controller
             ->toJson();
     }
 
+    public function listConcepts(Ordinance $ordinance)
+    {
+        return $ordinance->conceptsByList(1);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,8 +48,7 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        return view('modules.applications.register')
-            ->with('typeForm', 'create');
+        //
     }
 
     /**
@@ -52,7 +57,7 @@ class ApplicationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Taxpayer $taxpayer)
     {
         dd($request);
     }

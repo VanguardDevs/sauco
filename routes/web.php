@@ -237,7 +237,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers', 'TaxpayerController');
 
     /** 
-     * Year routes
+     * Listing routes
      */
+    Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
 });

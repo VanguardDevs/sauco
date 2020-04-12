@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Declaraciones de '.$taxpayer->rif)
+@section('title', 'Solicitudes de '.$taxpayer->rif)
 
 @section('content')
 
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="kt-portlet__body">
-            {!! Form::open(['route' => ['settlements.create', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+            {!! Form::open(['route' => ['applications.store', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
                 <div class="form-group row">
                     <div class="col-lg-5">
                         <label class="col-lg-12">Seleccione la ordenanza<span class="text-danger"> *</span></label>
@@ -29,7 +29,7 @@
                             Form::select('ordinance', $ordinances, null, [
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
-                                'id' => 'years' 
+                                'id' => 'applications' 
                             ])
                         !!}
 
@@ -40,14 +40,14 @@
                     <div class="col-lg-5">
                         <label class="col-lg-12">Seleccione el mes<span class="text-danger"> *</span></label>
                         {!!
-                            Form::select('month', [], null, [
+                            Form::select('concepts', [], null, [
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
-                                'id' => 'months' 
+                                'id' => 'concepts' 
                             ])
                         !!}
 
-                        @error('month')
+                        @error('concepts')
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
