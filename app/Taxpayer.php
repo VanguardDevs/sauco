@@ -56,14 +56,14 @@ class Taxpayer extends Model implements Auditable
         return $this->hasOne(CommercialDenomination::class);
     }
 
-    public function settlements()
+    public function applications()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->hasMany(Application::class);
     }
-
-    public function receivables()
+    
+    public function fines()
     {
-        return $this->hasMany(Receivable::class);
+        return $this->hasMany(Fine::class);
     }
     
     public function payments()

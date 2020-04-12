@@ -178,16 +178,14 @@ Route::prefix('/')->middleware('auth')->group(function()
         /**
          * Taxpayer's Fines
          */
-        Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@listByTaxpayer');
-        Route::get('taxpayers/{taxpayer}/fines', 'FineController@indexByTaxpayer')
-            ->name('taxpayer.fines');
+        Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
+        Route::resource('taxpayers/{taxpayer}/fines', 'FineController@indexByTaxpayer');
 
         /**
          * Taxpayer's application
          */
-        Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@listByTaxpayer');
-        Route::get('taxpayers/{taxpayer}/applications', 'ApplicationController@indexByTaxpayer')
-            ->name('taxpayer.applications');
+        Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
+        Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
    });
 
     /**

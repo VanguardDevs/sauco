@@ -395,9 +395,9 @@ Breadcrumbs::for('settings/application-types/update', function ($trail) {
 });
 
 /*------------- Applications -------------*/
-Breadcrumbs::for('applications', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Solicitudes', url('applications'));
+Breadcrumbs::for('applications.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Solicitudes', route('applications.index', $row));
 });
 
 /*------------- Charging Methods -------------*/

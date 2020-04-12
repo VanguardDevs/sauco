@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Fine;
 use App\Taxpayer;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class FineController extends Controller
 {
@@ -13,14 +14,9 @@ class FineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Taxpayer $taxpayer)
     {
         //
-    }
-
-    public function indexByTaxpayer(Taxpayer $taxpayer)
-    {
-        dd($taxpayer);
     }
 
     /**

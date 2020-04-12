@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFinesTable extends Migration
+class AddForeignKeysToFinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,13 @@ class CreateFinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fines', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->float('amount');
-            $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('concept_id');
-            $table->unsignedBigInteger('user_id');
+        Schema::table('fines', function (Blueprint $table) {
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('concept_id')->references('id')->on('concepts')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -37,6 +30,8 @@ class CreateFinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fines');
+        Schema::table('fines', function (Blueprint $table) {
+            //
+        });
     }
 }

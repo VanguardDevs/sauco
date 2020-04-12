@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Ordinance;
 use App\Taxpayer;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
@@ -17,19 +19,20 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Taxpayer $taxpayer)
     {
-        return view('modules.applications.index');
+        return view('modules.taxpayers.applications.index')
+            ->with('taxpayer', $taxpayer)
+            ->with('ordinances', Ordinance::pluck('description', 'id'));
     }
 
-    public function indexByTaxpayer(Taxpayer $taxpayer)
+    public function list(Taxpayer $taxpayer)
     {
-        dd($taxpayer);
-    }
+        $query = Application::whereTaxpayerId($taxpayer->id)
+            ->with('concept');
 
-    public function list()
-    {
-        //
+        return DataTables::of($query)
+            ->toJson();
     }
 
     /**
