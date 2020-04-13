@@ -6,6 +6,7 @@ use App\Taxpayer;
 use App\Year;
 use App\Month;
 use App\Settlement;
+use App\Affidavit;
 use App\Concept;
 use App\Services\ReceivableService;
 use App\Services\PaymentService;
@@ -57,22 +58,22 @@ class AffidavitController extends Controller
         return DataTables::of($query)->toJson();
     }
 
-    public function show(Settlement $settlement)
+    public function show(Affidavit $affidavit)
     {
-        if ($settlement->state->id == 1) {
+        if ($affidavit->amount == 0.00) {
             if (!Auth::user()->can('process.settlements'))  {
                 return redirect('cashbox/settlements')
                     ->withError('¡No puede procesar la liquidación!');
             }
 
             return view('modules.cashbox.select-settlement')
-                ->with('row', $settlement);
+                ->with('row', $affidavit);
         }
 
         // The settlement it's already processed    
         return view('modules.cashbox.register-settlement')
             ->with('typeForm', 'show')
-            ->with('row', $settlement);
+            ->with('row', $affidavit);
     }
 
     /**
@@ -80,10 +81,10 @@ class AffidavitController extends Controller
      * @param  \App\Settlement  $settlement
      * @return \Illuminate\Http\Response
      */
-    public function groupActivityForm(Settlement $settlement)
+    public function groupActivityForm(Affidavit $affidavit)
     {
         return view('modules.cashbox.register-settlement')
-            ->with('row', $settlement)
+            ->with('row', $affidavit)
             ->with('typeForm', 'edit-group');
     }
     
@@ -92,11 +93,11 @@ class AffidavitController extends Controller
      * @param \App\Settlement $settlement
      * @return \Illuminate\Http\Response
      */
-    public function normalCalcForm(Settlement $settlement)
+    public function normalCalcForm(Affidavit $affidavit)
     {
         return view('modules.cashbox.register-settlement')
             ->with('typeForm', 'edit-normal')
-            ->with('row', $settlement);
+            ->with('row', $affidavit);
     }
 
     public function create(AffidavitsCreateFormRequest $request, Taxpayer $taxpayer)
@@ -113,24 +114,24 @@ class AffidavitController extends Controller
      */
     public function validateStore()
     {
-        $settlement = $this->settlement
-            ->findOneByMonth($this->concept, $this->taxpayer, $this->month);
+        $affidavit = Affidavit::findOneByMonth($this->taxpayer, $this->month)
+            ->first();
         
         // No affidavit found
-        if (!$settlement) {
-            $pendingSettlement = $this->checkLastSettlement();
+        if (!$affidavit) {
+            $pendingAffidavit = $this->checkLastAffidavit();
 
-            if (!$pendingSettlement) {
+            if (!$pendingAffidavit) {
                 return $this->store();
             } else {
-               return $this->fireError("Debe procesar la liquidación del mes de ".$pendingSettlement->month->name.' - '.$pendingSettlement->month->year->year);
+               return $this->fireError("Debe procesar la declaración del mes de ".$pendingAffidavit->month->name.' - '.$pendingAffidavit->month->year->year);
             }
         // Selected month has already an affidavit created
         } else {
-            return $this->fireError("La liquidación del mes de ".
+            return $this->fireError("La declaración del mes de ".
                 $this->month->name." -  ".
                 $this->month->year->year.
-                " esta generada"
+                " fue generada"
             );
         }
     }
@@ -138,15 +139,15 @@ class AffidavitController extends Controller
     /**
      * Check last settlement status
      */
-    public function checkLastSettlement()
+    public function checkLastAffidavit()
     {
-        $lastSettlement = $this->settlement->find($this->concept, $this->taxpayer)
+        $lastAffidavit = Affidavit::whereTaxpayerId($this->taxpayer->id)
             ->latest()->first();
         
-        if ($lastSettlement) {
+        if ($lastAffidavit) {
             // If last month settlement isn't processed yet
-            if ($lastSettlement->state->id == 1) {
-                return $lastSettlement;
+            if ($lastAffidavit->amount == 0.00) {
+                return $lastAffidavit;
             }
         }
 
@@ -158,12 +159,16 @@ class AffidavitController extends Controller
      * @return Illuminate\Response
      */
     public function store()
-    {
-        $settlement = $this->settlement
-            ->make($this->taxpayer, $this->concept, $this->month);
+    {        
+        $affidavit = Affidavit::create([
+            'taxpayer_id' => $this->taxpayer->id,
+            'month_id' => $this->month->id,
+            'user_id' => auth()->user()->id,
+            'amount' => 0.00
+        ]);
 
-        return redirect('affidavits/'.$settlement->id)
-            ->withSuccess('¡Liquidación del mes de '.$this->month->name.' - '.$this->month->year->year.' realizada!');
+        return redirect('affidavits/'.$affidavit->id)
+            ->withSuccess('¡Declaración del mes de '.$this->month->name.' - '.$this->month->year->year.' realizada!');
     }
 
     /**
@@ -203,15 +208,15 @@ class AffidavitController extends Controller
      * @param Settlement $settlement
      * @return Illuminate\Response
      */
-    public function makePayment(Settlement $settlement)
+    public function makePayment(Affidavit $affidavit)
     {
-        if ($settlement->payment()) {
-            return redirect('affidavits/'.$settlement->id)
+        if ($affidavit->payment()) {
+            return redirect('affidavits/'.$affidavit->id)
                 ->withError('¡La factura de la liquidación fue realizada!');
         }
 
-        $payment = $this->payment->make($settlement->taxpayer);
-        $receivable = $this->receivable->make($settlement, $payment);
+        $payment = $this->payment->make($affidavit->taxpayer);
+        $receivable = $this->receivable->make($affidavit, $payment);
 
         return redirect('cashbox/payments/'.$payment->id)
             ->withSuccess('¡Factura realizada!');

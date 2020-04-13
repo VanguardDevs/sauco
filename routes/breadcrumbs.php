@@ -60,7 +60,7 @@ Breadcrumbs::for('affidavits.index', function ($trail, $row) {
 /*----------  Taxpayers > taxpayer > Affidavits > show ----------*/
 Breadcrumbs::for('affidavits.show', function ($trail, $row) {
     $trail->parent('affidavits.index', $row->taxpayer);
-    $trail->push('Liquidación n°'.$row->id, url('affidavits/'.$row->id));
+    $trail->push('Nueva declaración', route('affidavits.show', $row));
 });
 
 /**

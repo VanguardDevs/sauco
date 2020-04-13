@@ -1,8 +1,8 @@
 @extends('cruds.form')
 
-@section('subheader__title', 'Liquidación # '.$row->num)
+@section('subheader__title', 'Liquidación')
 
-@section('title', 'Liquidación '.$row->num)
+@section('title', 'Liquidación')
 
 @section('form')
     <!-- general form elements -->
@@ -43,7 +43,7 @@
                     Declaraciones por actividad económica
                 </div>
             </div>
-            @foreach($row->affidavits as $affidavit)
+            @foreach($row->economicActivityAffidavits as $affidavit)
                 <div class="form-group row">
                     <div class="col-md-1">
                         <label class="col-md-12">Código</label>

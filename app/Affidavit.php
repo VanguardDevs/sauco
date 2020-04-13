@@ -61,9 +61,20 @@ class Affidavit extends Model
         return Date('d-m-Y H:m', strtotime($value)); 
     }
 
-    public function scopeLastSettlement($query)
+    public function scopeLastAffidavit($query)
     {
-        return $query->withTrashed()->latest()->first();
+        return $query->latest()->first();
+    }
+
+    public function scopePendingAffidavit($query)
+    {
+
+    }
+
+    public function scopeFindOneByMonth($query, $taxpayer, $month)
+    {
+        return $query->whereTaxpayerId($taxpayer->id)
+            ->whereMonthId($month->id);
     }
 
     public function getBruteAmountAffidavitAttribute($value)

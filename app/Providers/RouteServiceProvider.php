@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Application;
+use App\Affidavit;
 use App\Ordinance;
 use App\Payment;
 use App\License;
@@ -41,6 +42,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('activity', EconomicActivity::class);
         Route::model('year', Year::class);
         Route::model('ordinance', Ordinance::class);
+        Route::model('affidavit', Affidavit::class);
     }
 
     /**

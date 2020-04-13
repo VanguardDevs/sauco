@@ -38,7 +38,7 @@
                         @enderror
                     </div>
                     <div class="col-lg-5">
-                        <label class="col-lg-12">Seleccione el mes<span class="text-danger"> *</span></label>
+                        <label class="col-lg-12">Seleccione el concepto<span class="text-danger"> *</span></label>
                         {!!
                             Form::select('concepts', [], null, [
                                 'class' => 'col-md-12 select2',
@@ -72,11 +72,6 @@
                 <h3 class="kt-portlet__head-title">
                     Histórico de solicitudes
                 </h3>
-            </div>
-            <div class="kt-portlet__head-toolbar">
-                <a href="{{ url("/") }}" class="btn btn-label-brand btn-bold btn-sm" title="Imprimir histórico de liquidaciones">
-                    <i class="fas fa-print"></i>
-                </a>
             </div>
         </div>
         <div class="kt-portlet__body">
