@@ -28,27 +28,6 @@
                             </div>
                         </div>
                     </a>
-
-                    <a class="kt-notification__item" href="{{ url('settings/economic-sectors') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-graphic"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                Sectores Económicos 
-                            </div>
-                        </div>
-                    </a>
-                    <a class="kt-notification__item" href="{{ url('settings/reductions') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon-price-tag"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                Descuentos
-                            </div>
-                        </div>
-                    </a>
                     <a class="kt-notification__item" href="{{ url('settings/ordinances') }}">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-file-1"></i>
@@ -56,16 +35,6 @@
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
                                 Ordenanzas
-                            </div>
-                        </div>
-                    </a>
-                    <a class="kt-notification__item" href="{{ url('settings/accounts') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon-coins"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                Cuentas financieras
                             </div>
                         </div>
                     </a>
@@ -81,31 +50,11 @@
                     </a>
                     <a class="kt-notification__item" href="{{ url('settings/tax-units') }}">
                         <div class="kt-notification__item-icon">
-                            <i class="flaticon-coins"></i>
+                            <i class="flaticon-price-tag"></i>
                         </div>
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
                                 Unidades Tributarias
-                            </div>
-                        </div>
-                    </a>
-                    <a class="kt-notification__item" href="{{ url('settings/property-types') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-protection"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                               Tipos de inmuebles
-                            </div>
-                        </div>
-                    </a>
-                    <a class="kt-notification__item" href="{{ url('settings/personal-firms') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-zig-zag-line-sign"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                               Firmas personales 
                             </div>
                         </div>
                     </a>

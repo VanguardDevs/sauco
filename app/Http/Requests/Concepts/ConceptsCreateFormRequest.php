@@ -24,30 +24,37 @@ class ConceptsCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'code' => 'required|unique:concepts',
             'name' => 'required',
-            'ordinance' => 'required',
-            'law' => 'required',
-            'list' => 'required'
+            'amount' => 'required',
+            'ordinance_id' => 'required',
+            'charging_method_id' => 'required',
+            'list_id' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
+            'code' => 'code',
             'name' => 'nombre',
-            'ordinance' => 'tipo de ordenanza',
-            'law' => 'ley u ordenanza',
-            'list' => 'listado'
+            'amount' => 'nombre',
+            'ordinance_id' => 'tipo de ordenanza',
+            'list_id' => 'listado',
+            'charging_method_id' => 'método de cálculo'
         ];
     }
 
     public function messages()
     {
         return [
+            'code.required' => 'Ingrese un :attribute',
+            'code.unique' => 'El :attribute ya existe',
             'name.required' => 'Ingrese un :attribute',
-            'ordinance.required' => 'Seleccione un :attribute',
-            'list.required' => 'Seleccione un :attribute',
-            'law.required' => 'Ingrese una :attribute'
+            'ordinance_id.required' => 'Seleccione un :attribute',
+            'list_id.required' => 'Seleccione un :attribute',
+            'charging_method_id.required' => 'Seleccione un :attribute',
+            'amount.required' => 'Ingrese un :attribute'
         ];
     }
 }

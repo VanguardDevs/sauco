@@ -525,9 +525,10 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/concepts/list",
         "columns": [
-            { data: 'id'},
             { data: 'name'},
-            { data: 'id'},
+            { data: 'ordinance.description'},
+            { data: 'charging_method.name'},
+            { data: 'amount'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

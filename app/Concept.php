@@ -13,31 +13,23 @@ class Concept extends Model
 
     protected $table = 'concepts';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'code',
+        'name',
+        'amount',
+        'charging_method_id',
+        'list_id',
+        'ordinance_id'
+    ];
 
     public function ordinance()
     {
         return $this->belongsTo(Ordinance::class);
     }
 
-    public function requisites()
+    public function chargingMethod()
     {
-        return $this->hasMany(Requisite::class);
-    }
-
-    public function conceptPrices()
-    {
-        return $this->hasMany(ConceptPrice::class);
-    }
-
-    public function receivables()
-    {
-        return $this->hasMany(Receivable::class);
-    }
-
-    public function settlements()
-    {
-        return $this->hasMany(Settlement::class);
+        return $this->belongsTo(ChargingMethod::class);
     }
 
     public function listing()

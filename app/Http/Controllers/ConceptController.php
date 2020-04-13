@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ConceptPrice;
 use App\Concept;
 use App\Ordinance;
 use App\ChargingMethod;
@@ -30,17 +29,9 @@ class ConceptController extends Controller
 
     public function list()
     {
-        $query = Concept::query()
-            ->with('conceptPrices');
+        $query = Concept::with(['ordinance', 'chargingMethod']);
 
         return DataTables::eloquent($query)->toJson();
-    }
-
-    public function byOrdinance($id)
-    {
-        $query = Concept::whereOrdinanceId($id);
-
-        return $query->get();
     }
 
     /**
@@ -65,22 +56,7 @@ class ConceptController extends Controller
      */
     public function store(ConceptsCreateFormRequest $request)
     {
-        $concept = Concept::create([
-            'code' => $request->input('code'),
-            'name' => $request->input('name'),
-            'law' => $request->input('law'),
-            'observations' => $request->input('observations'),
-            'ordinance_id' => $request->input('ordinance'),
-            'list_id' => $request->input('list')
-        ]);
-        /**
-        if ($concept->code != 1) { 
-            ConceptPrice::create([
-                'value' => $request->input('value'),
-                'concept_id' => $concept->id,
-                'charging_method_id' => $request->input('charging_method')
-            ]);
-        } */
+        $concept = Concept::create($request->input());
 
         return redirect('settings/concepts')
             ->withSuccess('¡Concepto de recaudación creado!');
@@ -106,7 +82,7 @@ class ConceptController extends Controller
     public function edit(Concept $concept)
     {
         return view('modules.concepts.register')
-            ->with('typeForm', 'update')
+            ->with('typeForm', 'edit')
             ->with('ordinances', Ordinance::pluck('description', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('listings', Listing::pluck('name', 'id'))
@@ -122,13 +98,7 @@ class ConceptController extends Controller
      */
     public function update(Request $request, Concept $concept)
     {
-        $concept->update([
-            'name' => $request->input('name'),
-            'law' => $request->input('law'),
-            'observations' => $request->input('observations'),
-            'ordinance_id' => $request->input('ordinance'),
-            'list_id' => $request->input('list')
-        ]);
+        $concept->update($request->input());
 
         return redirect('settings/concepts')
             ->withSuccess('¡Concepto de recaudación actualizado!');
