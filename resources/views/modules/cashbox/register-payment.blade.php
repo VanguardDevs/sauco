@@ -49,13 +49,13 @@
           <table class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">No. Liquidación</th>
+                <th width="10%">Liquidación</th>
                 <th width="80%">Concepto</th>
                 <th width="10%">Monto</th>
               </tr>
             </thead>
             <tbody>
-            @foreach($row->receivables as $settlement)
+            @foreach($row->settlements as $settlement)
              <tr>
                 <td>{{ $settlement->num }}</td> 
                 <td>{{ $settlement->object_payment  }}</td>   
