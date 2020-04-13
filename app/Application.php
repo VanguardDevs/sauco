@@ -24,4 +24,9 @@ class Application extends Model
     {
         return $this->belongsTo(Taxpayer::class);
     }
+
+    public function payment()
+    {
+        return $this->belongsToMany(Payment::class, Settlement::class);
+    }
 }

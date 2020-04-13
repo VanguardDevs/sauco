@@ -16,7 +16,6 @@ class RenameSettlementsTable extends Migration
         Schema::rename('affidavits', 'economic_activity_affidavit');
         Schema::rename('settlements', 'affidavits');
         Schema::rename('receivables', 'settlements');
-        Schema::rename('payment_settlement', 'affidavit_payment');
     }
 
     /**

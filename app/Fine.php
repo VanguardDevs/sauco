@@ -27,6 +27,6 @@ class Fine extends Model
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class);
+        return $this->belongsToMany(Payment::class, Settlement::class);
     }
 }

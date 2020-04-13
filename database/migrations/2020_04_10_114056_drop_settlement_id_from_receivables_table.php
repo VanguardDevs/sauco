@@ -14,12 +14,10 @@ class DropSettlementIdFromReceivablesTable extends Migration
     public function up()
     {
         Schema::table('receivables', function (Blueprint $table) {
-            $table->dropForeign(['settlement_id']);
             $table->dropForeign(['taxpayer_id']);
             $table->dropForeign(['concept_id']);
             $table->dropForeign(['user_id']);
             $table->dropColumn(['user_id']);
-            $table->dropColumn(['settlement_id']);
             $table->dropColumn(['taxpayer_id']);
             $table->dropColumn(['concept_id']);
             $table->dropColumn(['processed_at']);

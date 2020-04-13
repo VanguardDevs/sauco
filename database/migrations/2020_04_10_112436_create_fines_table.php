@@ -16,6 +16,7 @@ class CreateFinesTable extends Migration
         Schema::create('fines', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('amount');
+            $table->boolean('active')->nullable();
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('user_id');

@@ -43,7 +43,12 @@ class Affidavit extends Model
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class);
+        return $this->belongsToMany(Payment::class, Settlement::class);
+    }
+
+    public function settlement()
+    {
+        return $this->hasOne(Settlement::class);
     }
 
     public function getCreatedAtAttribute($value)

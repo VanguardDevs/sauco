@@ -21,6 +21,21 @@ class Settlement extends Model implements Auditable
         return $this->belongsTo(Payment::class);
     }
 
+    public function fine()
+    {
+        return $this->belongsTo(Fine::class);
+    }
+
+    public function affidavit()
+    {
+        return $this->belongsTo(Affidavit::class);
+    }
+
+    public function application()
+    {
+        return $this->belongsTo(Application::class);
+    }
+
     public function getTotalAmountAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
