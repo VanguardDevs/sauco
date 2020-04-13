@@ -23,7 +23,6 @@ class Taxpayer extends Model implements Auditable
         'email',
         'community_id',
         'taxpayer_type_id',
-        'municipality_id'
     ];
 
     public function representations()
@@ -76,19 +75,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Affidavit::class);
     }
 
-    public function municipality()
-    {
-        return $this->belongsTo(Municipality::class);
-    }
-
     public function community()
     {
         return $this->belongsTo(Community::class);
-    }
-
-    public function vehicles()
-    {
-        return $this->hasMany(Vehicle::class);
     }
 
     public function getRifAttribute($value)

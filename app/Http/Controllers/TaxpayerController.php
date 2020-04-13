@@ -6,7 +6,6 @@ use App\CommercialDenomination;
 use App\EconomicActivity;
 use App\TaxpayerType;
 use App\Person;
-use App\Municipality;
 use App\Taxpayer;
 use App\License;
 use App\Community;
@@ -76,9 +75,7 @@ class TaxpayerController extends Controller
                 ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
         }
 
-        $taxpayer = Municipality::find(5)->taxpayers()->create(
-            $request->input()
-        );
+        $taxpayer = Taxpayer::create($request->input());
 
         $denomination = $request->input('trade_denomination');
 
@@ -89,7 +86,7 @@ class TaxpayerController extends Controller
             ]);
         }
 
-        return redirect("taxpayers/".$taxpayer->id)
+        return redirect()->route('taxpayers.show', $taxpayer)
             ->withSuccess('¡Contribuyente registrado!');
     }
 
