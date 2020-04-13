@@ -400,6 +400,13 @@ Breadcrumbs::for('applications.index', function ($trail, $row) {
     $trail->push('Solicitudes', route('applications.index', $row));
 });
 
+/*------------- Fines -------------*/
+Breadcrumbs::for('fines.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Multas y sanciones', route('fines.index', $row));
+});
+
+
 /*------------- Charging Methods -------------*/
 Breadcrumbs::for('settings/charging-methods', function ($trail) {
     $trail->parent('dashboard');

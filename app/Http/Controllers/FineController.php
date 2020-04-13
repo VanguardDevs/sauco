@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Fine;
 use App\Taxpayer;
+use App\Ordinance;
+use App\Concept;
+use App\Payment;
+use App\Settlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class FineController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +25,26 @@ class FineController extends Controller
      */
     public function index(Taxpayer $taxpayer)
     {
-        //
+        return view('modules.taxpayers.fines.index')
+            ->with('taxpayer', $taxpayer)
+            ->with('ordinances', Ordinance::pluck('description', 'id'));
     }
+
+    public function list(Taxpayer $taxpayer)
+    {
+        $query = Fine::whereTaxpayerId($taxpayer->id)
+            ->with('concept')
+            ->get();
+
+        return DataTables::of($query)
+            ->toJson();
+    }
+
+    public function listConcepts(Ordinance $ordinance)
+    {
+        return $ordinance->conceptsByList(2);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,9 +62,36 @@ class FineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Taxpayer $taxpayer)
     {
-        //
+        $concept = Concept::find($request->input('concept'));
+        $amount = $request->input('amount'); 
+
+        $fine = $taxpayer->fines()->create([
+            'active' => 1,
+            'concept_id' => $concept->id,
+            'user_id' => auth()->user()->id,
+            'amount' => $amount
+        ]);
+
+        $payment = $taxpayer->payments()->create([
+            'num' => Payment::newNum(),
+            'state_id' => 1,
+            'user_id' => auth()->user()->id,
+            'amount' => $amount,
+            'payment_method_id' => 1,
+            'payment_type_id' => 1,
+        ]);
+
+        $fine->settlement()->create([
+            'num' => Settlement::newNum(),
+            'object_payment' => $concept->name,
+            'payment_id' => $payment->id,
+            'amount' => $amount
+        ]);
+
+        return redirect()->route('fines.index', $taxpayer)
+            ->withSuccess('¡Multa aplicada!');
     }
 
     /**

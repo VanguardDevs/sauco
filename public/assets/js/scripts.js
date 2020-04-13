@@ -11,6 +11,7 @@ $("#form").closest('form').on('submit', function(e) {
 /*--------- Select Dinamicos ---------*/
 $(function () {
     $('#applications').on('change', onSelectApplications);
+    $('#fines').on('change', onSelectFines);
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#payment_methods').on('change', onSelectPaymentType);
@@ -74,6 +75,21 @@ function onSelectApplications() {
     let html_select = '<option value=""> SELECCIONE </option>';
 
     $.get('/applications/'+ordinance_id+'/concepts/', data => {
+
+      for (let i = 0; i < data.length; i++) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+      }
+
+      $('#concepts').html(html_select);
+    });
+}
+
+function onSelectFines() {
+    let ordinance_id = $(this).val();
+
+    let html_select = '<option value=""> SELECCIONE </option>';
+
+    $.get('/fines/'+ordinance_id+'/concepts/', data => {
 
       for (let i = 0; i < data.length; i++) {
         html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
@@ -748,6 +764,34 @@ $(document).ready(function() {
         ]
     });
     
+    $('#tFines').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'concept.name', name: 'concept.name' },
+            { data: 'amount', name: 'amount' },
+            { data: 'created_at', name: 'created_at' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${window.location.href}/${oData.id}/download title='Descargar declaración jurada de ingresos'>
+                            <i class='btn-sm btn-dark bg-dark fas fa-file-download'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
     $('#tApplications').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],

@@ -29,4 +29,19 @@ class Fine extends Model
     {
         return $this->belongsToMany(Payment::class, Settlement::class);
     }
+
+    public function settlement()
+    {
+        return $this->hasOne(Settlement::class);
+    }
+
+    public function getAmountAttribute($value)
+    {
+        return number_format($value, 2, ',', '.');
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Date('d/m/Y H:m', strtotime($value));
+    }
 }

@@ -179,7 +179,7 @@ Route::prefix('/')->middleware('auth')->group(function()
          * Taxpayer's Fines
          */
         Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
-        Route::resource('taxpayers/{taxpayer}/fines', 'FineController@indexByTaxpayer');
+        Route::resource('taxpayers/{taxpayer}/fines', 'FineController');
 
         /**
          * Taxpayer's application
@@ -240,5 +240,6 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Listing routes
      */
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
+    Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
 });
