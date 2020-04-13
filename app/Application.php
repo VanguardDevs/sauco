@@ -29,4 +29,9 @@ class Application extends Model
     {
         return $this->belongsToMany(Payment::class, Settlement::class);
     }
+
+    public function settlement()
+    {
+        return $this->hasOne(Settlement::class);
+    }
 }

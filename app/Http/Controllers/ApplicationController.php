@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Ordinance;
+use App\TaxUnit;
+use App\Concept;
 use App\Taxpayer;
+use App\Payment;
+use App\Settlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -59,7 +63,35 @@ class ApplicationController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        dd($request);
+        $value = TaxUnit::latest()->first()->value;
+        $concept = Concept::find($request->input('concepts'));
+        $amount = $concept->amount * $value; 
+
+        $application = $taxpayer->applications()->create([
+            'active' => 1,
+            'concept_id' => $request->input('concepts'),
+            'user_id' => auth()->user()->id,
+            'amount' => $amount
+        ]);
+
+        $payment = $taxpayer->payments()->create([
+            'num' => Payment::newNum(),
+            'state_id' => 1,
+            'user_id' => auth()->user()->id,
+            'amount' => $amount,
+            'payment_method_id' => 1,
+            'payment_type_id' => 1,
+        ]);
+
+        $application->settlement()->create([
+            'num' => Settlement::newNum(),
+            'object_payment' => $concept->name,
+            'payment_id' => $payment->id,
+            'amount' => $amount
+        ]);
+
+        return redirect()->route('applications.index', $taxpayer)
+            ->withSuccess('¡Solicitud creada!');
     }
 
     /**
@@ -93,7 +125,7 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        //
     }
 
     /**

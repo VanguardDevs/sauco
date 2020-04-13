@@ -43,7 +43,7 @@ class Settlement extends Model implements Auditable
 
     public static function newNum()
     {
-        $lastNum = Receivable::withTrashed()
+        $lastNum = self::withTrashed()
             ->orderBy('num','DESC')
             ->first()
             ->num;
