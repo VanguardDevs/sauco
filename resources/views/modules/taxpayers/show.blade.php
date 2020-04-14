@@ -22,7 +22,7 @@
                         @if(Auth::user()->can('edit.taxpayers'))
                         <div class="kt-widget__action">
                             <a href="{{ route('taxpayers.edit', $row) }}" class="btn btn-circle btn-icon">
-                                <i class="flaticon2-edit kt-font-warning"></i>
+                                <i class="flaticon2-edit kt-font-brand"></i>
                             </a>
                         </div>
                         @endif
@@ -84,7 +84,7 @@
                 <div class="kt-portlet__head-toolbar">
                     @if(@Auth::user()->can('add.economic-activities'))
                     <a href="{{ route('taxpayer.economic-activities', $row) }}" class="btn btn-circle btn-icon">
-                        <i class="flaticon2-edit kt-font-warning"></i>
+                        <i class="flaticon2-edit kt-font-brand"></i>
                     </a>
                     @endif
                 </div>
@@ -97,7 +97,7 @@
                                  <i class="flaticon2-percentage"></i>
                             </div>
                             <div class="kt-widget4__info">
-                                <a class="kt-widget4__username">
+                                <a class="kt-widget4__username" href="{{ route('economic-activities.show', $activity->id) }}">
                                     {{ $activity->code }}
                                 </a>
                                 <p class="kt-widget4__text">
@@ -119,9 +119,11 @@
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">Representante(s)</h3>
                 </div>
-                @if(Auth()->user()->can('add.representations'))
+                @if(Auth()->user()->can('edit.taxpayers'))
                 <div class="kt-portlet__head-toolbar">
-                    <a href="{{ url("taxpayers/".$row->id."/representation/add") }}" class="btn btn-label-brand btn-bold btn-sm">Añadir</a>
+                    <a href="{{ url("taxpayers/".$row->id."/representation/add") }}" class="btn btn-circle btn-icon">
+                        <i class="flaticon2-plus kt-font-brand"></i>
+                    </a>
                 </div>
                 @endif
             </div>

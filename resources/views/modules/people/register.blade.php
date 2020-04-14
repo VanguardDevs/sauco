@@ -1,29 +1,23 @@
 @extends('cruds.form')
 
-@section('title', 'Nuevo representante')
+@section('title', 'Nueva persona')
 
 @section('form')
     <div class="row">
         <div class="col-lg-12">
             <div class="kt-portlet">
-                <div class="kt-portlet__head alert alert-danger">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                        @if ($typeForm == 'create')
-                            Datos generales de la persona
-                        @else
-                            Editar usuario: {{ @$row->login }}
-                        @endif
-                        </h3>
-                    </div>
-                </div>
                 @if ($typeForm == 'create')
                     {!! Form::open(['url' => route('person.store', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
                     {!! Form::model($row, ['route' => ['person.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
                     <div class="kt-portlet__body">
-                        <div class="form-group row">
+                        <div class="form-group col-lg-12">
+                            <div class="kt-heading kt-heading--md">
+                            Datos generales de la persona
+                            </div>
+                         </div>
+                       <div class="form-group row">
                             <div class="col-lg-6">
                                 <label>Primer nombre <span class="text-danger">*</span></label>
 
@@ -42,6 +36,8 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+                       <div class="form-group row">
                             <div class="col-lg-6">
                                 <label>Primer Apellido <span class="text-danger">*</span></label>
 

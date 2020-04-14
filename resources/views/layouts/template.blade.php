@@ -34,7 +34,7 @@
                     @yield('content')
                 </div>
               <!-- end:: Content -->
-            @include('layouts.nav.footer')
+            {{-- @include('layouts.nav.footer') --}}
           </div>
     </div>
     <!-- begin::Scrolltop -->
