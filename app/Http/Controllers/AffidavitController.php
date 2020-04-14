@@ -7,36 +7,30 @@ use App\Year;
 use App\Month;
 use App\Settlement;
 use App\Affidavit;
+use App\Payment;
+use App\EconomicActivityAffidavit;
 use App\Concept;
-use App\Services\ReceivableService;
-use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;
-use App\Services\SettlementService;
 use Auth;
+use App\Services\AffidavitService;
 
 class AffidavitController extends Controller
 {
     /** Initial variables
      * @var $settlement, $concept, $taxpayer, $month, $receivable, $payment
      */
-    protected $settlement;
-    protected $concept;
+    protected $economicActivityAffidavit;
     protected $taxpayer;
     protected $month;
-    protected $receivable;
-    protected $payment;
 
-    public function __construct(ReceivableService $receivable, PaymentService $payment, SettlementService $settlement, Concept $concept, Taxpayer $taxpayer, Month $month)
+    public function __construct(AffidavitService $economicActivityAffidavit, Taxpayer $taxpayer, Month $month)
     {
         $this->taxpayer = $taxpayer;
+        $this->economicActivityAffidavit = $economicActivityAffidavit;
         $this->month = $month;
-        $this->concept = Concept::whereCode(1)->first();
-        $this->payment = $payment;
-        $this->receivable = $receivable;
-        $this->settlement = $settlement;
         $this->middleware('auth');
     }
 
@@ -167,6 +161,22 @@ class AffidavitController extends Controller
             'amount' => 0.00
         ]);
 
+        $activities = $this->taxpayer->economicActivities;
+        $data = Array();
+
+        foreach($activities as $activity) {
+            array_push($data, Array(
+                'amount' => 0.00,
+                'brute_amount' => 0.00,
+                'affidavit_id' => $affidavit->id,
+                'economic_activity_id' => $activity->id,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ));
+        }
+
+        EconomicActivityAffidavit::insert($data);
+
         return redirect('affidavits/'.$affidavit->id)
             ->withSuccess('¡Declaración del mes de '.$this->month->name.' - '.$this->month->year->year.' realizada!');
     }
@@ -175,7 +185,7 @@ class AffidavitController extends Controller
      * Update affidavit
      * @return Illuminate\Response
      */
-    public function update(Request $request, Settlement $settlement)
+    public function update(Request $request, Affidavit $affidavit)
     {
         $isEditGroup = $request->has('edit-group');
 
@@ -183,13 +193,21 @@ class AffidavitController extends Controller
 
         if ($isEditGroup) {
             $amount = $amounts[0]; 
-            $settlement = $this->settlement->handleUpdate($settlement, $amount, $isEditGroup); 
+            $totalAmount = $this->economicActivityAffidavit->updateByGroup($affidavit, $amount);
         } else {
-            $settlement = $this->settlement->handleUpdate($settlement, $amounts, $isEditGroup);
+            $totalAmount = $this->economicActivityAffidavit->update($affidavit, $amounts);
         }
+
+        $processedAt = Carbon::now();
+
+        $affidavit->update([
+            'amount' => $totalAmount,
+            'user_id' => auth()->user()->id,
+            'processed_at' => $processedAt,
+        ]);
         
-        return redirect('affidavits/'.$settlement->id)
-            ->withSuccess('¡Liquidación procesada!');
+        return redirect('affidavits/'.$affidavit->id)
+            ->withSuccess('¡Declaración procesada!');
     }
 
     /**
@@ -210,16 +228,45 @@ class AffidavitController extends Controller
      */
     public function makePayment(Affidavit $affidavit)
     {
-        if ($affidavit->payment()) {
+        if ($affidavit->payment()->first()) {
             return redirect('affidavits/'.$affidavit->id)
                 ->withError('¡La factura de la liquidación fue realizada!');
         }
 
-        $payment = $this->payment->make($affidavit->taxpayer);
-        $receivable = $this->receivable->make($affidavit, $payment);
+        $payment = Payment::create([
+            'num' => Payment::newNum(),
+            'state_id' => 1,
+            'user_id' => auth()->user()->id,
+            'amount' => $affidavit->amount,
+            'payment_method_id' => 1,
+            'payment_type_id' => 1,
+            'taxpayer_id' => $affidavit->taxpayer_id
+        ]);
+
+        $month = Month::find($affidavit->month_id);
+
+        Settlement::create([
+            'num' => Settlement::newNum(),
+            'object_payment' =>  $this->message($month),
+            'payment_id' => $payment->id,
+            'affidavit_id' => $affidavit->id,
+            'amount' => $affidavit->amount
+        ]);
 
         return redirect('cashbox/payments/'.$payment->id)
             ->withSuccess('¡Factura realizada!');
+    }
+    
+    public function message(Month $month)
+    {
+        $concept = Concept::whereCode(1)->first();
+
+        return $concept->name.': '.$month->name.' - '.$month->year->year;
+    }
+
+    public function applyFine(Affidavit $affidavit)
+    {
+        //
     }
 
     public function download(Settlement $settlement)

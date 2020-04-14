@@ -16,7 +16,8 @@
                         <th width="10%">Cédula</th>
                         <th width="40%">Nombre</th>
                         <th width="30%">Dirección</th>
-                        <th width="20%">Teléfono</th>
+                        <th width="10%">Teléfono</th>
+                        <th width="10%">Acciones</th>
                     </tr>
                 </thead>
             </table>

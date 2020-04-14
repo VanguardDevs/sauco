@@ -3,12 +3,11 @@
 namespace app\Services;
 
 use App\Settlement;
-use App\Receivable;
 use App\Payment;
 use App\Services\FineService;
 use App\Services\PaymentService;
 
-class ReceivableService
+class Settlement
 {
     protected $fine;
     protected $payment;
@@ -42,24 +41,6 @@ class ReceivableService
         ]);
 
         return $receivable;
-    }
-
-    public function checkForFine($settlement, $payment)
-    {
-        if (!$this->hasException($settlement)) { 
-            if ($settlement->month->year->year != 2020) {
-                $settlement = $this->fine->create($settlement, 2);
-                $this->create($settlement, $payment);
-            }
-        }
-    }
-
-    public function hasException($settlement)
-    {
-        if ($settlement->taxpayer->economicActivities->first()->code == 123456) {
-            return true;
-        }
-        return false;
     }
 }
 

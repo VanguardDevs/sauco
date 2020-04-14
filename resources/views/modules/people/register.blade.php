@@ -20,7 +20,7 @@
                 @if ($typeForm == 'create')
                     {!! Form::open(['url' => route('person.store', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @else
-                    {!! Form::model($row, ['route' => ["representation".'.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                    {!! Form::model($row, ['route' => ['person.update', $row->id], 'method' => 'patch', 'autocomplete' => 'off', 'class' => 'kt-form kt-form--label-right', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
@@ -87,6 +87,7 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            @if($typeForm == 'create')
                             <div class="col-lg-4">
                                 <label>Tipo de representante<span class="text-danger">*</span></label>
 
@@ -102,6 +103,7 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            @endif
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-4">

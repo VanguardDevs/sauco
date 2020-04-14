@@ -420,6 +420,18 @@ $(document).ready(function() {
             { data: 'name'},
             { data: 'address'},
             { data: 'phone' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/people/${oData.id}/edit title='Editar'>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
         ]
     });
 

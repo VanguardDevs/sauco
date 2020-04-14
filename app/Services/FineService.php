@@ -37,5 +37,23 @@ class FineService
             return $settlement->amount * 0.6;
         }
     }
+
+    public function checkForFine($affidavit, $payment)
+    {
+        if (!$this->hasException($affidavit)) { 
+            if ($settlement->month->year->year != 2020) {
+                $settlement = $this->fine->create($settlement, 2);
+                $this->create($settlement, $payment);
+            }
+        }
+    }
+
+    public function hasException($settlement)
+    {
+        if ($settlement->taxpayer->economicActivities->first()->code == 123456) {
+            return true;
+        }
+        return false;
+    }
 }
 

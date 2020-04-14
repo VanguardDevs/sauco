@@ -201,6 +201,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayers/{taxpayer}/representation/add', 'RepresentationController@create')->name('representations.add');
         Route::post('taxpayers/{taxpayer}/representation/create', 'RepresentationController@store')->name('representation.store');
     });
+    Route::resource('people', 'PersonController');
     Route::resource('taxpayers/representations', 'RepresentationController')->except(['create', 'store']);
 
     /*----------  Routes taxpayers ----------*/

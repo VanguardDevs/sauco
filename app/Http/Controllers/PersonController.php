@@ -40,17 +40,7 @@ class PersonController extends Controller
      */
     public function create($id)
     {
-        $taxpayer = Taxpayer::find($id);
-
-        if ($taxpayer->taxpayerType->description != 'JURÍDICO') {
-            return redirect('taxpayers/'.$id)
-                ->withError('¡Este contribuyente no admite un representante!');
-        }
-
-        return view('modules.people.register')
-            ->with('citizenships', Citizenship::pluck('description', 'id'))
-            ->with('taxpayer', $taxpayer)
-            ->with('typeForm', 'create');
+        //
     }
 
     /**
@@ -115,9 +105,12 @@ class PersonController extends Controller
      * @param  \App\Person  $Person
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Person $Person)
+    public function update(Request $request, Person $person)
     {
-        //
+        $person->update($request->input());
+        
+        return redirect()->route('representations.index')
+            ->withSuccess('¡Datos de '.$person->identification.' actualizados!');
     }
 
     /**

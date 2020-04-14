@@ -3,47 +3,24 @@
 namespace App\Services;
 
 use App\Affidavit;
-use App\Settlement;
+use App\EconomicActivityAffidavit;
 use App\TaxUnit;
 
 class AffidavitService
 {
-    /**
-     * Create economic activity settlements for every activity
-     * @param $settlement
-     */
-    public function make(Settlement $settlement)
+    public function update(Affidavit $affidavit, array $amounts)
     {
-        $activities = $settlement->taxpayer->economicActivities;
-        $data = Array();
-        
-        foreach($activities as $activity) {
-            array_push($data, Array(
-                'amount' => 0.00,
-                'brute_amount' => 0.00,
-                'settlement_id' => $settlement->id,
-                'economic_activity_id' => $activity->id,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
-            ));
-        }
-
-        Affidavit::insert($data);
-    }
-
-    public function update(Settlement $settlement, array $amounts)
-    {
-        $settlements = $settlement->affidavits;
+        $affidavits = $affidavit->economicActivityAffidavits;
         $bruteAmounts = $amounts;
         $totalAmounts = Array();
 
-        foreach($settlements as $settlement) {
+        foreach($affidavits as $affidavit) {
             $amount = array_shift($bruteAmounts);
 
-            if (($settlements->count() > 2) && ($amount == 0.00)) {
-                $updateSettlement = $this->calculateTax($settlement, $amount);
+            if (($affidavits->count() > 2) && ($amount == 0.00)) {
+                $updateSettlement = $this->calculateTax($affidavit, $amount);
             } else {
-                $updateSettlement = $this->calculateTax($settlement, $amount, true);
+                $updateSettlement = $this->calculateTax($affidavit, $amount, true);
             } 
 
             array_push($totalAmounts, $updateSettlement->amount);
@@ -52,21 +29,21 @@ class AffidavitService
         return array_sum($totalAmounts);
     }
 
-    public function updateByGroup(Settlement $settlement, float $amount)
+    public function updateByGroup(Affidavit $affidavit, float $amount)
     {
-        $settlements = $settlement->affidavits;
-        $maxDeclaration = $settlements->first();
+        $affidavits = $affidavit->economicActivityAffidavits;
+        $maxDeclaration = $affidavits->first();
 
         if ($amount == 0.00) {
-            foreach ($settlements as $settlement) {
-                if ($settlement->economicActivity->min_tax > $maxDeclaration->economicActivity->min_tax) {
-                    $maxDeclaration = $settlement;
+            foreach ($affidavits as $affidavit) {
+                if ($affidavit->economicActivity->min_tax > $maxDeclaration->economicActivity->min_tax) {
+                    $maxDeclaration = $affidavit;
                 }
             }
         } else {
-            foreach ($settlements as $settlement) {
-                if ($settlement->economicActivity->aliquote > $maxDeclaration->economicActivity->aliquote) {
-                    $maxDeclaration = $settlement;
+            foreach ($affidavits as $affidavit) {
+                if ($affidavit->economicActivity->aliquote > $maxDeclaration->economicActivity->aliquote) {
+                    $maxDeclaration = $affidavit;
                 }
             }
         }
@@ -74,7 +51,7 @@ class AffidavitService
         return $this->calculateTax($maxDeclaration, $amount, true)->amount;
     }
 
-    public function calculateTax(Affidavit $affidavit, $amount, $update = false)
+    public function calculateTax(EconomicActivityAffidavit $affidavit, $amount, $update = false)
     {
         $total = 0.00;
         $activity = $affidavit->economicActivity;
@@ -93,11 +70,10 @@ class AffidavitService
             }
         }
         
-        $settlement = Affidavit::find($affidavit->id);
-        $settlement->update([
+        $affidavit->update([
             'amount' => $total,
             'brute_amount' => $amount
         ]);
-        return $settlement;
+        return $affidavit;
     }
 }
