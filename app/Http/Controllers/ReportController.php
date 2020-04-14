@@ -38,16 +38,6 @@ class ReportController extends Controller
     }
 
     /**
-     * Display a listing of processed settlements.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function settlements()
-    {
-        return view('modules.reports.settlements');
-    }
-
-    /**
      * Display a listing of null payments.
      *
      * @return \Illuminate\Http\Response
@@ -55,16 +45,6 @@ class ReportController extends Controller
     public function showNullPayments()
     {
         return view('modules.reports.list-null-payments');
-    }
-
-    /**
-     * Display a listing of null settlements.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showNullSettlements()
-    {
-        return view('modules.reports.list-null-settlements');
     }
 
     public function printPaymentReport(Request $request)

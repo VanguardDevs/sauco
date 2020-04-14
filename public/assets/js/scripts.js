@@ -198,7 +198,7 @@ $(document).ready(function() {
                         <a class="mr-2" href=${baseURL}/administration/users/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'administration/users')" title='Editar'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'administration/users')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
@@ -225,7 +225,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(
                     `<div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/administration/permissions/${oData.id}/edit title='Editar'>
+                        <a class="mr-2" href=${baseURL}/administration/permissions/${oData.id}/edit title='Anular'>
                             <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`
@@ -620,7 +620,7 @@ $(document).ready(function() {
             { data: 'state.name' },
             { data: 'user.full_name' },
             { data: 'created_at' },
-            { data: 'total_amount' },
+            { data: 'amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -658,10 +658,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/reports/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
@@ -688,82 +688,7 @@ $(document).ready(function() {
             { data: 'deleted_at' }
         ]
     });
-    
-    $('#tNullSettlements').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/settlements/list-null",
-        "columns": [
-            { data: 'id'},
-            { data: 'taxpayer.rif' },
-            { data: 'concept.name'},
-            { data: 'amount' },
-            { data: 'deleted_at'}
-        ]
-    });
 
-    $('#tSettlements').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/settlements/list",
-        "columns": [
-            { data: 'id'},
-            { data: 'taxpayer.rif' },
-            { data: 'object_payment'},
-            { data: 'amount' },
-            { data: 'created_at'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/settlements')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tProcessedSettlements').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/settlements/processed/list",
-        "columns": [
-            { data: 'num'},
-            { data: 'taxpayer.rif' },
-            { data: 'object_payment'},
-            { data: 'user.login' },
-            { data: 'total_amount', name: 'total_amount' },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/settlements')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-    
     $('#tFines').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],

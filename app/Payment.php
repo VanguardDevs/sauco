@@ -20,10 +20,6 @@ class Payment extends Model implements Auditable
         'amount' => 'float'
     ];  
 
-    protected $appends = [
-        'total_amount',
-    ];
-
     public function state()
     {
         return $this->belongsTo(Status::class);
@@ -91,7 +87,7 @@ class Payment extends Model implements Auditable
 
     public function getCreatedAtAttribute($value)
     {
-        return date('d/m/Y H:m:s', strtotime($value));
+        return date('d/m/Y H:m', strtotime($value));
     }
 
     public function getProcessedAtAttribute($value)
@@ -104,8 +100,8 @@ class Payment extends Model implements Auditable
         return date('d-m-Y H:m', strtotime($value));
     }
 
-    public function getTotalAmountAttribute()
+    public function getAmountAttribute($value)
     {
-        return number_format($this->amount, 2, ',', '.');
+        return number_format($value, 2, ',', '.');
     }
 }

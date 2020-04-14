@@ -117,8 +117,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('reports/payment-report', 'ReportController@printPaymentReport')
             ->name('print.payments.report');
         Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
-        Route::get('reports/settlements', 'ReportController@settlements')->name('report.settlements');
-        Route::get('reports/null-settlements', 'ReportController@showNullSettlements')->name('null.settlements');
         Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
         Route::get('economic-activities/{activity}/download', 'ReportController@printActivityReport')
             ->name('print.activity-report');
@@ -137,14 +135,6 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('economic-activity-license.create');
         Route::get('taxpayers/economic-activity-licenses/list', 'LicenseController@list');
         Route::resource('taxpayers/economic-activity-licenses', 'LicenseController');
-
-        /**
-         * Settlements' routes module
-         */
-        Route::get('settlements/list', 'SettlementController@list');
-        Route::get('settlements/processed/list', 'SettlementController@listProcessed');
-        Route::get('settlements/list-null', 'SettlementController@onlyNull');
-        Route::resource('cashbox/settlements', 'SettlementController');
 
         /*
         * Payment's routes modules
