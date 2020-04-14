@@ -1,24 +1,11 @@
 @extends('cruds.form')
 
-@section('subheader__title', 'Registro de actividades económicas')
-
-@section('title', 'Registro de actividades económicas')
+@section('title', 'Actualizar actividades económicas')
 
 @section('form')
     <div class="row">
         <div class="col-lg-12">
             <div class="kt-portlet">
-                <div class="kt-portlet__head alert alert-danger">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                        @if ($typeForm == 'create')
-                            Registro de Contribuyente
-                       @else
-                            Editar actividades económicas: {{ @$row->rif }}
-                       @endif
-                        </h3>
-                    </div>
-                </div>
                 <!-- form start -->
                 @if ($typeForm == 'create')
                 {!! Form::open(['route' => ["taxpayer-activities.store", $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
@@ -30,7 +17,7 @@
                         <div class="form-group col-md-12">
                             <div class="form-group col-lg-12">
                                 <div class="kt-heading kt-heading--md">
-                                    Actividades económicas
+                                    Actualizar actividades económicas
                                 </div>
                             </div>
                             {!!

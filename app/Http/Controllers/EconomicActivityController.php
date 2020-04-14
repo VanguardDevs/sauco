@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\ActivityClassification;
 use App\EconomicActivity;
+use App\Taxpayer;
+use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -104,13 +106,35 @@ class EconomicActivityController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource
+     *
+     * @param \App\Taxpayer $taxpayer
+     * @return \Illuminate\Http\Respose
+     */
+    public function editActivitiesForm(Taxpayer $taxpayer)
+    {
+        if (($taxpayer->taxpayerType->description != 'JURÍDICO') &&
+            (!$taxpayer->commercialDenomination)) {
+                return redirect('taxpayers/'.$taxpayer->id)
+                    ->withError('¡Este contribuyente no admite actividades económicas!');
+        }
+
+        $activities = EconomicActivity::all()->pluck('fullName','id');
+
+        return view('modules.taxpayers.register-economic-activities')
+            ->with('row', $taxpayer)
+            ->with('activities', $activities)
+            ->with('typeForm', 'update');
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\EconomicActivity  $economicActivity
      * @return \Illuminate\Http\Response
      */
-    public function update(EconomicActivitiesUpdateFormRequest $request, EconomicActivity $economicActivity)
+    public function update(EconomicActivitiesFormRequest $request, EconomicActivity $economicActivity)
     {
         $row = EconomicActivity::find($economicActivity->id);
         
@@ -119,6 +143,23 @@ class EconomicActivityController extends Controller
 
         return redirect('economic-activities')
             ->withSuccess('¡Actividad económica actualizada!');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Taxpayer  $taxpayer
+     * @return \Illuminate\Http\Response
+     */
+    public function editActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
+    {
+        $taxpayer->economicActivities()->sync(
+            $request->input('economic_activities')
+        );
+
+        return redirect('taxpayers/'.$taxpayer->id)
+            ->withSuccess('¡Actividades económicas actualizadas!');
     }
 
     /**

@@ -90,57 +90,6 @@ class TaxpayerController extends Controller
             ->withSuccess('¡Contribuyente registrado!');
     }
 
-    public function activitiesForm(Taxpayer $taxpayer)
-    {
-        if (($taxpayer->taxpayerType->description != 'JURÍDICO') &&
-            (!$taxpayer->commercialDenomination)) {
-                return redirect('taxpayers/'.$taxpayer->id)
-                    ->withError('¡Este contribuyente no admite actividades económicas!');
-        }
-
-        $activities = EconomicActivity::all()->pluck('fullName','id');
-
-        return view('modules.taxpayers.register-economic-activities')
-            ->with('taxpayer', $taxpayer)
-            ->with('activities', $activities)
-            ->with('typeForm', 'create');
-    }
-
-    public function editActivitiesForm(Taxpayer $taxpayer)
-    {
-        if (($taxpayer->taxpayerType->description != 'JURÍDICO') &&
-            (!$taxpayer->commercialDenomination)) {
-                return redirect('taxpayers/'.$taxpayer->id)
-                    ->withError('¡Este contribuyente no admite actividades económicas!');
-        }
-        $activities = EconomicActivity::all()->pluck('fullName','id');
-
-        return view('modules.taxpayers.register-economic-activities')
-            ->with('row', $taxpayer)
-            ->with('activities', $activities)
-            ->with('typeForm', 'update');
-    }
-
-    public function addActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
-    {
-        $taxpayer->economicActivities()->attach(
-            $request->input('economic_activities')
-        );
-
-        return redirect('taxpayers/'.$taxpayer->id)
-            ->withSuccess('¡Actividades económicas añadidas!');
-    }
-
-    public function editActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
-    {
-        $taxpayer->economicActivities()->sync(
-            $request->input('economic_activities')
-        );
-
-        return redirect('taxpayers/'.$taxpayer->id)
-            ->withSuccess('¡Actividades económicas actualizadas!');
-    }
-
     public function downloadDeclarations(Taxpayer $taxpayer)
     {
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;

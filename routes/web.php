@@ -44,12 +44,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         */
         Route::resource('settings/years', 'YearController');
 
-       /**
-        *  Settings > Property types
-        */
-        Route::get('property-types/list', 'PropertyTypeController@list')->name('list-property-types');
-        Route::resource('settings/property-types', 'PropertyTypeController');
-
         /**
          * Ordinance settings
          */
@@ -61,12 +55,6 @@ Route::prefix('/')->middleware('auth')->group(function()
          */
         Route::get('payment-methods/list', 'PaymentMethodController@list')->name('list-payment-methods');
         Route::resource('settings/payment-methods', 'PaymentMethodController');
-
-        /**
-         * Finance Accounts
-         */
-        Route::get('accounts/list', 'AccountController@list');
-        Route::resource('settings/accounts', 'AccountController');
 
         /**
          * Routes Settings > Concepts
@@ -196,7 +184,6 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     /*----------  Routes representations ----------*/
     Route::group(['middleware' => 'can:add.representations'], function () {
-        Route::get('representations/list', 'RepresentationController@list');
         Route::post('people/{taxpayer}', 'RepresentationController@storePerson')->name('person.store');
         Route::get('taxpayers/{taxpayer}/representation/add', 'RepresentationController@create')->name('representations.add');
         Route::post('taxpayers/{taxpayer}/representation/create', 'RepresentationController@store')->name('representation.store');
@@ -204,20 +191,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('people', 'PersonController');
     Route::resource('taxpayers/representations', 'RepresentationController')->except(['create', 'store']);
 
-    /*----------  Routes taxpayers ----------*/
-    Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
-    Route::group(['middleware' => 'can:add.economic-activities'], function () {
-        Route::get('taxpayer/{taxpayer}/economic-activities/add', 'TaxpayerController@activitiesForm')->name('add.activities');
-        Route::post('taxpayer/{taxpayer}/add-economic-activities', 'TaxpayerController@addActivities')->name('taxpayer-activities.store');
-    });
-    Route::group(['middleware' => 'can:edit.economic-activities'], function () {
-        Route::patch('taxpayer/{taxpayer}/update-economic-activities', 'TaxpayerController@editActivities')->name('taxpayer-activities.update');
-        Route::get('taxpayers/{taxpayer}/economic-activities/edit', 'TaxpayerController@editActivitiesForm')->name('edit.activities');
-    });
-
     /**
      * Taxpayer's routes
      */
+    Route::group(['middleware' => 'can:edit.taxpayers'], function () {
+        Route::patch('taxpayer/{taxpayer}/update-economic-activities', 'EconomicActivityController@editActivities')->name('taxpayer-activities.update');
+        Route::get('taxpayers/{taxpayer}/economic-activities', 'EconomicActivityController@editActivitiesForm')->name('taxpayer.economic-activities');
+    });
     Route::get('taxpayers/{taxpayer}/affidavits/{affidavit}/download', 'AffidavitController@download');
     Route::get('taxpayers/{taxpayer}/affidavits/download', 'TaxpayerController@downloadAffidavits');
     Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
@@ -225,11 +205,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
+    Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
     Route::resource('taxpayers', 'TaxpayerController');
 
     /** 
      * Listing routes
      */
+    Route::get('representations/list', 'RepresentationController@list');
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
