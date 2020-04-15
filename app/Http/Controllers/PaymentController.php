@@ -106,7 +106,7 @@ class PaymentController extends Controller
             }
         }
 
-        return view('modules.cashbox.register-payment')
+        return view('modules.taxpayers.payment')
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
@@ -139,14 +139,14 @@ class PaymentController extends Controller
         
         $this->payment->update($payment, $data);
 
-        return redirect('cashbox/payments/'.$payment->id)
+        return redirect()->back()
             ->withSuccess('¡Factura procesada!');
     }
 
     public function download(Payment $payment)
     {
         if ($payment->state->id == 1) {
-            return redirect('cashbox/payments')
+            return redirect()->back()
                 ->withError('¡La factura no ha sido procesada!');
         }
 
@@ -158,7 +158,7 @@ class PaymentController extends Controller
         
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.cashbox.pdf.payment', compact($vars)) 
-            ->download('factura-'.$payment->id.'.pdf');
+            ->stream('factura-'.$payment->id.'.pdf');
    }
 
     /**
@@ -176,7 +176,7 @@ class PaymentController extends Controller
         }
 
         // Delete receivables and payment but keep settlements
-        Receivable::where('payment_id', $payment->id)->delete();
+        Settlement::where('payment_id', $payment->id)->delete();
         $payment->delete();
 
         return redirect()->back()

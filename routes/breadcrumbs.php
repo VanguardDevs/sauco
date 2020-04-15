@@ -3,9 +3,9 @@
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 /*----------  Cashbox ----------*/
-Breadcrumbs::for('receivables', function ($trail) {
+Breadcrumbs::for('receivables.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Cuentas por cobrar', route('receivables'));
+    $trail->push('Cuentas por cobrar', route('receivables.index'));
 });
 
 /*----------  Reports ----------*/
@@ -32,23 +32,6 @@ Breadcrumbs::for('report.payments', function ($trail) {
     $trail->push('Pagos procesados', url('reports/payments'));
 });
 
-Breadcrumbs::for('report.settlements', function ($trail) {
-    $trail->parent('reports');
-    $trail->push('Liquidaciones procesadas', url('reports/settlements'));
-});
-
-/*---------- Settlements ----------*/
-Breadcrumbs::for('settlements.show', function ($trail, $row) {
-    $trail->parent('dashboard');
-    $trail->push('Liquidación n° '.$row->id, url('cashbox/settlements'));
-});
-
-/*---------- Settlements ----------*/
-Breadcrumbs::for('settlements.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Liquidaciones pendientes', url('cashbox/settlements'));
-});
-
 /**
  * Taxpayer > taxpayer > Affidavits
  */
@@ -71,32 +54,21 @@ Breadcrumbs::for('affidavits.group', function ($trail, $row) {
     $trail->push('Cálculo de liquidación agrupada', url('affidavits/'.$row->id.'/group'));
 });
 
-/*----------  Cashbox > Payments ----------*/
-Breadcrumbs::for('payments.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Pagos pendientes', url('cashbox/payments'));
-});
-
 Breadcrumbs::for('null.payments', function ($trail) {
     $trail->parent('reports');
     $trail->push('Pagos anulados', route('null.payments'));
 });
 
-Breadcrumbs::for('null.settlements', function ($trail) {
-    $trail->parent('reports');
-    $trail->push('Liquidaciones anuladas', route('null.settlements'));
-});
-
-/*----------  Cashbox > Payments > show ----------*/
+/*----------  Taxpayers > taxpayer > payment ----------*/
 Breadcrumbs::for('payments.show', function ($trail, $row) {
-    $trail->parent('payments.index');
-    $trail->push('Factura n°'.$row->id, url('cashbox/payments/'.$row->id));
+    $trail->parent('taxpayers.show', $row->taxpayer);
+    $trail->push('Pago '.$row->num, route('payments.show', $row));
 });
 
-/*----------  Cashbox > Null Settlements ----------*/
-Breadcrumbs::for('settlements.null', function ($trail) {
-    $trail->parent('cashbox');
-    $trail->push('Listado de liquidaciones anuladas', url('cashbox/null-settlements'));
+/*----------  Receivables > receivable ----------*/
+Breadcrumbs::for('receivables.show', function ($trail, $row) {
+    $trail->parent('receivables.index');
+    $trail->push('Pago '.$row->num, route('receivables.show', $row));
 });
 
 /*----------  Dashboard  ----------*/

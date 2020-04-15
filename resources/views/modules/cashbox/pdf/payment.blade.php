@@ -25,8 +25,8 @@
                 border: 1px #000 dashed;
             }
             td {
-                font-size: 12px;
-                padding: 3px;
+                font-size: 13px;
+                padding: 2px;
             }
             table {
                 border-collapse: collapse;
@@ -127,17 +127,17 @@
                 <caption>DETALLES DEL PAGO</caption>
                 <thead>
                   <tr>
-                    <th width="20%">NO. LIQUIDACIÓN</th>
+                    <th width="20%">LIQUIDACIÓN</th>
                     <th width="60%">DETALLES</th>
                     <th width="20%">MONTO TOTAL</th>
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($payment->receivables as $settlement)
+                @foreach($payment->settlements as $settlement)
                  <tr>
                     <td>{{ $settlement->num }}</td> 
                     <td>{{ $settlement->object_payment  }}</td>   
-                    <td>{{ $settlement->totalAmount }}</td>
+                    <td>{{ $settlement->amount }}</td>
                 </tr>
                 @endforeach   
              </table>
@@ -149,7 +149,7 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->totalAmount }}
+                    PAGO TOTAL: {{ $payment->amount }} Bs
                 </div>
             </div>
         </div>

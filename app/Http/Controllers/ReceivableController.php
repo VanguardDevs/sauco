@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Payment;
+use App\PaymentType;
+use App\PaymentMethod;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReceivableController extends Controller
 {    
+    private $typeForm = 'show';
+
     /**
      * Display a listing of the resource.
      *
@@ -54,9 +58,19 @@ class ReceivableController extends Controller
      * @param  \App\Receivable  $receivable
      * @return \Illuminate\Http\Response
      */
-    public function show(Receivable $receivable)
+    public function show(Payment $payment)
     {
-        //
+        if ($payment->state->id == 1) {
+            if (auth()->user()->can('process.payments')) {
+                $this->typeform = 'edit';
+            }
+        }
+
+        return view('modules.taxpayers.payment')
+            ->with('row', $payment)
+            ->with('types', PaymentType::exceptNull())
+            ->with('methods', PaymentMethod::exceptNull())
+            ->with('typeForm', $this->typeform);
     }
 
     /**

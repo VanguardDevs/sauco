@@ -1,12 +1,6 @@
 @extends('cruds.form')
 
-@if ($typeForm == 'edit')
-@section('title', 'Factura # '.$row->id)
-@else
-@section('subheader__title', 'Factura N° '.$row->num)
-@endif
-
-@section('title', 'Factura # '.(($row->num) ? $row->num : $row->id))
+@section('title', 'Factura # '.$row->num)
 
 @section('form')
     <!-- general form elements -->
@@ -49,13 +43,13 @@
           <table class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="10%">No. Liquidación</th>
+                <th width="10%">Liquidación</th>
                 <th width="80%">Concepto</th>
                 <th width="10%">Monto</th>
               </tr>
             </thead>
             <tbody>
-            @foreach($row->receivables as $settlement)
+            @foreach($row->settlements as $settlement)
              <tr>
                 <td>{{ $settlement->num }}</td> 
                 <td>{{ $settlement->object_payment  }}</td>   
@@ -65,7 +59,7 @@
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Monto Total: {{ $row->total_amount }}
+                    Monto Total: {{ $row->amount }} Bs
                 </div>
                 @if ($typeForm == 'show')
                 <div class="kt-heading kt-heading--md">
@@ -122,7 +116,7 @@
                 </button>
             @else
             <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
-            @if($typeForm == 'show' && Auth::user()->hasRole('collection-chief'))
+            @if($typeForm == 'show' && Auth::user()->can('process.payments'))
             <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-success' title='Descargar factura' target='_blank'>
                 <i class='flaticon2-download'></i>
                 Imprimir factura

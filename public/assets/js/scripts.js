@@ -608,10 +608,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/cashbox/payments/${oData.id} title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/receivables/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'receivables')" title='Editar'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
