@@ -288,7 +288,7 @@ $(document).ready(function() {
     });
 
     $('#tCommunities').DataTable({
-        "order": [[0, "asc"]],
+        "order": [[2, "desc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
@@ -436,7 +436,6 @@ $(document).ready(function() {
     });
 
     $('#tTaxpayers').DataTable({
-        "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"

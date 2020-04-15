@@ -13,7 +13,7 @@
                         <i class="kt-font-brand fas fa-file-medical"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Patentes de actividad económica
+                        Listado de patentes de actividad económica emitidas
                     </h3>
                 </div>
                  <div class="kt-portlet__head-toolbar">
@@ -31,7 +31,7 @@
                         <th width="15%">Número</th>
                         <th width="15%">RIF</th>
                         <th width="50%">Razón social</th>
-                        <th width="10%">Emisión</th>
+                        <th width="10%">Fecha</th>
                         <th width="10%">Acciones</th>
                     </tr>
                 </thead>

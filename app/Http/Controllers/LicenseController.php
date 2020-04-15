@@ -33,9 +33,13 @@ class LicenseController extends Controller
 
     public function list()
     {
-        $query = License::with(['taxpayer'])->get();
+        $query = License::with(['taxpayer'])
+            ->orderBy('created_at', 'DESC');
 
-        return DataTables::of($query)
+        return DataTables::eloquent($query)
+            ->addColumn('num', function (License $license) {
+                return $license->num;
+            })
             ->toJson();
     }
 
