@@ -62,7 +62,7 @@ class ReceivableController extends Controller
     {
         if ($payment->state->id == 1) {
             if (auth()->user()->can('process.payments')) {
-                $this->typeform = 'edit';
+                $this->typeForm = 'edit';
             }
         }
 
@@ -70,7 +70,7 @@ class ReceivableController extends Controller
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
-            ->with('typeForm', $this->typeform);
+            ->with('typeForm', $this->typeForm);
     }
 
     /**

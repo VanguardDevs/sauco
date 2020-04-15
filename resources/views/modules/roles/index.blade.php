@@ -1,21 +1,30 @@
 @extends('layouts.template')
 
-@section('title', 'Roles')
+@section('title', 'Control de roles de usuarios')
 
 @section('content')
 
-  <div class="row" style="margin-top: 20px;">
+<div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">
-      <div class="card card-primary card-outline">
-        <div class="card-header alert alert-danger">
-          <div class="row">
-            <h5 class="m-0">Roles de Usuarios <b>(</b> <a href="{{ Route("roles".'.create') }}" title="Registrar parroquia">
-              <span>Registrar</span>
-            </a><b>)</b></h5>
-          </div>
-        </div>
-
-        <div class="card-body">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        Control de roles de usuarios
+                    </h3>
+                </div>
+               <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a href="{{ Route('roles.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nuevo rol">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
             <table id="tRoles" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                 <tr>
