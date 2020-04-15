@@ -21,7 +21,6 @@ class TaxpayerController extends Controller
     public function __construct()
     {
         $this->middleware('can:create.taxpayers')->only(['create','store']);
-        $this->middleware('can:access.taxpayers')->only(['show', 'index']);
         $this->middleware('can:edit.taxpayers')->only(['edit', 'update']);
         $this->middleware('auth');
     }

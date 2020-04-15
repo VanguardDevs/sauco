@@ -82,7 +82,7 @@
                     <h3 class="kt-portlet__head-title">Actividades económicas</h3>
                 </div>
                 <div class="kt-portlet__head-toolbar">
-                    @if(@Auth::user()->can('add.economic-activities'))
+                    @if(@Auth::user()->can('edit.taxpayers'))
                     <a href="{{ route('taxpayer.economic-activities', $row) }}" class="btn btn-circle btn-icon">
                         <i class="flaticon2-edit kt-font-brand"></i>
                     </a>

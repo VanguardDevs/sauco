@@ -93,27 +93,30 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('geographic-area/communities', 'CommunityController');
 
     /**
-    * Cashbox's routes
+     * Handle reports
      */
-    Route::group(['middleware' => 'can:access.receivables'], function() {
-        Route::get('receivables/list', 'ReceivableController@list');
-        Route::get('receivables', 'ReceivableController@index')->name('receivables');
-
-        /**
-         * Handle reports
-         */
+    Route::group(['middleware' => 'can:print.reports'], function() {
         Route::post('reports/payment-report', 'ReportController@printPaymentReport')
             ->name('print.payments.report');
-        Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
-        Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
         Route::get('economic-activities/{activity}/download', 'ReportController@printActivityReport')
             ->name('print.activity-report');
         Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport')
             ->name('print.taxpayers');
         Route::get('reports/economic-activity-licenses/print-list', 'ReportController@printLicensesList')
             ->name('economic-activity-licenses.print-list');
-        Route::get('reports', 'ReportController@index')->name('reports');
+    });
+    Route::get('payments/list-null', 'PaymentController@onlyNull');
+    Route::get('payments/processed/list', 'PaymentController@listProcessed');
+    Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
+    Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
+    Route::get('reports', 'ReportController@index')->name('reports');
 
+    Route::get('receivables/list', 'ReceivableController@list');
+    Route::get('receivables', 'ReceivableController@index')->name('receivables');
+    /**
+    * Cashbox's routes
+     */
+    Route::group(['middleware' => 'can:access.receivables'], function() {
         /**
          * Licenses
          */
@@ -129,8 +132,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*
         * Payment's routes modules
          */
-        Route::get('payments/list-null', 'PaymentController@onlyNull');
-        Route::get('payments/processed/list', 'PaymentController@listProcessed');
         Route::get('cashbox/payments/{payment}/download', 'PaymentController@download')
             ->name('payments.download');
         Route::resource('cashbox/payments', 'PaymentController');
@@ -139,7 +140,7 @@ Route::prefix('/')->middleware('auth')->group(function()
    /**
     * Routes for settlements
     */
-   Route::group(['middleware' => 'can:create.payments'], function () {
+   Route::group(['middleware' => 'can:process.settlements'], function () {
         
         /**
         * Taxpayer's affidavits
