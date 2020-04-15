@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Payment;
 use App\Taxpayer;
 use App\EconomicActivity;
+use App\License;
 use Carbon\Carbon;
 use PDF;
 use Session;
@@ -82,5 +83,16 @@ class ReportController extends Controller
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.reports.pdf.activity', $data)
             ->download('reporte-actividad-'.$activity->code.'.pdf');
+    }
+
+    public function printLicensesList()
+    {
+        $licenses = License::with(['taxpayer'])->get();
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $data = compact(['licenses', 'emissionDate']);
+        $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
+
+        return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
     }
 }

@@ -33,8 +33,7 @@ class LicenseController extends Controller
 
     public function list()
     {
-        $query = License::with(['taxpayer'])
-            ->get();
+        $query = License::with(['taxpayer'])->get();
 
         return DataTables::of($query)
             ->toJson();

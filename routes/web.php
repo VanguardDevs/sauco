@@ -110,6 +110,8 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('print.activity-report');
         Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport')
             ->name('print.taxpayers');
+        Route::get('reports/economic-activity-licenses/print-list', 'ReportController@printLicensesList')
+            ->name('economic-activity-licenses.print-list');
         Route::get('reports', 'ReportController@index')->name('reports');
 
         /**
