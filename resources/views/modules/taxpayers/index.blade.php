@@ -61,18 +61,20 @@
                         Control de contribuyentes
                     </h3>
                 </div>
-               @if (Auth()->user()->can('create.taxpayers'))
                <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-actions">
+                       @if (Auth()->user()->can('create.taxpayers'))
                         <a href="{{ Route('taxpayers.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nuevo contribuyente">
                             <i class="fas fa-plus"></i>
                         </a>
+                        @endif
+                        @if (Auth()->user()->can('print.reports'))
                         <a href="{{ Route('print.taxpayers') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Imprimir listado" target='_blank'>
                             <i class="fas fa-print"></i>
                         </a>
+                        @endif
                     </div>
                 </div>
-                @endif
             </div>
             <div class="kt-portlet__body">
               <table id="tTaxpayers" class="table table-bordered table-striped datatables" style="text-align: center">

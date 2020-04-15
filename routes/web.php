@@ -113,29 +113,27 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::get('receivables/list', 'ReceivableController@list');
     Route::get('receivables', 'ReceivableController@index')->name('receivables');
+
     /**
-    * Cashbox's routes
+     * Licenses
      */
-    Route::group(['middleware' => 'can:access.receivables'], function() {
-        /**
-         * Licenses
-         */
-        Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@show')
-            ->name('taxpayer.economic-activity-licenses');
-        Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@listByTaxpayer');
+    Route::group(['middleware' => 'can:create.licenses'], function() {
         Route::get('economic-activity-licenses/{license}/download', 'LicenseController@download');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
-        Route::get('taxpayers/economic-activity-licenses/list', 'LicenseController@list');
-        Route::resource('taxpayers/economic-activity-licenses', 'LicenseController');
-
-        /*
-        * Payment's routes modules
-         */
-        Route::get('cashbox/payments/{payment}/download', 'PaymentController@download')
-            ->name('payments.download');
-        Route::resource('cashbox/payments', 'PaymentController');
     });
+    Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@show')
+        ->name('taxpayer.economic-activity-licenses');
+    Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@listByTaxpayer');
+    Route::get('taxpayers/economic-activity-licenses/list', 'LicenseController@list');
+    Route::resource('taxpayers/economic-activity-licenses', 'LicenseController');
+
+     /*
+    * Payment's routes modules
+     */
+    Route::get('payments/{payment}/download', 'PaymentController@download')
+        ->name('payments.download');
+    Route::resource('cashbox/payments', 'PaymentController');
 
    /**
     * Routes for settlements

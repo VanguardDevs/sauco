@@ -6,6 +6,7 @@
 
 @section('content')
     <!-- general form elements -->
+    @if(Auth::user()->can('print.reports'))
     <div class="kt-portlet">
         <!-- /.card-header -->
         <!-- form start -->
@@ -33,6 +34,7 @@
         </div>
         {!! Form::close() !!}
     </div>
+    @endif
     <!-- /.card -->
   <div class="row" style="margin-top: 20px;">
     <div class="col-lg-12">

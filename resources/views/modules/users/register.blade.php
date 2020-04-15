@@ -1,22 +1,17 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Usuarios')
+@if ($typeForm == 'create')
+@section('title', 'Nuevo usuario')
+@section('subheader__title', 'Nuevo usuario')
+@else
+@section('title', 'Actualizar usuarios')
+@section('subheader__title', 'Actualizar usuario')
+@endif
 
 @section('form')
+<div class="kt-portlet">
     <div class="row">
         <div class="col-lg-12">
-            <div class="kt-portlet">
-                <div class="kt-portlet__head alert alert-danger">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">
-                        @if ($typeForm == 'create')
-                            Registro de Usuarios
-                       @else
-                            Editar usuario: {{ @$row->login }}
-                       @endif
-                        </h3>
-                    </div>
-                </div>
                 <!--begin::Form-->
                 @if ($typeForm == 'create')
                     {!! Form::open(['route' => 'users'.'.store', 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}

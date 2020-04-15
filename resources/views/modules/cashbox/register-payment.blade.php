@@ -122,7 +122,7 @@
                 </button>
             @else
             <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
-            @if($typeForm == 'show' && Auth::user()->hasRole('collection-chief'))
+            @if($typeForm == 'show' && Auth::user()->can('process.payments'))
             <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-success' title='Descargar factura' target='_blank'>
                 <i class='flaticon2-download'></i>
                 Imprimir factura

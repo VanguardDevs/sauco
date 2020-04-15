@@ -73,9 +73,11 @@
                 </div>
                <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-actions">
+                        @if (Auth()->user()->can('print.reports'))
                         <a href="{{ Route('print.activity-report', $row->id) }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Imprimir listado">
                             <i class="fas fa-print"></i>
                         </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -86,8 +88,7 @@
                   <tr>
                     <th width="10%">RIF</th>
                     <th width="50%">Razón social</th>
-                    <th width="10%">Comunidad</th>
-                    <th width="20%">Dirección fiscal</th>
+                    <th width="30%">Dirección fiscal</th>
                     <th width="10%">Acciones</th>
                   </tr>
                 </thead>

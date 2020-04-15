@@ -29,7 +29,7 @@ class PaymentController extends Controller
     {
         $this->payment = $payment;
         $this->middleware('has.role:admin')->only('destroy');
-        $this->middleware('has.role:collection-chief')->only('update');
+        $this->middleware('can:process.payments')->only('update');
         $this->middleware('auth');
     }
 
@@ -101,7 +101,7 @@ class PaymentController extends Controller
     public function show(Payment $payment)
     {
         if ($payment->state->id == 1) {
-            if (auth()->user()->hasRole('collection-chief')) {
+            if (auth()->user()->can('process.payments')) {
                 $this->typeform = 'edit';
             }
         }

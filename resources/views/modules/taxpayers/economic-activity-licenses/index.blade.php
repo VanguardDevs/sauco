@@ -17,7 +17,7 @@
                     </h3>
                 </div>
                  <div class="kt-portlet__head-toolbar">
-                    @if(@Auth::user()->can('reports.print'))
+                    @if(@Auth::user()->can('print.reports'))
                     <a href="{{ route('economic-activity-licenses.print-list') }}" class="btn btn-circle btn-icon" title="Imprimir reporte">
                         <i class="fas fa-print kt-font-brand"></i>
                     </a>

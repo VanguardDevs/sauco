@@ -151,7 +151,6 @@
         </div>
     </div>
 </div>
-@if(Auth()->user()->can('access.cashbox'))
 <div class="row">
     <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
@@ -228,5 +227,4 @@
         </div>
     </div>
 </div>
-@endif
 @endsection
