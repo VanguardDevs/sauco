@@ -228,6 +228,10 @@ $(document).ready(function() {
                         <a class="mr-2" href=${baseURL}/administration/permissions/${oData.id}/edit title='Anular'>
                             <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'administration/permissions')" title='Anular'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>
+
                     </div>`
                     );
                 }

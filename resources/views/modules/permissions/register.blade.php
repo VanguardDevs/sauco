@@ -1,17 +1,16 @@
 @extends('cruds.form')
 
-@section('title', 'Registro de Permisos')
+@if ($typeForm == 'create')
+@section('title', 'Nuevo permiso')
+@section('subheader__title', 'Nuevo permiso')
+@else
+@section('title', 'Actualizar permisos')
+@section('subheader__title', 'Actualizar permiso')
+@endif
 
 @section('form')
     <!-- general form elements -->
-    <div class="card card-primary">
-        <div class="card-header alert alert-danger">
-            @if ($typeForm == 'create')
-                <h5 class="card-title">Registro de Permisos</h5>
-           @else
-                <h5>Editar registro: {{ @$row->name }}</h5>
-           @endif
-        </div>
+<div class="kt-portlet">
         <!-- /.card-header -->
         <!-- form start -->
         @if ($typeForm == 'create')
