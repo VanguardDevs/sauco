@@ -62,7 +62,7 @@ class Payment extends Model implements Auditable
 
     public function fine()
     {
-        return $this->belongsToMany(Fine::class);
+        return $this->belongsToMany(Fine::class, Settlement::class);
     }
 
     public static function processedByDate($date)

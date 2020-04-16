@@ -135,8 +135,11 @@ class TaxpayerController extends Controller
     public function update(TaxpayersUpdateFormRequest $request, Taxpayer $taxpayer)
     {
         $taxpayer->update($request->input());
-        $taxpayer->commercialDenomination->name = $request->input('personal_firm');
-        $taxpayer->push();
+
+        if ($request->input('persona_firm')) {
+            $taxpayer->commercialDenomination->name = $request->input('personal_firm');
+            $taxpayer->push();
+        }
 
         return redirect('taxpayers/'.$taxpayer->id)
             ->withSuccess('¡Info. general del contribuyente actualizada!');

@@ -52,18 +52,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <div class="col-lg-12">
-                                <label>Teléfono <span class="text-danger">*</span></label>
-                                {!! Form::text("phone", old('phone', @$row->phone), ["class" => "form-control", "data-inputmask" => '"mask": "(999) 999-9999"', "data-mask", "placeholder" => "Teléfono"]) !!}
-
-                                @error('surname')
-                                <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label>Usuario <span class="text-danger">*</span></label>

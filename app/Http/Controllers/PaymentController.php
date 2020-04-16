@@ -6,9 +6,8 @@ use App\PaymentMethod;
 use App\PaymentType;
 use App\Payment;
 use App\Reference;
-use App\Receivable;
+use App\Settlement;
 use App\Taxpayer;
-use App\EconomicActivitySettlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\PaymentService;
@@ -176,7 +175,23 @@ class PaymentController extends Controller
         }
 
         // Delete receivables and payment but keep settlements
-        Settlement::where('payment_id', $payment->id)->delete();
+        $settlements = Settlement::where('payment_id', $payment->id);
+
+        // Delete every association
+        foreach($settlements as $settlement) {
+            if ($settlement->has('fine')) {
+                $settlement->fine->delete();
+            }
+            if ($settlement->has('affidavit')) {
+                $settlement->affidavit->delete();
+            }
+            if ($settlement->has('application')) {
+                $settlement->application->delete();
+            }
+        }
+
+        // Delete settlements and payment
+        $settlements->delete();
         $payment->delete();
 
         return redirect()->back()

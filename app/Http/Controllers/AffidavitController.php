@@ -205,6 +205,8 @@ class AffidavitController extends Controller
             'user_id' => auth()->user()->id,
             'processed_at' => $processedAt,
         ]);
+
+        $this->makePayment($affidavit);
         
         return redirect('affidavits/'.$affidavit->id)
             ->withSuccess('¡Declaración procesada!');
@@ -244,6 +246,7 @@ class AffidavitController extends Controller
         ]);
 
         $month = Month::find($affidavit->month_id);
+        $this->applyFine($affidavit, $payment);
 
         Settlement::create([
             'num' => Settlement::newNum(),
@@ -252,9 +255,6 @@ class AffidavitController extends Controller
             'affidavit_id' => $affidavit->id,
             'amount' => $affidavit->amount
         ]);
-
-        return redirect('cashbox/payments/'.$payment->id)
-            ->withSuccess('¡Factura realizada!');
     }
     
     public function message(Month $month)
@@ -264,7 +264,7 @@ class AffidavitController extends Controller
         return $concept->name.': '.$month->name.' - '.$month->year->year;
     }
 
-    public function applyFine(Affidavit $affidavit)
+    public function applyFine(Affidavit $affidavit, Payment $payment)
     {
         //
     }

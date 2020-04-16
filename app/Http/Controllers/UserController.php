@@ -117,6 +117,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $edit             = User::find($user->id);
+        $edit->login = $request->input('login');
         $edit->first_name = $request->input('first_name');
         $edit->surname    = $request->input('surname');
         

@@ -643,7 +643,7 @@ $(document).ready(function() {
                         <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'cashbox/payments')" title='Editar'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Editar'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
