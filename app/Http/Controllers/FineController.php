@@ -136,6 +136,15 @@ class FineController extends Controller
      */
     public function destroy(Fine $fine)
     {
-        //
+        if (!Auth::user()->hasRole('admin')) {
+            return response()->json([
+                'message' => '¡Acción no permitida!'
+            ]);
+        }
+
+        $fine->delete();
+
+        return redirect()->back()
+            ->with('success', '¡Multa anulada!');   
     }
 }

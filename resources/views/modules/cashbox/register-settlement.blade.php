@@ -8,7 +8,7 @@
         <!-- /.card-header -->
         <!-- form start -->
         @if (($typeForm == 'edit-normal') || ($typeForm == 'edit-group'))
-            {!! Form::open(['route' => ['affidavits.update', $row->id, $typeForm], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+            {!! Form::open(['route' => ['affidavits.update', $row->id, $typeForm], 'method' => 'put', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
         @endif
         <div class="kt-portlet__body">
             <div class="form-group col-lg-12">

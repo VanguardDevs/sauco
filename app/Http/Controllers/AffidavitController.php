@@ -308,6 +308,21 @@ class AffidavitController extends Controller
         if ($settlement->taxpayer->economicActivities->first()->code == 123456) {
             return true;
         }
+            $settlement->affidavit()->delete();
         return false;
+    }
+
+    public function destroy(Affidavit $affidavit)
+    {
+        if (!Auth::user()->hasRole('admin')) {
+            return response()->json([
+                'message' => '¡Acción no permitida!'
+            ]);
+        }
+
+        $affidavit->delete();
+
+        return redirect()->back()
+            ->with('success', '¡Liquidación anulada!');   
     }
 }

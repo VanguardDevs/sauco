@@ -134,8 +134,17 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Application $application)
     {
-        //
+        if (!Auth::user()->hasRole('admin')) {
+            return response()->json([
+                'message' => '¡Acción no permitida!'
+            ]);
+        }
+
+        $affidavit->delete();
+
+        return redirect()->back()
+            ->with('success', '¡Liquidación anulada!');   
     }
 }

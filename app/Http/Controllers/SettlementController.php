@@ -122,17 +122,6 @@ class SettlementController extends Controller
      */
     public function destroy(Settlement $settlement)
     {
-        if (!Auth::user()->hasRole('admin')) {
-            return response()->json([
-                'message' => '¡Usuario no permitido!'
-            ]);
-        }
-
-        // Delete economic activity settlements and settlement
-        Affidavit::where('settlement_id', $settlement->id)->delete();
-        $settlement->delete();
-
-        return redirect()->back()
-            ->with('success', '¡Liquidación anulada!');   
+        //
     }
 }

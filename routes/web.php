@@ -150,10 +150,7 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('affidavits.group');
         Route::get('affidavits/{affidavit}/payment/new', 'AffidavitController@makePayment')
             ->name('affidavits.payment');
-        Route::post('affidavits/{affidavit}/update', 'AffidavitController@update')
-            ->name('affidavits.update');
-        Route::post('affidavits/{affidavit}/update', 'AffidavitController@update')
-            ->name('affidavits.update');
+        Route::resource('affidavits', 'AffidavitController');
 
         /**
          * Taxpayer's Fines
@@ -167,17 +164,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
         Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
    });
-
-    /**
-     * Only available for certain permissions
-     */
-    Route::group(['middleware' => 'can:create.taxpayers'], function() {
-        /**
-         * List communities and municipalities
-         */
-        Route::get('parishes/{id}/communities', 'ParishController@getCommunities');
-        Route::get('state/{id}/municipalities', 'StateController@getMunicipalities');
-    });
 
     /**
      * Handle settlements and payments
@@ -201,9 +187,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayers/{taxpayer}/economic-activities', 'EconomicActivityController@editActivitiesForm')->name('taxpayer.economic-activities');
     });
     Route::get('taxpayers/{taxpayer}/affidavits/{affidavit}/download', 'AffidavitController@download');
-    Route::get('taxpayers/{taxpayer}/affidavits/download', 'TaxpayerController@downloadAffidavits');
     Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
-    Route::get('affidavits/{affidavit}', 'AffidavitController@show')->name('affidavits.show');
     Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');

@@ -109,7 +109,7 @@
         <!-- /.card-body -->
         <div class="card-footer">
             @if($typeForm == 'edit')
-            <a href="{{ url('cashbox/payments') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
+            <a href="{{ URL::previous() }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
                 <button  type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i>
                     Registrar

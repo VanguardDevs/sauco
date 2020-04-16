@@ -177,19 +177,6 @@ class PaymentController extends Controller
         // Delete receivables and payment but keep settlements
         $settlements = Settlement::where('payment_id', $payment->id);
 
-        // Delete every association
-        foreach($settlements as $settlement) {
-            if ($settlement->has('fine')) {
-                $settlement->fine->delete();
-            }
-            if ($settlement->has('affidavit')) {
-                $settlement->affidavit->delete();
-            }
-            if ($settlement->has('application')) {
-                $settlement->application->delete();
-            }
-        }
-
         // Delete settlements and payment
         $settlements->delete();
         $payment->delete();

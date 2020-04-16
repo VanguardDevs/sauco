@@ -19,31 +19,6 @@ class PaymentService
         $this->method = $method;
     }
 
-    /**
-    * Make a pending payment
-    * @param var $objectPayment
-    */    
-    public function make($taxpayer)
-    {
-        $payment = Payment::create([
-            'state_id' => 1,
-            'user_id' => auth()->user()->id,
-            'amount' => 0.0,
-            'payment_method_id' => 1,
-            'payment_type_id' => 1,
-            'taxpayer_id' => $taxpayer->id
-        ]);
-
-        return $payment;
-    }
-
-    public function updateAmount($payment)
-    {
-        $totalAmount = $payment->receivables->sum('amount');
-
-        $payment->update(['amount' => $totalAmount]);
-    }
-
     public function update(Payment $payment, Array $data)
     {
         $paymentNum = Payment::newNum();

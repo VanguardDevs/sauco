@@ -723,6 +723,9 @@ $(document).ready(function() {
                         <a class="mr-2" href=${window.location.href}/${oData.id}/download title='Descargar declaración jurada de ingresos'>
                             <i class='btn-sm btn-dark bg-dark fas fa-file-download'></i>
                         </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id}, 'taxpayers/${oData.taxpayer_id}/fines')" title='Anular'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>               
                     </div>`
                     );
                 }
@@ -747,9 +750,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${window.location.href}/${oData.id}/download title='Descargar declaración jurada de ingresos'>
-                            <i class='btn-sm btn-dark bg-dark fas fa-file-download'></i>
-                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>               
                     </div>`
                     );
                 }
@@ -777,6 +780,9 @@ $(document).ready(function() {
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Ver declaración jurada de ingresos'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'affidavits')" title='Anular'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
                     );
