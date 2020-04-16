@@ -331,6 +331,12 @@ Breadcrumbs::for('representation.store', function ($trail, $row) {
     $trail->push('Añadir representante', url('taxpayers'.$row->id.'representation/add'));
 });
 
+Breadcrumbs::for('people.edit', function ($trail, $row) {
+    $trail->parent('representations.index', $row);
+    $trail->push('Editar persona', route('people.edit', $row));
+});
+
+
 /*------------- Tax units -------------*/
 Breadcrumbs::for('tax-units.index', function ($trail) {
     $trail->parent('settings');

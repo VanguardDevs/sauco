@@ -73,11 +73,6 @@
                     Histórico de declaraciones
                 </h3>
             </div>
-            <div class="kt-portlet__head-toolbar">
-                <a href="{{ url("/") }}" class="btn btn-label-brand btn-bold btn-sm" title="Imprimir histórico de liquidaciones">
-                    <i class="fas fa-print"></i>
-                </a>
-            </div>
         </div>
         <div class="kt-portlet__body">
             <table id="tAffidavits" class="table table-bordered table-striped datatables" style="text-align: center">

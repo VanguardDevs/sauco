@@ -37,16 +37,8 @@ class Concept extends Model
         return $this->belongsTo(Listing::class, 'list_id');
     }
 
-    public function scopeGetAmount($query, Taxpayer $taxpayer, Concept $concept)
+    public function fines()
     {
-        if ($concept->chargingMethod->name == 'U.T') {
-            // Get amount according to taxpayer and concept
-            $currentUT = TaxUnit::latest()->first();
-            $amount = $concept->value * $currentUT->value;
-        } elseif ($concept->description == 'SOLICITUD DE PATENTE DE INDUSTRIA Y COMERCIO') {
-            $amount = $taxpayer->capital * $concept->value;
-        }
-
-        return $amount;
+        return $this->hasMany(Fine::class);
     }
 }

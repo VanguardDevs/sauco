@@ -20,6 +20,13 @@ class Payment extends Model implements Auditable
         'amount' => 'float'
     ];  
 
+    public function updateAmount()
+    {
+        $amount = $this->settlements->sum('amount');
+
+        return $this->update([ 'amount' => $amount ]);
+    }
+
     public function state()
     {
         return $this->belongsTo(Status::class);

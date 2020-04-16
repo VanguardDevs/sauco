@@ -10,6 +10,13 @@ class Fine extends Model
 
     protected $guarded = [];
 
+    public static function calculateAmount($value, $concept)
+    {
+        if ($concept->chargingMethod->name == "TASA") {
+            return $value * $concept->amount / 100;
+        }    
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

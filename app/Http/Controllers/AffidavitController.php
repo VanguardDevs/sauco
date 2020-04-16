@@ -6,6 +6,7 @@ use App\Taxpayer;
 use App\Year;
 use App\Month;
 use App\Settlement;
+use App\Fine;
 use App\Affidavit;
 use App\Payment;
 use App\EconomicActivityAffidavit;
@@ -246,15 +247,16 @@ class AffidavitController extends Controller
         ]);
 
         $month = Month::find($affidavit->month_id);
-        $this->applyFine($affidavit, $payment);
 
-        Settlement::create([
+        $payment->settlements()->create([
             'num' => Settlement::newNum(),
             'object_payment' =>  $this->message($month),
-            'payment_id' => $payment->id,
             'affidavit_id' => $affidavit->id,
             'amount' => $affidavit->amount
         ]);
+
+        $this->applyFine($affidavit, $payment);
+        $payment->updateAmount();
     }
     
     public function message(Month $month)
@@ -266,11 +268,46 @@ class AffidavitController extends Controller
 
     public function applyFine(Affidavit $affidavit, Payment $payment)
     {
-        //
+        $concept = $this->checkForFine($affidavit);
+
+        if ($concept) {
+            $amount = Fine::calculateAmount($affidavit->amount, $concept);
+
+            $fine = $concept->fines()->create([
+                'amount' => $amount,
+                'active' => true,
+                'taxpayer_id' => $affidavit->taxpayer_id,
+                'user_id' => $affidavit->user_id,
+            ]);
+
+            $settlement = $fine->settlement()->create([
+                'num' => Settlement::newNum(),
+                'object_payment' => $concept->name,
+                'amount' => $amount,
+                'payment_id' => $payment->id 
+            ]);
+        }
     }
 
-    public function download(Settlement $settlement)
+    public function checkForFine($affidavit)
     {
-        //
+        if (!$this->hasException($affidavit)) { 
+            if ($affidavit->month->year->year != 2020) {
+                return Concept::whereCode(2)->first();
+            }
+            
+            if ($affidavit->month->id == 3) {
+                return Concept::whereCode(3)->first();
+            }
+        }
+        return false;
+    }
+
+    public function hasException($settlement)
+    {
+        if ($settlement->taxpayer->economicActivities->first()->code == 123456) {
+            return true;
+        }
+        return false;
     }
 }

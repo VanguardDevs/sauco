@@ -775,14 +775,8 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${window.location.href}/${oData.id}/download title='Descargar declaración jurada de ingresos'>
-                            <i class='btn-sm btn-dark bg-dark fas fa-file-download'></i>
-                        </a>
                         <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Ver declaración jurada de ingresos'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
-                        </a>
-                        <a class="mr-2" href=${window.location.href}/cashbox/settlements/${oData.id} title='Facturar liquidación'>
-                            <i class='btn-sm btn-success fas fa-money-check'></i>
                         </a>
                     </div>`
                     );
