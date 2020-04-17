@@ -295,10 +295,6 @@ class AffidavitController extends Controller
             if ($affidavit->month->year->year != 2020) {
                 return Concept::whereCode(2)->first();
             }
-            
-            if ($affidavit->month->id == 3) {
-                return Concept::whereCode(3)->first();
-            }
         }
         return false;
     }
