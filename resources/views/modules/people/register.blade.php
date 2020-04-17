@@ -63,7 +63,7 @@
 
                                 {!!
                                     Form::select('citizenship', $citizenships,
-                                    (isset($citizen) ? $citizen : null), [
+                                    (isset($row->citizenship) ? $row->citizenship->id : null), [
                                     'class'=>'col-md-12 form-control select2',
                                     'placeholder' => ' SELECCIONE ',
                                     'id' => 'citizenships'
@@ -123,7 +123,7 @@
                             <div class="col-lg-4">
                                 <label>Correo electrónico </label>
 
-                                {!! Form::text('email', old('email', @$row->email), ['class' => 'form-control email-input-mask']) !!}
+                                {!! Form::text('email', (isset($row->email) ? $row->getOriginal('email') : null), ['class' => 'form-control email-input-mask']) !!}
 
                                 @error('email')
                                     <div class="text text-danger">{{ $message }}</div>
