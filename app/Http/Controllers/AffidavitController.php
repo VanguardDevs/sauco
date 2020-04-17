@@ -239,7 +239,7 @@ class AffidavitController extends Controller
         $payment = Payment::create([
             'num' => Payment::newNum(),
             'state_id' => 1,
-            'user_id' => auth()->user()->id,
+            'user_id' => $affidavit->user_id,
             'amount' => $affidavit->amount,
             'payment_method_id' => 1,
             'payment_type_id' => 1,
@@ -257,6 +257,8 @@ class AffidavitController extends Controller
 
         $this->applyFine($affidavit, $payment);
         $payment->updateAmount();
+
+        return redirect()->back();
     }
     
     public function message(Month $month)

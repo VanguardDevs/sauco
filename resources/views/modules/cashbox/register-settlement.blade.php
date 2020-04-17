@@ -83,7 +83,8 @@
                     </tr>
                 </tbody>
             </table>
-
+            
+            @if($row->payment->first())
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
                     Monto a pagar: {{ $row->payment->first()->amount }} Bs
@@ -92,6 +93,7 @@
                     Estado del pago: {{ $row->payment->first()->state->name }}
                 </div>
            </div>
+            @endif
 
             @endif
             @else
