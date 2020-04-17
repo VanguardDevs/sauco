@@ -76,7 +76,7 @@ class TaxpayerController extends Controller
 
         $taxpayer = Taxpayer::create($request->input());
 
-        $denomination = $request->input('trade_denomination');
+        $denomination = $request->input('personal_firm');
 
         if (!empty($denomination)) {
             CommercialDenomination::create([
