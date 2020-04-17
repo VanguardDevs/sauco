@@ -304,7 +304,6 @@ class AffidavitController extends Controller
         if ($settlement->taxpayer->economicActivities->first()->code == 123456) {
             return true;
         }
-            $settlement->affidavit()->delete();
         return false;
     }
 
