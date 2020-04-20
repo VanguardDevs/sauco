@@ -91,9 +91,9 @@
                 @foreach($payments as $payment)
                  <tr>
                     <td>{{ $payment->num }}</td> 
-                    <td>{{ $payment->receivables->first()->settlement->taxpayer->rif }}</td>   
-                    <td>{{ $payment->receivables->first()->settlement->taxpayer->name }}</td>
-                    <td>{{ $payment->totalAmount }}</td>
+                    <td>{{ $payment->taxpayer->rif }}</td>   
+                    <td>{{ $payment->taxpayer->name }}</td>
+                    <td>{{ $payment->amount }}</td>
                 </tr>
                 @endforeach   
              </table>

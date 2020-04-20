@@ -53,7 +53,11 @@ class ReportController extends Controller
         $date = Carbon::parse($request->input('date'));
         $payments = Payment::processedByDate($date);
         $dateFormat = date('d-m-Y', strtotime($date)); 
-        $total = number_format($payments->sum('amount'), 2, ',', '.')." Bs";
+        $total = $payments->map(function ($row) {
+            return $row->getOriginal('amount');
+        })->sum();
+
+        $total = number_format($total, 2, ',', '.')." Bs";
 
         $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
         return $pdf->download('reporte-de-pagos.pdf');
