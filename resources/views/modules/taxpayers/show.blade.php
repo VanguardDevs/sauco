@@ -29,16 +29,20 @@
                     </div>
                     <div class="kt-widget__subhead">
                         <a>
+                            <i class="fas fa-tag"></i>
+                            {{ $row->taxpayerClassification->name }}
+                        </a>
+                        <a>
+                            <i class="flaticon2-maps"></i>
+                             {{ $row->fiscal_address }}
+                        </a>
+                        <a>
                             <i class="flaticon2-new-email"></i>
                             {{ $row->email ?? 'NO REGISTRADO' }}
                         </a>
                         <a>
                             <i class="flaticon2-phone"></i>
                              {{ $row->phone ?? 'NO REGISTRADO' }}
-                        </a>
-                        <a>
-                            <i class="flaticon2-maps"></i>
-                             {{ $row->fiscal_address }}
                         </a>
                     </div>
                 </div>

@@ -23,6 +23,7 @@ class Taxpayer extends Model implements Auditable
         'email',
         'community_id',
         'taxpayer_type_id',
+        'taxpayer_classification_id',
     ];
 
     public function representations()
@@ -80,10 +81,16 @@ class Taxpayer extends Model implements Auditable
         return $this->belongsTo(Community::class);
     }
 
+    public function taxpayerClassification()
+    {
+        return $this->belongsTo(TaxpayerClassification::class);
+    }
+
     public function getRifAttribute($value)
     {
         return $this->taxpayerType->correlative.$value;
     }
+
     public function getFiscalAddressAttribute()
     {
         return $this->attributes['fiscal_address'].

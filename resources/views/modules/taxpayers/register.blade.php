@@ -25,7 +25,7 @@
                             Datos generales del contribuyente:
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label class="control-label"> Tipo <span class="text-danger">*</span></label>
 
                             {!! Form::select('taxpayer_type_id', $types,
@@ -40,7 +40,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label class="control-label">RIF <span class="text-danger">*</span></label>
 
                             {!!
@@ -52,6 +52,20 @@
                             !!}
 
                             @error('rif')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label"> Clasificación <span class="text-danger">*</span></label>
+
+                            {!! Form::select('taxpayer_classification_id', $classifications,
+                                (isset($row->taxpayerClassification) ? ($row->taxpayerClassification->id) : null), [
+                                'class' => 'form-control select2',
+                                'placeholder' => ' SELECCIONE ',
+                                'required'
+                            ]) !!}
+
+                            @error('taxpayer_classification_id')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
