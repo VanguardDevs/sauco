@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CommercialDenomination;
 use App\EconomicActivity;
 use App\TaxpayerType;
+use App\TaxpayerClassification;
 use App\Person;
 use App\Taxpayer;
 use App\License;
@@ -56,6 +57,7 @@ class TaxpayerController extends Controller
     {
         return view('modules.taxpayers.register')
             ->with('types', TaxpayerType::pluck('description', 'id'))
+            ->with('classifications', TaxpayerClassification::pluck('name', 'id'))
             ->with('communities', Community::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
@@ -119,6 +121,7 @@ class TaxpayerController extends Controller
     public function edit(Taxpayer $taxpayer)
     {
         return view('modules.taxpayers.register')
+            ->with('classifications', TaxpayerClassification::pluck('name', 'id'))
             ->with('types', TaxpayerType::pluck('description', 'id'))
             ->with('communities', Community::pluck('name', 'id'))
             ->with('typeForm', 'edit')

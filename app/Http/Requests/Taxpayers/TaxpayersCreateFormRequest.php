@@ -25,8 +25,9 @@ class TaxpayersCreateFormRequest extends FormRequest
     {
         return [
             'rif'              => 'required',
-            'name'    => 'required',
-            'taxpayer_type_id'    => 'required',
+            'name' => 'required',
+            'taxpayer_type_id' => 'required',
+            'taxpayer_classification_id' => 'required',
             'community_id' => 'required',
             'fiscal_address' => 'required',
         ];
@@ -39,6 +40,7 @@ class TaxpayersCreateFormRequest extends FormRequest
             'name'    => 'nombre o razón social',
             'fiscal_address' => 'dirección fiscal',
             'taxpayer_type_id'    => 'tipo de contribuyente',
+            'taxpayer_classification_id'    => 'clasificación',
             'community_id' => 'comunidad',
         ];
     }
@@ -51,6 +53,7 @@ class TaxpayersCreateFormRequest extends FormRequest
             'fiscal_address.required' => 'Ingrese la :attribute',
             'community_id.required' => 'Seleccione un :attribute',
             'taxpayer_type_id.required' => 'Seleccione una :attribute',
+            'taxpayer_classification_id.required' => 'Seleccione una :attribute',
         ];
     }
 }
