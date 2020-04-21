@@ -8,7 +8,7 @@ class Listing extends Model
 {
     protected $table = 'lists';
 
-    protected $guarded = ['name'];
+    protected $fillable = ['name'];
 
     public function concepts()
     {

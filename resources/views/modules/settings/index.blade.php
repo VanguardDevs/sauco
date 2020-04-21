@@ -28,6 +28,16 @@
                             </div>
                         </div>
                     </a>
+                    <a class="kt-notification__item" href="{{ route('categories.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Categorías
+                            </div>
+                        </div>
+                    </a>
                     <a class="kt-notification__item" href="{{ url('settings/ordinances') }}">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-file-1"></i>

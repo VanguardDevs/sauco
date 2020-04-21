@@ -62,6 +62,12 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('concepts/list', 'ConceptController@list')->name('list-concepts');
         Route::resource('settings/concepts', 'ConceptController');
 
+        /**
+         * Routes Settings > Concepts
+         */
+        Route::get('categories/list', 'CategoryController@list')->name('list-concepts');
+        Route::resource('settings/categories', 'CategoryController');
+
         /*----------  Routes Settings > Tax Units ----------*/
         Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
         Route::resource('settings/tax-units', 'TaxUnitController');

@@ -393,6 +393,24 @@ Breadcrumbs::for('settings/charging-methods/create', function ($trail) {
 });
 
 /*------------- Concepts -------------*/
+Breadcrumbs::for('categories.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Categorías', route('categories.index'));
+});
+
+/*------------- Concepts > create -------------*/
+Breadcrumbs::for('categories.create', function ($trail) {
+    $trail->parent('categories.index');
+    $trail->push('Nueva categoría', url('categories.create'));
+});
+
+/*------------- Concepts > edit -------------*/
+Breadcrumbs::for('categories.edit', function ($trail, $row) {
+    $trail->parent('concepts.index');
+    $trail->push('Editar categoría', route('categories.edit',$row));
+});
+
+/*------------- Concepts -------------*/
 Breadcrumbs::for('concepts.index', function ($trail) {
     $trail->parent('settings');
     $trail->push('Conceptos de recaudación', url('settings/concepts'));
@@ -401,7 +419,7 @@ Breadcrumbs::for('concepts.index', function ($trail) {
 /*------------- Concepts > create -------------*/
 Breadcrumbs::for('concepts.create', function ($trail) {
     $trail->parent('concepts.index');
-    $trail->push('Crear nueva concepto de recaudación', url('settings/concepts/create'));
+    $trail->push('Nuevo concepto de recaudación', url('settings/concepts/create'));
 });
 
 /*------------- Concepts > edit -------------*/
