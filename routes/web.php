@@ -171,7 +171,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::post('settlements/{taxpayer}/create', 'AffidavitController@create')->name('settlements.create');
 
     /*----------  Routes representations ----------*/
-    Route::group(['middleware' => 'can:add.representations'], function () {
+    Route::group(['middleware' => 'can:edit.taxpayers'], function () {
         Route::post('people/{taxpayer}', 'RepresentationController@storePerson')->name('person.store');
         Route::get('taxpayers/{taxpayer}/representation/add', 'RepresentationController@create')->name('representations.add');
         Route::post('taxpayers/{taxpayer}/representation/create', 'RepresentationController@store')->name('representation.store');
