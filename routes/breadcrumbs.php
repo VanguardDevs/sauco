@@ -32,6 +32,12 @@ Breadcrumbs::for('report.payments', function ($trail) {
     $trail->push('Pagos procesados', url('reports/payments'));
 });
 
+/*----------  Reports ----------*/
+Breadcrumbs::for('taxpayers.uptodate', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Contribuyentes al día', route('taxpayers.uptodate'));
+});
+
 /**
  * Taxpayer > taxpayer > Affidavits
  */

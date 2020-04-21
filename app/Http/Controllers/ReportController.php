@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Taxpayer;
@@ -36,6 +37,18 @@ class ReportController extends Controller
     public function payments()
     {
         return view('modules.reports.payments');
+    }
+
+    public function showUpToDateTaxpayers()
+    {
+        return view('modules.reports.up-to-date-taxpayers');
+    }
+
+    public function listUpToDate()
+    {
+        $taxpayers = $this->upToDateTaxpayers();
+
+        return DataTables::eloquent($taxpayers)->toJson();
     }
 
     /**
@@ -99,4 +112,24 @@ class ReportController extends Controller
 
         return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
     }
+
+    public function upToDateTaxpayers()
+    {
+        $taxpayers = Taxpayer::whereHas('affidavits', function ($affidavit) {
+            $affidavit->whereHas('payment', function ($payment) {
+                $payment->where('state_id', '=', 2);
+            })->where('month_id', '=', 3);
+        });
+
+        return $taxpayers;
+    }
+
+    public function printUpToDate()
+    {
+        $taxpayers = $this->upToDateTaxpayers()->get();
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate']));
+        return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
+    }        
 }

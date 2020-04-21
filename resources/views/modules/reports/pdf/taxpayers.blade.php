@@ -60,7 +60,7 @@
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ asset('assets/images/sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+                <img src="{{ base_path().'/public/assets/images/sumat.png' }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -73,7 +73,7 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('assets/images/logo.png') }}" height="70px" width="130px" alt="logo" />
+                <img src="{{ base_path().'/public/assets/images/logo.png' }}" height="70px" width="130px" alt="logo" />
             </div>
         </div>
         <div class="tables">
@@ -81,20 +81,18 @@
                 <caption>CONTRIBUYENTES REGISTRADOS</caption>
                 <thead>
                   <tr>
-                    <th width="5%">N°</th>
                     <th width="15%">RIF</th>
                     <th width="35%">RAZÓN SOCIAL</th>
-                    <th width="35%">DIRECCIÓN FISCAL</th>
+                    <th width="40%">DIRECCIÓN FISCAL</th>
                     <th width="10%">COMUNIDAD</th>
                   </tr>
                 </thead>
                 <tbody>
                 @foreach($taxpayers as $taxpayer)
                  <tr>
-                    <td>{{ $taxpayer->id }}</td>
                     <td>{{ $taxpayer->rif }}</td> 
                     <td>{{ $taxpayer->name }}</td>   
-                    <td>{{ $taxpayer->fiscal_address }}</td>
+                    <td>{{ $taxpayer->getOriginal('fiscal_address') }}</td>
                     <td>{{ $taxpayer->community->name }}</td>
                 </tr>
                 @endforeach   

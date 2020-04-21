@@ -110,11 +110,15 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('print.taxpayers');
         Route::get('reports/economic-activity-licenses/print-list', 'ReportController@printLicensesList')
             ->name('economic-activity-licenses.print-list');
+        Route::get('reports/taxpayers/up-to-date/print', 'ReportController@printUpToDate')
+            ->name('print.uptodate.taxpayers');
     });
     Route::get('payments/list-null', 'PaymentController@onlyNull');
     Route::get('payments/processed/list', 'PaymentController@listProcessed');
     Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
     Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
+    Route::get('reports/taxpayers/up-to-date/list', 'ReportController@listUpToDate');
+    Route::get('reports/taxpayers/up-to-date', 'ReportController@showUpToDateTaxpayers')->name('taxpayers.uptodate');
     Route::get('reports', 'ReportController@index')->name('reports');
 
     Route::get('receivables/list', 'ReceivableController@list');
