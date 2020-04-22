@@ -127,9 +127,10 @@ class ReportController extends Controller
     public function printUpToDate()
     {
         $taxpayers = $this->upToDateTaxpayers()->get();
+        $taxpayerCount = $taxpayers->count();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
-        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate']));
-        return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
+        $pdf = PDF::loadView('modules.reports.pdf.taxpayers-uptodate', compact(['taxpayers', 'emissionDate', 'taxpayerCount']));
+        return $pdf->download('contribuyentes'.$emissionDate.'.pdf');
     }        
 }
