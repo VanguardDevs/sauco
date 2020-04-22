@@ -73,16 +73,16 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('settings/tax-units', 'TaxUnitController');
 
         /*----------  Routes permissions  ----------*/
-        Route::get('permissions/list', 'PermissionController@list');
-        Route::resource('administration/permissions', 'PermissionController');
+        Route::get('permissions/list', 'Settings\PermissionController@list');
+        Route::resource('administration/permissions', 'Settings\PermissionController');
 
         /*----------  Routes roles  ----------*/
-        Route::get('roles/list', 'RoleController@list');
-        Route::resource('administration/roles', 'RoleController');
+        Route::get('roles/list', 'Settings\RoleController@list');
+        Route::resource('administration/roles', 'Settings\RoleController');
 
         /*----------  Routes users  ----------*/
-        Route::get('users/list', 'UserController@list');
-        Route::resource('administration/users', 'UserController');
+        Route::get('users/list', 'Settings\UserController@list');
+        Route::resource('administration/users', 'Settings\UserController');
    });
 
     /**
@@ -173,6 +173,12 @@ Route::prefix('/')->middleware('auth')->group(function()
          */
         Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
         Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
+
+        /**
+         * Taxpayer's permits
+         */
+        Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
+        Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
    });
 
     /**

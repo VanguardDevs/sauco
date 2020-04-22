@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
-use App\Http\Requests\Permissions\PermissionsCreateFormRequest;
-use App\Http\Requests\Permissions\PermissionsUpdateFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Roles\RolesCreateFormRequest;
 use Illuminate\Http\Request;
+use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
-class PermissionController extends Controller
+class RoleController extends Controller
 {
     public function __construct()
     {
@@ -22,12 +23,12 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view("modules.permissions.index");
+        return view("modules.roles.index");
     }
 
     public function list()
     {
-        $query = Permission::query()->orderBy('slug', 'ASC');
+        $query = Role::query()->orderBy('created_at', 'desc');
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -39,7 +40,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view("modules.permissions.register")
+        return view("modules.roles.register")
+            ->with('permissions', Permission::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -49,16 +51,12 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PermissionsCreateFormRequest $request)
+    public function store(RolesCreateFormRequest $request)
     {
-        $create = new Permission([
-            'name' => $request->input('name'),
-            'slug' => $request->input('slug'),
-            'description' => $request->input('description')
-        ]);
-        $create->save();
+        $role = Role::create($request->all());
+        $role->permissions()->sync($request->get('permissions'));
 
-        return redirect('administration/permissions')->with('success', '¡Permiso agregado!');
+        return redirect('administration/roles')->withSuccess('Rol agregado!!');
     }
 
     /**
@@ -78,11 +76,12 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permission $permission)
+    public function edit(Role $role)
     {
-        return view("modules.permissions.register")
+        return view("modules.roles.register")
             ->with('typeForm', 'update')
-            ->with('row', $permission);
+            ->with('permissions', Permission::pluck('name', 'id'))
+            ->with('row', $role);
     }
 
     /**
@@ -92,12 +91,12 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PermissionsUpdateFormRequest $request, Permission $permission)
+    public function update(Request $request, Role $role)
     {
-        $edit       = Permission::find($permission->id);
-        $edit->fill($request->all())->save();
+        $role->update($request->all());
+        $role->permissions()->sync($request->get('permissions'));
 
-        return redirect('administration/permissions')->withSuccess('¡Permiso actualizado!');
+        return redirect('administration/roles')->withSuccess('¡Rol actualizado!');
     }
 
     /**
@@ -106,12 +105,8 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission)
+    public function destroy($id)
     {
-        $permission->delete();
-
-        return response()->json([
-            'success' => '¡Permiso eliminado!'
-        ]);
+        //
     }
 }

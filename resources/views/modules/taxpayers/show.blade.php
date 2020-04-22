@@ -77,6 +77,7 @@
     </div>
 </div>
 
+@if(Auth::user()->can('process.settlements'))
 <div class="row">
     @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
     <div class="col-xl-6">
@@ -168,9 +169,6 @@
                             <div class="kt-notification__item-title">
                                 Declaración jurada de ingresos    
                             </div>
-                            <div class="kt-notification__item-time">
-                                Ver declaraciones y realizar liquidaciones
-                            </div>
                         </div>
                     </a>
                 </div>
@@ -198,7 +196,18 @@
                         </div>
                     </a>
                 </div>
-
+                <div class="kt-notification">
+                    <a class="kt-notification__item" href="{{ route('permits.index', $row) }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Permisos       
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -231,4 +240,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
