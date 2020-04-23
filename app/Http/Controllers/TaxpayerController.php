@@ -70,15 +70,22 @@ class TaxpayerController extends Controller
      */
     public function store(Request $request)
     {
+        $type = $request->input('taxpayer_type_id');
+        $denomination = $request->input('personal_firm');
+
         if (Taxpayer::existsRif($request->input('rif'))) {
             return redirect('taxpayers/create')
                 ->withInput($request->input())
                 ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
         }
 
-        $taxpayer = Taxpayer::create($request->input());
+        if ($type != 1 && empty($denomination)) {
+            return redirect()->route('taxpayers.create')
+                ->withInput($request->input())
+                ->withError('¡Ingrese la denominación comercial!');
+        }
 
-        $denomination = $request->input('personal_firm');
+        $taxpayer = Taxpayer::create($request->input());
 
         if (!empty($denomination)) {
             CommercialDenomination::create([
