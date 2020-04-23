@@ -80,7 +80,7 @@
 @if(Auth::user()->can('process.settlements'))
 <div class="row">
     @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
-    <div class="col-xl-6">
+    <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
@@ -118,7 +118,7 @@
         </div>
     </div>
     @endif
-    <div class="col-xl-6">
+    <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
