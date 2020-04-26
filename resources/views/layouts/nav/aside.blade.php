@@ -86,39 +86,6 @@
         </li>
 
         @if (@Auth::user()->hasRole('admin'))
-            <li class="kt-menu__item  kt-menu__item--submenu {!! classActivePath('administration') !!}" aria-haspopup="true"  data-ktmenu-submenu-toggle="hover">
-                <a  href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                    <i class="kt-menu__link-icon fas fa-user-check"></i>
-                    <span class="kt-menu__link-text">Administración</span>
-                    <i class="kt-menu__ver-arrow la la-angle-right"></i>
-                </a>
-                <div class="kt-menu__submenu ">
-                    <span class="kt-menu__arrow"></span>
-                    <ul class="kt-menu__subnav">
-                    <li class="kt-menu__item {{ active('administration/permissions*') }}" aria-haspopup="true" >
-                        <a  href="{{ url('administration/permissions') }}" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Permisos</span>
-                        </a>
-                    </li>
-
-                    <li class="kt-menu__item {{ active('administration/roles*') }}" aria-haspopup="true" >
-                        <a  href="{{ url('administration/roles') }}" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Roles</span>
-                        </a>
-                    </li>
-
-                    <li class="kt-menu__item {{ active('administration/users*') }}" aria-haspopup="true" >
-                        <a  href="{{ url('administration/users') }}" class="kt-menu__link ">
-                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                        <span class="kt-menu__link-text">Usuarios</span>
-                        </a>
-                    </li>
-                    </ul>
-                </div>
-            </li>
-
             <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
                 <a  href="{{ url('settings') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon2-dashboard"></i>

@@ -74,15 +74,15 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         /*----------  Routes permissions  ----------*/
         Route::get('permissions/list', 'Settings\PermissionController@list');
-        Route::resource('administration/permissions', 'Settings\PermissionController');
+        Route::resource('settings/administration/permissions', 'Settings\PermissionController');
 
         /*----------  Routes roles  ----------*/
         Route::get('roles/list', 'Settings\RoleController@list');
-        Route::resource('administration/roles', 'Settings\RoleController');
+        Route::resource('settings/administration/roles', 'Settings\RoleController');
 
         /*----------  Routes users  ----------*/
         Route::get('users/list', 'Settings\UserController@list');
-        Route::resource('administration/users', 'Settings\UserController');
+        Route::resource('settings/administration/users', 'Settings\UserController');
    });
 
     /**

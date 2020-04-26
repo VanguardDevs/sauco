@@ -3,7 +3,8 @@
 @section('title', 'Configuraciones')
 
 @section('content')
-	<div class="col-xl-12">
+<div class="row">
+    <div class="col-xl-6 col-md-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head kt-portlet__head--lg">
                 <div class="kt-portlet__head-label">
@@ -11,7 +12,7 @@
                         <i class="kt-font-brand flaticon-settings-1"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Configuraciones
+                        Configuraciones básicas
                     </h3>
                 </div>
             </div>
@@ -82,4 +83,54 @@
             </div>
         </div>
     </div>
+
+    <div class="col-xl-6 col-md-6 col-sm-6">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__head kt-portlet__head--lg">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="kt-font-brand fas fa-users"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                        Administración
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-notification">
+                    <a class="kt-notification__item" href="{{ route('permissions.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-user-lock"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Permisos
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ route('roles.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-user-tag"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Roles
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ route('users.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Usuarios
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

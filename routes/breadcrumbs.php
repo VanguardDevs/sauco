@@ -96,56 +96,56 @@ Breadcrumbs::for('settings', function ($trail) {
 
 /*------------- Users -------------*/
 Breadcrumbs::for('permissions.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Permisos', url('administration/permissions'));
+    $trail->parent('settings');
+    $trail->push('Permisos', route('permissions.index'));
 });
 
 /*------------- Users > Create -------------*/
 Breadcrumbs::for('permissions.create', function ($trail) {
     $trail->parent('permissions.index');
-    $trail->push('Crear permiso', url('permissions.create'));
+    $trail->push('Crear permiso', route('permissions.create'));
 });
 
 /*------------- Users > edit -------------*/
 Breadcrumbs::for('permissions.edit', function ($trail, $row) {
     $trail->parent('permissions.index');
-    $trail->push('Editar permiso'/*.$row->login*/, url('permissions.edit', $row->id));
+    $trail->push('Editar permiso'/*.$row->login*/, route('permissions.edit', $row));
 });
 
 /*------------- Users -------------*/
 Breadcrumbs::for('users.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Usuarios', url('administration/users'));
+    $trail->parent('settings');
+    $trail->push('Usuarios', route('users.index'));
 });
 
 /*------------- Users > Create -------------*/
 Breadcrumbs::for('users.create', function ($trail) {
     $trail->parent('users.index');
-    $trail->push('Crear usuario', url('administration/users/create'));
+    $trail->push('Crear usuario', route('users.create'));
 });
 
 /*------------- Users > edit -------------*/
 Breadcrumbs::for('users.edit', function ($trail, $row) {
     $trail->parent('users.index');
-    $trail->push('Editar Usuario '/*.$row->login*/, url('administration/users/edit', $row->id));
+    $trail->push('Editar Usuario ', route('users.edit',  $row));
 });
 
 /*------------- Roles -------------*/
 Breadcrumbs::for('roles.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Roles', url('administration/roles'));
+    $trail->parent('settings');
+    $trail->push('Roles', route('roles.index'));
 });
 
 /*------------- Roles > Create -------------*/
 Breadcrumbs::for('roles.create', function ($trail) {
     $trail->parent('roles.index');
-    $trail->push('Crear rol', url('administration/roles/create'));
+    $trail->push('Crear rol', route('roles.create'));
 });
 
 /*------------- Roles > edit -------------*/
 Breadcrumbs::for('roles.edit', function ($trail, $row) {
     $trail->parent('roles.index');
-    $trail->push('Editar rol '/*.$row->login*/, url('administration/roles/edit', $row->id));
+    $trail->push('Editar rol '/*.$row->login*/, route('roles.edit', $row));
 });
 
 /*------------- Parishes -------------*/

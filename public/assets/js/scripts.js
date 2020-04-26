@@ -195,10 +195,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(
                     `<div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/administration/users/${oData.id}/edit title='Editar'>
+                        <a class="mr-2" href=${baseURL}/settings/administration/users/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'administration/users')" title='Anular'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'settings/administration/users')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
@@ -225,10 +225,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(
                     `<div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/administration/permissions/${oData.id}/edit title='Anular'>
+                        <a class="mr-2" href=${baseURL}/settings/administration/permissions/${oData.id}/edit title='Anular'>
                             <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'administration/permissions')" title='Anular'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'settings/administration/permissions')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
 
@@ -257,7 +257,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/administration/roles/${oData.id}/edit title='Editar'>
+                        <a class="mr-2" href=${baseURL}/settings/administration/roles/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning fas fa-edit'></i>
                         </a>
                     </div>`);
