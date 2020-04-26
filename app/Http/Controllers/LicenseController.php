@@ -99,6 +99,11 @@ class LicenseController extends Controller
             $isValid['msg'] = '¡El contribuyente no tiene un representante (PRESIDENTE) registrado!';
         } 
 
+        if ($taxpayer->licenses()->exists()) {
+            $isValid['error'] = true;
+            $isValid['msg'] = '¡El contribuyente tiene una licencia activa!';
+        }
+
         return $isValid;
     }
 
