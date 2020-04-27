@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Ordinance;
-use App\TaxUnit;
 use App\Concept;
 use App\Taxpayer;
 use App\Payment;
@@ -63,9 +62,8 @@ class ApplicationController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        $value = TaxUnit::latest()->first()->value;
         $concept = Concept::find($request->input('concepts'));
-        $amount = $concept->amount * $value; 
+        $amount = $concept->calculateAmount();
 
         $application = $taxpayer->applications()->create([
             'active' => 1,

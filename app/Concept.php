@@ -22,6 +22,18 @@ class Concept extends Model
         'ordinance_id'
     ];
 
+    public function calculateAmount()
+    {
+        $method = $this->chargingMethod()->first()->name;
+        $value = TaxUnit::latest()->first()->value;
+
+        if ($method == 'DIVISA') {
+            return $this->amount;
+        } else if ($method == 'U.T') {
+            return $this->amount * $value;
+        }
+    }
+
     public function ordinance()
     {
         return $this->belongsTo(Ordinance::class);
