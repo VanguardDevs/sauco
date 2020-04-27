@@ -137,7 +137,7 @@
                  <tr>
                     <td>{{ $settlement->num }}</td> 
                     <td>{{ $settlement->object_payment  }}</td>   
-                    <td>{{ $settlement->amount }}</td>
+                    <td>{{ $settlement->total_amount }}</td>
                 </tr>
                 @endforeach   
              </table>
