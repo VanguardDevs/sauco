@@ -44,12 +44,13 @@
             .col-bill-info {
                 float: left;
                 width: 50%;
+                font-size: 15px;
             }
             .total-amount {
                 text-align: right;
             }
             .miscellaneus {
-                font-size: 10px;
+                font-size: 12px;
             }
             caption {
                 font-weight: bold;
@@ -137,7 +138,7 @@
                  <tr>
                     <td>{{ $settlement->num }}</td> 
                     <td>{{ $settlement->object_payment  }}</td>   
-                    <td>{{ $settlement->total_amount }}</td>
+                    <td style="font-weight:bold;">{{ $settlement->total_amount }}</td>
                 </tr>
                 @endforeach   
              </table>
