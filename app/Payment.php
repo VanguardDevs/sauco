@@ -64,7 +64,7 @@ class Payment extends Model implements Auditable
 
     public function affidavit()
     {
-        return $this->belongsToMany(Affidavit::class);
+        return $this->belongsToMany(Affidavit::class, Settlement::class);
     }
 
     public function fine()
@@ -72,9 +72,9 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Fine::class, Settlement::class);
     }
 
-    public static function processedByDate($date)
+    public static function processedByDate($firstDate, $lastDate)
     {
-        return self::whereDate('processed_at', $date->toDateString())
+        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
             ->whereStateId(2)
             ->orderBy('processed_at', 'ASC')
             ->get();

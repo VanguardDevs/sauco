@@ -14,9 +14,9 @@
         <div class="kt-portlet__body">
             <div class="form-group row">
                 <label class="col-lg-12">Seleccione un día</label>
-                <div class="col-lg-8 col-md-9 col-sm-8">
+                <div class="col-lg-5">
                 {!!   
-                    Form::text('date', null, [
+                    Form::text('first_date', null, [
                         'class' => 'form-control',
                         'id' => 'datepicker',
                         'placeholder' => 'Seleccione una fecha',
@@ -24,7 +24,17 @@
                     ]) 
                 !!}
                 </div>
-                <div class="col-lg-4 col-md-9 col-sm-4">
+                <div class="col-lg-5">
+                {!!   
+                    Form::text('last_date', null, [
+                        'class' => 'form-control',
+                        'id' => 'datepicker',
+                        'placeholder' => 'Seleccione una fecha',
+                        'readonly' 
+                    ]) 
+                !!}
+                </div>
+                <div class="col-lg-2 col-md-9 col-sm-4">
                     <button type="submit" class="btn btn-success">
                         <i class="flaticon-paper-plane-1"></i>
                        Enviar 
