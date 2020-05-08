@@ -65,7 +65,7 @@ set_time_limit(120);
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ asset('assets/images/sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+                <img src="{{ base_path().'/public/assets/images/sumat.png' }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -78,7 +78,7 @@ set_time_limit(120);
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('assets/images/logo.png') }}" height="70px" width="130px" alt="logo" />
+                <img src="{{ base_path().'/public/assets/images/logo.png' }}" height="70px" width="130px" alt="logo" />
             </div>
         </div>
         <div class="tables">
