@@ -104,7 +104,9 @@ class ReportController extends Controller
 
     public function printLicensesList()
     {
-        $licenses = License::with(['taxpayer'])->get();
+        $licenses = License::with(['taxpayer'])
+            ->orderBy('created_at', 'ASC')
+            ->get();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
         $data = compact(['licenses', 'emissionDate']);
