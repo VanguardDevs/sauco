@@ -83,8 +83,9 @@ class ReportController extends Controller
     {
         $taxpayers = Taxpayer::orderBy('created_at', 'ASC')->get();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+        $total = Taxpayer::count();
 
-        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate']));
+        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate', 'total']));
         return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
     }
 
@@ -110,9 +111,10 @@ class ReportController extends Controller
         $licenses = License::with(['taxpayer'])
             ->orderBy('created_at', 'ASC')
             ->get();
+        $total = License::count();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
-        $data = compact(['licenses', 'emissionDate']);
+        $data = compact(['licenses', 'emissionDate', 'total']);
         $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
 
         return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');

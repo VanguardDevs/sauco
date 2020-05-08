@@ -105,7 +105,11 @@ set_time_limit(120);
                 <div class="col-bill-info">
                     FECHA DE EMISIÓN: {{ $emissionDate }}
                 </div>
-                TOTAL DE CONTRIBUYENTES: {{ $taxpayers->count() }}
+                <div class="col-bill-info">
+                    <div class="total-amount">
+                        TOTAL: {{ $total }}
+                    </div>
+                </div>
             </div>
         </div>
     </body>

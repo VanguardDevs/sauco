@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+@php
+set_time_limit(120);
+@endphp
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
