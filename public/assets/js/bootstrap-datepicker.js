@@ -25,6 +25,12 @@ var KTBootstrapDatepicker = function () {
             language: 'es'
         });
 
+        $('#kt_daterangepicker_1, #kt_daterangepicker_1_modal').daterangepicker({
+            buttonClasses: ' btn',
+            applyClass: 'btn-primary',
+            cancelClass: 'btn-secondary'
+        });
+
         // minimum setup for modal demo
         $('#kt_datepicker_1_modal').datepicker({
             rtl: KTUtil.isRTL(),

@@ -63,14 +63,17 @@ class ReportController extends Controller
 
     public function printPaymentReport(Request $request)
     {
-        $date = Carbon::parse($request->input('date'));
-        $payments = Payment::processedByDate($date);
-        $dateFormat = date('d-m-Y', strtotime($date)); 
-        $total = $payments->map(function ($row) {
+        $firstDate = Carbon::parse($request->input('first_date'));
+        $lastDate = Carbon::parse($request->input('last_date'));
+
+        $payments = Payment::processedByDate($firstDate, $lastDate);
+
+        // Prepare pdf
+        $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 
+        $totalAmount = $payments->map(function ($row) {
             return $row->getOriginal('amount');
         })->sum();
-
-        $total = number_format($total, 2, ',', '.')." Bs";
+        $total = number_format($totalAmount, 2, ',', '.')." Bs";
 
         $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
         return $pdf->download('reporte-de-pagos.pdf');
