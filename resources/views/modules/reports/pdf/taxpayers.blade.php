@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+@php
+set_time_limit(120);
+@endphp
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -83,8 +88,7 @@
                   <tr>
                     <th width="15%">RIF</th>
                     <th width="35%">RAZÓN SOCIAL</th>
-                    <th width="40%">DIRECCIÓN FISCAL</th>
-                    <th width="10%">COMUNIDAD</th>
+                    <th width="50%">DIRECCIÓN FISCAL</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -92,8 +96,7 @@
                  <tr>
                     <td>{{ $taxpayer->rif }}</td> 
                     <td>{{ $taxpayer->name }}</td>   
-                    <td>{{ $taxpayer->getOriginal('fiscal_address') }}</td>
-                    <td>{{ $taxpayer->community->name }}</td>
+                    <td>{{ $taxpayer->fiscal_address }}</td>
                 </tr>
                 @endforeach   
              </table>
@@ -102,6 +105,7 @@
                 <div class="col-bill-info">
                     FECHA DE EMISIÓN: {{ $emissionDate }}
                 </div>
+                TOTAL DE CONTRIBUYENTES: {{ $taxpayers->count() }}
             </div>
         </div>
     </body>

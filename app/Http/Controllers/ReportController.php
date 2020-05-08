@@ -78,7 +78,7 @@ class ReportController extends Controller
 
     public function printTaxpayersReport()
     {
-        $taxpayers = Taxpayer::get();
+        $taxpayers = Taxpayer::orderBy('created_at', 'ASC')->get();
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
 
         $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate']));
