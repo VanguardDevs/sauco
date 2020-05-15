@@ -6,6 +6,7 @@
 
 @section('content')
 <div class="row">
+    @if (Auth()->user()->can('access.licenses'))
     <div class="col-md-4 col-sm-12">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__body">
@@ -27,6 +28,7 @@
             </div>
         </div>
     </div>
+    @endif
     <div class="col-md-3 col-sm-12">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__body">

@@ -19,6 +19,7 @@ class LicenseController extends Controller
     {
         $this->license = $license; 
         $this->middleware('auth');
+        $this->middleware('can:access.licenses')->only('index');
     }
 
     /**
