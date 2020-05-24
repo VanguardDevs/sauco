@@ -59,7 +59,8 @@ class PermissionController extends Controller
         ]);
         $create->save();
 
-        return redirect('administration/permissions')->with('success', '¡Permiso agregado!');
+        return redirect()->route('permissions.index')
+            ->with('success', '¡Permiso agregado!');
     }
 
     /**
