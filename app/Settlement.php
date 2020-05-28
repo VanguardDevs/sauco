@@ -15,6 +15,10 @@ class Settlement extends Model implements Auditable
     protected $table = 'settlements';
 
     protected $guarded = [];
+ 
+    protected $casts = [
+        'amount' => 'float'
+    ];  
 
     public function payment()
     {
