@@ -82,6 +82,10 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         /*----------  Routes users  ----------*/
         Route::get('users/list', 'Settings\UserController@list');
+        Route::get('change-password', 'Settings\UserController@showChangePassword')
+            ->name('change-password.show');
+        Route::post('update-password', 'Settings\UserController@updatePassword')
+            ->name('change-password.update');
         Route::resource('settings/administration/users', 'Settings\UserController');
    });
 

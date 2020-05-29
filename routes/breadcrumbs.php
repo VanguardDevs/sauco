@@ -2,6 +2,11 @@
 
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
+Breadcrumbs::for('change-password.show', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Cambiar contraseña', route('change-password.show'));
+});
+
 /*----------  Cashbox ----------*/
 Breadcrumbs::for('receivables.index', function ($trail) {
     $trail->parent('dashboard');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UsersCreateFormRequest;
+use App\Http\Requests\Users\UpdatePassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -13,6 +14,7 @@ use File;
 use DataTables;
 use App\User;
 use Caffeinated\Shinobi\Models\Role;
+use Auth;
 
 class UserController extends Controller
 {
@@ -84,6 +86,7 @@ class UserController extends Controller
     {
         //
     }
+
     /**
      *
      * User profile
@@ -92,6 +95,34 @@ class UserController extends Controller
     public function profile($id)
     {
         return view("modules.users.profile");
+    }
+
+    public function showChangePassword()
+    {
+        return view('modules.users.change-password');
+    }
+
+    public function updatePassword(UpdatePassword $request)
+    {
+        $newPassword = bcrypt($request->input('new-password'));
+        $currentPass = bcrypt($request->input('current-password'));
+        $user = Auth::user();
+
+        if ($currentPass == $user->password) {
+            return Redirect::back()
+                ->withError('¡Tu contraseña actual es incorrecta!');
+        }
+
+        if ($currentPass == $newPassword) {
+            return Redirect::back()
+                ->withError('¡La nueva contraseña no debe ser igual a la anterior!');
+        }
+
+        $user->password = $newPassword;
+        $user->save();
+
+        return Redirect::back()
+            ->withSuccess('¡Contraseña actualizada!');
     }
 
     /**

@@ -16,13 +16,13 @@
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
         <!--begin: Navigation -->
             <div class="kt-notification">
-                <a href="{{ url('profile/'.Auth::user()->id) }}" class="kt-notification__item">
+                <a href="{{ route('change-password.show') }}" class="kt-notification__item">
                     <div class="kt-notification__item-icon">
                         <i class="flaticon2-calendar-3 kt-font-success"></i>
                     </div>
                     <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title kt-font-bold">
-                            Perfil
+                            Actualizar contraseña
                         </div>
                     </div>
                 </a>
