@@ -311,7 +311,7 @@ class AffidavitController extends Controller
 
     public function destroy(Affidavit $affidavit)
     {
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->can('null.payments')) {
             return response()->json([
                 'message' => '¡Acción no permitida!'
             ]);

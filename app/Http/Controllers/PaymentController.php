@@ -168,9 +168,15 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        if (!Auth::user()->hasRole('admin')) {
+        if (!Auth::user()->can('null.payments')) {
             return response()->json([
                 'message' => '¡Usuario no permitido!'
+            ]);
+        }
+
+        if ($payment->state_id == 2) {
+            return response()->json([
+                'message' => '¡La factura está pagada!'
             ]);
         }
 
