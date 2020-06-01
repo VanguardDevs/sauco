@@ -27,7 +27,7 @@ class PaymentController extends Controller
     public function __construct(PaymentService $payment)
     {
         $this->payment = $payment;
-        $this->middleware('has.role:admin')->only('destroy');
+        $this->middleware('can:null.payments')->only('destroy');
         $this->middleware('can:process.payments')->only('update');
         $this->middleware('auth');
     }
@@ -168,12 +168,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        if (!Auth::user()->can('null.payments')) {
-            return response()->json([
-                'message' => '¡Usuario no permitido!'
-            ]);
-        }
-
         if ($payment->state_id == 2) {
             return response()->json([
                 'message' => '¡La factura está pagada!'
