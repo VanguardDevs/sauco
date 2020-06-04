@@ -79,7 +79,7 @@
         </li>
 
         <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
-            <a  href="{{ url('reports') }}" class="kt-menu__link">
+            <a  href="{{ route('reports') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-squares-2"></i>
             <span class="kt-menu__link-text">Reportes</span>
             </a>
