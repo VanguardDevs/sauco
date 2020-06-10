@@ -207,7 +207,7 @@ class AffidavitController extends Controller
             'processed_at' => $processedAt,
         ]);
 
-        $this->makePayment($affidavit);
+        // $this->makePayment($affidavit);
         
         return redirect('affidavits/'.$affidavit->id)
             ->withSuccess('¡Declaración procesada!');
