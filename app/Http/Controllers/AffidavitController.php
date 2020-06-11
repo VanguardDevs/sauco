@@ -178,8 +178,7 @@ class AffidavitController extends Controller
 
         EconomicActivityAffidavit::insert($data);
 
-        return redirect('affidavits/'.$affidavit->id)
-            ->withSuccess('¡Declaración del mes de '.$this->month->name.' - '.$this->month->year->year.' realizada!');
+        return redirect('affidavits/'.$affidavit->id);
     }
 
     /**
@@ -258,7 +257,8 @@ class AffidavitController extends Controller
         $this->applyFine($affidavit, $payment);
         $payment->updateAmount();
 
-        return redirect()->back();
+        return redirect()->back()
+            ->withSuccess('¡Factura realizada!');
     }
     
     public function message(Month $month)

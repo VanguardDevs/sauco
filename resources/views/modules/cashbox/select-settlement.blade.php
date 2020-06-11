@@ -11,31 +11,31 @@
             <div class="card-header alert">
                 <div class="row">
                     <h5 class="m-0">
-                        Seleccione el tipo de liquidación
+                        Declaración para el período
+                        {{ $row->month->name }} - {{ $row->month->year->year }}
                     </h5>
                 </div>
             </div>
         </card>
 
-
         <!-- form start -->
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <a href="{{ $row->id }}/group" class="btn btn-secondary">
-                        <i class="fas fa-layer-group"></i>Por actividad económica agrupada 
+                    <a href="{{ $row->id }}/group" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-layer-group"></i>AGRUPADA                    
                     </a> 
                 </div>
                 <div class="col-md-6">
-                    <a href="{{ $row->id }}/normal" class="btn btn-secondary">
-                        <i class="fas fa-calculator"></i>Cálculo normal
+                    <a href="{{ $row->id }}/normal" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-stream"></i>DESGLOSADA
                     </a>
                 </div>
             </div> 
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-            <a href="{{ url('cashbox/settlements') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
         </div>
     </div>
     <!-- /.card -->

@@ -5,6 +5,11 @@
 @section('form')
     <!-- general form elements -->
     <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">Declaración para el período {{ $row->month->name }} -  {{ $row->month->year->year }}</h3>
+            </div>
+        </div>
         <!-- /.card-header -->
         <!-- form start -->
         @if (($typeForm == 'edit-normal') || ($typeForm == 'edit-group'))
