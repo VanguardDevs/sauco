@@ -84,13 +84,9 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         /*----------  Routes users  ----------*/
         Route::get('users/list', 'Settings\UserController@list');
-        Route::get('change-password', 'Settings\UserController@showChangePassword')
-            ->name('change-password.show');
-        Route::post('update-password', 'Settings\UserController@updatePassword')
-            ->name('change-password.update');
         Route::resource('settings/administration/users', 'Settings\UserController');
-   });
-
+    });
+ 
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
@@ -222,4 +218,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
+    
+    /**
+     * Update passwords
+     */
+    Route::get('change-password', 'Settings\UserController@showChangePassword')
+        ->name('change-password.show');
+    Route::post('update-password', 'Settings\UserController@updatePassword')
+        ->name('change-password.update');
 });
