@@ -15,6 +15,7 @@ use DataTables;
 use App\User;
 use Caffeinated\Shinobi\Models\Role;
 use Auth;
+use Hash;
 
 class UserController extends Controller
 {
@@ -104,11 +105,11 @@ class UserController extends Controller
 
     public function updatePassword(UpdatePassword $request)
     {
-        $newPassword = bcrypt($request->input('new-password'));
-        $currentPass = bcrypt($request->input('current-password'));
+        $newPassword = $request->input('new-password');
+        $currentPass = $request->input('current-password');
         $user = Auth::user();
-
-        if ($currentPass == $user->password) {
+        
+        if (!Hash::check($currentPass, $user->password)) {
             return Redirect::back()
                 ->withError('¡Tu contraseña actual es incorrecta!');
         }
@@ -118,7 +119,7 @@ class UserController extends Controller
                 ->withError('¡La nueva contraseña no debe ser igual a la anterior!');
         }
 
-        $user->password = $newPassword;
+        $user->password = bcrypt($newPassword);
         $user->save();
 
         return Redirect::back()
