@@ -48,6 +48,13 @@ class TaxpayerController extends Controller
         return DataTables::eloquent($query)->toJson();
     }
 
+    public function getRepresentations(Taxpayer $taxpayer)
+    {
+        $query = $taxpayer->representations()->with(['representationType', 'person']);
+
+        return response()->json($query->get());
+    }
+
     /**
      * Show the form for creating a new resource.
      *

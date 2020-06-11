@@ -14,7 +14,7 @@
             <div class="kt-widget__top">
                 <div class="kt-widget__content">
                     <div class="kt-widget__head">
-                        <a class="kt-widget__username" href="{{ Route('taxpayers.show', $row->id) }}">
+                        <a id="taxpayer" class="kt-widget__username" data_id="{{ $row->id }}" href="{{ Route('taxpayers.show', $row->id) }}">
                             {{ $row->name }}   
                             </br>
                             <small> {{ $row->rif }} </small>
@@ -133,24 +133,7 @@
                 @endif
             </div>
             <div class="kt-portlet__body">
-                <div class="kt-widget4">
-                    @forelse ($row->representations as $representation)
-                        <div class="kt-widget4__item">
-                            <div class="kt-widget4__pic kt-widget4__pic--pic">
-                                <img src="{{ asset('assets/images/user-default.png') }}" alt="" />
-                            </div>
-                            <div class="kt-widget4__info">
-                                <a class="kt-widget4__username">
-                                    {{ $representation->person->name }}
-                                </a>
-                                <p class="kt-widget4__text">
-                                    {{ $representation->representationType->name  }}
-                                </p>
-                            </div>
-                        </div>
-                    @empty
-                        Este contribuyente no tiene representante
-                    @endforelse
+                <div class="kt-widget4" id="representations">
                 </div>
             </div>
         </div>
