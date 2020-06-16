@@ -28,7 +28,7 @@ class AccountingAccountController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.accounting-accounts.register');
     }
 
     /**
