@@ -85,6 +85,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*----------  Routes users  ----------*/
         Route::get('users/list', 'Settings\UserController@list');
         Route::resource('settings/administration/users', 'Settings\UserController');
+
+        /*---------- Accounting accounts --------*/
+        Route::resource('settings/accounting-accounts', 'AccountingAccountController');
     });
  
     /**

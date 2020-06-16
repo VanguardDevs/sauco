@@ -29,6 +29,16 @@
                             </div>
                         </div>
                     </a>
+                    <a class="kt-notification__item" href="{{ route('accounting-accounts.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Cuentas contables
+                            </div>
+                        </div>
+                    </a>
                     <a class="kt-notification__item" href="{{ route('categories.index') }}">
                         <div class="kt-notification__item-icon">
                             <i class="fas fa-tag"></i>
