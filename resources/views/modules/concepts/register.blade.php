@@ -20,8 +20,22 @@
                 @endif
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="control-label"> Tipo <span class="text-danger">*</span></label>
+                        <div class="form-group col-md-4">
+                            <label class="control-label"> Cuenta contable <span class="text-danger">*</span></label>
+
+                            {!! Form::select('accounting_account_id', $accounts,
+                                (isset($row->accounting_account) ? ($row->accounting_account->id) : null), [
+                                'class' => 'form-control select2',
+                                'placeholder' => ' SELECCIONE ',
+                                'required'
+                            ]) !!}
+
+                            @error('accounting_account_id')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label"> Ordenanza <span class="text-danger">*</span></label>
 
                             {!! Form::select('ordinance_id', $ordinances,
                                 (isset($row->ordinance) ? ($row->ordinance->id) : null), [
@@ -34,7 +48,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label class="control-label"> Listado  <span class="text-danger">*</span></label>
 
                             {!! Form::select('list_id', $listings,

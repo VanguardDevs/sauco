@@ -6,6 +6,7 @@ use App\Concept;
 use App\Ordinance;
 use App\ChargingMethod;
 use App\Listing;
+use App\AccountingAccount;
 use App\Http\Requests\Concepts\ConceptsCreateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -43,6 +44,7 @@ class ConceptController extends Controller
     {
         return view('modules.concepts.register')
             ->with('ordinances', Ordinance::pluck('description', 'id'))
+            ->with('accounts', AccountingAccount::pluck('name', 'id'))
             ->with('listings', Listing::pluck('name', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('typeForm', 'create');
@@ -86,6 +88,7 @@ class ConceptController extends Controller
             ->with('ordinances', Ordinance::pluck('description', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('listings', Listing::pluck('name', 'id'))
+            ->with('accounts', AccountingAccount::pluck('name', 'id'))
             ->with('row', $concept);
     }
 

@@ -547,3 +547,20 @@ Breadcrumbs::for('payments/edit', function ($trail) {
     $trail->push('Procesar liquidación', url('payments/edit'));
 });
 
+/*------------- Ordinances -------------*/
+Breadcrumbs::for('accounting-accounts.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Cuentas contables', url('settings/accounting-accounts'));
+});
+
+/*------------- Ordinances > create -------------*/
+Breadcrumbs::for('accounting-accounts.create', function ($trail) {
+    $trail->parent('accounting-accounts.index');
+    $trail->push('Crear cuenta contable', url('settings/accounting-accounts/create'));
+});
+
+/*------------- Ordinances > edit -------------*/
+Breadcrumbs::for('accounting-accounts.edit', function ($trail, $row) {
+    $trail->parent('accounting-accounts.index');
+    $trail->push('Editar cuenta contable', url('settings/accounting-accounts/edit'.$row->id));
+});

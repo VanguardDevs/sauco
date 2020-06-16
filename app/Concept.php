@@ -19,7 +19,8 @@ class Concept extends Model
         'amount',
         'charging_method_id',
         'list_id',
-        'ordinance_id'
+        'ordinance_id',
+        'accounting_account_id'
     ];
 
     public function calculateAmount()
@@ -52,5 +53,10 @@ class Concept extends Model
     public function fines()
     {
         return $this->hasMany(Fine::class);
+    }
+
+    public function accountingAccount()
+    {
+        return $this->belongsTo(AccountingAccount::class);
     }
 }
