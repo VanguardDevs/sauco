@@ -294,16 +294,19 @@ class AffidavitController extends Controller
     public function checkForFine($affidavit)
     {
         if (!$this->hasException($affidavit)) { 
-            if ($affidavit->month->year->year != 2020) {
-                return Concept::whereCode(2)->first();
+            $startPeriod = Carbon::parse($affidavit->month->start_period_at);
+            $todayDate = Carbon::now();
+
+            if ($startPeriod->diffInDays($todayDate) > 60) {
+               return Concept::whereCode(2)->first(); 
             }
         }
         return false;
     }
 
-    public function hasException($settlement)
+    public function hasException($affidavit)
     {
-        if ($settlement->taxpayer->economicActivities->first()->code == 123456) {
+        if ($affidavit->taxpayer->economicActivities->first()->code == 123456) {
             return true;
         }
         return false;

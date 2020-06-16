@@ -10,6 +10,7 @@ class Month extends Model
 
     protected $fillable = [
         'name',
+        'start_period_at',
         'year_id'
     ];
 
