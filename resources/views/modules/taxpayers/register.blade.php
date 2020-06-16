@@ -83,21 +83,6 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
- 
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Firma personal o denominación comercial</label>
-
-                            {!!
-                            Form::text("personal_firm", old('personal_firm', @$row->commercialDenomination->name), [
-                                "class" => "form-control",
-                                "onkeyup" => "upperCase(this);"
-                            ])
-                            !!}
-
-                            @error('personal_firm')
-                            <div class="text text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
