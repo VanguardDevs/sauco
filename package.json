@@ -17,6 +17,7 @@
     "lodash": "^4.17.5",
     "popper.js": "^1.12",
     "react": "^16.2.0",
+    "react-data-grid": "^7.0.0-canary.16",
     "react-dom": "^16.2.0",
     "react-helmet": "^6.1.0",
     "resolve-url-loader": "^2.3.1",
