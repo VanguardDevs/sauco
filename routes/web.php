@@ -31,8 +31,11 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('about', 'ShowAbout')->name('about');
-
+    
+    // API ROUTES
     Route::get('api/taxpayers/{taxpayer}/representations', 'TaxpayerController@getRepresentations');
+    Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
+
     /**
      * Only Admin routes
      */

@@ -7,7 +7,7 @@
     <div class="kt-portlet">
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title">Declaración para el período {{ $row->month->name }} -  {{ $row->month->year->year }}</h3>
+                <h3 class="kt-portlet__head-title" id="affidavit" data_id="{{ $row->id }}">Declaración para el período {{ $row->month->name }} -  {{ $row->month->year->year }}</h3>
             </div>
         </div>
         <!-- /.card-header -->
@@ -88,16 +88,9 @@
                     </tr>
                 </tbody>
             </table>
-            
-            @if($row->payment->first())
-           <div class="form-group col-lg-12">
-                <div class="kt-heading kt-heading--md">
-                    Monto a pagar: {{ $row->payment->first()->amount }} Bs
-                </div>
-                <div class="kt-heading kt-heading--md">
-                    Estado del pago: {{ $row->payment->first()->state->name }}
-                </div>
-           </div>
+
+            @if(!$row->payment->first())
+            <div id="paymentInfo"></div> 
             @endif
 
             @endif

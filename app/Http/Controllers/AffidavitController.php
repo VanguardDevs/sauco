@@ -53,8 +53,18 @@ class AffidavitController extends Controller
         return DataTables::of($query)->toJson();
     }
 
-    public function show(Affidavit $affidavit)
+    public function show(Request $request, Affidavit $affidavit)
     {
+        if ($request->wantsJson()) {
+            $fineType = $this->checkForFine($affidavit);
+
+            return response()->json([
+                'affidavit' => $affidavit,
+                'payment' => $affidavit->payment,
+                'fineType' => $fineType 
+            ]);
+        }
+
         if ($affidavit->amount == 0.00) {
             if (!Auth::user()->can('process.settlements'))  {
                 return redirect('cashbox/settlements')
@@ -230,11 +240,6 @@ class AffidavitController extends Controller
      */
     public function makePayment(Affidavit $affidavit)
     {
-        if ($affidavit->payment()->first()) {
-            return redirect('affidavits/'.$affidavit->id)
-                ->withError('¡La factura de la liquidación fue realizada!');
-        }
-
         $payment = Payment::create([
             'num' => Payment::newNum(),
             'state_id' => 1,
@@ -257,7 +262,7 @@ class AffidavitController extends Controller
         $this->applyFine($affidavit, $payment);
         $payment->updateAmount();
 
-        return redirect()->back()
+        return redirect()->route('affidavits.index', $affidavit->taxpayer)
             ->withSuccess('¡Factura realizada!');
     }
     

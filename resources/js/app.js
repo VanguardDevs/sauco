@@ -17,3 +17,5 @@ require('./components/ListAccountingAccounts');
 
 require('./components/RegisterAccountingAccounts');
 
+require('./components/AffidavitFine');
+
