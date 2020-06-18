@@ -110,6 +110,9 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Handle reports
      */
     Route::group(['middleware' => 'can:print.reports'], function() {
+        Route::get('reports/pending-affidavits', 'ReportController@pendingAffidavits');
+        Route::get('reports/pending-payments', 'ReportController@pendingPayments');
+
         Route::post('reports/payment-report', 'ReportController@printPaymentReport')
             ->name('print.payments.report');
         Route::get('economic-activities/{activity}/download', 'ReportController@printActivityReport')
