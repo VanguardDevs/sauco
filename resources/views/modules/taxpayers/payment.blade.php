@@ -68,6 +68,9 @@
                 <div class="kt-heading kt-heading--md">
                     Método de pago: {{ $row->paymentMethod->name }}
                 </div>
+                <div class="kt-heading kt-heading--md">
+                    Estado: {{ $row->state->name }}
+                </div>
                 @endif
            </div>
         @if ($typeForm == 'edit')        
