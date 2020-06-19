@@ -107,6 +107,8 @@
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
             @if(!$row->payment()->first())
             <a href="{{ route('affidavits.payment', $row->id) }}" class="btn btn-success"><i class='fas fa-money-check'></i>Facturar</a>
+            @else
+            <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info"><i class="fas fa-money-check"></i>Ver factura</a>
             @endif
            @else
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
