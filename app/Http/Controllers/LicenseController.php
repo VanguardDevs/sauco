@@ -105,6 +105,13 @@ class LicenseController extends Controller
             $isValid['msg'] = '¡El contribuyente tiene una licencia activa!';
         }
 
+        $application = $taxpayer->applications()->whereHas('concept', function ($concept) {
+            return $concept->whereCode(4);
+        })->latest()->first();
+
+        if ($application->payment()->first()) {
+        }
+
         return $isValid;
     }
 
