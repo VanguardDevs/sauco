@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CorrelativeType;
 use App\License;
+use App\Application;
 use App\Services\LicenseService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -71,7 +72,7 @@ class LicenseController extends Controller
     {
         $correlative = CorrelativeType::find($request->input('correlative'));
 
-        $validator = $this->validateStore($taxpayer);
+        $validator = $this->validateStore($taxpayer, $correlative);
 
         if ($validator['error']) {
             return redirect()->back()->withError($validator['msg']);
@@ -83,7 +84,7 @@ class LicenseController extends Controller
             ->withSuccess('¡Licencia de actividad económica creada!');
     }
 
-    public function validateStore(Taxpayer $taxpayer)
+    public function validateStore(Taxpayer $taxpayer, $correlativeType)
     {
         $isValid = [
             'error' => false,
@@ -105,7 +106,21 @@ class LicenseController extends Controller
             $isValid['msg'] = '¡El contribuyente tiene una licencia activa!';
         }
 
+        if ($correlativeType->description == 'R-') {
+            $useConformityPaid = Application::hasPaid($taxpayer, 4);
+
+            if (!$useConformityPaid) {
+                $isValid['error'] = true;
+                $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
+            }
+        }
+
         return $isValid;
+    }
+
+    public function validateRenovation($taxpayer)
+    {
+        //
     }
 
     /**
