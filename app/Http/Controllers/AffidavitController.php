@@ -302,11 +302,13 @@ class AffidavitController extends Controller
             $startPeriod = Carbon::parse($affidavit->month->start_period_at);
             $todayDate = Carbon::now();
             $passedDays = $startPeriod->diffInDays($todayDate);
-
-            if ($passedDays > 60) {
-               return Concept::whereCode(2)->first(); 
-            } else if ($passedDays > 45 ) {
-                return Concept::whereCode(3)->first();
+            
+            if ($affidavit->created_at > Carbon::parse('2020-06-18')) {
+                if ($passedDays > 60) {
+                   return Concept::whereCode(2)->first(); 
+                } else if ($passedDays > 45 ) {
+                    return Concept::whereCode(3)->first();
+                }
             }
         }
 
