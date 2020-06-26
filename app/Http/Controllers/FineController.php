@@ -17,7 +17,7 @@ class FineController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:destroy.fines')->only('destroy');
+        $this->middleware('has.role:admin')->only('destroy');
     }
 
     /**
