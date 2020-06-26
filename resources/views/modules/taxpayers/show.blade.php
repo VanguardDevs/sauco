@@ -158,7 +158,7 @@
                 </div>
                 @endif
                 <div class="kt-notification">
-                    <a class="kt-notification__item" href="{{ route('fines.index', $row->id) }}">
+                    <a class="kt-notification__item" href="{{ route('taxpayer.fines', $row->id) }}">
                         <div class="kt-notification__item-icon">
                             <i class="fas fa-stop-circle"></i>
                         </div>

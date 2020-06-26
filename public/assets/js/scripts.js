@@ -774,9 +774,9 @@ $(document).ready(function() {
                         <a class="mr-2" href=${window.location.href}/${oData.id}/download title='Descargar declaración jurada de ingresos'>
                             <i class='btn-sm btn-dark bg-dark fas fa-file-download'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id}, 'taxpayers/${oData.taxpayer_id}/fines')" title='Anular'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>               
+                        </a>
                     </div>`
                     );
                 }

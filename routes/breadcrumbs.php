@@ -385,9 +385,9 @@ Breadcrumbs::for('applications.index', function ($trail, $row) {
 });
 
 /*------------- Fines -------------*/
-Breadcrumbs::for('fines.index', function ($trail, $row) {
+Breadcrumbs::for('taxpayer.fines', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
-    $trail->push('Multas y sanciones', route('fines.index', $row));
+    $trail->push('Multas y sanciones', route('taxpayer.fines', $row));
 });
 
 

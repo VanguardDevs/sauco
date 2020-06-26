@@ -173,7 +173,9 @@ Route::prefix('/')->middleware('auth')->group(function()
          * Taxpayer's Fines
          */
         Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
-        Route::resource('taxpayers/{taxpayer}/fines', 'FineController');
+        Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
+            ->name('taxpayer.fines');
+        Route::resource('fines', 'FineController');
 
         /**
          * Taxpayer's application

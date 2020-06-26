@@ -10,12 +10,14 @@ use App\Payment;
 use App\Settlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Auth;
 
 class FineController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:destroy.fines')->only('destroy');
     }
 
     /**
@@ -135,13 +137,13 @@ class FineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Fine $fine)
-    {
-        if (!Auth::user()->hasRole('admin')) {
-            return response()->json([
-                'message' => '¡Acción no permitida!'
-            ]);
-        }
+    { 
+        $payment = $fine->payment()->first();
 
+        if ($fine->settlement) {
+            $fine->settlement->delete();
+            $payment->updateAmount();
+        } 
         $fine->delete();
 
         return redirect()->back()
