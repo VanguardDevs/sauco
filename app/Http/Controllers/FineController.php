@@ -35,7 +35,7 @@ class FineController extends Controller
     public function list(Taxpayer $taxpayer)
     {
         $query = Fine::whereTaxpayerId($taxpayer->id)
-            ->with('concept')
+            ->with(['concept', 'payment'])
             ->get();
 
         return DataTables::of($query)
