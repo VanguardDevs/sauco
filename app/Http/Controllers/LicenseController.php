@@ -11,6 +11,7 @@ use Yajra\DataTables\Facades\DataTables;
 use PDF;
 use App\Taxpayer;
 use Carbon\Carbon;
+use Auth;
 
 class LicenseController extends Controller
 {
@@ -109,7 +110,7 @@ class LicenseController extends Controller
         if ($correlativeType->description == 'R-') {
             $useConformityPaid = Application::hasPaid($taxpayer, 4);
 
-            if (!$useConformityPaid) {
+            if ($useConformityPaid || !Auth::user()->hasRole('admin')) {
                 $isValid['error'] = true;
                 $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
             }
