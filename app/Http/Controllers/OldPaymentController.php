@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\OldPayment;
+use App\Taxpayer;
 use Illuminate\Http\Request;
 
 class OldPaymentController extends Controller
@@ -12,9 +13,14 @@ class OldPaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer)
+    public function index(Request $request, Taxpayer $taxpayer)
     {
-        return $taxpayer->oldPayments->get();
+        if ($request->ajax()) {
+            return $taxpayer->oldPayments->get();
+        }
+
+        return view('modules.taxpayers.old-payments.index')
+            ->with('taxpayer', $taxpayer);
     }
 
     /**
@@ -41,7 +47,7 @@ class OldPaymentController extends Controller
         ]);
 
         return response()->json([
-            'message' => '¡Pago registrado!';
+            'message' => '¡Pago registrado!'
         ]);
     }
 

@@ -32,10 +32,10 @@ if (document.getElementById('taxpayer')) {
   
   ReactDOM.render(
     <Row>
-      <Col>
+      <Col xl={12} sm={6}>
         <Actions />
       </Col>
-      <Col>
+      <Col xl={12} sm={6}>
         <Licenses />
       </Col>
     </Row>,
