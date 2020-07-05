@@ -71,6 +71,11 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Payment::class);
     }
 
+    public function oldPayments()
+    {
+        return $this->hasMany(OldPayment::class);
+    }
+
     public function affidavits()
     {
         return $this->hasMany(Affidavit::class);
