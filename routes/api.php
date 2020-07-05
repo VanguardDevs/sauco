@@ -12,8 +12,10 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+/**
 Route::middleware('auth:api')->group(function () {
     //
 });
+**/
 
+Route::resource('old-payments', 'OldPaymentController');

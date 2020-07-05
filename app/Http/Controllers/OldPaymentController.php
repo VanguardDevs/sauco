@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\OldPayment;
 use App\Taxpayer;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class OldPaymentController extends Controller
 {
@@ -39,16 +40,21 @@ class OldPaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $taxpayer)
+    public function store(Request $request)
     {
-        $taxpayer->oldPayment()->create([
-            'user_id' => Auth()->user->id,
-            'concept_id' => $request->input('concept_id')
-        ]);
+        $recapiURL = config('app.recapi').'/payments';
+        $client = new Client();
+        
+        $data = [
+            'num' => $request->get('num')
+        ];
 
-        return response()->json([
-            'message' => '¡Pago registrado!'
+        $res = $client->request('POST', $recapiURL, [
+            'json' => $data
         ]);
+        $content = json_decode($res->getBody()->getContents());
+
+        return response()->json($content); 
     }
 
     /**
