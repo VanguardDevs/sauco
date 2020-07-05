@@ -184,6 +184,12 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
         /**
+         * Taxpayer's old payments
+         */
+        Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
+            ->name('taxpayer.old-payments');
+
+        /**
          * Taxpayer's permits
          */
         Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');

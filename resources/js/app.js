@@ -11,6 +11,12 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+/**
+require('./screens/taxpayers/OldPayments');
+**/
+
+require('./screens/Settings/Index');
+
 require('./components/TaxpayerProfile');
 
 require('./components/ListAccountingAccounts');
