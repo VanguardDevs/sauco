@@ -33456,7 +33456,6 @@ var defaultProps = {
   widths: colWidths
 };
 var propTypes = {
-  children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.element.isRequired,
   xs: columnProps,
   sm: columnProps,
   md: columnProps,
@@ -33909,19 +33908,99 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Notification */ "./resources/js/components/Notification.js");
 /* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Portlet */ "./resources/js/components/Portlet.js");
+/* harmony import */ var _components_Col__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Col */ "./resources/js/components/Col.js");
+/* harmony import */ var _components_Row__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/Row */ "./resources/js/components/Row.js");
+/* harmony import */ var _OrganizationInformation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./OrganizationInformation */ "./resources/js/screens/Settings/OrganizationInformation.js");
 
  // Components
 
 
 
 
+
+
+
 var Index = function Index() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Hello World");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Row__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    xl: 6,
+    md: 6,
+    sm: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: "Configuraciones b\xE1sicas"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "settings/years",
+    icon: "fa-lightbulb",
+    title: "A\xF1os fiscales"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "settings/accounting-accounts",
+    icon: "fa-tag",
+    title: "Cuentas contables"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "settings/ordinances",
+    icon: "fa-file",
+    title: "Ordenanzas"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "settings/payment-methods",
+    icon: "fa-money-bill",
+    title: "M\xE9todos de pago"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "settings/tax-units",
+    icon: "fa-coins",
+    title: "Unidades tributarias"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "settings/concepts",
+    icon: "fa-shopping-basket",
+    title: "Conceptos de recaudaci\xF3n"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    xl: 6,
+    md: 6,
+    sm: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: "Administraci\xF3n"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "administration/permissions",
+    icon: "fa-user-lock",
+    title: "Permisos"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "administration/roles",
+    icon: "fa-user-tag",
+    title: "Roles"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    url: "administration/users",
+    icon: "fa-user-plus",
+    title: "Usuarios"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_OrganizationInformation__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
 };
 
 if (document.getElementById('settings-screen')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, null), 'settings-screen');
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, null), document.getElementById('settings-screen'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/screens/Settings/OrganizationInformation.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/screens/Settings/OrganizationInformation.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Portlet */ "./resources/js/components/Portlet.js");
+ // Components
+
+
+
+var OrganizationInfo = function OrganizationInfo() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    label: "Informaci\xF3n de la organizaci\xF3n"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Loading"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OrganizationInfo);
 
 /***/ }),
 

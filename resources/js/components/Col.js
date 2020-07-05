@@ -15,7 +15,6 @@ const defaultProps = {
 };
 
 const propTypes = {
-  children: PropTypes.element.isRequired,
   xs: columnProps,
   sm: columnProps,
   md: columnProps,
