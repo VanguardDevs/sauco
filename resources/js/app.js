@@ -11,7 +11,7 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Representations');
+require('./components/TaxpayerProfile');
 
 require('./components/ListAccountingAccounts');
 

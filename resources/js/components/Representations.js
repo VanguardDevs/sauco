@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 const Representations = props => {
@@ -43,12 +42,4 @@ const Representations = props => {
   );
 }
 
-if (document.getElementById('representations')) {
-  const taxpayer = document.getElementById('taxpayer');
-  
-  const props = {
-    taxpayerId: taxpayer.getAttribute('data_id')
-  };
-
-  ReactDOM.render(<Representations {...props} />, document.getElementById('representations'));
-}
+export default Representations;
