@@ -33866,11 +33866,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-if (document.getElementById('taxpayer')) {
-  var taxpayer = document.getElementById('taxpayer');
-  var props = {
-    taxpayerId: taxpayer.getAttribute('data_id')
-  };
+var Profile = function Profile(props) {
+  var taxpayer = props.taxpayer;
 
   var Actions = function Actions() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Portlet__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -33888,6 +33885,10 @@ if (document.getElementById('taxpayer')) {
       title: "Solicitudes",
       icon: "fa-paper-plane",
       url: taxpayer + '/applications'
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      title: "Retenciones",
+      icon: "fa-hand-holding-usd",
+      url: taxpayer + '/withholdings'
     }));
   };
 
@@ -33901,13 +33902,23 @@ if (document.getElementById('taxpayer')) {
     }));
   };
 
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Col__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Col__WEBPACK_IMPORTED_MODULE_6__["default"], {
     xl: 6,
     sm: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Actions, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Col__WEBPACK_IMPORTED_MODULE_6__["default"], {
     xl: 6,
     sm: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Licenses, null))), document.getElementById('row'));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Licenses, null)));
+};
+
+if (document.getElementById('taxpayer')) {
+  var taxpayer = document.getElementById('taxpayer');
+  var props = {
+    taxpayerId: taxpayer.getAttribute('data_id')
+  };
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Profile, {
+    taxpayer: taxpayer
+  }), document.getElementById('row'));
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Representations__WEBPACK_IMPORTED_MODULE_3__["default"], props), document.getElementById('representations'));
 }
 

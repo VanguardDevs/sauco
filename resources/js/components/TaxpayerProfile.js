@@ -8,12 +8,10 @@ import Notification from './Notification';
 import Row from './Row';
 import Col from './Col';
 
-if (document.getElementById('taxpayer')) {
-  const taxpayer = document.getElementById('taxpayer');
-
-  const props = {
-    taxpayerId: taxpayer.getAttribute('data_id')
-  };
+const Profile = (props) => {
+  const {
+    taxpayer
+  } = props;
 
   const Actions = () => (
     <Portlet
@@ -23,6 +21,7 @@ if (document.getElementById('taxpayer')) {
       <Notification title='Declaración jurada de ingresos' icon='fa-address-book' url={taxpayer+'/affidavits'} />
       <Notification title='Multas y sanciones' icon='fa-stop-circle' url={taxpayer+'/fines'} />
       <Notification title='Solicitudes' icon='fa-paper-plane' url={taxpayer+'/applications'} />
+      <Notification title='Retenciones' icon='fa-hand-holding-usd' url={taxpayer+'/withholdings'} />
       {/* <Notification title='Pagos antiguos' icon='fa-history' url={taxpayer+'/old-payments'} /> */}
     </Portlet>
   );
@@ -32,8 +31,8 @@ if (document.getElementById('taxpayer')) {
       <Notification title='Licencias de actividad económica' icon='fa-book-reader' url={taxpayer+'/economic-activity-licenses'} />
     </Portlet>
   );
-  
-  ReactDOM.render(
+
+  return (
     <Row>
       <Col xl={6} sm={6}>
         <Actions />
@@ -41,8 +40,17 @@ if (document.getElementById('taxpayer')) {
       <Col xl={6} sm={6}>
         <Licenses />
       </Col>
-    </Row>,
-    document.getElementById('row')
+    </Row>
   );
+}
+
+if (document.getElementById('taxpayer')) {
+  const taxpayer = document.getElementById('taxpayer');
+
+  const props = {
+    taxpayerId: taxpayer.getAttribute('data_id')
+  }; 
+  
+  ReactDOM.render(<Profile taxpayer={taxpayer} />,document.getElementById('row'));
   ReactDOM.render(<Representations {...props} />, document.getElementById('representations'));
 }
