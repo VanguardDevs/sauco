@@ -16,7 +16,10 @@ if (document.getElementById('taxpayer')) {
   };
 
   const Actions = () => (
-    <Portlet label='Acciones'>
+    <Portlet
+      label='Acciones'
+      fluid
+    >
       <Notification title='Declaración jurada de ingresos' icon='fa-address-book' url={taxpayer+'/affidavits'} />
       <Notification title='Multas y sanciones' icon='fa-stop-circle' url={taxpayer+'/fines'} />
       <Notification title='Solicitudes' icon='fa-paper-plane' url={taxpayer+'/applications'} />

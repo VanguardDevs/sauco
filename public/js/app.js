@@ -33624,24 +33624,43 @@ var Notification = function Notification(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var Portlet = function Portlet(_ref) {
-  var label = _ref.label,
-      children = _ref.children;
+var defaultProps = {
+  fluid: false,
+  label: false
+};
+
+var getClasses = function getClasses(shouldFluid) {
+  return shouldFluid ? 'kt-portlet kt-portlet--height-fluid' : 'kt-portlet';
+};
+
+var getPortletHeader = function getPortletHeader(label) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "kt-portlet kt-portlet--height-fluid"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "kt-portlet__head"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "kt-portlet__head-label"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "kt-portlet__head-title"
-  }, label))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, label)));
+};
+
+var Portlet = function Portlet(props) {
+  var label = props.label,
+      children = props.children,
+      fluid = props.fluid;
+  var header = label ? getPortletHeader(label) : '';
+  var classes = getClasses(fluid);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classes
+  }, header, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "kt-portlet__body"
   }, children));
 };
 
+Portlet.defaultProps = defaultProps;
 /* harmony default export */ __webpack_exports__["default"] = (Portlet);
 
 /***/ }),
@@ -33855,7 +33874,8 @@ if (document.getElementById('taxpayer')) {
 
   var Actions = function Actions() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Portlet__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      label: "Acciones"
+      label: "Acciones",
+      fluid: true
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_4__["default"], {
       title: "Declaraci\xF3n jurada de ingresos",
       icon: "fa-address-book",
@@ -33926,7 +33946,8 @@ var Index = function Index() {
     md: 6,
     sm: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    label: "Configuraciones b\xE1sicas"
+    label: "Configuraciones b\xE1sicas",
+    fluid: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
     url: "settings/years",
     icon: "fa-lightbulb",

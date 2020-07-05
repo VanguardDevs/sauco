@@ -13,6 +13,7 @@ const Index = () => {
       <Col xl={6} md={6} sm={6}>
         <Portlet
           label="Configuraciones básicas"
+          fluid
         >
           <Notification
             url='settings/years'
