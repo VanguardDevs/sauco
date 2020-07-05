@@ -15,6 +15,7 @@
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.4",
         "laravel/framework": "^6.0",
+        "laravel/passport": "^9.3",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^6.0",
         "owen-it/laravel-auditing": "^9.3",
