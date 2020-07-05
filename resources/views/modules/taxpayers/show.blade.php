@@ -139,38 +139,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-xl-6 col-sm-6">
-        <div id="actions"></div>
-    </div>
-    <div class="col-xl-6 col-sm-6">
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        Licencias 
-                    </h3>
-                </div>
-            </div>
-            <div class="kt-portlet__body">
-                <div class="kt-notification">
-                    <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/economic-activity-licenses') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="fas fa-book-reader"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                Licencias de actividad económica        
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Emitir nueva licencia y consultar histórico de renovaciones
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="row">
 </div>
 @endif
 @endsection
