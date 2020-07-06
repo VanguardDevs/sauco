@@ -14,7 +14,7 @@ class InvoiceModelController extends Controller
      */
     public function index()
     {
-        //
+        return view('modules.settings.invoice-models');
     }
 
     /**
@@ -35,7 +35,9 @@ class InvoiceModelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $invoice = InvoiceModel::create($request->all());
+
+        return response()->json($invoice);
     }
 
     /**

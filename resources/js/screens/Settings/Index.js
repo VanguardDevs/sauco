@@ -45,6 +45,11 @@ const Index = () => {
             icon='fa-shopping-basket'
             title='Conceptos de recaudación'
           />
+          <Notification
+            url='settings/invoice-models'
+            icon='fa-receipt'
+            title='Modelos de factura'
+          />
         </Portlet>
       </Col>
       <Col xl={6} md={6} sm={6}>

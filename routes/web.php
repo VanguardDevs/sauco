@@ -91,6 +91,9 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         /*---------- Accounting accounts --------*/
         Route::resource('settings/accounting-accounts', 'AccountingAccountController');
+
+        Route::get('settings/invoice-models', 'InvoiceModelController@index')
+            ->name('invoice-models.index');
     });
  
     /**

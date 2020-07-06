@@ -427,6 +427,12 @@ Breadcrumbs::for('categories.edit', function ($trail, $row) {
 });
 
 /*------------- Concepts -------------*/
+Breadcrumbs::for('invoice-models.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Modelos de factura', route('invoice-models.index'));
+});
+
+/*------------- Concepts -------------*/
 Breadcrumbs::for('concepts.index', function ($trail) {
     $trail->parent('settings');
     $trail->push('Conceptos de recaudación', url('settings/concepts'));
