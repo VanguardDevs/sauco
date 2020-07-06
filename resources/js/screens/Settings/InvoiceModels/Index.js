@@ -12,10 +12,7 @@ const Index = () => {
   const {register, handleSubmit} = useForm();
 
   const onSubmit = (data) => {
-    var ax = axios.create({
-      baseURL: 'http://sirim.local/api',
-    });
-    ax.post('invoice-models', data)
+    axios.post('invoice-models', data)
       .then( res => console.log(res) )
       .catch(err => console.log(err));
   };

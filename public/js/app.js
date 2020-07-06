@@ -35852,10 +35852,7 @@ var Index = function Index() {
       handleSubmit = _useForm.handleSubmit;
 
   var onSubmit = function onSubmit(data) {
-    var ax = axios__WEBPACK_IMPORTED_MODULE_3___default.a.create({
-      baseURL: 'http://sirim.local/api'
-    });
-    ax.post('invoice-models', data).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('invoice-models', data).then(function (res) {
       return console.log(res);
     })["catch"](function (err) {
       return console.log(err);
