@@ -34,4 +34,14 @@ class Withholding extends Model implements Auditable
     {
         return $this->belongsTo(User::class);
     }
+
+    public function settlement()
+    {
+        return $this->hasOne(Settlement::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsToMany(Payment::class, Settlement::class);
+    }
 }

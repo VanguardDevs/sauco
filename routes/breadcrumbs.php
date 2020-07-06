@@ -384,6 +384,12 @@ Breadcrumbs::for('settings/application-types/update', function ($trail) {
 });
 
 /*------------- Applications -------------*/
+Breadcrumbs::for('withholdings.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Retenciones', route('withholdings.index', $row));
+});
+
+/*------------- Applications -------------*/
 Breadcrumbs::for('applications.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Solicitudes', route('applications.index', $row));

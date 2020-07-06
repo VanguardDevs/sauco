@@ -46,6 +46,11 @@ class Affidavit extends Model
         return $this->belongsToMany(Payment::class, Settlement::class);
     }
 
+    public function withholding()
+    {
+        return $this->belongsToMany(Withholding::class);
+    }
+
     public function processedPayment()
     {
         return $this->belongsToMany(Payment::class, Settlement::class)->first();

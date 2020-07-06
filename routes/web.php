@@ -92,6 +92,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*---------- Accounting accounts --------*/
         Route::resource('settings/accounting-accounts', 'AccountingAccountController');
 
+        Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
+            ->name('withholdings.index');
+        Route::resource('taxpayer/{taxpayer}/withholdings', 'WithholdingController');
+
         Route::get('settings/invoice-models', 'InvoiceModelController@index')
             ->name('invoice-models.index');
     });
