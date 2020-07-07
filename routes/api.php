@@ -20,3 +20,4 @@ Route::middleware('auth:api')->group(function () {
 
 Route::resource('old-payments', 'OldPaymentController');
 Route::resource('invoice-models', 'InvoiceModelController');
+Route::resource('organization', 'OrganizationController');

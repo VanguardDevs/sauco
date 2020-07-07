@@ -35907,24 +35907,9 @@ if (document.getElementById('invoice-models')) {
   !*** ./resources/js/screens/Settings/OrganizationInformation.js ***!
   \******************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Portlet */ "./resources/js/components/Portlet.js");
- // Components
-
-
-
-var OrganizationInfo = function OrganizationInfo() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    label: "Informaci\xF3n de la organizaci\xF3n"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Loading"));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (OrganizationInfo);
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /var/www/sirim/resources/js/screens/Settings/OrganizationInformation.js: Unexpected token (8:4)\n\n\u001b[0m \u001b[90m  6 | \u001b[39m\u001b[36mconst\u001b[39m getInnerChild \u001b[33m=\u001b[39m (state) \u001b[33m=>\u001b[39m (\u001b[0m\n\u001b[0m \u001b[90m  7 | \u001b[39m  (state) \u001b[33m?\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 | \u001b[39m    \u001b[33m<\u001b[39m\u001b[33mp\u001b[39m\u001b[33m>\u001b[39m\u001b[33mLa\u001b[39m información de la institución no ha sido cargada\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mp\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 | \u001b[39m  } \u001b[33m:\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 10 | \u001b[39m    {state}\u001b[0m\n\u001b[0m \u001b[90m 11 | \u001b[39m  }\u001b[0m\n    at Object._raise (/var/www/sirim/node_modules/@babel/parser/lib/index.js:746:17)\n    at Object.raiseWithData (/var/www/sirim/node_modules/@babel/parser/lib/index.js:739:17)\n    at Object.raise (/var/www/sirim/node_modules/@babel/parser/lib/index.js:733:17)\n    at Object.unexpected (/var/www/sirim/node_modules/@babel/parser/lib/index.js:8807:16)\n    at Object.parseIdentifierName (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10823:18)\n    at Object.parseIdentifier (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10800:23)\n    at Object.parseMaybePrivateName (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10157:19)\n    at Object.parsePropertyName (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10624:126)\n    at Object.parseObjectMember (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10525:10)\n    at Object.parseObj (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10448:25)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10055:28)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9493:30)\n    at Object.parseMaybeConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9486:17)\n    at Object.parseMaybeAssign (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseParenAndDistinguishExpression (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10267:28)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10007:21)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseFunctionBody (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10701:24)\n    at Object.parseArrowExpression (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10677:10)\n    at Object.parseParenAndDistinguishExpression (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10295:12)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10007:21)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9506:23)");
 
 /***/ }),
 
@@ -35946,8 +35931,8 @@ var OrganizationInfo = function OrganizationInfo() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/sirim-dev/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/sirim-dev/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/sirim/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/sirim/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
