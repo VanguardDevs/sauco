@@ -15,12 +15,12 @@ const getDataDisplay = (loading, data) => {
 };
 
 const OrganizationInfo = () => {
-  const [ data, setData ] = useState({});
-  const [ loading, setLoading ] = useState(true);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios.get('/api/organization')
-      .then( res => setData({ ...res.data }) )
+      .then( res => setData( res.data ) )
       .then( res => setLoading(false) )
       .catch( err => console.log(err) );
   }, []);

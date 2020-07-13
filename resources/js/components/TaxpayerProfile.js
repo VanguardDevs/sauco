@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 // Components
 import Portlet from './Portlet';
 import Representations from './Representations';
+import EconomicActivities from './EconomicActivities';
 import Notification from './Notification';
 import Row from './Row';
 import Col from './Col';
@@ -51,6 +52,7 @@ if (document.getElementById('taxpayer')) {
     taxpayerId: taxpayer.getAttribute('data_id')
   }; 
   
+  ReactDOM.render(<EconomicActivities {...props} />, document.getElementById('economic-activities'));
   ReactDOM.render(<Profile taxpayer={taxpayer} />,document.getElementById('row'));
   ReactDOM.render(<Representations {...props} />, document.getElementById('representations'));
 }

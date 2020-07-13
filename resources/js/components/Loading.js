@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactLoading from 'react-loading';
 
 import Row from './Row';
@@ -12,5 +13,11 @@ const Loading = ({ type, height, width  }) =>
     width={width} 
   />
 </div>
+
+Loading.defaultProps = {
+  type: 'spin',
+  height: '5%',
+  width: '5%'
+};
 
 export default Loading;

@@ -55,6 +55,13 @@ class TaxpayerController extends Controller
         return response()->json($query->get());
     }
 
+    public function economicActivities(Taxpayer $taxpayer)
+    {
+        $query = $taxpayer->economicActivities;
+
+        return $query;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

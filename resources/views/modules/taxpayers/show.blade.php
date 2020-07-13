@@ -95,25 +95,7 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <div class="kt-widget4">
-                    @forelse($row->economicActivities as $activity) 
-                        <div class="kt-widget4__item">
-                            <div class="kt-widget4__icon">
-                                 <i class="flaticon2-percentage"></i>
-                            </div>
-                            <div class="kt-widget4__info">
-                                <a class="kt-widget4__username" href="{{ route('economic-activities.show', $activity->id) }}">
-                                    {{ $activity->code }}
-                                </a>
-                                <p class="kt-widget4__text">
-                                    {{ $activity->name  }}
-                                </p>
-                            </div>
-                        </div>
-                    @empty 
-                        Este contribuyente no tiene actividades económicas asignadas
-                    @endforelse
-                </div>
+                <div class="kt-widget4" id="economic-activities"></div>
             </div>
         </div>
     </div>

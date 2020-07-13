@@ -9,15 +9,17 @@ import WidgetInfo from './WidgetInfo';
 const renderChildComponent = (loading, data) => {
   return (!loading) ?
     (data.length > 0) ?
-      data.map((rep, index) => (
+      data.map((activity, index) => (
         <WidgetItem key={index}>
-          <WidgetIcon 
-            type='image'
-            icon='/assets/images/user-default.png'
+          <WidgetIcon
+            type='icon'
+            icon='flaticon2-percentage' 
           />
+
           <WidgetInfo
-            title={rep.person.name}
-            desc={rep.representation_type.name}
+            title={activity.code}
+            desc={activity.name}
+            url={`economic-activities/${activity.id}`}
           />
         </WidgetItem>
       ))
@@ -28,19 +30,19 @@ const renderChildComponent = (loading, data) => {
           icon="fas fa-question-circle"
         />
         <WidgetInfo
-          desc='No tiene representante legal asignado'
+          desc='No tiene actividades económicas asignadas'
         />
       </WidgetItem>
     :
     <Loading />
 }
 
-const Representations = props => {
+const EconomicActivities = props => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    axios.get(`/api/taxpayers/${props.taxpayerId}/representations`)
+    axios.get(`/api/taxpayers/${props.taxpayerId}/economic-activities`)
       .then((res) => setData( res.data ))
       .then((res) => setLoading(false))
       .catch((err) => console.log(err));
@@ -55,4 +57,4 @@ const Representations = props => {
   );
 }
 
-export default Representations;
+export default EconomicActivities;

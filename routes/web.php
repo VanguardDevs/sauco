@@ -35,6 +35,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     // API ROUTES
     Route::get('api/taxpayers/{taxpayer}/representations', 'TaxpayerController@getRepresentations');
     Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
+    Route::get('api/taxpayers/{taxpayer}/economic-activities', 'TaxpayerController@economicActivities');
 
     /**
      * Only Admin routes
