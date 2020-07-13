@@ -21,6 +21,7 @@
     "react-dom": "^16.2.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.0.1",
+    "react-loading": "^2.0.3",
     "react-router-dom": "^5.2.0",
     "resolve-url-loader": "^2.3.1",
     "sass": "^1.15.2",
