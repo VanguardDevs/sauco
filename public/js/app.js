@@ -35907,9 +35907,44 @@ if (document.getElementById('invoice-models')) {
   !*** ./resources/js/screens/Settings/OrganizationInformation.js ***!
   \******************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /var/www/sirim/resources/js/screens/Settings/OrganizationInformation.js: Unexpected token (8:4)\n\n\u001b[0m \u001b[90m  6 | \u001b[39m\u001b[36mconst\u001b[39m getInnerChild \u001b[33m=\u001b[39m (state) \u001b[33m=>\u001b[39m (\u001b[0m\n\u001b[0m \u001b[90m  7 | \u001b[39m  (state) \u001b[33m?\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 | \u001b[39m    \u001b[33m<\u001b[39m\u001b[33mp\u001b[39m\u001b[33m>\u001b[39m\u001b[33mLa\u001b[39m información de la institución no ha sido cargada\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mp\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 | \u001b[39m  } \u001b[33m:\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 10 | \u001b[39m    {state}\u001b[0m\n\u001b[0m \u001b[90m 11 | \u001b[39m  }\u001b[0m\n    at Object._raise (/var/www/sirim/node_modules/@babel/parser/lib/index.js:746:17)\n    at Object.raiseWithData (/var/www/sirim/node_modules/@babel/parser/lib/index.js:739:17)\n    at Object.raise (/var/www/sirim/node_modules/@babel/parser/lib/index.js:733:17)\n    at Object.unexpected (/var/www/sirim/node_modules/@babel/parser/lib/index.js:8807:16)\n    at Object.parseIdentifierName (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10823:18)\n    at Object.parseIdentifier (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10800:23)\n    at Object.parseMaybePrivateName (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10157:19)\n    at Object.parsePropertyName (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10624:126)\n    at Object.parseObjectMember (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10525:10)\n    at Object.parseObj (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10448:25)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10055:28)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9493:30)\n    at Object.parseMaybeConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9486:17)\n    at Object.parseMaybeAssign (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseParenAndDistinguishExpression (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10267:28)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10007:21)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseFunctionBody (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10701:24)\n    at Object.parseArrowExpression (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10677:10)\n    at Object.parseParenAndDistinguishExpression (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10295:12)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:10007:21)\n    at Object.parseExprAtom (/var/www/sirim/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/var/www/sirim/node_modules/@babel/parser/lib/index.js:9506:23)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Portlet */ "./resources/js/components/Portlet.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+ // Components
+
+
+
+var OrganizationInfo = function OrganizationInfo() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      state = _useState.state,
+      setState = _useState.setState;
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/organization').then(function (res) {
+      return setState(_objectSpread({}, res.data));
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    label: "Informaci\xF3n de la organizaci\xF3n"
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OrganizationInfo);
 
 /***/ }),
 
