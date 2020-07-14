@@ -38628,12 +38628,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Portlet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Portlet */ "./resources/js/components/Portlet.js");
-/* harmony import */ var _Representations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Representations */ "./resources/js/components/Representations.js");
-/* harmony import */ var _EconomicActivities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EconomicActivities */ "./resources/js/components/EconomicActivities.js");
-/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Notification */ "./resources/js/components/Notification.js");
-/* harmony import */ var _Row__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Row */ "./resources/js/components/Row.js");
-/* harmony import */ var _Col__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Col */ "./resources/js/components/Col.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Portlet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Portlet */ "./resources/js/components/Portlet.js");
+/* harmony import */ var _Representations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Representations */ "./resources/js/components/Representations.js");
+/* harmony import */ var _EconomicActivities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EconomicActivities */ "./resources/js/components/EconomicActivities.js");
+/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Notification */ "./resources/js/components/Notification.js");
+/* harmony import */ var _Row__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Row */ "./resources/js/components/Row.js");
+/* harmony import */ var _Col__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Col */ "./resources/js/components/Col.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
  // Components
 
@@ -38645,48 +38660,70 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Profile = function Profile(props) {
-  var taxpayer = props.taxpayer;
+  var taxpayer = props.taxpayerId;
 
-  var Actions = function Actions() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Portlet__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loading = _useState4[0],
+      setLoading = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/taxpayers/".concat(taxpayer)).then(function (res) {
+      return setData(res.data);
+    }).then(function (res) {
+      return setLoading(false);
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  }, []);
+
+  var Actions = function Actions(type) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
       label: "Acciones",
       fluid: true
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      title: "Declaraci\xF3n jurada de ingresos",
-      icon: "fa-address-book",
-      url: taxpayer + '/affidavits'
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_6__["default"], {
       title: "Multas y sanciones",
       icon: "fa-stop-circle",
       url: taxpayer + '/fines'
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_6__["default"], {
       title: "Solicitudes",
       icon: "fa-paper-plane",
       url: taxpayer + '/applications'
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), type != 'JURÍDICO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      title: "Declaraci\xF3n jurada de ingresos",
+      icon: "fa-address-book",
+      url: taxpayer + '/affidavits'
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_6__["default"], {
       title: "Retenciones",
       icon: "fa-hand-holding-usd",
       url: taxpayer + '/withholdings'
-    }));
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null));
   };
 
   var Licenses = function Licenses() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Portlet__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
       label: "Licencias"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notification__WEBPACK_IMPORTED_MODULE_6__["default"], {
       title: "Licencias de actividad econ\xF3mica",
       icon: "fa-book-reader",
       url: taxpayer + '/economic-activity-licenses'
     }));
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_6__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Col__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_7__["default"], null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Col__WEBPACK_IMPORTED_MODULE_8__["default"], {
     xl: 6,
     sm: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Actions, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Col__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Actions, {
+    type: data.taxpayer_type.description
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Col__WEBPACK_IMPORTED_MODULE_8__["default"], {
     xl: 6,
     sm: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Licenses, null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Licenses, null))));
 };
 
 if (document.getElementById('taxpayer')) {
@@ -38694,12 +38731,34 @@ if (document.getElementById('taxpayer')) {
   var props = {
     taxpayerId: taxpayer.getAttribute('data_id')
   };
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EconomicActivities__WEBPACK_IMPORTED_MODULE_4__["default"], props), document.getElementById('economic-activities'));
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Profile, {
-    taxpayer: taxpayer
-  }), document.getElementById('row'));
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Representations__WEBPACK_IMPORTED_MODULE_3__["default"], props), document.getElementById('representations'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EconomicActivities__WEBPACK_IMPORTED_MODULE_5__["default"], props), document.getElementById('economic-activities'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Profile, props), document.getElementById('row'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Representations__WEBPACK_IMPORTED_MODULE_4__["default"], props), document.getElementById('representations'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/Widget.js":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Widget.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var Widget = function Widget(_ref) {
+  var children = _ref.children;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "kt-widget4"
+  }, children);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Widget);
 
 /***/ }),
 
@@ -38993,6 +39052,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Portlet */ "./resources/js/components/Portlet.js");
 /* harmony import */ var _components_Loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Loading */ "./resources/js/components/Loading.js");
+/* harmony import */ var _components_WidgetIcon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/WidgetIcon */ "./resources/js/components/WidgetIcon.js");
+/* harmony import */ var _components_WidgetInfo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/WidgetInfo */ "./resources/js/components/WidgetInfo.js");
+/* harmony import */ var _components_WidgetItem__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/WidgetItem */ "./resources/js/components/WidgetItem.js");
+/* harmony import */ var _components_Widget__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/Widget */ "./resources/js/components/Widget.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -39011,12 +39074,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
+
 var getDataDisplay = function getDataDisplay(loading, data) {
   return loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Loading__WEBPACK_IMPORTED_MODULE_3__["default"], {
     type: 'spin',
     height: '5%',
     width: '5%'
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Component loaded");
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Widget__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_WidgetItem__WEBPACK_IMPORTED_MODULE_6__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_WidgetIcon__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    type: "icon",
+    icon: "fas fa-question-circle"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_WidgetInfo__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    desc: "Sin informaci\xF3n."
+  })));
 };
 
 var OrganizationInfo = function OrganizationInfo() {

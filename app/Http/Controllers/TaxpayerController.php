@@ -127,8 +127,12 @@ class TaxpayerController extends Controller
      * @param  \App\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
-    public function show(Taxpayer $taxpayer)
+    public function show(Request $request, Taxpayer $taxpayer)
     {
+        if ($request->wantsJson()) {
+            return $taxpayer;
+        }
+
         return view('modules.taxpayers.show')
             ->with('row', $taxpayer);
     }

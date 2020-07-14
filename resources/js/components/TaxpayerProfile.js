@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 // Components
 import Portlet from './Portlet';
@@ -11,21 +12,36 @@ import Col from './Col';
 
 const Profile = (props) => {
   const {
-    taxpayer
+    taxpayerId: taxpayer
   } = props;
 
-  const Actions = () => (
-    <Portlet
-      label='Acciones'
-      fluid
-    >
-      <Notification title='Declaración jurada de ingresos' icon='fa-address-book' url={taxpayer+'/affidavits'} />
-      <Notification title='Multas y sanciones' icon='fa-stop-circle' url={taxpayer+'/fines'} />
-      <Notification title='Solicitudes' icon='fa-paper-plane' url={taxpayer+'/applications'} />
-      <Notification title='Retenciones' icon='fa-hand-holding-usd' url={taxpayer+'/withholdings'} />
-      {/* <Notification title='Pagos antiguos' icon='fa-history' url={taxpayer+'/old-payments'} /> */}
-    </Portlet>
-  );
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get(`/api/taxpayers/${taxpayer}`)
+      .then((res) => setData(res.data))
+      .then(res => setLoading(false))
+      .catch(err => console.log(err));
+  }, []);
+
+  const Actions = (type) => {
+    return (
+      <Portlet
+        label='Acciones'
+        fluid
+      >
+        <Notification title='Multas y sanciones' icon='fa-stop-circle' url={taxpayer+'/fines'} />
+        <Notification title='Solicitudes' icon='fa-paper-plane' url={taxpayer+'/applications'} /> 
+        {
+          (type != 'JURÍDICO') ? <> 
+            <Notification title='Declaración jurada de ingresos' icon='fa-address-book' url={taxpayer+'/affidavits'} />
+            <Notification title='Retenciones' icon='fa-hand-holding-usd' url={taxpayer+'/withholdings'} />
+          </>: <></>
+        }
+      </Portlet>
+    );
+  }
 
   const Licenses = () => (
     <Portlet label='Licencias'>
@@ -35,12 +51,17 @@ const Profile = (props) => {
 
   return (
     <Row>
-      <Col xl={6} sm={6}>
-        <Actions />
-      </Col>
-      <Col xl={6} sm={6}>
-        <Licenses />
-      </Col>
+      {
+        (loading) ? <></>
+        : <>
+          <Col xl={6} sm={6}>
+            <Actions type={data.taxpayer_type.description}/>
+          </Col>
+          <Col xl={6} sm={6}>
+            <Licenses />
+          </Col>
+        </>
+      }
     </Row>
   );
 }
@@ -53,6 +74,6 @@ if (document.getElementById('taxpayer')) {
   }; 
   
   ReactDOM.render(<EconomicActivities {...props} />, document.getElementById('economic-activities'));
-  ReactDOM.render(<Profile taxpayer={taxpayer} />,document.getElementById('row'));
+  ReactDOM.render(<Profile {...props} />,document.getElementById('row'));
   ReactDOM.render(<Representations {...props} />, document.getElementById('representations'));
 }
