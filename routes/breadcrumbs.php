@@ -457,9 +457,9 @@ Breadcrumbs::for('concepts.edit', function ($trail, $row) {
 });
 
 /*------------- Fines -------------*/
-Breadcrumbs::for('fines', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Multas', url('fines'));
+Breadcrumbs::for('fines.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Multas', route('fines.index', $row));
 });
 
 /*------------- Bank Accounts -------------*/
