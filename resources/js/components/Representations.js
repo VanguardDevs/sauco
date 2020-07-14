@@ -40,7 +40,7 @@ const Representations = props => {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    axios.get(`/api/taxpayers/${props.taxpayerId}/representations`)
+    axios.get(`taxpayers/${props.taxpayerId}/representations`)
       .then((res) => setData( res.data ))
       .then((res) => setLoading(false))
       .catch((err) => console.log(err));

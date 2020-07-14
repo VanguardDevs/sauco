@@ -21,7 +21,7 @@ const AffidavitFine = props => {
   
   useEffect(() => {
     async function fetchData() {
-      const res = await axios(`/api/affidavits/${props.affidavitId}`);
+      const res = await axios(`affidavits/${props.affidavitId}`);
       setState({ ...state, data: res.data });
     }
     fetchData(); 

@@ -19,7 +19,7 @@ const Profile = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`/api/taxpayers/${taxpayer}`)
+    axios.get(`taxpayers/${taxpayer}`)
       .then((res) => setData(res.data))
       .then(res => setLoading(false))
       .catch(err => console.log(err));

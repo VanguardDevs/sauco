@@ -33,7 +33,7 @@ const OrganizationInfo = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/organization')
+    axios.get('organization')
       .then( res => setData( res.data ) )
       .then( res => setLoading(false) )
       .catch( err => console.log(err) );

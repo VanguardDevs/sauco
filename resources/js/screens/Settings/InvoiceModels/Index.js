@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +11,7 @@ import Row from '../../../components/Row';
 import Col from '../../../components/Col';
 
 const Index = () => {
-  const { data, setData } = useState({});
+  const [data, setData] = useState({});
   const {register, handleSubmit} = useForm();
 
   const onSubmit = (data) => {
