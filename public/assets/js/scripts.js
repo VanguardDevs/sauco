@@ -19,6 +19,7 @@ $(function () {
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
+const apiURL = $("meta[name='api-base-url']").attr("content");
 
 const handleRequest = url => {
     fetch(`${baseURL}/${url}`, {

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 // Components
 import Portlet from '../../../components/Portlet';
@@ -9,11 +12,13 @@ import Row from '../../../components/Row';
 import Col from '../../../components/Col';
 
 const Index = () => {
+  const { data, setData } = useState({});
   const {register, handleSubmit} = useForm();
 
   const onSubmit = (data) => {
     axios.post('invoice-models', data)
-      .then( res => console.log(res) )
+      .then(res => setData(res.data))
+      .then(res => toast("Easy!"))
       .catch(err => console.log(err));
   };
 
