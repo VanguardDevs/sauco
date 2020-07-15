@@ -31,7 +31,7 @@ const create = (props) => {
   }, [props]);
 
   const onSubmit = (data) => {
-    axios.post('withholdings', data)
+    axios.post(`taxpayers/${props.taxpayer}/withholdings`, data)
       .then(res => setData(res.data))
       .then(() => Toast(`¡Retención creada!`))
       .catch(err => console.log(err));
@@ -65,6 +65,7 @@ const create = (props) => {
           </Col>
         </FormGroup>
       </form>
+      <ToastWrapper />
     </Portlet>
   : 
   <Portlet>

@@ -20,16 +20,14 @@ class WithholdingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer)
+    public function index(Request $request, Taxpayer $taxpayer)
     {
-        // $affidavits = $taxpayer->affidavits()->get();
-        $months = Month::whereYearId(1)
-                ->where('id', '<', Carbon::now()->month)
-                ->pluck('name', 'id');
+        if ($request->wantsJson()) {
+            return $taxpayer->withholdings;
+        }
 
         return view('modules.taxpayers.withholdings.index')
-            ->with('taxpayer', $taxpayer)
-            ->with('months', $months);
+            ->with('taxpayer', $taxpayer);
     }
 
     public function months()
