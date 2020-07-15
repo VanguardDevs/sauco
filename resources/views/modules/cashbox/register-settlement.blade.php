@@ -89,9 +89,7 @@
                 </tbody>
             </table>
 
-            @if(!$row->payment->first())
             <div id="paymentInfo"></div> 
-            @endif
 
             @endif
             @else
