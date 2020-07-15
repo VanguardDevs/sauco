@@ -5,7 +5,7 @@ import Notification from '../../components/Notification';
 import Portlet from '../../components/Portlet';
 import Col from '../../components/Col';
 import Row from '../../components/Row';
-import OrganizationInformation from './OrganizationInformation';
+import Organization from './Organization';
 
 const Index = () => {
   return (
@@ -54,7 +54,7 @@ const Index = () => {
       </Col>
       <Col xl={6} md={6} sm={6}>
         <Portlet
-          label="Administración"
+          label="Administración de usuarios"
         >
           <Notification
             url='administration/permissions'
@@ -72,7 +72,7 @@ const Index = () => {
             title='Usuarios'
           />        
         </Portlet>
-        <OrganizationInformation />
+        <Organization />
       </Col>
     </Row>
   );
