@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 // Components
-import Loading from './Loading';
-import WidgetItem from './WidgetItem';
-import WidgetIcon from './WidgetIcon';
-import WidgetInfo from './WidgetInfo';
+import Loading from '../../../components/Loading';
+import WidgetItem from '../../../components/WidgetItem';
+import WidgetIcon from '../../../components/WidgetIcon';
+import WidgetInfo from '../../../components/WidgetInfo';
 
 const renderChildComponent = (loading, data) => {
   return (!loading) ?

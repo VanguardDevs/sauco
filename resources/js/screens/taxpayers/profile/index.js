@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 // Components
-import Portlet from './Portlet';
+import Portlet from '../../../components/Portlet';
 import Representations from './Representations';
 import EconomicActivities from './EconomicActivities';
-import Notification from './Notification';
-import Row from './Row';
-import Col from './Col';
+import Notification from '../../../components/Notification';
+import Row from '../../../components/Row';
+import Col from '../../../components/Col';
 
-const Profile = (props) => {
+const Index = (props) => {
   const {
     taxpayerId: taxpayer
   } = props;
@@ -74,6 +74,6 @@ if (document.getElementById('taxpayer')) {
   }; 
   
   ReactDOM.render(<EconomicActivities {...props} />, document.getElementById('economic-activities'));
-  ReactDOM.render(<Profile {...props} />,document.getElementById('row'));
   ReactDOM.render(<Representations {...props} />, document.getElementById('representations'));
+  ReactDOM.render(<Index {...props} />, document.getElementById('row'));
 }

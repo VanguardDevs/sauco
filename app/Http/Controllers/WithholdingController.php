@@ -32,6 +32,14 @@ class WithholdingController extends Controller
             ->with('months', $months);
     }
 
+    public function months()
+    {
+        $months = Month::whereYearId(1)
+            ->where('id', '<', Carbon::now()->month);
+        
+        return $months->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,6 +58,8 @@ class WithholdingController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
+        return $request->all();
+
         $affidavit = $taxpayer->affidavits()->whereMonthId($request->input('month'))
             ->first();
 

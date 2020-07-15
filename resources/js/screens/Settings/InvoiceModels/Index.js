@@ -5,6 +5,7 @@ import { Toast, ToastWrapper  } from '../../../utils/toast';
 
 // Components
 import Portlet from '../../../components/Portlet';
+import FormGroup from '../../../components/FormGroup';
 import Row from '../../../components/Row';
 import Col from '../../../components/Col';
 
@@ -26,19 +27,19 @@ const Index = () => {
           label='Registrar modelo de factura'
         >
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group row">
+            <FormGroup>
               <Col md={8}>
                 <input name="name" placeholder="Nombre" ref={register} className="form-control"/>
               </Col>
               <Col md={4}>
                 <input name="code" placeholder="Código" ref={register} className="form-control"/>
               </Col>
-            </div>
-            <div className="form-group row">
+            </FormGroup>
+            <FormGroup>
               <Col md={12}>
                 <textarea name="description" placeholder="Descripción" ref={register} className="form-control"/>
               </Col>
-            </div>
+            </FormGroup>
             <button type="submit" className="btn btn-success">
               Registrar
             </button>
