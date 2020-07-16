@@ -88367,8 +88367,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Portlet */ "./resources/js/components/Portlet.js");
 /* harmony import */ var _components_Loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Loading */ "./resources/js/components/Loading.js");
 /* harmony import */ var _components_Col__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/Col */ "./resources/js/components/Col.js");
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -88381,6 +88379,8 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 
 
  // Components
@@ -88389,45 +88389,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var List = function List(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
-      _useState2 = _slicedToArray(_useState, 2),
-      models = _useState2[0],
-      setModels = _useState2[1];
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
-      _useState4 = _slicedToArray(_useState3, 2),
-      loading = _useState4[0],
-      setLoading = _useState4[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('invoice-models').then(function (res) {
-      return setModels(res.data);
-    }).then(function (res) {
-      return setLoading(false);
-    })["catch"](function (err) {
-      return console.log(err);
-    });
-  }, []);
-  var data = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
-    return [{
-      col1: models.code,
-      col2: models.name,
-      col3: models.description
-    }];
-  }, [models]);
-  var columns = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
-    return [{
-      header: 'Código',
-      accessor: 'col1'
-    }, {
-      header: 'Nombre',
-      accessor: 'col2'
-    }, {
-      header: 'Descripción',
-      accessor: 'col3'
-    }];
-  }, []);
+var Table = function Table(_ref) {
+  var columns = _ref.columns,
+      data = _ref.data;
 
   var _useTable = Object(react_table__WEBPACK_IMPORTED_MODULE_1__["useTable"])({
     columns: columns,
@@ -88439,11 +88403,7 @@ var List = function List(props) {
       rows = _useTable.rows,
       prepareRow = _useTable.prepareRow;
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    lg: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    label: "Modelos de facturas"
-  }, " ", !loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
     className: "table table-bordered table-striped"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, headerGroups.map(function (headerGroup) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", headerGroup.getHeaderGroupProps(), headerGroup.headers.map(function (column) {
@@ -88454,7 +88414,49 @@ var List = function List(props) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", row.getRowProps(), row.cells.map(function (cell) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", cell.getCellProps(), cell.render('Cell'));
     }));
-  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
+  })));
+};
+
+var List = function List() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loading = _useState4[0],
+      setLoading = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('invoice-models').then(function (res) {
+      return setData(res.data);
+    }).then(function (res) {
+      return setLoading(false);
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  }, [data]);
+  var columns = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return [{
+      header: 'Código',
+      accessor: 'code'
+    }, {
+      header: 'Nombre',
+      accessor: 'name'
+    }, {
+      header: 'Descripción',
+      accessor: 'description'
+    }];
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    lg: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: "Modelos de facturas"
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Table, {
+    columns: columns,
+    data: data
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (List);
