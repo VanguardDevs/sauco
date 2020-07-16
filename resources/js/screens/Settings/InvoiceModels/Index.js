@@ -6,6 +6,7 @@ import { Toast, ToastWrapper  } from '../../../utils/toast';
 // Components
 import Portlet from '../../../components/Portlet';
 import FormGroup from '../../../components/FormGroup';
+import List from './list';
 import Row from '../../../components/Row';
 import Col from '../../../components/Col';
 
@@ -47,6 +48,8 @@ const Index = () => {
           <ToastWrapper />
         </Portlet>
       </Col>
+
+      <List />
     </Row>
   );
 }
