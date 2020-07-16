@@ -3,51 +3,23 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 // Components
-import Portlet from '../../../components/Portlet';
 import Representations from './Representations';
+import Actions from './Actions';
+import Licenses from './Licenses';
 import EconomicActivities from './EconomicActivities';
-import Notification from '../../../components/Notification';
 import Row from '../../../components/Row';
 import Col from '../../../components/Col';
 
 const Index = (props) => {
-  const {
-    taxpayerId: taxpayer
-  } = props;
-
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`taxpayers/${taxpayer}`)
+    axios.get(`taxpayers/${props.taxpayerId}`)
       .then((res) => setData(res.data))
       .then(res => setLoading(false))
       .catch(err => console.log(err));
   }, []);
-
-  const Actions = (type) => {
-    return (
-      <Portlet
-        label='Acciones'
-        fluid
-      >
-        <Notification title='Multas y sanciones' icon='fa-stop-circle' url={taxpayer+'/fines'} />
-        <Notification title='Solicitudes' icon='fa-paper-plane' url={taxpayer+'/applications'} /> 
-        {
-          (type != 'JURÍDICO') ? <> 
-            <Notification title='Declaración jurada de ingresos' icon='fa-address-book' url={taxpayer+'/affidavits'} />
-            <Notification title='Retenciones' icon='fa-hand-holding-usd' url={taxpayer+'/withholdings'} />
-          </>: <></>
-        }
-      </Portlet>
-    );
-  }
-
-  const Licenses = () => (
-    <Portlet label='Licencias'>
-      <Notification title='Licencias de actividad económica' icon='fa-book-reader' url={taxpayer+'/economic-activity-licenses'} />
-    </Portlet>
-  );
 
   return (
     <Row>
@@ -55,10 +27,10 @@ const Index = (props) => {
         (loading) ? <></>
         : <>
           <Col xl={6} sm={6}>
-            <Actions type={data.taxpayer_type.description}/>
+            <Actions taxpayer={data}/>
           </Col>
           <Col xl={6} sm={6}>
-            <Licenses />
+            <Licenses taxpayer={taxpayer}/>
           </Col>
         </>
       }
