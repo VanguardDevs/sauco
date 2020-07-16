@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import dateformat from '../utils/dateformat';
 // Components
 import Col from './Col';
 import Loading from './Loading';
@@ -50,7 +51,6 @@ const AffidavitFine = props => {
     component = (
       <>
         <div className="kt-heading kt-heading--md">
-          <p>Recibida el: {data.affidavit.processed_at}</p>
         </div>
         {
           (data.fine.apply) ? 
@@ -64,6 +64,7 @@ const AffidavitFine = props => {
         }
         <div className="kt-heading kt-heading--md">
           <p>Total a pagar: {currencyFormat(total)}</p>
+          <h5>Recibida {dateformat(data.affidavit.processed_at)}</h5>
         </div>
       </>
     );
