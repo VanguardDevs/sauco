@@ -88388,6 +88388,9 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 
 
+var rowStyle = {
+  'left': '0px'
+};
 
 var Table = function Table(_ref) {
   var columns = _ref.columns,
@@ -88403,18 +88406,38 @@ var Table = function Table(_ref) {
       rows = _useTable.rows,
       prepareRow = _useTable.prepareRow;
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
-    className: "table table-bordered table-striped"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, headerGroups.map(function (headerGroup) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", headerGroup.getHeaderGroupProps(), headerGroup.headers.map(function (column) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", column.getHeaderProps(), column.render('header'));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
+    className: "kt-datatable__table"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
+    className: "kt-datatable__head"
+  }, headerGroups.map(function (headerGroup) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, headerGroup.getHeaderGroupProps(), {
+      className: "kt-datatable__row"
+    }), headerGroup.headers.map(function (column) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", _extends({}, column.getHeaderProps(), {
+        className: "kt-datatable__cell",
+        style: {
+          rowStyle: rowStyle
+        }
+      }), column.render('header'));
     }));
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", getTableBodyProps(), rows.map(function (row) {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", _extends({}, getTableBodyProps(), {
+    className: "kt-datatable__body"
+  }), rows.map(function (row) {
     prepareRow(row);
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", row.getRowProps(), row.cells.map(function (cell) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", cell.getCellProps(), cell.render('Cell'));
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, row.getRowProps(), {
+      className: "kt-datatable__row",
+      style: {
+        rowStyle: rowStyle
+      }
+    }), row.cells.map(function (cell) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", _extends({}, cell.getCellProps(), {
+        className: "kt-datatable__cell"
+      }), cell.render('Cell'));
     }));
-  })));
+  }))));
 };
 
 var List = function List() {

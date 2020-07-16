@@ -19197,7 +19197,7 @@ strong {
         .kt-datatable.kt-datatable--default.kt-datatable--loaded > .kt-datatable__table > .kt-datatable__body .kt-datatable__row,
         .kt-datatable.kt-datatable--default.kt-datatable--loaded > .kt-datatable__table > .kt-datatable__foot .kt-datatable__row {
           display: table;
-          table-layout: initial; }
+          table-layout: fixed; }
   .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table {
     display: block; }
     .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__head,

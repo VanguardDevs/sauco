@@ -6,6 +6,10 @@ import Portlet from '../../../components/Portlet';
 import Loading from '../../../components/Loading';
 import Col from '../../../components/Col';
 
+const rowStyle = {
+  'left': '0px'
+};
+
 const Table = ({ columns, data }) => {
   const {
     getTableProps,
@@ -16,35 +20,37 @@ const Table = ({ columns, data }) => {
   } = useTable({ columns, data });
 
   return (
-    <table {...getTableProps()} className="table table-bordered table-striped">
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>
-                {column.render('header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return (
-                  <td {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                )
-              })}
+    <div className='kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded'>
+      <table {...getTableProps()} className="kt-datatable__table">
+        <thead className="kt-datatable__head">
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()} className="kt-datatable__row">
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()} className="kt-datatable__cell" style={{rowStyle}}>
+                  {column.render('header')}
+                </th>
+              ))}
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()} className="kt-datatable__body">
+          {rows.map(row => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()} className="kt-datatable__row" style={{rowStyle}}>
+                {row.cells.map(cell => {
+                  return (
+                    <td {...cell.getCellProps()} className="kt-datatable__cell">
+                      {cell.render('Cell')}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
