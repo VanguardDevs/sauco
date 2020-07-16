@@ -88238,13 +88238,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_hook_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/index.esm.js");
-/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils/toast */ "./resources/js/utils/toast.js");
-/* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Portlet */ "./resources/js/components/Portlet.js");
-/* harmony import */ var _components_FormGroup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/FormGroup */ "./resources/js/components/FormGroup.js");
-/* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./list */ "./resources/js/screens/Settings/InvoiceModels/list.js");
-/* harmony import */ var _components_Row__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../components/Row */ "./resources/js/components/Row.js");
-/* harmony import */ var _components_Col__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../components/Col */ "./resources/js/components/Col.js");
+/* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./list */ "./resources/js/screens/Settings/InvoiceModels/list.js");
+/* harmony import */ var _create__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./create */ "./resources/js/screens/Settings/InvoiceModels/create.js");
+/* harmony import */ var _components_Row__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Row */ "./resources/js/components/Row.js");
+
+ // Components
+
+
+
+
+
+var Index = function Index() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Row__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_list__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+};
+
+if (document.getElementById('invoice-models')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, null), document.getElementById('invoice-models'));
+}
+
+/***/ }),
+
+/***/ "./resources/js/screens/Settings/InvoiceModels/create.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/screens/Settings/InvoiceModels/create.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_hook_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/index.esm.js");
+/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/toast */ "./resources/js/utils/toast.js");
+/* harmony import */ var _components_Col__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Col */ "./resources/js/components/Col.js");
+/* harmony import */ var _components_FormGroup__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/FormGroup */ "./resources/js/components/FormGroup.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -88259,22 +88287,18 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
  // Components
 
 
 
 
-
-
-
-var Index = function Index() {
+var CreateInvoiceModel = function CreateInvoiceModel(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
       data = _useState2[0],
       setData = _useState2[1];
 
-  var _useForm = Object(react_hook_form__WEBPACK_IMPORTED_MODULE_2__["useForm"])(),
+  var _useForm = Object(react_hook_form__WEBPACK_IMPORTED_MODULE_1__["useForm"])(),
       register = _useForm.register,
       handleSubmit = _useForm.handleSubmit;
 
@@ -88282,33 +88306,33 @@ var Index = function Index() {
     axios.post('invoice-models', data).then(function (res) {
       return setData(res.data);
     }).then(function () {
-      return Object(_utils_toast__WEBPACK_IMPORTED_MODULE_3__["Toast"])("\xA1Modelo ".concat(data.name, " creado!"));
+      return Object(_utils_toast__WEBPACK_IMPORTED_MODULE_2__["Toast"])("\xA1Modelo ".concat(data.name, " creado!"));
     })["catch"](function (err) {
       return console.log(err);
     });
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Row__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_3__["default"], {
     lg: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Portlet, {
     label: "Registrar modelo de factura"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: handleSubmit(onSubmit)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormGroup__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormGroup__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_3__["default"], {
     md: 8
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "name",
     placeholder: "Nombre",
     ref: register,
     className: "form-control"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_3__["default"], {
     md: 4
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "code",
     placeholder: "C\xF3digo",
     ref: register,
     className: "form-control"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormGroup__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormGroup__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_3__["default"], {
     md: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
     name: "description",
@@ -88318,12 +88342,10 @@ var Index = function Index() {
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "submit",
     className: "btn btn-success"
-  }, "Registrar")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_utils_toast__WEBPACK_IMPORTED_MODULE_3__["ToastWrapper"], null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_list__WEBPACK_IMPORTED_MODULE_6__["default"], null));
+  }, "Registrar")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_utils_toast__WEBPACK_IMPORTED_MODULE_2__["ToastWrapper"], null)));
 };
 
-if (document.getElementById('invoice-models')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, null), document.getElementById('invoice-models'));
-}
+/* harmony default export */ __webpack_exports__["default"] = (CreateInvoiceModel);
 
 /***/ }),
 
@@ -88338,12 +88360,13 @@ if (document.getElementById('invoice-models')) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
-/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
+/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Portlet */ "./resources/js/components/Portlet.js");
-/* harmony import */ var _components_Col__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Col */ "./resources/js/components/Col.js");
+/* harmony import */ var _components_Loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Loading */ "./resources/js/components/Loading.js");
+/* harmony import */ var _components_Col__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/Col */ "./resources/js/components/Col.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -88365,19 +88388,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var List = function List() {
+
+var List = function List(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
       models = _useState2[0],
       setModels = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loading = _useState4[0],
+      setLoading = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('invoice-models').then(function (res) {
+      return setModels(res.data);
+    }).then(function (res) {
+      return setLoading(false);
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  }, []);
   var data = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
     return [{
-      col1: 'Codigo',
-      col2: 'Nombre',
-      col3: 'Descripcion'
+      col1: models.code,
+      col2: models.name,
+      col3: models.description
     }];
-  }, []);
+  }, [models]);
   var columns = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
     return [{
       header: 'Código',
@@ -88391,7 +88429,7 @@ var List = function List() {
     }];
   }, []);
 
-  var _useTable = Object(react_table__WEBPACK_IMPORTED_MODULE_2__["useTable"])({
+  var _useTable = Object(react_table__WEBPACK_IMPORTED_MODULE_1__["useTable"])({
     columns: columns,
     data: data
   }),
@@ -88401,18 +88439,11 @@ var List = function List() {
       rows = _useTable.rows,
       prepareRow = _useTable.prepareRow;
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('invoice-models').then(function (res) {
-      return setModels(res.data);
-    })["catch"](function (err) {
-      return console.log(err);
-    });
-  }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
     lg: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
     label: "Modelos de facturas"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
+  }, " ", !loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
     className: "table table-bordered table-striped"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, headerGroups.map(function (headerGroup) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", headerGroup.getHeaderGroupProps(), headerGroup.headers.map(function (column) {
@@ -88423,7 +88454,7 @@ var List = function List() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", row.getRowProps(), row.cells.map(function (cell) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", cell.getCellProps(), cell.render('Cell'));
     }));
-  })))));
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (List);
