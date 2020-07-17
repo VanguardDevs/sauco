@@ -56,9 +56,8 @@ class WithholdingController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        return $request->all();
-
-        $affidavit = $taxpayer->affidavits()->whereMonthId($request->input('month'))
+        $month = $request->input('month')['value'];
+        $affidavit = $taxpayer->affidavits()->whereMonthId($month)
             ->first();
 
         $amount = $request->input('amount');
