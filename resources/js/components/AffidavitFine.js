@@ -1,6 +1,10 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import dateformat from '../utils/dateformat';
+// Components
+import Col from './Col';
+import Loading from './Loading';
 
 const fineAmount = (affidavit, fine) => {
   const amount = fine.amount * affidavit.amount / 10;
@@ -8,61 +12,70 @@ const fineAmount = (affidavit, fine) => {
   return Math.round(amount * 10) / 100;
 };
 
+const getFineData = ({ affidavit, fine }) => ({
+  concept: fine.data.name,
+  amount: fineAmount(affidavit, fine.data)
+});
+
 const currencyFormat = amount =>
   Number((amount).toFixed(2))
     .toLocaleString();
 
 const AffidavitFine = props => {
-  const [state, setState] = useState({
-    data: {},
-    fine: {},
-    total: 0
-  });
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [fine, setFine] = useState({});
+  const [total, setTotal] = useState(0);
   
   useEffect(() => {
-    async function fetchData() {
-      const res = await axios(`/api/affidavits/${props.affidavitId}`);
-      setState({ ...state, data: res.data });
-    }
-    fetchData(); 
-  }, [props]);
+    axios.get(`affidavits/${props.affidavitId}`)
+      .then(res => {
+        let total = res.data.affidavit.amount;
 
-  useEffect(() => {
-    if (Object.keys(state.data).length) {
-      const amount = fineAmount(state.data.affidavit, state.data.fineType); 
-      
-      setState({
-        ...state,
-        total: currencyFormat(state.data.affidavit.amount + amount),
-        fine: {
-          concept: state.data.fineType.name,
-          amount: currencyFormat(amount)
+        if (res.data.fine.apply) {
+          let fineData = getFineData(res.data);
+          total += fineData.amount;
+          setFine(getFineData(res.data));
         }
-      });
-    }
-  }, [state.data]);
+
+        setData(res.data);
+        setTotal(total);
+      })
+      .then(res => setLoading(!loading))
+      .catch(err => console.log(err));
+  }, [props]);
 
   let component;
 
-  if (Object.keys(state.data).length) {
-    // Missing step: if affidavit doesn't have a recharge
+  if (!loading) {
     component = (
-      <div className="form-group col-lg-12">
+      <>
         <div className="kt-heading kt-heading--md">
-          {state.fine.concept}
         </div>
+        {
+          (data.fine.apply) ? 
+            <div className="kt-heading kt-heading--md">
+              <p>
+                {fine.concept}
+                : {currencyFormat(fine.amount)}
+              </p>
+            </div>
+          : <></>
+        }
         <div className="kt-heading kt-heading--md">
-          <p>Monto de la multa: {state.fine.amount}</p>
-          <p>Total a pagar: {state.total}</p>
+          <p>Total a pagar: {currencyFormat(total)}</p>
+          <h5>Recibida {dateformat(data.affidavit.processed_at)}</h5>
         </div>
-      </div>
+      </>
     );
+  } else {
+    component = <Loading />
   }
 
   return (
-    <Fragment>
+    <Col lg='12'>
       {component}
-    </Fragment>
+    </Col>
   );
 }
 

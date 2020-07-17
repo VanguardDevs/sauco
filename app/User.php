@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->hasMany(Settlement::class);
     }
 
+    public function withholdings()
+    {
+        return $this->hasMany(Withholding::class);
+    }
+
     public function getFullNameAttribute()
     {
         return $this->attributes['first_name'].' '.

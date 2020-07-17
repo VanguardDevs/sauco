@@ -67,7 +67,7 @@ class FineController extends Controller
     public function store(Request $request, Taxpayer $taxpayer)
     {
         $concept = Concept::find($request->input('concept'));
-        $amount = $request->input('amount'); 
+        $amount = $concept->calculateAmount();
 
         $fine = $taxpayer->fines()->create([
             'active' => 1,
@@ -93,7 +93,7 @@ class FineController extends Controller
         ]);
 
         return redirect()->route('fines.index', $taxpayer)
-            ->withSuccess('¡Multa aplicada!');
+            ->withSuccess('¡Multa creada!');
     }
 
     /**

@@ -20,28 +20,28 @@
                 position: relative;
                 overflow: hidden;
                 width: 100%;
-                height: 100%;
+                height: 90%;
                 z-index: 9;
             }
             .taxpayer-info {
                 position: absolute;
-                top: 280px; 
-                left: 140px;
+                top: 110px; 
+                left: 0px;
             }
             .activity {
                 font-size: 10px;
                 margin-top: 5px;
             }
-            .dates {
+            .dates-container {
                 position: absolute;
-                top: 170px;
-                left: 140px;
+                top: 340px;
+                left: 280px;
             }
             .correlative {
                 position: absolute;
                 font-weight: bold;
-                font-size: 30px;
-                top: 270px;
+                font-size: 42px;
+                top: 276px;
                 left: 360px;
             }
             .row {
@@ -66,7 +66,7 @@
             <div class="correlative">
                 {{ $licenseCorrelative }}
             </div>
-            <div class="dates">
+            <div class="dates-container">
                 <div class="dates row">{{ $license->emission_date }}</div>
                 <div class="dates row endofyear">{{ $endOfYear }}</div>
             <div>

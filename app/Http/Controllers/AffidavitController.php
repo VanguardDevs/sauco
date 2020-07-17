@@ -56,12 +56,24 @@ class AffidavitController extends Controller
     public function show(Request $request, Affidavit $affidavit)
     {
         if ($request->wantsJson()) {
-            $fineType = $this->checkForFine($affidavit);
+            $fine = $this->checkForFine($affidavit);
+
+            if ($fine) {
+                $fine = [
+                    'apply' => true,
+                    'data' => $fine
+                ];
+            } else {
+                $fine = [
+                    'apply' => false,
+                    'data' => []
+                ];
+            }
 
             return response()->json([
                 'affidavit' => $affidavit,
                 'payment' => $affidavit->payment,
-                'fineType' => $fineType 
+                'fine' => $fine 
             ]);
         }
 

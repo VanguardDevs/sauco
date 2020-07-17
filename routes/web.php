@@ -35,6 +35,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     // API ROUTES
     Route::get('api/taxpayers/{taxpayer}/representations', 'TaxpayerController@getRepresentations');
     Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
+    Route::get('api/taxpayers/{taxpayer}/economic-activities', 'TaxpayerController@economicActivities');
+    Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
 
     /**
      * Only Admin routes
@@ -91,6 +93,9 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         /*---------- Accounting accounts --------*/
         Route::resource('settings/accounting-accounts', 'AccountingAccountController');
+ 
+        Route::get('settings/invoice-models', 'InvoiceModelController@index')
+            ->name('invoice-models.index');
     });
  
     /**
@@ -156,17 +161,19 @@ Route::prefix('/')->middleware('auth')->group(function()
    /**
     * Routes for settlements
     */
-   Route::group(['middleware' => 'can:process.settlements'], function () {
+   Route::group(['middleware' => 'can:access.taxpayer-info'], function () {
         
         /**
         * Taxpayer's affidavits
          */
-        Route::get('affidavits/{affidavit}/normal', 'AffidavitController@normalCalcForm')
-            ->name('affidavits.show');
-        Route::get('affidavits/{affidavit}/group', 'AffidavitController@groupActivityForm')
-            ->name('affidavits.group');
-        Route::get('affidavits/{affidavit}/payment/new', 'AffidavitController@makePayment')
-            ->name('affidavits.payment');
+        Route::group(['middleware' => 'can:process.settlements'], function() {
+            Route::get('affidavits/{affidavit}/normal', 'AffidavitController@normalCalcForm')
+                ->name('affidavits.show');
+            Route::get('affidavits/{affidavit}/group', 'AffidavitController@groupActivityForm')
+                ->name('affidavits.group');
+            Route::get('affidavits/{affidavit}/payment/new', 'AffidavitController@makePayment')
+                ->name('affidavits.payment');
+        });
         Route::resource('affidavits', 'AffidavitController');
 
         /**
@@ -175,7 +182,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
         Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
             ->name('taxpayer.fines');
-        Route::resource('fines', 'FineController');
+        Route::resource('taxpayers/{taxpayer}/fines', 'FineController');
 
         /**
          * Taxpayer's application
@@ -184,10 +191,24 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
         /**
+         * Taxpayer's old payments
+         */
+        Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
+            ->name('taxpayer.old-payments');
+
+        /**
          * Taxpayer's permits
          */
         Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
         Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
+        
+        /**
+         * Taxpayer's Withholdings
+         */
+        Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
+            ->name('withholdings.index');
+        Route::resource('taxpayer/{taxpayer}/withholdings', 'WithholdingController');
+
    });
 
     /**

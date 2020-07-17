@@ -77,7 +77,7 @@
     </div>
 </div>
 
-@if(Auth::user()->can('process.settlements'))
+@if(Auth::user()->can('access.taxpayer-info'))
 <div class="row">
     @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
     <div class="col-xl-6 col-sm-6">
@@ -95,25 +95,7 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <div class="kt-widget4">
-                    @forelse($row->economicActivities as $activity) 
-                        <div class="kt-widget4__item">
-                            <div class="kt-widget4__icon">
-                                 <i class="flaticon2-percentage"></i>
-                            </div>
-                            <div class="kt-widget4__info">
-                                <a class="kt-widget4__username" href="{{ route('economic-activities.show', $activity->id) }}">
-                                    {{ $activity->code }}
-                                </a>
-                                <p class="kt-widget4__text">
-                                    {{ $activity->name  }}
-                                </p>
-                            </div>
-                        </div>
-                    @empty 
-                        Este contribuyente no tiene actividades económicas asignadas
-                    @endforelse
-                </div>
+                <div class="kt-widget4" id="economic-activities"></div>
             </div>
         </div>
     </div>
@@ -139,38 +121,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-xl-6 col-sm-6">
-        <div id="actions"></div>
-    </div>
-    <div class="col-xl-6 col-sm-6">
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        Licencias 
-                    </h3>
-                </div>
-            </div>
-            <div class="kt-portlet__body">
-                <div class="kt-notification">
-                    <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/economic-activity-licenses') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="fas fa-book-reader"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                Licencias de actividad económica        
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Emitir nueva licencia y consultar histórico de renovaciones
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="row">
 </div>
 @endif
 @endsection
