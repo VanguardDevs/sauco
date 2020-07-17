@@ -158,7 +158,7 @@ class LicenseController extends Controller
 
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 
-            ->stream('Licencia '.$taxpayer->rif.'.pdf');
+            ->download('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**
