@@ -74,7 +74,7 @@ class UserController extends Controller
 
         $create->roles()->sync($request->get('roles'));
 
-        return redirect('administration/users')->withSuccess('¡Usuario agregado!');
+        return redirect()->route('users.index')->withSuccess('¡Usuario agregado!');
     }
 
     /**
@@ -160,7 +160,7 @@ class UserController extends Controller
         $edit->roles()->sync($request->get('roles'));
         $edit->save();
 
-        return Redirect::back()
+        return redirect()->route('users.index')
             ->withSuccess('¡Usuario actualizado!');
     }
     

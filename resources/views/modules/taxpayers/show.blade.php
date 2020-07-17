@@ -77,7 +77,7 @@
     </div>
 </div>
 
-@if(Auth::user()->can('process.settlements'))
+@if(Auth::user()->can('access.taxpayer-info'))
 <div class="row">
     @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
     <div class="col-xl-6 col-sm-6">

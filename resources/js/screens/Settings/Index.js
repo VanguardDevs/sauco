@@ -57,17 +57,17 @@ const Index = () => {
           label="Administración de usuarios"
         >
           <Notification
-            url='administration/permissions'
+            url='settings/administration/permissions'
             icon='fa-user-lock'
             title='Permisos'
           />
           <Notification
-            url='administration/roles'
+            url='settings/administration/roles'
             icon='fa-user-tag'
             title='Roles'
           />
           <Notification
-            url='administration/users'
+            url='settings/administration/users'
             icon='fa-user-plus'
             title='Usuarios'
           />        
