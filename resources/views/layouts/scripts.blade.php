@@ -4,13 +4,11 @@
 </script>
 <!-- end::Global Config -->
 
-{{-- Scripts --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('assets/js/vendors.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ asset('assets/js/login-general.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/select2.js') }}"></script>
     <script src="{{ asset('assets/js/input-mask.js') }}"></script>

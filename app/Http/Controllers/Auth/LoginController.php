@@ -63,14 +63,19 @@ class LoginController extends Controller
         ]);
 
         if (!auth()->attempt($loginData)) {
-            return response(['message' => 'Invalid credentials!']);
+            return response([
+                'success' => false,
+                'message' => '¡Credenciales incorrectas!'
+            ]);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
         return response([
+            'success' => true,
             'user' => auth()->user(),
-            'access_token' => $accessToken
+            'access_token' => $accessToken,
+            'message' => 'Redireccionando...'
         ]);
     }
 }
