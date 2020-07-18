@@ -32,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    // protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -44,12 +44,33 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
         return redirect('/login');
     }
 
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $loginData = $request->validate([
+            'login' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (!auth()->attempt($loginData)) {
+            return response(['message' => 'Invalid credentials!']);
+        }
+
+        $accessToken = auth()->user()->createToken('authToken')->accessToken;
+
+        return response([
+            'user' => auth()->user(),
+            'access_token' => $accessToken
+        ]);
     }
 }
