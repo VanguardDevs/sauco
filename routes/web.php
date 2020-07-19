@@ -21,8 +21,7 @@ Route::get('/', function () {
     }
 });
 
-Route::get('login', 'Auth\LoginController@index')->name('login.index');
-Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::get('login', 'Auth\LoginController@index')->name('login');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::prefix('/')->middleware('auth')->group(function()

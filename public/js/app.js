@@ -83179,8 +83179,6 @@ require('./screens/taxpayers/OldPayments');
 
 __webpack_require__(/*! ./screens/Settings/Index */ "./resources/js/screens/Settings/Index.js");
 
-__webpack_require__(/*! ./screens/Auth/Login */ "./resources/js/screens/Auth/Login.js");
-
 __webpack_require__(/*! ./screens/Settings/InvoiceModels/Index */ "./resources/js/screens/Settings/InvoiceModels/Index.js");
 
 __webpack_require__(/*! ./screens/taxpayers/profile */ "./resources/js/screens/taxpayers/profile/index.js");
@@ -83855,82 +83853,6 @@ var WidgetItem = function WidgetItem(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (WidgetItem);
-
-/***/ }),
-
-/***/ "./resources/js/screens/Auth/Login.js":
-/*!********************************************!*\
-  !*** ./resources/js/screens/Auth/Login.js ***!
-  \********************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/toast */ "./resources/js/utils/toast.js");
-/* harmony import */ var _components_FormGroup__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/FormGroup */ "./resources/js/components/FormGroup.js");
-/* harmony import */ var react_hook_form__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/index.esm.js");
-
-
-
-
-
-
-
-var Login = function Login() {
-  var _useForm = Object(react_hook_form__WEBPACK_IMPORTED_MODULE_5__["useForm"])(),
-      control = _useForm.control,
-      register = _useForm.register,
-      handleSubmit = _useForm.handleSubmit;
-
-  var onSubmit = function onSubmit(data) {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("login", data).then(function (res) {
-      return Object(_utils_toast__WEBPACK_IMPORTED_MODULE_3__["Toast"])("".concat(res.data.message));
-    })["catch"](function (err) {
-      return console.log(err);
-    });
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "kt-login__form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "kt-login__title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Inicio de Sesi\xF3n")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    className: "kt-form",
-    onSubmit: handleSubmit(onSubmit)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormGroup__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    name: "login",
-    className: "form-control",
-    autoFocus: true,
-    placeholder: "Usuario",
-    ref: register,
-    required: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormGroup__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "password",
-    className: "form-control",
-    name: "password",
-    required: true,
-    placeholder: "Contrase\xF1a",
-    ref: register
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "kt-login__actions"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit",
-    id: "kt_login_signin_submit",
-    className: "btn btn-primary btn-elevate kt-login__btn-primary"
-  }, "Acceder"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_utils_toast__WEBPACK_IMPORTED_MODULE_3__["ToastWrapper"], null));
-};
-
-if (document.getElementById('login')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Login, null), document.getElementById('login'));
-}
 
 /***/ }),
 
