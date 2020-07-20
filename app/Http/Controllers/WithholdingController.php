@@ -56,9 +56,11 @@ class WithholdingController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        return $request->all();
+        $amount = $request->get('amount');
+        $user = $request->get('user');
+        $month = $request->get('month')['value']; 
 
-        $affidavit = $taxpayer->affidavits()->whereMonthId($request->input('month'))
+        $affidavit = $taxpayer->affidavits()->whereMonthId($month)
             ->first();
 
         $amount = $request->input('amount');
@@ -67,8 +69,10 @@ class WithholdingController extends Controller
         $settlement = $affidavit->settlement()->first();
 
         if (!$settlement) {
-            return redirect()->route('withholdings.index', $taxpayer)
-                ->withError('¡La declaración no ha sido facturada!');
+            return response()->json([
+                'success' => false,
+                'message' => '¡La declaración del mes de '.$affidavit->month->name.' no ha sido facturada!'
+            ]);
         }
         
         $settlement->update([
@@ -79,8 +83,8 @@ class WithholdingController extends Controller
         // Save withholding
         $withholding = $affidavit->withholding()->create([
             'amount' => $amount,
-            'affidavit_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id
+            'affidavit_id' => $affidavit->id,
+            'user_id' => $user
         ]);
 
         $payment = Payment::create([
@@ -100,9 +104,11 @@ class WithholdingController extends Controller
             'withholding_id' => $withholding->id,
             'amount' => $withholding->amount
         ]);
-
-        return redirect()->route('withholdings.index', $taxpayer)
-            ->withSuccess('¡Retención procesada!');
+        
+        return response()->json([
+            'success' => true,
+            'message' => '¡Retención de monto '.$withholding->amount.' realizada!'
+        ]);
     }
 
     public function message(Affidavit $affidavit)

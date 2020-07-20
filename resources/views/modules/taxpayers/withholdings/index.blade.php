@@ -6,6 +6,6 @@
 
 @if(Auth()->user()->can('process.settlements'))
 <div id='withholdings'></div>
-<div id="taxpayerID" data_id="{{ $taxpayer->id }}"></id>
+<div id="data" data-taxpayer-id="{{ $taxpayer->id }}" data-user-id="{{ auth()->user()->id }}"></id>
 @endif
 @endsection

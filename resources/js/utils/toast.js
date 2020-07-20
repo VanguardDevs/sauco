@@ -17,5 +17,7 @@ export const ToastWrapper = () => (
   />
 );
 
-export const Toast = (message) => toast.success(`${message}`);
+export const Success = (message) => toast.success(`${message}`);
+
+export const Error = (message) => toast.error(`${message}`);
  

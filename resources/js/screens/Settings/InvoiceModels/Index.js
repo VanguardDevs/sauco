@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
-import { Toast, ToastWrapper  } from '../../../utils/toast';
+import { Success, ToastWrapper  } from '../../../utils/toast';
 
 // Components
 import Portlet from '../../../components/Portlet';
@@ -16,7 +16,7 @@ const Index = () => {
   const onSubmit = (data) => {
     axios.post('invoice-models', data)
       .then(res => setData(res.data))
-      .then(() => Toast(`¡Modelo ${data.name} creado!`))
+      .then(() => Success(`¡Modelo ${data.name} creado!`))
       .catch(err => console.log(err));
   };
 
