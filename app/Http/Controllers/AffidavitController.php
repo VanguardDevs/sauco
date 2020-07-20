@@ -258,6 +258,7 @@ class AffidavitController extends Controller
             'user_id' => $affidavit->user_id,
             'amount' => $affidavit->amount,
             'payment_method_id' => 1,
+            'invoice_model_id' => 1,
             'payment_type_id' => 1,
             'taxpayer_id' => $affidavit->taxpayer_id
         ]);

@@ -82,6 +82,7 @@ class FineController extends Controller
             'user_id' => auth()->user()->id,
             'amount' => $amount,
             'payment_method_id' => 1,
+            'invoice_model_id' => 1,
             'payment_type_id' => 1,
         ]);
 
