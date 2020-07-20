@@ -12,6 +12,7 @@ use App\Concept;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
+use DataTables;
 
 class WithholdingController extends Controller
 {
@@ -36,6 +37,14 @@ class WithholdingController extends Controller
             ->where('id', '<', Carbon::now()->month);
         
         return $months->get();
+    }
+
+    public function list(Taxpayer $taxpayer)
+    {
+        $query = $taxpayer->withholdings()
+            ->with(['affidavit', 'payment']);
+
+        return DataTables::of($query->get())->toJson();
     }
 
     /**
@@ -72,6 +81,18 @@ class WithholdingController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => '¡La declaración del mes de '.$affidavit->month->name.' no ha sido facturada!'
+            ]);
+        }
+        if ($settlementAmount < 0) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡El monto a retener se excede del monto declarado!'
+            ]);
+        }
+        if ($affidavit->withholding()->first()) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡Ya existe una declaración realizada por este mes!'
             ]);
         }
         
@@ -113,10 +134,11 @@ class WithholdingController extends Controller
 
     public function message(Affidavit $affidavit)
     {
-        $conceptName = Concept::whereCode(5)->first()->name;
-        $monthYear = $affidavit->month->name.' - '.$affidavit->month->year->year;
+        $concept = Concept::whereCode(8)->first();
+        $conceptName = $concept->listing->name.': '.$concept->name.': ';
+        $monthYear = ' ('.$affidavit->month->name.' - '.$affidavit->month->year->year.')';
 
-        return $conceptName.': '.$monthYear;
+        return $conceptName.$affidavit->taxpayer->name.$monthYear;
     }
 
     /**

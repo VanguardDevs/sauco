@@ -207,6 +207,7 @@ Route::prefix('/')->middleware('auth')->group(function()
          */
         Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
             ->name('withholdings.index');
+        Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
         Route::resource('taxpayer/{taxpayer}/withholdings', 'WithholdingController');
 
    });
