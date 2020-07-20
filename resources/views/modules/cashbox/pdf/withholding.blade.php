@@ -90,8 +90,8 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>{{ $organization->name }}</td> 
-                        <td>{{ $organization->rif }}</td>
+                        <td>REPÚBLICA BOLIVARIANA DE VENEZUELA</td>
+                        <td>G-20000222-1</td>
                     </tr>
                 </tbody>
             </table>
@@ -103,7 +103,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $organization->address }}</td>
+                        <td>AV. CARABOBO, EDIFICIO MUNICIPAL</td>
                     </tr>
                 </tbody>
             </table>

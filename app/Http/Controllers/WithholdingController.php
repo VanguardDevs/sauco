@@ -12,6 +12,7 @@ use App\Concept;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
+use DataTables;
 
 class WithholdingController extends Controller
 {
@@ -38,6 +39,14 @@ class WithholdingController extends Controller
         return $months->get();
     }
 
+    public function list(Taxpayer $taxpayer)
+    {
+        $query = $taxpayer->withholdings()
+            ->with(['affidavit', 'payment']);
+
+        return DataTables::of($query->get())->toJson();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -56,7 +65,10 @@ class WithholdingController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        $month = $request->input('month')['value'];
+        $amount = $request->get('amount');
+        $user = $request->get('user');
+        $month = $request->get('month')['value']; 
+
         $affidavit = $taxpayer->affidavits()->whereMonthId($month)
             ->first();
 
@@ -66,8 +78,22 @@ class WithholdingController extends Controller
         $settlement = $affidavit->settlement()->first();
 
         if (!$settlement) {
-            return redirect()->route('withholdings.index', $taxpayer)
-                ->withError('¡La declaración no ha sido facturada!');
+            return response()->json([
+                'success' => false,
+                'message' => '¡La declaración del mes de '.$affidavit->month->name.' no ha sido facturada!'
+            ]);
+        }
+        if ($settlementAmount < 0) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡El monto a retener se excede del monto declarado!'
+            ]);
+        }
+        if ($affidavit->withholding()->first()) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡Ya existe una declaración realizada por este mes!'
+            ]);
         }
         
         $settlement->update([
@@ -78,8 +104,8 @@ class WithholdingController extends Controller
         // Save withholding
         $withholding = $affidavit->withholding()->create([
             'amount' => $amount,
-            'affidavit_id' => Auth::user()->id,
-            'user_id' => Auth::user()->id
+            'affidavit_id' => $affidavit->id,
+            'user_id' => $user
         ]);
 
         $payment = Payment::create([
@@ -99,17 +125,20 @@ class WithholdingController extends Controller
             'withholding_id' => $withholding->id,
             'amount' => $withholding->amount
         ]);
-
-        return redirect()->route('withholdings.index', $taxpayer)
-            ->withSuccess('¡Retención procesada!');
+        
+        return response()->json([
+            'success' => true,
+            'message' => '¡Retención de monto '.$withholding->amount.' realizada!'
+        ]);
     }
 
     public function message(Affidavit $affidavit)
     {
-        $conceptName = Concept::whereCode(5)->first()->name;
-        $monthYear = $affidavit->month->name.' - '.$affidavit->month->year->year;
+        $concept = Concept::whereCode(8)->first();
+        $conceptName = $concept->listing->name.': '.$concept->name.': ';
+        $monthYear = ' ('.$affidavit->month->name.' - '.$affidavit->month->year->year.')';
 
-        return $conceptName.': '.$monthYear;
+        return $conceptName.$affidavit->taxpayer->name.$monthYear;
     }
 
     /**

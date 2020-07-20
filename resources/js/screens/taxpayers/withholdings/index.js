@@ -8,12 +8,20 @@ import Create from './create';
 const Withholdings = (props) => {
   return (
     <Col md='12'>
-      <Create taxpayer={props.taxpayer}/>
+      <Create
+        taxpayer={props.taxpayer}
+        user={props.user}
+      />
     </Col>
   );
 }
 
 if (document.getElementById('withholdings')) {
-  let taxpayer = document.getElementById('taxpayerID').getAttribute('data_id');
-  ReactDOM.render(<Withholdings taxpayer={taxpayer} />, document.getElementById('withholdings')) 
+  let taxpayer = document.getElementById('data');
+
+  ReactDOM.render(
+    <Withholdings 
+      taxpayer={data.getAttribute('data-taxpayer-id')}
+      user={data.getAttribute('data-user-id')}
+    />, document.getElementById('withholdings')) 
 }

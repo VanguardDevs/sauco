@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Toast, ToastWrapper  } from '../../../utils/toast';
+import { Success, ToastWrapper  } from '../../../utils/toast';
 // Components
 import Col from '../../../components/Col';
 import FormGroup from '../../../components/FormGroup';
@@ -12,7 +12,7 @@ const CreateInvoiceModel = props => {
   const onSubmit = (data) => {
     axios.post('invoice-models', data)
       .then(res => setData(res.data))
-      .then(() => Toast(`¡Modelo ${data.name} creado!`))
+      .then(() => Success(`¡Modelo ${data.name} creado!`))
       .catch(err => console.log(err));
   };
 

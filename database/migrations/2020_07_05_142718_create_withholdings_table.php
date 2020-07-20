@@ -23,6 +23,7 @@ class CreateWithholdingsTable extends Migration
             $table->foreign('affidavit_id')->references('id')->on('affidavits')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

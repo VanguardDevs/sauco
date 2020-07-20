@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select'; 
 import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
-import { Toast, ToastWrapper  } from '../../../utils/toast';
+import { Success, Error, ToastWrapper  } from '../../../utils/toast';
 // Components
 import Portlet from '../../../components/Portlet';
 import FormGroup from '../../../components/FormGroup';
@@ -18,6 +18,7 @@ const getMapOfMonths = (months) => months.map(month => {
 });
 
 const create = (props) => {
+  const { taxpayer, user } = props;
   const [data, setData] = useState({});
   const [months, setMonths] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,9 +32,15 @@ const create = (props) => {
   }, [props]);
 
   const onSubmit = (data) => {
-    axios.post(`taxpayers/${props.taxpayer}/withholdings`, data)
-      .then(res => setData(res.data))
-      .then(() => Toast(`¡Retención creada!`))
+    axios.post(`taxpayers/${taxpayer}/withholdings`, {
+      ...data, user: user
+    })
+      .then(res => {
+        const data = res.data;
+        
+        // Notify
+        (data.success) ? Success(data.message) : Error(data.message);
+      })
       .catch(err => console.log(err));
   };
 
