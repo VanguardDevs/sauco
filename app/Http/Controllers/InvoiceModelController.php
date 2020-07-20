@@ -12,8 +12,12 @@ class InvoiceModelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->wantsJson()) {
+            return InvoiceModel::get();
+        }
+
         return view('modules.settings.invoice-models');
     }
 
