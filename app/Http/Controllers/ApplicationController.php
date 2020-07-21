@@ -73,7 +73,6 @@ class ApplicationController extends Controller
         ]);
 
         $payment = $taxpayer->payments()->create([
-            'num' => Payment::newNum(),
             'state_id' => 1,
             'user_id' => auth()->user()->id,
             'amount' => $amount,
