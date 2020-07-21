@@ -182,7 +182,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
         Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
             ->name('taxpayer.fines');
-        Route::resource('taxpayers/{taxpayer}/fines', 'FineController');
+        Route::post('taxpayers/{taxpayer}/fines/create', 'FineController@store')
+            ->name('fines.new');        
+        Route::resource('fines', 'FineController');
 
         /**
          * Taxpayer's application

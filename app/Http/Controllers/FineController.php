@@ -93,7 +93,7 @@ class FineController extends Controller
             'amount' => $amount
         ]);
 
-        return redirect()->route('fines.index', $taxpayer)
+        return redirect()->route('taxpayer.fines', $taxpayer)
             ->withSuccess('¡Multa creada!');
     }
 
