@@ -772,12 +772,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/payments/${oData.payment[0].id} title='Ver factura'>
-                            <i class='btn-sm btn-info fas fa-eye'></i>
-                        </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
+                        </a>               
                     </div>`
                     );
                 }

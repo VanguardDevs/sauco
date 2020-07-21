@@ -77,7 +77,6 @@ class FineController extends Controller
         ]);
 
         $payment = $taxpayer->payments()->create([
-            'num' => Payment::newNum(),
             'state_id' => 1,
             'user_id' => auth()->user()->id,
             'amount' => $amount,
@@ -93,7 +92,7 @@ class FineController extends Controller
             'amount' => $amount
         ]);
 
-        return redirect()->route('fines.index', $taxpayer)
+        return redirect()->route('taxpayer.fines', $taxpayer)
             ->withSuccess('¡Multa creada!');
     }
 

@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="kt-portlet__body">
-            {!! Form::open(['route' => ['fines.store', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+            {!! Form::open(['route' => ['fines.new', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
                 <div class="form-group row">
                     <div class="col-lg-5">
                         <label class="col-lg-12">Seleccione la ordenanza<span class="text-danger"> *</span></label>
