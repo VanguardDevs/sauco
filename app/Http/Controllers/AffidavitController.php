@@ -53,8 +53,30 @@ class AffidavitController extends Controller
         return DataTables::of($query)->toJson();
     }
 
-    public function show(Affidavit $affidavit)
+    public function show(Request $request, Affidavit $affidavit)
     {
+        if ($request->wantsJson()) {
+            $fine = $this->checkForFine($affidavit);
+
+            if ($fine) {
+                $fine = [
+                    'apply' => true,
+                    'data' => $fine
+                ];
+            } else {
+                $fine = [
+                    'apply' => false,
+                    'data' => []
+                ];
+            }
+
+            return response()->json([
+                'affidavit' => $affidavit,
+                'payment' => $affidavit->payment,
+                'fine' => $fine 
+            ]);
+        }
+
         if ($affidavit->amount == 0.00) {
             if (!Auth::user()->can('process.settlements'))  {
                 return redirect('cashbox/settlements')
@@ -206,8 +228,6 @@ class AffidavitController extends Controller
             'processed_at' => $processedAt,
         ]);
 
-        // $this->makePayment($affidavit);
-        
         return redirect('affidavits/'.$affidavit->id)
             ->withSuccess('¡Declaración procesada!');
     }
@@ -230,17 +250,12 @@ class AffidavitController extends Controller
      */
     public function makePayment(Affidavit $affidavit)
     {
-        if ($affidavit->payment()->first()) {
-            return redirect('affidavits/'.$affidavit->id)
-                ->withError('¡La factura de la liquidación fue realizada!');
-        }
-
         $payment = Payment::create([
-            'num' => Payment::newNum(),
             'state_id' => 1,
             'user_id' => $affidavit->user_id,
             'amount' => $affidavit->amount,
             'payment_method_id' => 1,
+            'invoice_model_id' => 1,
             'payment_type_id' => 1,
             'taxpayer_id' => $affidavit->taxpayer_id
         ]);
@@ -257,7 +272,7 @@ class AffidavitController extends Controller
         $this->applyFine($affidavit, $payment);
         $payment->updateAmount();
 
-        return redirect()->back()
+        return redirect()->route('affidavits.index', $affidavit->taxpayer)
             ->withSuccess('¡Factura realizada!');
     }
     
@@ -296,11 +311,17 @@ class AffidavitController extends Controller
         if (!$this->hasException($affidavit)) { 
             $startPeriod = Carbon::parse($affidavit->month->start_period_at);
             $todayDate = Carbon::now();
-
-            if ($startPeriod->diffInDays($todayDate) > 60) {
-               return Concept::whereCode(2)->first(); 
+            $passedDays = $startPeriod->diffInDays($todayDate);
+            
+            if ($affidavit->processed_at > Carbon::parse('2020-06-18')) {
+                if ($passedDays > 63) {
+                   return Concept::whereCode(2)->first(); 
+                } else if ($passedDays > 48) {
+                    return Concept::whereCode(3)->first();
+                }
             }
         }
+
         return false;
     }
 

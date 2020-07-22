@@ -29,6 +29,7 @@ class ConceptsCreateFormRequest extends FormRequest
             'amount' => 'required',
             'ordinance_id' => 'required',
             'charging_method_id' => 'required',
+            'accounting_account_id' => 'required',
             'list_id' => 'required'
         ];
     }
@@ -41,6 +42,7 @@ class ConceptsCreateFormRequest extends FormRequest
             'amount' => 'nombre',
             'ordinance_id' => 'tipo de ordenanza',
             'list_id' => 'listado',
+            'accounting_account_id' => 'cuenta contable',
             'charging_method_id' => 'método de cálculo'
         ];
     }
@@ -52,6 +54,7 @@ class ConceptsCreateFormRequest extends FormRequest
             'code.unique' => 'El :attribute ya existe',
             'name.required' => 'Ingrese un :attribute',
             'ordinance_id.required' => 'Seleccione un :attribute',
+            'accounting_account_id.required' => 'Seleccione un :attribute',
             'list_id.required' => 'Seleccione un :attribute',
             'charging_method_id.required' => 'Seleccione un :attribute',
             'amount.required' => 'Ingrese un :attribute'

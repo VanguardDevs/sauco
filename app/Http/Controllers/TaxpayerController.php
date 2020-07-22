@@ -55,6 +55,13 @@ class TaxpayerController extends Controller
         return response()->json($query->get());
     }
 
+    public function economicActivities(Taxpayer $taxpayer)
+    {
+        $query = $taxpayer->economicActivities;
+
+        return $query;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -120,8 +127,12 @@ class TaxpayerController extends Controller
      * @param  \App\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
-    public function show(Taxpayer $taxpayer)
+    public function show(Request $request, Taxpayer $taxpayer)
     {
+        if ($request->wantsJson()) {
+            return $taxpayer;
+        }
+
         return view('modules.taxpayers.show')
             ->with('row', $taxpayer);
     }

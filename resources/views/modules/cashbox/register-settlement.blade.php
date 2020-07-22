@@ -7,7 +7,7 @@
     <div class="kt-portlet">
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title">Declaración para el período {{ $row->month->name }} -  {{ $row->month->year->year }}</h3>
+                <h3 class="kt-portlet__head-title" id="affidavit" data_id="{{ $row->id }}">Declaración para el período {{ $row->month->name }} -  {{ $row->month->year->year }}</h3>
             </div>
         </div>
         <!-- /.card-header -->
@@ -88,17 +88,8 @@
                     </tr>
                 </tbody>
             </table>
-            
-            @if($row->payment->first())
-           <div class="form-group col-lg-12">
-                <div class="kt-heading kt-heading--md">
-                    Monto a pagar: {{ $row->payment->first()->amount }} Bs
-                </div>
-                <div class="kt-heading kt-heading--md">
-                    Estado del pago: {{ $row->payment->first()->state->name }}
-                </div>
-           </div>
-            @endif
+
+            <div id="paymentInfo"></div> 
 
             @endif
             @else
@@ -114,6 +105,8 @@
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
             @if(!$row->payment()->first())
             <a href="{{ route('affidavits.payment', $row->id) }}" class="btn btn-success"><i class='fas fa-money-check'></i>Facturar</a>
+            @else
+            <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info"><i class="fas fa-money-check"></i>Ver factura</a>
             @endif
            @else
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>

@@ -19,6 +19,11 @@ Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
     $trail->push('Declaraciones', url('taxpayers/'.$row->id.'/declarations'));
 });
 
+Breadcrumbs::for('taxpayer.old-payments', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Pagos antiguos', url('taxpayers/'.$row->id.'/old-payments'));
+});
+
 /*----------  Reports ----------*/
 Breadcrumbs::for('taxpayer.economic-activity-licenses', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
@@ -379,15 +384,21 @@ Breadcrumbs::for('settings/application-types/update', function ($trail) {
 });
 
 /*------------- Applications -------------*/
+Breadcrumbs::for('withholdings.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Retenciones', route('withholdings.index', $row));
+});
+
+/*------------- Applications -------------*/
 Breadcrumbs::for('applications.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Solicitudes', route('applications.index', $row));
 });
 
 /*------------- Fines -------------*/
-Breadcrumbs::for('fines.index', function ($trail, $row) {
+Breadcrumbs::for('taxpayer.fines', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
-    $trail->push('Multas y sanciones', route('fines.index', $row));
+    $trail->push('Multas y sanciones', route('taxpayer.fines', $row));
 });
 
 
@@ -422,6 +433,12 @@ Breadcrumbs::for('categories.edit', function ($trail, $row) {
 });
 
 /*------------- Concepts -------------*/
+Breadcrumbs::for('invoice-models.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Modelos de factura', route('invoice-models.index'));
+});
+
+/*------------- Concepts -------------*/
 Breadcrumbs::for('concepts.index', function ($trail) {
     $trail->parent('settings');
     $trail->push('Conceptos de recaudación', url('settings/concepts'));
@@ -440,9 +457,9 @@ Breadcrumbs::for('concepts.edit', function ($trail, $row) {
 });
 
 /*------------- Fines -------------*/
-Breadcrumbs::for('fines', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Multas', url('fines'));
+Breadcrumbs::for('fines.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Multas', route('fines.index', $row));
 });
 
 /*------------- Bank Accounts -------------*/
@@ -547,3 +564,20 @@ Breadcrumbs::for('payments/edit', function ($trail) {
     $trail->push('Procesar liquidación', url('payments/edit'));
 });
 
+/*------------- Ordinances -------------*/
+Breadcrumbs::for('accounting-accounts.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Cuentas contables', url('settings/accounting-accounts'));
+});
+
+/*------------- Ordinances > create -------------*/
+Breadcrumbs::for('accounting-accounts.create', function ($trail) {
+    $trail->parent('accounting-accounts.index');
+    $trail->push('Crear cuenta contable', url('settings/accounting-accounts/create'));
+});
+
+/*------------- Ordinances > edit -------------*/
+Breadcrumbs::for('accounting-accounts.edit', function ($trail, $row) {
+    $trail->parent('accounting-accounts.index');
+    $trail->push('Editar cuenta contable', url('settings/accounting-accounts/edit'.$row->id));
+});

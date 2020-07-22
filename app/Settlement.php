@@ -20,6 +20,11 @@ class Settlement extends Model implements Auditable
         'amount' => 'float'
     ];  
 
+    public function withholding()
+    {
+        return $this->belongsTo(Withholding::class);
+    }
+
     public function payment()
     {
         return $this->belongsTo(Payment::class);

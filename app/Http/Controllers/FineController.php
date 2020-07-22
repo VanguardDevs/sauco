@@ -10,12 +10,14 @@ use App\Payment;
 use App\Settlement;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Auth;
 
 class FineController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('has.role:admin')->only('destroy');
     }
 
     /**
@@ -33,7 +35,7 @@ class FineController extends Controller
     public function list(Taxpayer $taxpayer)
     {
         $query = Fine::whereTaxpayerId($taxpayer->id)
-            ->with('concept')
+            ->with(['concept', 'payment'])
             ->get();
 
         return DataTables::of($query)
@@ -65,7 +67,7 @@ class FineController extends Controller
     public function store(Request $request, Taxpayer $taxpayer)
     {
         $concept = Concept::find($request->input('concept'));
-        $amount = $request->input('amount'); 
+        $amount = $concept->calculateAmount();
 
         $fine = $taxpayer->fines()->create([
             'active' => 1,
@@ -75,11 +77,11 @@ class FineController extends Controller
         ]);
 
         $payment = $taxpayer->payments()->create([
-            'num' => Payment::newNum(),
             'state_id' => 1,
             'user_id' => auth()->user()->id,
             'amount' => $amount,
             'payment_method_id' => 1,
+            'invoice_model_id' => 1,
             'payment_type_id' => 1,
         ]);
 
@@ -90,8 +92,8 @@ class FineController extends Controller
             'amount' => $amount
         ]);
 
-        return redirect()->route('fines.index', $taxpayer)
-            ->withSuccess('¡Multa aplicada!');
+        return redirect()->route('taxpayer.fines', $taxpayer)
+            ->withSuccess('¡Multa creada!');
     }
 
     /**
@@ -135,13 +137,13 @@ class FineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Fine $fine)
-    {
-        if (!Auth::user()->hasRole('admin')) {
-            return response()->json([
-                'message' => '¡Acción no permitida!'
-            ]);
-        }
+    { 
+        $payment = $fine->payment()->first();
 
+        if ($fine->settlement) {
+            $fine->settlement->delete();
+            $payment->updateAmount();
+        } 
         $fine->delete();
 
         return redirect()->back()

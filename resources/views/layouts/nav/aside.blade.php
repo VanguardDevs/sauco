@@ -71,13 +71,6 @@
             </a>
         </li>
 
-        <li class="kt-menu__item {{ active('receivables*') }}" aria-haspopup="true" >
-            <a  href="{{ url('receivables') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon2-box"></i>
-            <span class="kt-menu__link-text">Cuentas por cobrar</span>
-            </a>
-        </li>
-
         <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
             <a  href="{{ route('reports') }}" class="kt-menu__link">
             <i class="kt-menu__link-icon flaticon-squares-2"></i>

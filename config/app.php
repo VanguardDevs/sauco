@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'recapi' => env('RECAPI_HOST', null),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

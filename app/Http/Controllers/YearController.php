@@ -40,7 +40,7 @@ class YearController extends Controller
         }
 
         return $year->months()->orderBy('id', 'ASC')->get(); 
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.
