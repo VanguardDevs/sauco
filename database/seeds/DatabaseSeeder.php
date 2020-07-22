@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Database\Factories\TaxpayerFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TaxpayerTypesTableSeeder::class);
         $this->call(RepresentationTypesTableSeeder::class);
         $this->call(CitizenshipsTableSeeder::class);
+        TaxpayerFactory()->create();
     }
 }
