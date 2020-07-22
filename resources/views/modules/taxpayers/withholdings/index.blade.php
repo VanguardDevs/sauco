@@ -25,8 +25,7 @@
                 <thead>
                   <tr>
                     <th width="60%">Monto</th>
-                    <th width="20%">Monto</th>
-                    <th width="20%">Acciones</th>
+                    <th width="40%">Monto</th>
                   </tr>
                 </thead>
             </table>

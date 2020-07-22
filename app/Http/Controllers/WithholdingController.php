@@ -95,6 +95,12 @@ class WithholdingController extends Controller
                 'message' => '¡Ya existe una declaración realizada por este mes!'
             ]);
         }
+        if ($affidavit->payment()->first()->state_id = 2) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡El pago de ese mes se encuentra procesado!'
+            ]);
+        }
         
         $settlement->update([
             'amount' => $settlementAmount
@@ -107,25 +113,7 @@ class WithholdingController extends Controller
             'affidavit_id' => $affidavit->id,
             'user_id' => $user
         ]);
-
-        $payment = Payment::create([
-            'num' => Payment::newNum(),
-            'state_id' => 1,
-            'user_id' => $withholding->user_id,
-            'amount' => $withholding->amount,
-            'payment_method_id' => 1,
-            'payment_type_id' => 1,
-            'invoice_model_id' => 1,
-            'taxpayer_id' => $taxpayer->id
-        ]);
-
-        $payment->settlements()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' =>  $this->message($affidavit),
-            'withholding_id' => $withholding->id,
-            'amount' => $withholding->amount
-        ]);
-        
+      
         return response()->json([
             'success' => true,
             'message' => '¡Retención de monto '.$withholding->amount.' realizada!'
