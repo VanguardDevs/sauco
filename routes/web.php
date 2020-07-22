@@ -133,10 +133,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('reports/taxpayers/up-to-date', 'ReportController@showUpToDateTaxpayers')->name('taxpayers.uptodate');
     Route::get('reports', 'ReportController@index')->name('reports');
 
-    Route::get('receivables/list', 'ReceivableController@list');
-    Route::get('receivables', 'ReceivableController@index')->name('receivables.index');
-    Route::get('receivables/{payment}', 'ReceivableController@show')->name('receivables.show');
-
     /**
      * Licenses
      */
