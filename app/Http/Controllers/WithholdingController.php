@@ -26,9 +26,6 @@ class WithholdingController extends Controller
         if ($request->wantsJson()) {
             return $taxpayer->withholdings;
         }
-
-        return view('modules.taxpayers.withholdings.index')
-            ->with('taxpayer', $taxpayer);
     }
 
     public function months()

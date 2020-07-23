@@ -5,7 +5,6 @@ import Notification from '../../components/Notification';
 import Portlet from '../../components/Portlet';
 import Col from '../../components/Col';
 import Row from '../../components/Row';
-import Organization from './Organization';
 
 const Index = () => {
   return (
@@ -72,7 +71,6 @@ const Index = () => {
             title='Usuarios'
           />        
         </Portlet>
-        <Organization />
       </Col>
     </Row>
   );
