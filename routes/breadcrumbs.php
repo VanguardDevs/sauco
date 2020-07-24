@@ -36,6 +36,16 @@ Breadcrumbs::for('reports', function ($trail) {
     $trail->push('Reportes', url('reports'));
 });
 
+Breadcrumbs::for('organization.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Organización', url('organization'));
+});
+
+Breadcrumbs::for('organization.withholdings', function ($trail) {
+    $trail->parent('organization.index');
+    $trail->push('Retenciones', route('organization.withholdings'));
+});
+
 /*----------  Reports ----------*/
 Breadcrumbs::for('report.payments', function ($trail) {
     $trail->parent('reports');

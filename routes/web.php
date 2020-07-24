@@ -111,6 +111,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('geographic-area/communities/{community}/taxpayers/list', 'CommunityController@listTaxpayers');
     Route::resource('geographic-area/communities', 'CommunityController');
 
+    // Organization routes
+    Route::get('organization', 'OrganizationController@index')->name('organization.index');
+    Route::get('organization/withholdings', 'OrganizationController@withholdings')->name('organization.withholdings');
+
     /**
      * Handle reports
      */

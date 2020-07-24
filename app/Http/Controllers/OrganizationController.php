@@ -12,9 +12,22 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Organization::first();
+        if ($request->wantsJson()) {
+            return Organization::first();
+        }
+
+        return view('modules.organization.index');
+    }
+
+    public function withholdings(Request $request)
+    {
+        if ($request->wantsJson()) {
+            //
+        }
+
+        return view('modules.organization.withholdings');
     }
 
     /**
