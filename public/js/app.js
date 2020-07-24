@@ -88012,6 +88012,79 @@ var Row = function Row(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Table.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/Table.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
+/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_1__);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
+
+var rowStyle = {
+  'left': '0px'
+};
+
+var Table = function Table(_ref) {
+  var columns = _ref.columns,
+      data = _ref.data;
+
+  var _useTable = Object(react_table__WEBPACK_IMPORTED_MODULE_1__["useTable"])({
+    columns: columns,
+    data: data
+  }, react_table__WEBPACK_IMPORTED_MODULE_1__["useSortBy"]),
+      getTableProps = _useTable.getTableProps,
+      getTableBodyProps = _useTable.getTableBodyProps,
+      headerGroups = _useTable.headerGroups,
+      rows = _useTable.rows,
+      prepareRow = _useTable.prepareRow;
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
+    className: "kt-datatable__table"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
+    className: "kt-datatable__head"
+  }, headerGroups.map(function (headerGroup) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, headerGroup.getHeaderGroupProps(), {
+      className: "kt-datatable__row"
+    }), headerGroup.headers.map(function (column) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", _extends({}, column.getHeaderProps(column.getSortByToggleProps()), {
+        className: "kt-datatable__cell",
+        style: {
+          rowStyle: rowStyle
+        }
+      }), column.render('header'), column.isSorted ? column.isSortedDesc ? '  🔽' : '  🔼' : '');
+    }));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", _extends({}, getTableBodyProps(), {
+    className: "kt-datatable__body"
+  }), rows.map(function (row) {
+    prepareRow(row);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, row.getRowProps(), {
+      className: "kt-datatable__row",
+      style: {
+        rowStyle: rowStyle
+      }
+    }), row.cells.map(function (cell) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", _extends({}, cell.getCellProps(), {
+        className: "kt-datatable__cell"
+      }), cell.render('Cell'));
+    }));
+  }))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Table);
+
+/***/ }),
+
 /***/ "./resources/js/components/Widget.js":
 /*!*******************************************!*\
   !*** ./resources/js/components/Widget.js ***!
@@ -88395,11 +88468,10 @@ var CreateInvoiceModel = function CreateInvoiceModel(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-table */ "./node_modules/react-table/index.js");
-/* harmony import */ var react_table__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_table__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Portlet */ "./resources/js/components/Portlet.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_Portlet__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/Portlet */ "./resources/js/components/Portlet.js");
+/* harmony import */ var _components_Table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Table */ "./resources/js/components/Table.js");
 /* harmony import */ var _components_Loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Loading */ "./resources/js/components/Loading.js");
 /* harmony import */ var _components_Col__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/Col */ "./resources/js/components/Col.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -88414,66 +88486,13 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-
 
  // Components
 
 
 
 
-var rowStyle = {
-  'left': '0px'
-};
 
-var Table = function Table(_ref) {
-  var columns = _ref.columns,
-      data = _ref.data;
-
-  var _useTable = Object(react_table__WEBPACK_IMPORTED_MODULE_1__["useTable"])({
-    columns: columns,
-    data: data
-  }, react_table__WEBPACK_IMPORTED_MODULE_1__["useSortBy"]),
-      getTableProps = _useTable.getTableProps,
-      getTableBodyProps = _useTable.getTableBodyProps,
-      headerGroups = _useTable.headerGroups,
-      rows = _useTable.rows,
-      prepareRow = _useTable.prepareRow;
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", _extends({}, getTableProps(), {
-    className: "kt-datatable__table"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
-    className: "kt-datatable__head"
-  }, headerGroups.map(function (headerGroup) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, headerGroup.getHeaderGroupProps(), {
-      className: "kt-datatable__row"
-    }), headerGroup.headers.map(function (column) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", _extends({}, column.getHeaderProps(column.getSortByToggleProps()), {
-        className: "kt-datatable__cell",
-        style: {
-          rowStyle: rowStyle
-        }
-      }), column.render('header'), column.isSorted ? column.isSortedDesc ? '  🔽' : '  🔼' : '');
-    }));
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", _extends({}, getTableBodyProps(), {
-    className: "kt-datatable__body"
-  }), rows.map(function (row) {
-    prepareRow(row);
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, row.getRowProps(), {
-      className: "kt-datatable__row",
-      style: {
-        rowStyle: rowStyle
-      }
-    }), row.cells.map(function (cell) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", _extends({}, cell.getCellProps(), {
-        className: "kt-datatable__cell"
-      }), cell.render('Cell'));
-    }));
-  }))));
-};
 
 var List = function List() {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
@@ -88487,7 +88506,7 @@ var List = function List() {
       setLoading = _useState4[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('invoice-models').then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('invoice-models').then(function (res) {
       return setData(res.data);
     }).then(function (res) {
       return setLoading(false);
@@ -88509,9 +88528,9 @@ var List = function List() {
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Col__WEBPACK_IMPORTED_MODULE_5__["default"], {
     lg: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Portlet__WEBPACK_IMPORTED_MODULE_2__["default"], {
     label: "Modelos de facturas"
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Table, {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Table__WEBPACK_IMPORTED_MODULE_3__["default"], {
     columns: columns,
     data: data
   })));
