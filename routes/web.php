@@ -38,6 +38,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('api/taxpayers/{taxpayer}/economic-activities', 'TaxpayerController@economicActivities');
     Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
 
+    Route::get('api/taxpayers/{taxpayer}/payments', 'TaxpayerController@showPayments');
     /**
      * Only Admin routes
      */
@@ -237,7 +238,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     });
     Route::get('taxpayers/{taxpayer}/affidavits/{affidavit}/download', 'AffidavitController@download');
     Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
-    Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');

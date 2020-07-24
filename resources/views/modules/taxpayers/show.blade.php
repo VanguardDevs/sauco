@@ -51,31 +51,7 @@
     </div>
 </div>
 
-<div class="row" style="margin-top: 20px;">
-    <div class="col-lg-12">
-      <div class="kt-portlet">
-        <div class="kt-portlet__head">
-            <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title">Pagos</h3>
-            </div>
-        </div>
-        <div class="kt-portlet__body">
-          <table id="tTaxpayerPayments" class="table table-bordered table-striped datatables" style="text-align: center">
-            <thead>
-              <tr>
-                <th width="15%">Nro.</th>
-                <th width="15%">Estado</th>
-                <th width="25%">Liquidador</th>
-                <th width="15%">Creada</th>
-                <th width="15%">Monto</th>
-                <th width="15%">Acciones</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-    </div>
-</div>
+<div id="taxpayer-payments"></div>
 
 @if(Auth::user()->can('access.taxpayer-info'))
 <div class="row">

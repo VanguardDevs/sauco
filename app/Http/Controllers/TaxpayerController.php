@@ -137,6 +137,15 @@ class TaxpayerController extends Controller
             ->with('row', $taxpayer);
     }
 
+    public function showPayments(Taxpayer $taxpayer)
+    {
+        $query = $taxpayer->payments()->with(['state', 'user'])
+            ->whereTaxpayerId($taxpayer->id)
+            ->orderBy('id', 'DESC');
+        
+        return $query->get();
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
