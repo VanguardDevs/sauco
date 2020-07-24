@@ -72,13 +72,6 @@
             </a>
         </li>
 
-        <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
-            <a  href="{{ route('reports') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-squares-2"></i>
-                <span class="kt-menu__link-text">Reportes</span>
-            </a>
-        </li>
-
         @if (@Auth::user()->can('access.geographic-area'))
         <li class="kt-menu__item {{ active('geographic-area/communities*') }}" aria-haspopup="true" >
             <a href="{{ route('communities.index') }}" class="kt-menu__link">
@@ -88,6 +81,13 @@
         </li>
         @endif
 
+        <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
+            <a  href="{{ route('reports') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon flaticon-squares-2"></i>
+                <span class="kt-menu__link-text">Reportes</span>
+            </a>
+        </li>
+ 
         @if (@Auth::user()->hasRole('admin'))
         <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
             <a  href="{{ url('settings') }}" class="kt-menu__link">
