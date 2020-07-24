@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useTable } from 'react-table';
+import { useTable, useSortBy } from 'react-table';
 import axios from 'axios';
 // Components
 import Portlet from '../../../components/Portlet';
@@ -17,7 +17,7 @@ const Table = ({ columns, data }) => {
     headerGroups,
     rows,
     prepareRow
-  } = useTable({ columns, data });
+  } = useTable({ columns, data }, useSortBy);
 
   return (
     <div className='kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded'>
@@ -26,8 +26,9 @@ const Table = ({ columns, data }) => {
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()} className="kt-datatable__row">
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()} className="kt-datatable__cell" style={{rowStyle}}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())} className="kt-datatable__cell" style={{rowStyle}}>
                   {column.render('header')}
+                  {column.isSorted ? (column.isSortedDesc ? '  🔽' : '  🔼') : ''}
                 </th>
               ))}
             </tr>
@@ -63,7 +64,7 @@ const List = () => {
       .then(res => setData(res.data))
       .then(res => setLoading(false))
       .catch(err => console.log(err));
-  }, [data]);
+  }, []);
 
   const columns = useMemo(() => [
     { header: 'Código', accessor: 'code' },
