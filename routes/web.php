@@ -35,7 +35,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     // API ROUTES
     Route::get('api/taxpayers/{taxpayer}/representations', 'TaxpayerController@getRepresentations');
     Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
+    Route::get('api/taxpayers/{taxpayer}/economic-activities', 'TaxpayerController@economicActivities');
+    Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
 
+    Route::get('api/taxpayers/{taxpayer}/payments', 'TaxpayerController@showPayments');
     /**
      * Only Admin routes
      */
@@ -91,6 +94,9 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         /*---------- Accounting accounts --------*/
         Route::resource('settings/accounting-accounts', 'AccountingAccountController');
+ 
+        Route::get('settings/invoice-models', 'InvoiceModelController@index')
+            ->name('invoice-models.index');
     });
  
     /**
@@ -105,6 +111,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('communities/list', 'CommunityController@list')->name('list-communities');
     Route::get('geographic-area/communities/{community}/taxpayers/list', 'CommunityController@listTaxpayers');
     Route::resource('geographic-area/communities', 'CommunityController');
+
+    // Organization routes
+    Route::get('organization', 'OrganizationController@index')->name('organization.index');
+    Route::get('organization/withholdings', 'OrganizationController@withholdings')->name('organization.withholdings');
 
     /**
      * Handle reports
@@ -131,10 +141,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('reports/taxpayers/up-to-date', 'ReportController@showUpToDateTaxpayers')->name('taxpayers.uptodate');
     Route::get('reports', 'ReportController@index')->name('reports');
 
-    Route::get('receivables/list', 'ReceivableController@list');
-    Route::get('receivables', 'ReceivableController@index')->name('receivables.index');
-    Route::get('receivables/{payment}', 'ReceivableController@show')->name('receivables.show');
-
     /**
      * Licenses
      */
@@ -159,24 +165,30 @@ Route::prefix('/')->middleware('auth')->group(function()
    /**
     * Routes for settlements
     */
-   Route::group(['middleware' => 'can:process.settlements'], function () {
+   Route::group(['middleware' => 'can:access.taxpayer-info'], function () {
         
         /**
         * Taxpayer's affidavits
          */
-        Route::get('affidavits/{affidavit}/normal', 'AffidavitController@normalCalcForm')
-            ->name('affidavits.show');
-        Route::get('affidavits/{affidavit}/group', 'AffidavitController@groupActivityForm')
-            ->name('affidavits.group');
-        Route::get('affidavits/{affidavit}/payment/new', 'AffidavitController@makePayment')
-            ->name('affidavits.payment');
+        Route::group(['middleware' => 'can:process.settlements'], function() {
+            Route::get('affidavits/{affidavit}/normal', 'AffidavitController@normalCalcForm')
+                ->name('affidavits.show');
+            Route::get('affidavits/{affidavit}/group', 'AffidavitController@groupActivityForm')
+                ->name('affidavits.group');
+            Route::get('affidavits/{affidavit}/payment/new', 'AffidavitController@makePayment')
+                ->name('affidavits.payment');
+        });
         Route::resource('affidavits', 'AffidavitController');
 
         /**
          * Taxpayer's Fines
          */
         Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
-        Route::resource('taxpayers/{taxpayer}/fines', 'FineController');
+        Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
+            ->name('taxpayer.fines');
+        Route::post('taxpayers/{taxpayer}/fines/create', 'FineController@store')
+            ->name('fines.new');        
+        Route::resource('fines', 'FineController');
 
         /**
          * Taxpayer's application
@@ -185,10 +197,25 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
         /**
+         * Taxpayer's old payments
+         */
+        Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
+            ->name('taxpayer.old-payments');
+
+        /**
          * Taxpayer's permits
          */
         Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
         Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
+        
+        /**
+         * Taxpayer's Withholdings
+         */
+        Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
+            ->name('withholdings.index');
+        Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
+        Route::resource('taxpayer/{taxpayer}/withholdings', 'WithholdingController');
+
    });
 
     /**
@@ -214,7 +241,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     });
     Route::get('taxpayers/{taxpayer}/affidavits/{affidavit}/download', 'AffidavitController@download');
     Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
-    Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');

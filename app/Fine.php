@@ -2,16 +2,33 @@
 
 namespace App;
 
+use App\Settlement;
+use App\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Fine extends Model
+class Fine extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     protected $table = 'fines';
 
     protected $guarded = [];
+
+    public function settlementHelpler($paymentId)
+    {
+        $payment = Payment::find($paymentId);
+
+        $payment->settlements()->create([
+            'num' => Settlement::newNum(),
+            'object_payment' => self::concept()->first()->name,
+            'fine_id' => $this->id
+        ]);
+
+        return $payment->updateAmount();
+    }
 
     public static function calculateAmount($value, $concept)
     {

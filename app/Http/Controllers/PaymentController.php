@@ -8,6 +8,7 @@ use App\Payment;
 use App\Reference;
 use App\Settlement;
 use App\Taxpayer;
+use App\Organization;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\PaymentService;
@@ -47,16 +48,6 @@ class PaymentController extends Controller
         $query = Payment::with('taxpayer') 
             ->whereStateId(2)
             ->orderBy('num', 'DESC');
-
-        return DataTables::of($query)->toJson();
-    }
-
-    public function listByTaxpayer(Taxpayer $taxpayer)
-    {
-        $query = Payment::with(['state', 'user'])
-            ->whereTaxpayerId($taxpayer->id)
-            ->orderBy('id', 'DESC')
-            ->get();
 
         return DataTables::of($query)->toJson();
     }
@@ -151,13 +142,22 @@ class PaymentController extends Controller
 
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
         $taxpayer = $payment->taxpayer;
-        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
 
-        $vars = ['payment', 'reference', 'denomination'];
-        
-        return PDF::setOptions(['isRemoteEnabled' => true])
-            ->loadView('modules.cashbox.pdf.payment', compact($vars)) 
-            ->stream('factura-'.$payment->id.'.pdf');
+        if ($payment->invoiceModel->code == 2) {
+            $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
+            $vars = ['payment', 'reference', 'denomination'];
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('modules.cashbox.pdf.payment', compact($vars)) 
+                ->stream('factura-'.$payment->id.'.pdf');
+        } else {
+            $organization = Organization::first();
+            $vars = ['payment', 'reference', 'organization'];
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('modules.cashbox.pdf.withholding', compact($vars)) 
+                ->stream('factura-'.$payment->id.'.pdf');
+        }
    }
 
     /**

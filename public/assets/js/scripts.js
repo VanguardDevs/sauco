@@ -19,6 +19,7 @@ $(function () {
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
+const apiURL = $("meta[name='api-base-url']").attr("content");
 
 const handleRequest = url => {
     fetch(`${baseURL}/${url}`, {
@@ -641,69 +642,6 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tReceivables').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/receivables/list",
-        "columns": [
-            { data: 'id' },
-            { data: 'taxpayer.rif' },
-            { data: 'taxpayer.name' },
-            { data: 'amount' },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/receivables/${oData.id} title='Ver factura'>
-                            <i class='btn-sm btn-info fas fa-eye'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'receivables')" title='Editar'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tTaxpayerPayments').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": `${window.location.href}/payments`,
-        "columns": [
-            { data: 'num' },
-            { data: 'state.name' },
-            { data: 'user.full_name' },
-            { data: 'created_at' },
-            { data: 'amount' },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
-                            <i class='btn-sm btn-info fas fa-eye'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Editar'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
     $('#tProcessedPayments').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -771,10 +709,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${window.location.href}/${oData.id}/download title='Descargar declaración jurada de ingresos'>
-                            <i class='btn-sm btn-dark bg-dark fas fa-file-download'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id}, 'taxpayers/${oData.taxpayer_id}/fines')" title='Anular'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>               
                     </div>`
@@ -808,6 +743,20 @@ $(document).ready(function() {
                     );
                 }
             }
+        ]
+    });
+
+    $('#tWithholdings').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'affidavit.month.name' },
+            { data: 'amount' },
         ]
     });
 

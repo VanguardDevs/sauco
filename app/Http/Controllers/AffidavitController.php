@@ -56,12 +56,24 @@ class AffidavitController extends Controller
     public function show(Request $request, Affidavit $affidavit)
     {
         if ($request->wantsJson()) {
-            $fineType = $this->checkForFine($affidavit);
+            $fine = $this->checkForFine($affidavit);
+
+            if ($fine) {
+                $fine = [
+                    'apply' => true,
+                    'data' => $fine
+                ];
+            } else {
+                $fine = [
+                    'apply' => false,
+                    'data' => []
+                ];
+            }
 
             return response()->json([
                 'affidavit' => $affidavit,
                 'payment' => $affidavit->payment,
-                'fineType' => $fineType 
+                'fine' => $fine 
             ]);
         }
 
@@ -216,8 +228,6 @@ class AffidavitController extends Controller
             'processed_at' => $processedAt,
         ]);
 
-        // $this->makePayment($affidavit);
-        
         return redirect('affidavits/'.$affidavit->id)
             ->withSuccess('¡Declaración procesada!');
     }
@@ -241,11 +251,11 @@ class AffidavitController extends Controller
     public function makePayment(Affidavit $affidavit)
     {
         $payment = Payment::create([
-            'num' => Payment::newNum(),
             'state_id' => 1,
             'user_id' => $affidavit->user_id,
             'amount' => $affidavit->amount,
             'payment_method_id' => 1,
+            'invoice_model_id' => 1,
             'payment_type_id' => 1,
             'taxpayer_id' => $affidavit->taxpayer_id
         ]);
@@ -302,11 +312,13 @@ class AffidavitController extends Controller
             $startPeriod = Carbon::parse($affidavit->month->start_period_at);
             $todayDate = Carbon::now();
             $passedDays = $startPeriod->diffInDays($todayDate);
-
-            if ($passedDays > 60) {
-               return Concept::whereCode(2)->first(); 
-            } else if ($passedDays > 45 ) {
-                return Concept::whereCode(3)->first();
+            
+            if ($affidavit->processed_at > Carbon::parse('2020-06-18')) {
+                if ($passedDays > 63) {
+                   return Concept::whereCode(2)->first(); 
+                } else if ($passedDays > 48) {
+                    return Concept::whereCode(3)->first();
+                }
             }
         }
 

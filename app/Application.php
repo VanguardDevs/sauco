@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Application extends Model
 {
@@ -12,6 +13,30 @@ class Application extends Model
     protected $table = 'applications';
 
     protected $guarded = [];
+
+    public static function hasPaid($taxpayer, $code)
+    {
+        $application = $taxpayer
+            ->applications()
+            ->whereBetween('created_at', [Carbon::now()->subYear(1), Carbon::now()])
+            ->whereHas('concept', function ($concept) use ($code) {
+                return $concept->whereCode($code);
+            })->latest()->first();
+
+        if ($application) {
+            $payment = $application->payment()->first();
+
+            if (!$payment) {
+                return false;
+            }
+
+            if ($payment->state_id == 2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public function concept()
     {
