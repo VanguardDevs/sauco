@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialDenomination;
+use App\Company;
 use App\EconomicActivity;
 use App\TaxpayerType;
 use App\TaxpayerClassification;
@@ -85,7 +85,6 @@ class TaxpayerController extends Controller
     public function store(Request $request)
     {
         $type = $request->input('taxpayer_type_id');
-        $denomination = $request->input('personal_firm');
 
         if (Taxpayer::existsRif($request->input('rif'))) {
             return redirect('taxpayers/create')
@@ -93,23 +92,24 @@ class TaxpayerController extends Controller
                 ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
         }
 
-        if ($type != 1 && empty($denomination)) {
-            return redirect()->route('taxpayers.create')
-                ->withInput($request->input())
-                ->withError('¡Ingrese la denominación comercial!');
-        }
-
         $taxpayer = Taxpayer::create($request->input());
 
-        if (!empty($denomination)) {
-            CommercialDenomination::create([
-                'name' => $denomination,
-                'taxpayer_id' => $taxpayer->id
-            ]);
-        }
+        $this->createCompany($taxpayer);
 
         return redirect()->route('taxpayers.show', $taxpayer)
             ->withSuccess('¡Contribuyente registrado!');
+    }
+
+    /**
+    * Creates a company if taxpayer is juridical
+     */     
+    public function createCompany($taxpayer)
+    {
+        if ($taxpayer->taxpayerType->description == 'JURÍDICO') {
+            $taxpayer->companies()->create([
+                'name' => $taxpayer->name
+            ]);
+        }
     }
 
     public function downloadDeclarations(Taxpayer $taxpayer)

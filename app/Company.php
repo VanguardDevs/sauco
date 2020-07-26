@@ -5,14 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CommercialDenomination extends Model
+class Company extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'commercial_denominations';
+    protected $table = 'companies';
 
     protected $fillable = [
         'name',
+        'capital',
+        'num_workers',
         'taxpayer_id'
     ];
 
