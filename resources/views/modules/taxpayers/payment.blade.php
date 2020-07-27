@@ -76,7 +76,6 @@
         @if ($typeForm == 'edit')        
         <div class="row form-group">
             <div class="col-md-12 form-group">
-
                 <label class="control-label"> Método de pago <span class="text-danger">*</span></label>
 
                 {!! Form::select('method', $methods,
@@ -112,14 +111,14 @@
         <!-- /.card-body -->
         <div class="card-footer">
             @if($typeForm == 'edit')
-            <a href="{{ URL::previous() }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
-                <button  type="submit" class="btn btn-primary">
+                <a href="{{ URL::previous() }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
+                <button  type="submit" class="btn btn-primary" onClick="this.form.submit(); this.disabled=true;">
                     <i class="fas fa-save"></i>
                     Registrar
                 </button>
             @else
             <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
-            @if($typeForm == 'show' && Auth::user()->can('process.payments'))
+            @if($typeForm == 'show')
             <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-success' title='Descargar factura' target='_blank'>
                 <i class='flaticon2-download'></i>
                 Imprimir factura
