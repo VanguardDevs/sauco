@@ -72,6 +72,13 @@ class WithholdingController extends Controller
         $affidavit = $taxpayer->affidavits()->whereMonthId($month)
             ->first();
 
+        if (!$affidavit) {
+            return response([
+                'success' => false,
+                'message' => '¡El mes no ha sido declarado!'
+            ]);
+        }
+
         $amount = $request->input('amount');
         $settlementAmount = $affidavit->amount - $amount;
 
@@ -95,7 +102,7 @@ class WithholdingController extends Controller
                 'message' => '¡Ya existe una declaración realizada por este mes!'
             ]);
         }
-        if ($affidavit->payment()->first()->state_id = 2) {
+        if ($affidavit->payment()->first()->state_id == 2) {
             return response()->json([
                 'success' => false,
                 'message' => '¡El pago de ese mes se encuentra procesado!'
