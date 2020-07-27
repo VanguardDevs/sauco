@@ -14,8 +14,6 @@ class AddTaxpayerIdToReceivablesTable extends Migration
     public function up()
     {
         Schema::table('receivables', function (Blueprint $table) {
-            $table->string('num', 8)->nullable();
-            $table->string('object_payment', 180)->nullable();
             $table->timestamp('processed_at')->nullable();
             $table->float('amount')->nullable();
             $table->unsignedBigInteger('taxpayer_id')->nullable();

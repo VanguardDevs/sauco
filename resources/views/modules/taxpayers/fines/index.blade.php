@@ -21,9 +21,9 @@
             </div>
         </div>
         <div class="kt-portlet__body">
-            {!! Form::open(['route' => ['fines.store', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+            {!! Form::open(['route' => ['fines.new', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
                 <div class="form-group row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <label class="col-lg-12">Seleccione la ordenanza<span class="text-danger"> *</span></label>
                         {!!
                             Form::select('ordinance', $ordinances, null, [
@@ -38,7 +38,7 @@
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <label class="col-lg-12">Seleccione el concepto<span class="text-danger"> *</span></label>
                         {!!
                             Form::select('concept', [], null, [
@@ -52,18 +52,6 @@
                         @error('concept')
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-lg-9">
-                        <label class="col-lg-12">Ingrese el monto a cobrar<span class="text-danger"> *</span></label>
-                        {{
-                            Form::text('amount', null, [
-                                'class' => 'col-lg-12 form-control decimal-input-mask',
-                                'placeholder' => 'Ingrese un monto',
-                                'required'
-                            ])
-                        }}
                     </div>
                     <div class="col-lg-2">
                         <button class="btn btn-success" style="margin-top:2em;"title="Enviar liquidación" type="submit">

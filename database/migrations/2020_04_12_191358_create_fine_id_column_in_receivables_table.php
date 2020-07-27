@@ -13,7 +13,7 @@ class CreateFineIdColumnInReceivablesTable extends Migration
      */
     public function up()
     {
-        Schema::table('receivables', function (Blueprint $table) {
+        Schema::table('settlements', function (Blueprint $table) {
             $table->unsignedBigInteger('fine_id')->nullable();
             $table->foreign('fine_id')->references('id')->on('fines')
                 ->onUpdate('cascade')->onDelete('cascade');

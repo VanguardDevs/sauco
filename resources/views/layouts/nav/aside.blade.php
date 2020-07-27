@@ -44,54 +44,57 @@
 
     <ul class="kt-menu__nav">
         <li class="kt-menu__item {{ active('dashboard*') }}" aria-haspopup="true" >
-            <a  href="{{ url('dashboard') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon fas fa-home"></i>
-            <span class="kt-menu__link-text">Inicio</span>
+            <a href="{{ url('dashboard') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon fas fa-home"></i>
+                <span class="kt-menu__link-text">Inicio</span>
             </a>
         </li>
 
         <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
-            <a  href="{{ url('taxpayers') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon fas fa-user-tie"></i>
-            <span class="kt-menu__link-text">Contribuyentes</span>
+            <a href="{{ url('taxpayers') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon fas fa-user-tie"></i>
+                <span class="kt-menu__link-text">Contribuyentes</span>
+            </a>
+        </li>
+
+        <li class="kt-menu__item {{ active('organization*') }}" aria-haspopup="true" >
+            <a href="{{ route('organization.index') }}" class="kt-menu__link" title="En construcción">
+                <i class="kt-menu__link-icon fas fa-city"></i>
+                <span class="kt-menu__link-text">Organización</span>
+                <span class="kt-menu__link-badge"><span class="kt-badge kt-badge--warning kt-badge--inline">Nuevo</span>
             </a>
         </li>
 
         <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
-            <a  href="{{ url('economic-activities') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon2-percentage"></i>
-            <span class="kt-menu__link-text">Actividades económicas</span>
+            <a href="{{ url('economic-activities') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon flaticon2-percentage"></i>
+                <span class="kt-menu__link-text">Actividades económicas</span>
             </a>
         </li>
 
+        @if (@Auth::user()->can('access.geographic-area'))
         <li class="kt-menu__item {{ active('geographic-area/communities*') }}" aria-haspopup="true" >
-            <a  href="{{ route('communities.index') }}" class="kt-menu__link">
+            <a href="{{ route('communities.index') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon fas fa-globe-americas"></i>
                 <span class="kt-menu__link-text">Área geográfica</span>
             </a>
         </li>
-
-        <li class="kt-menu__item {{ active('receivables*') }}" aria-haspopup="true" >
-            <a  href="{{ url('receivables') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon2-box"></i>
-            <span class="kt-menu__link-text">Cuentas por cobrar</span>
-            </a>
-        </li>
+        @endif
 
         <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
             <a  href="{{ route('reports') }}" class="kt-menu__link">
-            <i class="kt-menu__link-icon flaticon-squares-2"></i>
-            <span class="kt-menu__link-text">Reportes</span>
+                <i class="kt-menu__link-icon flaticon-squares-2"></i>
+                <span class="kt-menu__link-text">Reportes</span>
             </a>
         </li>
-
+ 
         @if (@Auth::user()->hasRole('admin'))
-            <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
-                <a  href="{{ url('settings') }}" class="kt-menu__link">
+        <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
+            <a  href="{{ url('settings') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon2-dashboard"></i>
                 <span class="kt-menu__link-text">Configuraciones</span>
-                </a>
-            </li>
+            </a>
+        </li>
         @endif
    </ul>
   </div>

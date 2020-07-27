@@ -3,7 +3,7 @@
  * includes React and other helpers. It's a great starting point while
  * building robust, powerful web applications using React + Laravel.
  */
-// require('./bootstrap');
+require('./bootstrap');
 
 /**
  * Next, we will create a fresh React component instance and attach it to
@@ -13,7 +13,15 @@
 
 require('./screens/taxpayers/OldPayments');
 
-require('./components/TaxpayerProfile');
+require('./screens/Settings/Index');
+
+require('./screens/organization/index');
+
+require('./screens/Settings/InvoiceModels/Index');
+
+require('./screens/taxpayers/profile');
+
+require('./screens/taxpayers/withholdings');
 
 require('./components/ListAccountingAccounts');
 

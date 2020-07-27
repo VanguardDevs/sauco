@@ -72,6 +72,11 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Fine::class, Settlement::class);
     }
 
+    public function invoiceModel()
+    {
+        return $this->belongsTo(InvoiceModel::class);
+    }
+
     public static function processedByDate($firstDate, $lastDate)
     {
         return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])

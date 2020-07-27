@@ -51,9 +51,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(License::class);
     }
 
-    public function commercialDenomination()
+    public function companies()
     {
-        return $this->hasOne(CommercialDenomination::class);
+        return $this->hasMany(Company::class);
     }
 
     public function applications()
@@ -75,6 +75,11 @@ class Taxpayer extends Model implements Auditable
     {
         return $this->hasMany(OldPayment::class);
     }
+
+    public function withholdings()
+    {
+        return $this->hasManyThrough(Withholding::class, Affidavit::class);
+    } 
 
     public function affidavits()
     {

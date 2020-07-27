@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Caffeinated\Shinobi\Concerns\HasRolesAndPermissions;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-    use HasRolesAndPermissions;
+    use Notifiable, HasRolesAndPermissions, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -38,6 +38,11 @@ class User extends Authenticatable
     public function settlements()
     {
         return $this->hasMany(Settlement::class);
+    }
+
+    public function withholdings()
+    {
+        return $this->hasMany(Withholding::class);
     }
 
     public function getFullNameAttribute()
