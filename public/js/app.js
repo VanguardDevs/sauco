@@ -88038,13 +88038,27 @@ var Table = function Table(_ref) {
 
   var _useTable = Object(react_table__WEBPACK_IMPORTED_MODULE_1__["useTable"])({
     columns: columns,
-    data: data
-  }, react_table__WEBPACK_IMPORTED_MODULE_1__["useSortBy"]),
+    data: data,
+    initialState: {
+      pageIndex: 0
+    }
+  }, react_table__WEBPACK_IMPORTED_MODULE_1__["useSortBy"], react_table__WEBPACK_IMPORTED_MODULE_1__["usePagination"]),
       getTableProps = _useTable.getTableProps,
       getTableBodyProps = _useTable.getTableBodyProps,
       headerGroups = _useTable.headerGroups,
-      rows = _useTable.rows,
-      prepareRow = _useTable.prepareRow;
+      page = _useTable.page,
+      prepareRow = _useTable.prepareRow,
+      canPreviousPage = _useTable.canPreviousPage,
+      canNextPage = _useTable.canNextPage,
+      pageOptions = _useTable.pageOptions,
+      pageCount = _useTable.pageCount,
+      gotoPage = _useTable.gotoPage,
+      nextPage = _useTable.nextPage,
+      previousPage = _useTable.previousPage,
+      setPageSize = _useTable.setPageSize,
+      _useTable$state = _useTable.state,
+      pageIndex = _useTable$state.pageIndex,
+      pageSize = _useTable$state.pageSize;
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded"
@@ -88065,7 +88079,7 @@ var Table = function Table(_ref) {
     }));
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", _extends({}, getTableBodyProps(), {
     className: "kt-datatable__body"
-  }), rows.map(function (row) {
+  }), page.map(function (row) {
     prepareRow(row);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, row.getRowProps(), {
       className: "kt-datatable__row",
@@ -88077,7 +88091,53 @@ var Table = function Table(_ref) {
         className: "kt-datatable__cell"
       }), cell.render('Cell'));
     }));
-  }))));
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "kt-datatable__pager kt-datatable--paging-loaded"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "kt-datatable__pager-nav"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      return gotoPage(0);
+    },
+    disabled: !canPreviousPage
+  }, '<<'), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      return previousPage();
+    },
+    disabled: !canPreviousPage
+  }, '<'), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      return nextPage();
+    },
+    disabled: !canNextPage
+  }, '>'), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      return gotoPage(pageCount - 1);
+    },
+    disabled: !canNextPage
+  }, '>>'), ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "kt-datatable__pager-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "P\xE1gina", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, pageIndex + 1, " de ", pageOptions.length), ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "| Ir a:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "number",
+    defaultValue: pageIndex + 1,
+    onChange: function onChange(e) {
+      var page = e.target.value ? Number(e.target.value) - 1 : 0;
+      gotoPage(page);
+    },
+    style: {
+      width: '100px'
+    }
+  })), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    value: pageSize,
+    onChange: function onChange(e) {
+      setPageSize(Number(e.target.value));
+    }
+  }, [10, 20, 30, 40, 50].map(function (pageSize) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: pageSize,
+      value: pageSize
+    }, "Mostrando ", pageSize, " resultados");
+  })))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Table);
