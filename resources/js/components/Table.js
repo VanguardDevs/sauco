@@ -24,7 +24,7 @@ const Table = ({ columns, data }) => {
   } = useTable({ 
     columns,
     data,
-    initialState: { pageIndex: 0 },
+    initialState: { pageIndex: 0, pageSize: 5 },
   }, 
     useSortBy, 
     usePagination
@@ -103,7 +103,7 @@ const Table = ({ columns, data }) => {
               setPageSize(Number(e.target.value))
             }}
           >
-            {[10, 20, 30, 40, 50].map(pageSize => (
+            {[5, 10, 25, 50].map(pageSize => (
               <option key={pageSize} value={pageSize}>
                 Mostrando {pageSize} resultados
               </option>

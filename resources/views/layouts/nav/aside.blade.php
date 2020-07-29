@@ -65,6 +65,17 @@
             </a>
         </li>
 
+        @if (@Auth::user()->can('access.licenses'))
+        <li class="kt-menu__item {{ active('licenses*') }}" aria-haspopup="true" >
+            <a href="{{ route('licenses.index') }}" class="kt-menu__link" title="En construcción">
+                <i class="kt-menu__link-icon fas fa-book-reader"></i>
+                <span class="kt-menu__link-text">Patentes</span>
+                <span class="kt-menu__link-badge"><span class="kt-badge kt-badge--warning kt-badge--inline">Nuevo</span>
+            </a>
+        </li>
+        @endif
+
+
         <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
             <a href="{{ url('economic-activities') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon2-percentage"></i>

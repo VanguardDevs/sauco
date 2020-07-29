@@ -8,9 +8,9 @@ Breadcrumbs::for('change-password.show', function ($trail) {
 });
 
 /*----------  Cashbox ----------*/
-Breadcrumbs::for('receivables.index', function ($trail) {
+Breadcrumbs::for('licenses.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Cuentas por cobrar', route('receivables.index'));
+    $trail->push('Licencias', route('licenses.index'));
 });
 
 /*----------  Reports ----------*/

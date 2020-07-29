@@ -39,6 +39,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
 
     Route::get('api/taxpayers/{taxpayer}/payments', 'TaxpayerController@showPayments');
+
     /**
      * Only Admin routes
      */
@@ -98,10 +99,12 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('settings/invoice-models', 'InvoiceModelController@index')
             ->name('invoice-models.index');
     });
- 
+
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
+    Route::get('licenses', 'LicenseController@index')->name('licenses.index');
+
     /*----------  Routes economic activities  ----------*/
     Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
     Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
