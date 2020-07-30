@@ -109,18 +109,20 @@ class WithholdingController extends Controller
             ]);
         }
         
-        $settlement->update([
-            'amount' => $settlementAmount
-        ]);
-        $settlement->payment->updateAmount();
-
         // Save withholding
         $withholding = $affidavit->withholding()->create([
             'amount' => $amount,
             'affidavit_id' => $affidavit->id,
             'user_id' => $user
         ]);
-      
+ 	
+	$settlement->update([
+	    'amount' => $settlementAmount,
+	    'withholding_id' => $withholding->id
+        ]);
+        $settlement->payment()->first()->updateAmount();
+
+     
         return response()->json([
             'success' => true,
             'message' => '¡Retención de monto '.$withholding->amount.' realizada!'
