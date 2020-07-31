@@ -21,6 +21,7 @@ const create = (props) => {
   const { taxpayer, user } = props;
   const [data, setData] = useState({});
   const [months, setMonths] = useState([]);
+  const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(true);
   const {control, register, handleSubmit} = useForm();
 
@@ -32,12 +33,13 @@ const create = (props) => {
   }, [props]);
 
   const onSubmit = (data) => {
+    setDisable(true);
     axios.post(`taxpayers/${taxpayer}/withholdings`, {
       ...data, user: user
     })
       .then(res => {
         const data = res.data;
-        
+        setDisable(false); 
         // Notify
         (data.success) ? Success(data.message) : Error(data.message);
       })
@@ -66,7 +68,7 @@ const create = (props) => {
             <input name="amount" placeholder="Monto" ref={register} className="form-control decimal-input-mask"/>
           </Col>
           <Col md={2}>
-            <button type="submit" className="btn btn-success">
+            <button type="submit" className="btn btn-success" disabled={disable}>
               Guardar
             </button>
           </Col>

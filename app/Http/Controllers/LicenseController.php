@@ -103,11 +103,11 @@ class LicenseController extends Controller
         }
 
         if ($correlativeType->description == 'R-') {
-            $useConformityPaid = Application::hasPaid($taxpayer, 4);
-
-            if ($useConformityPaid || !Auth::user()->hasRole('admin')) {
-                $isValid['error'] = true;
-                $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
+            $useConformityPaid = Application::hasPaid($taxpayer, 7);
+	
+            if (!$useConformityPaid && !Auth::user()->hasRole('admin')) {
+	        $isValid['error'] = true;
+	        $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
             }
         }
 
