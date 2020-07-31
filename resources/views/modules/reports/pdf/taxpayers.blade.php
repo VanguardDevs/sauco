@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 @php
-set_time_limit(120);
+ini_set('memory_limit', "800M");
+ini_set('max_execution_time', "800");
 @endphp
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -37,9 +38,6 @@ set_time_limit(120);
                 border-collapse: collapse;
                 width: 100%;                
                 margin-top: 5px;
-            }
-            .tables {
-                display:block;
             }
             .bill-info {
                 width: 100%;
@@ -81,36 +79,34 @@ set_time_limit(120);
                 <img src="{{ base_path().'/public/assets/images/logo.png' }}" height="70px" width="130px" alt="logo" />
             </div>
         </div>
-        <div class="tables">
-           <table style="text-align: center">
-                <caption>CONTRIBUYENTES REGISTRADOS</caption>
-                <thead>
-                  <tr>
-                    <th width="15%">RIF</th>
-                    <th width="35%">RAZÓN SOCIAL</th>
-                    <th width="50%">DIRECCIÓN FISCAL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                @foreach($taxpayers as $taxpayer)
-                 <tr>
-                    <td>{{ $taxpayer->rif }}</td> 
-                    <td>{{ $taxpayer->name }}</td>   
-                    <td>{{ $taxpayer->fiscal_address }}</td>
-                </tr>
-                @endforeach   
-             </table>
-            <br>
-            <div class="bill-info">
-                <div class="col-bill-info">
-                    FECHA DE EMISIÓN: {{ $emissionDate }}
-                </div>
-                <div class="col-bill-info">
-                    <div class="total-amount">
-                        TOTAL: {{ $total }}
-                    </div>
-                </div>
-            </div>
-        </div>
+   	<table style="text-align: left">
+	<caption>CONTRIBUYENTES REGISTRADOS</caption>
+	<thead>
+	  <tr>
+	    <th width="15%">RIF</th>
+	    <th width="35%">RAZÓN SOCIAL</th>
+	    <th width="50%">DIRECCIÓN FISCAL</th>
+	  </tr>
+	</thead>
+	<tbody>
+	@foreach($taxpayers as $taxpayer)
+	 <tr>
+	    <td>{{ $taxpayer->rif }}</td> 
+	    <td>{{ $taxpayer->name }}</td>   
+	    <td>{{ $taxpayer->fiscal_address }}</td>
+	</tr>
+	@endforeach   
+     </table>
+    <br>
+    <div class="bill-info">
+	<div class="col-bill-info">
+	    FECHA DE EMISIÓN: {{ $emissionDate }}
+	</div>
+	<div class="col-bill-info">
+	    <div class="total-amount">
+		TOTAL: {{ $total }}
+	    </div>
+	</div>
+    </div>
     </body>
 </html>

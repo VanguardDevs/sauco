@@ -30,4 +30,9 @@ class Correlative extends Model
     {
         return $this->belongsTo(CorrelativeNumber::class);
     }
+
+    public function license()
+    {
+        return $this->hasOne(License::class);
+    }
 }

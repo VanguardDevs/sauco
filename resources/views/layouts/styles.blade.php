@@ -2,8 +2,6 @@
 
 <!--begin::Fonts -->
 
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,700&display=swap" rel="stylesheet">
-
 <!--end::Fonts -->
 
 <link rel="stylesheet" href="{{ asset('assets/css/login-1.css') }}">

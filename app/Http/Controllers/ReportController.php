@@ -85,7 +85,8 @@ class ReportController extends Controller
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
         $total = Taxpayer::count();
 
-        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate', 'total']));
+	$pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate', 'total']))
+		->setPaper('a4', 'letter');
         return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
     }
 
