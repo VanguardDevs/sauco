@@ -93,13 +93,13 @@ class WithholdingController extends Controller
         if ($settlementAmount < 0) {
             return response()->json([
                 'success' => false,
-                'message' => '¡El monto a retener se excede del monto declarado!'
+                'message' => '¡El monto a retener se excede del monto de la liquidación!. ('.$settlement->total_amount.').'
             ]);
         }
         if ($affidavit->withholding()->first()) {
             return response()->json([
                 'success' => false,
-                'message' => '¡Ya existe una declaración realizada por este mes!'
+                'message' => '¡Ya existe una retención realizada para la liquidación seleccionada!'
             ]);
         }
         if ($affidavit->payment()->first()->state_id == 2) {
@@ -116,9 +116,9 @@ class WithholdingController extends Controller
             'user_id' => $user
         ]);
  	
-	$settlement->update([
-	    'amount' => $settlementAmount,
-	    'withholding_id' => $withholding->id
+	    $settlement->update([
+            'amount' => $settlementAmount,
+            'withholding_id' => $withholding->id
         ]);
         $settlement->payment()->first()->updateAmount();
 
