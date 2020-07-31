@@ -132,6 +132,16 @@ class ReportController extends Controller
         return $taxpayers;
     }
 
+    public function printActivitiesReport()
+    {
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+        $activities = EconomicActivity::get();
+        $total = EconomicActivity::count();
+
+        $pdf = PDF::loadView('modules.reports.pdf.activities', compact(['activities', 'total', 'emissionDate' ]))->setPaper('a4', 'letter');
+        return $pdf->download('actividades-economicas.pdf');
+    }
+
     public function printUpToDate()
     {
         $taxpayers = $this->upToDateTaxpayers()->get();
