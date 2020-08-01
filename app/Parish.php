@@ -14,4 +14,14 @@ class Parish extends Model
     {
         return $this->belongsToMany(Community::class);
     }
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
+    public function taxpayers()
+    {
+        return $this->hasMany(Taxpayer::class);
+    }
 }

@@ -13,13 +13,26 @@ class Company extends Model
 
     protected $fillable = [
         'name',
+        'address',
         'capital',
         'num_workers',
+        'parish_id',
+        'community_id',
         'taxpayer_id'
     ];
 
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);
+    }
+
+    public function parish()
+    {
+        return $this->belongsTo(Parish::class);
+    }
+
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
     }
 }

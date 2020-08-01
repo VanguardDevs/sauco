@@ -25,6 +25,11 @@ class Community extends Model
         return $this->hasMany(Taxpayer::class);
     }
 
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
     public function getParishNamesAttribute()
     {
         return $this->parishes()->get()->implode('name', ', ');

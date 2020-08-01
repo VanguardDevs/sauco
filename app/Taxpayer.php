@@ -22,6 +22,7 @@ class Taxpayer extends Model implements Auditable
         'phone',
         'email',
         'community_id',
+        'parish_id',
         'taxpayer_type_id',
         'taxpayer_classification_id',
     ];
@@ -54,6 +55,11 @@ class Taxpayer extends Model implements Auditable
     public function companies()
     {
         return $this->hasMany(Company::class);
+    }
+
+    public function parish()
+    {
+        return $this->belongsTo(Parish::class);
     }
 
     public function applications()
