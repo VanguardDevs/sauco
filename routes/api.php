@@ -22,6 +22,7 @@ Route::resource('old-payments', 'OldPaymentController');
 Route::resource('old-payments', 'OldPaymentController');
 Route::resource('invoice-models', 'InvoiceModelController');
 Route::resource('organization', 'OrganizationController');
+Route::resource('companies', 'CompanyController');
 Route::resource('taxpayers/{taxpayer}/withholdings', 'WithholdingController');
 Route::get('withholdings-months', 'WithholdingController@months');
 Route::resource('licenses', 'LicenseController');

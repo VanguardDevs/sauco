@@ -57,9 +57,17 @@
             </a>
         </li>
 
+        <li class="kt-menu__item {{ active('companies*') }}" aria-haspopup="true" >
+            <a href="{{ route('companies.index') }}" class="kt-menu__link" title="En construcción">
+                <i class="kt-menu__link-icon fas fa-city"></i>
+                <span class="kt-menu__link-text">Empresas</span>
+                <span class="kt-menu__link-badge"><span class="kt-badge kt-badge--warning kt-badge--inline">Nuevo</span>
+            </a>
+        </li>
+
         <li class="kt-menu__item {{ active('organization*') }}" aria-haspopup="true" >
             <a href="{{ route('organization.index') }}" class="kt-menu__link" title="En construcción">
-                <i class="kt-menu__link-icon fas fa-city"></i>
+                <i class="kt-menu__link-icon fas fa-building"></i>
                 <span class="kt-menu__link-text">Organización</span>
                 <span class="kt-menu__link-badge"><span class="kt-badge kt-badge--warning kt-badge--inline">Nuevo</span>
             </a>

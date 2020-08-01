@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialDenomination;
+use App\Company;
 use Illuminate\Http\Request;
 
-class CommercialDenominationController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->wantsJson()) {
+            return Company::with(['taxpayer:id,taxpayer_type_id,rif'])->get();
+        }
+
+        return view('modules.companies.index');
     }
 
     /**
@@ -41,10 +45,10 @@ class CommercialDenominationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(CommercialDenomination $commercialDenomination)
+    public function show(Company $company)
     {
         //
     }
@@ -52,10 +56,10 @@ class CommercialDenominationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit(CommercialDenomination $commercialDenomination)
+    public function edit(Company $company)
     {
         //
     }
@@ -64,10 +68,10 @@ class CommercialDenominationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CommercialDenomination $commercialDenomination)
+    public function update(Request $request, Company $company)
     {
         //
     }
@@ -75,10 +79,10 @@ class CommercialDenominationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CommercialDenomination $commercialDenomination)
+    public function destroy(Company $company)
     {
         //
     }

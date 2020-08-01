@@ -27,6 +27,7 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 Route::prefix('/')->middleware('auth')->group(function()
 {
+    Route::get('companies', 'CompanyController@index')->name('companies.index');
     /**
      * Available for all users logged in
      */

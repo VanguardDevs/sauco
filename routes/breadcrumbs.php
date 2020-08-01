@@ -8,6 +8,12 @@ Breadcrumbs::for('change-password.show', function ($trail) {
 });
 
 /*----------  Cashbox ----------*/
+Breadcrumbs::for('companies.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Empresas', route('companies.index'));
+});
+
+/*----------  Cashbox ----------*/
 Breadcrumbs::for('licenses.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Licencias', route('licenses.index'));

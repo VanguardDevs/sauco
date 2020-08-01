@@ -15,6 +15,8 @@ require('./screens/taxpayers/OldPayments');
 
 require('./screens/Settings/Index');
 
+require('./screens/companies/index');
+
 require('./screens/licenses/index');
 
 require('./screens/organization/index');
