@@ -20,6 +20,8 @@ class RenameCommercialDenominationsTable extends Migration
             $table->decimal('capital', 20, 2)->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->unsignedBigInteger('community_id')->nullable();
+            $table->unsignedBigInteger('parish_id')->nullable();
         });
 
         Schema::rename('commercial_denominations', 'companies');
