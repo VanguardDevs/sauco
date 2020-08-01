@@ -28,10 +28,9 @@ class RepresentationController extends Controller
      */
     public function create(Taxpayer $taxpayer)
     {
-        if (($taxpayer->taxpayerType->description != 'JURÍDICO') && 
-            (!$taxpayer->commercialDenomination->exists())) {
-                return redirect('taxpayers/'.$taxpayer->id)
-                    ->withError('¡Este contribuyente no admite un representante!');
+        if ($taxpayer->taxpayerType->description != 'JURÍDICO') {
+            return redirect('taxpayers/'.$taxpayer->id)
+                ->withError('¡Este contribuyente no admite un representante!');
         }
 
         return view('modules.taxpayers.representations.register')
