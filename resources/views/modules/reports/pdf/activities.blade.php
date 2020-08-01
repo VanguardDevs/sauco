@@ -9,7 +9,7 @@ ini_set('max_execution_time', "800");
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Contribuyentes registrados </title>
+        <title> Actividades Económicas Registradas </title>
         <style>
            body {
                 font-family: sans-serif, serif;
@@ -80,20 +80,22 @@ ini_set('max_execution_time', "800");
             </div>
         </div>
    	<table style="text-align: left">
-	<caption>CONTRIBUYENTES REGISTRADOS</caption>
+	<caption>ACTIVIDADES ECONÓMICAS</caption>
 	<thead>
 	  <tr>
-	    <th width="15%">RIF</th>
-	    <th width="35%">RAZÓN SOCIAL</th>
-	    <th width="50%">DIRECCIÓN FISCAL</th>
+	    <th width="10%">CÓDIGO</th>
+	    <th width="70%">NOMBRE</th>
+	    <th width="10%">ALÍCUOTA</th>
+	    <th width="10%">MÍNIMO TRIBUTABLE</th>
 	  </tr>
 	</thead>
 	<tbody>
-	@foreach($taxpayers as $taxpayer)
+	@foreach($activities as $activity)
 	 <tr>
-	    <td>{{ $taxpayer->rif }}</td> 
-	    <td>{{ $taxpayer->name }}</td>   
-	    <td>{{ $taxpayer->fiscal_address }}</td>
+	    <td>{{ $activity->code }}</td> 
+	    <td>{{ $activity->name }}</td>   
+	    <td>{{ $activity->aliquote }}</td>
+	    <td>{{ $activity->min_tax }}</td>
 	</tr>
 	@endforeach   
      </table>

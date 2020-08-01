@@ -86,7 +86,8 @@ class ReportController extends Controller
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
         $total = Taxpayer::count();
 
-        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate', 'total']));
+	$pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate', 'total']))
+		->setPaper('a4', 'letter');
         return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
     }
 
@@ -130,6 +131,16 @@ class ReportController extends Controller
         });
 
         return $taxpayers;
+    }
+
+    public function printActivitiesReport()
+    {
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+        $activities = EconomicActivity::get();
+        $total = EconomicActivity::count();
+
+        $pdf = PDF::loadView('modules.reports.pdf.activities', compact(['activities', 'total', 'emissionDate' ]))->setPaper('a4', 'letter');
+        return $pdf->download('actividades-economicas.pdf');
     }
 
     public function printUpToDate()
