@@ -21,8 +21,11 @@ Route::get('/', function () {
     }
 });
 
+Route::get('/app', function() {
+    return view('app');
+});
+
 Route::get('login', 'Auth\LoginController@index')->name('login');
-Route::post('login', 'Auth\LoginController@authenticate')->name('authenticate');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::prefix('/')->middleware('auth')->group(function()

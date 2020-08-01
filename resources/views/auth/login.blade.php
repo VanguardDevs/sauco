@@ -17,7 +17,7 @@
                     <div class="kt-login__title">
                        <h3>Inicio de Sesión</h3>
                     </div>
-                    <form class="kt-form" method="POST" action="{{ route('authenticate') }}" autocomplete="off">
+                    <form class="kt-form" method="POST" action="{{ route('login') }}" autocomplete="off">
                         @csrf
                         <div class="form-group">
                             <input type="text" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="login" autofocus placeholder="Usuario">
