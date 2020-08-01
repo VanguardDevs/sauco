@@ -110,7 +110,7 @@
         @if (@Auth::user()->hasRole('admin'))
         <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
             <a  href="{{ url('settings') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon2-dashboard"></i>
+                <i class="kt-menu__link-icon fas fa-hammer"></i>
                 <span class="kt-menu__link-text">Configuraciones</span>
             </a>
         </li>

@@ -19,7 +19,7 @@ Route::middleware('auth:api')->group(function () {
 **/
 
 Route::resource('old-payments', 'OldPaymentController');
-Route::resource('old-payments', 'OldPaymentController');
+Route::resource('fiscal-years', 'YearController');
 Route::resource('invoice-models', 'InvoiceModelController');
 Route::resource('organization', 'OrganizationController');
 Route::resource('companies', 'CompanyController');
