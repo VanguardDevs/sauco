@@ -88821,9 +88821,26 @@ var rowStyle = {
   'left': '0px'
 };
 
-var Table = function Table(_ref) {
-  var columns = _ref.columns,
-      data = _ref.data;
+var GlobalFilter = function GlobalFilter(_ref) {
+  var preGlobalFilteredRows = _ref.preGlobalFilteredRows,
+      globalFilter = _ref.globalFilter,
+      setGlobalFilter = _ref.setGlobalFilter;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Buscar:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    value: globalFilter || '',
+    onChange: function onChange(e) {
+      setGlobalFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+    },
+    placeholder: "records...",
+    style: {
+      fontSize: '1.1rem',
+      border: '0'
+    }
+  }));
+};
+
+var Table = function Table(_ref2) {
+  var columns = _ref2.columns,
+      data = _ref2.data;
 
   var _useTable = Object(react_table__WEBPACK_IMPORTED_MODULE_1__["useTable"])({
     columns: columns,
@@ -88832,7 +88849,7 @@ var Table = function Table(_ref) {
       pageIndex: 0,
       pageSize: 5
     }
-  }, react_table__WEBPACK_IMPORTED_MODULE_1__["useSortBy"], react_table__WEBPACK_IMPORTED_MODULE_1__["usePagination"]),
+  }, react_table__WEBPACK_IMPORTED_MODULE_1__["useGlobalFilter"], react_table__WEBPACK_IMPORTED_MODULE_1__["useSortBy"], react_table__WEBPACK_IMPORTED_MODULE_1__["usePagination"]),
       getTableProps = _useTable.getTableProps,
       getTableBodyProps = _useTable.getTableBodyProps,
       headerGroups = _useTable.headerGroups,
@@ -88846,9 +88863,12 @@ var Table = function Table(_ref) {
       nextPage = _useTable.nextPage,
       previousPage = _useTable.previousPage,
       setPageSize = _useTable.setPageSize,
+      preGlobalFilteredRows = _useTable.preGlobalFilteredRows,
+      setGlobalFilter = _useTable.setGlobalFilter,
       _useTable$state = _useTable.state,
       pageIndex = _useTable$state.pageIndex,
-      pageSize = _useTable$state.pageSize;
+      pageSize = _useTable$state.pageSize,
+      globalFilter = _useTable$state.globalFilter;
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded"
@@ -88856,7 +88876,11 @@ var Table = function Table(_ref) {
     className: "kt-datatable__table"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
     className: "kt-datatable__head"
-  }, headerGroups.map(function (headerGroup) {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GlobalFilter, {
+    preGlobalFilteredRows: preGlobalFilteredRows,
+    globalFilter: globalFilter,
+    setGlobalFilter: setGlobalFilter
+  }))), headerGroups.map(function (headerGroup) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", _extends({}, headerGroup.getHeaderGroupProps(), {
       className: "kt-datatable__row"
     }), headerGroup.headers.map(function (column) {

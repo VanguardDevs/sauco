@@ -1,9 +1,30 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useTable, useSortBy, usePagination } from 'react-table';
+import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table';
 
 const rowStyle = {
   'left': '0px'
 };
+
+const GlobalFilter = ({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) => (
+  <span>
+    Buscar:{' '}
+    <input
+      value={globalFilter || ''}
+      onChange={e => {
+        setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+      }}
+      placeholder={`records...`}
+      style={{
+        fontSize: '1.1rem',
+        border: '0',
+      }}
+    />
+  </span>
+);
 
 const Table = ({ columns, data }) => {
   const {
@@ -20,20 +41,32 @@ const Table = ({ columns, data }) => {
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize },
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state: { pageIndex, pageSize, globalFilter },
   } = useTable({ 
-    columns,
-    data,
-    initialState: { pageIndex: 0, pageSize: 5 },
-  }, 
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 5 },
+    }, 
+    useGlobalFilter,
     useSortBy, 
-    usePagination
+    usePagination,
   );
 
   return (
     <div className='kt-datatable kt-datatable--default kt-datatable--scroll kt-datatable--loaded'>
       <table {...getTableProps()} className="kt-datatable__table">
-        <thead className="kt-datatable__head">
+         <thead className="kt-datatable__head">
+           <tr>
+              <th>
+                <GlobalFilter
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  globalFilter={globalFilter}
+                  setGlobalFilter={setGlobalFilter}
+                />
+              </th>
+            </tr>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()} className="kt-datatable__row">
               {headerGroup.headers.map(column => (
