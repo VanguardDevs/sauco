@@ -6,29 +6,6 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-3 col-sm-12">
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__body">
-                <div class="kt-widget4">
-                    <a href="{{ Route('representations.index') }}" class="kt-widget4__item">
-                        <div class="kt-widget4__icon">
-                            <i class="flaticon-users-1"></i>
-                        </div>
-                        <div class="kt-widget4__title kt-widget4__title--dark">
-                            <div class="kt-notification__item-title">
-                                Representantes
-                            </div>
-                            <small>
-                            {{ $numPersons }} personas registradas
-                            </small>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-lg-12">
         <div class="kt-portlet">
             <div class="kt-portlet__head">

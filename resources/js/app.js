@@ -23,6 +23,8 @@ require('./screens/companies/index');
 
 require('./screens/licenses/index');
 
+require('./screens/people/index');
+
 require('./screens/organization/index');
 
 require('./screens/Settings/InvoiceModels/Index');

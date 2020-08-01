@@ -14,6 +14,12 @@ Breadcrumbs::for('companies.index', function ($trail) {
 });
 
 /*----------  Cashbox ----------*/
+Breadcrumbs::for('people.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Personas', route('people.index'));
+});
+
+/*----------  Cashbox ----------*/
 Breadcrumbs::for('licenses.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Licencias', route('licenses.index'));

@@ -240,7 +240,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('taxpayers/{taxpayer}/representation/create', 'RepresentationController@store')->name('representation.store');
     });
     Route::resource('people', 'PersonController');
-    Route::resource('taxpayers/representations', 'RepresentationController')->except(['create', 'store']);
 
     /**
      * Taxpayer's routes
@@ -259,7 +258,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     /** 
      * Listing routes
      */
-    Route::get('representations/list', 'RepresentationController@list');
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
