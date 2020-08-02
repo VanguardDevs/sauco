@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
 
-class Affidavit extends Model
+class Affidavit extends Model implements Auditable
 {
+    use Audit;
     use SoftDeletes;
 
     protected $table = 'affidavits';

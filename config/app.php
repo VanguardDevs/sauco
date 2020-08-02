@@ -170,6 +170,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
     	OwenIt\Auditing\AuditingServiceProvider::class,
 	    RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
