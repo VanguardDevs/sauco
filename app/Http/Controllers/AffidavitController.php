@@ -250,6 +250,11 @@ class AffidavitController extends Controller
      */
     public function makePayment(Affidavit $affidavit)
     {
+        if ($affidavit->payment()->count() > 0) {
+            return redirect()->route('affidavits.index', $affidavit->taxpayer)
+                ->withError('¡La declaración tiene una factura realizada!');
+        }
+
         $payment = Payment::create([
             'state_id' => 1,
             'user_id' => $affidavit->user_id,
@@ -272,8 +277,7 @@ class AffidavitController extends Controller
         $this->applyFine($affidavit, $payment);
         $payment->updateAmount();
 
-        return redirect()->route('affidavits.index', $affidavit->taxpayer)
-            ->withSuccess('¡Factura realizada!');
+        return redirect()->route('payments.show', $payment->id);
     }
     
     public function message(Month $month)
