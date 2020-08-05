@@ -21,6 +21,11 @@ class Company extends Model
         'taxpayer_id'
     ];
 
+    public function affidavits()
+    {
+        return $this->hasMany(Affidavit::class);
+    }
+
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);
@@ -34,5 +39,10 @@ class Company extends Model
     public function community()
     {
         return $this->belongsTo(Community::class);
+    }
+
+    public function economicActivities()
+    {
+        return $this->belongsToMany(EconomicActivity::class);
     }
 }

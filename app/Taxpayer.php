@@ -27,6 +27,11 @@ class Taxpayer extends Model implements Auditable
         'taxpayer_classification_id',
     ];
 
+    public function affidavits()
+    {
+        return $this->hasMany(Affidavit::class);
+    }
+
     public function representations()
     {
         return $this->hasMany(Representation::class);
@@ -40,11 +45,6 @@ class Taxpayer extends Model implements Auditable
     public function taxpayerType()
     {
         return $this->belongsTo(TaxpayerType::class);
-    }
-
-    public function economicActivities()
-    {
-        return $this->belongsToMany(EconomicActivity::class);
     }
 
     public function licenses()
@@ -86,11 +86,6 @@ class Taxpayer extends Model implements Auditable
     {
         return $this->hasManyThrough(Withholding::class, Affidavit::class);
     } 
-
-    public function affidavits()
-    {
-        return $this->hasMany(Affidavit::class);
-    }
 
     public function community()
     {
