@@ -35,10 +35,10 @@ class FineController extends Controller
     public function list(Taxpayer $taxpayer)
     {
         $query = Fine::whereTaxpayerId($taxpayer->id)
-            ->with(['concept', 'payment'])
-            ->get();
+            ->orderBy('fines.created_at', 'DESC')
+            ->with(['concept', 'payment']);
 
-        return DataTables::of($query)
+        return DataTables::eloquent($query)
             ->toJson();
     }
 
@@ -76,24 +76,30 @@ class FineController extends Controller
             'amount' => $amount
         ]);
 
-        $payment = $taxpayer->payments()->create([
+        return redirect()->route('taxpayer.fines', $taxpayer)
+            ->withSuccess('¡Multa aplicada!');
+    }
+
+    public function makePayment(Fine $fine)
+    {
+        $payment = $fine->payment()->create([
             'state_id' => 1,
             'user_id' => auth()->user()->id,
-            'amount' => $amount,
+            'amount' => $fine->amount,
             'payment_method_id' => 1,
             'invoice_model_id' => 1,
             'payment_type_id' => 1,
+            'taxpayer_id' => $fine->taxpayer_id
         ]);
 
         $fine->settlement()->create([
             'num' => Settlement::newNum(),
             'object_payment' => $concept->name,
             'payment_id' => $payment->id,
-            'amount' => $amount
+            'amount' => $fine->amount
         ]);
 
-        return redirect()->route('taxpayer.fines', $taxpayer)
-            ->withSuccess('¡Multa creada!');
+        return redirect()->route('payments.show', $payment);
     }
 
     /**

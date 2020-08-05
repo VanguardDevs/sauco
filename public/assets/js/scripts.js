@@ -741,6 +741,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/fines/${oData.id}/payment/new title='Facturar'>
+                            <i class='btn-sm btn-success fas fa-money-check'></i>
+                        </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>               
@@ -810,6 +813,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/affidavits/${oData.id}/payment/new title='Facturar'>
+                            <i class='btn-sm btn-success fas fa-money-check'></i>
+                        </a>
                         <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Ver declaración jurada de ingresos'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>

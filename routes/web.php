@@ -186,6 +186,7 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('taxpayer.fines');
         Route::post('taxpayers/{taxpayer}/fines/create', 'FineController@store')
             ->name('fines.new');        
+        Route::get('fines/{fine}/payment/new', 'FineController@makePayment');
         Route::resource('fines', 'FineController');
 
         /**

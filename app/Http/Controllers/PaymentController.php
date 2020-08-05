@@ -56,7 +56,7 @@ class PaymentController extends Controller
     {
         $query = Payment::with(['state', 'user'])
             ->whereTaxpayerId($taxpayer->id)
-            ->orderBy('id', 'DESC')
+            ->orderBy('processed_at', 'ASC')
             ->get();
 
         return DataTables::of($query)->toJson();

@@ -17,6 +17,10 @@ class Fine extends Model implements Auditable
 
     protected $guarded = [];
 
+    protected $casts = [
+        'amount' => 'float'
+    ];  
+
     public function settlementHelpler($paymentId)
     {
         $payment = Payment::find($paymentId);
