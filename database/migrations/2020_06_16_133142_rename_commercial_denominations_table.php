@@ -19,6 +19,7 @@ class RenameCommercialDenominationsTable extends Migration
             $table->boolean('active')->default(1);
             $table->boolean('principal')->default(1);
             $table->decimal('capital', 20, 2)->nullable();
+            $table->date('constitution_date')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->unsignedBigInteger('community_id')->nullable();
