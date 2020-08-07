@@ -47,5 +47,6 @@ if (document.getElementById('taxpayer')) {
   
   ReactDOM.render(<EconomicActivities {...props} />, document.getElementById('economic-activities'));
   ReactDOM.render(<Representations {...props} />, document.getElementById('representations'));
-  ReactDOM.render(<Index {...props} />, document.getElementById('row'));
+  
+  ReactDOM.render(<Index {...props} />, document.getElementById('profile'));
 }

@@ -36,7 +36,7 @@ class FineController extends Controller
     {
         $query = Fine::whereTaxpayerId($taxpayer->id)
             ->orderBy('fines.created_at', 'DESC')
-            ->with(['concept', 'payment']);
+            ->with(['concept:id,name']);
 
         return DataTables::eloquent($query)
             ->toJson();
@@ -82,7 +82,12 @@ class FineController extends Controller
 
     public function makePayment(Fine $fine)
     {
-        $payment = $fine->payment()->create([
+        if ($fine->payment()->exists()) {
+            return redirect()->route('taxpayer.fines', $fine->taxpayer)
+                ->withError('¡La multa tiene una factura realizada!');
+        }
+
+        $payment = Payment::create([
             'state_id' => 1,
             'user_id' => auth()->user()->id,
             'amount' => $fine->amount,
@@ -94,7 +99,7 @@ class FineController extends Controller
 
         $fine->settlement()->create([
             'num' => Settlement::newNum(),
-            'object_payment' => $concept->name,
+            'object_payment' => $fine->concept->name,
             'payment_id' => $payment->id,
             'amount' => $fine->amount
         ]);

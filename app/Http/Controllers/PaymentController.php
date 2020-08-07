@@ -56,10 +56,9 @@ class PaymentController extends Controller
     {
         $query = Payment::with(['state', 'user'])
             ->whereTaxpayerId($taxpayer->id)
-            ->orderBy('processed_at', 'ASC')
-            ->get();
+            ->orderBy('processed_at', 'DESC');
 
-        return DataTables::of($query)->toJson();
+        return DataTables::eloquent($query)->toJson();
     }
 
     public function onlyNull()

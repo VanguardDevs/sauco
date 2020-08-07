@@ -65,8 +65,8 @@
               <tr>
                 <th width="15%">Nro.</th>
                 <th width="15%">Estado</th>
-                <th width="25%">Liquidador</th>
-                <th width="15%">Creada</th>
+                <th width="25%">Recaudador</th>
+                <th width="15%">Procesada</th>
                 <th width="15%">Monto</th>
                 <th width="15%">Acciones</th>
               </tr>
@@ -77,7 +77,8 @@
     </div>
 </div>
 
-@if(Auth::user()->can('access.taxpayer-info'))
+<div id="profile"></div>
+
 <div class="row">
     @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
     <div class="col-xl-6 col-sm-6">
@@ -121,7 +122,4 @@
         </div>
     </div>
 </div>
-<div id="row">
-</div>
-@endif
 @endsection
