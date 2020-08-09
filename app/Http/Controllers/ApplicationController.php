@@ -57,8 +57,8 @@ class ApplicationController extends Controller
     public function makePayment(Application $application)
     {
         if ($application->payment()->exists()) {
-            return redirect()->route('applications.index', $application->taxpayer)
-                ->withError('¡La multa tiene una factura realizada!');
+            return redirect()
+                ->route('payments.show', $application->payment()->first());
         }
 
         $payment = Payment::create([

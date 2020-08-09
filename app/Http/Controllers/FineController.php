@@ -83,8 +83,8 @@ class FineController extends Controller
     public function makePayment(Fine $fine)
     {
         if ($fine->payment()->exists()) {
-            return redirect()->route('taxpayer.fines', $fine->taxpayer)
-                ->withError('¡La multa tiene una factura realizada!');
+            return redirect()
+                ->route('payments.show', $fine->payment()->first());
         }
 
         $payment = Payment::create([

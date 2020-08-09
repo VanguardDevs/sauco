@@ -251,8 +251,8 @@ class AffidavitController extends Controller
     public function makePayment(Affidavit $affidavit)
     {
         if ($affidavit->payment()->count() > 0) {
-            return redirect()->route('affidavits.index', $affidavit->taxpayer)
-                ->withError('¡La declaración tiene una factura realizada!');
+            return redirect()
+                ->route('payments.show', $affidavit->payment()->first());
         }
 
         $payment = Payment::create([

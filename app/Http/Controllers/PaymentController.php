@@ -11,7 +11,6 @@ use App\Taxpayer;
 use App\Organization;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Services\PaymentService;
 use Carbon\Carbon;
 use PDF;
 use Auth;
@@ -23,11 +22,9 @@ class PaymentController extends Controller
      * @var $typeform
      */
     private $typeform = 'show';
-    private $payment;
 
-    public function __construct(PaymentService $payment)
+    public function __construct()
     {
-        $this->payment = $payment;
         $this->middleware('can:null.payments')->only('destroy');
         $this->middleware('can:process.payments')->only('update');
         $this->middleware('auth');
@@ -128,15 +125,23 @@ class PaymentController extends Controller
                         ->withError('¡Faltan datos!');
             }
 
-            $this->payment->makeReference($payment, $reference);
+            $payment->reference()->create([
+                'reference' => $reference,
+                'account_id' => 1, 
+            ]);
         }
 
-        $data = Array(
+        $paymentNum = Payment::newNum();
+        $processedAt = Carbon::now();
+
+        $payment->update([
+            'user_id' => Auth::user()->id, 
             'payment_method_id' => $request->input('method'),
-            'observations' => $request->input('observations')
-        );
-        
-        $this->payment->update($payment, $data);
+            'state_id' => 2,
+            'observations' => $request->input('observations'),
+            'num' => $paymentNum,
+            'processed_at' => $processedAt
+        ]);
 
         return redirect()->back()
             ->withSuccess('¡Factura procesada!');

@@ -94,7 +94,7 @@
                 <div class="col-md-12">
                     <label class="control-label">Referencia del pago <span class="text-danger">*</span></label>
                     {!!
-                    Form::text("reference", old('trade_denomination', @$row->denomination), [
+                    Form::text("reference", old('trade_denomination', null), [
                         "class" => "form-control"
                     ])
                     !!}
