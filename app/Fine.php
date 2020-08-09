@@ -66,11 +66,6 @@ class Fine extends Model implements Auditable
         return $this->hasOne(Settlement::class);
     }
 
-    public function getAmountAttribute($value)
-    {
-        return number_format($value, 2, ',', '.');
-    }
-
     public function getCreatedAtAttribute($value)
     {
         return Date('d/m/Y H:m', strtotime($value));

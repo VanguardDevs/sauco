@@ -56,7 +56,6 @@
                 <span class="kt-menu__link-text">Contribuyentes</span>
             </a>
         </li>
-
         <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
             <a href="{{ url('economic-activities') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon fas fa-percentage"></i>
@@ -64,7 +63,7 @@
             </a>
         </li>
 
-        @if (@Auth::user()->can('access.licenses'))
+        @if (@Auth::user()->hasRole('admin'))
         <li class="kt-menu__item {{ active('companies*') }}" aria-haspopup="true" >
             <a href="{{ route('companies.index') }}" class="kt-menu__link" title="En construcción">
                 <i class="kt-menu__link-icon fas fa-store"></i>
@@ -80,7 +79,6 @@
                 <span class="kt-menu__link-badge"><span class="kt-badge kt-badge--warning kt-badge--inline">Nuevo</span>
             </a>
         </li>
-
         <li class="kt-menu__item {{ active('licenses*') }}" aria-haspopup="true" >
             <a href="{{ route('licenses.index') }}" class="kt-menu__link" title="En construcción">
                 <i class="kt-menu__link-icon fas fa-book-reader"></i>

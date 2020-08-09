@@ -91010,7 +91010,7 @@ if (document.getElementById('taxpayer')) {
   }), document.getElementById('taxpayer-payments'));
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EconomicActivities__WEBPACK_IMPORTED_MODULE_6__["default"], props), document.getElementById('economic-activities'));
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Representations__WEBPACK_IMPORTED_MODULE_3__["default"], props), document.getElementById('representations'));
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, props), document.getElementById('row'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, props), document.getElementById('profile'));
 }
 
 /***/ }),

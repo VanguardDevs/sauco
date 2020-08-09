@@ -701,8 +701,8 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'concept.name', name: 'concept.name' },
             { data: 'amount', name: 'amount' },
+            { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
             {
                 data: "id",
@@ -739,9 +739,12 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>               
+                      <a class="mr-2" href=${baseURL}/applications/${oData.id}/payment/new title='Facturar'>
+                        <i class='btn-sm btn-success fas fa-money-check'></i>
+                      </a>
+                      <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
+                        <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                      </a>               
                     </div>`
                     );
                 }

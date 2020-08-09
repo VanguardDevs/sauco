@@ -172,62 +172,58 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('payments.download');
     Route::resource('payments', 'PaymentController');
 
-   /**
-    * Routes for settlements
-    */
-   Route::group(['middleware' => 'can:access.taxpayer-info'], function () {
         
-        /**
-        * Taxpayer's affidavits
-         */
-        Route::group(['middleware' => 'can:process.settlements'], function() {
-            Route::get('affidavits/{affidavit}/normal', 'AffidavitController@normalCalcForm')
-                ->name('affidavits.show');
-            Route::get('affidavits/{affidavit}/group', 'AffidavitController@groupActivityForm')
-                ->name('affidavits.group');
-            Route::get('affidavits/{affidavit}/payment/new', 'AffidavitController@makePayment')
-                ->name('affidavits.payment');
-        });
-        Route::resource('affidavits', 'AffidavitController');
+    /**
+    * Taxpayer's affidavits
+     */
+    Route::get('affidavits/{affidavit}/normal', 'AffidavitController@normalCalcForm')
+        ->name('affidavits.show');
+    Route::get('affidavits/{affidavit}/group', 'AffidavitController@groupActivityForm')
+        ->name('affidavits.group');
+    Route::get('affidavits/{affidavit}/payment/new', 'AffidavitController@makePayment')
+        ->middleware('can:process.payments')
+        ->name('affidavits.payment');
+    Route::resource('affidavits', 'AffidavitController');
 
-        /**
-         * Taxpayer's Fines
-         */
-        Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
-        Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
-            ->name('taxpayer.fines');
-        Route::post('taxpayers/{taxpayer}/fines/create', 'FineController@store')
-            ->name('fines.new');        
-        Route::get('fines/{fine}/payment/new', 'FineController@makePayment');
-        Route::resource('fines', 'FineController');
+    /**
+     * Taxpayer's Fines
+     */
+    Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
+    Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
+        ->name('taxpayer.fines');
+    Route::post('taxpayers/{taxpayer}/fines/create', 'FineController@store')
+        ->name('fines.new');        
+    Route::get('fines/{fine}/payment/new', 'FineController@makePayment')
+        ->middleware('can:process.payments');
+    Route::resource('fines', 'FineController');
 
-        /**
-         * Taxpayer's application
-         */
-        Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
-        Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
+    /**
+     * Taxpayer's application
+     */
+    Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
+    Route::get('applications/{application}/payment/new', 'ApplicationController@makePayment')
+        ->middleware('can:process.payments');
+    Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
-        /**
-         * Taxpayer's old payments
-         */
-        Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
-            ->name('taxpayer.old-payments');
+    /**
+     * Taxpayer's old payments
+     */
+    Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
+        ->name('taxpayer.old-payments');
 
-        /**
-         * Taxpayer's permits
-         */
-        Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
-        Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
-        
-        /**
-         * Taxpayer's Withholdings
-         */
-        Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
-            ->name('withholdings.index');
-        Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
-        Route::resource('taxpayer/{taxpayer}/withholdings', 'WithholdingController');
-
-   });
+    /**
+     * Taxpayer's permits
+     */
+    Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
+    Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
+    
+    /**
+     * Taxpayer's Withholdings
+     */
+    Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
+        ->name('withholdings.index');
+    Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
+    Route::resource('taxpayer/{taxpayer}/withholdings', 'WithholdingController');
 
     /**
      * Handle settlements and payments

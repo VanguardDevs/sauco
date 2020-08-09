@@ -103,8 +103,13 @@
         <div class="card-footer">
             @if($typeForm == 'show')
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+            @if($row->payment()->exists())
+            <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info">
+                <i class="fas fa-money-check"></i> Ver factura
+            </a>
             @endif
-           @else
+            @endif
+            @if($typeForm == 'edit-group' || $typeForm == 'edit-normal')
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
             <button  type="submit" class="btn btn-primary">
                 <i class="fas fa-calculator"></i>

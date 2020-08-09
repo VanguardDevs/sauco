@@ -54,6 +54,34 @@ class ApplicationController extends Controller
         //
     }
 
+    public function makePayment(Application $application)
+    {
+        if ($application->payment()->exists()) {
+            return redirect()->route('applications.index', $application->taxpayer)
+                ->withError('¡La multa tiene una factura realizada!');
+        }
+
+        $payment = Payment::create([
+            'state_id' => 1,
+            'user_id' => auth()->user()->id,
+            'amount' => $application->amount,
+            'payment_method_id' => 1,
+            'invoice_model_id' => 1,
+            'payment_type_id' => 1,
+            'taxpayer_id' => $application->taxpayer_id
+        ]);
+
+        $application->settlement()->create([
+            'num' => Settlement::newNum(),
+            'object_payment' => $application->concept->name,
+            'payment_id' => $payment->id,
+            'amount' => $application->amount
+        ]);
+
+        return redirect()->route('payments.show', $payment);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -69,22 +97,6 @@ class ApplicationController extends Controller
             'active' => 1,
             'concept_id' => $request->input('concepts'),
             'user_id' => auth()->user()->id,
-            'amount' => $amount
-        ]);
-
-        $payment = $taxpayer->payments()->create([
-            'state_id' => 1,
-            'user_id' => auth()->user()->id,
-            'amount' => $amount,
-            'payment_method_id' => 1,
-            'invoice_model_id' => 1,
-            'payment_type_id' => 1,
-        ]);
-
-        $application->settlement()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' => $concept->name,
-            'payment_id' => $payment->id,
             'amount' => $amount
         ]);
 

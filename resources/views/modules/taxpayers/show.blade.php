@@ -53,7 +53,8 @@
 
 <div id="taxpayer-payments"></div>
 
-@if(Auth::user()->can('access.taxpayer-info'))
+<div id="profile"></div>
+
 <div class="row">
     @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->companies()->first()))
     <div class="col-xl-6 col-sm-6">
@@ -97,7 +98,4 @@
         </div>
     </div>
 </div>
-<div id="row">
-</div>
-@endif
 @endsection

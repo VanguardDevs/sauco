@@ -15,6 +15,10 @@ class Application extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'amount' => 'float'
+    ];
+
     public static function hasPaid(Taxpayer $taxpayer, $code)
     {
         $application = $taxpayer
@@ -62,11 +66,6 @@ class Application extends Model
     public function settlement()
     {
         return $this->hasOne(Settlement::class);
-    }
-
-    public function getAmountAttribute($value)
-    {
-        return number_format($value, 2, ',', '.');
     }
 
     public function getCreatedAtAttribute($value)
