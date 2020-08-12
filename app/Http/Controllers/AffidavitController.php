@@ -251,8 +251,8 @@ class AffidavitController extends Controller
     public function makePayment(Affidavit $affidavit)
     {
         if ($affidavit->payment()->count() > 0) {
-            return redirect()
-                ->route('payments.show', $affidavit->payment()->first());
+            return redirect()->route('affidavits.index', $affidavit->taxpayer)
+                ->withError('¡La declaración tiene una factura realizada!');
         }
 
         $payment = Payment::create([
@@ -317,6 +317,11 @@ class AffidavitController extends Controller
             $todayDate = Carbon::now();
             $passedDays = $startPeriod->diffInDays($todayDate);
             
+            
+            if ($affidavit->month->year->year == "2019") {
+                return Concept::whereCode(2)->first();
+            }
+
             if ($affidavit->processed_at > Carbon::parse('2020-06-18')) {
                 if ($passedDays > 63) {
                    return Concept::whereCode(2)->first(); 
