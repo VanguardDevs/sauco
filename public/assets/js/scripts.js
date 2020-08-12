@@ -655,7 +655,7 @@ $(document).ready(function() {
             { data: 'state.name' },
             { data: 'user.full_name' },
             { data: 'processed_at' },
-            { data: 'amount' },
+            { data: 'formatted_amount', name: 'formatted_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -686,14 +686,14 @@ $(document).ready(function() {
             { data: 'num', name: 'num' },
             { data: 'taxpayer.rif', name: 'taxpayer.rif' },
             { data: 'taxpayer.name', name: 'taxpayer.name' },
-            { data: 'amount', name: 'amount' },
+            { data: 'formatted_amount', name: 'formatted_amount' },
             { data: 'processed_at', name: 'processed_at' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/reports/payments/${oData.id} title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>

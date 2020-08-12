@@ -150,7 +150,7 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->amount }} Bs
+                    PAGO TOTAL: {{ $payment->formattedAmount }} Bs
                 </div>
             </div>
         </div>

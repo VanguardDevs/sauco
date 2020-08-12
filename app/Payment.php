@@ -20,6 +20,8 @@ class Payment extends Model implements Auditable
         'amount' => 'float'
     ];  
 
+    protected $appends = [ 'formatted_amount' ];
+
     public function updateAmount()
     {
         $amount = $this->settlements->sum('amount');
@@ -112,8 +114,8 @@ class Payment extends Model implements Auditable
         return date('d/m/Y H:m', strtotime($value));
     }
 
-    public function getAmountAttribute($value)
+    public function getFormattedAmountAttribute()
     {
-        return number_format($value, 2, ',', '.');
+        return number_format($this->amount, 2, ',', '.');
     }
 }
