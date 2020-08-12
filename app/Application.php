@@ -19,6 +19,11 @@ class Application extends Model
         'amount' => 'float'
     ];
 
+    public function nullApplication()
+    {
+        return $this->hasOne(NullApplication::class);
+    }
+
     public static function hasPaid(Taxpayer $taxpayer, $code)
     {
         $application = $taxpayer

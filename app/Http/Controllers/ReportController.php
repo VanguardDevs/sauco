@@ -71,9 +71,7 @@ class ReportController extends Controller
 
         // Prepare pdf
         $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 
-        $totalAmount = $payments->map(function ($row) {
-            return $row->getOriginal('amount');
-        })->sum();
+        $totalAmount = $payments->sum('amount');
         $total = number_format($totalAmount, 2, ',', '.')." Bs";
 
         $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
@@ -86,8 +84,8 @@ class ReportController extends Controller
         $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
         $total = Taxpayer::count();
 
-	$pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate', 'total']))
-		->setPaper('a4', 'letter');
+        $pdf = PDF::loadView('modules.reports.pdf.taxpayers', compact(['taxpayers', 'emissionDate', 'total']))
+            ->setPaper('a4', 'letter');
         return $pdf->download('contribuyentes-registrados-'.$emissionDate.'.pdf');
     }
 

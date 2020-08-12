@@ -65,7 +65,7 @@
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Monto Total: {{ $row->total_amount }}
+                    Monto Total: {{ $row->formattedAmount }}
                 </div>
                 @if ($typeForm == 'show')
                 <div class="kt-heading kt-heading--md">
@@ -94,7 +94,7 @@
                 <div class="col-md-12">
                     <label class="control-label">Referencia del pago <span class="text-danger">*</span></label>
                     {!!
-                    Form::text("reference", old('trade_denomination', @$row->denomination), [
+                    Form::text("reference", old('trade_denomination', null), [
                         "class" => "form-control"
                     ])
                     !!}

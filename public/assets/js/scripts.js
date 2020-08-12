@@ -22,143 +22,153 @@ const token = $("meta[name='csrf-token']").attr("content");
 const apiURL = $("meta[name='api-base-url']").attr("content");
 
 const handleRequest = url => {
-    fetch(`${baseURL}/${url}`, {
-        method: 'POST',
-        headers: {
-            "X-CSRF-TOKEN": token
-        }
-    }).then(response => response.json())
-    .then(data => {
-        if (!data.ok) {
-            Swal.fire({
-                title: data.message,
-                type: 'error'
-            })
-        } else {
-            Swal.fire({
-                title: data.message,
-                type: 'success'
-            })
-        }
-    });
+  fetch(`${baseURL}/${url}`, {
+      method: 'POST',
+      headers: {
+          "X-CSRF-TOKEN": token
+      }
+  }).then(response => response.json())
+  .then(data => {
+      if (!data.ok) {
+          Swal.fire({
+              title: data.message,
+              type: 'error'
+          })
+      } else {
+          Swal.fire({
+              title: data.message,
+              type: 'success'
+          })
+      }
+  });
 }
 
 function onSelectTaxpayerType() {
-    let selected = $(this).children('option:selected').val();
-    let commercialDenomination = $('#commercial_denomination');
+  let selected = $(this).children('option:selected').val();
+  let commercialDenomination = $('#commercial_denomination');
 
-    // Show commercial denomination input
-    if (selected !== "1") {
-        commercialDenomination.show();
-    } else {
-        commercialDenomination.hide();
-    }
+  // Show commercial denomination input
+  if (selected !== "1") {
+      commercialDenomination.show();
+  } else {
+      commercialDenomination.hide();
+  }
 }
 
 function onSelectPaymentType() {
-    let selected = $(this).children('option:selected').html();
-    let reference = $('#reference');
+  let selected = $(this).children('option:selected').html();
+  let reference = $('#reference');
 
-    // Show commercial denomination input
-    if (selected !== "EFECTIVO") {
-        reference.show();
-    } else {
-        reference.hide();
-    }
+  // Show commercial denomination input
+  if (selected !== "EFECTIVO") {
+      reference.show();
+  } else {
+      reference.hide();
+  }
 }
 
 /**
  * Get all communities for a given parish
  */
 function onSelectApplications() {
-    let ordinance_id = $(this).val();
+  let ordinance_id = $(this).val();
 
-    let html_select = '<option value=""> SELECCIONE </option>';
+  let html_select = '<option value=""> SELECCIONE </option>';
 
-    $.get('/applications/'+ordinance_id+'/concepts/', data => {
+  $.get('/applications/'+ordinance_id+'/concepts/', data => {
 
-      for (let i = 0; i < data.length; i++) {
-        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-      }
+    for (let i = 0; i < data.length; i++) {
+      html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+    }
 
-      $('#concepts').html(html_select);
-    });
+    $('#concepts').html(html_select);
+  });
 }
 
 function onSelectFines() {
-    let ordinance_id = $(this).val();
+  let ordinance_id = $(this).val();
 
-    let html_select = '<option value=""> SELECCIONE </option>';
+  let html_select = '<option value=""> SELECCIONE </option>';
 
-    $.get('/fines/'+ordinance_id+'/concepts/', data => {
+  $.get('/fines/'+ordinance_id+'/concepts/', data => {
 
-      for (let i = 0; i < data.length; i++) {
-        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-      }
+    for (let i = 0; i < data.length; i++) {
+      html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+    }
 
-      $('#concepts').html(html_select);
-    });
+    $('#concepts').html(html_select);
+  });
 }
 
 /**
  * Get all communities for a given parish
  */
 function onSelectYears() {
-    let year_id = $(this).val();
+  let year_id = $(this).val();
 
-    let html_select = '<option value=""> SELECCIONE </option>';
+  let html_select = '<option value=""> SELECCIONE </option>';
 
-    $.get('/years/'+year_id+'/months/', data => {
+  $.get('/years/'+year_id+'/months/', data => {
 
-      for (let i = 0; i < data.length; i++) {
-        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
-      }
+    for (let i = 0; i < data.length; i++) {
+      html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+    }
 
-      $('#months').html(html_select);
-    });
+    $('#months').html(html_select);
+  });
 }
 
 function onSelectBuildingOwner() {
-    let selected = $(this).children('option:selected').html();
-    let contract = $('#contract');
-    let document = $('#document');
+  let selected = $(this).children('option:selected').html();
+  let contract = $('#contract');
+  let document = $('#document');
 
-    // Show contract input
-    if (selected == "ALQUILADO") {
-        contract.show();
-        document.hide();
-    } else if (selected == "PROPIO") {
-        contract.hide();
-        document.show();
-    } else {
-        contract.hide();
-        document.hide();
-    }
+  // Show contract input
+  if (selected == "ALQUILADO") {
+      contract.show();
+      document.hide();
+  } else if (selected == "PROPIO") {
+      contract.hide();
+      document.show();
+  } else {
+      contract.hide();
+      document.hide();
+  }
 }
 
 /*----------  Uppercase  ----------*/
 function upperCase(e) {
-    e.value = e.value.toUpperCase();
+  e.value = e.value.toUpperCase();
 }
 
 /*---------- Delete confirm chargue --------*/
 const nullRecord = (id, url) => {
     Swal.fire({
-        title: '¿Está seguro(a) que desea anular el registro?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Anular'
+      title: '¿Está seguro(a) que desea anular el registro?',
+      type: 'warning',
+      html: '<input id="annullmentReason" placeholder="Razón de anulación" class="form-control">',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Anular',
+      showLoaderOnConfirm: true,
+      preConfirm: (response) => {
+        return new Promise((resolve, reject) => {
+          resolve({
+            answer: $('#annullmentReason').val()
+          });
+        }); 
+      }
     }).then(result => {
         if (result.value) {
             $.ajax({
                 type: 'POST',
                 url: `${baseURL}/${url}/${id}`,
                 data: {
-                    '_method': 'DELETE',
-                    '_token': $("meta[name='csrf-token']").attr("content")
+                  '_method': 'DELETE',
+                  '_token': $("meta[name='csrf-token']").attr("content"),
+                  'annullment_reason': $('#annullmentReason').val()
                 },
                 success: response => location.reload(),
                 error: res => Swal.fire({
@@ -654,14 +664,14 @@ $(document).ready(function() {
             { data: 'num', name: 'num' },
             { data: 'taxpayer.rif', name: 'taxpayer.rif' },
             { data: 'taxpayer.name', name: 'taxpayer.name' },
-            { data: 'amount', name: 'amount' },
+            { data: 'formatted_amount', name: 'formatted_amount' },
             { data: 'processed_at', name: 'processed_at' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/reports/payments/${oData.id} title='Ver factura'>
+                        <a class="mr-2" href=${baseURL}/payments/${oData.id} title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>

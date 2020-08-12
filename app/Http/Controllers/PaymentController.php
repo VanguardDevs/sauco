@@ -9,10 +9,11 @@ use App\Reference;
 use App\Settlement;
 use App\Taxpayer;
 use App\Organization;
+use App\PaymentNull;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Services\PaymentService;
 use Carbon\Carbon;
+use App\Http\Requests\AnnullmentRequest;
 use PDF;
 use Auth;
 
@@ -23,11 +24,9 @@ class PaymentController extends Controller
      * @var $typeform
      */
     private $typeform = 'show';
-    private $payment;
 
-    public function __construct(PaymentService $payment)
+    public function __construct()
     {
-        $this->payment = $payment;
         $this->middleware('can:null.payments')->only('destroy');
         $this->middleware('can:process.payments')->only('update');
         $this->middleware('auth');
@@ -119,15 +118,23 @@ class PaymentController extends Controller
                         ->withError('¡Faltan datos!');
             }
 
-            $this->payment->makeReference($payment, $reference);
+            $payment->reference()->create([
+                'reference' => $reference,
+                'account_id' => 1, 
+            ]);
         }
 
-        $data = Array(
+        $paymentNum = Payment::newNum();
+        $processedAt = Carbon::now();
+
+        $payment->update([
+            'user_id' => Auth::user()->id, 
             'payment_method_id' => $request->input('method'),
-            'observations' => $request->input('observations')
-        );
-        
-        $this->payment->update($payment, $data);
+            'state_id' => 2,
+            'observations' => $request->input('observations'),
+            'num' => $paymentNum,
+            'processed_at' => $processedAt
+        ]);
 
         return redirect()->back()
             ->withSuccess('¡Factura procesada!');
@@ -166,10 +173,11 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy(AnnullmentRequest $request, Payment $payment)
     {
-        if ($payment->state_id == 2) {
+        if ($payment->state_id == 2 && !Auth::user()->hasRole('admin')) {
             return response()->json([
+                'success' => false,
                 'message' => '¡La factura está pagada!'
             ]);
         }
@@ -180,6 +188,11 @@ class PaymentController extends Controller
         // Delete settlements and payment
         $settlements->delete();
         $payment->delete();
+
+        $payment->nullPayment()->create([
+            'reason' => $request->get('annullment_reason'),
+            'user_id' => Auth::user()->id
+        ]);
 
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
