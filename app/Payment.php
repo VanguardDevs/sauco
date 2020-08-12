@@ -29,6 +29,11 @@ class Payment extends Model implements Auditable
         return $this->update([ 'amount' => $amount ]);
     }
 
+    public function nullPayment()
+    {
+        return $this->hasOne(NullPayment::class);
+    }
+
     public function state()
     {
         return $this->belongsTo(Status::class);

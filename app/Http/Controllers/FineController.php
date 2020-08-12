@@ -8,6 +8,7 @@ use App\Ordinance;
 use App\Concept;
 use App\Payment;
 use App\Settlement;
+use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Auth;
@@ -147,7 +148,7 @@ class FineController extends Controller
      * @param  \App\Fine  $fine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fine $fine)
+    public function destroy(AnnullmentRequest $request, Fine $fine)
     { 
         $payment = $fine->payment()->first();
 
@@ -156,6 +157,11 @@ class FineController extends Controller
             $payment->updateAmount();
         } 
         $fine->delete();
+
+        $fine->nullFine()->create([
+            'user_id' => Auth::user()->id,
+            'reason' => $request->get('annullment_reason')
+        ]);
 
         return redirect()->back()
             ->with('success', '¡Multa anulada!');   

@@ -24,6 +24,11 @@ class Affidavit extends Model implements Auditable
 
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
 
+    public function nullAffidavit()
+    {
+        return $this->hasOne(NullAffidavit::class);
+    }
+
     public function month()
     {
         return $this->belongsTo(Month::class);

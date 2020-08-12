@@ -21,6 +21,11 @@ class Fine extends Model implements Auditable
         'amount' => 'float'
     ];  
 
+    public function nullFine()
+    {
+        return $this->hasOne(NullFine::class);
+    }
+
     public function settlementHelpler($paymentId)
     {
         $payment = Payment::find($paymentId);

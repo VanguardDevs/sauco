@@ -111,8 +111,8 @@ class LicenseController extends Controller
             $useConformityPaid = Application::hasPaid($taxpayer, 7);
 	
             if (!$useConformityPaid && !Auth::user()->hasRole('admin')) {
-	        $isValid['error'] = true;
-	        $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
+                $isValid['error'] = true;
+                $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
             }
         }
 

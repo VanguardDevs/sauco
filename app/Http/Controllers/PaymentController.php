@@ -9,9 +9,11 @@ use App\Reference;
 use App\Settlement;
 use App\Taxpayer;
 use App\Organization;
+use App\PaymentNull;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
+use App\Http\Requests\AnnullmentRequest;
 use PDF;
 use Auth;
 
@@ -180,10 +182,11 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy(AnnullmentRequest $request, Payment $payment)
     {
-        if ($payment->state_id == 2) {
+        if ($payment->state_id == 2 && !Auth::user()->hasRole('admin')) {
             return response()->json([
+                'success' => false,
                 'message' => '¡La factura está pagada!'
             ]);
         }
@@ -194,6 +197,11 @@ class PaymentController extends Controller
         // Delete settlements and payment
         $settlements->delete();
         $payment->delete();
+
+        $payment->nullPayment()->create([
+            'reason' => $request->get('annullment_reason'),
+            'user_id' => Auth::user()->id
+        ]);
 
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
