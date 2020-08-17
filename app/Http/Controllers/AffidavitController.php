@@ -351,10 +351,10 @@ class AffidavitController extends Controller
             ]);
         }
 
-        if ($affidavit->payment()->first()->state_id == 2) {
+        if ($affidavit->payment()->first()) {
             return response()->json([
                 'success' => false,
-                'message' => '¡La declaración tiene una liquidación pagada!'
+                'message' => '¡La declaración tiene una liquidación asociada!'
             ]);
         }
 
