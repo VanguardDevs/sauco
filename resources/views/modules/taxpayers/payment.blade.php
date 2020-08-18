@@ -62,9 +62,11 @@
                     Monto Total: {{ $row->amount }} Bs
                 </div>
                 @if ($typeForm == 'show')
+                @if (Auth()->user()->hasRole('admin'))
                 <div class="kt-heading kt-heading--md">
-                    Liquidador: {{ $row->user->fullName }}
+                    Recaudador: {{ $row->user->fullName }}
                 </div>
+                @endif
                 <div class="kt-heading kt-heading--md">
                     Método de pago: {{ $row->paymentMethod->name }}
                 </div>
