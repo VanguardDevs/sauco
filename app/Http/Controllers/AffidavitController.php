@@ -72,8 +72,7 @@ class AffidavitController extends Controller
             }
 
             return response()->json([
-                'affidavit' => $affidavit,
-                'payment' => $affidavit->payment,
+                'affidavit' => $affidavit->load('user'),
                 'fine' => $fine 
             ]);
         }
