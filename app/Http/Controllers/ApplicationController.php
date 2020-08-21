@@ -33,9 +33,10 @@ class ApplicationController extends Controller
     public function list(Taxpayer $taxpayer)
     {
         $query = Application::whereTaxpayerId($taxpayer->id)
-            ->with('concept');
+            ->orderBy('applications.created_at', 'DESC')
+            ->with(['concept:id,name']);
 
-        return DataTables::of($query)
+        return DataTables::eloquent($query)
             ->toJson();
     }
 
@@ -57,6 +58,7 @@ class ApplicationController extends Controller
     public function makePayment(Application $application)
     {
         if ($application->payment()->exists()) {
+            dd($application->payment()->first());
             return redirect()
                 ->route('payments.show', $application->payment()->first());
         }

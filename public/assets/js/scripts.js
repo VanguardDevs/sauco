@@ -774,6 +774,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
+            { data: 'amount', name: 'amount' },
             { data: 'concept.name' },
             { data: 'created_at' },
             {

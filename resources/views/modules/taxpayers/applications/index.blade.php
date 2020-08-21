@@ -78,7 +78,8 @@
             <table id="tApplications" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
-                    <th width="60%">Concepto</th>
+                    <th width="20%">Monto</th>
+                    <th width="40%">Concepto</th>
                     <th width="20%">Realizada</th>
                     <th width="20%">Acciones</th>
                   </tr>
