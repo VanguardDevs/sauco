@@ -11,6 +11,7 @@ use App\Settlement;
 use App\Concept;
 use Carbon\Carbon;
 use Auth;
+use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -178,8 +179,22 @@ class WithholdingController extends Controller
      * @param  \App\Withholding  $withholding
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Withholding $withholding)
+    public function destroy(AnnullmentRequest $request, Withholding $withholding)
     {
-        //
+        $payment = $withholding->payment()->first();
+
+        if ($withholding->settlement) {
+            $withholding->settlement->delete();
+            $payment->updateAmount();
+        } 
+        $withholding->delete();
+
+        $withholding->nullWithholding()->create([
+            'user_id' => Auth::user()->id,
+            'reason' => $request->get('annullment_reason')
+        ]);
+
+        return redirect()->back()
+            ->with('success', '¡Multa anulada!');   
     }
 }

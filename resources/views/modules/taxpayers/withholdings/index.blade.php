@@ -24,8 +24,9 @@
             <table id="tWithholdings" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
-                    <th width="60%">Monto</th>
+                    <th width="40%">Mes</th>
                     <th width="40%">Monto</th>
+                    <th width="20%">Acciones</th>
                   </tr>
                 </thead>
             </table>
