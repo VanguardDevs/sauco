@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use Carbon\Carbon;
 
 class Affidavit extends Model implements Auditable
 {
@@ -84,9 +85,11 @@ class Affidavit extends Model implements Auditable
         return $query->latest()->first();
     }
 
-    public function scopePendingAffidavit($query)
+    public function changeData($userId, $processed_at)
     {
+        $date = Carbon::parse($processed_at);
 
+        return $this->update(['user_id' => $userId, 'processed_at' => $date ]);
     }
 
     public function scopeFindOneByMonth($query, $taxpayer, $month)
