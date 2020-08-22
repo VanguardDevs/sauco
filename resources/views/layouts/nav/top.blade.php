@@ -27,14 +27,9 @@
                     </div>
                 </a>
                 <div class="kt-notification__custom kt-space-between">
-                    <a class="btn btn-label btn-label-brand btn-sm btn-bold" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                        Salir
+                    <a class="btn btn-label btn-label-brand btn-sm btn-bold" href="{{ route('logout') }}">
+                    Salir
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                      @csrf
-                    </form>
                 </div>
             </div>
         <!--end: Navigation -->

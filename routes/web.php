@@ -11,8 +11,6 @@
 |
 */
 
-Auth::routes();
-
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('dashboard');
@@ -25,11 +23,12 @@ Route::get('/app', function() {
     return view('app');
 });
 
-Route::get('login', 'Auth\LoginController@index')->name('login');
-Route::get('logout', 'Auth\LoginController@logout');
+Route::get('login', 'LoginController@show')->name('login');
+Route::post('authenticate', 'LoginController@authenticate')->name('authenticate');
 
 Route::prefix('/')->middleware('auth')->group(function()
 {
+    Route::get('logout', 'LoginController@logout')->name('logout');
     Route::get('companies', 'CompanyController@index')->name('companies.index');
     /**
      * Available for all users logged in
