@@ -19,8 +19,11 @@ Route::middleware('auth:api')->group(function () {
 **/
 
 Route::resource('old-payments', 'OldPaymentController');
+Route::resource('fiscal-years', 'YearController');
 Route::resource('invoice-models', 'InvoiceModelController');
 Route::resource('organization', 'OrganizationController');
+Route::resource('companies', 'CompanyController');
+Route::resource('people', 'PersonController');
 Route::resource('taxpayers/{taxpayer}/withholdings', 'WithholdingController');
-
 Route::get('withholdings-months', 'WithholdingController@months');
+Route::resource('licenses', 'LicenseController');

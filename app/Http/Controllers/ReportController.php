@@ -8,6 +8,7 @@ use App\Payment;
 use App\Taxpayer;
 use App\EconomicActivity;
 use App\License;
+use App\Affidavit;
 use Carbon\Carbon;
 use PDF;
 use Session;
@@ -149,4 +150,45 @@ class ReportController extends Controller
         $pdf = PDF::loadView('modules.reports.pdf.taxpayers-uptodate', compact(['taxpayers', 'emissionDate', 'taxpayerCount']));
         return $pdf->download('contribuyentes'.$emissionDate.'.pdf');
     }        
+
+    public function pendingPayments()
+    {
+        $payments = Payment::whereStateId(1)->get();
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $totalAmount = $payments->map(function ($row) {
+            return $row->getOriginal('amount');
+        })->sum();
+
+        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+
+        dd(
+            $payments->count(),
+            $total
+        );
+        
+        $pdf = PDF::loadView('modules.reports.pdf.pending-payments', compact(['payments', 'emissionDate', 'total']));
+
+        return $pdf->download('morosos.pdf');
+    }
+
+    public function pendingAffidavits()
+    {
+        $affidavits = Affidavit::whereHas('payment', function ($payment) {
+            return $payment->where('state_id', '=', 1);
+        })->orWhereDoesntHave('payment')->get();
+        
+        $totalAmount = $affidavits->sum('amount');
+        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+
+        dd(
+            $affidavits->count(),
+            $total     
+        );
+
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $pdf = PDF::loadView('modules.reports.pdf.pending-affidavits', compact(['affidavits', 'emissionDate', 'total']));
+        return $pdf->stream('declaraciones-sin-pagar.pdf');
+    }
 }

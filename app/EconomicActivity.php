@@ -21,9 +21,9 @@ class EconomicActivity extends Model
 
     protected $appends = ['fullName'];
 
-    public function taxpayers()
+    public function companies()
     {
-        return $this->belongsToMany(Taxpayer::class);
+        return $this->belongsToMany(Company::class);
     }
 
     public function economicActivitySettlements()

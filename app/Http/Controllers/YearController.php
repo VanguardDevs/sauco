@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class YearController extends Controller
 {   
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     protected $months = Array(
         'ENERO', 'FEBRERO', 'MARZO', 'ABRIL',
         'MAYO', 'JUNIO', 'JULIO', 'AGOSTO',
@@ -25,10 +20,13 @@ class YearController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.settings.years.index')
-            ->with('years', Year::get());
+        if ($request->wantsJson()) {
+            return Year::get();
+        }
+
+        return view('modules.settings.years.index');
     }
 
     public function listMonths(Year $year)

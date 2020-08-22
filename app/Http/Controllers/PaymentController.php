@@ -51,15 +51,6 @@ class PaymentController extends Controller
         return DataTables::of($query)->toJson();
     }
 
-    public function listByTaxpayer(Taxpayer $taxpayer)
-    {
-        $query = Payment::with(['state', 'user'])
-            ->whereTaxpayerId($taxpayer->id)
-            ->orderBy('processed_at', 'DESC');
-
-        return DataTables::eloquent($query)->toJson();
-    }
-
     public function onlyNull()
     {
         $query = Payment::onlyTrashed()

@@ -11,26 +11,17 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PersonController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.Persons.index');
-    }
-
-    public function list()
-    {
-        $query = Person::query();
-
-        return DataTables::eloquent($query)->toJson();
+        if ($request->wantsJson()) {
+            return Person::with(['citizenship'])->get();
+        }
+        return view('modules.people.index');
     }
 
     /**

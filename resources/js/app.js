@@ -11,11 +11,19 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-/**
+require('./index');
+
 require('./screens/taxpayers/OldPayments');
-**/
 
 require('./screens/Settings/Index');
+
+require('./screens/Settings/FiscalYears/index');
+
+require('./screens/companies/index');
+
+require('./screens/licenses/index');
+
+require('./screens/people/index');
 
 require('./screens/organization/index');
 

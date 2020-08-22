@@ -14,6 +14,11 @@ class DropEconomicSectorsTable extends Migration
     public function up()
     {
         Schema::dropIfExists('economic_sectors');
+        
+        Schema::table('receivables', function (Blueprint $table) {
+            // $table->dropColumn(['num']);
+            // $table->dropColumn(['object_payment']);
+        });
     }
 
     /**

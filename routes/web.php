@@ -21,11 +21,16 @@ Route::get('/', function () {
     }
 });
 
+Route::get('/app', function() {
+    return view('app');
+});
+
 Route::get('login', 'Auth\LoginController@index')->name('login');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::prefix('/')->middleware('auth')->group(function()
 {
+    Route::get('companies', 'CompanyController@index')->name('companies.index');
     /**
      * Available for all users logged in
      */
@@ -37,6 +42,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
     Route::get('api/taxpayers/{taxpayer}/economic-activities', 'TaxpayerController@economicActivities');
     Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
+
+    Route::get('api/taxpayers/{taxpayer}/payments', 'TaxpayerController@showPayments');
 
     /**
      * Only Admin routes
@@ -97,10 +104,12 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('settings/invoice-models', 'InvoiceModelController@index')
             ->name('invoice-models.index');
     });
- 
+
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
+    Route::get('licenses', 'LicenseController@index')->name('licenses.index');
+
     /*----------  Routes economic activities  ----------*/
     Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
     Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
@@ -119,6 +128,9 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Handle reports
      */
     Route::group(['middleware' => 'can:print.reports'], function() {
+        Route::get('reports/pending-affidavits', 'ReportController@pendingAffidavits');
+        Route::get('reports/pending-payments', 'ReportController@pendingPayments');
+
         Route::post('reports/payment-report', 'ReportController@printPaymentReport')
             ->name('print.payments.report');
         Route::get('economic-activities/{activity}/download', 'ReportController@printActivityReport')
@@ -225,7 +237,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('taxpayers/{taxpayer}/representation/create', 'RepresentationController@store')->name('representation.store');
     });
     Route::resource('people', 'PersonController');
-    Route::resource('taxpayers/representations', 'RepresentationController')->except(['create', 'store']);
 
     /**
      * Taxpayer's routes
@@ -236,7 +247,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     });
     Route::get('taxpayers/{taxpayer}/affidavits/{affidavit}/download', 'AffidavitController@download');
     Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
-    Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
@@ -245,7 +255,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     /** 
      * Listing routes
      */
-    Route::get('representations/list', 'RepresentationController@list');
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');

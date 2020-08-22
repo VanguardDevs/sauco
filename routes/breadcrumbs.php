@@ -8,9 +8,21 @@ Breadcrumbs::for('change-password.show', function ($trail) {
 });
 
 /*----------  Cashbox ----------*/
-Breadcrumbs::for('receivables.index', function ($trail) {
+Breadcrumbs::for('companies.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Cuentas por cobrar', route('receivables.index'));
+    $trail->push('Empresas', route('companies.index'));
+});
+
+/*----------  Cashbox ----------*/
+Breadcrumbs::for('people.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Personas', route('people.index'));
+});
+
+/*----------  Cashbox ----------*/
+Breadcrumbs::for('licenses.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Licencias', route('licenses.index'));
 });
 
 /*----------  Reports ----------*/

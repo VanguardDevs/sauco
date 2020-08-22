@@ -51,36 +51,12 @@
     </div>
 </div>
 
-<div class="row" style="margin-top: 20px;">
-    <div class="col-lg-12">
-      <div class="kt-portlet">
-        <div class="kt-portlet__head">
-            <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title">Pagos</h3>
-            </div>
-        </div>
-        <div class="kt-portlet__body">
-          <table id="tTaxpayerPayments" class="table table-bordered table-striped datatables" style="text-align: center">
-            <thead>
-              <tr>
-                <th width="15%">Nro.</th>
-                <th width="15%">Estado</th>
-                <th width="25%">Recaudador</th>
-                <th width="15%">Procesada</th>
-                <th width="15%">Monto</th>
-                <th width="15%">Acciones</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-    </div>
-</div>
+<div id="taxpayer-payments"></div>
 
 <div id="profile"></div>
 
 <div class="row">
-    @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
+    @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->companies()->first()))
     <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">

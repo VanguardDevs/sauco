@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Person;
 use App\RepresentationType;
 use App\Citizenship;
-use Yajra\DataTables\Facades\DataTables;
 
 class RepresentationController extends Controller
 {
@@ -19,13 +18,7 @@ class RepresentationController extends Controller
      */
     public function index()
     {
-        return view('modules.taxpayers.representations.index');
-    }
-
-    public function list()
-    {
-        return DataTables::of(Person::get())
-            ->toJson();
+        //
     }
 
     /**
@@ -35,10 +28,9 @@ class RepresentationController extends Controller
      */
     public function create(Taxpayer $taxpayer)
     {
-        if (($taxpayer->taxpayerType->description != 'JURÍDICO') && 
-            (!$taxpayer->commercialDenomination->exists())) {
-                return redirect('taxpayers/'.$taxpayer->id)
-                    ->withError('¡Este contribuyente no admite un representante!');
+        if ($taxpayer->taxpayerType->description != 'JURÍDICO') {
+            return redirect('taxpayers/'.$taxpayer->id)
+                ->withError('¡Este contribuyente no admite un representante!');
         }
 
         return view('modules.taxpayers.representations.register')
