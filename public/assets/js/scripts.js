@@ -742,6 +742,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
+            { data: 'amount', name: 'amount' },
             { data: 'concept.name' },
             { data: 'created_at' },
             {
@@ -773,6 +774,18 @@ $(document).ready(function() {
         "columns": [
             { data: 'affidavit.month.name' },
             { data: 'amount' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                      <a class="mr-2" onClick="nullRecord(${oData.id},'withholdings')" title='Anular'>
+                        <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                      </a>               
+                    </div>`
+                    );
+                }
+            }
         ]
     });
 

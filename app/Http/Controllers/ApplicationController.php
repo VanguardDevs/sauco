@@ -9,6 +9,7 @@ use App\Taxpayer;
 use App\Payment;
 use App\Settlement;
 use Illuminate\Http\Request;
+use App\Http\Requests\AnnullmentRequest;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
@@ -33,9 +34,10 @@ class ApplicationController extends Controller
     public function list(Taxpayer $taxpayer)
     {
         $query = Application::whereTaxpayerId($taxpayer->id)
-            ->with('concept');
+            ->orderBy('applications.created_at', 'DESC')
+            ->with(['concept:id,name']);
 
-        return DataTables::of($query)
+        return DataTables::eloquent($query)
             ->toJson();
     }
 
@@ -57,6 +59,7 @@ class ApplicationController extends Controller
     public function makePayment(Application $application)
     {
         if ($application->payment()->exists()) {
+            dd($application->payment()->first());
             return redirect()
                 ->route('payments.show', $application->payment()->first());
         }
@@ -144,17 +147,22 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Application $application)
+    public function destroy(AnnullmentRequest $request, Application $application)
     {
-        if (!Auth::user()->hasRole('admin')) {
-            return response()->json([
-                'message' => '¡Acción no permitida!'
-            ]);
-        }
+        $payment = $application->payment()->first();
 
-        $affidavit->delete();
+        if ($application->settlement) {
+            $application->settlement->delete();
+            $payment->updateAmount();
+        } 
+        $application->delete();
+
+        $application->nullFine()->create([
+            'user_id' => Auth::user()->id,
+            'reason' => $request->get('annullment_reason')
+        ]);
 
         return redirect()->back()
-            ->with('success', '¡Liquidación anulada!');   
+            ->with('success', '¡Solicitud anulada!');       
     }
 }

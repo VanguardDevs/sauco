@@ -22459,7 +22459,7 @@ module.exports = hoistNonReactStatics;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.19';
+  var VERSION = '4.17.20';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -38035,7 +38035,7 @@ module.exports = hoistNonReactStatics;
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
      *
      * // Checking for several possible values
-     * _.filter(users, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
+     * _.filter(objects, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
      * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
@@ -38072,7 +38072,7 @@ module.exports = hoistNonReactStatics;
      * // => { 'a': 4, 'b': 5, 'c': 6 }
      *
      * // Checking for several possible values
-     * _.filter(users, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
+     * _.filter(objects, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
      * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matchesProperty(path, srcValue) {
@@ -66903,6 +66903,7 @@ const VALIDATION_MODE = {
     onBlur: 'onBlur',
     onChange: 'onChange',
     onSubmit: 'onSubmit',
+    onTouched: 'onTouched',
     all: 'all',
 };
 const VALUE = 'value';
@@ -66930,7 +66931,10 @@ var isNullOrUndefined = (value) => value == null;
 var isArray = (value) => Array.isArray(value);
 
 const isObjectType = (value) => typeof value === 'object';
-var isObject = (value) => !isNullOrUndefined(value) && !isArray(value) && isObjectType(value);
+var isObject = (value) => !isNullOrUndefined(value) &&
+    !isArray(value) &&
+    isObjectType(value) &&
+    !(value instanceof Date);
 
 var isKey = (value) => !isArray(value) &&
     (/^\w*$/.test(value) ||
@@ -67102,6 +67106,8 @@ function isDetached(element) {
 
 var isEmptyObject = (value) => isObject(value) && !Object.keys(value).length;
 
+var isBoolean = (value) => typeof value === 'boolean';
+
 function baseGet(object, updatePath) {
     const path = updatePath.slice(0, -1);
     const length = path.length;
@@ -67133,8 +67139,7 @@ function unset(object, path) {
             if (currentPathsLength === index &&
                 ((isObject(objectRef) && isEmptyObject(objectRef)) ||
                     (isArray(objectRef) &&
-                        !objectRef.filter((data) => isObject(data) && !isEmptyObject(data))
-                            .length))) {
+                        !objectRef.filter((data) => (isObject(data) && !isEmptyObject(data)) || isBoolean(data)).length))) {
                 previousObjRef ? delete previousObjRef[item] : delete object[item];
             }
             previousObjRef = objectRef;
@@ -67189,6 +67194,23 @@ function findRemovedFieldAndRemoveListener(fieldsRef, handleChange, field, unmou
 
 var isString = (value) => typeof value === 'string';
 
+function deepMerge(target, source) {
+    if (!isObject(target) || !isObject(source)) {
+        return source;
+    }
+    for (const key in source) {
+        const targetValue = target[key];
+        const sourceValue = source[key];
+        if (isObject(targetValue) && isObject(sourceValue)) {
+            target[key] = deepMerge(targetValue, sourceValue);
+        }
+        else {
+            target[key] = sourceValue;
+        }
+    }
+    return target;
+}
+
 var getFieldsValues = (fieldsRef, unmountFieldsStateRef, search) => {
     const output = {};
     for (const name in fieldsRef.current) {
@@ -67199,7 +67221,7 @@ var getFieldsValues = (fieldsRef, unmountFieldsStateRef, search) => {
             output[name] = getFieldValue(fieldsRef, name);
         }
     }
-    return Object.assign(Object.assign({}, transformToNestObject((unmountFieldsStateRef || {}).current || {})), transformToNestObject(output));
+    return deepMerge(transformToNestObject((unmountFieldsStateRef || {}).current || {}), transformToNestObject(output));
 };
 
 var isSameError = (error, { type, types = {}, message }) => isObject(error) &&
@@ -67235,8 +67257,6 @@ var getValueAndMessage = (validationData) => isValueMessage(validationData)
     };
 
 var isFunction = (value) => typeof value === 'function';
-
-var isBoolean = (value) => typeof value === 'boolean';
 
 var isMessage = (value) => isString(value) || (isObject(value) && Object(react__WEBPACK_IMPORTED_MODULE_0__["isValidElement"])(value));
 
@@ -67413,9 +67433,12 @@ var assignWatchFields = (fieldValues, fieldName, watchFields, inputValue, isSing
         : value;
 };
 
-var skipValidation = ({ isOnBlur, isOnChange, isReValidateOnBlur, isReValidateOnChange, isBlurEvent, isSubmitted, isOnAll, }) => {
+var skipValidation = ({ isOnBlur, isOnChange, isOnTouch, isTouched, isReValidateOnBlur, isReValidateOnChange, isBlurEvent, isSubmitted, isOnAll, }) => {
     if (isOnAll) {
         return false;
+    }
+    else if (!isSubmitted && isOnTouch) {
+        return !(isTouched || isBlurEvent);
     }
     else if (isSubmitted ? isReValidateOnBlur : isOnBlur) {
         return !isBlurEvent;
@@ -67428,26 +67451,22 @@ var skipValidation = ({ isOnBlur, isOnChange, isReValidateOnBlur, isReValidateOn
 
 var getFieldArrayParentName = (name) => name.substring(0, name.indexOf('['));
 
-function getIsFieldsDifferent(referenceArray, differenceArray) {
-    if (!isArray(referenceArray) ||
-        !isArray(differenceArray) ||
-        referenceArray.length !== differenceArray.length) {
-        return true;
+function deepEqual(object1 = [], object2 = []) {
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+    if (keys1.length !== keys2.length) {
+        return false;
     }
-    for (let i = 0; i < referenceArray.length; i++) {
-        const dataA = referenceArray[i];
-        const dataB = differenceArray[i];
-        if (isUndefined(dataB) ||
-            Object.keys(dataA).length !== Object.keys(dataB).length) {
-            return true;
-        }
-        for (const key in dataA) {
-            if (dataA[key] !== dataB[key]) {
-                return true;
-            }
+    for (const key of keys1) {
+        const val1 = object1[key];
+        const val2 = object2[key];
+        if ((isObject(val1) || isArray(val1)) && (isObject(val2) || isArray(val2))
+            ? !deepEqual(val1, val2)
+            : val1 !== val2) {
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
 const isMatchFieldArrayName = (name, searchName) => RegExp(`^${searchName}[\\d+]`.replace(/\[/g, '\\[').replace(/\]/g, '\\]')).test(name);
@@ -67474,6 +67493,7 @@ var modeChecker = (mode) => ({
     isOnBlur: mode === VALIDATION_MODE.onBlur,
     isOnChange: mode === VALIDATION_MODE.onChange,
     isOnAll: mode === VALIDATION_MODE.all,
+    isOnTouch: mode === VALIDATION_MODE.onTouched,
 });
 
 var isRadioOrCheckboxFunction = (ref) => isRadioInput(ref) || isCheckBoxInput(ref);
@@ -67511,14 +67531,14 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
     const fieldArrayNamesRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(new Set());
     const [, render] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
     const modeRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(modeChecker(mode));
-    const { current: { isOnSubmit, isOnAll }, } = modeRef;
+    const { current: { isOnSubmit, isOnTouch }, } = modeRef;
     const isValidateAllFieldCriteria = criteriaMode === VALIDATION_MODE.all;
     const readFormStateRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])({
         isDirty: !isProxyEnabled,
         dirtyFields: !isProxyEnabled,
         isSubmitted: isOnSubmit,
         submitCount: !isProxyEnabled,
-        touched: !isProxyEnabled,
+        touched: !isProxyEnabled || isOnTouch,
         isSubmitting: !isProxyEnabled,
         isValid: !isProxyEnabled,
     });
@@ -67571,7 +67591,7 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
         }
         else if (isCheckBoxInput(ref) && options) {
             options.length > 1
-                ? options.forEach(({ ref: checkboxRef }) => (checkboxRef.checked = value.includes(checkboxRef.value)))
+                ? options.forEach(({ ref: checkboxRef }) => (checkboxRef.checked = String(value).includes(checkboxRef.value)))
                 : (options[0].ref.checked = !!value);
         }
         else {
@@ -67596,7 +67616,7 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
         }
         isDirtyRef.current =
             (isFieldArray &&
-                getIsFieldsDifferent(get(getValues(), getFieldArrayParentName(name)), get(defaultValuesRef.current, getFieldArrayParentName(name)))) ||
+                !deepEqual(get(getValues(), getFieldArrayParentName(name)), get(defaultValuesRef.current, getFieldArrayParentName(name)))) ||
                 !isEmptyObject(dirtyFieldsRef.current);
         return ((isDirty && previousIsDirty !== isDirtyRef.current) ||
             (dirtyFields && isDirtyFieldExist !== get(dirtyFieldsRef.current, name)));
@@ -67682,7 +67702,7 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
     const renderWatchedInputs = (name, found = true) => {
         if (!isEmptyObject(watchFieldsHookRef.current)) {
             for (const key in watchFieldsHookRef.current) {
-                if (name === '' ||
+                if (!name ||
                     watchFieldsHookRef.current[key].has(name) ||
                     watchFieldsHookRef.current[key].has(getFieldArrayParentName(name)) ||
                     !watchFieldsHookRef.current[key].size) {
@@ -67712,10 +67732,9 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
             let error;
             if (field) {
                 const isBlurEvent = type === EVENTS.BLUR;
-                const shouldSkipValidation = !isOnAll &&
-                    skipValidation(Object.assign({ isBlurEvent,
-                        isReValidateOnChange,
-                        isReValidateOnBlur, isSubmitted: isSubmittedRef.current }, modeRef.current));
+                const shouldSkipValidation = skipValidation(Object.assign({ isBlurEvent,
+                    isReValidateOnChange,
+                    isReValidateOnBlur, isSubmitted: isSubmittedRef.current, isTouched: !!get(touchedFieldsRef.current, name) }, modeRef.current));
                 let shouldRender = setDirty(name) || isFieldWatched(name);
                 if (isBlurEvent &&
                     !get(touchedFieldsRef.current, name) &&
@@ -67727,8 +67746,8 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
                     renderWatchedInputs(name);
                     return shouldRender && reRender();
                 }
-                if (resolver) {
-                    const { errors } = await resolver(getValues(), contextRef.current, isValidateAllFieldCriteria);
+                if (resolverRef.current) {
+                    const { errors } = await resolverRef.current(getValues(), contextRef.current, isValidateAllFieldCriteria);
                     const previousFormIsValid = isValidRef.current;
                     isValidRef.current = isEmptyObject(errors);
                     error = (get(errors, name)
@@ -67833,14 +67852,22 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
         (isArray(name) ? name : [name]).forEach((fieldName) => removeFieldEventListenerAndRef(fieldsRef.current[fieldName], true));
     }
     function registerFieldRef(ref, validateOptions = {}) {
-        if ( true && !ref.name) {
-            // eslint-disable-next-line no-console
-            return console.warn('Missing name @', ref);
+        if (true) {
+            if (!ref.name) {
+                return console.warn('📋 Field is missing `name` attribute:', ref);
+            }
+            if (fieldArrayNamesRef.current.has(ref.name.split(/\[\d+\]$/)[0]) &&
+                !RegExp(`^${ref.name.split(/\[\d+\]$/)[0]}[\\d+]\.\\w+`
+                    .replace(/\[/g, '\\[')
+                    .replace(/\]/g, '\\]')).test(ref.name)) {
+                return console.warn('📋 `name` prop should be in object shape: name="test[index].name". https://react-hook-form.com/api#useFieldArray');
+            }
         }
         const { name, type, value } = ref;
         const fieldRefAndValidationOptions = Object.assign({ ref }, validateOptions);
         const fields = fieldsRef.current;
         const isRadioOrCheckbox = isRadioOrCheckboxFunction(ref);
+        const compareRef = (currentRef) => isWeb && (!isHTMLElement(ref) || currentRef === ref);
         let field = fields[name];
         let isEmptyDefaultValue = true;
         let isFieldArray;
@@ -67849,9 +67876,9 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
             (isRadioOrCheckbox
                 ? isArray(field.options) &&
                     unique(field.options).find((option) => {
-                        return value === option.ref.value && option.ref === ref;
+                        return value === option.ref.value && compareRef(option.ref);
                     })
-                : ref === field.ref)) {
+                : compareRef(field.ref))) {
             fields[name] = Object.assign(Object.assign({}, field), validateOptions);
             return;
         }
@@ -67926,7 +67953,7 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
             }
         }
     }
-    const handleSubmit = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])((callback) => async (e) => {
+    const handleSubmit = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])((onValid, onInvalid) => async (e) => {
         if (e && e.preventDefault) {
             e.preventDefault();
             e.persist();
@@ -67964,10 +67991,13 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
                 Object.keys(errorsRef.current).every((name) => Object.keys(fieldsRef.current).includes(name))) {
                 errorsRef.current = {};
                 reRender();
-                await callback(fieldValues, e);
+                await onValid(fieldValues, e);
             }
             else {
                 errorsRef.current = Object.assign(Object.assign({}, errorsRef.current), fieldErrors);
+                if (onInvalid) {
+                    await onInvalid(fieldErrors, e);
+                }
                 if (shouldFocusError) {
                     focusOnErrorField(fieldsRef.current, fieldErrors);
                 }
@@ -68028,8 +68058,8 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
             }
         }
         fieldsRef.current = {};
+        defaultValuesRef.current = values || Object.assign({}, defaultValuesRef.current);
         if (values) {
-            defaultValuesRef.current = values;
             renderWatchedInputs('');
         }
         unmountFieldsStateRef.current = shouldUnregister ? {} : values || {};
@@ -68041,12 +68071,14 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
         isUnMount.current = false;
         return () => {
             isUnMount.current = true;
+            if (true) {
+                return;
+            }
             fieldsRef.current &&
-                "development" === 'production' &&
                 Object.values(fieldsRef.current).forEach((field) => removeFieldEventListenerAndRef(field, true));
         };
     }, [removeFieldEventListenerAndRef]);
-    if (!resolver) {
+    if (!resolver && readFormStateRef.current.isValid) {
         isValidRef.current =
             validFieldsRef.current.size >= fieldsWithValidationRef.current.size &&
                 isEmptyObject(errorsRef.current);
@@ -68075,6 +68107,11 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
         formState: isProxyEnabled
             ? new Proxy(formState, {
                 get: (obj, prop) => {
+                    if ( true &&
+                        prop === 'isValid' &&
+                        isOnSubmit) {
+                        console.warn('📋 `formState.isValid` is applicable with `onChange` or `onBlur` mode. https://react-hook-form.com/api#formState');
+                    }
                     if (prop in obj) {
                         readFormStateRef.current[prop] = true;
                         return obj[prop];
@@ -68084,7 +68121,7 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
             })
             : formState,
     };
-    const control = Object.assign(Object.assign({ removeFieldEventListener,
+    const control = Object.assign({ removeFieldEventListener,
         renderWatchedInputs,
         watchInternal,
         reRender, mode: modeRef.current, reValidateMode: {
@@ -68107,7 +68144,7 @@ function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_
         isSubmittedRef,
         readFormStateRef,
         defaultValuesRef,
-        unmountFieldsStateRef }, (resolver ? { validateSchemaIsValid: validateResolver } : {})), commonProps);
+        unmountFieldsStateRef, validateResolver: resolver ? validateResolver : undefined }, commonProps);
     return Object.assign({ watch,
         control,
         handleSubmit, reset: Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(reset, []), clearErrors: Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(clearErrors, []), setError: Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(setError, []), errors: errorsRef.current }, commonProps);
@@ -68224,48 +68261,57 @@ const appendId = (value, keyName) => (Object.assign({ [keyName]: generateId() },
 const mapIds = (data, keyName) => (isArray(data) ? data : []).map((value) => appendId(value, keyName));
 const useFieldArray = ({ control, name, keyName = 'id', }) => {
     const methods = useFormContext();
+    if (true) {
+        if (!control && !methods) {
+            throw new Error('📋 useFieldArray is missing `control` prop.');
+        }
+        if (!name) {
+            console.warn('📋 useFieldArray is missing `name` attribute.');
+        }
+    }
     const focusIndexRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(-1);
-    const { isWatchAllRef, resetFieldArrayFunctionRef, fieldArrayNamesRef, reRender, fieldsRef, defaultValuesRef, removeFieldEventListener, errorsRef, dirtyFieldsRef, isDirtyRef, touchedFieldsRef, readFormStateRef, watchFieldsRef, validFieldsRef, fieldsWithValidationRef, fieldArrayDefaultValues, validateSchemaIsValid, renderWatchedInputs, getValues, } = control || methods.control;
+    const { isWatchAllRef, resetFieldArrayFunctionRef, fieldArrayNamesRef, reRender, fieldsRef, defaultValuesRef, removeFieldEventListener, errorsRef, dirtyFieldsRef, isDirtyRef, touchedFieldsRef, readFormStateRef, watchFieldsRef, validFieldsRef, fieldsWithValidationRef, fieldArrayDefaultValues, validateResolver, renderWatchedInputs, getValues, } = control || methods.control;
     let shouldRender;
     const getDefaultValues = () => [
-        ...get(fieldArrayDefaultValues.current[getFieldArrayParentName(name)]
-            ? fieldArrayDefaultValues.current
-            : defaultValuesRef.current, name, []),
+        ...(get(fieldArrayDefaultValues.current, name) ||
+            get(defaultValuesRef.current, name) ||
+            []),
     ];
     const memoizedDefaultValues = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(getDefaultValues());
-    const [fields, setField] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(mapIds(memoizedDefaultValues.current, keyName));
-    const [isDeleted, setIsDeleted] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
+    const [fields, setFields] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(mapIds(memoizedDefaultValues.current, keyName));
     const allFields = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(fields);
-    const isNameKey = isKey(name);
+    const rootParentName = getFieldArrayParentName(name);
     const getCurrentFieldsValues = () => get(getValues() || {}, name, allFields.current).map((item, index) => (Object.assign(Object.assign({}, allFields.current[index]), item)));
     allFields.current = fields;
-    if (isNameKey) {
-        fieldArrayDefaultValues.current[name] = memoizedDefaultValues.current;
+    fieldArrayNamesRef.current.add(name);
+    if (!get(fieldArrayDefaultValues.current, name) && rootParentName) {
+        set(fieldArrayDefaultValues.current, rootParentName, get(defaultValuesRef.current, rootParentName));
     }
     const appendValueWithKey = (values) => values.map((value) => appendId(value, keyName));
     const setFieldAndValidState = (fieldsValues) => {
-        setField(fieldsValues);
-        if (readFormStateRef.current.isValid && validateSchemaIsValid) {
-            validateSchemaIsValid({
-                [name]: fieldsValues,
-            });
+        setFields(fieldsValues);
+        if (readFormStateRef.current.isValid && validateResolver) {
+            const values = {};
+            set(values, name, fieldsValues);
+            validateResolver(values);
         }
     };
     const shouldRenderFieldArray = (shouldRender) => {
-        if (readFormStateRef.current.dirtyFields ||
+        renderWatchedInputs(name);
+        if ((readFormStateRef.current.dirtyFields ||
             readFormStateRef.current.isDirty ||
-            readFormStateRef.current.isValid) {
+            readFormStateRef.current.isValid) &&
+            !isWatchAllRef.current) {
             shouldRender = true;
         }
-        renderWatchedInputs(name);
-        shouldRender && !isWatchAllRef.current && reRender();
+        shouldRender && reRender();
     };
     const resetFields = (flagOrFields) => {
         if (readFormStateRef.current.isDirty ||
             readFormStateRef.current.dirtyFields) {
             isDirtyRef.current =
                 isUndefined(flagOrFields) ||
-                    getIsFieldsDifferent(flagOrFields.map((_a = {}) => {
+                    !deepEqual(flagOrFields.map((_a = {}) => {
                         var _b = keyName, omitted = _a[_b], rest = __rest(_a, [typeof _b === "symbol" ? _b : _b + ""]);
                         return rest;
                     }), get(defaultValuesRef.current, name, []));
@@ -68286,10 +68332,11 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
         ]);
         if (readFormStateRef.current.dirtyFields ||
             readFormStateRef.current.isDirty) {
-            dirtyFieldsRef.current[name] = [
-                ...(dirtyFieldsRef.current[name] || fillEmptyArray(fields.slice(0, 1))),
+            set(dirtyFieldsRef.current, name, [
+                ...(get(dirtyFieldsRef.current, name) ||
+                    fillEmptyArray(fields.slice(0, 1))),
                 ...filterBooleanArray(value),
-            ];
+            ]);
             isDirtyRef.current = true;
             shouldRender = true;
         }
@@ -68302,15 +68349,16 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
         setFieldAndValidState(prepend(getCurrentFieldsValues(), isArray(value) ? appendValueWithKey(value) : [appendId(value, keyName)]));
         resetFields();
         if (isArray(get(errorsRef.current, name))) {
-            errorsRef.current[name] = prepend(get(errorsRef.current, name), emptyArray);
+            set(errorsRef.current, name, prepend(get(errorsRef.current, name), emptyArray));
         }
-        if (readFormStateRef.current.touched && touchedFieldsRef.current[name]) {
-            touchedFieldsRef.current[name] = prepend(touchedFieldsRef.current[name], emptyArray);
+        if (readFormStateRef.current.touched &&
+            get(touchedFieldsRef.current, name)) {
+            set(touchedFieldsRef.current, name, prepend(get(touchedFieldsRef.current, name), emptyArray));
             shouldRender = true;
         }
         if (readFormStateRef.current.dirtyFields ||
             readFormStateRef.current.isDirty) {
-            dirtyFieldsRef.current[name] = prepend(dirtyFieldsRef.current[name] || [], filterBooleanArray(value));
+            set(dirtyFieldsRef.current, name, prepend(get(dirtyFieldsRef.current, name) || [], filterBooleanArray(value)));
             shouldRender = true;
         }
         shouldRenderFieldArray(shouldRender);
@@ -68321,27 +68369,27 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
         const fieldValues = getCurrentFieldsValues();
         setFieldAndValidState(removeArrayAt(fieldValues, index));
         resetFields(removeArrayAt(fieldValues, index));
-        setIsDeleted(true);
         if (isArray(get(errorsRef.current, name))) {
             set(errorsRef.current, name, removeArrayAt(get(errorsRef.current, name), index));
             if (!unique(get(errorsRef.current, name, [])).length) {
                 unset(errorsRef.current, name);
             }
         }
-        if (readFormStateRef.current.touched && touchedFieldsRef.current[name]) {
-            touchedFieldsRef.current[name] = removeArrayAt(touchedFieldsRef.current[name], index);
+        if (readFormStateRef.current.touched &&
+            get(touchedFieldsRef.current, name)) {
+            set(touchedFieldsRef.current, name, removeArrayAt(get(touchedFieldsRef.current, name), index));
             shouldRender = true;
         }
         if ((readFormStateRef.current.dirtyFields ||
             readFormStateRef.current.isDirty) &&
-            dirtyFieldsRef.current[name]) {
-            dirtyFieldsRef.current[name] = removeArrayAt(dirtyFieldsRef.current[name], index);
-            if (!dirtyFieldsRef.current[name].length) {
-                delete dirtyFieldsRef.current[name];
+            get(dirtyFieldsRef.current, name)) {
+            set(dirtyFieldsRef.current, name, removeArrayAt(get(dirtyFieldsRef.current, name), index));
+            if (!unique(get(dirtyFieldsRef.current, name, [])).length) {
+                unset(dirtyFieldsRef.current, name);
             }
             shouldRender = true;
         }
-        if (readFormStateRef.current.isValid && !validateSchemaIsValid) {
+        if (readFormStateRef.current.isValid && !validateResolver) {
             let fieldIndex = -1;
             let isFound = false;
             const isIndexUndefined = isUndefined(index);
@@ -68355,18 +68403,17 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
                     continue;
                 }
                 for (const key in fields[fieldIndex]) {
-                    const currentFieldName = `${name}[${fieldIndex}].${key}`;
+                    const getFieldName = (index = 0) => `${name}[${fieldIndex - index}].${key}`;
                     if (isCurrentIndex || isLast || isIndexUndefined) {
-                        validFieldsRef.current.delete(currentFieldName);
-                        fieldsWithValidationRef.current.delete(currentFieldName);
+                        validFieldsRef.current.delete(getFieldName());
+                        fieldsWithValidationRef.current.delete(getFieldName());
                     }
                     else {
-                        const previousFieldName = `${name}[${fieldIndex - 1}].${key}`;
-                        if (validFieldsRef.current.has(currentFieldName)) {
-                            validFieldsRef.current.add(previousFieldName);
+                        if (validFieldsRef.current.has(getFieldName())) {
+                            validFieldsRef.current.add(getFieldName(1));
                         }
-                        if (fieldsWithValidationRef.current.has(currentFieldName)) {
-                            fieldsWithValidationRef.current.add(previousFieldName);
+                        if (fieldsWithValidationRef.current.has(getFieldName())) {
+                            fieldsWithValidationRef.current.add(getFieldName(1));
                         }
                     }
                 }
@@ -68381,16 +68428,17 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
         setFieldAndValidState(insert(fieldValues, index, isArray(value) ? appendValueWithKey(value) : [appendId(value, keyName)]));
         resetFields(insert(fieldValues, index));
         if (isArray(get(errorsRef.current, name))) {
-            errorsRef.current[name] = insert(get(errorsRef.current, name), index, emptyArray);
+            set(errorsRef.current, name, insert(get(errorsRef.current, name), index, emptyArray));
         }
-        if (readFormStateRef.current.touched && touchedFieldsRef.current[name]) {
-            touchedFieldsRef.current[name] = insert(touchedFieldsRef.current[name], index, emptyArray);
+        if (readFormStateRef.current.touched &&
+            get(touchedFieldsRef.current, name)) {
+            set(touchedFieldsRef.current, name, insert(get(touchedFieldsRef.current, name), index, emptyArray));
             shouldRender = true;
         }
         if ((readFormStateRef.current.dirtyFields ||
             readFormStateRef.current.isDirty) &&
-            dirtyFieldsRef.current[name]) {
-            dirtyFieldsRef.current[name] = insert(dirtyFieldsRef.current[name], index, filterBooleanArray(value));
+            get(dirtyFieldsRef.current, name)) {
+            set(dirtyFieldsRef.current, name, insert(get(dirtyFieldsRef.current, name), index, filterBooleanArray(value)));
             shouldRender = true;
         }
         shouldRenderFieldArray(shouldRender);
@@ -68405,14 +68453,15 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
         if (isArray(get(errorsRef.current, name))) {
             swapArrayAt(get(errorsRef.current, name), indexA, indexB);
         }
-        if (readFormStateRef.current.touched && touchedFieldsRef.current[name]) {
-            swapArrayAt(touchedFieldsRef.current[name], indexA, indexB);
+        if (readFormStateRef.current.touched &&
+            get(touchedFieldsRef.current, name)) {
+            swapArrayAt(get(touchedFieldsRef.current, name), indexA, indexB);
             shouldRender = true;
         }
         if ((readFormStateRef.current.dirtyFields ||
             readFormStateRef.current.isDirty) &&
-            dirtyFieldsRef.current[name]) {
-            swapArrayAt(dirtyFieldsRef.current[name], indexA, indexB);
+            get(dirtyFieldsRef.current, name)) {
+            swapArrayAt(get(dirtyFieldsRef.current, name), indexA, indexB);
             shouldRender = true;
         }
         shouldRenderFieldArray(shouldRender);
@@ -68426,14 +68475,15 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
         if (isArray(get(errorsRef.current, name))) {
             moveArrayAt(get(errorsRef.current, name), from, to);
         }
-        if (readFormStateRef.current.touched && touchedFieldsRef.current[name]) {
-            moveArrayAt(touchedFieldsRef.current[name], from, to);
+        if (readFormStateRef.current.touched &&
+            get(touchedFieldsRef.current, name)) {
+            moveArrayAt(get(touchedFieldsRef.current, name), from, to);
             shouldRender = true;
         }
         if ((readFormStateRef.current.dirtyFields ||
             readFormStateRef.current.isDirty) &&
-            dirtyFieldsRef.current[name]) {
-            moveArrayAt(dirtyFieldsRef.current[name], from, to);
+            get(dirtyFieldsRef.current, name)) {
+            moveArrayAt(get(dirtyFieldsRef.current, name), from, to);
             shouldRender = true;
         }
         shouldRenderFieldArray(shouldRender);
@@ -68441,14 +68491,13 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
     const reset = () => {
         resetFields();
         memoizedDefaultValues.current = getDefaultValues();
-        setField(mapIds(memoizedDefaultValues.current, keyName));
+        setFields(mapIds(memoizedDefaultValues.current, keyName));
     };
     Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-        if (isNameKey &&
-            isDeleted &&
-            fieldArrayDefaultValues.current[name] &&
-            fields.length < fieldArrayDefaultValues.current[name].length) {
-            fieldArrayDefaultValues.current[name].pop();
+        const defaultValues = get(fieldArrayDefaultValues.current, name);
+        if (defaultValues && fields.length < defaultValues.length) {
+            defaultValues.pop();
+            set(fieldArrayDefaultValues.current, name, defaultValues);
         }
         if (isWatchAllRef.current) {
             reRender();
@@ -68479,8 +68528,6 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
         fields,
         name,
         fieldArrayDefaultValues,
-        isDeleted,
-        isNameKey,
         reRender,
         fieldsRef,
         watchFieldsRef,
@@ -68488,13 +68535,11 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
     ]);
     Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
         const resetFunctions = resetFieldArrayFunctionRef.current;
-        const fieldArrayNames = fieldArrayNamesRef.current;
-        fieldArrayNames.add(name);
         resetFunctions[name] = reset;
         return () => {
             resetFields();
             delete resetFunctions[name];
-            fieldArrayNames.delete(name);
+            fieldArrayNamesRef.current.delete(name);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -68511,6 +68556,14 @@ const useFieldArray = ({ control, name, keyName = 'id', }) => {
 
 function useWatch({ control, name, defaultValue, }) {
     const methods = useFormContext();
+    if (true) {
+        if (!control && !methods) {
+            throw new Error('📋 useWatch is missing `control` prop.');
+        }
+        if (name === '') {
+            console.warn('📋 useWatch is missing `name` attribute.');
+        }
+    }
     const { watchFieldsHookRef, watchFieldsHookRenderRef, watchInternal, defaultValuesRef, } = control || methods.control;
     const [value, setValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(isUndefined(defaultValue)
         ? isString(name)
@@ -68521,21 +68574,20 @@ function useWatch({ control, name, defaultValue, }) {
         : defaultValue);
     const idRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
     const defaultValueRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(defaultValue);
-    const nameRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(name);
-    const updateWatchValue = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => setValue(watchInternal(nameRef.current, defaultValueRef.current, idRef.current)), [setValue, watchInternal, defaultValueRef, nameRef, idRef]);
+    const updateWatchValue = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => setValue(watchInternal(name, defaultValueRef.current, idRef.current)), [setValue, watchInternal, defaultValueRef, name, idRef]);
     Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
         const id = (idRef.current = generateId());
         const watchFieldsHookRender = watchFieldsHookRenderRef.current;
         const watchFieldsHook = watchFieldsHookRef.current;
         watchFieldsHook[id] = new Set();
         watchFieldsHookRender[id] = updateWatchValue;
-        watchInternal(nameRef.current, defaultValueRef.current, id);
+        watchInternal(name, defaultValueRef.current, id);
         return () => {
             delete watchFieldsHook[id];
             delete watchFieldsHookRender[id];
         };
     }, [
-        nameRef,
+        name,
         updateWatchValue,
         watchFieldsHookRenderRef,
         watchFieldsHookRef,
@@ -68556,6 +68608,9 @@ var getInputValue = (event) => isPrimitive(event) ||
 const Controller = (_a) => {
     var { name, rules, as, render, defaultValue, control, onFocus } = _a, rest = __rest(_a, ["name", "rules", "as", "render", "defaultValue", "control", "onFocus"]);
     const methods = useFormContext();
+    if ( true && !control && !methods) {
+        throw new Error('📋 Controller is missing `control` prop.');
+    }
     const { defaultValuesRef, setValue, register, unregister, trigger, mode, reValidateMode: { isReValidateOnBlur, isReValidateOnChange }, isSubmittedRef, touchedFieldsRef, readFormStateRef, reRender, fieldsRef, fieldArrayNamesRef, unmountFieldsStateRef, } = control || methods.control;
     const isNotFieldArray = !isNameInFieldArray(fieldArrayNamesRef.current, name);
     const getInitialValue = () => !isUndefined(get(unmountFieldsStateRef.current, name)) && isNotFieldArray
@@ -68566,11 +68621,20 @@ const Controller = (_a) => {
     const [value, setInputStateValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(getInitialValue());
     const valueRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(value);
     const onFocusRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(onFocus);
-    const isSubmitted = isSubmittedRef.current;
+    if (true) {
+        if (isUndefined(value)) {
+            console.warn('📋 Controller `defaultValue` or useForm `defaultValues` is missing.');
+        }
+        if (as && render) {
+            console.warn('📋 Should use either `as` or `render` prop.');
+        }
+        if (!isNotFieldArray && isUndefined(defaultValue)) {
+            console.warn('📋 Controller is missing `defaultValue` prop when using `useFieldArray`.');
+        }
+    }
     const shouldValidate = (isBlurEvent) => !skipValidation(Object.assign({ isBlurEvent,
         isReValidateOnBlur,
-        isReValidateOnChange,
-        isSubmitted }, mode));
+        isReValidateOnChange, isSubmitted: isSubmittedRef.current }, mode));
     const commonTask = ([event]) => {
         const data = getInputValue(event);
         setInputStateValue(data);
@@ -68578,6 +68642,9 @@ const Controller = (_a) => {
         return data;
     };
     const registerField = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
+        if ( true && !name) {
+            return console.warn('📋 Field is missing `name` prop.');
+        }
         if (fieldsRef.current[name]) {
             fieldsRef.current[name] = Object.assign({ ref: fieldsRef.current[name].ref }, rules);
         }
@@ -68591,6 +68658,9 @@ const Controller = (_a) => {
                     return valueRef.current;
                 },
             }), rules);
+            if (isNotFieldArray && !get(defaultValuesRef.current, name)) {
+                setInputStateValue(getInitialValue());
+            }
         }
     }, [fieldsRef, rules, name, onFocusRef, register]);
     Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => () => {
@@ -68635,6 +68705,7 @@ const Controller = (_a) => {
                 onChange,
                 onBlur,
                 value,
+                name,
             })
             : null;
 };
@@ -78786,7 +78857,13 @@ module.exports = withSideEffect;
     return column;
   } // Build the header groups from the bottom up
 
-  function makeHeaderGroups(allColumns, defaultColumn) {
+  function makeHeaderGroups(allColumns, defaultColumn, additionalHeaderProperties) {
+    if (additionalHeaderProperties === void 0) {
+      additionalHeaderProperties = function additionalHeaderProperties() {
+        return {};
+      };
+    }
+
     var headerGroups = [];
     var scanColumns = allColumns;
     var uid = 0;
@@ -78818,16 +78895,16 @@ module.exports = withSideEffect;
               originalId: column.parent.id,
               id: column.parent.id + "_" + getUID(),
               headers: [column]
-            });
+            }, additionalHeaderProperties(column));
           } else {
             // If other columns have parents, we'll need to add a place holder if necessary
             var originalId = column.id + "_placeholder";
-            newParent = decorateColumn({
+            newParent = decorateColumn(_extends({
               originalId: originalId,
               id: column.id + "_placeholder_" + getUID(),
               placeholderOf: column,
               headers: [column]
-            }, defaultColumn);
+            }, additionalHeaderProperties(column)), defaultColumn);
           } // If the resulting parent columns are the same, just add
           // the column and increment the header span
 
@@ -80519,15 +80596,11 @@ module.exports = withSideEffect;
       return null;
     }
 
-    var min = 0;
-    var max = 0;
-    values.forEach(function (value) {
-      if (typeof value === 'number') {
-        min = Math.min(min, value);
-        max = Math.max(max, value);
-      }
+    var mid = Math.floor(values.length / 2);
+    var nums = [].concat(values).sort(function (a, b) {
+      return a - b;
     });
-    return (min + max) / 2;
+    return values.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
   }
   function unique(values) {
     return Array.from(new Set(values).values());
@@ -80556,6 +80629,7 @@ module.exports = withSideEffect;
   var emptyObject = {}; // Actions
 
   actions.resetGroupBy = 'resetGroupBy';
+  actions.setGroupBy = 'setGroupBy';
   actions.toggleGroupBy = 'toggleGroupBy';
   var useGroupBy = function useGroupBy(hooks) {
     hooks.getGroupByToggleProps = [defaultGetGroupByToggleProps];
@@ -80595,6 +80669,13 @@ module.exports = withSideEffect;
     if (action.type === actions.resetGroupBy) {
       return _extends({}, state, {
         groupBy: instance.initialState.groupBy || []
+      });
+    }
+
+    if (action.type === actions.setGroupBy) {
+      var value = action.value;
+      return _extends({}, state, {
+        groupBy: value
       });
     }
 
@@ -80679,6 +80760,12 @@ module.exports = withSideEffect;
       dispatch({
         type: actions.toggleGroupBy,
         columnId: columnId,
+        value: value
+      });
+    }, [dispatch]);
+    var setGroupBy = React.useCallback(function (value) {
+      dispatch({
+        type: actions.setGroupBy,
         value: value
       });
     }, [dispatch]);
@@ -80856,18 +80943,21 @@ module.exports = withSideEffect;
       rows: groupedRows,
       flatRows: groupedFlatRows,
       rowsById: groupedRowsById,
-      toggleGroupBy: toggleGroupBy
+      toggleGroupBy: toggleGroupBy,
+      setGroupBy: setGroupBy
     });
   }
 
   function prepareRow$1(row) {
     row.allCells.forEach(function (cell) {
+      var _row$subRows;
+
       // Grouped cells are in the groupBy and the pivot cell for the row
       cell.isGrouped = cell.column.isGrouped && cell.column.id === row.groupByID; // Placeholder cells are any columns in the groupBy that are not grouped
 
       cell.isPlaceholder = !cell.isGrouped && cell.column.isGrouped; // Aggregated cells are not grouped, not repeated, but still have subRows
 
-      cell.isAggregated = !cell.isGrouped && !cell.isPlaceholder && row.canExpand;
+      cell.isAggregated = !cell.isGrouped && !cell.isPlaceholder && ((_row$subRows = row.subRows) == null ? void 0 : _row$subRows.length);
     });
   }
 
@@ -80978,6 +81068,7 @@ module.exports = withSideEffect;
   });
 
   actions.resetSortBy = 'resetSortBy';
+  actions.setSortBy = 'setSortBy';
   actions.toggleSortBy = 'toggleSortBy';
   actions.clearSortBy = 'clearSortBy';
   defaultColumn.sortType = 'alphanumeric';
@@ -81032,6 +81123,13 @@ module.exports = withSideEffect;
       });
     }
 
+    if (action.type === actions.setSortBy) {
+      var _sortBy = action.sortBy;
+      return _extends({}, state, {
+        sortBy: _sortBy
+      });
+    }
+
     if (action.type === actions.toggleSortBy) {
       var columnId = action.columnId,
           desc = action.desc,
@@ -81042,18 +81140,18 @@ module.exports = withSideEffect;
           disableMultiRemove = instance.disableMultiRemove,
           _instance$maxMultiSor = instance.maxMultiSortColCount,
           maxMultiSortColCount = _instance$maxMultiSor === void 0 ? Number.MAX_SAFE_INTEGER : _instance$maxMultiSor;
-      var _sortBy = state.sortBy; // Find the column for this columnId
+      var _sortBy2 = state.sortBy; // Find the column for this columnId
 
       var column = allColumns.find(function (d) {
         return d.id === columnId;
       });
       var sortDescFirst = column.sortDescFirst; // Find any existing sortBy for this column
 
-      var existingSortBy = _sortBy.find(function (d) {
+      var existingSortBy = _sortBy2.find(function (d) {
         return d.id === columnId;
       });
 
-      var existingIndex = _sortBy.findIndex(function (d) {
+      var existingIndex = _sortBy2.findIndex(function (d) {
         return d.id === columnId;
       });
 
@@ -81070,7 +81168,7 @@ module.exports = withSideEffect;
         }
       } else {
         // Normal mode
-        if (existingIndex !== _sortBy.length - 1) {
+        if (existingIndex !== _sortBy2.length - 1 || _sortBy2.length !== 1) {
           sortAction = 'replace';
         } else if (existingSortBy) {
           sortAction = 'toggle';
@@ -81095,7 +81193,7 @@ module.exports = withSideEffect;
           desc: hasDescDefined ? desc : sortDescFirst
         }];
       } else if (sortAction === 'add') {
-        _newSortBy = [].concat(_sortBy, [{
+        _newSortBy = [].concat(_sortBy2, [{
           id: columnId,
           desc: hasDescDefined ? desc : sortDescFirst
         }]); // Take latest n columns
@@ -81103,7 +81201,7 @@ module.exports = withSideEffect;
         _newSortBy.splice(0, _newSortBy.length - maxMultiSortColCount);
       } else if (sortAction === 'toggle') {
         // This flips (or sets) the
-        _newSortBy = _sortBy.map(function (d) {
+        _newSortBy = _sortBy2.map(function (d) {
           if (d.id === columnId) {
             return _extends({}, d, {
               desc: hasDescDefined ? desc : !existingSortBy.desc
@@ -81113,7 +81211,7 @@ module.exports = withSideEffect;
           return d;
         });
       } else if (sortAction === 'remove') {
-        _newSortBy = _sortBy.filter(function (d) {
+        _newSortBy = _sortBy2.filter(function (d) {
           return d.id !== columnId;
         });
       }
@@ -81142,7 +81240,13 @@ module.exports = withSideEffect;
         getHooks = instance.getHooks,
         _instance$autoResetSo = instance.autoResetSortBy,
         autoResetSortBy = _instance$autoResetSo === void 0 ? true : _instance$autoResetSo;
-    ensurePluginOrder(plugins, ['useFilters', 'useGlobalFilter', 'useGroupBy', 'usePivotColumns'], 'useSortBy'); // Updates sorting based on a columnId, desc flag and multi flag
+    ensurePluginOrder(plugins, ['useFilters', 'useGlobalFilter', 'useGroupBy', 'usePivotColumns'], 'useSortBy');
+    var setSortBy = React.useCallback(function (sortBy) {
+      dispatch({
+        type: actions.setSortBy,
+        sortBy: sortBy
+      });
+    }, [dispatch]); // Updates sorting based on a columnId, desc flag and multi flag
 
     var toggleSortBy = React.useCallback(function (columnId, desc, multi) {
       dispatch({
@@ -81253,7 +81357,10 @@ module.exports = withSideEffect;
         sortedData.forEach(function (row) {
           sortedFlatRows.push(row);
 
-          if (!row.subRows || row.subRows.length < 1) {
+          if (!row.subRows) {
+            return;
+          } else if (row.subRows.length === 1) {
+            sortedFlatRows.push(row.subRows[0]);
             return;
           }
 
@@ -81282,6 +81389,7 @@ module.exports = withSideEffect;
       sortedFlatRows: sortedFlatRows,
       rows: sortedRows,
       flatRows: sortedFlatRows,
+      setSortBy: setSortBy,
       toggleSortBy: toggleSortBy
     });
   }
@@ -81335,7 +81443,7 @@ module.exports = withSideEffect;
 
       if (newPageIndex > state.pageIndex) {
         // next page
-        canNavigate = pageCount === -1 ? page.length >= state.pageSize : newPageIndex < pageCount;
+        canNavigate = pageCount === -1 ? page.length >= state.pageSize : newPageIndex <= pageCount;
       } else if (newPageIndex < state.pageIndex) {
         // prev page
         canNavigate = newPageIndex > -1;
@@ -81717,9 +81825,11 @@ module.exports = withSideEffect;
   actions.resetSelectedRows = 'resetSelectedRows';
   actions.toggleAllRowsSelected = 'toggleAllRowsSelected';
   actions.toggleRowSelected = 'toggleRowSelected';
+  actions.toggleAllPageRowsSelected = 'toggleAllPageRowsSelected';
   var useRowSelect = function useRowSelect(hooks) {
     hooks.getToggleRowSelectedProps = [defaultGetToggleRowSelectedProps];
     hooks.getToggleAllRowsSelectedProps = [defaultGetToggleAllRowsSelectedProps];
+    hooks.getToggleAllPageRowsSelectedProps = [defaultGetToggleAllPageRowsSelectedProps];
     hooks.stateReducers.push(reducer$8);
     hooks.useInstance.push(useInstance$8);
     hooks.prepareRow.push(prepareRow$3);
@@ -81767,6 +81877,25 @@ module.exports = withSideEffect;
     }];
   };
 
+  var defaultGetToggleAllPageRowsSelectedProps = function defaultGetToggleAllPageRowsSelectedProps(props, _ref3) {
+    var instance = _ref3.instance;
+    return [props, {
+      onChange: function onChange(e) {
+        instance.toggleAllPageRowsSelected(e.target.checked);
+      },
+      style: {
+        cursor: 'pointer'
+      },
+      checked: instance.isAllPageRowsSelected,
+      title: 'Toggle All Current Page Rows Selected',
+      indeterminate: Boolean(!instance.isAllPageRowsSelected && instance.page.some(function (_ref4) {
+        var id = _ref4.id;
+        return instance.state.selectedRowIds[id];
+      }))
+    }];
+  }; // eslint-disable-next-line max-params
+
+
   function reducer$8(state, action, previousState, instance) {
     if (action.type === actions.init) {
       return _extends({
@@ -81811,7 +81940,8 @@ module.exports = withSideEffect;
           _setSelected = action.value;
       var _rowsById = instance.rowsById,
           _instance$selectSubRo = instance.selectSubRows,
-          selectSubRows = _instance$selectSubRo === void 0 ? true : _instance$selectSubRo; // Join the ids of deep rows
+          selectSubRows = _instance$selectSubRo === void 0 ? true : _instance$selectSubRo,
+          getSubRows = instance.getSubRows; // Join the ids of deep rows
       // to make a key, then manage all of the keys
       // in a flat object
 
@@ -81836,8 +81966,8 @@ module.exports = withSideEffect;
           }
         }
 
-        if (selectSubRows && row.subRows) {
-          return row.subRows.forEach(function (row) {
+        if (selectSubRows && getSubRows(row)) {
+          return getSubRows(row).forEach(function (row) {
             return handleRowById(row.id);
           });
         }
@@ -81848,6 +81978,48 @@ module.exports = withSideEffect;
         selectedRowIds: newSelectedRowIds
       });
     }
+
+    if (action.type === actions.toggleAllPageRowsSelected) {
+      var _setSelected2 = action.value;
+
+      var page = instance.page,
+          _rowsById2 = instance.rowsById,
+          _instance$selectSubRo2 = instance.selectSubRows,
+          _selectSubRows = _instance$selectSubRo2 === void 0 ? true : _instance$selectSubRo2,
+          isAllPageRowsSelected = instance.isAllPageRowsSelected,
+          _getSubRows = instance.getSubRows;
+
+      var _selectAll = typeof _setSelected2 !== 'undefined' ? _setSelected2 : !isAllPageRowsSelected;
+
+      var _newSelectedRowIds = _extends({}, state.selectedRowIds);
+
+      var _handleRowById = function _handleRowById(id) {
+        var row = _rowsById2[id];
+
+        if (!row.isGrouped) {
+          if (_selectAll) {
+            _newSelectedRowIds[id] = true;
+          } else {
+            delete _newSelectedRowIds[id];
+          }
+        }
+
+        if (_selectSubRows && _getSubRows(row)) {
+          return _getSubRows(row).forEach(function (row) {
+            return _handleRowById(row.id);
+          });
+        }
+      };
+
+      page.forEach(function (row) {
+        return _handleRowById(row.id);
+      });
+      return _extends({}, state, {
+        selectedRowIds: _newSelectedRowIds
+      });
+    }
+
+    return state;
   }
 
   function useInstance$8(instance) {
@@ -81861,14 +82033,16 @@ module.exports = withSideEffect;
         _instance$autoResetSe = instance.autoResetSelectedRows,
         autoResetSelectedRows = _instance$autoResetSe === void 0 ? true : _instance$autoResetSe,
         selectedRowIds = instance.state.selectedRowIds,
-        _instance$selectSubRo2 = instance.selectSubRows,
-        selectSubRows = _instance$selectSubRo2 === void 0 ? true : _instance$selectSubRo2,
-        dispatch = instance.dispatch;
-    ensurePluginOrder(plugins, ['useFilters', 'useGroupBy', 'useSortBy'], 'useRowSelect');
+        _instance$selectSubRo3 = instance.selectSubRows,
+        selectSubRows = _instance$selectSubRo3 === void 0 ? true : _instance$selectSubRo3,
+        dispatch = instance.dispatch,
+        page = instance.page,
+        getSubRows = instance.getSubRows;
+    ensurePluginOrder(plugins, ['useFilters', 'useGroupBy', 'useSortBy', 'useExpanded', 'usePagination'], 'useRowSelect');
     var selectedFlatRows = React.useMemo(function () {
       var selectedFlatRows = [];
       rows.forEach(function (row) {
-        var isSelected = selectSubRows ? getRowIsSelected(row, selectedRowIds) : !!selectedRowIds[row.id];
+        var isSelected = selectSubRows ? getRowIsSelected(row, selectedRowIds, getSubRows) : !!selectedRowIds[row.id];
         row.isSelected = !!isSelected;
         row.isSomeSelected = isSelected === null;
 
@@ -81877,14 +82051,24 @@ module.exports = withSideEffect;
         }
       });
       return selectedFlatRows;
-    }, [rows, selectSubRows, selectedRowIds]);
+    }, [rows, selectSubRows, selectedRowIds, getSubRows]);
     var isAllRowsSelected = Boolean(Object.keys(nonGroupedRowsById).length && Object.keys(selectedRowIds).length);
+    var isAllPageRowsSelected = isAllRowsSelected;
 
     if (isAllRowsSelected) {
       if (Object.keys(nonGroupedRowsById).some(function (id) {
         return !selectedRowIds[id];
       })) {
         isAllRowsSelected = false;
+      }
+    }
+
+    if (!isAllRowsSelected) {
+      if (page && page.length && page.some(function (_ref5) {
+        var id = _ref5.id;
+        return !selectedRowIds[id];
+      })) {
+        isAllPageRowsSelected = false;
       }
     }
 
@@ -81902,6 +82086,12 @@ module.exports = withSideEffect;
         value: value
       });
     }, [dispatch]);
+    var toggleAllPageRowsSelected = React.useCallback(function (value) {
+      return dispatch({
+        type: actions.toggleAllPageRowsSelected,
+        value: value
+      });
+    }, [dispatch]);
     var toggleRowSelected = React.useCallback(function (id, value) {
       return dispatch({
         type: actions.toggleRowSelected,
@@ -81913,17 +82103,23 @@ module.exports = withSideEffect;
     var getToggleAllRowsSelectedProps = makePropGetter(getHooks().getToggleAllRowsSelectedProps, {
       instance: getInstance()
     });
+    var getToggleAllPageRowsSelectedProps = makePropGetter(getHooks().getToggleAllPageRowsSelectedProps, {
+      instance: getInstance()
+    });
     Object.assign(instance, {
       selectedFlatRows: selectedFlatRows,
       isAllRowsSelected: isAllRowsSelected,
+      isAllPageRowsSelected: isAllPageRowsSelected,
       toggleRowSelected: toggleRowSelected,
       toggleAllRowsSelected: toggleAllRowsSelected,
-      getToggleAllRowsSelectedProps: getToggleAllRowsSelectedProps
+      getToggleAllRowsSelectedProps: getToggleAllRowsSelectedProps,
+      getToggleAllPageRowsSelectedProps: getToggleAllPageRowsSelectedProps,
+      toggleAllPageRowsSelected: toggleAllPageRowsSelected
     });
   }
 
-  function prepareRow$3(row, _ref3) {
-    var instance = _ref3.instance;
+  function prepareRow$3(row, _ref6) {
+    var instance = _ref6.instance;
 
     row.toggleRowSelected = function (set) {
       return instance.toggleRowSelected(row.id, set);
@@ -81935,21 +82131,23 @@ module.exports = withSideEffect;
     });
   }
 
-  function getRowIsSelected(row, selectedRowIds) {
+  function getRowIsSelected(row, selectedRowIds, getSubRows) {
     if (selectedRowIds[row.id]) {
       return true;
     }
 
-    if (row.subRows && row.subRows.length) {
+    var subRows = getSubRows(row);
+
+    if (subRows && subRows.length) {
       var allChildrenSelected = true;
       var someSelected = false;
-      row.subRows.forEach(function (subRow) {
+      subRows.forEach(function (subRow) {
         // Bail out early if we know both of these
         if (someSelected && !allChildrenSelected) {
           return;
         }
 
-        if (getRowIsSelected(subRow, selectedRowIds)) {
+        if (getRowIsSelected(subRow, selectedRowIds, getSubRows)) {
           someSelected = true;
         } else {
           allChildrenSelected = false;
@@ -93052,7 +93250,7 @@ if (document.getElementById('withholdings')) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "authReducer", function() { return authReducer; });
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./types */ "./resources/js/store/types.js");
-/* harmony import */ var _utils_isEmpty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/isEmpty */ "./resources/js/utils/isEmpty.js");
+/* harmony import */ var _utils_isEmpty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/isEmpty */ "./resources/js/utils/isEmpty.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -93073,7 +93271,7 @@ var authReducer = function authReducer() {
   switch (action.type) {
     case _types__WEBPACK_IMPORTED_MODULE_0__["SET_CURRENT_USER"]:
       return _objectSpread(_objectSpread({}, state), {}, {
-        isAuthenticated: !Object(_utils_isEmpty__WEBPACK_IMPORTED_MODULE_2__["default"])(action.payload),
+        isAuthenticated: !Object(_utils_isEmpty__WEBPACK_IMPORTED_MODULE_1__["default"])(action.payload),
         user: action.payload
       });
 

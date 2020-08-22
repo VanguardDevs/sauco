@@ -15,6 +15,11 @@ class CorrelativeNumber extends Model
         return $this->hasMany(Correlative::class);
     }
 
+    public function license()
+    {
+        return $this->hasOneThrough(License::class, Correlative::class);
+    }
+
     public static function getNum()
     {
         if (self::lastCorrelative()->count()) {
