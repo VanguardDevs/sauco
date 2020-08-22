@@ -24,6 +24,8 @@ Route::resource('invoice-models', 'InvoiceModelController');
 Route::resource('organization', 'OrganizationController');
 Route::resource('companies', 'CompanyController');
 Route::resource('people', 'PersonController');
+Route::resource('licenses', 'LicenseController');
+
 Route::resource('taxpayers/{taxpayer}/withholdings', 'WithholdingController');
 Route::get('withholdings-months', 'WithholdingController@months');
-Route::resource('licenses', 'LicenseController');
+

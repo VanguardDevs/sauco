@@ -24,7 +24,7 @@ const Payments = (props) => {
 
   const columns = useMemo(() => [
     { header: 'Número', accessor: 'num' },
-    { header: 'Monto', accessor: 'amount' },
+    { header: 'Monto', accessor: 'formatted_amount' },
     { header: 'Estado', accessor: 'state.name' }
   ], []);
 

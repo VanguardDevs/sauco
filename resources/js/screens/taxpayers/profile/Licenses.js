@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 // Components
-import Notification from '../../../components/Notification';
-import Portlet from '../../../components/Portlet';
-import Loading from '../../../components/Loading';
+import {
+  Loading,
+  Portlet,
+  PortletBody,
+  PortletHeader,
+  Notification
+} from '../../../components';
 
 const renderComponent = (loading, data) => {
   const { id } = data;
 
   return (loading) ? ( 
     <Portlet>
-      <Loading /> 
+      <PortletBody>
+        <Loading /> 
+      </PortletBody>
     </Portlet>
   ) : (
-    <Portlet label='Licencias'>
-      <Notification title='Licencias de actividad económica' icon='fa-book-reader' url={taxpayer+'/economic-activity-licenses'} />
+    <Portlet>
+      <PortletHeader label='Licencias' />
+      <PortletBody>
+        <Notification title='Licencias de actividad económica' icon='book-reader' url={taxpayer+'/economic-activity-licenses'} />
+      </PortletBody>
     </Portlet>
   )
 }
