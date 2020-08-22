@@ -39,3 +39,6 @@ require('./components/RegisterAccountingAccounts');
 
 require('./components/AffidavitFine');
 
+const helloWorld = require("./hello-world").helloWorld();
+
+console.log(helloWorld);
