@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'first_name'    =>  'Jesús',
             'surname'	    =>  'Ordosgoitty',
             'login'         =>  'admin',
-            'password'      =>  bcrypt('jodaz.2602*'),
+            'password'      =>  bcrypt('qwerty123'),
             'avatar'   	    =>  'admin.png'
         ]);
 

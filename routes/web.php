@@ -26,6 +26,8 @@ Route::get('/app', function() {
 Route::get('login', 'LoginController@show')->name('login');
 Route::post('authenticate', 'LoginController@authenticate')->name('authenticate');
 
+Route::get('/api/user', 'UserController@getUser');
+
 Route::prefix('/')->middleware('auth')->group(function()
 {
     Route::get('logout', 'LoginController@logout')->name('logout');
@@ -94,8 +96,8 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('settings/administration/roles', 'Settings\RoleController');
 
         /*----------  Routes users  ----------*/
-        Route::get('users/list', 'Settings\UserController@list');
-        Route::resource('settings/administration/users', 'Settings\UserController');
+        Route::get('users/list', 'UserController@list');
+        Route::resource('settings/administration/users', 'UserController');
 
         /*---------- Accounting accounts --------*/
         Route::resource('settings/accounting-accounts', 'AccountingAccountController');
@@ -261,8 +263,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Update passwords
      */
-    Route::get('change-password', 'Settings\UserController@showChangePassword')
+    Route::get('change-password', 'UserController@showChangePassword')
         ->name('change-password.show');
-    Route::post('update-password', 'Settings\UserController@updatePassword')
+    Route::post('update-password', 'UserController@updatePassword')
         ->name('change-password.update');
 });

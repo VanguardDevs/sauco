@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 // Components
-import Portlet from '../../../components/Portlet';
-import Table from '../../../components/Table';
-import Loading from '../../../components/Loading';
-import Col from '../../../components/Col';
-import Row from '../../../components/Row';
+import {
+  Portlet,
+  Table,
+  PortletHeader,
+  Loading,
+  Col,
+  Row,
+  PortletBody
+} from '../../../components';
 
 const Payments = (props) => {
   const [data, setData] = useState({});
@@ -29,11 +33,16 @@ const Payments = (props) => {
       <Col lg={12}>
         {(loading) ? (
           <Portlet>
-            <Loading />
+            <PortletBody>
+              <Loading />
+            </PortletBody>
           </Portlet>
         ) : (
-          <Portlet label="Pagos">
-            <Table columns={columns} data={data} />
+          <Portlet>
+            <PortletHeader label="Pagos" />
+            <PortletBody>
+              <Table columns={columns} data={data} />
+            </PortletBody>
           </Portlet>
         )}
       </Col>

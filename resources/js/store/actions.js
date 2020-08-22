@@ -10,25 +10,25 @@ import {
 import { setAuthToken, history } from '../utils';
 
 export const recoverAccount = data => dispatch => {
-  axios.post('/api/recover-account', data)
+  axios.post('/recover-account', data)
     .then(res => history.push('/check-email'))
     .catch(err => dispatch(setErrors(err.response.data.errors)));
 }
 
 export const resetPassword = data => dispatch => {
-  axios.post('/api/reset-password', data)
+  axios.post('/reset-password', data)
     .then(res => history.push('/login'))
     .catch(err => dispatch(setErrors(err.response.data.errors)));
 }
 
 export const registerUser = data => dispatch => {
-  axios.post('/api/users', data)
+  axios.post('/users', data)
     .then(res => console.log(res.data))
     .catch(err => dispatch(setErrors(err.response.data.errors)));
 }
 
 export const login = data => dispatch => {
-  axios.post('/api/login', data)
+  axios.post('/login', data)
     .then(res => {
       const { token } = res.data;
 
@@ -43,7 +43,7 @@ export const login = data => dispatch => {
 }
 
 export const logout = () => dispatch => {
-  axios.get('/api/logout')
+  axios.get('/logout')
     .then(res => {
       localStorage.removeItem('sasi');
       setAuthToken();
@@ -56,11 +56,11 @@ export const logout = () => dispatch => {
 }
 
 export const getUser = () => dispatch => {
-  axios.get('/api/user')
+  axios.get('/user')
     .then( res => dispatch(setUser(res.data)))
     .catch(err => {
       if (err.response.status) {
-        localStorage.removeItem('sasi');
+        localStorage.removeItem('sauco');
         history.push('/login');
       }
 
@@ -74,7 +74,7 @@ export const setUser = user => ({
 });
 
 export const createCategory = data => dispatch => {
-  axios.post('/api/categories', data)
+  axios.post('/categories', data)
     .then(res => {
       history.goBack();
       dispatch(makeNotification(res.data));
@@ -83,7 +83,7 @@ export const createCategory = data => dispatch => {
 }
 
 export const createApplication = data => dispatch => {
-  axios.post('/api/applications', data)
+  axios.post('/applications', data)
     .then(res => {
       history.goBack();
       dispatch(makeNotification(res.data))
@@ -93,7 +93,7 @@ export const createApplication = data => dispatch => {
 }
 
 export const createCommunity = data => dispatch => {
-  axios.post('/api/communities', data)
+  axios.post('/communities', data)
     .then(res => {
       history.goBack();
       dispatch(makeNotification(res.data))

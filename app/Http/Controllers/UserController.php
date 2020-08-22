@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UsersCreateFormRequest;
@@ -83,19 +83,29 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
     }
 
-    /**
-     *
-     * User profile
-     *
-     */
-    public function profile($id)
+    public function getUser(Request $request)
     {
-        return view("modules.users.profile");
+        $user = Auth::user();
+
+        if ($user) {
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            $token->save();
+
+            return response()->json([
+                'token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $tokenResult->token->expires_at)
+                        ->toDateTimeString(),
+                'user' => $user
+            ]);
+        }
     }
 
     public function showChangePassword()
