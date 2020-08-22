@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 // Components
-import Row from '../../components/Row';
-import Loading from '../../components/Loading';
-import Portlet from '../../components/Portlet';
-import Table from '../../components/Table';
-import Col from '../../components/Col';
+import {
+  Row,
+  Loading,
+  Portlet,
+  PortletBody,
+  Table,
+  Col
+} from '../../components';
 
 const Index = (props) => {
   const [data, setData] = useState({});
@@ -34,11 +37,15 @@ const Index = (props) => {
       <Col lg={12}>
         {(loading) ? (
           <Portlet>
-            <Loading />
+            <PortletBody>
+              <Loading />
+            </PortletBody>
           </Portlet>
         ) : (
           <Portlet label="Licencias emitidas">
-            <Table columns={columns} data={data} />
+            <PortletBody>
+              <Table columns={columns} data={data} />
+            </PortletBody>
           </Portlet>
         )}
       </Col>
