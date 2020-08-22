@@ -1,9 +1,6 @@
 <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}" />
 
-<!--begin::Fonts -->
-
-<!--end::Fonts -->
-
+<link rel="stylesheet" href="{{ asset('css/app.css') }}"></link>
 <link rel="stylesheet" href="{{ asset('assets/css/login-1.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/vendors.bundle.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/style.bundle.css') }}">

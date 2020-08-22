@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SIRIM</title>
     @include('layouts.styles')
+    <script src="{{ asset('css/app.css') }}"></script>
 </head>
 <body>
     <div id="root"></div>

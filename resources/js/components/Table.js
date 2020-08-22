@@ -11,13 +11,12 @@ const GlobalFilter = ({
   setGlobalFilter,
 }) => (
   <span>
-    Buscar:{' '}
     <input
       value={globalFilter || ''}
       onChange={e => {
         setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
       }}
-      placeholder={`records...`}
+      placeholder={`Buscar...`}
       style={{
         fontSize: '1.1rem',
         border: '0',
