@@ -43,7 +43,10 @@ class Company extends Model
 
     public function economicActivities()
     {
-        return $this->belongsToMany(EconomicActivity::class);
+        return $this->belongsToMany(
+            EconomicActivity::class,
+            'company_economic_activity'
+        );
     }
 
     public function payments()

@@ -27,6 +27,11 @@ class Taxpayer extends Model implements Auditable
         'taxpayer_classification_id',
     ];
 
+    public function economicActivities()
+    {
+        return $this->belongsToMany(EconomicActivity::class);
+    }
+
     public function affidavits()
     {
         return $this->hasMany(Affidavit::class);

@@ -39,7 +39,7 @@ class EconomicActivityController extends Controller
 
     public function listTaxpayers(EconomicActivity $economicActivity)
     {
-        return DataTables::of($economicActivity->getTaxpayers())
+        return DataTables::of($economicActivity->companies())
             ->toJson();
     }
 
@@ -83,11 +83,11 @@ class EconomicActivityController extends Controller
      */
     public function show(EconomicActivity $economicActivity)
     {
-        $taxpayersCount = $economicActivity->getTaxpayers()->count();
+        $companiesCount = $economicActivity->companies()->count();
 
         return view('modules.economic-activities.show')
             ->with('row', $economicActivity)
-            ->with('numTaxpayers', $taxpayersCount);
+            ->with('numTaxpayers', $companiesCount);
     }
 
     /**
