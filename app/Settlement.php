@@ -27,7 +27,7 @@ class Settlement extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsToMany(Payment::class);
     }
 
     public function fine()

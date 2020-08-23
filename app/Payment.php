@@ -56,7 +56,7 @@ class Payment extends Model implements Auditable
 
     public function settlements()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->belongsToMany(Settlement::class);
     }
 
     public function taxpayer()
