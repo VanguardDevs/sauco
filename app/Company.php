@@ -45,4 +45,9 @@ class Company extends Model
     {
         return $this->belongsToMany(EconomicActivity::class);
     }
+
+    public function payments()
+    {
+        return $this->belongsToMany(Payment::class);
+    }
 }

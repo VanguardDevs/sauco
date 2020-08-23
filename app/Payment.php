@@ -123,4 +123,9 @@ class Payment extends Model implements Auditable
     {
         return number_format($this->amount, 2, ',', '.');
     }
+
+    public function company()
+    {
+        return $this->belongsToMany(Company::class);
+    }
 }
