@@ -256,6 +256,8 @@ class AffidavitController extends Controller
             return redirect()->route('payments.show', $payment->first());
         }
 
+        $fine = $this->checkForFine($affidavit);
+
         $payment = Payment::create([
             'state_id' => 1,
             'user_id' => $affidavit->user_id,
@@ -275,8 +277,7 @@ class AffidavitController extends Controller
             'amount' => $affidavit->amount
         ]);
 
-        $this->applyFine($affidavit, $payment);
-        $payment->updateAmount();
+        $this->applyFine($affidavit, $fine, $payment);
 
         return redirect()->route('payments.show', $payment->id);
     }
@@ -288,10 +289,8 @@ class AffidavitController extends Controller
         return $concept->name.': '.$month->name.' - '.$month->year->year;
     }
 
-    public function applyFine(Affidavit $affidavit, Payment $payment)
+    public function applyFine($affidavit, $concept, $payment)
     {
-        $concept = $this->checkForFine($affidavit);
-
         if ($concept) {
             $amount = Fine::calculateAmount($affidavit->amount, $concept);
 
@@ -308,11 +307,28 @@ class AffidavitController extends Controller
                 'amount' => $amount,
                 'payment_id' => $payment->id 
             ]);
+
+            $payment->updateAmount();
         }
     }
 
     public function checkForFine($affidavit)
     {
+        $payment = $affidavit->payment()->exists() 
+            ? $affidavit->payment()->first() 
+            : false;
+
+        if ($payment) {
+            $fine = $payment->whereHas('settlements', function ($q) {
+                return $q->whereNotNull('fine_id');
+            })->first();
+
+            if ($fine != null) {
+                return $fine->concept;
+            }
+            return false;
+        }
+
         if (!$this->hasException($affidavit)) { 
             $startPeriod = Carbon::parse($affidavit->month->start_period_at);
             $todayDate = Carbon::now();
