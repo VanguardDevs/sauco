@@ -20,10 +20,8 @@
         "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "laravelcollective/html": "^6.0",
         "owen-it/laravel-auditing": "^10.0",
-        "spatie/laravel-permission": "^3.0",
-        "yajra/laravel-datatables-oracle": "^9.2"
+        "spatie/laravel-permission": "^3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
