@@ -15,17 +15,18 @@ class StatesTableSeeder extends Seeder
         'ARAGUA', 'BARINAS', 'BOLÍVAR',
         'CARABOBO', 'COJEDES', 'DELTA AMACURO',
         'DEPENDENCIAS FEDERALES', 'DISTRITO CAPITAL',
-        'FALCÓN', 'GUÁRICO', 'LA GUAIRA', 'LARA', 'MIRANDA',
+        'FALCÓN', 'GUÁRICO', 'LARA', 'MIRANDA',
         'MONAGAS', 'MONAGAS', 'MÉRIDA', 'NUEVA ESPARTA',
         'PORTUGUESA', 'SUCRE', 'TRUJILLO', 'TÁCHIRA',
-        'VARGAS', 'YARACUY', 'ZULIA'
+        'LA GUAIRA', 'YARACUY', 'ZULIA'
 	);
 
     public function run()
     {
     	foreach ($this->states as $key => $name) {
     		State::create([
-    			'name' => $name
+    			'name' => $name,
+                'code' => 'POR ASIGNAR'
     		]);
     	}
     }
