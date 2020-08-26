@@ -11,7 +11,6 @@
         "php": "^7.3",
         "barryvdh/laravel-dompdf": "^0.8.4",
         "caffeinated/shinobi": "^5.0",
-        "davejamesmiller/laravel-breadcrumbs": "5.x",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -23,7 +22,6 @@
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.0",
         "owen-it/laravel-auditing": "^10.0",
-        "realrashid/sweet-alert": "^3.1",
         "spatie/laravel-permission": "^3.0",
         "yajra/laravel-datatables-oracle": "^9.2"
     },
