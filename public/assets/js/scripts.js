@@ -663,8 +663,6 @@ $(document).ready(function() {
         "columns": [
             { data: 'num' },
             { data: 'state.name' },
-            { data: 'user.full_name' },
-            { data: 'processed_at' },
             { data: 'formatted_amount', name: 'formatted_amount' },
             {
                 data: "id",

@@ -63,12 +63,10 @@
           <table id="tTaxpayerPayments" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="15%">Nro.</th>
-                <th width="15%">Estado</th>
-                <th width="25%">Recaudador</th>
-                <th width="15%">Procesada</th>
-                <th width="15%">Monto</th>
-                <th width="15%">Acciones</th>
+                <th width="20%">Nro.</th>
+                <th width="30%">Estado</th>
+                <th width="30%">Monto</th>
+                <th width="20%">Acciones</th>
               </tr>
             </thead>
           </table>

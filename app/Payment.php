@@ -111,7 +111,7 @@ class Payment extends Model implements Auditable
 
     public function getProcessedAtAttribute($value)
     {
-        return date('d/m/Y H:m', strtotime($value));
+        return date('d/m/Y h:i', strtotime($value));
     }
 
     public function getDeletedAtAttribute($value)

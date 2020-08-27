@@ -59,7 +59,7 @@
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Monto Total: {{ $row->amount }} Bs
+                    Monto Total: {{ $row->formattedAmount }} Bs
                 </div>
                 @if ($typeForm == 'show')
                 @if (Auth()->user()->hasRole('admin'))
@@ -72,6 +72,9 @@
                 </div>
                 <div class="kt-heading kt-heading--md">
                     Estado: {{ $row->state->name }}
+                </div>
+                <div class="kt-heading kt-heading--md">
+                    Fecha: {{ $row->processed_at }}
                 </div>
                 @endif
            </div>
