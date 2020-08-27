@@ -43,7 +43,7 @@ class Fine extends Model implements Auditable
     {
         if ($concept->chargingMethod->name == "TASA") {
             return $value * $concept->amount / 100;
-        }    
+        } 
     }
 
     public function user()

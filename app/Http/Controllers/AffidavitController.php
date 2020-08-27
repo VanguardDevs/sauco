@@ -256,8 +256,6 @@ class AffidavitController extends Controller
             return redirect()->route('payments.show', $payment->first());
         }
 
-        $fine = $this->checkForFine($affidavit);
-
         $payment = Payment::create([
             'state_id' => 1,
             'user_id' => $affidavit->user_id,
@@ -277,8 +275,6 @@ class AffidavitController extends Controller
             'amount' => $affidavit->amount
         ]);
 
-        $this->applyFine($affidavit, $fine, $payment);
-
         return redirect()->route('payments.show', $payment->id);
     }
     
@@ -287,29 +283,6 @@ class AffidavitController extends Controller
         $concept = Concept::whereCode(1)->first();
 
         return $concept->name.': '.$month->name.' - '.$month->year->year;
-    }
-
-    public function applyFine($affidavit, $concept, $payment)
-    {
-        if ($concept) {
-            $amount = Fine::calculateAmount($affidavit->amount, $concept);
-
-            $fine = $concept->fines()->create([
-                'amount' => $amount,
-                'active' => true,
-                'taxpayer_id' => $affidavit->taxpayer_id,
-                'user_id' => $affidavit->user_id,
-            ]);
-
-            $settlement = $fine->settlement()->create([
-                'num' => Settlement::newNum(),
-                'object_payment' => $concept->name,
-                'amount' => $amount,
-                'payment_id' => $payment->id 
-            ]);
-
-            $payment->updateAmount();
-        }
     }
 
     public function checkForFine($affidavit)
@@ -329,11 +302,10 @@ class AffidavitController extends Controller
             return false;
         }
 
-        if (!$this->hasException($affidavit)) { 
+        if (!$affidavit->hasException()) { 
             $startPeriod = Carbon::parse($affidavit->month->start_period_at);
             $todayDate = Carbon::now();
             $passedDays = $startPeriod->diffInDays($todayDate);
-            
             
             if ($affidavit->month->year->year == "2019") {
                 return Concept::whereCode(2)->first();

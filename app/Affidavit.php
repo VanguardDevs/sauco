@@ -25,6 +25,21 @@ class Affidavit extends Model implements Auditable
 
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
 
+    public function hasException()
+    {
+        if ($this->taxpayer->economicActivities->first()->code == 123456) {
+            return true;
+        }
+        if (
+            $this->processed_at > Carbon::parse('2020-06-18') &&
+            !$this->month->year->year > 2019
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function nullAffidavit()
     {
         return $this->hasOne(NullAffidavit::class);
