@@ -6,7 +6,6 @@ use App\Taxpayer;
 use App\Year;
 use App\Month;
 use App\Settlement;
-use App\Fine;
 use App\Affidavit;
 use App\Payment;
 use App\EconomicActivityAffidavit;
@@ -292,9 +291,7 @@ class AffidavitController extends Controller
             : false;
 
         if ($payment) {
-            $fine = $payment->whereHas('settlements', function ($q) {
-                return $q->whereNotNull('fine_id');
-            })->first();
+            $fine = $payment->fine()->first();
 
             if ($fine != null) {
                 return $fine->concept;
