@@ -17,6 +17,8 @@ class Fine extends Model implements Auditable
 
     protected $guarded = [];
 
+    protected $appends = [ 'formatted_amount' ];
+
     protected $casts = [
         'amount' => 'float'
     ];  
@@ -71,8 +73,13 @@ class Fine extends Model implements Auditable
         return $this->hasOne(Settlement::class);
     }
 
+    public function getFormattedAmountAttribute()
+    {
+        return number_format($this->amount, 2, ',', '.');
+    }
+
     public function getCreatedAtAttribute($value)
     {
-        return Date('d/m/Y H:m', strtotime($value));
+        return Date('d/m/Y h:i', strtotime($value));
     }
 }

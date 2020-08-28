@@ -741,7 +741,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'amount', name: 'amount' },
+            { data: 'formatted_amount', name: 'formatted_amount' },
             { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
             {

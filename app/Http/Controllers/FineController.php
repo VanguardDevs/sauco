@@ -35,12 +35,15 @@ class FineController extends Controller
 
     public function list(Taxpayer $taxpayer)
     {
-        $query = Fine::whereTaxpayerId($taxpayer->id)
+        $query = $taxpayer->fines()
             ->orderBy('fines.created_at', 'DESC')
             ->with(['concept:id,name']);
 
-        return DataTables::eloquent($query)
-            ->toJson();
+        return DataTables::of($query)
+            ->addColumn('formatted_amount', function ($payment) {
+                return $payment->formatted_amount;
+            })
+            ->make(true);
     }
 
     public function listConcepts(Ordinance $ordinance)
