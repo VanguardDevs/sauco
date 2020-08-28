@@ -118,7 +118,9 @@ class PaymentController extends Controller
                 : false;
 
             if ($affidavit) {
-                $this->checkForFine($affidavit);
+                if (!$payment->fine()->onlyTrashed()->first()) {
+                    $this->checkForFine($affidavit);
+                }
             }
         }
 
