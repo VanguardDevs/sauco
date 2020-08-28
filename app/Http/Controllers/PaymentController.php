@@ -50,7 +50,11 @@ class PaymentController extends Controller
             ->whereStateId(2)
             ->orderBy('num', 'DESC');
 
-        return DataTables::of($query)->toJson();
+        return DataTables::of($query)
+            ->addColumn('formatted_amount', function ($payment) {
+                return $payment->formatted_amount;
+            })
+            ->make(true);
     }
 
     public function listByTaxpayer(Taxpayer $taxpayer)
@@ -59,7 +63,11 @@ class PaymentController extends Controller
             ->whereTaxpayerId($taxpayer->id)
             ->orderBy('processed_at', 'DESC');
 
-        return DataTables::eloquent($query)->toJson();
+        return DataTables::of($query)
+            ->addColumn('formatted_amount', function ($payment) {
+                return $payment->formatted_amount;
+            })
+            ->make(true);
     }
 
     public function onlyNull()
