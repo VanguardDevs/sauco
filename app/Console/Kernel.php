@@ -26,7 +26,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('apply:fine')
-            ->everyMinute();
+            ->everyMinute()
+            ->weekdays()
+            ->between('08:00', '17:00');
     }
 
     /**

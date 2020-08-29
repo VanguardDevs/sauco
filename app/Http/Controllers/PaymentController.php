@@ -112,16 +112,6 @@ class PaymentController extends Controller
             if (auth()->user()->can('process.payments')) {
                 $this->typeform = 'edit';
             }
-
-            $affidavit = ($payment->affidavit()->exists())
-                ? $payment->affidavit()->first()
-                : false;
-
-            if ($affidavit) {
-                if (!$payment->fine()->onlyTrashed()->first()) {
-                    $this->checkForFine($affidavit);
-                }
-            }
         }
 
         return view('modules.taxpayers.payment')
@@ -129,49 +119,6 @@ class PaymentController extends Controller
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())
             ->with('typeForm', $this->typeform);
-    }
-
-    public function applyFine($affidavit, $concept, $payment)
-    {
-        if ($concept) {
-            $amount = Fine::calculateAmount($affidavit->amount, $concept);
-
-            $fine = $concept->fines()->create([
-                'amount' => $amount,
-                'active' => true,
-                'taxpayer_id' => $affidavit->taxpayer_id,
-                'user_id' => $affidavit->user_id,
-            ]);
-
-            $settlement = $fine->settlement()->create([
-                'num' => Settlement::newNum(),
-                'object_payment' => $concept->name,
-                'amount' => $amount,
-                'payment_id' => $payment->id 
-            ]);
-            
-            $payment->updateAmount();
-        }
-    }
-
-    public function checkForFine($affidavit)
-    {
-        $startPeriod = Carbon::parse($affidavit->month->start_period_at);
-        $todayDate = Carbon::now();
-        $passedDays = $startPeriod->diffInDays($todayDate);
-        $payment = $affidavit->payment()->first();
-        $concept = Concept::whereCode(3)->first();
-
-        if (!$affidavit->hasException()) {
-            if ($passedDays > 48 && $payment->settlements()->count() == 1) {
-                // Creamos una multa
-                $this->applyFine($affidavit, $concept, $payment);
-            }
-            if ($passedDays > 63 && $payment->settlements()->count() == 2) {
-                // Creamos otra multa
-                $this->applyFine($affidavit, $concept, $payment);
-            }
-        }
     }
 
     /**
