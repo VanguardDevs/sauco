@@ -28,24 +28,24 @@ class Fine extends Model implements Auditable
         return $this->hasOne(NullFine::class);
     }
 
-    public function settlementHelpler($paymentId)
+    public static function applyFine($payment, $concept)
     {
-        $payment = Payment::find($paymentId);
+        $amount = $payment->settlements()->first()->amount;
+        $fineAmount = $concept->calculateAmount($amount);
 
-        $payment->settlements()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' => self::concept()->first()->name,
-            'fine_id' => $this->id
+        $fine = $concept->fines()->create([
+            'amount' => $fineAmount,
+            'active' => true,
+            'taxpayer_id' => $payment->taxpayer_id,
+            'user_id' => 1
         ]);
 
-        return $payment->updateAmount();
-    }
-
-    public static function calculateAmount($value, $concept)
-    {
-        if ($concept->chargingMethod->name == "TASA") {
-            return $value * $concept->amount / 100;
-        } 
+        $fine->settlement()->create([
+            'num' => Settlement::newNum(),
+            'object_payment' => $concept->name,
+            'amount' => $fineAmount,
+            'payment_id' => $payment->id,
+        ]);
     }
 
     public function user()

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
+use App\Concept;
 
 class Affidavit extends Model implements Auditable
 {
@@ -25,16 +26,39 @@ class Affidavit extends Model implements Auditable
 
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
 
+    /**
+    * Check if this affidavit fills an exception for fine
+    * 
+     */
     public function hasException()
     {
-        if ($this->taxpayer->economicActivities->first()->code == 123456) {
+        if ($this->taxpayer->hasException()) {
             return true;
         }
-        if (
-            $this->processed_at > Carbon::parse('2020-06-18') &&
-            !$this->month->year->year > 2019
-        ) {
-            return true;
+
+        $pandemicAgreement = $this->processed_at > Carbon::parse('2020-06-18');
+        $year2019 = $this->month->year->year < 2020;
+
+        return ($pandemicAgreement || $year2019)
+            ? false
+            : true;
+    }
+
+    public function shouldHaveFine()
+    {
+        if (!$this->hasException()) {
+            $startPeriod = Carbon::parse($this->month->start_period_at);
+            $todayDate = Carbon::now();
+            $passedDays = $startPeriod->diffInDays($todayDate);
+
+            if ($passedDays > 60) {
+                return [
+                    Concept::whereCode(3)->first(),
+                    Concept::whereCode(3)->first(),
+                ]; 
+            } else if ($passedDays > 45) {
+               return [Concept::whereCode(3)->first()]; 
+            }
         }
 
         return false;

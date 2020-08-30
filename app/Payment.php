@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use Carbon\Carbon;
+use App\Fine;
 
 class Payment extends Model implements Auditable
 {
@@ -16,18 +18,56 @@ class Payment extends Model implements Auditable
 
     protected $guarded = [];
  
-    protected $casts = [
-        'amount' => 'float'
-    ];  
+    protected $casts = [ 'amount' => 'float' ];  
 
     protected $appends = [ 'formatted_amount' ];
 
+    public function checkForFine()
+    {
+        $shouldHaveFine = $this->affidavit()->first()->shouldHaveFine();
+        $totalSettlements = $this->settlements()->count();
+
+        if ($shouldHaveFine) {
+            $concept = $shouldHaveFine[0];
+            if (count($shouldHaveFine) == 2 && $totalSettlements == 1) {
+                // Apply two fines
+                Fine::applyFine($this, $concept);
+                Fine::applyFine($this, $concept);
+            }
+            if (count($shouldHaveFine) == 1) {
+                // Apply one fine
+                Fine::applyFine($this, $concept);
+            }
+        }
+        $this->updateAmount();
+    }
+    
     public function updateAmount()
     {
         $amount = $this->settlements->sum('amount');
 
         return $this->update([ 'amount' => $amount ]);
     }
+
+    public static function processedByDate($firstDate, $lastDate)
+    {
+        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
+            ->whereStateId(2)
+            ->orderBy('processed_at', 'ASC')
+            ->get();
+    } 
+
+    public static function newNum()
+    {
+        $lastNum = Payment::withTrashed()
+            ->whereStateId(2)
+            ->orderBy('num', 'DESC')
+            ->first()
+            ->num;
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
+    } 
 
     public function nullPayment()
     {
@@ -83,26 +123,6 @@ class Payment extends Model implements Auditable
     {
         return $this->belongsTo(InvoiceModel::class);
     }
-
-    public static function processedByDate($firstDate, $lastDate)
-    {
-        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
-            ->whereStateId(2)
-            ->orderBy('processed_at', 'ASC')
-            ->get();
-    } 
-
-    public static function newNum()
-    {
-        $lastNum = Payment::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('num', 'DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
-    } 
 
     public function getCreatedAtAttribute($value)
     {

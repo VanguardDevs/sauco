@@ -274,6 +274,8 @@ class AffidavitController extends Controller
             'amount' => $affidavit->amount
         ]);
 
+        $payment->checkForFine();
+
         return redirect()->route('payments.show', $payment->id);
     }
     
@@ -299,33 +301,9 @@ class AffidavitController extends Controller
             return false;
         }
 
-        if (!$affidavit->hasException()) { 
-            $startPeriod = Carbon::parse($affidavit->month->start_period_at);
-            $todayDate = Carbon::now();
-            $passedDays = $startPeriod->diffInDays($todayDate);
-            
-            if ($affidavit->month->year->year == "2019") {
-                return Concept::whereCode(2)->first();
-            }
+        $checker = $affidavit->shouldHaveFine();
 
-            if ($affidavit->processed_at > Carbon::parse('2020-06-18')) {
-                if ($passedDays > 63) {
-                   return Concept::whereCode(2)->first(); 
-                } else if ($passedDays > 48) {
-                    return Concept::whereCode(3)->first();
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public function hasException($affidavit)
-    {
-        if ($affidavit->taxpayer->economicActivities->first()->code == 123456) {
-            return true;
-        }
-        return false;
+        return $checker;
     }
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)

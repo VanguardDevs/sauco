@@ -20,6 +20,22 @@ class Settlement extends Model implements Auditable
         'amount' => 'float'
     ];  
 
+    public function getTotalAmountAttribute($value)
+    {
+        return number_format($this->amount, 2, ',', '.');
+    }
+
+    public static function newNum()
+    {
+        $lastNum = self::withTrashed()
+            ->orderBy('num','DESC')
+            ->first()
+            ->num;
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
+    }   
+
     public function withholding()
     {
         return $this->belongsTo(Withholding::class);
@@ -44,20 +60,4 @@ class Settlement extends Model implements Auditable
     {
         return $this->belongsTo(Application::class);
     }
-
-    public function getTotalAmountAttribute($value)
-    {
-        return number_format($this->amount, 2, ',', '.');
-    }
-
-    public static function newNum()
-    {
-        $lastNum = self::withTrashed()
-            ->orderBy('num','DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
-    }   
 }
