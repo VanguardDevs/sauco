@@ -114,7 +114,7 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Affidavit::class, Settlement::class);
     }
 
-    public function fine()
+    public function fines()
     {
         return $this->belongsToMany(Fine::class, Settlement::class);
     }

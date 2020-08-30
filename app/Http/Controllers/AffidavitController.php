@@ -292,18 +292,15 @@ class AffidavitController extends Controller
             ? $affidavit->payment()->first() 
             : false;
 
-        if ($payment) {
-            $fine = $payment->fine()->first();
+        if ($payment->state_id == 2) {
+            $fines = $payment->fines()->with('concept')->get();
 
-            if ($fine != null) {
-                return $fine->concept;
+            if ($fines != null) {
+                return $fines;
             }
-            return false;
         }
 
-        $checker = $affidavit->shouldHaveFine();
-
-        return $checker;
+        return $affidavit->shouldHaveFine();
     }
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)

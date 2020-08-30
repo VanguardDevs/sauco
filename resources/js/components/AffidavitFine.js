@@ -53,18 +53,19 @@ const AffidavitFine = props => {
         <div className="kt-heading kt-heading--md">
         </div>
         {
-          (data.fine.apply) ? 
-            <div className="kt-heading kt-heading--md">
-              <p>
-                {fine.concept}
-                : {currencyFormat(fine.amount)}
-              </p>
-            </div>
-          : <></>
+          (data.fine.apply) && 
+          { 
+            fine.forEach(fine => {
+              <div className="kt-heading kt-heading--md">
+                <p>{fine.concept}</p>
+              </div>
+            })
+          }
         }
         <div className="kt-heading kt-heading--md">
           <p>Total a pagar: {currencyFormat(total)}</p>
-          <h5>Recibida {dateformat(data.affidavit.processed_at)}</h5>
+          <h5>Fecha: {dateformat(data.affidavit.processed_at)}</h5>
+          <h5>Por: {data.affidavit.user.full_name}</h5>
         </div>
       </>
     );
