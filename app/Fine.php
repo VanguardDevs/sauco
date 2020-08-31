@@ -4,6 +4,7 @@ namespace App;
 
 use App\Settlement;
 use App\Payment;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -32,12 +33,13 @@ class Fine extends Model implements Auditable
     {
         $amount = $payment->settlements()->first()->amount;
         $fineAmount = $concept->calculateAmount($amount);
+        $userId = User::whereLogin('sauco')->first()->id;
 
         $fine = $concept->fines()->create([
             'amount' => $fineAmount,
             'active' => true,
             'taxpayer_id' => $payment->taxpayer_id,
-            'user_id' => 1
+            'user_id' => $userId
         ]);
 
         $fine->settlement()->create([

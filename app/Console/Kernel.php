@@ -26,10 +26,19 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('apply:fine')
-            ->monthlyOn(16, '6')
-            ->monthlyOn(31, '6')
-            ->monthlyOn(1, '6')
+            ->monthlyOn(16, '01:42')
+            ->lastDayOfMonth('01:42')
             ->evenInMaintenanceMode();
+    }
+
+    /**
+     * Get the timezone that should be used by default for scheduled events.
+     *
+     * @return \DateTimeZone|string|null
+     */
+    protected function scheduleTimezone()
+    {
+        return 'America/Caracas';
     }
 
     /**

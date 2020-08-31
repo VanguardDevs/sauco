@@ -24,17 +24,16 @@ class Payment extends Model implements Auditable
 
     public function checkForFine()
     {
-        $shouldHaveFine = $this->affidavit()->first()->shouldHaveFine();
+        $totalFines = $this->affidavit()->first()->shouldHaveFine();
         $totalSettlements = $this->settlements()->count();
 
-        if ($shouldHaveFine) {
-            $concept = $shouldHaveFine[0];
-            if (count($shouldHaveFine) == 2 && $totalSettlements == 1) {
+        if ($totalFines && $totalSettlements < 3) {
+            $concept = $totalFines[0];
+            if (count($totalFines) == 2 && $totalSettlements < 2) {
                 // Apply two fines
                 Fine::applyFine($this, $concept);
-                Fine::applyFine($this, $concept);
             }
-            if (count($shouldHaveFine) == 1) {
+            if (count($totalFines) == 1 || count($totalFines) == 2) {
                 // Apply one fine
                 Fine::applyFine($this, $concept);
             }

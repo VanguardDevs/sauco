@@ -53,6 +53,11 @@ class User extends Authenticatable
 
     public function affidavits()
     {
-	return $this->hasMany(Affidavit::class);
+    	return $this->hasMany(Affidavit::class);
+    }
+
+    public function fines()
+    {
+        return $this->hasMany(Fine::class);
     }
 }
