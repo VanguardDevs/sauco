@@ -45,7 +45,7 @@ class ApplyFine extends Command
             $payments->get()->each(function ($payment) {
                 // Apply a fine to all payments except those whose
                 // Fine was annulled
-                if (!$payment->fine()->onlyTrashed()->first()) {
+                if (!$payment->fines()->onlyTrashed()->first()) {
                     $payment->checkForFine();
                 }
             });
