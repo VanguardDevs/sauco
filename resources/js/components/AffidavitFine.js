@@ -30,9 +30,8 @@ const currencyFormat = amount => (
 );
 
 const hasProcessedPayment = payment => {
-  if (!isEmpty(payment)) {
-    return (payment.state_id == 2) ? true : false; 
-  }
+  if (isEmpty(payment)) return false;
+  return (payment.state_id === 2) ? true : false; 
 };
 
 const AffidavitFine = props => {
@@ -46,7 +45,7 @@ const AffidavitFine = props => {
       .then(res => {
         let total = res.data.affidavit.amount;
 
-        if (res.data.fine.apply && hasProcessedPayment(res.data.affidavit.payment)) {
+        if (res.data.fine.apply && !hasProcessedPayment(res.data.affidavit.payment[0])) {
           let fineData = getFineData(total, res.data.fine.concepts);
           total += fineData.amount;
           setFine(fineData);
