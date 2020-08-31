@@ -56,23 +56,17 @@ class AffidavitController extends Controller
     public function show(Request $request, Affidavit $affidavit)
     {
         if ($request->wantsJson()) {
-            $fine = $this->checkForFine($affidavit);
-
-            if ($fine) {
-                $fine = [
+            $fines = $affidavit->shouldHaveFine();
+            $fineData = ($fines)
+                ? [
                     'apply' => true,
-                    'data' => $fine
-                ];
-            } else {
-                $fine = [
-                    'apply' => false,
-                    'data' => []
-                ];
-            }
+                    'concepts' => $fines 
+                ]
+                : ['apply' => false];
 
             return response()->json([
-                'affidavit' => $affidavit->load('user'),
-                'fine' => $fine 
+                'affidavit' => $affidavit->load(['user', 'payment']),
+                'fine' => $fineData 
             ]);
         }
 
@@ -284,23 +278,6 @@ class AffidavitController extends Controller
         $concept = Concept::whereCode(1)->first();
 
         return $concept->name.': '.$month->name.' - '.$month->year->year;
-    }
-
-    public function checkForFine($affidavit)
-    {
-        $payment = $affidavit->payment()->exists() 
-            ? $affidavit->payment()->first() 
-            : false;
-
-        if ($payment->state_id == 2) {
-            $fines = $payment->fines()->with('concept')->get();
-
-            if ($fines != null) {
-                return $fines;
-            }
-        }
-
-        return $affidavit->shouldHaveFine();
     }
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)

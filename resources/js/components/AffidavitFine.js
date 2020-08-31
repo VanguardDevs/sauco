@@ -6,20 +6,26 @@ import dateformat from '../utils/dateformat';
 import Col from './Col';
 import Loading from './Loading';
 
-const fineAmount = (affidavit, fine) => {
-  const amount = fine.amount * affidavit.amount / 10;
+const getFineData = ( settlementAmount, concepts ) => {
+  let data = {
+    'amount': null,
+    'message': 'El pago recibirá una multa equivalente al 30% de la liquidación'
+  };
+  let amount = concepts[0].amount * settlementAmount / 10;
 
-  return Math.round(amount * 10) / 100;
+  if (concepts.length > 1) {
+    data.message = 'El pago recibirá una multa equivalente al 60% de la liquidación';
+    amount = amount * 2;
+  }
+  data.amount = Math.round(amount * 10) / 100;
+
+  return data;
 };
 
-const getFineData = ({ affidavit, fine }) => ({
-  concept: fine.data.name,
-  amount: fineAmount(affidavit, fine.data)
-});
-
-const currencyFormat = amount =>
-  Number((amount).toFixed(2))
-    .toLocaleString();
+const currencyFormat = amount => (
+  new Intl.NumberFormat('es-VE')
+    .format(amount)
+);
 
 const AffidavitFine = props => {
   const [data, setData] = useState({});
@@ -33,9 +39,9 @@ const AffidavitFine = props => {
         let total = res.data.affidavit.amount;
 
         if (res.data.fine.apply) {
-          let fineData = getFineData(res.data);
+          let fineData = getFineData(total, res.data.fine.concepts);
           total += fineData.amount;
-          setFine(getFineData(res.data));
+          setFine(fineData);
         }
 
         setData(res.data);
@@ -45,37 +51,27 @@ const AffidavitFine = props => {
       .catch(err => console.log(err));
   }, [props]);
 
-  let component;
-
-  if (!loading) {
-    component = (
-      <>
-        <div className="kt-heading kt-heading--md">
-        </div>
-        {
-          (data.fine.apply) && 
-          { 
-            fine.forEach(fine => {
-              <div className="kt-heading kt-heading--md">
-                <p>{fine.concept}</p>
-              </div>
-            })
-          }
-        }
-        <div className="kt-heading kt-heading--md">
-          <p>Total a pagar: {currencyFormat(total)}</p>
-          <h5>Fecha: {dateformat(data.affidavit.processed_at)}</h5>
-          <h5>Por: {data.affidavit.user.full_name}</h5>
-        </div>
-      </>
-    );
-  } else {
-    component = <Loading />
-  }
-
   return (
     <Col lg='12'>
-      {component}
+      { (!loading) 
+        ? (
+          <>
+            <div className="kt-heading kt-heading--md">
+              { 
+              (data.fine.apply) && 
+                <div className="kt-heading kt-heading--md">
+                  <p>{fine.message} : {currencyFormat(fine.amount)}</p>
+                </div>
+              }
+            </div>
+            <div className="kt-heading kt-heading--md">
+              <p>Total a pagar: {currencyFormat(total)}</p>
+              <h5>Fecha: {dateformat(data.affidavit.processed_at)}</h5>
+              <h5>Por: {data.affidavit.user.full_name}</h5>
+            </div>
+          </>
+        ) : <Loading />
+      }
     </Col>
   );
 }
