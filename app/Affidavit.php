@@ -36,12 +36,7 @@ class Affidavit extends Model implements Auditable
             return true;
         }
 
-        $pandemicAgreement = $this->processed_at > Carbon::parse('2020-06-18');
-        $year2019 = $this->month->year->year < 2020;
-
-        return ($pandemicAgreement || $year2019)
-            ? false
-            : true;
+        return false;
     }
 
     public function shouldHaveFine()
