@@ -13,20 +13,62 @@ class DropTables extends Migration
      */
     public function up()
     {
-        Schema::table('references', function (Blueprint $table) {
-            $table->dropForeign(['account_id']);
-            $table->dropColumn(['account_id']);
+        Schema::dropIfExists('settlement_reduction');
+        Schema::dropIfExists('reductions');
+
+        Schema::table('taxpayers', function (Blueprint $table) {
+            $table->unsignedBigInteger('parish_id')->nullable();
         });
 
-        Schema::table('taxpayer_property', function (Blueprint $table) {
-            $table->dropForeign(['property_id']);
-        });  
+        /**
+         * Add company_id to affidavits
+         */        
+        Schema::table('affidavits', function (Blueprint $table) {
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->foreign('company_id')->references('id')->on('companies')
+                ->onUpdate('cascade')->onDelete('cascade');
+        });
 
-        Schema::dropIfExists('accounts');
-        Schema::dropIfExists('account_types');
-        Schema::dropIfExists('settlement_reduction');
-        Schema::dropIfExists('properties');
-        Schema::dropIfExists('reductions');
+        /**
+        * Update amount column of fines, applications and settlements
+         */       
+        Schema::table('fines', function (Blueprint $table) {
+            $table->decimal('amount', 15, 2)->change();
+        });
+
+        Schema::table('applications', function (Blueprint $table) {
+            $table->decimal('amount', 15, 2)->change();
+        });
+
+        Schema::table('settlements', function (Blueprint $table) {
+            $table->decimal('amount', 15, 2)->change();
+            $table->foreign('payment_id')->references('id')->on('payments')
+                ->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        Schema::table('payments', function (Blueprint $table) {
+            $table->decimal('amount', 15, 2)->change();
+        });
+
+        /**
+        * Recover states and municipalities tables
+         */        
+        Schema::create('states', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('code');
+            $table->timestamps();
+        });
+
+        Schema::create('municipalities', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('code');
+            $table->unsignedBigInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('states')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
