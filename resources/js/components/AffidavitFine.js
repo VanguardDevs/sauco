@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import dateformat from '../utils/dateformat';
+import isEmpty from '../utils/isEmpty';
+
 // Components
 import Col from './Col';
 import Loading from './Loading';
@@ -27,6 +29,12 @@ const currencyFormat = amount => (
     .format(amount)
 );
 
+const hasProcessedPayment = payment => {
+  if (!isEmpty(payment)) {
+    return (payment.state_id == 2) ? true : false; 
+  }
+};
+
 const AffidavitFine = props => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -38,10 +46,12 @@ const AffidavitFine = props => {
       .then(res => {
         let total = res.data.affidavit.amount;
 
-        if (res.data.fine.apply) {
+        if (res.data.fine.apply && hasProcessedPayment(res.data.affidavit.payment)) {
           let fineData = getFineData(total, res.data.fine.concepts);
           total += fineData.amount;
           setFine(fineData);
+        } else {
+          setFine({ hasPayment: true });
         }
 
         setData(res.data);
@@ -58,14 +68,14 @@ const AffidavitFine = props => {
           <>
             <div className="kt-heading kt-heading--md">
               { 
-              (data.fine.apply) && 
+              (!fine.hasPayment) && 
                 <div className="kt-heading kt-heading--md">
                   <p>{fine.message} : {currencyFormat(fine.amount)}</p>
                 </div>
               }
             </div>
             <div className="kt-heading kt-heading--md">
-              <p>Total a pagar: {currencyFormat(total)}</p>
+              <p>Total: {currencyFormat(total)}</p>
               <h5>Fecha: {dateformat(data.affidavit.processed_at)}</h5>
               <h5>Por: {data.affidavit.user.full_name}</h5>
             </div>

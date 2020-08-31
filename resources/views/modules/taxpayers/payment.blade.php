@@ -1,6 +1,6 @@
 @extends('cruds.form')
 
-@section('title', 'Factura # '.$row->num)
+@section('title', 'Factura '.$row->num)
 
 @section('form')
     <!-- general form elements -->
@@ -117,19 +117,26 @@
         <div class="card-footer">
             @if($typeForm == 'edit')
                 <a href="{{ URL::previous() }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>
-                <button  type="submit" class="btn btn-primary" onClick="this.form.submit(); this.disabled=true;">
+                <button type="submit" class="btn btn-primary" onClick="this.form.submit(); this.disabled=true;">
                     <i class="fas fa-save"></i>
-                    Registrar
+                    Registrar pago
                 </button>
             @else
-            <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
-            @if($typeForm == 'show')
-            <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-success' title='Descargar factura' target='_blank'>
-                <i class='flaticon2-download'></i>
-                Imprimir factura
+                <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
+                @if($typeForm == 'show')
+                <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-info' title='Descargar factura' target='_blank'>
+                    <i class='flaticon2-download'></i>
+                    Imprimir factura
+                </a>
+                @endif
+            @endif
+
+            @if($row->affidavit()->exists())
+            <a href="{{ route('affidavits.show', $row->affidavit()->first() ) }}"}} class='btn btn-success' title='Ir a la declaración'>
+                <i class='fas fa-chevron-right'></i>
+                Ir a la declaración
             </a>
             @endif
-        @endif
         </div>
         {!! Form::close() !!}
     </div>
