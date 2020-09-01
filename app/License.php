@@ -24,8 +24,6 @@ class License extends Model implements Auditable
         'downloaded_at'
     ];
 
-    protected $appends = ['num'];
-
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);
@@ -34,15 +32,6 @@ class License extends Model implements Auditable
     public function correlative()
     {
         return $this->belongsTo(Correlative::class);
-    }
-
-    public function getNumAttribute()
-    {
-        $correlative = $this->correlative;
-
-        return $correlative->correlativeType->description
-                             .$correlative->year->year.'-'
-                             .$correlative->correlativeNumber->num;
     }
 
     public function ordinance()

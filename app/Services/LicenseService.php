@@ -37,6 +37,7 @@ class LicenseService {
         ]);    
 
         $license = License::create([
+            'num' => $correlative->num, 
             'emission_date' => $emissionDate,
             'ordinance_id' => $ordinance->id,
             'correlative_id' => $correlative->id,

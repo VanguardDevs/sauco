@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Correlative extends Model
 {
     use SoftDeletes;
+    
     protected $table = 'correlatives';
 
     protected $fillable = [
@@ -15,6 +16,13 @@ class Correlative extends Model
         'correlative_type_id',
         'year_id'
     ];
+
+    public function getNumAttribute()
+    {
+        return $this->correlativeType->description
+            .$this->year->year.'-'
+            .$this->correlativeNumber->num;
+    }
 
     public function correlativeType()
     {
