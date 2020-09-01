@@ -10,6 +10,11 @@ class CorrelativeNumber extends Model
 
     protected $guarded = [];
 
+    public function license()
+    {
+        return $this->hasOneThrough(License::class, Correlative::class);
+    }
+
     public function correlative()
     {
         return $this->hasMany(Correlative::class);

@@ -21,7 +21,6 @@ class LicenseController extends Controller
     {
         $this->license = $license; 
         $this->middleware('auth');
-        $this->middleware('can:access.licenses')->only('index');
     }
 
     /**
@@ -35,11 +34,7 @@ class LicenseController extends Controller
             $query = License::with(['taxpayer'])
                 ->orderBy('created_at', 'DESC');
 
-            return DataTables::eloquent($query)
-                ->addColumn('num', function (License $license) {
-                    return $license->num;
-                })
-                ->toJson();
+            return DataTables::eloquent($query)->toJson();
         }
 
         return view('modules.taxpayers.economic-activity-licenses.index');
@@ -154,6 +149,7 @@ class LicenseController extends Controller
         $representation = $taxpayer->president()->first()->person->name;
 
         $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'endOfYear'];
+        $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 

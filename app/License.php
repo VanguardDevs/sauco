@@ -15,10 +15,13 @@ class License extends Model implements Auditable
     protected $table = 'licenses';
 
     protected $fillable = [
+        'num',
+        'active',
         'emission_date',
         'taxpayer_id',
         'correlative_id',
-        'ordinance_id'
+        'ordinance_id',
+        'downloaded_at'
     ];
 
     protected $appends = ['num'];
