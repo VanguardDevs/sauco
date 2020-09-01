@@ -42,12 +42,18 @@ class DropTables extends Migration
 
         Schema::table('settlements', function (Blueprint $table) {
             $table->decimal('amount', 15, 2)->change();
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('payment_id')->references('id')->on('payments')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('status')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::table('payments', function (Blueprint $table) {
             $table->decimal('amount', 15, 2)->change();
+            $table->renameColumn('state_id', 'status_id');
+            $table->foreign('status_id')->references('id')->on('status')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
 
         /**

@@ -23,12 +23,14 @@ class Concept extends Model
         'accounting_account_id'
     ];
 
-    public function calculateAmount()
+    public function calculateAmount($value = null)
     {
         $method = $this->chargingMethod()->first()->name;
-        $value = TaxUnit::latest()->first()->value;
-
-        if ($method == 'DIVISA') {
+        $value = $value ? $value : TaxUnit::latest()->first()->value;
+        
+        if ($method == "TASA") {
+            return $value * $this->amount / 100;
+        } else if ($method == 'DIVISA') {
             return $this->amount;
         } else if ($method == 'U.T') {
             return $this->amount * $value;

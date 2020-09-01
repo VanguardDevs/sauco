@@ -4,6 +4,7 @@ namespace App;
 
 use App\Settlement;
 use App\Payment;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -17,6 +18,8 @@ class Fine extends Model implements Auditable
 
     protected $guarded = [];
 
+    protected $appends = [ 'formatted_amount' ];
+
     protected $casts = [
         'amount' => 'float'
     ];  
@@ -26,24 +29,25 @@ class Fine extends Model implements Auditable
         return $this->hasOne(NullFine::class);
     }
 
-    public function settlementHelpler($paymentId)
+    public static function applyFine($payment, $concept)
     {
-        $payment = Payment::find($paymentId);
+        $amount = $payment->settlements()->first()->amount;
+        $fineAmount = $concept->calculateAmount($amount);
+        $userId = User::whereLogin('sauco')->first()->id;
 
-        $payment->settlements()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' => self::concept()->first()->name,
-            'fine_id' => $this->id
+        $fine = $concept->fines()->create([
+            'amount' => $fineAmount,
+            'active' => true,
+            'taxpayer_id' => $payment->taxpayer_id,
+            'user_id' => $userId
         ]);
 
-        return $payment->updateAmount();
-    }
-
-    public static function calculateAmount($value, $concept)
-    {
-        if ($concept->chargingMethod->name == "TASA") {
-            return $value * $concept->amount / 100;
-        }    
+        $fine->settlement()->create([
+            'num' => Settlement::newNum(),
+            'object_payment' => $concept->name,
+            'amount' => $fineAmount,
+            'payment_id' => $payment->id,
+        ]);
     }
 
     public function user()
@@ -71,8 +75,13 @@ class Fine extends Model implements Auditable
         return $this->hasOne(Settlement::class);
     }
 
+    public function getFormattedAmountAttribute()
+    {
+        return number_format($this->amount, 2, ',', '.');
+    }
+
     public function getCreatedAtAttribute($value)
     {
-        return Date('d/m/Y H:m', strtotime($value));
+        return Date('d/m/Y h:i', strtotime($value));
     }
 }

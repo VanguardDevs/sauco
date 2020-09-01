@@ -22,19 +22,16 @@ class Taxpayer extends Model implements Auditable
         'phone',
         'email',
         'community_id',
-        'parish_id',
         'taxpayer_type_id',
         'taxpayer_classification_id',
     ];
 
-    public function economicActivities()
+    public function hasException()
     {
-        return $this->belongsToMany(EconomicActivity::class);
-    }
+        $query = $this->economicActivities()
+            ->whereCode(123456);
 
-    public function affidavits()
-    {
-        return $this->hasMany(Affidavit::class);
+        return $query->first() ? true : false;
     }
 
     public function representations()
@@ -52,19 +49,19 @@ class Taxpayer extends Model implements Auditable
         return $this->belongsTo(TaxpayerType::class);
     }
 
+    public function economicActivities()
+    {
+        return $this->belongsToMany(EconomicActivity::class);
+    }
+
     public function licenses()
     {
         return $this->hasMany(License::class);
     }
 
-    public function companies()
+    public function commercialDenomination()
     {
-        return $this->hasMany(Company::class);
-    }
-
-    public function parish()
-    {
-        return $this->belongsTo(Parish::class);
+        return $this->hasOne(CommercialDenomination::class);
     }
 
     public function applications()
@@ -82,15 +79,15 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Payment::class);
     }
 
-    public function oldPayments()
-    {
-        return $this->hasMany(OldPayment::class);
-    }
-
     public function withholdings()
     {
         return $this->hasManyThrough(Withholding::class, Affidavit::class);
     } 
+
+    public function affidavits()
+    {
+        return $this->hasMany(Affidavit::class);
+    }
 
     public function community()
     {

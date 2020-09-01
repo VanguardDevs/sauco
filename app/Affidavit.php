@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
+use App\Concept;
 
 class Affidavit extends Model implements Auditable
 {
@@ -25,6 +26,39 @@ class Affidavit extends Model implements Auditable
 
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
 
+    /**
+    * Check if this affidavit fills an exception for fine
+    * 
+     */
+    public function hasException()
+    {
+        if ($this->taxpayer->hasException()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function shouldHaveFine()
+    {
+        if (!$this->hasException()) {
+            $startPeriod = Carbon::parse($this->month->start_period_at);
+            $todayDate = Carbon::now();
+            $passedDays = $startPeriod->diffInDays($todayDate);
+
+            if ($passedDays > 60) {
+                return [
+                    Concept::whereCode(3)->first(),
+                    Concept::whereCode(3)->first(),
+                ]; 
+            } else if ($passedDays > 45) {
+               return [Concept::whereCode(3)->first()]; 
+            }
+        }
+
+        return false;
+    }
+
     public function nullAffidavit()
     {
         return $this->hasOne(NullAffidavit::class);
@@ -34,7 +68,12 @@ class Affidavit extends Model implements Auditable
     {
         return $this->belongsTo(Month::class);
     }
-    
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -43,11 +82,6 @@ class Affidavit extends Model implements Auditable
     public function economicActivityAffidavits()
     {
         return $this->hasMany(EconomicActivityAffidavit::class);
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
     }
 
     public function payment()
@@ -70,6 +104,16 @@ class Affidavit extends Model implements Auditable
         return $this->hasOne(Settlement::class);
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Date('d/m/Y', strtotime($value)); 
@@ -90,11 +134,6 @@ class Affidavit extends Model implements Auditable
         $date = Carbon::parse($processed_at);
 
         return $this->update(['user_id' => $userId, 'processed_at' => $date ]);
-    }
-
-    public function taxpayer()
-    {
-        return $this->belongsTo(Taxpayer::class);
     }
 
     public function scopeFindOneByMonth($query, $taxpayer, $month)

@@ -21,17 +21,19 @@ class EconomicActivity extends Model
 
     protected $appends = ['fullName'];
 
-    public function companies()
+    public function taxpayers()
     {
-        return $this->belongsToMany(
-            Company::class,
-            'company_economic_activity'
-        );;
+        return $this->belongsToMany(Taxpayer::class);
     }
 
-    public function economicActivitySettlements()
+    public function companies()
     {
-        return $this->hasMany(EconomicActivitySettlement::class);
+        return $this->belongsToMany(Company::class);
+    } 
+
+    public function affidavits()
+    {
+        return $this->belongsToMany(Affidavit::class);
     }
 
     public function activityClassification()

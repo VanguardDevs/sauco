@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use Carbon\Carbon;
+use App\Fine;
 
 class Payment extends Model implements Auditable
 {
@@ -16,12 +18,29 @@ class Payment extends Model implements Auditable
 
     protected $guarded = [];
  
-    protected $casts = [
-        'amount' => 'float'
-    ];  
+    protected $casts = [ 'amount' => 'float' ];  
 
     protected $appends = [ 'formatted_amount' ];
 
+    public function checkForFine()
+    {
+        $totalFines = $this->affidavit()->first()->shouldHaveFine();
+        $totalSettlements = $this->settlements()->count();
+
+        if ($totalFines && $totalSettlements < 3) {
+            $concept = $totalFines[0];
+            if (count($totalFines) == 2 && $totalSettlements < 2) {
+                // Apply two fines
+                Fine::applyFine($this, $concept);
+            }
+            if (count($totalFines) == 1 || count($totalFines) == 2) {
+                // Apply one fine
+                Fine::applyFine($this, $concept);
+            }
+        }
+        $this->updateAmount();
+    }
+    
     public function updateAmount()
     {
         $amount = $this->settlements->sum('amount');
@@ -29,14 +48,29 @@ class Payment extends Model implements Auditable
         return $this->update([ 'amount' => $amount ]);
     }
 
+    public static function processedByDate($firstDate, $lastDate)
+    {
+        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
+            ->whereStateId(2)
+            ->orderBy('processed_at', 'ASC')
+            ->get();
+    } 
+
+    public static function newNum()
+    {
+        $lastNum = Payment::withTrashed()
+            ->whereStateId(2)
+            ->orderBy('num', 'DESC')
+            ->first()
+            ->num;
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
+    } 
+
     public function nullPayment()
     {
         return $this->hasOne(NullPayment::class);
-    }
-
-    public function state()
-    {
-        return $this->belongsTo(Status::class);
     }
  
     public function paymentType()
@@ -74,7 +108,7 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Affidavit::class, Settlement::class);
     }
 
-    public function fine()
+    public function fines()
     {
         return $this->belongsToMany(Fine::class, Settlement::class);
     }
@@ -84,48 +118,33 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(InvoiceModel::class);
     }
 
-    public static function processedByDate($firstDate, $lastDate)
+    public function company()
     {
-        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
-            ->whereStateId(2)
-            ->orderBy('processed_at', 'ASC')
-            ->get();
-    } 
+        return $this->belongsToMany(Company::class);
+    }
 
-    public static function newNum()
+    public function status()
     {
-        $lastNum = Payment::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('num', 'DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
-    } 
+        return $this->hasOne(Status::class);
+    }
 
     public function getCreatedAtAttribute($value)
     {
-        return date('d/m/Y H:m', strtotime($value));
+        return date('d/m/Y h:i', strtotime($value));
     }
 
     public function getProcessedAtAttribute($value)
     {
-        return date('d/m/Y H:m', strtotime($value));
+        return date('d/m/Y h:i', strtotime($value));
     }
 
     public function getDeletedAtAttribute($value)
     {
-        return date('d/m/Y H:m', strtotime($value));
+        return date('d/m/Y h:i', strtotime($value));
     }
 
     public function getFormattedAmountAttribute()
     {
         return number_format($this->amount, 2, ',', '.');
-    }
-
-    public function company()
-    {
-        return $this->belongsToMany(Company::class);
     }
 }
