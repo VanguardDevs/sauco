@@ -32,7 +32,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1399px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
 *,
@@ -52,7 +52,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Open Sans";
+  font-family: "Poppins";
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -4858,7 +4858,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Open Sans";
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -4943,7 +4943,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Open Sans";
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -11602,7 +11602,7 @@ body {
   padding: 0px;
   font-size: 13px;
   font-weight: 300;
-  font-family: "Open Sans";
+  font-family: Poppins;
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
@@ -22524,7 +22524,7 @@ strong {
   box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);
   border-radius: 4px;
   border: 0;
-  font-family: "Open Sans";
+  font-family: Poppins;
   z-index: 95; }
   .modal-open .daterangepicker {
     z-index: 1051; }
@@ -23368,7 +23368,7 @@ strong {
   padding: 0;
   min-width: 125px;
   font-size: 1rem;
-  font-family: "Open Sans";
+  font-family: Poppins;
   border-radius: 4px; }
   .vakata-context li,
   .vakata-context ul li {

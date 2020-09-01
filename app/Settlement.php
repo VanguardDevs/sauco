@@ -20,7 +20,7 @@ class Settlement extends Model implements Auditable
         'amount' => 'float'
     ];  
 
-    public function getFormattedAmountAttribute($value)
+    public function getTotalAmountAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
     }
@@ -43,7 +43,7 @@ class Settlement extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class);
+        return $this->belongsTo(Payment::class);
     }
 
     public function fine()
@@ -59,10 +59,5 @@ class Settlement extends Model implements Auditable
     public function application()
     {
         return $this->belongsTo(Application::class);
-    }
-
-    public function status()
-    {
-        return $this->hasOne(Status::class);
     }
 }

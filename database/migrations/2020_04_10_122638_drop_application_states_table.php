@@ -13,10 +13,10 @@ class DropApplicationStatesTable extends Migration
      */
     public function up()
     {
-        // Schema::table('applications', function (Blueprint $table) {
-           // $table->dropForeign(['application_state_id']);
-            // $table->dropColumn(['application_state_id']);
-        // });
+        Schema::table('applications', function (Blueprint $table) {
+            $table->dropForeign(['application_state_id']);
+            $table->dropColumn(['application_state_id']);
+        });
 
         Schema::dropIfExists('application_states');
     }

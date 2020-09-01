@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Taxpayer;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(AccountTypesTableSeeder::class);
         $this->call(StatusTableSeeder::class);
         $this->call(PaymentTypesTableSeeder::class);
         $this->call(ChargingMethodsTableSeeder::class);
@@ -26,10 +26,5 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentMethodsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(TaxpayerClassificationsSeeder::class);
-        $this->call(TaxpayerTypesTableSeeder::class);
-        $this->call(RepresentationTypesTableSeeder::class);
-        $this->call(CitizenshipsTableSeeder::class);
-
-        factory(Taxpayer::class, 30)->create();
     }
 }

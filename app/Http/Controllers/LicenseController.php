@@ -20,6 +20,8 @@ class LicenseController extends Controller
     public function __construct(LicenseService $license)
     {
         $this->license = $license; 
+        $this->middleware('auth');
+        $this->middleware('can:access.licenses')->only('index');
     }
 
     /**
@@ -27,18 +29,21 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Taxpayer $taxpayer)
     {
-        if ($request->wantsJson()) {
-            $query = License::with([
-                'ordinance:id,description',
-                'taxpayer:id,taxpayer_type_id,rif,name'
-            ])->orderBy('created_at', 'DESC');
+        return view('modules.taxpayers.economic-activity-licenses.index');
+    }
 
-            return $query->get();
-        }
+    public function list()
+    {
+        $query = License::with(['taxpayer'])
+            ->orderBy('created_at', 'DESC');
 
-        return view('modules.licenses.index');
+        return DataTables::eloquent($query)
+            ->addColumn('num', function (License $license) {
+                return $license->num;
+            })
+            ->toJson();
     }
 
     public function listBytaxpayer(Taxpayer $taxpayer)

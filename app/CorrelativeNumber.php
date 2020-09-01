@@ -12,12 +12,7 @@ class CorrelativeNumber extends Model
 
     public function correlative()
     {
-        return $this->hasOne(Correlative::class);
-    }
-
-    public function license()
-    {
-        return $this->hasOneThrough(License::class, Correlative::class);
+        return $this->hasMany(Correlative::class);
     }
 
     public static function getNum()

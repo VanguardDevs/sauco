@@ -72,6 +72,11 @@ class Payment extends Model implements Auditable
     {
         return $this->hasOne(NullPayment::class);
     }
+
+    public function state()
+    {
+        return $this->belongsTo(Status::class);
+    }
  
     public function paymentType()
     {
@@ -90,7 +95,7 @@ class Payment extends Model implements Auditable
 
     public function settlements()
     {
-        return $this->belongsToMany(Settlement::class);
+        return $this->hasMany(Settlement::class);
     }
 
     public function taxpayer()
@@ -118,19 +123,9 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(InvoiceModel::class);
     }
 
-    public function company()
-    {
-        return $this->belongsToMany(Company::class);
-    }
-
-    public function status()
-    {
-        return $this->hasOne(Status::class);
-    }
-
     public function getCreatedAtAttribute($value)
     {
-        return date('d/m/Y h:i', strtotime($value));
+        return date('d/m/Y H:m', strtotime($value));
     }
 
     public function getProcessedAtAttribute($value)
@@ -140,7 +135,7 @@ class Payment extends Model implements Auditable
 
     public function getDeletedAtAttribute($value)
     {
-        return date('d/m/Y h:i', strtotime($value));
+        return date('d/m/Y H:m', strtotime($value));
     }
 
     public function getFormattedAmountAttribute()

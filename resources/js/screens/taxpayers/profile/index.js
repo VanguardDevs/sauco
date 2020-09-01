@@ -7,7 +7,6 @@ import Representations from './Representations';
 import Actions from './Actions';
 import Licenses from './Licenses';
 import EconomicActivities from './EconomicActivities';
-import Payments from './Payments';
 import Row from '../../../components/Row';
 import Col from '../../../components/Col';
 
@@ -46,7 +45,6 @@ if (document.getElementById('taxpayer')) {
     taxpayerId: taxpayer.getAttribute('data_id')
   }; 
   
-  ReactDOM.render(<Payments taxpayer={props.taxpayerId}/>, document.getElementById('taxpayer-payments'));
   ReactDOM.render(<EconomicActivities {...props} />, document.getElementById('economic-activities'));
   ReactDOM.render(<Representations {...props} />, document.getElementById('representations'));
   

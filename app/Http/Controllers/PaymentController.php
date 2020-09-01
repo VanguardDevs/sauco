@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\PaymentMethod;
 use App\PaymentType;
 use App\Payment;
+use App\Fine;
+use App\Concept;
 use App\Reference;
 use App\Settlement;
 use App\Taxpayer;
@@ -48,7 +50,24 @@ class PaymentController extends Controller
             ->whereStateId(2)
             ->orderBy('num', 'DESC');
 
-        return DataTables::of($query)->toJson();
+        return DataTables::of($query)
+            ->addColumn('formatted_amount', function ($payment) {
+                return $payment->formatted_amount;
+            })
+            ->make(true);
+    }
+
+    public function listByTaxpayer(Taxpayer $taxpayer)
+    {
+        $query = Payment::with(['state', 'user'])
+            ->whereTaxpayerId($taxpayer->id)
+            ->orderBy('processed_at', 'DESC');
+
+        return DataTables::of($query)
+            ->addColumn('formatted_amount', function ($payment) {
+                return $payment->formatted_amount;
+            })
+            ->make(true);
     }
 
     public function onlyNull()

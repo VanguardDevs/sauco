@@ -26,14 +26,9 @@ class EconomicActivity extends Model
         return $this->belongsToMany(Taxpayer::class);
     }
 
-    public function companies()
+    public function economicActivitySettlements()
     {
-        return $this->belongsToMany(Company::class);
-    } 
-
-    public function affidavits()
-    {
-        return $this->belongsToMany(Affidavit::class);
+        return $this->hasMany(EconomicActivitySettlement::class);
     }
 
     public function activityClassification()
@@ -44,5 +39,13 @@ class EconomicActivity extends Model
     public function getFullNameAttribute()
     {
         return "{$this->code} - {$this->attributes['name']}";
+    }
+
+    /**
+     * Return all taxpayers with community
+     */
+    public function getTaxpayers()
+    {
+        return $this->taxpayers->load('community');
     }
 }

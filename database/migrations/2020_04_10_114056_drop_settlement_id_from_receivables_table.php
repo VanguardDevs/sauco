@@ -26,6 +26,8 @@ class DropSettlementIdFromReceivablesTable extends Migration
         Schema::table('settlements', function (Blueprint $table) {
             $table->dropForeign(['concept_id']);
             $table->dropForeign(['state_id']);
+            $table->dropColumn(['object_payment']);
+            $table->dropColumn(['num']);
             $table->dropColumn(['state_id']);
             $table->dropColumn(['concept_id']);
         });

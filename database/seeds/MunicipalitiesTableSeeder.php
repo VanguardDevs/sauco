@@ -113,7 +113,6 @@ class MunicipalitiesTableSeeder extends Seeder
             foreach($municipalityNames as $name) {
                 Municipality::create([
                     'state_id' => $stateID,
-                    'code' => 'POR ASIGNAR',
                     'name' => $name
                 ]);
             }

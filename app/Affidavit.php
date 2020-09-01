@@ -104,16 +104,6 @@ class Affidavit extends Model implements Auditable
         return $this->hasOne(Settlement::class);
     }
 
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
-
-    public function taxpayer()
-    {
-        return $this->belongsTo(Taxpayer::class);
-    }
-
     public function getCreatedAtAttribute($value)
     {
         return Date('d/m/Y', strtotime($value)); 

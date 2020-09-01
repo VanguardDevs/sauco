@@ -12,7 +12,10 @@ const RegisterOldPayment = () => {
   const {register, handleSubmit} = useForm();
 
   const onSubmit = (data) => {
-    axios.post('old-payments', data)
+    var ax = axios.create({
+      baseURL: 'http://sirim.local/api',
+    });
+    ax.post('old-payments', data)
       .then( res => console.log(res) )
       .catch(err => console.log(err));
   };

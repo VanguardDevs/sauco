@@ -652,6 +652,36 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tTaxpayerPayments').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/payments`,
+        "columns": [
+            { data: 'num' },
+            { data: 'state.name' },
+            { data: 'formatted_amount', name: 'formatted_amount' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Editar'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
     $('#tProcessedPayments').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -711,7 +741,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'amount', name: 'amount' },
+            { data: 'formatted_amount', name: 'formatted_amount' },
             { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
             {
@@ -815,6 +845,36 @@ $(document).ready(function() {
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'affidavits')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tEconomicActivityLicenses').DataTable({
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'num' },
+            { data: 'taxpayer.rif' },
+            { data: 'taxpayer.name' },
+            { data: 'emission_date' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/economic-activity-licenses/${oData.id}/download title='Imprimir licencia'>
+                            <i class='btn-sm btn-success fas fa-print'></i>
+                        </a>
+                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.taxpayer.id} title='Ver contribuyente'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`
                     );

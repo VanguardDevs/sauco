@@ -15,11 +15,6 @@ class Community extends Model
         'parish_names'
     ];
 
-    public function companies()
-    {
-        return $this->hasMany(Company::class);
-    }
-
     public function parishes()
     {
         return $this->belongsToMany(Parish::class);

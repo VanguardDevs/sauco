@@ -1,33 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Loading,
-  Portlet,
-  PortletBody,
-  PortletHeader,
-  Notification
-} from '../../../components';
+import Loading from '../../../components/Loading';
+import Portlet from '../../../components/Portlet';
+import Notification from '../../../components/Notification';
 
 const renderComponent = (loading, data) => {
   const { id } = data;
 
   return (loading) ? ( 
     <Portlet>
-      <PortletBody>
-        <Loading /> 
-      </PortletBody>
+      <Loading /> 
     </Portlet>
   ) : (
-    <Portlet fluid>
-      <PortletHeader label='Acciones' />
-      
-      <PortletBody>
-        <Notification title='Multas y sanciones' icon='stop-circle' url={id+'/fines'} />
-        <Notification title='Solicitudes' icon='paper-plane' url={id+'/applications'} /> 
-        <Notification title='Declaración jurada de ingresos' icon='address-book' url={id+'/affidavits'} />
-        <Notification title='Retenciones' icon='hand-holding-usd' url={id+'/withholdings'} />
-      </PortletBody>
+    <Portlet
+      label='Acciones'
+      fluid
+    >
+      <Notification title='Multas y sanciones' icon='fa-stop-circle' url={id+'/fines'} />
+      <Notification title='Solicitudes' icon='fa-paper-plane' url={id+'/applications'} /> 
+      <Notification title='Declaración jurada de ingresos' icon='fa-address-book' url={id+'/affidavits'} />
+      <Notification title='Retenciones' icon='fa-hand-holding-usd' url={id+'/withholdings'} />
     </Portlet>
-  ); 
+  ) 
 }
 
 const Actions = props => {

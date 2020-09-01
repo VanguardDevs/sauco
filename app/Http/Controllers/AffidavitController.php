@@ -6,7 +6,6 @@ use App\Taxpayer;
 use App\Year;
 use App\Month;
 use App\Settlement;
-use App\Fine;
 use App\Affidavit;
 use App\Payment;
 use App\EconomicActivityAffidavit;
@@ -57,23 +56,17 @@ class AffidavitController extends Controller
     public function show(Request $request, Affidavit $affidavit)
     {
         if ($request->wantsJson()) {
-            $fine = $this->checkForFine($affidavit);
-
-            if ($fine) {
-                $fine = [
+            $fines = $affidavit->shouldHaveFine();
+            $fineData = ($fines)
+                ? [
                     'apply' => true,
-                    'data' => $fine
-                ];
-            } else {
-                $fine = [
-                    'apply' => false,
-                    'data' => []
-                ];
-            }
+                    'concepts' => $fines 
+                ]
+                : ['apply' => false];
 
             return response()->json([
-                'affidavit' => $affidavit->load('user'),
-                'fine' => $fine 
+                'affidavit' => $affidavit->load(['user', 'payment']),
+                'fine' => $fineData 
             ]);
         }
 
@@ -250,9 +243,10 @@ class AffidavitController extends Controller
      */
     public function makePayment(Affidavit $affidavit)
     {
-        if ($affidavit->payment()->count() > 0) {
-            return redirect()->route('affidavits.index', $affidavit->taxpayer)
-                ->withError('¡La declaración tiene una factura realizada!');
+        $payment = $affidavit->payment();
+
+        if ($payment->exists()) {
+            return redirect()->route('payments.show', $payment->first());
         }
 
         $payment = Payment::create([
@@ -274,8 +268,7 @@ class AffidavitController extends Controller
             'amount' => $affidavit->amount
         ]);
 
-        $this->applyFine($affidavit, $payment);
-        $payment->updateAmount();
+        $payment->checkForFine();
 
         return redirect()->route('payments.show', $payment->id);
     }
@@ -285,61 +278,6 @@ class AffidavitController extends Controller
         $concept = Concept::whereCode(1)->first();
 
         return $concept->name.': '.$month->name.' - '.$month->year->year;
-    }
-
-    public function applyFine(Affidavit $affidavit, Payment $payment)
-    {
-        $concept = $this->checkForFine($affidavit);
-
-        if ($concept) {
-            $amount = Fine::calculateAmount($affidavit->amount, $concept);
-
-            $fine = $concept->fines()->create([
-                'amount' => $amount,
-                'active' => true,
-                'taxpayer_id' => $affidavit->taxpayer_id,
-                'user_id' => $affidavit->user_id,
-            ]);
-
-            $settlement = $fine->settlement()->create([
-                'num' => Settlement::newNum(),
-                'object_payment' => $concept->name,
-                'amount' => $amount,
-                'payment_id' => $payment->id 
-            ]);
-        }
-    }
-
-    public function checkForFine($affidavit)
-    {
-        if (!$this->hasException($affidavit)) { 
-            $startPeriod = Carbon::parse($affidavit->month->start_period_at);
-            $todayDate = Carbon::now();
-            $passedDays = $startPeriod->diffInDays($todayDate);
-            
-            
-            if ($affidavit->month->year->year == "2019") {
-                return Concept::whereCode(2)->first();
-            }
-
-            if ($affidavit->processed_at > Carbon::parse('2020-06-18')) {
-                if ($passedDays > 63) {
-                   return Concept::whereCode(2)->first(); 
-                } else if ($passedDays > 48) {
-                    return Concept::whereCode(3)->first();
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public function hasException($affidavit)
-    {
-        if ($affidavit->taxpayer->economicActivities->first()->code == 123456) {
-            return true;
-        }
-        return false;
     }
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)
