@@ -25,9 +25,9 @@ Breadcrumbs::for('taxpayer.old-payments', function ($trail, $row) {
 });
 
 /*----------  Reports ----------*/
-Breadcrumbs::for('taxpayer.economic-activity-licenses', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Licencias de actividad económica', url('taxpayers/'.$row->id.'/economic-activity-licenses'));
+Breadcrumbs::for('licenses.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Licencias', route('licenses.index'));
 });
 
 /*----------  Reports ----------*/
@@ -336,9 +336,9 @@ Breadcrumbs::for('representations.index', function ($trail) {
 });
 
 /*------------- Representations -------------*/
-Breadcrumbs::for('economic-activity-licenses.index', function ($trail) {
-    $trail->parent('taxpayers.index');
-    $trail->push('Patentes de actividad económica', url('economic-activity-licenses'));
+Breadcrumbs::for('taxpayer.economic-activity-licenses', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Patentes de actividad económica', route('licenses.show', $row));
 });
 
 /**

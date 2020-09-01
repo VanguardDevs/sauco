@@ -859,7 +859,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": `${window.location.href}/list`,
+        "ajax": `${window.location.href}`,
         "columns": [
             { data: 'num' },
             { data: 'taxpayer.rif' },

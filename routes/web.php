@@ -150,8 +150,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@show')
         ->name('taxpayer.economic-activity-licenses');
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@listByTaxpayer');
-    Route::get('taxpayers/economic-activity-licenses/list', 'LicenseController@list');
-    Route::resource('taxpayers/economic-activity-licenses', 'LicenseController');
+    Route::resource('licenses', 'LicenseController');
 
      /*
     * Payment's routes modules

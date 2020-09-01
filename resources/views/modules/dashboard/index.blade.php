@@ -14,7 +14,7 @@
                     <div class="kt-widget17__visual kt-widget17__visual--chart kt-portlet-fit--top kt-portlet-fit--sides" style="background-color: #D4AF37">
                         <div class="kt-widget17__chart" style="height:320px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
                             <div style="text-align:center; color:aliceblue">
-                                <h3>Sistema Integral de Recaudación de Impuestos Municipales</h3>
+                                <h3>Sistema de Recaudación de Impuestos Municipales</h3>
                                 <span class="kt-widget17__subtitle">
                                     <h4>SIRIM - Bermúdez</h4>
                                 </span>

@@ -29,21 +29,20 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer)
+    public function index(Request $request)
     {
+        if ($request->wantsJson()) {
+            $query = License::with(['taxpayer'])
+                ->orderBy('created_at', 'DESC');
+
+            return DataTables::eloquent($query)
+                ->addColumn('num', function (License $license) {
+                    return $license->num;
+                })
+                ->toJson();
+        }
+
         return view('modules.taxpayers.economic-activity-licenses.index');
-    }
-
-    public function list()
-    {
-        $query = License::with(['taxpayer'])
-            ->orderBy('created_at', 'DESC');
-
-        return DataTables::eloquent($query)
-            ->addColumn('num', function (License $license) {
-                return $license->num;
-            })
-            ->toJson();
     }
 
     public function listBytaxpayer(Taxpayer $taxpayer)

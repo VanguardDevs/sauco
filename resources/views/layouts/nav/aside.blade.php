@@ -56,7 +56,14 @@
                 <span class="kt-menu__link-text">Contribuyentes</span>
             </a>
         </li>
-        
+
+        <li class="kt-menu__item {{ active('licenses*') }}" aria-haspopup="true" >
+            <a href="{{ route('licenses.index') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon fas fa-file-invoice"></i>
+                <span class="kt-menu__link-text">Licencias</span>
+            </a>
+        </li>
+
         @if (@Auth::user()->hasRole('admin'))
         <li class="kt-menu__item {{ active('organization*') }}" aria-haspopup="true" >
             <a href="{{ route('organization.index') }}" class="kt-menu__link" title="En construcción">
