@@ -14,9 +14,12 @@ class CreatePropertiesTable extends Migration
     public function up()
     {
         Schema::create('properties', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('cadastre_num');
             $table->string('bulletin');
+            $table->unsignedBigInteger('parish_id');
+            $table->unsignedBigInteger('community_id');
+            $table->unsignedBigInteger('street_id');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('parish_id')->references('id')->on('parishes')

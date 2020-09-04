@@ -18,6 +18,11 @@ class Property extends Model
         'parish_id'
     ];
 
+    public function uses()
+    {
+        $this->belongsToMany(Purpose::class);
+    }
+
     public function community()
     {
         return $this->belongsTo(Community::class);
