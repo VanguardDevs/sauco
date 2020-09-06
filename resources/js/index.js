@@ -1,26 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import redux from 'redux';
 import { Provider, useDispatch } from 'react-redux';
 import Loading from './components/Loading';
 import store from './store';
 import { getUser } from './store/actions';
+import App from './screens';
+import { history } from './utils';
+import Helmet from 'react-helmet';
 
-const App = () => {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+const Index = () => {
+  /**
+   * Authentication things
+  if (localStorage.sauco) {
+    history.push('/home');
+  } else {
+    history.push('/signin');
+  }
+  **/
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
+  return (
+    <>
+      <Helmet titleTemplate="%s - Sauco"/>
 
-  return <Loading />;
+      <App />
+    </>
+  );
 }
 
 if (document.getElementById('root')) {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <Index />
     </Provider>, 
     document.getElementById('root')
   );

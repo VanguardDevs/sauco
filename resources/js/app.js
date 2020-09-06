@@ -11,23 +11,5 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-/**
-require('./screens/taxpayers/OldPayments');
-**/
-
-require('./screens/Settings/Index');
-
-require('./screens/organization/index');
-
-require('./screens/Settings/InvoiceModels/Index');
-
-require('./screens/taxpayers/profile');
-
-require('./screens/taxpayers/withholdings');
-
-require('./components/ListAccountingAccounts');
-
-require('./components/RegisterAccountingAccounts');
-
-require('./components/AffidavitFine');
+require('./index');
 
