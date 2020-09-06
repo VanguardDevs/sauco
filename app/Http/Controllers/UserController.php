@@ -83,9 +83,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
-        //
+        $user = $request->user();
+
+        return Response($user); 
     }
 
     public function getUser(Request $request)

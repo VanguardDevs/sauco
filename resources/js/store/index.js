@@ -1,17 +1,4 @@
-import { applyMiddleware, createStore, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { errorsReducer } from './Errors';
-import { notificationsReducer } from './Notifications';
-import { authReducer } from './Auth';
+import store from './store';
+import * as Actions from './actions';
 
-const rootReducer = combineReducers({
-  errors: errorsReducer,
-  auth: authReducer,
-  notification: notificationsReducer
-});
-
-export default createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk)),
-);
+export { store, Actions };

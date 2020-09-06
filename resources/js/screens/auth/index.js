@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,18 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+// 
+import Helmet from 'react-helmet';
+import { useForm } from 'react-hook-form';
+import { Actions } from '../../store';
+import { isEmpty } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+
+const ErrorTypo = (text) => (
+  <Typography variant="overline" color="error">
+    {text}
+  </Typography>
+);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,7 +46,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const { register, handleSubmit, errors } = useForm();
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const loginErrors = useSelector(store => store.errors);
+  
+  const onSubmit = data => dispatch(Actions.login(data));
 
   return (
     <Container component="main" maxWidth="xs">
@@ -45,31 +62,35 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Inicio de sesión
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
           <TextField
             variant="outlined"
+            error={errors.login && true}
             margin="normal"
-            required
             fullWidth
             id="login"
             label="Usuario"
             name="login"
-            autoComplete=""
-            autoFocus
+            required
+            inputRef={register({ required: true })}
+            helperText={errors.login && 'Ingrese su nombre de usuario.'}
           />
           <TextField
             variant="outlined"
+            error={errors.password && true}
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Contraseña"
             type="password"
             id="password"
-            autoComplete="current-password"
+            required
+            inputRef={register({ required: true })}
+            helperText={errors.password && 'Introduzca su contraseña'}
           />
+          {!isEmpty(loginErrors) && ErrorTypo(loginErrors.message) }
           <Button
             type="submit"
             fullWidth
@@ -77,7 +98,7 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Acceder
           </Button>
         </form>
       </div>

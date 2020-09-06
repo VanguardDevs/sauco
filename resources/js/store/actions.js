@@ -32,14 +32,14 @@ export const login = data => dispatch => {
     .then(res => {
       const { token } = res.data;
 
-      localStorage.setItem('sasi', token);
+      localStorage.setItem('sauco', token);
       setAuthToken(token);
 
       history.push('/home');
       dispatch(setUser(res.data.user));
       dispatch(clearErrors());
     })
-    .catch(err => dispatch(setErrors(err.response.data.errors)));
+    .catch(err => dispatch(setErrors(err.response.data)));
 }
 
 export const logout = () => dispatch => {
