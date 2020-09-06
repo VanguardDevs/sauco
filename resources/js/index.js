@@ -3,21 +3,22 @@ import ReactDOM from 'react-dom';
 import redux from 'redux';
 import { Provider, useDispatch } from 'react-redux';
 import Loading from './components/Loading';
-import { store } from './store';
+import { store, Actions } from './store';
 import * as Store from './store';
 import App from './screens';
-import { history } from './utils';
+import { history, setAuthToken } from './utils';
 import Helmet from 'react-helmet';
 
 const Index = () => {
+  const dispatch = useDispatch();
   /**
    * Authentication things
   **/
+  if (location.pathname === '/') history.push('/home');
   if (localStorage.sauco) {
-    history.push('/home');
-  } else {
-    history.push('/signin');
-  }
+    setAuthToken(localStorage.sauco);
+    dispatch(Actions.getUser());
+  } 
 
   return (
     <>

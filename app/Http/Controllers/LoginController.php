@@ -40,6 +40,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        dd($request->user());
         $request->user()->token()->revoke();
 
         return response()->json([ 'success' => true ]);

@@ -17,7 +17,7 @@ export const recoverAccount = data => dispatch => {
 
 export const resetPassword = data => dispatch => {
   axios.post('/reset-password', data)
-    .then(res => history.push('/login'))
+    .then(res => history.push('/signin'))
     .catch(err => dispatch(setErrors(err.response.data.errors)));
 }
 
@@ -28,7 +28,7 @@ export const registerUser = data => dispatch => {
 }
 
 export const login = data => dispatch => {
-  axios.post('/login', data)
+  axios.post('/signin', data)
     .then(res => {
       const { token } = res.data;
 
@@ -45,12 +45,10 @@ export const login = data => dispatch => {
 export const logout = () => dispatch => {
   axios.get('/logout')
     .then(res => {
-      localStorage.removeItem('sasi');
+      history.push('/signin');
+      localStorage.removeItem('sauco');
       setAuthToken();
-      history.push('/login');
-      dispatch({
-        type: LOGOUT_USER
-      });
+      dispatch(setUser({}));
     })
     .catch(err => dispatch(setErrors(err.response.data.errors)));
 }
@@ -61,7 +59,7 @@ export const getUser = () => dispatch => {
     .catch(err => {
       if (err.response.status) {
         localStorage.removeItem('sauco');
-        history.push('/login');
+        history.push('/signin');
       }
 
       dispatch(setErrors(err.response.data.errors));

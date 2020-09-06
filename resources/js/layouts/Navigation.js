@@ -6,9 +6,12 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +19,9 @@ import Link from '@material-ui/core/Link';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import routes from '../routes';
+
+import { Actions } from '../store';
+import { useDispatch } from 'react-redux';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -35,6 +41,15 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       display: 'none',
+    },
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
     },
   },
   toolbar: theme.mixins.toolbar,
@@ -63,10 +78,47 @@ function ResponsiveDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const dispatch = useDispatch();
   
-  function handleDrawerToggle() {
-    setMobileOpen(!mobileOpen)
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleLogout = () => {
+    handleMenuClose();
+    dispatch(Actions.logout());
   }
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Cambiar contraseña</MenuItem>
+      <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
+    </Menu>
+  );
 
   const drawer = (
     <div>
@@ -103,7 +155,21 @@ function ResponsiveDrawer() {
           <Typography variant="h6" noWrap>
              Sauco
           </Typography>
+          <div className={classes.grow} />
+          <div>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
         </Toolbar>
+        {renderMenu}
       </AppBar>
       
       <nav className={classes.drawer}>

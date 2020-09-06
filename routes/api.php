@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('login', 'LoginController@signIn');
+Route::post('signin', 'LoginController@signIn');
 
 // Authenticated only
 Route::middleware('auth:api')->group(function () {
-    Route::get('logout', 'AuthController@logout');
-    Route::get('user', 'UserController@show');
+    Route::get('logout', 'LoginController@logout');
+    Route::get('user', 'UserController@getUser');
 });
 
 Route::resource('old-payments', 'OldPaymentController');

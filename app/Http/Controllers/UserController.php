@@ -83,31 +83,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(User $user)
     {
-        $user = $request->user();
-
-        return Response($user); 
+        //
     }
 
     public function getUser(Request $request)
     {
-        $user = Auth::user();
+        $user = $request->user();
 
-        if ($user) {
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-            $token->save();
-
-            return response()->json([
-                'token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at)
-                        ->toDateTimeString(),
-                'user' => $user
-            ]);
-        }
+        return response()->json($user);
     }
 
     public function showChangePassword()
