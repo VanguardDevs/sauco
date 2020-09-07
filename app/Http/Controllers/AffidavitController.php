@@ -282,7 +282,7 @@ class AffidavitController extends Controller
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)
     {
-        if (!Auth::user()->can('null.payments')) {
+        if (!Auth::user()->can('null.settlements')) {
             return response()->json([
                 'message' => '¡Acción no permitida!'
             ]);
