@@ -5,5 +5,6 @@ import setAuthToken from './setAuthToken';
 import useDetectOutsideClick from './useDetectOutsideClick';
 import isMobile from './isMobile';
 import PrivateRoute from './PrivateRoute';
+import useFetch from './useFetch';
 
-export { history, setAuthToken, goBack, isEmpty, useDetectOutsideClick, isMobile, PrivateRoute };
+export { history, setAuthToken, useFetch, goBack, isEmpty, useDetectOutsideClick, isMobile, PrivateRoute };

@@ -1,25 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import {
+  AppBar,
+  CssBaseline,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  Menu,
+  MenuItem,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Link,
+  makeStyles,
+  useTheme
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import CloseIcon from '@material-ui/icons/Close';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Route, MemoryRouter } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import routes from '../routes';
-
 import { Actions } from '../store';
 import { useDispatch } from 'react-redux';
 
@@ -66,12 +70,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function renderLink({ to }) {
-  const Link = React.useMemo(
+function ListItemLink(props) {
+  const { icon, primary, to } = props;
+
+  const renderLink = React.useMemo(
     () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
     [to],
-  ); 
-  return <Link />
+  );
+
+  return (
+    <li>
+      <ListItem button component={renderLink}>
+        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        <ListItemText primary={primary} />
+      </ListItem>
+    </li>
+  );
 }
 
 function ResponsiveDrawer() {
@@ -124,15 +138,12 @@ function ResponsiveDrawer() {
     <div>
       <List>
         {routes.map((route, index) => (
-          <ListItem button key={index}>
-            {route.name}
-            <Link
-              to={route.path}
-              component={RouterLink}
-            >
-              {route.name}
-            </ Link>
-          </ListItem>
+          <ListItemLink
+            to={route.path}
+            primary={route.name}
+            icon={route.icon}
+            key={index}
+          />
         ))}
       </List>
     </div>

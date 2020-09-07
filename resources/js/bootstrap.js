@@ -12,4 +12,3 @@ if (token) {
 }
 
 window.axios.defaults.baseURL = `${window.location.origin}/api/`;
-
