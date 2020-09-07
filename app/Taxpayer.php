@@ -104,12 +104,6 @@ class Taxpayer extends Model implements Auditable
         return $this->taxpayerType->correlative.$value;
     }
 
-    public function getFiscalAddressAttribute()
-    {
-        return $this->attributes['fiscal_address'].
-            ', '.$this->community->name;
-    } 
-
     public static function existsRif($rif)
     {
         return self::whereRif($rif)->first();
