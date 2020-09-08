@@ -12,13 +12,11 @@ class Settlement extends Model implements Auditable
     use SoftDeletes;
     use Audit;
 
-    protected $table = 'settlements';
+    protected $table = 'liquidations';
 
     protected $guarded = [];
  
-    protected $casts = [
-        'amount' => 'float'
-    ];  
+    protected $casts = ['amount' => 'float' ];  
 
     public function getTotalAmountAttribute($value)
     {
@@ -43,7 +41,7 @@ class Settlement extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsToMany(Payment::class);
     }
 
     public function fine()
