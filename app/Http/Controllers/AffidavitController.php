@@ -24,14 +24,10 @@ class AffidavitController extends Controller
      * @var $settlement, $concept, $taxpayer, $month, $receivable, $payment
      */
     protected $economicActivityAffidavit;
-    protected $taxpayer;
-    protected $month;
 
-    public function __construct(AffidavitService $economicActivityAffidavit, Taxpayer $taxpayer, Month $month)
+    public function __construct(AffidavitService $economicActivityAffidavit)
     {
-        $this->taxpayer = $taxpayer;
         $this->economicActivityAffidavit = $economicActivityAffidavit;
-        $this->month = $month;
         $this->middleware('auth');
     }
 
