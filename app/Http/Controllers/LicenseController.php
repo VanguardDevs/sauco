@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\CorrelativeType;
-use App\License;
-use App\Application;
-use App\Services\LicenseService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
-use App\Taxpayer;
-use Carbon\Carbon;
 use Auth;
+use App\License;
+use App\Correlative;
+use App\CorrelativeNumber;
+use App\CorrelativeType;
+use App\Year;
+use App\Ordinance;
+use App\Taxpayer;
+use App\Application;
+use Carbon\Carbon;
 
 class LicenseController extends Controller
 {
-    protected $license;
-
-    public function __construct(LicenseService $license)
+    public function __construct()
     {
-        $this->license = $license; 
         $this->middleware('auth');
     }
 
@@ -73,10 +73,47 @@ class LicenseController extends Controller
             return redirect()->back()->withError($validator['msg']);
         }
 
-        $this->license->makeLicense($correlative, $taxpayer);
+        $this->makeLicense($correlative, $taxpayer);
         
         return redirect('taxpayers/'.$taxpayer->id.'/economic-activity-licenses')
             ->withSuccess('¡Licencia de actividad económica creada!');
+    }
+
+    public function makeLicense(CorrelativeType $type, Taxpayer $taxpayer)
+    {
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+        $correlativeNum = CorrelativeNumber::getNum();
+        // Maybe for other kind of licenses, I would inject
+        // Ordinances in this method and make licences without searching for
+        // a model
+        $ordinance = Ordinance::whereDescription('ACTIVIDAD ECONÓMICA')->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = $emissionDate->copy()->endOfYear(); 
+    
+        $correlativeNumber = CorrelativeNumber::create([
+            'num' => $correlativeNum
+        ]);
+
+        $correlative = Correlative::create([
+            'year_id' => $currYear->id,
+            'correlative_type_id' => $type->id,
+            'correlative_number_id' => $correlativeNumber->id
+        ]);    
+
+        $license = License::create([
+            'num' => $correlative->num, 
+            'emission_date' => $emissionDate,
+            'expiration_date' => $expirationDate,
+            'ordinance_id' => $ordinance->id,
+            'correlative_id' => $correlative->id,
+            'taxpayer_id' => $taxpayer->id,
+            'representation_id' => $taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id
+        ]);
+
+        // Sync economic activities
+        $act = $taxpayer->economicActivities;
+        $license->economicActivities()->sync($act);
     }
 
     public function validateStore(Taxpayer $taxpayer, $correlativeType)
@@ -140,15 +177,14 @@ class LicenseController extends Controller
     {
         $taxpayer = $license->taxpayer;
         $num = preg_replace("/[^0-9]/", "", $taxpayer->rif);
-        $endOfYear = date('d-m-Y', strtotime(Carbon::now()->copy()->endOfYear()));
         $correlative = $license->correlative;
         $licenseCorrelative = $correlative->correlativeType->description.
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
-        $representation = $taxpayer->president()->first()->person->name;
+        $representation = $license->representation->person->name;
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'endOfYear'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative'];
         $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::setOptions(['isRemoteEnabled' => true])
