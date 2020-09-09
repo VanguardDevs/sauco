@@ -51,6 +51,11 @@ class User extends Authenticatable
             $this->attributes['surname'];
     }
 
+    public function licenses()
+    {
+        return $this->hasMany(License::class);
+    }
+
     public function affidavits()
     {
     	return $this->hasMany(Affidavit::class);
