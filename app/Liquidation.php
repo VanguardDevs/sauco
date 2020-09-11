@@ -18,7 +18,11 @@ class Liquidation extends Model implements Auditable
  
     protected $casts = ['amount' => 'float' ];  
 
-    public function getTotalAmountAttribute($value)
+    protected $appends = [
+        'formatted_amount'
+    ];
+
+    public function getFormattedAmountAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
     }

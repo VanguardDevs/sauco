@@ -22,6 +22,7 @@ class CreateCanceledLiquidationsTable extends Migration
         }
 
         Schema::table('liquidations', function (Blueprint $table) {
+            $table->unsignedBigInteger('payment_id')->nullable()->change();
             $table->unsignedBigInteger('model_id')->nullable();
             $table->unsignedBigInteger('concept_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();

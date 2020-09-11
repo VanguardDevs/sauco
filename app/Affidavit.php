@@ -86,7 +86,9 @@ class Affidavit extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Liquidation::class);
+        $liquidation = $this->liquidation;
+
+        return $liquidation->payment()->first();
     }
 
     public function withholding()

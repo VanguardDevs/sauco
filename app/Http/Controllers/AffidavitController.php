@@ -72,12 +72,12 @@ class AffidavitController extends Controller
                     ->withError('¡No puede procesar la liquidación!');
             }
 
-            return view('modules.cashbox.select-liquidation')
+            return view('modules.taxpayers.affidavits.select')
                 ->with('row', $affidavit);
         }
 
         // The liquidation it's already processed    
-        return view('modules.cashbox.register-liquidation')
+        return view('modules.taxpayers.affidavits.register')
             ->with('typeForm', 'show')
             ->with('row', $affidavit);
     }
@@ -89,7 +89,7 @@ class AffidavitController extends Controller
      */
     public function groupActivityForm(Affidavit $affidavit)
     {
-        return view('modules.cashbox.register-liquidation')
+        return view('modules.taxpayers.affidavits.register')
             ->with('row', $affidavit)
             ->with('typeForm', 'edit-group');
     }
@@ -101,7 +101,7 @@ class AffidavitController extends Controller
      */
     public function normalCalcForm(Affidavit $affidavit)
     {
-        return view('modules.cashbox.register-liquidation')
+        return view('modules.taxpayers.affidavits.register')
             ->with('typeForm', 'edit-normal')
             ->with('row', $affidavit);
     }
@@ -239,11 +239,11 @@ class AffidavitController extends Controller
      */
     public function makePayment(Affidavit $affidavit)
     {
-        $payment = $affidavit->payment();
+        $liquidation = $affidavit->liquidation();
         $concept = Concept::whereCode(1)->first();
 
-        if ($payment->exists()) {
-            return redirect()->route('payments.show', $payment->first());
+        if ($liquidation->exists()) {
+            return redirect()->route('payments.show', $liquidation->first()->payment->first());
         }
 
         $payment = Payment::create([

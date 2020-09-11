@@ -7,21 +7,10 @@ Breadcrumbs::for('change-password.show', function ($trail) {
     $trail->push('Cambiar contraseña', route('change-password.show'));
 });
 
-/*----------  Cashbox ----------*/
-Breadcrumbs::for('receivables.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Cuentas por cobrar', route('receivables.index'));
-});
-
 /*----------  Reports ----------*/
 Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Declaraciones', url('taxpayers/'.$row->id.'/declarations'));
-});
-
-Breadcrumbs::for('taxpayer.old-payments', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Pagos antiguos', url('taxpayers/'.$row->id.'/old-payments'));
 });
 
 /*----------  Reports ----------*/
@@ -64,6 +53,11 @@ Breadcrumbs::for('taxpayers.uptodate', function ($trail) {
 Breadcrumbs::for('affidavits.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Declaraciones', route('affidavits.index', $row));
+});
+
+Breadcrumbs::for('liquidations.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Liquidaciones', route('liquidations.index', $row));
 });
 
 /*----------  Taxpayers > taxpayer > Affidavits > show ----------*/

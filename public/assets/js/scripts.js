@@ -651,6 +651,23 @@ $(document).ready(function() {
             { data: 'publication_date'}
         ]
     });
+    
+    $('#tTaxpayerLiquidations').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'num' },
+            { data: 'object_payment' },
+            { data: 'status.name' },
+            { data: 'liquidation_type.name' },
+            { data: 'formatted_amount', name: 'formatted_amount' }
+        ]
+    });
 
     $('#tTaxpayerPayments').DataTable({
         "order": [[0, "asc"]],

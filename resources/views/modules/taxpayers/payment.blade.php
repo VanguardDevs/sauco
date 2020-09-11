@@ -49,11 +49,11 @@
               </tr>
             </thead>
             <tbody>
-            @foreach($row->settlements as $settlement)
+            @foreach($row->liquidations as $liquidation)
              <tr>
-                <td>{{ $settlement->num }}</td> 
-                <td>{{ $settlement->object_payment  }}</td>   
-                <td>{{ $settlement->total_amount }}</td>
+                <td>{{ $liquidation->num }}</td> 
+                <td>{{ $liquidation->object_payment }}</td>   
+                <td>{{ $liquidation->total_amount }}</td>
             </tr>
             @endforeach   
           </table>

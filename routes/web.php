@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('taxpayers/{taxpayer}/liquidations', 'LiquidationController@index')
+    ->name('liquidations.index');
+Route::resource('liquidations', 'LiquidationController')->except('index');
 
 Auth::routes();
 
@@ -72,8 +75,8 @@ Route::prefix('/')->middleware('auth')->group(function()
         /**
          * Routes Settings > Concepts
          */
-        Route::get('categories/list', 'CategoryController@list')->name('list-concepts');
-        Route::resource('settings/categories', 'CategoryController');
+        Route::get('categories/list', 'LiquidationTypeController@list')->name('list-concepts');
+        Route::resource('settings/categories', 'LiquidationTypeController');
 
         /*----------  Routes Settings > Tax Units ----------*/
         Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
@@ -159,7 +162,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('payments.download');
     Route::resource('payments', 'PaymentController');
 
-        
     /**
     * Taxpayer's affidavits
      */
@@ -193,16 +195,14 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
     /**
-     * Taxpayer's old payments
-     */
-    Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
-        ->name('taxpayer.old-payments');
-
-    /**
      * Taxpayer's permits
      */
     Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
     Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
+    
+    /**
+     * Taxpayer's liquidations
+     */
     
     /**
      * Taxpayer's Withholdings
