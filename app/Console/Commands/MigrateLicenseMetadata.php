@@ -88,7 +88,7 @@ class MigrateLicenseMetadata extends Command
             return $license->economicActivities()->sync($act);
         });
 
-        License::whereNull('expiration_date')->get()->each(function ($license) {
+        License::whereNull('expiration_date')->get()->each(function ($license)  use ($endOfYear){
             return $license->update(['expiration_date' => $endOfYear]);
         });
     }
