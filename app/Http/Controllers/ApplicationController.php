@@ -59,7 +59,6 @@ class ApplicationController extends Controller
     public function makePayment(Application $application)
     {
         if ($application->payment()->exists()) {
-            dd($application->payment()->first());
             return redirect()
                 ->route('payments.show', $application->payment()->first());
         }
@@ -74,12 +73,16 @@ class ApplicationController extends Controller
             'taxpayer_id' => $application->taxpayer_id
         ]);
 
-        $application->liquidation()->create([
+        $liquidation = $application->liquidation()->create([
             'num' => Liquidation::getNewNum(),
             'object_payment' => $application->concept->name,
-            'payment_id' => $payment->id,
+            'concept_id' => $fine->concept->id,
+            'taxpayer_id' => $fine->taxpayer_id,
+            'user_id' => auth()->user()->id,
             'amount' => $application->amount
         ]);
+
+        $payment->liquidations()->sync($liquidation);
 
         return redirect()->route('payments.show', $payment);
     }

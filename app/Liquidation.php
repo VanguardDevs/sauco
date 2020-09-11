@@ -23,6 +23,11 @@ class Liquidation extends Model implements Auditable
         return number_format($this->amount, 2, ',', '.');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
@@ -33,24 +38,9 @@ class Liquidation extends Model implements Auditable
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function withholding()
-    {
-        return $this->belongsTo(Withholding::class);
-    }
-
     public function payment()
     {
         return $this->belongsToMany(Payment::class);
-    }
-
-    public function fine()
-    {
-        return $this->belongsTo(Fine::class);
-    }
-
-    public function affidavit()
-    {
-        return $this->belongsTo(Affidavit::class);
     }
 
     public function concept()
@@ -58,13 +48,28 @@ class Liquidation extends Model implements Auditable
         return $this->belongsTo(Concept::class);
     }
 
-    public function application()
-    {
-        return $this->belongsTo(Application::class);
-    }
-
     public function liquidationType()
     {
-        return $this->hasOneThrough(LiquidationType::class, Concept::class);
+        return $this->belongsTo(LiquidationType::class);
+    }
+
+    public function canceledLiquidation()
+    {
+        return $this->hasOne(CanceledLiquidation::class);
+    }
+
+    public function fine()
+    {
+        return $this->belongsTo(Fine::class, 'model_id');
+    }
+
+    public function affidavit()
+    {
+        return $this->belongsTo(Affidavit::class, 'model_id');
+    }
+
+    public function application()
+    {
+        return $this->belongsTo(Application::class, 'model_id');
     }
 }

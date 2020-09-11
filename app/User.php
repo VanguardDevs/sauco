@@ -26,24 +26,7 @@ class User extends Authenticatable
         'login'
     ];
 
-    protected $appends = [
-        'full_name'
-    ];
-
-    public function payments()
-    {
-        return $this->hasMany(Payment::class);
-    }
-
-    public function settlements()
-    {
-        return $this->hasMany(Settlement::class);
-    }
-
-    public function withholdings()
-    {
-        return $this->hasMany(Withholding::class);
-    }
+    protected $appends = [ 'full_name' ];
 
     public function getFullNameAttribute()
     {
@@ -51,13 +34,28 @@ class User extends Authenticatable
             $this->attributes['surname'];
     }
 
-    public function affidavits()
+    public function payments()
     {
-    	return $this->hasMany(Affidavit::class);
+        return $this->hasMany(Payment::class);
+    }
+
+    public function liquidations()
+    {
+        return $this->hasMany(Liquidation::class);
+    }
+
+    public function withholdings()
+    {
+        return $this->hasMany(Withholding::class);
     }
 
     public function fines()
     {
         return $this->hasMany(Fine::class);
+    }
+
+    public function affidavits()
+    {
+    	return $this->hasMany(Affidavit::class);
     }
 }

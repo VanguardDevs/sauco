@@ -17,6 +17,6 @@ class LiquidationType extends Model
 
     public function liquidations()
     {
-        return $this->hasManyThrough(Liquidation::class, Concept::class);
+        return $this->hasMany(Liquidation::class);
     }
 }

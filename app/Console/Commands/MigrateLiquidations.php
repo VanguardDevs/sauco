@@ -7,10 +7,10 @@ use App\Payment;
 use App\Liquidation;
 use Illuminate\Support\Facades\Schema;
 use Artisan;
-use NullAffidavit;
-use NullApplication;
-use NullFine;
-use NullWithholding;
+use App\Fine;
+use App\Concept;
+use App\Application;
+use App\Affidavit;
 
 class MigrateLiquidations extends Command
 {
@@ -41,13 +41,22 @@ class MigrateLiquidations extends Command
     public function getConceptId($liquidation)
     {
         if ($liquidation->application_id) {
-            return $liquidation->application()->withTrashed()->first()->concept->id;
+            $model = Application::withTrashed()->find(
+                $liquidation->application_id
+            );
+            return [$model, $model->concept];
         }
         if ($liquidation->fine_id) {
-            return $liquidation->fine()->withTrashed()->first()->concept->id;
+            $model = Fine::withTrashed()->find(
+                $liquidation->fine_id
+            );
+            return [$model, $model->concept];
         }
         if ($liquidation->affidavit_id) {
-            return 1;
+            $model = Affidavit::withTrashed()->find(
+                $liquidation->affidavit_id
+            );
+            return [$model, Concept::find(1)];
         }
     }
 
@@ -62,10 +71,17 @@ class MigrateLiquidations extends Command
                 $liquidation->payment()->sync($payment);
             }
             if (!$liquidation->concept()->exists()) {
+                $data = $this->getConceptId($liquidation);
+                $model = $data[0];
+                $concept = $data[1];
+
                 $liquidation->update([
+                    'model_id' => $model->id,
                     'status_id' => $payment->state_id,
                     'taxpayer_id' => $payment->taxpayer_id,
-                    'concept_id' => $this->getConceptId($liquidation)
+                    'concept_id' => $concept->id,
+                    'liquidation_type_id' => $concept->liquidationType->id,
+                    'user_id' => $model->user_id
                 ]);
             }
 

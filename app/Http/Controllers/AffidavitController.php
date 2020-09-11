@@ -248,7 +248,7 @@ class AffidavitController extends Controller
 
         $payment = Payment::create([
             'state_id' => 1,
-            'user_id' => $affidavit->user_id,
+            'user_id' => auth()->user()->id,
             'amount' => $affidavit->amount,
             'payment_method_id' => 1,
             'invoice_model_id' => 1,
@@ -258,13 +258,15 @@ class AffidavitController extends Controller
 
         $month = Month::find($affidavit->month_id);
 
-        $payment->liquidations()->create([
+        $liquidation = $affidavit->liquidation()->create([
             'num' => Liquidation::getNewNum(),
+            'user_id' => Auth::user()->id,
             'object_payment' =>  $this->message($month),
             'concept_id' => $concept->id,
             'amount' => $affidavit->amount
         ]);
 
+        $payment->liquidations()->sync($liquidation);
         $payment->checkForFine();
 
         return redirect()->route('payments.show', $payment->id);

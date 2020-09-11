@@ -101,12 +101,16 @@ class FineController extends Controller
             'taxpayer_id' => $fine->taxpayer_id
         ]);
 
-        $fine->liquidation()->create([
+        $liquidation = $fine->liquidation()->create([
             'num' => Liquidation::getNewNum(),
             'object_payment' => $fine->concept->name,
-            'payment_id' => $payment->id,
+            'concept_id' => $fine->concept->id,
+            'taxpayer_id' => $fine->taxpayer_id,
+            'user_id' => auth()->user()->id,
             'amount' => $fine->amount
         ]);
+
+        $payment->liquidations()->sync($liquidation);
 
         return redirect()->route('payments.show', $payment);
     }

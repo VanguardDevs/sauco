@@ -45,8 +45,11 @@ class Fine extends Model implements Auditable
         $fine->liquidation()->create([
             'num' => Liquidation::newNum(),
             'object_payment' => $concept->name,
+            'status_id' => $payment->state_id,
+            'taxpayer_id' => $payment->taxpayer_id,
+            'concept_id' => $concept->id,
+            'liquidation_type_id' => $concept->liquidationType->id,
             'amount' => $fineAmount,
-            'payment_id' => $payment->id,
         ]);
     }
 
@@ -72,7 +75,7 @@ class Fine extends Model implements Auditable
 
     public function liquidation()
     {
-        return $this->hasOne(Liquidation::class);
+        return $this->hasOne(Liquidation::class, 'model_id');
     }
 
     public function getFormattedAmountAttribute()

@@ -70,7 +70,7 @@ class Application extends Model
 
     public function liquidation()
     {
-        return $this->hasOne(Liquidation::class);
+        return $this->hasOne(Liquidation::class, 'model_id');
     }
 
     public function getCreatedAtAttribute($value)
