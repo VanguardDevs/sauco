@@ -13,7 +13,13 @@ class CreateCanceledLiquidationsTable extends Migration
      */
     public function up()
     {
-        Schema::rename('settlements', 'liquidations');
+        if (!Schema::hasTable('liquidations')) {
+            Schema::rename('settlements', 'liquidations');
+        }
+
+        if (!Schema::hasTable('liquidation_types')) {
+            Schema::rename('lists', 'liquidation_types');
+        }
 
         Schema::create('canceled_liquidations', function (Blueprint $table) {
             $table->id();
@@ -24,7 +30,7 @@ class CreateCanceledLiquidationsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
         });
 
-        Schema::create('liquidation_payment', function (Blueprint ($table) {
+        Schema::create('payment_liquidation', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('liquidation_id');
             $table->unsignedBigInteger('payment_id');
@@ -32,6 +38,12 @@ class CreateCanceledLiquidationsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('payment_id')->references('id')->on('payments')
                 ->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        Schema::table('concepts', function (Blueprint $table) {
+            $table->renameColumn('amount', 'min_amount');  
+            $table->float('max_amount')->nullable();
+            $table->renameColumn('list_id', 'liquidation_type_id');
         });
     }
 

@@ -620,7 +620,7 @@ $(document).ready(function() {
             { data: 'name'},
             { data: 'ordinance.description'},
             { data: 'charging_method.name'},
-            { data: 'amount'},
+            { data: 'min_amount'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
