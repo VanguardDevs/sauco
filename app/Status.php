@@ -15,8 +15,8 @@ class Status extends Model
         return $this->hasMany(Payment::class);
     } 
 
-    public function settlements()
+    public function liquidations()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->hasMany(Liquidation::class);
     }
 }

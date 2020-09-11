@@ -4,10 +4,10 @@ namespace App\Traits;
 
 trait NewValue
 {
-    public function getNewNum()
+    public static function getNewNum()
     {
         $lastNum = self::withTrashed()
-            ->whereStateId(2)
+            ->whereStatusId(2)
             ->orderBy('num', 'DESC')
             ->first()
             ->num;

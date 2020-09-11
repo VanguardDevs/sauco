@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Taxpayer;
 use App\Year;
 use App\Month;
-use App\Settlement;
+use App\Liquidation;
 use App\Affidavit;
 use App\Payment;
 use App\EconomicActivityAffidavit;
@@ -21,7 +21,7 @@ use App\Services\AffidavitService;
 class AffidavitController extends Controller
 {
     /** Initial variables
-     * @var $settlement, $concept, $taxpayer, $month, $receivable, $payment
+     * @var $liquidation, $concept, $taxpayer, $month, $receivable, $payment
      */
     protected $economicActivityAffidavit;
 
@@ -67,41 +67,41 @@ class AffidavitController extends Controller
         }
 
         if ($affidavit->amount == 0.00) {
-            if (!Auth::user()->can('process.settlements'))  {
-                return redirect('cashbox/settlements')
+            if (!Auth::user()->can('process.liquidations'))  {
+                return redirect('cashbox/liquidations')
                     ->withError('¡No puede procesar la liquidación!');
             }
 
-            return view('modules.cashbox.select-settlement')
+            return view('modules.cashbox.select-liquidation')
                 ->with('row', $affidavit);
         }
 
-        // The settlement it's already processed    
-        return view('modules.cashbox.register-settlement')
+        // The liquidation it's already processed    
+        return view('modules.cashbox.register-liquidation')
             ->with('typeForm', 'show')
             ->with('row', $affidavit);
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param  \App\Settlement  $settlement
+     * @param  \App\Liquidation  $liquidation
      * @return \Illuminate\Http\Response
      */
     public function groupActivityForm(Affidavit $affidavit)
     {
-        return view('modules.cashbox.register-settlement')
+        return view('modules.cashbox.register-liquidation')
             ->with('row', $affidavit)
             ->with('typeForm', 'edit-group');
     }
     
     /**
      * Show form for editing the specified resource.
-     * @param \App\Settlement $settlement
+     * @param \App\Liquidation $liquidation
      * @return \Illuminate\Http\Response
      */
     public function normalCalcForm(Affidavit $affidavit)
     {
-        return view('modules.cashbox.register-settlement')
+        return view('modules.cashbox.register-liquidation')
             ->with('typeForm', 'edit-normal')
             ->with('row', $affidavit);
     }
@@ -143,7 +143,7 @@ class AffidavitController extends Controller
     }
 
     /**
-     * Check last settlement status
+     * Check last liquidation status
      */
     public function checkLastAffidavit()
     {
@@ -151,7 +151,7 @@ class AffidavitController extends Controller
             ->latest()->first();
         
         if ($lastAffidavit) {
-            // If last month settlement isn't processed yet
+            // If last month liquidation isn't processed yet
             if ($lastAffidavit->amount == 0.00) {
                 return $lastAffidavit;
             }
@@ -161,7 +161,7 @@ class AffidavitController extends Controller
     }
 
     /**
-     * Make a new Affidavit Settlement
+     * Make a new Affidavit Liquidation
      * @return Illuminate\Response
      */
     public function store()
@@ -200,7 +200,7 @@ class AffidavitController extends Controller
     {
         $isEditGroup = $request->has('edit-group');
 
-        $amounts = $request->input('activity_settlements');
+        $amounts = $request->input('activity_liquidations');
 
         if ($isEditGroup) {
             $amount = $amounts[0]; 
@@ -234,7 +234,7 @@ class AffidavitController extends Controller
 
     /**
      * Make a payment
-     * @param Settlement $settlement
+     * @param Liquidation $liquidation
      * @return Illuminate\Response
      */
     public function makePayment(Affidavit $affidavit)
@@ -257,8 +257,8 @@ class AffidavitController extends Controller
 
         $month = Month::find($affidavit->month_id);
 
-        $payment->settlements()->create([
-            'num' => Settlement::newNum(),
+        $payment->liquidations()->create([
+            'num' => Liquidation::getNewNum(),
             'object_payment' =>  $this->message($month),
             'affidavit_id' => $affidavit->id,
             'amount' => $affidavit->amount
@@ -278,7 +278,7 @@ class AffidavitController extends Controller
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)
     {
-        if (!Auth::user()->can('null.settlements')) {
+        if (!Auth::user()->can('null.liquidations')) {
             return response()->json([
                 'message' => '¡Acción no permitida!'
             ]);

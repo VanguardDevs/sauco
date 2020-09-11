@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Settlement;
+use App\Liquidation;
 use App\Payment;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +31,7 @@ class Fine extends Model implements Auditable
 
     public static function applyFine($payment, $concept)
     {
-        $amount = $payment->settlements()->first()->amount;
+        $amount = $payment->liquidations()->first()->amount;
         $fineAmount = $concept->calculateAmount($amount);
         $userId = User::whereLogin('sauco')->first()->id;
 
@@ -42,8 +42,8 @@ class Fine extends Model implements Auditable
             'user_id' => $userId
         ]);
 
-        $fine->settlement()->create([
-            'num' => Settlement::newNum(),
+        $fine->liquidation()->create([
+            'num' => Liquidation::newNum(),
             'object_payment' => $concept->name,
             'amount' => $fineAmount,
             'payment_id' => $payment->id,
@@ -67,12 +67,12 @@ class Fine extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
-    public function settlement()
+    public function liquidation()
     {
-        return $this->hasOne(Settlement::class);
+        return $this->hasOne(Liquidation::class);
     }
 
     public function getFormattedAmountAttribute()

@@ -86,7 +86,7 @@ class Affidavit extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
     public function withholding()
@@ -96,12 +96,12 @@ class Affidavit extends Model implements Auditable
 
     public function processedPayment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class)->first();
+        return $this->belongsToMany(Payment::class, Liquidation::class)->first();
     }
 
-    public function settlement()
+    public function liquidation()
     {
-        return $this->hasOne(Settlement::class);
+        return $this->hasOne(Liquidation::class);
     }
 
     public function getCreatedAtAttribute($value)

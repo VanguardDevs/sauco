@@ -8,7 +8,7 @@ use App\Payment;
 use App\Fine;
 use App\Concept;
 use App\Reference;
-use App\Settlement;
+use App\Liquidation;
 use App\Taxpayer;
 use App\Organization;
 use App\PaymentNull;
@@ -143,7 +143,7 @@ class PaymentController extends Controller
             ]);
         }
 
-        $paymentNum = Payment::newNum();
+        $paymentNum = Payment::getNewNum();
         $processedAt = Carbon::now();
 
         $payment->update([
@@ -201,11 +201,11 @@ class PaymentController extends Controller
             ]);
         }
 
-        // Delete receivables and payment but keep settlements
-        $settlements = Settlement::where('payment_id', $payment->id);
+        // Delete receivables and payment but keep liquidations
+        $liquidations = Liquidation::where('payment_id', $payment->id);
 
-        // Delete settlements and payment
-        $settlements->delete();
+        // Delete liquidations and payment
+        $liquidations->delete();
         $payment->delete();
 
         $payment->nullPayment()->create([

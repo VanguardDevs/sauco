@@ -7,7 +7,7 @@ use App\Taxpayer;
 use App\Affidavit;
 use App\Month;
 use App\Payment;
-use App\Settlement;
+use App\Liquidation;
 use App\Concept;
 use Carbon\Carbon;
 use Auth;

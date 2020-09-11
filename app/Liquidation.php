@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\NewValue;
 
-class Settlement extends Model implements Auditable
+class Liquidation extends Model implements Auditable
 {
-    use SoftDeletes;
-    use Audit;
+    use SoftDeletes, Audit, NewValue;
 
     protected $table = 'liquidations';
 
@@ -23,16 +23,10 @@ class Settlement extends Model implements Auditable
         return number_format($this->amount, 2, ',', '.');
     }
 
-    public static function newNum()
+    public function status()
     {
-        $lastNum = self::withTrashed()
-            ->orderBy('num','DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
-    }   
+        return $this->belongsTo(Status::class, 'status_id');
+    }
 
     public function withholding()
     {

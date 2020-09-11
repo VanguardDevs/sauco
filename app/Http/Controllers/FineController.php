@@ -7,7 +7,7 @@ use App\Taxpayer;
 use App\Ordinance;
 use App\Concept;
 use App\Payment;
-use App\Settlement;
+use App\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -101,8 +101,8 @@ class FineController extends Controller
             'taxpayer_id' => $fine->taxpayer_id
         ]);
 
-        $fine->settlement()->create([
-            'num' => Settlement::newNum(),
+        $fine->liquidation()->create([
+            'num' => Liquidation::getNewNum(),
             'object_payment' => $fine->concept->name,
             'payment_id' => $payment->id,
             'amount' => $fine->amount
@@ -155,8 +155,8 @@ class FineController extends Controller
     { 
         $payment = $fine->payment()->first();
 
-        if ($fine->settlement) {
-            $fine->settlement->delete();
+        if ($fine->liquidation) {
+            $fine->liquidation->delete();
             $payment->updateAmount();
         } 
         $fine->delete();

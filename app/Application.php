@@ -65,12 +65,12 @@ class Application extends Model
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
-    public function settlement()
+    public function liquidation()
     {
-        return $this->hasOne(Settlement::class);
+        return $this->hasOne(Liquidation::class);
     }
 
     public function getCreatedAtAttribute($value)

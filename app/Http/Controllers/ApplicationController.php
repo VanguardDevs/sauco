@@ -7,7 +7,7 @@ use App\Ordinance;
 use App\Concept;
 use App\Taxpayer;
 use App\Payment;
-use App\Settlement;
+use App\Liquidation;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnnullmentRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -74,8 +74,8 @@ class ApplicationController extends Controller
             'taxpayer_id' => $application->taxpayer_id
         ]);
 
-        $application->settlement()->create([
-            'num' => Settlement::newNum(),
+        $application->liquidation()->create([
+            'num' => Liquidation::getNewNum(),
             'object_payment' => $application->concept->name,
             'payment_id' => $payment->id,
             'amount' => $application->amount
@@ -151,8 +151,8 @@ class ApplicationController extends Controller
     {
         $payment = $application->payment()->first();
 
-        if ($application->settlement) {
-            $application->settlement->delete();
+        if ($application->liquidation()->exists()) {
+            $application->liquidation->delete();
             $payment->updateAmount();
         } 
         $application->delete();

@@ -17,6 +17,12 @@ class CreateCanceledLiquidationsTable extends Migration
             Schema::rename('settlements', 'liquidations');
         }
 
+        Schema::table('liquidations', function (Blueprint $table) {
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->foreign('status_id')->references('id')->on('status')
+                ->onUpdate('cascade')->onDelete('cascade');
+        });
+
         if (!Schema::hasTable('liquidation_types')) {
             Schema::rename('lists', 'liquidation_types');
         }
