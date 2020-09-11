@@ -240,6 +240,7 @@ class AffidavitController extends Controller
     public function makePayment(Affidavit $affidavit)
     {
         $payment = $affidavit->payment();
+        $concept = Concept::whereCode(1)->first();
 
         if ($payment->exists()) {
             return redirect()->route('payments.show', $payment->first());
@@ -260,7 +261,7 @@ class AffidavitController extends Controller
         $payment->liquidations()->create([
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $this->message($month),
-            'affidavit_id' => $affidavit->id,
+            'concept_id' => $concept->id,
             'amount' => $affidavit->amount
         ]);
 

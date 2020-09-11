@@ -63,4 +63,9 @@ class Concept extends Model
     {
         return $this->belongsTo(AccountingAccount::class);
     }
+
+    public function liquidations()
+    {
+        return $this->hasMany(Liquidation::class);
+    }
 }
