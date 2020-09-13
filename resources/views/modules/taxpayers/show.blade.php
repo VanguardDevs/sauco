@@ -73,6 +73,7 @@
               <tr>
                 <th width="20%">Número</th>
                 <th width="30%">Monto</th>
+                <th width="30%">Fecha</th>
                 <th width="20%">Acciones</th>
               </tr>
             </thead>

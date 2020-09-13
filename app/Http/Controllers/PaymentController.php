@@ -47,7 +47,7 @@ class PaymentController extends Controller
     public function listProcessed()
     { 
         $query = Payment::with('taxpayer') 
-            ->whereStateId(2)
+            ->whereStatusId(2)
             ->orderBy('num', 'DESC');
 
         return DataTables::of($query)

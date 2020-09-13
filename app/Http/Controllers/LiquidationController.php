@@ -13,7 +13,8 @@ use App\Http\Requests\AnnullmentRequest;
 use Auth;
 
 class LiquidationController extends Controller
-{    /**
+{
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -61,11 +62,12 @@ class LiquidationController extends Controller
      * @param  \App\Liquidation  $liquidation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Liquidation $liquidation)
+    public function destroy(AnnullmentRequest $request, Liquidation $liquidation)
     {
         if ($liquidation->status_id == 1) {
             $liquidation->canceledLiquidation()->create([
                 'reason' => $request->get('annullment_reason'),
+                'user_id' => Auth::user()->id
             ]);
 
             $type = $liquidation->liquidation_type_id;

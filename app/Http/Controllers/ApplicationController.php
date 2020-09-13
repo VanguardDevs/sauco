@@ -9,7 +9,6 @@ use App\Taxpayer;
 use App\Payment;
 use App\Liquidation;
 use Illuminate\Http\Request;
-use App\Http\Requests\AnnullmentRequest;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
@@ -121,22 +120,8 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Application $application)
+    public function destroy(Application $application)
     {
-        $payment = $application->payment()->first();
-
-        if ($application->liquidation()->exists()) {
-            $application->liquidation->delete();
-            $payment->updateAmount();
-        } 
-        $application->delete();
-
-        $application->nullFine()->create([
-            'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
-        ]);
-
-        return redirect()->back()
-            ->with('success', '¡Solicitud anulada!');       
+        //
     }
 }

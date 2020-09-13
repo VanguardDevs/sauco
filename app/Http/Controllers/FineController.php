@@ -159,22 +159,8 @@ class FineController extends Controller
      * @param  \App\Fine  $fine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Fine $fine)
+    public function destroy(Fine $fine)
     { 
-        $payment = $fine->payment()->first();
-
-        if ($fine->liquidation) {
-            $fine->liquidation->delete();
-            $payment->updateAmount();
-        } 
-        $fine->delete();
-
-        $fine->nullFine()->create([
-            'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
-        ]);
-
-        return redirect()->back()
-            ->with('success', '¡Multa anulada!');   
+        //
     }
 }

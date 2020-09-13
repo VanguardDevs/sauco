@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\PrettyTimestamps;
 
 class CanceledLiquidation extends Model
 {
+    use PrettyTimestamps;
+
     protected $table = 'canceled_liquidations';
 
     protected $fillable = [
@@ -14,6 +17,16 @@ class CanceledLiquidation extends Model
         'reason'
     ];
 
+    public function taxpayer()
+    {
+        return $this->liquidation()->first()->taxpayer();
+    }
+
+    public function status()
+    {
+        return $this->liquidation()->first()->status();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -21,6 +34,7 @@ class CanceledLiquidation extends Model
 
     public function liquidation()
     {
-        return $this->belongsTo(Liquidation::class);
+        return $this->belongsTo(Liquidation::class)
+            ->withTrashed();
     }
 }

@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;
 use Auth;
-use App\Http\Requests\AnnullmentRequest;
 use App\Services\AffidavitService;
 
 class AffidavitController extends Controller
@@ -251,29 +250,8 @@ class AffidavitController extends Controller
         return redirect()->route('liquidations.index', $affidavit->taxpayer_id);
     }
 
-    public function destroy(AnnullmentRequest $request, Affidavit $affidavit)
+    public function destroy(Affidavit $affidavit)
     {
-        if (!Auth::user()->can('null.liquidations')) {
-            return response()->json([
-                'message' => '¡Acción no permitida!'
-            ]);
-        }
-
-        if ($affidavit->payment()->first()) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡La declaración tiene una liquidación asociada!'
-            ]);
-        }
-
-        $affidavit->nullAffidavit()->create([
-            'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
-        ]);
-
-        $affidavit->delete();
-
-        return redirect()->back()
-            ->with('success', '¡Liquidación anulada!');   
+        //
     }
 }

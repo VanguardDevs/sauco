@@ -67,7 +67,7 @@ class Affidavit extends Model implements Auditable
         return false;
     }
 
-    public function nullAffidavit()
+    public function getNull()
     {
         return $this->hasOne(NullAffidavit::class);
     }

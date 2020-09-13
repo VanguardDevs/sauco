@@ -60,12 +60,33 @@ class MigrateLiquidations extends Command
         }
     }
 
+    public function migrateCanceledLiquidations()
+    {
+        $fines = Fine::whereHas('getNull')->get();
+        $affidavits = Affidavit::whereHas('getNull')->get();
+        $applications = Application::whereHas('getNull')->get();
+
+        $models = collect($fines)
+            ->merge($affidavits)
+            ->merge($applications);
+
+        foreach($models as $model) {
+            $liquidation = $model->liquidation()->first();
+            $liquidation->canceledLiquidation()->create([
+                'reason' => $model->getNull->reason,
+                'user_id' => $model->user_id
+            ]);
+        }
+    }
+
     public function migrateLiquidations()
     {
         $liquidations = Liquidation::withTrashed()->get();
 
         foreach($liquidations as $liquidation) {
-            $payment = Payment::withTrashed()->whereId($liquidation->payment_id)->first();
+            $payment = Payment::withTrashed()
+                ->whereId($liquidation->payment_id)
+                ->first();
 
             if (!$liquidation->payment()->exists()) {
                 $liquidation->payment()->sync($payment);
@@ -108,5 +129,6 @@ class MigrateLiquidations extends Command
         }
         $this->migrateLiquidations();     
         $this->migrateLiquidations();     
+        $this->migrateCanceledLiquidations();
     }
 }

@@ -10,10 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('taxpayers/{taxpayer}/liquidations', 'LiquidationController@index')
-    ->name('liquidations.index');
-Route::resource('liquidations', 'LiquidationController')->except('index');
-
 Auth::routes();
 
 Route::get('/', function () {
@@ -236,6 +232,18 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
     Route::resource('taxpayers', 'TaxpayerController');
+
+    /**
+     * Liquidations
+     */
+    Route::get('taxpayers/{taxpayer}/liquidations', 'LiquidationController@index')
+        ->name('liquidations.index');
+    Route::resource('liquidations', 'LiquidationController')->except('index');
+
+    /**
+     * Canceled
+     */
+    Route::resource('reports/canceled-liquidations', 'CanceledLiquidationController');
 
     /** 
      * Listing routes

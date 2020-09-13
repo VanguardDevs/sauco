@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CanceledLiquidation;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 
 class CanceledLiquidationController extends Controller
@@ -12,9 +13,16 @@ class CanceledLiquidationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->wantsJson()) {
+            $query = CanceledLiquidation::query()
+                    ->with(['taxpayer', 'status', 'liquidation', 'user' ]);
+
+            return DataTables::of($query)->toJson();
+        }
+
+        return view('modules.reports.canceled-liquidations');
     }
 
     /**

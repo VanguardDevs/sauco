@@ -31,7 +31,7 @@ class Fine extends Model implements Auditable
 
     protected $casts = [ 'amount' => 'float' ];  
 
-    public function nullFine()
+    public function getNull()
     {
         return $this->hasOne(NullFine::class);
     }
@@ -83,6 +83,7 @@ class Fine extends Model implements Auditable
     public function liquidation()
     {
         return $this->hasOne(Liquidation::class, 'model_id')
+            ->withTrashed()
             ->whereLiquidationTypeId(2);
     }
 }

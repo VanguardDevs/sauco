@@ -77,6 +77,12 @@ class Application extends Model implements Auditable
     public function liquidation()
     {
         return $this->hasOne(Liquidation::class, 'model_id')
+            ->withTrashed()
             ->whereLiquidationTypeId(1);
+    }
+
+    public function getNull()
+    {
+        return $this->hasOne(NullApplication::class);
     }
 }

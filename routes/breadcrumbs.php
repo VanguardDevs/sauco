@@ -74,9 +74,9 @@ Breadcrumbs::for('affidavits.group', function ($trail, $row) {
     $trail->push('Cálculo de liquidación agrupada', url('affidavits/'.$row->id.'/group'));
 });
 
-Breadcrumbs::for('null.payments', function ($trail) {
+Breadcrumbs::for('canceled-liquidations.index', function ($trail) {
     $trail->parent('reports');
-    $trail->push('Pagos anulados', route('null.payments'));
+    $trail->push('Liquidaciones anuladas', route('canceled-liquidations.index'));
 });
 
 /*----------  Taxpayers > taxpayer > payment ----------*/

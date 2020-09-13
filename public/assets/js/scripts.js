@@ -703,6 +703,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'num' },
             { data: 'pretty_amount', name: 'pretty_amount' },
+            { data: 'processed_at' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -753,21 +754,20 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tNullPayments').DataTable({
+    $('#tCanceledLiquidations').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/payments/list-null",
+        "ajax": baseURL + "/reports/canceled-liquidations",
         "columns": [
-            { data: 'id'},
-            { data: 'taxpayer.rif' },
+            { data: 'liquidation.num'},
             { data: 'taxpayer.name' },
-            { data: 'amount' },
-            { data: 'state.name' },
-            { data: 'deleted_at' }
+            { data: 'reason' },
+            { data: 'liquidation.pretty_amount' },
+            { data: 'created_at' }
         ]
     });
 
@@ -788,12 +788,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/fines/${oData.id}/payment/new title='Facturar'>
-                            <i class='btn-sm btn-success fas fa-money-check'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>               
+                      <a class="mr-2" href=${baseURL}/fines/${oData.id} title='Más información'>
+                        <i class='btn-sm btn-success fas fa-money-check'></i>
+                      </a>
                     </div>`
                     );
                 }
@@ -819,12 +816,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                      <a class="mr-2" href=${baseURL}/applications/${oData.id}/payment/new title='Facturar'>
+                      <a class="mr-2" href=${baseURL}/applications/${oData.id} title='Más información'>
                         <i class='btn-sm btn-success fas fa-money-check'></i>
                       </a>
-                      <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
-                        <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
                     </div>`
                     );
                 }
@@ -876,19 +870,13 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/affidavits/${oData.id}/payment/new title='Facturar'>
-                            <i class='btn-sm btn-success fas fa-money-check'></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Ver declaración jurada de ingresos'>
-                            <i class='btn-sm btn-info fas fa-eye'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'affidavits')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
+                      <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Más información'>
+                        <i class='btn-sm btn-success fas fa-money-check'></i>
+                      </a>
                     </div>`
                     );
                 }
-            }
+            }        
         ]
     });
 
