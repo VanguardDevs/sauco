@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Taxpayer;
 use Carbon\Carbon;
-use App\Traits\FormattedAmount;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 
 class Application extends Model implements Auditable
 {
-    use SoftDeletes, FormattedAmount, Audit;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps;
 
     protected $table = 'applications';
 
@@ -69,10 +70,5 @@ class Application extends Model implements Auditable
     public function liquidation()
     {
         return $this->hasOne(Liquidation::class, 'model_id');
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Date('d/m/Y H:m', strtotime($value));
     }
 }

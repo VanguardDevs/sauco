@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\NewValue;
-use App\Traits\FormattedAmount;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 
 class Liquidation extends Model implements Auditable
 {
-    use SoftDeletes, Audit, NewValue, FormattedAmount;
+    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps;
 
     protected $table = 'liquidations';
 

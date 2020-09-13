@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait FormattedAmount
+trait PrettyAmount
 {   
     public function getPrettyAmountAttribute()
     {

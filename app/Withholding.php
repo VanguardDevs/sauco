@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
-use App\Traits\FormattedAmount;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 
 class Withholding extends Model implements Auditable 
 {
-    use SoftDeletes, Audit, FormattedAmount;
+    use SoftDeletes, Audit, PrettyAmount, PrettyTimestamps;
 
     protected $table = 'withholdings';
 

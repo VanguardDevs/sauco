@@ -8,23 +8,25 @@ use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
 use App\Concept;
+use App\Traits\PrettyTimestamps;
+use App\Traits\PrettyAmount;
 
 class Affidavit extends Model implements Auditable
 {
-    use Audit;
-    use SoftDeletes;
+    use Audit, SoftDeletes, PrettyTimestamps, PrettyAmount;
 
     protected $table = 'affidavits';
 
     protected $guarded = [];
 
-    protected $casts = [
-        'amount' => 'float'
-    ];
+    protected $casts = [ 'amount' => 'float' ];
 
     protected $with = [ 'month' ];
 
-    protected $appends = ['total_amount', 'brute_amount_affidavit'];
+    protected $appends = [
+        'pretty_amount',
+        'brute_amount_affidavit'
+    ];
 
     /**
     * Check if this affidavit fills an exception for fine
@@ -106,16 +108,6 @@ class Affidavit extends Model implements Auditable
         return $this->hasOne(Liquidation::class, 'model_id');
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        return Date('d/m/Y', strtotime($value)); 
-    }
-
-    public function getDeletedAtAttribute($value)
-    {
-        return Date('d-m-Y H:m', strtotime($value)); 
-    }
-
     public function scopeLastAffidavit($query)
     {
         return $query->latest()->first();
@@ -139,10 +131,5 @@ class Affidavit extends Model implements Auditable
         $totalAffidavit = $this->economicActivityAffidavits->sum('brute_amount');
 
         return number_format($totalAffidavit, 2, ',', '.');
-    }
-
-    public function getTotalAmountAttribute($value)
-    {
-        return number_format($this->amount, 2, ',', '.');
     }
 }

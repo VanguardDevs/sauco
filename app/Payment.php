@@ -9,11 +9,12 @@ use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
 use App\Fine;
 use App\Traits\NewValue;
-use App\Traits\FormattedAmount;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 
 class Payment extends Model implements Auditable
 {
-    use Audit, SoftDeletes, NewValue, FormattedAmount;
+    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps;
 
     protected $table = 'payments';
 
@@ -112,20 +113,5 @@ class Payment extends Model implements Auditable
     public function invoiceModel()
     {
         return $this->belongsTo(InvoiceModel::class);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return date('d/m/Y H:m', strtotime($value));
-    }
-
-    public function getProcessedAtAttribute($value)
-    {
-        return date('d/m/Y h:i', strtotime($value));
-    }
-
-    public function getDeletedAtAttribute($value)
-    {
-        return date('d/m/Y H:m', strtotime($value));
     }
 }
