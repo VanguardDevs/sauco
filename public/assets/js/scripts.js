@@ -665,7 +665,7 @@ $(document).ready(function() {
             { data: 'object_payment' },
             { data: 'status.name' },
             { data: 'liquidation_type.name' },
-            { data: 'formatted_amount', name: 'formatted_amount' }
+            { data: 'pretty_amount', name: 'pretty_amount' }
         ]
     });
 
@@ -680,7 +680,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'num' },
             { data: 'state.name' },
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -711,7 +711,7 @@ $(document).ready(function() {
             { data: 'num', name: 'num' },
             { data: 'taxpayer.rif', name: 'taxpayer.rif' },
             { data: 'taxpayer.name', name: 'taxpayer.name' },
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'processed_at', name: 'processed_at' },
             {
                 data: "id",
@@ -758,7 +758,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
             {
@@ -789,7 +789,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'amount', name: 'amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'concept.name' },
             { data: 'created_at' },
             {
@@ -820,7 +820,7 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/list`,
         "columns": [
             { data: 'affidavit.month.name' },
-            { data: 'amount' },
+            { data: 'pretty_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

@@ -138,7 +138,7 @@
                  <tr>
                     <td>{{ $liquidation->num }}</td> 
                     <td>{{ $liquidation->object_payment  }}</td>   
-                    <td style="font-weight:bold;">{{ $liquidation->total_amount }}</td>
+                    <td style="font-weight:bold;">{{ $liquidation->prettyAmount }}</td>
                 </tr>
                 @endforeach   
              </table>
@@ -150,7 +150,7 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->formattedAmount }} Bs
+                    PAGO TOTAL: {{ $payment->prettyAmount }} Bs
                 </div>
             </div>
         </div>

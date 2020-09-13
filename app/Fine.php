@@ -7,22 +7,21 @@ use App\Payment;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
+use App\Traits\FormattedAmount;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
 
 class Fine extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use SoftDeletes, FormattedAmount, Audit;
 
     protected $table = 'fines';
 
     protected $guarded = [];
 
-    protected $appends = [ 'formatted_amount' ];
+    protected $appends = [ 'pretty_amount' ];
 
-    protected $casts = [
-        'amount' => 'float'
-    ];  
+    protected $casts = [ 'amount' => 'float' ];  
 
     public function nullFine()
     {
@@ -76,11 +75,6 @@ class Fine extends Model implements Auditable
     public function liquidation()
     {
         return $this->hasOne(Liquidation::class, 'model_id');
-    }
-
-    public function getFormattedAmountAttribute()
-    {
-        return number_format($this->amount, 2, ',', '.');
     }
 
     public function getCreatedAtAttribute($value)

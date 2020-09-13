@@ -53,13 +53,13 @@
              <tr>
                 <td>{{ $liquidation->num }}</td> 
                 <td>{{ $liquidation->object_payment }}</td>   
-                <td>{{ $liquidation->total_amount }}</td>
+                <td>{{ $liquidation->prettyAmount }}</td>
             </tr>
             @endforeach   
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Monto Total: {{ $row->formattedAmount }} Bs
+                    Monto Total: {{ $row->prettyAmount }} Bs
                 </div>
                 @if ($typeForm == 'show' && $row->state_id == 2)
                 <div class="kt-heading kt-heading--md">

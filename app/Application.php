@@ -6,29 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Taxpayer;
 use Carbon\Carbon;
+use App\Traits\FormattedAmount;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
 
-class Application extends Model
+class Application extends Model implements Auditable
 {
-    use SoftDeletes;
+    use SoftDeletes, FormattedAmount, Audit;
 
     protected $table = 'applications';
 
     protected $guarded = [];
 
-    protected $casts = [
-        'amount' => 'float'
-    ];
+    protected $casts = [ 'amount' => 'float' ];
 
-    public function nullApplication()
-    {
-        return $this->hasOne(NullApplication::class);
-    }
+    protected $appends = [ 'pretty_amount' ];
 
     public static function hasPaid(Taxpayer $taxpayer, $code)
     {
         $application = $taxpayer
             ->applications()
-	    ->whereBetween('created_at', [Carbon::now()->subYear(1), Carbon::now()])
+            ->whereBetween('created_at', [Carbon::now()->subYear(1), Carbon::now()])
             ->whereHas('concept', function ($concept) use ($code) {
                 return $concept->whereCode($code);
             })->latest()->first();

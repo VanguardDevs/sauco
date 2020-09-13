@@ -9,10 +9,11 @@ use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
 use App\Fine;
 use App\Traits\NewValue;
+use App\Traits\FormattedAmount;
 
 class Payment extends Model implements Auditable
 {
-    use Audit, SoftDeletes, NewValue;
+    use Audit, SoftDeletes, NewValue, FormattedAmount;
 
     protected $table = 'payments';
 
@@ -20,7 +21,7 @@ class Payment extends Model implements Auditable
  
     protected $casts = [ 'amount' => 'float' ];  
 
-    protected $appends = [ 'formatted_amount' ];
+    protected $appends = [ 'pretty_amount' ];
 
     public function checkForFine()
     {
@@ -54,18 +55,6 @@ class Payment extends Model implements Auditable
             ->whereStateId(2)
             ->orderBy('processed_at', 'ASC')
             ->get();
-    } 
-
-    public static function newNum()
-    {
-        $lastNum = Payment::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('num', 'DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
     } 
 
     public function nullPayment()
@@ -138,10 +127,5 @@ class Payment extends Model implements Auditable
     public function getDeletedAtAttribute($value)
     {
         return date('d/m/Y H:m', strtotime($value));
-    }
-
-    public function getFormattedAmountAttribute()
-    {
-        return number_format($this->amount, 2, ',', '.');
     }
 }

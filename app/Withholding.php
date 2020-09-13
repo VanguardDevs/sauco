@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\FormattedAmount;
 
 class Withholding extends Model implements Auditable 
 {
-    use SoftDeletes;
-    use Audit;
+    use SoftDeletes, Audit, FormattedAmount;
 
     protected $table = 'withholdings';
 
@@ -19,6 +19,8 @@ class Withholding extends Model implements Auditable
         'affidavit_id',
         'amount'
     ];
+
+    protected $appends = [ 'pretty_amount' ];
 
     public function affidavit()
     {
