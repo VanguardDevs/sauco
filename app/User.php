@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $this->hasMany(Fine::class);
     }
 
+    public function licenses()
+    {
+        return $this->hasMany(License::class);
+    }
+
     public function affidavits()
     {
     	return $this->hasMany(Affidavit::class);

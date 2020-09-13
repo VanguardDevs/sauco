@@ -138,6 +138,7 @@ class LicenseController extends Controller
             $isValid['msg'] = '¡El contribuyente tiene una licencia activa!';
         }
 
+        /**
         if ($correlativeType->description == 'R-') {
             $useConformityPaid = Application::hasPaid($taxpayer, 7);
 	
@@ -146,6 +147,7 @@ class LicenseController extends Controller
                 $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
             }
         }
+        **/
 
         return $isValid;
     }
