@@ -65,6 +65,13 @@ class CreateCanceledLiquidationsTable extends Migration
             $table->float('max_amount')->nullable();
             $table->renameColumn('list_id', 'liquidation_type_id');
         });
+
+        // Drop unnused tables if exists
+
+        if (Schema::hasTable('organization_payment')) {
+            Schema::drop('organization_payment');
+            Schema::drop('organizations');
+        }
     }
 
     /**
