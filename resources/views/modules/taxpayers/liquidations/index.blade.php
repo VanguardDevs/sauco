@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Declaraciones de '.$taxpayer->rif)
+@section('title', 'Liquidaciones de '.$taxpayer->rif)
 
 @section('content')
 
@@ -20,11 +20,12 @@
             <table id="tTaxpayerLiquidations" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
-                    <th width="10%">Número</th>
+                    <th width="5%">Número</th>
                     <th width="40%">Concepto</th>
-                    <th width="10%">Estado</th>
-                    <th width="20%">Monto</th>
-                    <th width="20%">Acciones</th>
+                    <th width="5%">Estado</th>
+                    <th width="20%">Tipo</th>
+                    <th width="10%">Monto</th>
+                    <th width="10%">Acciones</th>
                   </tr>
                 </thead>
             </table>

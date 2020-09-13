@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 
 class Fine extends Model implements Auditable
 {
-    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, MakeLiquidation;
 
     protected $table = 'fines';
 

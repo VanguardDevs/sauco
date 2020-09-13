@@ -246,37 +246,9 @@ class AffidavitController extends Controller
             return redirect()->route('payments.show', $liquidation->first()->payment->first());
         }
 
-        $payment = Payment::create([
-            'state_id' => 1,
-            'user_id' => auth()->user()->id,
-            'amount' => $affidavit->amount,
-            'payment_method_id' => 1,
-            'invoice_model_id' => 1,
-            'payment_type_id' => 1,
-            'taxpayer_id' => $affidavit->taxpayer_id
-        ]);
+        $affidavit->makeLiquidation();
 
-        $month = Month::find($affidavit->month_id);
-
-        $liquidation = $affidavit->liquidation()->create([
-            'num' => Liquidation::getNewNum(),
-            'user_id' => Auth::user()->id,
-            'object_payment' =>  $this->message($month),
-            'concept_id' => $concept->id,
-            'amount' => $affidavit->amount
-        ]);
-
-        $payment->liquidations()->sync($liquidation);
-        $payment->checkForFine();
-
-        return redirect()->route('payments.show', $payment->id);
-    }
-    
-    public function message(Month $month)
-    {
-        $concept = Concept::whereCode(1)->first();
-
-        return $concept->name.': '.$month->name.' - '.$month->year->year;
+        return redirect()->route('liquidations.index', $affidavit->taxpayer_id);
     }
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)

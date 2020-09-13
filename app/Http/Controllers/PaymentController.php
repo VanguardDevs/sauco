@@ -51,21 +51,21 @@ class PaymentController extends Controller
             ->orderBy('num', 'DESC');
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
             })
             ->make(true);
     }
 
     public function listByTaxpayer(Taxpayer $taxpayer)
     {
-        $query = Payment::with(['state', 'user'])
+        $query = Payment::whereStatusId(2)
             ->whereTaxpayerId($taxpayer->id)
             ->orderBy('processed_at', 'DESC');
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
             })
             ->make(true);
     }
@@ -73,7 +73,7 @@ class PaymentController extends Controller
     public function onlyNull()
     {
         $query = Payment::onlyTrashed()
-            ->with(['taxpayer', 'state'])
+            ->with(['taxpayer', 'status'])
             ->orderBy('id', 'DESC');
         
         return DataTables::of($query)->toJson();
@@ -108,7 +108,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if ($payment->state->id == 1) {
+        if ($payment->status->id == 1) {
             if (auth()->user()->can('process.payments')) {
                 $this->typeform = 'edit';
             }
@@ -149,7 +149,7 @@ class PaymentController extends Controller
         $payment->update([
             'user_id' => Auth::user()->id, 
             'payment_method_id' => $request->input('method'),
-            'state_id' => 2,
+            'status_id' => 2,
             'observations' => $request->input('observations'),
             'num' => $paymentNum,
             'processed_at' => $processedAt
@@ -161,7 +161,7 @@ class PaymentController extends Controller
 
     public function download(Payment $payment)
     {
-        if ($payment->state->id == 1) {
+        if ($payment->status->id == 1) {
             return redirect()->back()
                 ->withError('¡La factura no ha sido procesada!');
         }
@@ -194,7 +194,7 @@ class PaymentController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Payment $payment)
     {
-        if ($payment->state_id == 2 && !Auth::user()->hasRole('admin')) {
+        if ($payment->status_id == 2 && !Auth::user()->hasRole('admin')) {
             return response()->json([
                 'success' => false,
                 'message' => '¡La factura está pagada!'

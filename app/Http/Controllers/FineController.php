@@ -48,7 +48,9 @@ class FineController extends Controller
 
     public function listConcepts(Ordinance $ordinance)
     {
-        return $ordinance->conceptsByList(2);
+        return $ordinance->concepts()
+            ->whereLiquidationTypeId(2)
+            ->get();
     }
 
 
@@ -80,7 +82,9 @@ class FineController extends Controller
             'amount' => $amount
         ]);
 
-        return redirect()->route('taxpayer.fines', $taxpayer)
+        $fine->makeLiquidation();
+
+        return redirect()->route('liquidations.index', $taxpayer)
             ->withSuccess('¡Multa aplicada!');
     }
 

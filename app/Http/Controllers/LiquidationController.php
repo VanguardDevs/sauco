@@ -21,7 +21,7 @@ class LiquidationController extends Controller
     {
         if ($request->wantsJson()) {
             $query = $taxpayer->liquidations()
-                    ->with(['status', 'liquidationType'])
+                    ->with(['status', 'liquidationType', 'payment'])
                     ->orderBy('created_at', 'DESC')
                     ->orderBy('status_id', 'DESC');
 

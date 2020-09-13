@@ -10,10 +10,11 @@ use Carbon\Carbon;
 use App\Concept;
 use App\Traits\PrettyTimestamps;
 use App\Traits\PrettyAmount;
+use App\Traits\MakeLiquidation;
 
 class Affidavit extends Model implements Auditable
 {
-    use Audit, SoftDeletes, PrettyTimestamps, PrettyAmount;
+    use Audit, SoftDeletes, PrettyTimestamps, PrettyAmount, MakeLiquidation;
 
     protected $table = 'affidavits';
 

@@ -58,13 +58,20 @@
             <div class="kt-portlet__head-label">
                 <h3 class="kt-portlet__head-title">Pagos</h3>
             </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-group">
+                    <a
+                        href="{{ route('liquidations.index', $row->id) }}"
+                        class="btn btn-outline-brand"
+                    >Liquidaciones</a>
+                </div>
+            </div>
         </div>
         <div class="kt-portlet__body">
           <table id="tTaxpayerPayments" class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
-                <th width="20%">Nro.</th>
-                <th width="30%">Estado</th>
+                <th width="20%">Número</th>
                 <th width="30%">Monto</th>
                 <th width="20%">Acciones</th>
               </tr>

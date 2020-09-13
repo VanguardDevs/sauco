@@ -31,11 +31,11 @@ class Concept extends Model
         $value = $value ? $value : TaxUnit::latest()->first()->value;
         
         if ($method == "TASA") {
-            return $value * $this->amount / 100;
+            return $value * $this->min_amount / 100;
         } else if ($method == 'DIVISA') {
-            return $this->amount;
+            return $this->min_amount;
         } else if ($method == 'U.T') {
-            return $this->amount * $value;
+            return $this->min_amount * $value;
         }
     }
 

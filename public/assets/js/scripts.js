@@ -665,7 +665,28 @@ $(document).ready(function() {
             { data: 'object_payment' },
             { data: 'status.name' },
             { data: 'liquidation_type.name' },
-            { data: 'pretty_amount', name: 'pretty_amount' }
+            { data: 'pretty_amount', name: 'pretty_amount' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    let payment = '';
+                    if (oData.payment.length) {
+                      payment = `
+                        <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                      `;
+                    }
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        ${payment}
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Editar'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
         ]
     });
 
@@ -679,7 +700,6 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/payments`,
         "columns": [
             { data: 'num' },
-            { data: 'state.name' },
             { data: 'pretty_amount', name: 'pretty_amount' },
             {
                 data: "id",
