@@ -46,6 +46,9 @@ class CreateCanceledLiquidationsTable extends Migration
             $table->string('reason');
             $table->timestamps();
             $table->unsignedBigInteger('liquidation_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('liquidation_id')->references('id')->on('liquidations')
                 ->onUpdate('cascade')->onDelete('cascade');
         });

@@ -32,8 +32,11 @@ class ApplicationController extends Controller
             ->orderBy('applications.created_at', 'DESC')
             ->with(['concept:id,name']);
 
-        return DataTables::eloquent($query)
-            ->toJson();
+        return DataTables::of($query)
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
+            })
+            ->make(true);
     }
 
     public function listConcepts(Ordinance $ordinance)

@@ -201,17 +201,11 @@ class PaymentController extends Controller
             ]);
         }
 
-        // Delete receivables and payment but keep liquidations
-        $liquidations = Liquidation::where('payment_id', $payment->id);
-
-        // Delete liquidations and payment
-        $liquidations->delete();
-        $payment->delete();
-
         $payment->nullPayment()->create([
             'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id
         ]);
+        $payment->delete();
 
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');

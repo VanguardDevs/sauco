@@ -677,7 +677,7 @@ $(document).ready(function() {
                       `;
                     } else {
                       actions = `
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'liquidations')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                       `
