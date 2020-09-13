@@ -22,20 +22,18 @@ class CreateCanceledLiquidationsTable extends Migration
         }
 
         Schema::table('liquidations', function (Blueprint $table) {
+            $table->string('liquidable_type')->nullable();
             $table->unsignedBigInteger('payment_id')->nullable()->change();
-            $table->unsignedBigInteger('model_id')->nullable();
+            $table->unsignedBigInteger('liquidable_id')->nullable();
             $table->unsignedBigInteger('concept_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('taxpayer_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
-            $table->unsignedBigInteger('liquidation_type_id')->nullable();
             $table->foreign('status_id')->references('id')->on('status')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('concept_id')->references('id')->on('concepts')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('liquidation_type_id')->references('id')->on('liquidation_types')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');

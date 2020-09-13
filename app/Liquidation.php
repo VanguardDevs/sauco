@@ -49,7 +49,7 @@ class Liquidation extends Model implements Auditable
 
     public function liquidationType()
     {
-        return $this->belongsTo(LiquidationType::class);
+        return $this->concept->liquidationType();
     }
 
     public function canceledLiquidation()
@@ -57,18 +57,8 @@ class Liquidation extends Model implements Auditable
         return $this->hasOne(CanceledLiquidation::class);
     }
 
-    public function fine()
+    public function liquidable()
     {
-        return $this->belongsTo(Fine::class, 'model_id');
-    }
-
-    public function affidavit()
-    {
-        return $this->belongsTo(Affidavit::class, 'model_id');
-    }
-
-    public function application()
-    {
-        return $this->belongsTo(Application::class, 'model_id');
+        return $this->morphTo();
     }
 }

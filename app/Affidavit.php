@@ -111,8 +111,8 @@ class Affidavit extends Model implements Auditable
 
     public function liquidation()
     {
-        return $this->hasOne(Liquidation::class, 'model_id')
-            ->whereLiquidationTypeId(3);
+        return $this->morphOne(Liquidation::class, 'liquidable')
+            ->withTrashed();
     }
 
     public function scopeLastAffidavit($query)

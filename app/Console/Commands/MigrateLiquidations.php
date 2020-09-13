@@ -62,20 +62,22 @@ class MigrateLiquidations extends Command
 
     public function migrateCanceledLiquidations()
     {
-        $fines = Fine::whereHas('getNull')->get();
-        $affidavits = Affidavit::whereHas('getNull')->get();
-        $applications = Application::whereHas('getNull')->get();
+        $fines = Fine::whereHas('getNull')->withTrashed()->get();
+        $affidavits = Affidavit::whereHas('getNull')->withTrashed()->get();
+        $applications = Application::whereHas('getNull')->withTrashed()->get();
 
         $models = collect($fines)
             ->merge($affidavits)
             ->merge($applications);
 
         foreach($models as $model) {
-            $liquidation = $model->liquidation()->first();
-            $liquidation->canceledLiquidation()->create([
-                'reason' => $model->getNull->reason,
-                'user_id' => $model->user_id
-            ]);
+            $liquidation = $model->liquidation;
+            if ($liquidation) {
+                $liquidation->canceledLiquidation()->create([
+                    'reason' => $model->getNull->reason,
+                    'user_id' => $model->user_id
+                ]);
+            }
         }
     }
 
@@ -86,6 +88,7 @@ class MigrateLiquidations extends Command
         foreach($liquidations as $liquidation) {
             $payment = Payment::withTrashed()
                 ->whereId($liquidation->payment_id)
+                ->whereStatusId(2)
                 ->first();
 
             if (!$liquidation->payment()->exists()) {
@@ -95,13 +98,13 @@ class MigrateLiquidations extends Command
                 $data = $this->getConceptId($liquidation);
                 $model = $data[0];
                 $concept = $data[1];
+                $status = $payment ? 2 : 1;
 
                 $liquidation->update([
                     'model_id' => $model->id,
-                    'status_id' => $payment->status_id,
+                    'status_id' => $status,
                     'taxpayer_id' => $payment->taxpayer_id,
                     'concept_id' => $concept->id,
-                    'liquidation_type_id' => $concept->liquidationType->id,
                     'user_id' => $model->user_id
                 ]);
             }
@@ -127,7 +130,6 @@ class MigrateLiquidations extends Command
                 '--force' => true
             ]);
         }
-        $this->migrateLiquidations();     
         $this->migrateLiquidations();     
         $this->migrateCanceledLiquidations();
     }

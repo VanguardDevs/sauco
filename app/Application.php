@@ -76,9 +76,8 @@ class Application extends Model implements Auditable
 
     public function liquidation()
     {
-        return $this->hasOne(Liquidation::class, 'model_id')
-            ->withTrashed()
-            ->whereLiquidationTypeId(1);
+        return $this->morphOne(Liquidation::class, 'liquidable')
+            ->withTrashed();
     }
 
     public function getNull()
