@@ -77,7 +77,7 @@ class MigrateLiquidations extends Command
 
                 $liquidation->update([
                     'model_id' => $model->id,
-                    'status_id' => $payment->state_id,
+                    'status_id' => $payment->status_id,
                     'taxpayer_id' => $payment->taxpayer_id,
                     'concept_id' => $concept->id,
                     'liquidation_type_id' => $concept->liquidationType->id,

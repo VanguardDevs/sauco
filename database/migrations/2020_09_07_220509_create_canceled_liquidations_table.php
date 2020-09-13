@@ -66,8 +66,11 @@ class CreateCanceledLiquidationsTable extends Migration
             $table->renameColumn('list_id', 'liquidation_type_id');
         });
 
-        // Drop unnused tables if exists
+        Schema::table('payments', function (Blueprint $table) {
+            $table->renameColumn('state_id', 'status_id');
+        });
 
+        // Drop unnused tables if exists
         if (Schema::hasTable('organization_payment')) {
             Schema::drop('organization_payment');
             Schema::drop('organizations');

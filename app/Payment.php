@@ -63,7 +63,7 @@ class Payment extends Model implements Auditable
         return $this->hasOne(NullPayment::class);
     }
 
-    public function state()
+    public function status()
     {
         return $this->belongsTo(Status::class);
     }
