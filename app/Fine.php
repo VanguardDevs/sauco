@@ -19,9 +19,15 @@ class Fine extends Model implements Auditable
 
     protected $table = 'fines';
 
-    protected $guarded = [];
-
     protected $appends = [ 'pretty_amount' ];
+
+    protected $fillable = [
+        'concept_id',
+        'active',
+        'taxpayer_id',
+        'amount',
+        'user_id'
+    ];
 
     protected $casts = [ 'amount' => 'float' ];  
 

@@ -18,7 +18,12 @@ class Affidavit extends Model implements Auditable
 
     protected $table = 'affidavits';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'amount',
+        'taxpayer_id',
+        'user_id',
+        'month_id'
+    ];
 
     protected $casts = [ 'amount' => 'float' ];
 

@@ -40,8 +40,8 @@ class FineController extends Controller
             ->with(['concept:id,name']);
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
             })
             ->make(true);
     }

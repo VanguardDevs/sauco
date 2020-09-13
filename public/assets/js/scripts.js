@@ -669,21 +669,23 @@ $(document).ready(function() {
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    let payment = '';
                     if (oData.payment.length) {
-                      payment = `
-                        <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
+                      actions = `
+                        <a class="mr-2" href=${window.location.origin}/payments/${oData.payment[0].id} title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                       `;
-                    }
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        ${payment}
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Editar'>
+                    } else {
+                      actions = `
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
-                    </div>`
+                      `
+                    }
+                    $(nTd).html(`
+                      <div class="btn-group">
+                        ${actions}
+                      </div>`
                     );
                 }
             }

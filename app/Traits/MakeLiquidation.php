@@ -7,20 +7,14 @@ use App\Concept;
 
 trait MakeLiquidation
 {
-    public $concept;
-
-    public function __construct()
-    {
-        if (method_exists($this, 'concept')) {
-            $this->concept = $this->concept;
-        } else {
-            $this->concept = Concept::whereCode(1)->first();
-        }
-    }
-
     public function makeLiquidation()
     {
-        $concept = $this->concept;
+        if (method_exists($this, 'concept')) {
+            $concept = $this->concept;
+        } else {
+            $concept = Concept::whereCode(1)->first();
+        }
+
         $objectPayment = $this->getObject($concept);
 
         $liquidation = $this->liquidation()->create([
@@ -38,10 +32,10 @@ trait MakeLiquidation
     private function getObject($concept)
     {
         if ($concept->code == 1) {
-            return $this->concept->name.': '
+            return $concept->name.': '
                 .$this->month->name
                 .' - '.$this->month->year->year;
         }
-        return $concept->name;
+        return $this->concept->name;
     }
 }
