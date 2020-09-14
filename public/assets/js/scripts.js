@@ -664,7 +664,6 @@ $(document).ready(function() {
             { data: 'num' },
             { data: 'object_payment' },
             { data: 'status.name' },
-            { data: 'liquidation_type.name' },
             { data: 'pretty_amount', name: 'pretty_amount' },
             {
                 data: "id",

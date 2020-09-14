@@ -20,12 +20,14 @@ trait MakeLiquidation
         $liquidation = $this->liquidation()->create([
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $objectPayment,
-            'amount' => $this->amount
+            'amount' => $this->amount,
             'user_id' => $this->user_id,
             'status_id' => 1,
             'concept_id' => $concept->id,
             'taxpayer_id' => $this->taxpayer_id
         ]);
+
+        return $liquidation;
     } 
 
     private function getObject($concept)

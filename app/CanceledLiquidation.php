@@ -27,6 +27,11 @@ class CanceledLiquidation extends Model
         return $this->liquidation()->first()->status();
     }
 
+    public function liquidationType()
+    {
+        return $this->liquidation()->first()->liquidationType();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -59,6 +59,6 @@ class Liquidation extends Model implements Auditable
 
     public function liquidable()
     {
-        return $this->morphTo();
+        return $this->morphTo()->withTrashed();
     }
 }

@@ -16,8 +16,8 @@ class CanceledLiquidationController extends Controller
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            $query = CanceledLiquidation::query()
-                    ->with(['taxpayer', 'status', 'liquidation', 'user' ]);
+            $query = CanceledLiquidation::orderBy('canceled_liquidations.created_at', 'DESC')
+                    ->with(['taxpayer', 'status', 'liquidation', 'user', 'liquidationType']);
 
             return DataTables::of($query)->toJson();
         }

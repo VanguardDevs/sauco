@@ -23,7 +23,7 @@ class LiquidationController extends Controller
     {
         if ($request->wantsJson()) {
             $query = $taxpayer->liquidations()
-                    ->with(['status', 'liquidationType', 'payment'])
+                    ->with(['status', 'payment'])
                     ->orderBy('created_at', 'DESC')
                     ->orderBy('status_id', 'DESC');
 
@@ -69,24 +69,7 @@ class LiquidationController extends Controller
                 'reason' => $request->get('annullment_reason'),
                 'user_id' => Auth::user()->id
             ]);
-
-            $type = $liquidation->liquidation_type_id;
-
-            switch ($type) {
-                case 1:
-                    $liquidation->application()->delete();        
-                    break;
-                case 2:
-                    $liquidation->fine()->delete();
-                    break;
-                case 3:
-                    $affidavit = $liquidation->affidavit;
-                    if ($affidavit->withholding()->exists()) {
-                        $affidavit->withholding()->delete();
-                    }
-                    $affidavit->delete();
-                    break;
-            }
+            $liquidation->liquidable()->delete();
             $liquidation->delete();
 
             return redirect()->back()

@@ -60,22 +60,30 @@ class MigrateLiquidations extends Command
         }
     }
 
-    public function migrateCanceledLiquidations()
+    public static function migrateCanceledLiquidations()
     {
-        $fines = Fine::whereHas('getNull')->withTrashed()->get();
-        $affidavits = Affidavit::whereHas('getNull')->withTrashed()->get();
-        $applications = Application::whereHas('getNull')->withTrashed()->get();
+        $fines = Fine::onlyTrashed()->whereHas('getNull')->get();
+        $affidavits = Affidavit::onlyTrashed()->whereHas('getNull')->get();
 
-        $models = collect($fines)
-            ->merge($affidavits)
-            ->merge($applications);
+        $collection = collect($fines);
+        $models = $collection->merge($affidavits);
 
         foreach($models as $model) {
-            $liquidation = $model->liquidation;
+            $liquidation = $model->liquidation
+                ? $model->liquidation
+                : $model->makeLiquidation();
+
+            $deletedAt = $model->getAttributes()['deleted_at'];
+
+            $liquidation->update(['deleted_at' => $deletedAt]);
+
             if ($liquidation) {
                 $liquidation->canceledLiquidation()->create([
                     'reason' => $model->getNull->reason,
-                    'user_id' => $model->user_id
+                    'user_id' => $model->user_id,
+                ]);
+                $liquidation->canceledLiquidation()->update([
+                    'created_at' => $deletedAt
                 ]);
             }
         }
@@ -83,37 +91,34 @@ class MigrateLiquidations extends Command
 
     public function migrateLiquidations()
     {
-        $liquidations = Liquidation::withTrashed()->get();
+        $liquidations = Liquidation::withTrashed()
+            ->whereNull('concept_id')
+            ->get();
 
         foreach($liquidations as $liquidation) {
-            $payment = Payment::withTrashed()
-                ->whereId($liquidation->payment_id)
-                ->whereStatusId(2)
-                ->first();
+            $model = Payment::withTrashed()
+                ->whereId($liquidation->payment_id);
+            $payment = $model->first();
 
-            if (!$liquidation->payment()->exists()) {
+            if ($model->exists() && $payment->status_id == 2) {
                 $liquidation->payment()->sync($payment);
-            }
-            if (!$liquidation->concept()->exists()) {
-                $data = $this->getConceptId($liquidation);
-                $model = $data[0];
-                $concept = $data[1];
-                $status = $payment ? 2 : 1;
-
-                $liquidation->update([
-                    'model_id' => $model->id,
-                    'status_id' => $status,
-                    'taxpayer_id' => $payment->taxpayer_id,
-                    'concept_id' => $concept->id,
-                    'user_id' => $model->user_id
-                ]);
+                $status = 2;
+            } else {
+                $status = 1;
             }
 
-            if (!$payment->deleted_at) {
-                $liquidation->update([
-                    'deleted_at' => $payment->deleted_at
-                ]);
-            }
+            $data = $this->getConceptId($liquidation);
+            $model = $data[0];
+            $concept = $data[1];
+
+            $liquidation->update([
+                'liquidable_type' => get_class($model),
+                'liquidable_id' => $model->id,
+                'status_id' => $status,
+                'taxpayer_id' => $payment->taxpayer_id,
+                'concept_id' => $concept->id,
+                'user_id' => $model->user_id
+            ]);
         }
     }
 
