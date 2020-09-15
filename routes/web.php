@@ -127,8 +127,6 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('print.taxpayers');
         Route::get('reports/activities/print', 'ReportController@printActivitiesReport')
             ->name('print.activities');
-        Route::get('reports/economic-activity-licenses/print-list', 'ReportController@printLicensesList')
-            ->name('economic-activity-licenses.print-list');
         Route::get('reports/taxpayers/up-to-date/print', 'ReportController@printUpToDate')
             ->name('print.uptodate.taxpayers');
     });
@@ -147,10 +145,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
     });
-    Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@show')
+    Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@listByTaxpayer');
-    Route::resource('licenses', 'LicenseController');
+    Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
 
      /*
     * Payment's routes modules

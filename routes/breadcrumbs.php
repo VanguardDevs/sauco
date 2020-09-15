@@ -19,9 +19,9 @@ Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
     $trail->push('Declaraciones', url('taxpayers/'.$row->id.'/declarations'));
 });
 
-Breadcrumbs::for('taxpayer.old-payments', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Pagos antiguos', url('taxpayers/'.$row->id.'/old-payments'));
+Breadcrumbs::for('licenses.show', function ($trail, $row) {
+    $trail->parent('licenses.index', $row);
+    $trail->push('Licencia '.$row->num, route('licenses.show', $row));
 });
 
 /*----------  Reports ----------*/

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
 use App\License;
@@ -18,11 +19,6 @@ use Carbon\Carbon;
 
 class LicenseController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -30,14 +26,56 @@ class LicenseController extends Controller
      */
     public function index(Request $request)
     {
+        $ordinance = $request->get('ordinance');
+        $type = $request->get('type');
+        $pdf = $request->get('pdf');
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        $query = License::orderBy('created_at', 'DESC');
+
+        if ($ordinance) {
+            $query->whereOrdinanceId($ordinance);
+        }
+        if ($type) {
+            $query->whereHas('correlative', function (Builder $query) use ($type) {
+                $query->whereCorrelativeTypeId($type);
+            });
+        }
+        if ($from) {
+            $query->whereBetween('emission_date',  [$from, $to]);
+        }
+
+        // Return responses
         if ($request->wantsJson()) {
-            $query = License::with(['taxpayer'])
+            $query->with(['taxpayer', 'ordinance'])
                 ->orderBy('created_at', 'DESC');
 
             return DataTables::eloquent($query)->toJson();
         }
 
-        return view('modules.taxpayers.economic-activity-licenses.index');
+        if ($pdf) {
+            return $this->printReport($query);
+        }
+
+        return view('modules.licenses.index');
+    }
+
+    /**
+     * Print a pdf of all licenses
+     *
+     * Return PDF
+     */    
+    private function printReport($query)
+    {
+        $licenses = $query->get();
+        $total = $query->count();
+        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+        $data = compact(['licenses', 'emissionDate', 'total']);
+        $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
+
+        return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
     }
 
     public function listBytaxpayer(Taxpayer $taxpayer)
@@ -52,9 +90,16 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Taxpayer $taxpayer)
     {
-        //
+        $correlatives = [
+            1 => 'INSTALAR LICENCIA',
+            2 => 'RENOVAR LICENCIA'
+        ];
+
+        return view('modules.licenses.index')
+            ->with('taxpayer', $taxpayer)
+            ->with('correlatives', $correlatives);
     }
 
     /**
@@ -138,23 +183,7 @@ class LicenseController extends Controller
             $isValid['msg'] = '¡El contribuyente tiene una licencia activa!';
         }
 
-        /**
-        if ($correlativeType->description == 'R-') {
-            $useConformityPaid = Application::hasPaid($taxpayer, 7);
-	
-            if (!$useConformityPaid && !Auth::user()->hasRole('admin')) {
-                $isValid['error'] = true;
-                $isValid['msg'] = '¡No ha pagado por una conformidad de uso en el último año!';
-            }
-        }
-        **/
-
         return $isValid;
-    }
-
-    public function validateRenovation($taxpayer)
-    {
-        //
     }
 
     /**
@@ -163,16 +192,24 @@ class LicenseController extends Controller
      * @param  \App\Taxpayer $taxpayer
      * @return \Illuminate\Http\Response
      */
-    public function show(Taxpayer $taxpayer)
+    public function show(Request $request, License $license)
     {
-        $correlatives = [
-            1 => 'INSTALAR LICENCIA',
-            2 => 'RENOVAR LICENCIA'
-        ];
+        if ($request->wantsJson()) {
+            $data = $license->load(
+                'user',
+                'taxpayer',
+                'representation',
+                'ordinance',
+            );
 
-        return view('modules.licenses.index')
-            ->with('taxpayer', $taxpayer)
-            ->with('correlatives', $correlatives);
+            if ($license->ordinance->description == 'ACTIVIDADES ECONÓMICAS') {
+                $data->load('economicActivities');
+            }
+
+            return response()->json($data);
+        }
+        return view('modules.licenses.show')
+            ->with('row', $license);
     }
 
     public function download(License $license)

@@ -356,36 +356,6 @@ $(document).ready(function() {
         ]
     });
 
-    /*----------  Datatables Economic sectors  ----------*/
-    $('#tEconomicSectors').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/economic-sectors/list",
-        "columns": [
-            {data: 'id'},
-            {data: 'description'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id} title='Ver información'>
-                            <i class='btn-sm btn-info fas fa-eye '></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning fas fa-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
     /*----------  Datatables Economic Activities  ----------*/
     $('#tEconomicActivities').DataTable({
         "order": [[0, "asc"]],
@@ -853,7 +823,7 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tEconomicActivityLicenses').DataTable({
+    $('#tLicenses').DataTable({
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
@@ -864,16 +834,14 @@ $(document).ready(function() {
             { data: 'num' },
             { data: 'taxpayer.rif' },
             { data: 'taxpayer.name' },
+            { data: 'ordinance.description' },
             { data: 'emission_date' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/economic-activity-licenses/${oData.id}/download title='Imprimir licencia'>
-                            <i class='btn-sm btn-success fas fa-print'></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.taxpayer.id} title='Ver contribuyente'>
+                        <a class="mr-2" href=${baseURL}/licenses/${oData.id} title='Ver licencia'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`

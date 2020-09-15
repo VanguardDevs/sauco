@@ -14,11 +14,6 @@ use Session;
 
 class ReportController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display reports dashboard.
      *
@@ -103,20 +98,6 @@ class ReportController extends Controller
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.reports.pdf.activity', $data)
             ->download('reporte-actividad-'.$activity->code.'.pdf');
-    }
-
-    public function printLicensesList()
-    {
-        $licenses = License::with(['taxpayer'])
-            ->orderBy('created_at', 'ASC')
-            ->get();
-        $total = License::count();
-        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
-
-        $data = compact(['licenses', 'emissionDate', 'total']);
-        $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
-
-        return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
     }
 
     public function upToDateTaxpayers()
