@@ -184,7 +184,11 @@ class WithholdingController extends Controller
         $payment = $withholding->payment()->first();
 
         if ($withholding->settlement) {
-            $withholding->settlement->delete();
+            $settlement = $withholding->settlement;
+            $amount = $withholding->amount + $settlement->amount;
+            $settlement = $settlement->update([
+                'amount' => $amount
+            ]);
             $payment->updateAmount();
         } 
         $withholding->delete();
