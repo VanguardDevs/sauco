@@ -24,24 +24,22 @@ class ConceptsCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:concepts',
             'name' => 'required',
-            'amount' => 'required',
+            'min_amount' => 'required',
             'ordinance_id' => 'required',
             'charging_method_id' => 'required',
             'accounting_account_id' => 'required',
-            'list_id' => 'required'
+            'liquidation_type_id' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'code' => 'code',
             'name' => 'nombre',
-            'amount' => 'nombre',
+            'min_amount' => 'nombre',
             'ordinance_id' => 'tipo de ordenanza',
-            'list_id' => 'listado',
+            'liquidation_type_id' => 'listado',
             'accounting_account_id' => 'cuenta contable',
             'charging_method_id' => 'método de cálculo'
         ];
@@ -50,14 +48,12 @@ class ConceptsCreateFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'code.required' => 'Ingrese un :attribute',
-            'code.unique' => 'El :attribute ya existe',
             'name.required' => 'Ingrese un :attribute',
             'ordinance_id.required' => 'Seleccione un :attribute',
             'accounting_account_id.required' => 'Seleccione un :attribute',
-            'list_id.required' => 'Seleccione un :attribute',
+            'liquidation_type_id.required' => 'Seleccione un :attribute',
             'charging_method_id.required' => 'Seleccione un :attribute',
-            'amount.required' => 'Ingrese un :attribute'
+            'min_amount.required' => 'Ingrese un :attribute'
         ];
     }
 }

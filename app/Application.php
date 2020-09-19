@@ -6,29 +6,35 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Taxpayer;
 use Carbon\Carbon;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
 
-class Application extends Model
+class Application extends Model implements Auditable
 {
-    use SoftDeletes;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, MakeLiquidation;
 
     protected $table = 'applications';
 
-    protected $guarded = [];
-
-    protected $casts = [
-        'amount' => 'float'
+    protected $fillable = [
+        'amount',
+        'taxpayer_id',
+        'user_id',
+        'concept_id',
+        'active'
     ];
 
-    public function nullApplication()
-    {
-        return $this->hasOne(NullApplication::class);
-    }
+    protected $casts = [ 'amount' => 'float' ];
+
+    protected $appends = [ 'pretty_amount' ];
 
     public static function hasPaid(Taxpayer $taxpayer, $code)
     {
         $application = $taxpayer
             ->applications()
-	    ->whereBetween('created_at', [Carbon::now()->subYear(1), Carbon::now()])
+            ->whereBetween('created_at', [Carbon::now()->subYear(1), Carbon::now()])
             ->whereHas('concept', function ($concept) use ($code) {
                 return $concept->whereCode($code);
             })->latest()->first();
@@ -65,16 +71,17 @@ class Application extends Model
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
-    public function settlement()
+    public function liquidation()
     {
-        return $this->hasOne(Settlement::class);
+        return $this->morphOne(Liquidation::class, 'liquidable')
+            ->withTrashed();
     }
 
-    public function getCreatedAtAttribute($value)
+    public function getNull()
     {
-        return Date('d/m/Y H:m', strtotime($value));
+        return $this->hasOne(NullApplication::class);
     }
 }

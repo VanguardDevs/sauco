@@ -5,20 +5,22 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use App\Traits\NewValue;
 use App\TaxUnit;
 
 class Concept extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, NewValue;
 
     protected $table = 'concepts';
 
     protected $fillable = [
         'code',
         'name',
-        'amount',
+        'min_amount',
+        'max_amount',
         'charging_method_id',
-        'list_id',
+        'liquidation_type_id',
         'ordinance_id',
         'accounting_account_id'
     ];
@@ -29,11 +31,11 @@ class Concept extends Model
         $value = $value ? $value : TaxUnit::latest()->first()->value;
         
         if ($method == "TASA") {
-            return $value * $this->amount / 100;
+            return $value * $this->min_amount / 100;
         } else if ($method == 'DIVISA') {
-            return $this->amount;
+            return $this->min_amount;
         } else if ($method == 'U.T') {
-            return $this->amount * $value;
+            return $this->min_amount * $value;
         }
     }
 
@@ -47,9 +49,9 @@ class Concept extends Model
         return $this->belongsTo(ChargingMethod::class);
     }
 
-    public function listing()
+    public function liquidationType()
     {
-        return $this->belongsTo(Listing::class, 'list_id');
+        return $this->belongsTo(LiquidationType::class);
     }
 
     public function fines()
@@ -60,5 +62,10 @@ class Concept extends Model
     public function accountingAccount()
     {
         return $this->belongsTo(AccountingAccount::class);
+    }
+
+    public function liquidations()
+    {
+        return $this->hasMany(Liquidation::class);
     }
 }

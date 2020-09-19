@@ -49,17 +49,17 @@
               </tr>
             </thead>
             <tbody>
-            @foreach($row->settlements as $settlement)
+            @foreach($row->liquidations as $liquidation)
              <tr>
-                <td>{{ $settlement->num }}</td> 
-                <td>{{ $settlement->object_payment  }}</td>   
-                <td>{{ $settlement->total_amount }}</td>
+                <td>{{ $liquidation->num }}</td> 
+                <td>{{ $liquidation->object_payment }}</td>   
+                <td>{{ $liquidation->prettyAmount }}</td>
             </tr>
             @endforeach   
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Monto Total: {{ $row->formattedAmount }} Bs
+                    Monto Total: {{ $row->prettyAmount }} Bs
                 </div>
                 @if ($typeForm == 'show' && $row->state_id == 2)
                 <div class="kt-heading kt-heading--md">

@@ -26,18 +26,22 @@ class User extends Authenticatable
         'login'
     ];
 
-    protected $appends = [
-        'full_name'
-    ];
+    protected $appends = [ 'full_name' ];
+
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['first_name'].' '.
+            $this->attributes['surname'];
+    }
 
     public function payments()
     {
         return $this->hasMany(Payment::class);
     }
 
-    public function settlements()
+    public function liquidations()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->hasMany(Liquidation::class);
     }
 
     public function withholdings()
@@ -45,10 +49,9 @@ class User extends Authenticatable
         return $this->hasMany(Withholding::class);
     }
 
-    public function getFullNameAttribute()
+    public function fines()
     {
-        return $this->attributes['first_name'].' '.
-            $this->attributes['surname'];
+        return $this->hasMany(Fine::class);
     }
 
     public function licenses()
@@ -59,10 +62,5 @@ class User extends Authenticatable
     public function affidavits()
     {
     	return $this->hasMany(Affidavit::class);
-    }
-
-    public function fines()
-    {
-        return $this->hasMany(Fine::class);
     }
 }

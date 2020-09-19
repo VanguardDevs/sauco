@@ -7,12 +7,6 @@ Breadcrumbs::for('change-password.show', function ($trail) {
     $trail->push('Cambiar contraseña', route('change-password.show'));
 });
 
-/*----------  Cashbox ----------*/
-Breadcrumbs::for('receivables.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Cuentas por cobrar', route('receivables.index'));
-});
-
 /*----------  Reports ----------*/
 Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
@@ -66,6 +60,11 @@ Breadcrumbs::for('affidavits.index', function ($trail, $row) {
     $trail->push('Declaraciones', route('affidavits.index', $row));
 });
 
+Breadcrumbs::for('liquidations.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Liquidaciones', route('liquidations.index', $row));
+});
+
 /*----------  Taxpayers > taxpayer > Affidavits > show ----------*/
 Breadcrumbs::for('affidavits.show', function ($trail, $row) {
     $trail->parent('affidavits.index', $row->taxpayer);
@@ -80,9 +79,9 @@ Breadcrumbs::for('affidavits.group', function ($trail, $row) {
     $trail->push('Cálculo de liquidación agrupada', url('affidavits/'.$row->id.'/group'));
 });
 
-Breadcrumbs::for('null.payments', function ($trail) {
+Breadcrumbs::for('canceled-liquidations.index', function ($trail) {
     $trail->parent('reports');
-    $trail->push('Pagos anulados', route('null.payments'));
+    $trail->push('Liquidaciones anuladas', route('canceled-liquidations.index'));
 });
 
 /*----------  Taxpayers > taxpayer > payment ----------*/

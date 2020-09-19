@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Organization;
+use App\CanceledLiquidation;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 
-class OrganizationController extends Controller
+class CanceledLiquidationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,19 +16,13 @@ class OrganizationController extends Controller
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            return Organization::first();
+            $query = CanceledLiquidation::orderBy('canceled_liquidations.created_at', 'DESC')
+                    ->with(['taxpayer', 'status', 'liquidation', 'user', 'liquidationType']);
+
+            return DataTables::of($query)->toJson();
         }
 
-        return view('modules.organization.index');
-    }
-
-    public function withholdings(Request $request)
-    {
-        if ($request->wantsJson()) {
-            //
-        }
-
-        return view('modules.organization.withholdings');
+        return view('modules.reports.canceled-liquidations');
     }
 
     /**
@@ -48,20 +43,16 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        $obj = Organization::create($request->all());
-
-        return response()->json([
-            'message' => '¡Información del ente añadida!' 
-        ], 200);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Organization  $organization
+     * @param  \App\CanceledLiquidation  $canceledLiquidation
      * @return \Illuminate\Http\Response
      */
-    public function show(Organization $organization)
+    public function show(CanceledLiquidation $canceledLiquidation)
     {
         //
     }
@@ -69,10 +60,10 @@ class OrganizationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Organization  $organization
+     * @param  \App\CanceledLiquidation  $canceledLiquidation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Organization $organization)
+    public function edit(CanceledLiquidation $canceledLiquidation)
     {
         //
     }
@@ -81,10 +72,10 @@ class OrganizationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Organization  $organization
+     * @param  \App\CanceledLiquidation  $canceledLiquidation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Organization $organization)
+    public function update(Request $request, CanceledLiquidation $canceledLiquidation)
     {
         //
     }
@@ -92,10 +83,10 @@ class OrganizationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Organization  $organization
+     * @param  \App\CanceledLiquidation  $canceledLiquidation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Organization $organization)
+    public function destroy(CanceledLiquidation $canceledLiquidation)
     {
         //
     }

@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Auth::routes();
 
 Route::get('/', function () {
@@ -72,8 +71,8 @@ Route::prefix('/')->middleware('auth')->group(function()
         /**
          * Routes Settings > Concepts
          */
-        Route::get('categories/list', 'CategoryController@list')->name('list-concepts');
-        Route::resource('settings/categories', 'CategoryController');
+        Route::get('categories/list', 'LiquidationTypeController@list')->name('list-concepts');
+        Route::resource('settings/categories', 'LiquidationTypeController');
 
         /*----------  Routes Settings > Tax Units ----------*/
         Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
@@ -110,10 +109,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('communities/list', 'CommunityController@list')->name('list-communities');
     Route::get('geographic-area/communities/{community}/taxpayers/list', 'CommunityController@listTaxpayers');
     Route::resource('geographic-area/communities', 'CommunityController');
-
-    // Organization routes
-    Route::get('organization', 'OrganizationController@index')->name('organization.index');
-    Route::get('organization/withholdings', 'OrganizationController@withholdings')->name('organization.withholdings');
 
     /**
      * Handle reports
@@ -157,7 +152,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('payments.download');
     Route::resource('payments', 'PaymentController');
 
-        
     /**
     * Taxpayer's affidavits
      */
@@ -191,16 +185,14 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
     /**
-     * Taxpayer's old payments
-     */
-    Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
-        ->name('taxpayer.old-payments');
-
-    /**
      * Taxpayer's permits
      */
     Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
     Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
+    
+    /**
+     * Taxpayer's liquidations
+     */
     
     /**
      * Taxpayer's Withholdings
@@ -238,6 +230,18 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
     Route::resource('taxpayers', 'TaxpayerController');
+
+    /**
+     * Liquidations
+     */
+    Route::get('taxpayers/{taxpayer}/liquidations', 'LiquidationController@index')
+        ->name('liquidations.index');
+    Route::resource('liquidations', 'LiquidationController')->except('index');
+
+    /**
+     * Canceled
+     */
+    Route::resource('reports/canceled-liquidations', 'CanceledLiquidationController');
 
     /** 
      * Listing routes
