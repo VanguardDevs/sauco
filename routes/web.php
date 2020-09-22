@@ -141,7 +141,7 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Licenses
      */
     Route::group(['middleware' => 'can:create.licenses'], function() {
-        Route::get('economic-activity-licenses/{license}/download', 'LicenseController@download');
+        Route::get('licenses/{license}/download', 'LicenseController@download');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
     });

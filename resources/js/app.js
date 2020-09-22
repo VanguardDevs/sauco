@@ -17,7 +17,7 @@ require('./screens/taxpayers/OldPayments');
 
 require('./screens/Settings/Index');
 
-require('./screens/organization/index');
+require('./screens/licenses/show');
 
 require('./screens/Settings/InvoiceModels/Index');
 

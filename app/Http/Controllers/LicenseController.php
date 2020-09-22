@@ -131,7 +131,7 @@ class LicenseController extends Controller
         // Maybe for other kind of licenses, I would inject
         // Ordinances in this method and make licences without searching for
         // a model
-        $ordinance = Ordinance::whereDescription('ACTIVIDAD ECONÓMICA')->first();
+        $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->endOfYear(); 
     
@@ -198,7 +198,7 @@ class LicenseController extends Controller
             $data = $license->load(
                 'user',
                 'taxpayer',
-                'representation',
+                'representation.person',
                 'ordinance',
             );
 
@@ -224,7 +224,7 @@ class LicenseController extends Controller
         $representation = $license->representation->person->name;
 
         $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative'];
-        $license->update(['downloaded_at' => Carbon::now()]);
+        $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 
