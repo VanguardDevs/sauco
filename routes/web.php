@@ -147,7 +147,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     });
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
-    Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@listByTaxpayer');
     Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
 
      /*

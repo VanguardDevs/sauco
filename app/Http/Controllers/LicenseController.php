@@ -90,14 +90,20 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Taxpayer $taxpayer)
+    public function create(Taxpayer $taxpayer, Request $request)
     {
+        if ($request->wantsJson()) {
+            $query = License::whereTaxpayerId($taxpayer->id);
+
+            return DataTables::eloquent($query)->toJson();
+        }
+
         $correlatives = [
             1 => 'INSTALAR LICENCIA',
             2 => 'RENOVAR LICENCIA'
         ];
 
-        return view('modules.licenses.index')
+        return view('modules.taxpayers.economic-activity-licenses.index')
             ->with('taxpayer', $taxpayer)
             ->with('correlatives', $correlatives);
     }
