@@ -28,6 +28,7 @@ class AffidavitController extends Controller
     public function __construct(AffidavitService $economicActivityAffidavit)
     {
         $this->economicActivityAffidavit = $economicActivityAffidavit;
+        $this->middleware('can:null.settlements')->only('destroy');
         $this->middleware('auth');
     }
 
@@ -278,12 +279,6 @@ class AffidavitController extends Controller
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)
     {
-        if (!Auth::user()->can('null.settlements')) {
-            return response()->json([
-                'message' => '¡Acción no permitida!'
-            ]);
-        }
-
         if ($affidavit->payment()->first()) {
             return response()->json([
                 'success' => false,

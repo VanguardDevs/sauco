@@ -194,13 +194,6 @@ class PaymentController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Payment $payment)
     {
-        if ($payment->state_id == 2 && !Auth::user()->hasRole('admin')) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡La factura está pagada!'
-            ]);
-        }
-
         // Delete receivables and payment but keep settlements
         $settlements = Settlement::where('payment_id', $payment->id);
 

@@ -18,7 +18,7 @@ class FineController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('has.role:admin')->only('destroy');
+        $this->middleware('can:null.settlements')->only('destroy');
     }
 
     /**
@@ -155,9 +155,9 @@ class FineController extends Controller
     { 
         $payment = $fine->payment()->first();
 
-        if ($fine->settlement) {
-            $fine->settlement->delete();
-            $payment->updateAmount();
+        if ($payment->state_id == 2) {
+            return redirect()->back()
+                ->with('error', 'La multa no puede ser anulada');
         } 
         $fine->delete();
 
