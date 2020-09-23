@@ -209,6 +209,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
     Route::resource('withholdings', 'WithholdingController');
 
+    Route::resource('reports/cancelled-payments', 'NullPaymentController');
+    Route::resource('reports/cancelled-fines', 'NullFineController');
+
     /**
      * Handle settlements and payments
      */

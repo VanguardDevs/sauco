@@ -72,7 +72,8 @@ class Fine extends Model implements Auditable
 
     public function settlement()
     {
-        return $this->hasOne(Settlement::class);
+        return $this->hasOne(Settlement::class)
+            ->withTrashed();
     }
 
     public function getFormattedAmountAttribute()

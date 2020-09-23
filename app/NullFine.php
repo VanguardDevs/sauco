@@ -16,11 +16,21 @@ class NullFine extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function fine()
     {
-        return $this->hasOne(Fine::class);
+        return $this->belongsTo(Fine::class)->withTrashed();
+    }
+
+    public function taxpayer()
+    {
+        return $this->fine->taxpayer();
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d/m/Y H:i', strtotime($value));
     }
 }

@@ -8,9 +8,15 @@ Breadcrumbs::for('change-password.show', function ($trail) {
 });
 
 /*----------  Cashbox ----------*/
-Breadcrumbs::for('receivables.index', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Cuentas por cobrar', route('receivables.index'));
+
+Breadcrumbs::for('cancelled-fines.index', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Multas anuladas ', route('cancelled-payments.index'));
+});
+
+Breadcrumbs::for('cancelled-payments.index', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Pagos cancelados', route('cancelled-payments.index'));
 });
 
 /*----------  Reports ----------*/

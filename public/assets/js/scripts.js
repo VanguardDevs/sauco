@@ -652,6 +652,63 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tCancelledPayments').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/reports/cancelled-payments",
+        "columns": [
+            { data: 'payment.num' },
+            { data: 'payment.state.name' },
+            { data: 'reason' },
+            { data: 'created_at' },
+            { data: 'user.login' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/reports/cancelled-payments/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tCancelledFines').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/reports/cancelled-fines",
+        "columns": [
+            { data: 'created_at' },
+            { data: 'reason' },
+            { data: 'fine.formatted_amount', name: 'formatted_amount' },
+            { data: 'user.login' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/reports/cancelled-fines/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
     $('#tProcessedPayments').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -681,24 +738,6 @@ $(document).ready(function() {
                     );
                 }
             }
-        ]
-    });
-
-    $('#tNullPayments').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/payments/list-null",
-        "columns": [
-            { data: 'id'},
-            { data: 'taxpayer.rif' },
-            { data: 'taxpayer.name' },
-            { data: 'amount' },
-            { data: 'state.name' },
-            { data: 'deleted_at' }
         ]
     });
 

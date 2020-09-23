@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\NullPayment;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class NullPaymentController extends Controller
 {
@@ -12,9 +13,15 @@ class NullPaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->wantsJson()) {
+            $query = NullPayment::latest('null_payments.created_at')
+                ->with(['payment.state', 'user']);
+
+            return DataTables::of($query->get())->toJson(); 
+        }
+        return view('modules.reports.cancelled-payments');
     }
 
     /**
@@ -46,7 +53,7 @@ class NullPaymentController extends Controller
      */
     public function show(NullPayment $nullPayment)
     {
-        //
+        dd($nullPayment);
     }
 
     /**

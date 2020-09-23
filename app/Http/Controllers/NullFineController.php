@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\NullFine;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class NullFineController extends Controller
 {
@@ -12,9 +13,16 @@ class NullFineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->wantsJson()) {
+            $query = NullFine::latest('null_fines.created_at')
+                ->with(['fine', 'user']);
+
+            return DataTables::of($query->get())
+                ->toJson();
+        }
+        return view('modules.reports.cancelled-fines');
     }
 
     /**
@@ -46,7 +54,7 @@ class NullFineController extends Controller
      */
     public function show(NullFine $nullFine)
     {
-        //
+        dd($nullFine);
     }
 
     /**
