@@ -31,7 +31,7 @@ class ReportController extends Controller
      */
     public function payments()
     {
-        return view('modules.reports.payments');
+        return view('modules.reports.payments.payments');
     }
 
     public function showUpToDateTaxpayers()
@@ -44,16 +44,6 @@ class ReportController extends Controller
         $taxpayers = $this->upToDateTaxpayers();
 
         return DataTables::eloquent($taxpayers)->toJson();
-    }
-
-    /**
-     * Display a listing of null payments.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showNullPayments()
-    {
-        return view('modules.reports.list-null-payments');
     }
 
     public function printPaymentReport(Request $request)

@@ -21,7 +21,8 @@ class NullPaymentController extends Controller
 
             return DataTables::of($query->get())->toJson(); 
         }
-        return view('modules.reports.cancelled-payments');
+
+        return view('modules.reports.payments.cancelled-payments');
     }
 
     /**
@@ -51,9 +52,18 @@ class NullPaymentController extends Controller
      * @param  \App\NullPayment  $nullPayment
      * @return \Illuminate\Http\Response
      */
-    public function show(NullPayment $nullPayment)
+    public function show($nullPayment, Request $request)
     {
-        dd($nullPayment);
+        $nullPayment = NullPayment::find($nullPayment);
+
+        if ($request->wantsJson()) {
+           $data = $nullPayment->load('payment', 'taxpayer', 'user'); 
+
+           return response()->json($data);
+        }
+
+        return view('modules.reports.payments.show')
+            ->with('row', $nullPayment);
     }
 
     /**

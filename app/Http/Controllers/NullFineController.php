@@ -22,7 +22,7 @@ class NullFineController extends Controller
             return DataTables::of($query->get())
                 ->toJson();
         }
-        return view('modules.reports.cancelled-fines');
+        return view('modules.reports.fines.cancelled-fines');
     }
 
     /**
@@ -52,9 +52,19 @@ class NullFineController extends Controller
      * @param  \App\NullFine  $nullFine
      * @return \Illuminate\Http\Response
      */
-    public function show(NullFine $nullFine)
+    public function show(Request $request, $nullFine) 
     {
-        dd($nullFine);
+        $nullFine = NullFine::find($nullFine); 
+
+        if ($request->wantsJson()) {
+
+           $data = $nullFine->load('fine', 'user'); 
+
+           return response()->json($data);
+        }
+
+        return view('modules.reports.fines.show')
+            ->with('row', $nullFine);
     }
 
     /**

@@ -11,12 +11,22 @@ Breadcrumbs::for('change-password.show', function ($trail) {
 
 Breadcrumbs::for('cancelled-fines.index', function ($trail) {
     $trail->parent('reports');
-    $trail->push('Multas anuladas ', route('cancelled-payments.index'));
+    $trail->push('Multas anuladas ', route('cancelled-fines.index'));
 });
 
 Breadcrumbs::for('cancelled-payments.index', function ($trail) {
     $trail->parent('reports');
-    $trail->push('Pagos cancelados', route('cancelled-payments.index'));
+    $trail->push('Pagos anulados', route('cancelled-payments.index'));
+});
+
+Breadcrumbs::for('cancelled-fines.show', function ($trail, $row) {
+    $trail->parent('cancelled-fines.index');
+    $trail->push('Anulación #'.$row, route('cancelled-fines.show', $row));
+});
+
+Breadcrumbs::for('cancelled-payments.show', function ($trail, $row) {
+    $trail->parent('cancelled-payments.index');
+    $trail->push('Pago anulado', route('cancelled-payments.show', $row));
 });
 
 /*----------  Reports ----------*/

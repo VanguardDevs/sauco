@@ -25,3 +25,5 @@ Route::resource('taxpayers/{taxpayer}/withholdings', 'WithholdingController');
 
 Route::get('withholdings-months', 'WithholdingController@months');
 Route::resource('licenses', 'LicenseController');
+Route::resource('cancelled-fines', 'NullFineController');
+Route::resource('cancelled-payments', 'NullPaymentController');

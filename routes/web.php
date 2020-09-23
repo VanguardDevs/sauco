@@ -45,7 +45,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         /** General Settings */
         Route::get('settings', 'ShowSettings')->name('settings');
 
-        Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
         /**
         * Settings > Years
         */
@@ -130,7 +129,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('reports/taxpayers/up-to-date/print', 'ReportController@printUpToDate')
             ->name('print.uptodate.taxpayers');
     });
-    Route::get('payments/list-null', 'PaymentController@onlyNull');
     Route::get('payments/processed/list', 'PaymentController@listProcessed');
     Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
     Route::get('reports/taxpayers/up-to-date/list', 'ReportController@listUpToDate');
