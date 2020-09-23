@@ -55,7 +55,7 @@ const ShowLicense = (props) => {
                     Imprimir licencia
                 </a>
                 {'    '}
-                <a href={`${window.location.origin}/taxpayers/${data.taxpayer_id}`} class='btn btn-success' title='Imprimir licencia' target='_blank'>
+                <a href={`${window.location.origin}/taxpayers/${data.taxpayer_id}`} class='btn btn-success' title='Imprimir licencia'>
                     <i class='fas fa-eye '></i>
                     Ver perfil
                 </a>
