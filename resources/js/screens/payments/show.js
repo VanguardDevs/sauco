@@ -14,12 +14,12 @@ import  {
 } from '../../components';
 import { isEmpty } from '../../utils'; 
 
-const ShowLicense = (props) => {
+const ShowNullFine = (props) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`licenses/${props.data}`)
+    axios.get(`cancelled-payments/${props.data}`)
       .then( res => setData( res.data ) )
       .then( res => setLoading(false) )
       .catch( err => console.log(err) );
@@ -34,32 +34,22 @@ const ShowLicense = (props) => {
               <Loading />
             </PortletBody>
             : <>
-              <PortletHeader label={`Licencia ${data.num}`} />
+              <PortletHeader label={`Pago anulado`} />
               <PortletBody>
-                <h5>LICENCIA DE { data.ordinance.description }</h5>
+                <h5>Razón de anulación:</h5>
+                <p>{data.reason}</p>
                 <br />
-                <h5>Representante: {data.representation.person.name}</h5>
-                <br />
-                <h5>Actividades Económicas</h5>
-                {data.economic_activities.map((activity, index) => (
-                  <div key={index}>
-                    <span>{activity.code} - {activity.name}</span>
-                  </div>
-                ))}
-                <br />
+                <h5>Fecha de anulación: {data.created_at}</h5>
                 <h5>Usuario: {data.user.login}</h5>
+                { (data.payment.state_id == 2) && (<>
+                    <br />
+                    <h3>Información del pago</h3>
+                    <h5>Número: {data.payment.num}</h5>
+                    <h5>Monto: {data.payment.formatted_amount}</h5>
+                    <h5>Fecha de procesamiento: {data.payment.processed_at}</h5>
+                  </>) 
+                }
               </PortletBody>
-              <PortletFooter>
-                <a href={`${window.location.origin}/licenses/${data.id}/download`} class='btn btn-info' title='Imprimir licencia' target='_blank'>
-                    <i class='flaticon2-download'></i>
-                    Imprimir licencia
-                </a>
-                {'    '}
-                <a href={`${window.location.origin}/taxpayers/${data.taxpayer_id}`} class='btn btn-success' title='Imprimir licencia'>
-                    <i class='fas fa-eye '></i>
-                    Ver perfil
-                </a>
-              </PortletFooter>
             </>
           }
         </Portlet>
@@ -68,9 +58,9 @@ const ShowLicense = (props) => {
   );
 };
 
-const element = document.getElementById('license-show');
+const element = document.getElementById('null-payment');
 
 if (element) {
   let data = element.getAttribute('data-id'); 
-  ReactDOM.render(<ShowLicense data={data}/>, element);
+  ReactDOM.render(<ShowNullFine data={data}/>, element);
 }

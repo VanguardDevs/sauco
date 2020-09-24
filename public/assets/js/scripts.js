@@ -658,14 +658,14 @@ $(document).ready(function() {
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
-        "serverSide": true,
+        processing: true,
+        serverSide: true,
         "ajax": baseURL + "/reports/cancelled-payments",
         "columns": [
-            { data: 'payment.num' },
-            { data: 'payment.state.name' },
             { data: 'reason' },
-            { data: 'created_at' },
-            { data: 'user.login' },
+            { data: 'payment.taxpayer.name', name: 'payment.taxpayer.name'},
+            { data: 'user.login', name: 'user.login'},
+            { data: 'created_at', name: 'created_at' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -690,8 +690,8 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": baseURL + "/reports/cancelled-fines",
         "columns": [
-            { data: 'created_at' },
             { data: 'reason' },
+            { data: 'created_at' },
             { data: 'fine.formatted_amount', name: 'formatted_amount' },
             { data: 'user.login' },
             {

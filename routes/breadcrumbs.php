@@ -21,7 +21,7 @@ Breadcrumbs::for('cancelled-payments.index', function ($trail) {
 
 Breadcrumbs::for('cancelled-fines.show', function ($trail, $row) {
     $trail->parent('cancelled-fines.index');
-    $trail->push('Anulación #'.$row, route('cancelled-fines.show', $row));
+    $trail->push('Multa anulada', route('cancelled-fines.show', $row));
 });
 
 Breadcrumbs::for('cancelled-payments.show', function ($trail, $row) {

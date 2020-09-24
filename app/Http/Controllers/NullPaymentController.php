@@ -17,9 +17,13 @@ class NullPaymentController extends Controller
     {
         if ($request->wantsJson()) {
             $query = NullPayment::latest('null_payments.created_at')
-                ->with(['payment.state', 'user']);
+                ->with(['user', 'payment.taxpayer']);
 
-            return DataTables::of($query->get())->toJson(); 
+            return DataTables::of($query)
+                ->addColumn('formatted_amount', function ($payment) {
+                    return $payment->formatted_amount;
+                })
+                ->make(true);
         }
 
         return view('modules.reports.payments.cancelled-payments');
@@ -57,7 +61,11 @@ class NullPaymentController extends Controller
         $nullPayment = NullPayment::find($nullPayment);
 
         if ($request->wantsJson()) {
-           $data = $nullPayment->load('payment', 'taxpayer', 'user'); 
+            $data = $nullPayment->load(
+                'payment.taxpayer',
+                'payment.state',
+                'user'
+            ); 
 
            return response()->json($data);
         }

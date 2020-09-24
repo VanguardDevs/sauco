@@ -19,9 +19,13 @@ class NullFineController extends Controller
             $query = NullFine::latest('null_fines.created_at')
                 ->with(['fine', 'user']);
 
-            return DataTables::of($query->get())
-                ->toJson();
+            return DataTables::of($query)
+                ->addColumn('formatted_amount', function ($payment) {
+                    return $payment->formatted_amount;
+                })
+                ->make(true);
         }
+
         return view('modules.reports.fines.cancelled-fines');
     }
 

@@ -13,8 +13,8 @@
               <table id="tCancelledFines" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
-                    <th width="20%">Fecha</th>
                     <th width="40%">Razón de anulación</th>
+                    <th width="20%">Fecha</th>
                     <th width="10%">Monto</th>
                     <th width="10%">Usuario</th>
                     <th width="10%">Acciones</th>

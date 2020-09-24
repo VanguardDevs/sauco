@@ -34,8 +34,14 @@ const ShowNullFine = (props) => {
               <Loading />
             </PortletBody>
             : <>
-              <PortletHeader label={`Multa anulada # ${data.id}`} />
+              <PortletHeader label={`Multa anulada`} />
               <PortletBody>
+                <h5>Razón de anulación:</h5>
+                <p>{data.reason}</p>
+                <br />
+                <h5>Fecha de aplicación de la multa: {data.fine.created_at}</h5>
+                <h5>Monto: {data.fine.formatted_amount}</h5>
+                <h5>Fecha de anulación: {data.created_at}</h5>
                 <h5>Usuario: {data.user.login}</h5>
               </PortletBody>
             </>
