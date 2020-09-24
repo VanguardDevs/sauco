@@ -16,11 +16,12 @@ class NullAffidavit extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function affidavit()
     {
-        return $this->hasOne(Affidavit::class);
+        return $this->belongsTo(Affidavit::class)
+            ->onlyTrashed();
     }
 }

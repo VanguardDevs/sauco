@@ -40,6 +40,16 @@
                             </div>
                         </div>
                     </a>
+                    <a class="kt-notification__item" href="{{ route('canceled-liquidations.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-graphic"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Liquidaciones anuladas
+                            </div>
+                        </div>
+                    </a>
                     @if (Auth::user()->hasRole('admin'))
                      <a class="kt-notification__item" href="{{ route('null.payments') }}">
                          <div class="kt-notification__item-icon">

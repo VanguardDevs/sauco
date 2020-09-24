@@ -39,6 +39,30 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Vehicle::class);
     }
 
+    public function getRifAttribute($value)
+    {
+        return $this->taxpayerType->correlative.$value;
+    }
+
+    public static function existsRif($rif)
+    {
+        return self::whereRif($rif)->first();
+    } 
+
+    public function president()
+    {
+        return $this->representations->filter(function ($item, $key) {
+            if ($item->representationType->name == 'PRESIDENTE') {
+                return $item;
+            } 
+        });
+    }
+
+    public function liquidations()
+    {
+        return $this->hasMany(Liquidation::class);
+    }
+
     public function representations()
     {
         return $this->hasMany(Representation::class);
@@ -102,30 +126,5 @@ class Taxpayer extends Model implements Auditable
     public function taxpayerClassification()
     {
         return $this->belongsTo(TaxpayerClassification::class);
-    }
-
-    public function getRifAttribute($value)
-    {
-        return $this->taxpayerType->correlative.$value;
-    }
-
-    public function getFiscalAddressAttribute()
-    {
-        return $this->attributes['fiscal_address'].
-            ', '.$this->community->name;
-    } 
-
-    public static function existsRif($rif)
-    {
-        return self::whereRif($rif)->first();
-    } 
-
-    public function president()
-    {
-        return $this->representations->filter(function ($item, $key) {
-            if ($item->representationType->name == 'PRESIDENTE') {
-                return $item;
-            } 
-        });
     }
 }

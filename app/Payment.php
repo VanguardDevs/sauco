@@ -8,11 +8,13 @@ use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
 use App\Fine;
+use App\Traits\NewValue;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 
 class Payment extends Model implements Auditable
 {
-    use Audit;
-    use SoftDeletes;
+    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps;
 
     protected $table = 'payments';
 
@@ -20,16 +22,16 @@ class Payment extends Model implements Auditable
  
     protected $casts = [ 'amount' => 'float' ];  
 
-    protected $appends = [ 'formatted_amount' ];
+    protected $appends = [ 'pretty_amount' ];
 
     public function checkForFine()
     {
         $totalFines = $this->affidavit()->first()->shouldHaveFine();
-        $totalSettlements = $this->settlements()->count();
+        $totalLiquidations = $this->liquidations()->count();
 
-        if ($totalFines && $totalSettlements < 3) {
+        if ($totalFines && $totalLiquidations < 3) {
             $concept = $totalFines[0];
-            if (count($totalFines) == 2 && $totalSettlements < 2) {
+            if (count($totalFines) == 2 && $totalLiquidations < 2) {
                 // Apply two fines
                 Fine::applyFine($this, $concept);
             }
@@ -43,7 +45,7 @@ class Payment extends Model implements Auditable
     
     public function updateAmount()
     {
-        $amount = $this->settlements->sum('amount');
+        $amount = $this->liquidations->sum('amount');
 
         return $this->update([ 'amount' => $amount ]);
     }
@@ -56,24 +58,12 @@ class Payment extends Model implements Auditable
             ->get();
     } 
 
-    public static function newNum()
-    {
-        $lastNum = Payment::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('num', 'DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
-    } 
-
     public function nullPayment()
     {
         return $this->hasOne(NullPayment::class);
     }
 
-    public function state()
+    public function status()
     {
         return $this->belongsTo(Status::class);
     }
@@ -93,9 +83,9 @@ class Payment extends Model implements Auditable
         return $this->hasOne(Reference::class);
     }
 
-    public function settlements()
+    public function liquidations()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->belongsToMany(Liquidation::class);
     }
 
     public function taxpayer()
@@ -110,36 +100,18 @@ class Payment extends Model implements Auditable
 
     public function affidavit()
     {
-        return $this->belongsToMany(Affidavit::class, Settlement::class);
+        $liquidation = $this->liquidations()->first();
+
+        return $liquidation->affidavit();
     }
 
     public function fines()
     {
-        return $this->belongsToMany(Fine::class, Settlement::class);
+        return $this->belongsToMany(Fine::class, Liquidation::class);
     }
 
     public function invoiceModel()
     {
         return $this->belongsTo(InvoiceModel::class);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return date('d/m/Y H:m', strtotime($value));
-    }
-
-    public function getProcessedAtAttribute($value)
-    {
-        return date('d/m/Y h:i', strtotime($value));
-    }
-
-    public function getDeletedAtAttribute($value)
-    {
-        return date('d/m/Y H:m', strtotime($value));
-    }
-
-    public function getFormattedAmountAttribute()
-    {
-        return number_format($this->amount, 2, ',', '.');
     }
 }

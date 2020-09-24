@@ -7,7 +7,7 @@ use App\Taxpayer;
 use App\Ordinance;
 use App\Concept;
 use App\Payment;
-use App\Settlement;
+use App\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -40,15 +40,17 @@ class FineController extends Controller
             ->with(['concept:id,name']);
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
             })
             ->make(true);
     }
 
     public function listConcepts(Ordinance $ordinance)
     {
-        return $ordinance->conceptsByList(2);
+        return $ordinance->concepts()
+            ->whereLiquidationTypeId(2)
+            ->get();
     }
 
 
@@ -80,7 +82,9 @@ class FineController extends Controller
             'amount' => $amount
         ]);
 
-        return redirect()->route('taxpayer.fines', $taxpayer)
+        $fine->makeLiquidation();
+
+        return redirect()->route('liquidations.index', $taxpayer)
             ->withSuccess('¡Multa aplicada!');
     }
 
@@ -101,12 +105,16 @@ class FineController extends Controller
             'taxpayer_id' => $fine->taxpayer_id
         ]);
 
-        $fine->settlement()->create([
-            'num' => Settlement::newNum(),
+        $liquidation = $fine->liquidation()->create([
+            'num' => Liquidation::getNewNum(),
             'object_payment' => $fine->concept->name,
-            'payment_id' => $payment->id,
+            'concept_id' => $fine->concept->id,
+            'taxpayer_id' => $fine->taxpayer_id,
+            'user_id' => auth()->user()->id,
             'amount' => $fine->amount
         ]);
+
+        $payment->liquidations()->sync($liquidation);
 
         return redirect()->route('payments.show', $payment);
     }
@@ -151,22 +159,8 @@ class FineController extends Controller
      * @param  \App\Fine  $fine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Fine $fine)
+    public function destroy(Fine $fine)
     { 
-        $payment = $fine->payment()->first();
-
-        if ($fine->settlement) {
-            $fine->settlement->delete();
-            $payment->updateAmount();
-        } 
-        $fine->delete();
-
-        $fine->nullFine()->create([
-            'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
-        ]);
-
-        return redirect()->back()
-            ->with('success', '¡Multa anulada!');   
+        //
     }
 }

@@ -15,7 +15,10 @@ class CreateLicensesTable extends Migration
     {
         Schema::create('licenses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('num')->nullable();
+            $table->timestamp('downloaded_at')->nullable();
             $table->date('emission_date');
+            $table->boolean('active')->default(1);
             $table->unsignedBigInteger('correlative_id');
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('ordinance_id');

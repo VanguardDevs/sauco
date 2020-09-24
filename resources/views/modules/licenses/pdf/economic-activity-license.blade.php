@@ -68,7 +68,7 @@
             </div>
             <div class="dates-container">
                 <div class="dates row">{{ $license->emission_date }}</div>
-                <div class="dates row endofyear">{{ $endOfYear }}</div>
+                <div class="dates row endofyear">{{ $license->expiration_date }}</div>
             <div>
             <div class="taxpayer-info">
                 <div class="taxpayer-information row">{{ $num }}</div>
@@ -77,7 +77,7 @@
                 <div class="taxpayer-information row">{{ $representation }}</div>
                 <div class="taxpayer-information row">{{ $taxpayer->fiscal_address }}</div>
                 <div class="taxpayer-information row">
-                   @foreach($taxpayer->economicActivities as $activity)
+                   @foreach($license->economicActivities as $activity)
                         <li class="activity">{{ $activity->code.' - '.$activity->name }}</li>
                    @endforeach 
                 </div>

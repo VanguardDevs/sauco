@@ -4,14 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\PrettyTimestamps;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 
-class Permit extends Model
+class Permit extends Model implements Auditable
 {
-    use SoftDeletes;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps;
 
     protected $table = 'permits';
 
-    protected $guarded = [];
+    protected $casts = [ 'amount' => 'float' ];
+
+    protected $appends = [ 'pretty_amount' ];
 
     public function taxpayer()
     {
@@ -28,8 +35,8 @@ class Permit extends Model
         return $this->belongsTo(User::class);
     } 
 
-    public function payment()
+    public function liquidation()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->hasOne(Liquidation::class);
     }
 }
