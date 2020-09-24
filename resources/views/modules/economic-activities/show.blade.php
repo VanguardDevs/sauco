@@ -5,7 +5,7 @@
 @section('title', 'Reporte de la actividad '.$row->code)
 
 @section('content')
-<div class="kt-portlet kt-portlet--height-fluid">
+<div class="kt-portlet kt-portlet">
     <div class="kt-portlet__body">
         <div class="kt-widget kt-widget--user-profile-3">
             <div class="kt-widget__top">

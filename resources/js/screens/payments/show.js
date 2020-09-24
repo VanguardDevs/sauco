@@ -45,7 +45,7 @@ const ShowNullFine = (props) => {
                     <br />
                     <h3>Información del pago</h3>
                     <h5>Número: {data.payment.num}</h5>
-                    <h5>Monto: {data.payment.formatted_amount}</h5>
+                    <h5>Monto: {data.payment.formatted_amount} Bs</h5>
                     <h5>Fecha de procesamiento: {data.payment.processed_at}</h5>
                   </>) 
                 }

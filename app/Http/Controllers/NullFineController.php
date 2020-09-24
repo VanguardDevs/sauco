@@ -62,7 +62,7 @@ class NullFineController extends Controller
 
         if ($request->wantsJson()) {
 
-           $data = $nullFine->load('fine', 'user'); 
+           $data = $nullFine->load('fine.taxpayer', 'user'); 
 
            return response()->json($data);
         }

@@ -39,10 +39,13 @@ const ShowNullFine = (props) => {
                 <h5>Razón de anulación:</h5>
                 <p>{data.reason}</p>
                 <br />
-                <h5>Fecha de aplicación de la multa: {data.fine.created_at}</h5>
-                <h5>Monto: {data.fine.formatted_amount}</h5>
                 <h5>Fecha de anulación: {data.created_at}</h5>
                 <h5>Usuario: {data.user.login}</h5>
+                <br />
+                <h3>Información de la multa</h3>
+                <h5>Contribuyente: <strong> {data.fine.taxpayer.name} </strong></h5>
+                <h5>Fecha de aplicación de la multa: {data.fine.created_at}</h5>
+                <h5>Monto: {data.fine.formatted_amount} Bs</h5>
               </PortletBody>
             </>
           }
