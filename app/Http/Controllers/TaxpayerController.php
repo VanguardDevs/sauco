@@ -164,8 +164,13 @@ class TaxpayerController extends Controller
     {
         $taxpayer->update($request->input());
 
-        if ($request->input('persona_firm')) {
-            $taxpayer->commercialDenomination->name = $request->input('personal_firm');
+        if ($request->has('personal_firm')) {
+            if (!$taxpayer->commercialDenomination()->exists()) {
+                $taxpayer->commercialDenomination()->create([
+                    'name' => $request->get('personal_firm')
+                ]);
+            }
+            $taxpayer->commercialDenomination->name = $request->get('personal_firm');
             $taxpayer->push();
         }
 

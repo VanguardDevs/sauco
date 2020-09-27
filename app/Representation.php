@@ -18,6 +18,11 @@ class Representation extends Model implements Auditable
         'person_id'
     ];
 
+    public function licenses()
+    {
+        return $this->hasMany(License::class);
+    }
+
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Listing;
+use App\LiquidationType;
 use App\Http\Requests\Categories\CategoriesCreateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryController extends Controller
+class LiquidationTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class CategoryController extends Controller
 
     public function list()
     {
-        $query = Listing::query();
+        $query = LiquidationType::query();
 
         return DataTables::eloquent($query)->toJson();
     }
@@ -45,7 +45,7 @@ class CategoryController extends Controller
      */
     public function store(CategoriesCreateFormRequest $request)
     {
-        Listing::create($request->input());
+        LiquidationType::create($request->input());
 
         return redirect()->route('categories.index')
             ->withSuccess('¡Categoría creada!');
@@ -68,10 +68,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Listing $category)
+    public function edit(LiquidationType $type)
     {
         return view('modules.settings.categories.register')
-            ->with('row', $category)
+            ->with('row', $type)
             ->with('typeForm', 'update');
     }
 
@@ -82,9 +82,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoriesCreateFormRequest $request, Listing $category)
+    public function update(CategoriesCreateFormRequest $request, LiquidationType $type)
     {
-        $category->update($request->input());
+        $type->update($request->input());
 
         return redirect()->route('categories.index')
             ->withSuccess('¡Categoría actualizada!');

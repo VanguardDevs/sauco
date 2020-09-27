@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 
 class Withholding extends Model implements Auditable 
 {
-    use SoftDeletes;
-    use Audit;
+    use SoftDeletes, Audit, PrettyAmount, PrettyTimestamps;
 
     protected $table = 'withholdings';
 
@@ -19,6 +20,8 @@ class Withholding extends Model implements Auditable
         'affidavit_id',
         'amount'
     ];
+
+    protected $appends = [ 'pretty_amount' ];
 
     public function affidavit()
     {
@@ -35,14 +38,14 @@ class Withholding extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
-    public function settlement()
+    public function liquidation()
     {
-        return $this->hasOne(Settlement::class);
+        return $this->hasOne(Liquidation::class);
     }
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
     public function NullWithholding()

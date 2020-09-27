@@ -1,59 +1,52 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
-
-// Components
+import React, { useState, useEffect } from 'react';
 import {
-  Row,
-  Loading,
-  Portlet,
-  PortletBody,
-  Table,
-  Col
-} from '../../components';
+  Grid,
+  Container,
+  CardHeader,
+  Box,
+  IconButton,
+  makeStyles,
+  useTheme,
+} from '@material-ui/core';
+import MUIDataTable from 'mui-datatables';
+import Layout from '../../layouts';
+import { useFetch } from '../../utils';
 
-const Index = (props) => {
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+export default function Licenses() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [data, setData] = useState([]);
+  const { response, error, isLoading } = useFetch(`licenses?results=${rowsPerPage}`);
 
   useEffect(() => {
-    axios.get(`licenses`)
-      .then(res => setData(res.data))
-      .then(res => setLoading(false))
-      .catch(err => console.log(err));
-  }, []);
+    if (!isLoading) {
+      const data = response.map(row => [
+        row.num,
+        row.emission_date,
+        row.taxpayer.name
+      ]);
+      setData(data);
+    }
+  }, [isLoading]);
 
-  const columns = useMemo(() => [
-    { header: 'Número', accessor: 'num' },
-    { header: 'RIF', accessor: 'taxpayer.rif' },
-    { header: 'Razón Social', accessor: 'taxpayer.name' },
-    { header: 'Ordenanza', accessor: 'ordinance.description' },
-    { header: 'Emitida', accessor: 'emission_date' }
-  ], []);
+  const columns = ['Número', 'Fecha de emision', 'Empresa'];
 
   return (
-    <Row>
-      {
-      <Col lg={12}>
-        {(loading) ? (
-          <Portlet>
-            <PortletBody>
-              <Loading />
-            </PortletBody>
-          </Portlet>
-        ) : (
-          <Portlet label="Licencias emitidas">
-            <PortletBody>
-              <Table columns={columns} data={data} />
-            </PortletBody>
-          </Portlet>
-        )}
-      </Col>
+    <Layout title='Licencias'>
+      <Box>
+        <CardHeader title='Licencias' />
+      </Box>
+      { (isLoading) 
+        ? <>Cargando...</>
+        : (
+          <MUIDataTable
+            serverSide
+            columns={columns}
+            data={data}
+          />
+        )
       }
-    </Row>
+    </Layout>
   );
-}
+};
 
-if (document.getElementById('licenses')) {
-  ReactDOM.render(<Index/>, document.getElementById('licenses'));
-}

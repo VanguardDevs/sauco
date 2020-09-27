@@ -7,7 +7,7 @@ use App\Taxpayer;
 use App\Affidavit;
 use App\Month;
 use App\Payment;
-use App\Settlement;
+use App\Liquidation;
 use App\Concept;
 use Carbon\Carbon;
 use Auth;
@@ -184,7 +184,11 @@ class WithholdingController extends Controller
         $payment = $withholding->payment()->first();
 
         if ($withholding->settlement) {
-            $withholding->settlement->delete();
+            $settlement = $withholding->settlement;
+            $amount = $withholding->amount + $settlement->amount;
+            $settlement = $settlement->update([
+                'amount' => $amount
+            ]);
             $payment->updateAmount();
         } 
         $withholding->delete();

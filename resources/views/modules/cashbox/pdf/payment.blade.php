@@ -134,11 +134,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($payment->settlements as $settlement)
+                @foreach($payment->liquidations as $liquidation)
                  <tr>
-                    <td>{{ $settlement->num }}</td> 
-                    <td>{{ $settlement->object_payment  }}</td>   
-                    <td style="font-weight:bold;">{{ $settlement->total_amount }}</td>
+                    <td>{{ $liquidation->num }}</td> 
+                    <td>{{ $liquidation->object_payment  }}</td>   
+                    <td style="font-weight:bold;">{{ $liquidation->prettyAmount }}</td>
                 </tr>
                 @endforeach   
              </table>
@@ -150,7 +150,7 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->formattedAmount }} Bs
+                    PAGO TOTAL: {{ $payment->prettyAmount }} Bs
                 </div>
             </div>
         </div>

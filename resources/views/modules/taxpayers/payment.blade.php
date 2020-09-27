@@ -49,29 +49,24 @@
               </tr>
             </thead>
             <tbody>
-            @foreach($row->settlements as $settlement)
+            @foreach($row->liquidations as $liquidation)
              <tr>
-                <td>{{ $settlement->num }}</td> 
-                <td>{{ $settlement->object_payment  }}</td>   
-                <td>{{ $settlement->total_amount }}</td>
+                <td>{{ $liquidation->num }}</td> 
+                <td>{{ $liquidation->object_payment }}</td>   
+                <td>{{ $liquidation->prettyAmount }}</td>
             </tr>
             @endforeach   
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Monto Total: {{ $row->formattedAmount }} Bs
+                    Monto Total: {{ $row->prettyAmount }} Bs
                 </div>
-                @if ($typeForm == 'show')
-                @if (Auth()->user()->hasRole('admin'))
+                @if ($typeForm == 'show' && $row->state_id == 2)
                 <div class="kt-heading kt-heading--md">
                     Recaudador: {{ $row->user->fullName }}
                 </div>
-                @endif
                 <div class="kt-heading kt-heading--md">
                     Método de pago: {{ $row->paymentMethod->name }}
-                </div>
-                <div class="kt-heading kt-heading--md">
-                    Estado: {{ $row->state->name }}
                 </div>
                 <div class="kt-heading kt-heading--md">
                     Fecha: {{ $row->processed_at }}
@@ -123,7 +118,7 @@
                 </button>
             @else
                 <a href="{{ URL::previous() }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Regresar</a>
-                @if($typeForm == 'show')
+                @if($row->state_id == 2)
                 <a href="{{ route('payments.download', $row->id ) }}"}} class='btn btn-info' title='Descargar factura' target='_blank'>
                     <i class='flaticon2-download'></i>
                     Imprimir factura

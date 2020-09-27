@@ -356,36 +356,6 @@ $(document).ready(function() {
         ]
     });
 
-    /*----------  Datatables Economic sectors  ----------*/
-    $('#tEconomicSectors').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": baseURL + "/economic-sectors/list",
-        "columns": [
-            {data: 'id'},
-            {data: 'description'},
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id} title='Ver información'>
-                            <i class='btn-sm btn-info fas fa-eye '></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/settings/economic-sectors/${oData.id}/edit title='Editar'>
-                            <i class='btn-sm btn-warning fas fa-edit'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
     /*----------  Datatables Economic Activities  ----------*/
     $('#tEconomicActivities').DataTable({
         "order": [[0, "asc"]],
@@ -620,7 +590,7 @@ $(document).ready(function() {
             { data: 'name'},
             { data: 'ordinance.description'},
             { data: 'charging_method.name'},
-            { data: 'amount'},
+            { data: 'min_amount'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -651,6 +621,45 @@ $(document).ready(function() {
             { data: 'publication_date'}
         ]
     });
+    
+    $('#tTaxpayerLiquidations').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'num' },
+            { data: 'object_payment' },
+            { data: 'status.name' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    if (oData.payment.length) {
+                      actions = `
+                        <a class="mr-2" href=${window.location.origin}/payments/${oData.payment[0].id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                      `;
+                    } else {
+                      actions = `
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'liquidations')" title='Anular'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>
+                      `
+                    }
+                    $(nTd).html(`
+                      <div class="btn-group">
+                        ${actions}
+                      </div>`
+                    );
+                }
+            }
+        ]
+    });
 
     $('#tTaxpayerPayments').DataTable({
         "order": [[0, "asc"]],
@@ -662,8 +671,8 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/payments`,
         "columns": [
             { data: 'num' },
-            { data: 'state.name' },
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
+            { data: 'processed_at' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -694,7 +703,7 @@ $(document).ready(function() {
             { data: 'num', name: 'num' },
             { data: 'taxpayer.rif', name: 'taxpayer.rif' },
             { data: 'taxpayer.name', name: 'taxpayer.name' },
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'processed_at', name: 'processed_at' },
             {
                 data: "id",
@@ -714,21 +723,20 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tNullPayments').DataTable({
+    $('#tCanceledLiquidations').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/payments/list-null",
+        "ajax": baseURL + "/reports/canceled-liquidations",
         "columns": [
-            { data: 'id'},
-            { data: 'taxpayer.rif' },
+            { data: 'liquidation.num'},
             { data: 'taxpayer.name' },
-            { data: 'amount' },
-            { data: 'state.name' },
-            { data: 'deleted_at' }
+            { data: 'reason' },
+            { data: 'liquidation.pretty_amount' },
+            { data: 'created_at' }
         ]
     });
 
@@ -741,7 +749,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
             {
@@ -749,12 +757,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/fines/${oData.id}/payment/new title='Facturar'>
-                            <i class='btn-sm btn-success fas fa-money-check'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>               
+                      <a class="mr-2" href=${baseURL}/fines/${oData.id} title='Más información'>
+                        <i class='btn-sm btn-success fas fa-money-check'></i>
+                      </a>
                     </div>`
                     );
                 }
@@ -772,7 +777,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'amount', name: 'amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'concept.name' },
             { data: 'created_at' },
             {
@@ -780,12 +785,9 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                      <a class="mr-2" href=${baseURL}/applications/${oData.id}/payment/new title='Facturar'>
+                      <a class="mr-2" href=${baseURL}/applications/${oData.id} title='Más información'>
                         <i class='btn-sm btn-success fas fa-money-check'></i>
                       </a>
-                      <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
-                        <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
                     </div>`
                     );
                 }
@@ -803,7 +805,7 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/list`,
         "columns": [
             { data: 'affidavit.month.name' },
-            { data: 'amount' },
+            { data: 'pretty_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -831,29 +833,23 @@ $(document).ready(function() {
             { data: 'month.year.year' },
             { data: 'month.name' },
             { data: 'brute_amount_affidavit', name: 'brute_amount_affidavit' },
-            { data: 'total_amount', name: 'total_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/affidavits/${oData.id}/payment/new title='Facturar'>
-                            <i class='btn-sm btn-success fas fa-money-check'></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Ver declaración jurada de ingresos'>
-                            <i class='btn-sm btn-info fas fa-eye'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'affidavits')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
+                      <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Más información'>
+                        <i class='btn-sm btn-success fas fa-money-check'></i>
+                      </a>
                     </div>`
                     );
                 }
-            }
+            }        
         ]
     });
 
-    $('#tEconomicActivityLicenses').DataTable({
+    $('#tLicenses').DataTable({
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
@@ -864,16 +860,14 @@ $(document).ready(function() {
             { data: 'num' },
             { data: 'taxpayer.rif' },
             { data: 'taxpayer.name' },
+            { data: 'ordinance.description' },
             { data: 'emission_date' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/economic-activity-licenses/${oData.id}/download title='Imprimir licencia'>
-                            <i class='btn-sm btn-success fas fa-print'></i>
-                        </a>
-                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.taxpayer.id} title='Ver contribuyente'>
+                        <a class="mr-2" href=${baseURL}/licenses/${oData.id} title='Ver licencia'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`
