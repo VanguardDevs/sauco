@@ -37,6 +37,7 @@ const ShowLicense = (props) => {
               <PortletHeader label={`Licencia ${data.num}`} />
               <PortletBody>
                 <h5>LICENCIA DE { data.ordinance.description }</h5>
+                <h5>Fecha de emisión: {data.emission_date}</h5>
                 <br />
                 <h5>Representante: {data.representation.person.name}</h5>
                 <br />
