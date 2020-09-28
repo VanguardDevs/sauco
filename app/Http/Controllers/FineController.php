@@ -158,13 +158,15 @@ class FineController extends Controller
         if ($payment->state_id == 2) {
             return redirect()->back()
                 ->with('error', 'La multa no puede ser anulada');
-        } 
+        }
+        $fine->settlement->delete();
         $fine->delete();
 
         $fine->nullFine()->create([
             'user_id' => Auth::user()->id,
             'reason' => $request->get('annullment_reason')
         ]);
+        $payment->updateAmount();
 
         return redirect()->back()
             ->with('success', '¡Multa anulada!');   
