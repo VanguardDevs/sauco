@@ -82,12 +82,13 @@ class TaxpayerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaxpayersCreateFormRequest $request)
     {
         $type = $request->input('taxpayer_type_id');
         $denomination = $request->input('personal_firm');
 
         if (Taxpayer::existsRif($request->input('rif'))) {
+            dd("Ya existe el rif");
             return redirect('taxpayers/create')
                 ->withInput($request->input())
                 ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');

@@ -18,3 +18,5 @@
     <script src="{{ asset('assets/js/profile.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
 @include('sweetalert::alert')
+
+@stack('js')

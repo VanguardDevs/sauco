@@ -58,7 +58,8 @@ class LicenseController extends Controller
             return $this->printReport($query);
         }
 
-        return view('modules.licenses.index');
+        return view('modules.licenses.index')
+            ->with('types', CorrelativeType::pluck('description', 'id'));
     }
 
     /**
