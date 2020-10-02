@@ -44,7 +44,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         /** General Settings */
         Route::get('settings', 'ShowSettings')->name('settings');
 
-        Route::get('reports/null-payments', 'ReportController@showNullPayments')->name('null.payments');
         /**
         * Settings > Years
         */
@@ -125,7 +124,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('reports/taxpayers/up-to-date/print', 'ReportController@printUpToDate')
             ->name('print.uptodate.taxpayers');
     });
-    Route::get('payments/list-null', 'PaymentController@onlyNull');
     Route::get('payments/processed/list', 'PaymentController@listProcessed');
     Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
     Route::get('reports/taxpayers/up-to-date/list', 'ReportController@listUpToDate');
@@ -136,13 +134,12 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Licenses
      */
     Route::group(['middleware' => 'can:create.licenses'], function() {
-        Route::get('economic-activity-licenses/{license}/download', 'LicenseController@download');
+        Route::get('licenses/{license}/download', 'LicenseController@download');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
     });
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
-    Route::get('taxpayers/{taxpayer}/economic-activity-licenses/list', 'LicenseController@listByTaxpayer');
     Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
 
      /*
@@ -201,6 +198,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('withholdings.index');
     Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
     Route::resource('withholdings', 'WithholdingController');
+
+    Route::resource('reports/cancelled-payments', 'NullPaymentController');
+    Route::resource('reports/cancelled-fines', 'NullFineController');
 
     /**
      * Handle settlements and payments

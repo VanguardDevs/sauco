@@ -4,11 +4,14 @@ import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import { Success, Error, ToastWrapper  } from '../../../utils/toast';
 // Components
-import Portlet from '../../../components/Portlet';
-import FormGroup from '../../../components/FormGroup';
-import Col from '../../../components/Col';
-import Notification from '../../../components/Notification';
-import Loading from '../../../components/Loading';
+import {
+  Portlet,
+  PortletHeader,
+  PortletBody,
+  Col,
+  Notification,
+  Loading
+} from '../../../components';
 
 const getMapOfMonths = (months) => months.map(month => {
   return {
@@ -47,38 +50,39 @@ const create = (props) => {
   };
 
   return (!loading) ?
-    <Portlet 
-      label='Realizar retención'
-      sublabel='Ingrese el monto y seleccione el mes de la declaración.'
-      fluid
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormGroup>
-          <Col lg={5} md={5}>
-            <Controller
-              as={Select}
-              name="month"
-              options={months}
-              control={control}
-              placeholder='Seleccione'
-              inputRef={register}
-            /> 
-          </Col>
-          <Col lg={5} md={5}>
-            <input name="amount" placeholder="Monto" ref={register} className="form-control decimal-input-mask"/>
-          </Col>
-          <Col md={2}>
-            <button type="submit" className="btn btn-success" disabled={disable}>
-              Guardar
-            </button>
-          </Col>
-        </FormGroup>
-      </form>
+    <Portlet fluid>
+      <PortletHeader label='Realizar retención' sublabel='Ingrese el monto y seleccione el mes de la declaración.' />
+      <PortletBody>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className='form-group row'>
+            <Col lg={5} md={5}>
+              <Controller
+                as={Select}
+                name="month"
+                options={months}
+                control={control}
+                placeholder='Seleccione'
+                inputRef={register}
+              /> 
+            </Col>
+            <Col lg={5} md={5}>
+              <input name="amount" placeholder="Monto" ref={register} className="form-control decimal-input-mask"/>
+            </Col>
+            <Col md={2}>
+              <button type="submit" className="btn btn-success" disabled={disable}>
+                Guardar
+              </button>
+            </Col>
+          </div>
+        </form>
+      </PortletBody>
       <ToastWrapper />
     </Portlet>
   : 
   <Portlet>
-    <Loading />
+    <PortletBody>
+      <Loading />
+    </PortletBody>
   </Portlet>
 }
 

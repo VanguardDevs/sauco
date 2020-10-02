@@ -27,6 +27,7 @@ class AffidavitController extends Controller
     public function __construct(AffidavitService $economicActivityAffidavit)
     {
         $this->economicActivityAffidavit = $economicActivityAffidavit;
+        $this->middleware('can:null.settlements')->only('destroy');
         $this->middleware('auth');
     }
 
@@ -252,6 +253,21 @@ class AffidavitController extends Controller
 
     public function destroy(Affidavit $affidavit)
     {
-        //
+        if ($affidavit->payment()->first()) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡La declaración tiene una liquidación asociada!'
+            ]);
+        }
+
+        $affidavit->nullAffidavit()->create([
+            'user_id' => Auth::user()->id,
+            'reason' => $request->get('annullment_reason')
+        ]);
+
+        $affidavit->delete();
+
+        return redirect()->back()
+            ->with('success', '¡Liquidación anulada!');   
     }
 }

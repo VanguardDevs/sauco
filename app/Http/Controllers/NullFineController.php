@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\NullFine;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class NullFineController extends Controller
 {
@@ -12,9 +13,20 @@ class NullFineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->wantsJson()) {
+            $query = NullFine::latest('null_fines.created_at')
+                ->with(['fine', 'user']);
+
+            return DataTables::of($query)
+                ->addColumn('formatted_amount', function ($payment) {
+                    return $payment->formatted_amount;
+                })
+                ->make(true);
+        }
+
+        return view('modules.reports.fines.cancelled-fines');
     }
 
     /**
@@ -44,9 +56,19 @@ class NullFineController extends Controller
      * @param  \App\NullFine  $nullFine
      * @return \Illuminate\Http\Response
      */
-    public function show(NullFine $nullFine)
+    public function show(Request $request, $nullFine) 
     {
-        //
+        $nullFine = NullFine::find($nullFine); 
+
+        if ($request->wantsJson()) {
+
+           $data = $nullFine->load('fine.taxpayer', 'user'); 
+
+           return response()->json($data);
+        }
+
+        return view('modules.reports.fines.show')
+            ->with('row', $nullFine);
     }
 
     /**

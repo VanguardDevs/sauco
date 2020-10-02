@@ -58,7 +58,8 @@ class LicenseController extends Controller
             return $this->printReport($query);
         }
 
-        return view('modules.licenses.index');
+        return view('modules.licenses.index')
+            ->with('types', CorrelativeType::pluck('description', 'id'));
     }
 
     /**
@@ -90,14 +91,20 @@ class LicenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Taxpayer $taxpayer)
+    public function create(Taxpayer $taxpayer, Request $request)
     {
+        if ($request->wantsJson()) {
+            $query = License::whereTaxpayerId($taxpayer->id);
+
+            return DataTables::eloquent($query)->toJson();
+        }
+
         $correlatives = [
             1 => 'INSTALAR LICENCIA',
             2 => 'RENOVAR LICENCIA'
         ];
 
-        return view('modules.licenses.index')
+        return view('modules.taxpayers.economic-activity-licenses.index')
             ->with('taxpayer', $taxpayer)
             ->with('correlatives', $correlatives);
     }
@@ -131,7 +138,7 @@ class LicenseController extends Controller
         // Maybe for other kind of licenses, I would inject
         // Ordinances in this method and make licences without searching for
         // a model
-        $ordinance = Ordinance::whereDescription('ACTIVIDAD ECONÓMICA')->first();
+        $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->endOfYear(); 
     
@@ -198,7 +205,7 @@ class LicenseController extends Controller
             $data = $license->load(
                 'user',
                 'taxpayer',
-                'representation',
+                'representation.person',
                 'ordinance',
             );
 
@@ -224,7 +231,7 @@ class LicenseController extends Controller
         $representation = $license->representation->person->name;
 
         $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative'];
-        $license->update(['downloaded_at' => Carbon::now()]);
+        $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 

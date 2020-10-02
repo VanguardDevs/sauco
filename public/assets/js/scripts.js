@@ -691,6 +691,63 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tCancelledPayments').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        processing: true,
+        serverSide: true,
+        "ajax": baseURL + "/reports/cancelled-payments",
+        "columns": [
+            { data: 'reason' },
+            { data: 'payment.taxpayer.name', name: 'payment.taxpayer.name'},
+            { data: 'user.login', name: 'user.login'},
+            { data: 'created_at', name: 'created_at' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/reports/cancelled-payments/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tCancelledFines').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/reports/cancelled-fines",
+        "columns": [
+            { data: 'reason' },
+            { data: 'created_at' },
+            { data: 'fine.formatted_amount', name: 'formatted_amount' },
+            { data: 'user.login' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/reports/cancelled-fines/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
     $('#tProcessedPayments').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -849,7 +906,8 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tLicenses').DataTable({
+    $('#tEconomicActivityLicensesTaxpayer').DataTable({
+        "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
@@ -858,41 +916,13 @@ $(document).ready(function() {
         "ajax": `${window.location.href}`,
         "columns": [
             { data: 'num' },
-            { data: 'taxpayer.rif' },
-            { data: 'taxpayer.name' },
-            { data: 'ordinance.description' },
             { data: 'emission_date' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/licenses/${oData.id} title='Ver licencia'>
-                            <i class='btn-sm btn-info fas fa-eye'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tEconomicActivityLicensesTaxpayer').DataTable({
-        "order": [[0, "asc"]],
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": `${window.location.href}/list`,
-        "columns": [
-            { data: 'emission_date' },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/economic-activity-licenses/${oData.id}/download title='Imprimir licencia'>
+                        <a class="mr-2" href=${baseURL}/licenses/${oData.id}/download title='Imprimir licencia'>
                             <i class='btn-sm btn-success fas fa-print'></i>
                         </a>
                     </div>`

@@ -3,7 +3,6 @@
 @section('title', 'Patentes')
 
 @section('content')
-
 <div class="row">
     <div class="col-lg-12">
         <div class="kt-portlet">
@@ -13,10 +12,32 @@
                         <i class="kt-font-brand fas fa-file-medical"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Listado de patentes emitidas
+                        Patentes emitidas
                     </h3>
                 </div>
            </div>
+            <div class="kt-portlet__body">
+                <div class="form-group row">
+                    <div class="col-lg-5">
+                        <label class="col-lg-12">Seleccione el tipo de licencia<span class="text-danger"> *</span></label>
+                        {!!
+                            Form::select('types', $types, null, [
+                                'class' => 'col-md-12 select2',
+                                'placeholder' => 'SELECCIONE',
+                                'id' => 'types',
+                                'required' 
+                            ])
+                        !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
            <div class="kt-portlet__body">
               <table id="tLicenses" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
@@ -36,3 +57,7 @@
 </div>
 
 @endsection
+
+@push('js')
+<script src="{{ asset('js/licenses.js') }}"></script>
+@endpush

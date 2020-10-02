@@ -7,6 +7,26 @@ Breadcrumbs::for('change-password.show', function ($trail) {
     $trail->push('Cambiar contraseña', route('change-password.show'));
 });
 
+Breadcrumbs::for('cancelled-fines.index', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Multas anuladas ', route('cancelled-fines.index'));
+});
+
+Breadcrumbs::for('cancelled-payments.index', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Pagos anulados', route('cancelled-payments.index'));
+});
+
+Breadcrumbs::for('cancelled-fines.show', function ($trail, $row) {
+    $trail->parent('cancelled-fines.index');
+    $trail->push('Multa anulada', route('cancelled-fines.show', $row));
+});
+
+Breadcrumbs::for('cancelled-payments.show', function ($trail, $row) {
+    $trail->parent('cancelled-payments.index');
+    $trail->push('Pago anulado', route('cancelled-payments.show', $row));
+});
+
 /*----------  Reports ----------*/
 Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);

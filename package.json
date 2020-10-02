@@ -12,6 +12,7 @@
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
     "axios": "^0.18",
+    "chart.js": "^2.9.3",
     "cross-env": "^5.1",
     "date-fns": "^2.16.1",
     "jwt-decode": "^2.2.0",

@@ -21,7 +21,11 @@ class NullFine extends Model
 
     public function fine()
     {
-        return $this->belongsTo(Fine::class)
-            ->onlyTrashed();
+        return $this->belongsTo(Fine::class)->withTrashed();
+    }
+
+    public function taxpayer()
+    {
+        return $this->fine->taxpayer();
     }
 }

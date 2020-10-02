@@ -16,11 +16,21 @@ class NullPayment extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function payment()
     {
-        return $this->hasOne(Payment::class);
+        return $this->belongsTo(Payment::class)->withTrashed();
+    }
+
+    public function taxpayer()
+    {
+        return $this->payment->taxpayer();
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d/m/Y H:i', strtotime($value));
     }
 }

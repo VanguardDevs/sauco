@@ -18,18 +18,6 @@
 
             <div class="kt-portlet__body">
                 <div class="kt-notification">
-                    @if (Auth::user()->hasRole('admin'))
-                    <a class="kt-notification__item" href="{{ route('taxpayers.uptodate') }}">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-graphic"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title">
-                                Contribuyentes al día
-                            </div>
-                        </div>
-                    </a>
-                    @endif
                     <a class="kt-notification__item" href="{{ url('reports/payments') }}">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-graphic"></i>
@@ -37,6 +25,26 @@
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
                                 Pagos procesados    
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ route('cancelled-fines.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="fas fa-stop-circle"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Multas anuladas
+                            </div>
+                        </div>
+                    </a>
+                    <a class="kt-notification__item" href="{{ route('cancelled-payments.index') }}">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon2-analytics"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title">
+                                Pagos anulados    
                             </div>
                         </div>
                     </a>
@@ -50,18 +58,6 @@
                             </div>
                         </div>
                     </a>
-                    @if (Auth::user()->hasRole('admin'))
-                     <a class="kt-notification__item" href="{{ route('null.payments') }}">
-                         <div class="kt-notification__item-icon">
-                             <i class="flaticon2-protection"></i>
-                         </div>
-                         <div class="kt-notification__item-details">
-                             <div class="kt-notification__item-title">
-                                Pagos anulados
-                             </div>
-                         </div>
-                     </a>
-                    @endif
                 </div>
             </div>
         </div>

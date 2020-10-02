@@ -44,7 +44,8 @@
             <table id="tEconomicActivityLicensesTaxpayer" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
-                    <th width="80%">Fecha de emisión</th>
+                    <th width="40%">Número</th>
+                    <th width="40%">Fecha de emisión</th>
                     <th width="20%">Acciones</th>
                   </tr>
                 </thead>
