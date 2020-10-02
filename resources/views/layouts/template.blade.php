@@ -33,6 +33,7 @@
                 @include('layouts.nav.subheader')
                 <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
                     @yield('content')
+                    <div id="root"></div>
                 </div>
               <!-- end:: Content -->
             {{-- @include('layouts.nav.footer') --}}

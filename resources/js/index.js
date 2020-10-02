@@ -1,28 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import redux from 'redux';
-import { Provider, useDispatch } from 'react-redux';
-import Loading from './components/Loading';
-import store from './store';
-import { getUser } from './store/actions';
+import { setAuthToken } from './utils';
+import axios from 'axios';
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+  if (!localStorage.sauco) {
+    axios.get('authenticate')
+      .then(res => {
+        localStorage.setItem('sauco', res.data.token);
+        setAuthToken(localStorage.sauco);
+      })
+      .catch(res => console.log(res.data));
+  } else {
+    setAuthToken(localStorage.sauco);
+  }
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
-  return <Loading />;
+  return <></>;
 }
 
 if (document.getElementById('root')) {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>, 
-    document.getElementById('root')
-  );
+  ReactDOM.render(<App />, document.getElementById('root'));
 }
 

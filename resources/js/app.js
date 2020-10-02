@@ -35,3 +35,5 @@ require('./components/RegisterAccountingAccounts');
 
 require('./components/AffidavitFine');
 
+require('./index');
+

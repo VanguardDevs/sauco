@@ -25,6 +25,8 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 Route::prefix('/')->middleware('auth')->group(function()
 {
+    Route::get('api/authenticate', 'AuthController@authenticate');
+    
     /**
      * Available for all users logged in
      */
