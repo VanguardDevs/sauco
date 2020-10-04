@@ -53,7 +53,6 @@ class Payment extends Model implements Auditable
     public static function processedByDate($firstDate, $lastDate)
     {
         return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
-            ->whereStateId(2)
             ->orderBy('processed_at', 'ASC')
             ->get();
     } 
