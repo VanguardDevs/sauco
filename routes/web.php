@@ -96,6 +96,8 @@ Route::prefix('/')->middleware('auth')->group(function()
  
         Route::get('settings/invoice-models', 'InvoiceModelController@index')
             ->name('invoice-models.index');
+
+        Route::resource('settings/requirements', 'RequirementController');
     });
  
     /**

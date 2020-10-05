@@ -134,6 +134,18 @@ Breadcrumbs::for('settings', function ($trail) {
 });
 
 /*------------- Users -------------*/
+Breadcrumbs::for('requirements.index', function ($trail) {
+    $trail->parent('settings');
+    $trail->push('Requerimientos', route('requirements.index'));
+});
+
+/*------------- Users -------------*/
+Breadcrumbs::for('requirements.create', function ($trail) {
+    $trail->parent('requirements.index');
+    $trail->push('Nuevo requerimiento', route('requirements.create'));
+});
+
+/*------------- Users -------------*/
 Breadcrumbs::for('permissions.index', function ($trail) {
     $trail->parent('settings');
     $trail->push('Permisos', route('permissions.index'));

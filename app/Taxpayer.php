@@ -118,6 +118,11 @@ class Taxpayer extends Model implements Auditable
         return $this->belongsTo(Community::class);
     }
 
+    public function requirement()
+    {
+        return $this->belongsToMany(Requirement::class);
+    }
+
     public function taxpayerClassification()
     {
         return $this->belongsTo(TaxpayerClassification::class);

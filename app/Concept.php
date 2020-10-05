@@ -22,6 +22,7 @@ class Concept extends Model
         'charging_method_id',
         'liquidation_type_id',
         'ordinance_id',
+        'interval_id',
         'accounting_account_id'
     ];
 
@@ -59,9 +60,19 @@ class Concept extends Model
         return $this->hasMany(Fine::class);
     }
 
+    public function requirement()
+    {
+        return $this->belongsToMany(Requirement::class);
+    }
+
     public function accountingAccount()
     {
         return $this->belongsTo(AccountingAccount::class);
+    }
+
+    public function interval()
+    {
+        return $this->belongsTo(Interval::class);
     }
 
     public function liquidations()

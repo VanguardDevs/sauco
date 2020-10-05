@@ -135,6 +135,19 @@ class MigrateLiquidations extends Command
                 '--force' => true
             ]);
         }
+        if (!Schema::hasTable('requirements')) {
+            Artisan::call('migrate', [
+                '--path' => 'database/migrations/2020_10_05_133535_create_requirements_table.php',
+                '--force' => true
+            ]);
+        }
+        if (!Schema::hasTable('intervals')) {
+            Artisan::call('migrate', [
+                '--path' => 'database/migrations/2020_10_05_161003_create_intervals_table.php',
+                '--force' => true
+            ]);
+        }
+
         $this->migrateLiquidations();     
         $this->migrateCanceledLiquidations();
     }

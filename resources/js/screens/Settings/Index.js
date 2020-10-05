@@ -45,6 +45,16 @@ const Index = () => {
             title='Conceptos de recaudación'
           />
           <Notification
+            url='settings/requirements'
+            icon='fa-pencil-ruler'
+            title='Requerimientos'
+          />
+          <Notification
+            url='settings/concepts'
+            icon='fa-shopping-basket'
+            title='Conceptos de recaudación'
+          />
+          <Notification
             url='settings/invoice-models'
             icon='fa-receipt'
             title='Modelos de factura'
