@@ -174,7 +174,7 @@ class PaymentController extends Controller
             $vars = ['payment', 'reference', 'denomination'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('modules.cashbox.pdf.payment', compact($vars)) 
+                ->loadView('pdf.payment', compact($vars)) 
                 ->stream('factura-'.$payment->id.'.pdf');
         } else {
             $organization = Organization::first();
