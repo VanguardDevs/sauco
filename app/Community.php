@@ -15,6 +15,11 @@ class Community extends Model
         'parish_names'
     ];
 
+    public function streets()
+    {
+        return $this->belongsToMany(Street::class);
+    }
+
     public function parishes()
     {
         return $this->belongsToMany(Parish::class);
@@ -23,6 +28,11 @@ class Community extends Model
     public function taxpayers()
     {
         return $this->hasMany(Taxpayer::class);
+    }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
     }
 
     public function getParishNamesAttribute()

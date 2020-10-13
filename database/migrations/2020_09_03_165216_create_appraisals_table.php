@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePropertiesTable extends Migration
+class CreateAppraisalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreatePropertiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::create('appraisals', function (Blueprint $table) {
             $table->id();
-            $table->string('cadastre_num');
-            $table->string('bulletin');
-            $table->unsignedBigInteger('parish_id');
-            $table->unsignedBigInteger('community_id');
-            $table->unsignedBigInteger('street_id');
+            $table->decimal('amount', 20);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('parish_id')->references('id')->on('parishes')
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('property_id');
+            $table->unsignedBigInteger('year_id');
+
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('community_id')->references('id')->on('communities')
+            $table->foreign('property_id')->references('id')->on('properties')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('street_id')->references('id')->on('streets')
+            $table->foreign('year_id')->references('id')->on('years')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -38,6 +38,6 @@ class CreatePropertiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties');
+        Schema::dropIfExists('appraisals');
     }
 }

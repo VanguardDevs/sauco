@@ -34,6 +34,11 @@ class Taxpayer extends Model implements Auditable
         return $query->first() ? true : false;
     }
 
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
     public function getRifAttribute($value)
     {
         return $this->taxpayerType->correlative.$value;

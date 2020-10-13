@@ -90,22 +90,9 @@ class UserController extends Controller
 
     public function getUser(Request $request)
     {
-        $user = Auth::user();
+        $user = $request->user();
 
-        if ($user) {
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-            $token->save();
-
-            return response()->json([
-                'token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at)
-                        ->toDateTimeString(),
-                'user' => $user
-            ]);
-        }
+        return response()->json($user);
     }
 
     public function showChangePassword()

@@ -26,6 +26,11 @@ class LicenseController extends Controller
      */
     public function index(Request $request)
     {
+        $query = License::with(['taxpayer'])
+            ->orderBy('created_at', 'DESC');
+
+        if ($request->has('results')) {
+            $results = $request->results;
         $ordinance = $request->get('ordinance');
         $type = $request->get('type');
         $pdf = $request->get('pdf');
@@ -77,13 +82,6 @@ class LicenseController extends Controller
         $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
 
         return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
-    }
-
-    public function listBytaxpayer(Taxpayer $taxpayer)
-    {
-        $query = License::whereTaxpayerId($taxpayer->id);
-
-    	return DataTables::eloquent($query)->toJson();
     }
 
     /**
