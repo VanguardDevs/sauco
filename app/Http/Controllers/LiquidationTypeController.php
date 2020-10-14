@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\LiquidationType;
-use App\Http\Requests\Categories\CategoriesCreateFormRequest;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class LiquidationTypeController extends Controller
 {
@@ -16,14 +13,7 @@ class LiquidationTypeController extends Controller
      */
     public function index()
     {
-        return view('modules.settings.categories.index');
-    }
-
-    public function list()
-    {
-        $query = LiquidationType::query();
-
-        return DataTables::eloquent($query)->toJson();
+        //
     }
 
     /**
@@ -33,8 +23,7 @@ class LiquidationTypeController extends Controller
      */
     public function create()
     {
-        return view('modules.settings.categories.register')
-            ->with('typeForm', 'create');
+        //
     }
 
     /**
@@ -43,12 +32,9 @@ class LiquidationTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoriesCreateFormRequest $request)
+    public function store(Request $request)
     {
-        LiquidationType::create($request->input());
-
-        return redirect()->route('categories.index')
-            ->withSuccess('¡Categoría creada!');
+        //
     }
 
     /**
@@ -68,11 +54,9 @@ class LiquidationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(LiquidationType $type)
+    public function edit($id)
     {
-        return view('modules.settings.categories.register')
-            ->with('row', $type)
-            ->with('typeForm', 'update');
+        //
     }
 
     /**
@@ -82,12 +66,9 @@ class LiquidationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoriesCreateFormRequest $request, LiquidationType $type)
+    public function update(Request $request, $id)
     {
-        $type->update($request->input());
-
-        return redirect()->route('categories.index')
-            ->withSuccess('¡Categoría actualizada!');
+        //
     }
 
     /**

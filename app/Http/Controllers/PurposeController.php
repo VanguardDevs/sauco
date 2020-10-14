@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\PropertyUse;
 use Illuminate\Http\Request;
 
-class PropertyUseController extends Controller
+class PurposeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +40,10 @@ class PropertyUseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\PropertyUse  $propertyUse
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PropertyUse $propertyUse)
+    public function show($id)
     {
         //
     }
@@ -52,10 +51,10 @@ class PropertyUseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\PropertyUse  $propertyUse
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(PropertyUse $propertyUse)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class PropertyUseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PropertyUse  $propertyUse
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PropertyUse $propertyUse)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +74,10 @@ class PropertyUseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\PropertyUse  $propertyUse
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PropertyUse $propertyUse)
+    public function destroy($id)
     {
         //
     }
