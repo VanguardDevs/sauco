@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 use Image;
 use File;
-use DataTables;
 use App\User;
 use Caffeinated\Shinobi\Models\Role;
 use Auth;
@@ -19,11 +18,6 @@ use Hash;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -32,14 +26,6 @@ class UserController extends Controller
     public function index()
     {
         return view('modules.users.index');
-    }
-
-    public function list()
-    {
-        $query = User::query();
-
-        return DataTables::eloquent($query)
-            ->toJson();
     }
 
     /**

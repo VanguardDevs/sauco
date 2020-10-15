@@ -13,7 +13,6 @@ use App\Taxpayer;
 use App\Organization;
 use App\PaymentNull;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
 use App\Http\Requests\AnnullmentRequest;
 use PDF;
@@ -49,12 +48,6 @@ class PaymentController extends Controller
         $query = Payment::with('taxpayer') 
             ->whereStatusId(2)
             ->orderBy('num', 'DESC');
-
-        return DataTables::of($query)
-            ->addColumn('pretty_amount', function ($payment) {
-                return $payment->pretty_amount;
-            })
-            ->make(true);
     }
 
     public function listByTaxpayer(Taxpayer $taxpayer)
@@ -62,21 +55,6 @@ class PaymentController extends Controller
         $query = Payment::whereStatusId(2)
             ->whereTaxpayerId($taxpayer->id)
             ->orderBy('processed_at', 'DESC');
-
-        return DataTables::of($query)
-            ->addColumn('pretty_amount', function ($payment) {
-                return $payment->pretty_amount;
-            })
-            ->make(true);
-    }
-
-    public function onlyNull()
-    {
-        $query = Payment::onlyTrashed()
-            ->with(['taxpayer', 'status'])
-            ->orderBy('id', 'DESC');
-        
-        return DataTables::of($query)->toJson();
     }
 
     /**

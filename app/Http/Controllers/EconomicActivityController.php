@@ -8,7 +8,6 @@ use App\Taxpayer;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
-use Yajra\DataTables\Facades\DataTables;
 
 class EconomicActivityController extends Controller
 {
@@ -33,14 +32,6 @@ class EconomicActivityController extends Controller
     public function list()
     {
         $query = EconomicActivity::query();
-
-        return DataTables::eloquent($query)->toJson();
-    }
-
-    public function listTaxpayers(EconomicActivity $economicActivity)
-    {
-        return DataTables::of($economicActivity->getTaxpayers())
-            ->toJson();
     }
 
     /**
