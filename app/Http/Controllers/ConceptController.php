@@ -9,7 +9,6 @@ use App\LiquidationType;
 use App\AccountingAccount;
 use App\Http\Requests\Concepts\ConceptsCreateFormRequest;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class ConceptController extends Controller
 {
@@ -31,8 +30,6 @@ class ConceptController extends Controller
     public function list()
     {
         $query = Concept::with(['ordinance', 'chargingMethod']);
-
-        return DataTables::eloquent($query)->toJson();
     }
 
     /**

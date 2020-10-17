@@ -4,15 +4,9 @@ namespace App\Http\Controllers;
 
 use App\PaymentMethod;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class PaymentMethodController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -71,15 +65,7 @@ class PaymentMethodController extends Controller
             ->with('typeForm', 'edit')
             ->with('row', $paymentMethod);
     }
-
-    public function list()
-    {
-        $query = PaymentMethod::query(); 
-
-        return DataTables::eloquent($query)->toJson();
-    }
-
-
+    
     /**
      * Update the specified resource in storage.
      *
