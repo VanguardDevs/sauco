@@ -1,12 +1,18 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Status;
 use Illuminate\Database\Seeder;
 
-class StatusTableSeeder extends Seeder
+class StatusSeeder extends Seeder
 {
     protected $states = Array(
-        'PENDIENTE', 'PROCESADA' 
+        'Pendiente',
+        'Aprobado',
+        'Por confirmar',
+        'Anulado',
+        'Procesado' 
     );
 
     /**
