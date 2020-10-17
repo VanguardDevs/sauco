@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameSettlementsTable extends Migration
+class CreateLiquidationTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class RenameSettlementsTable extends Migration
      */
     public function up()
     {
-        Schema::rename('affidavits', 'economic_activity_affidavit');
-        Schema::rename('settlements', 'affidavits');
-        Schema::rename('receivables', 'settlements');
+        Schema::create('liquidation_types', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,6 +27,6 @@ class RenameSettlementsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('liquidation_types');
     }
 }

@@ -16,11 +16,11 @@ class CreateRepresentationsTable extends Migration
         Schema::create('representations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('person_id');
+            $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('representation_type_id');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('person_id')->references('id')->on('people')
+            $table->foreign('company_id')->references('id')->on('companies')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('representation_type_id')->references('id')->on('representation_types')
                 ->onUpdate('cascade')->onDelete('cascade');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommercialDenominationsTable extends Migration
+class CreateOwnershipStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateCommercialDenominationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('commercial_denominations', function (Blueprint $table) {
+        Schema::create('ownership_status', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedBigInteger('taxpayer_id');
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
-                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +27,6 @@ class CreateCommercialDenominationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commercial_denominations');
+        Schema::dropIfExists('ownership_status');
     }
 }
