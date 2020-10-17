@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Taxpayer;
@@ -37,13 +36,6 @@ class ReportController extends Controller
     public function showUpToDateTaxpayers()
     {
         return view('modules.reports.up-to-date-taxpayers');
-    }
-
-    public function listUpToDate()
-    {
-        $taxpayers = $this->upToDateTaxpayers();
-
-        return DataTables::eloquent($taxpayers)->toJson();
     }
 
     public function printPaymentReport(Request $request)

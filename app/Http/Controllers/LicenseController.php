@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
@@ -56,7 +55,6 @@ class LicenseController extends Controller
             $query->with(['taxpayer', 'ordinance'])
                 ->orderBy('created_at', 'DESC');
 
-            return DataTables::eloquent($query)->toJson();
         }
 
         if ($pdf) {
@@ -94,7 +92,6 @@ class LicenseController extends Controller
         if ($request->wantsJson()) {
             $query = License::whereTaxpayerId($taxpayer->id);
 
-            return DataTables::eloquent($query)->toJson();
         }
 
         $correlatives = [

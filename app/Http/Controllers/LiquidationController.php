@@ -8,7 +8,6 @@ use App\CanceledLiquidation;
 use App\Concept;
 use App\Month;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
 
@@ -26,8 +25,6 @@ class LiquidationController extends Controller
                     ->with(['status', 'payment'])
                     ->orderBy('created_at', 'DESC')
                     ->orderBy('status_id', 'DESC');
-
-            return DataTables::eloquent($query)->toJson();
         }
         return view('modules.taxpayers.liquidations.index')
             ->with('taxpayer', $taxpayer);

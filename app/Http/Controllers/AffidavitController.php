@@ -12,7 +12,6 @@ use App\EconomicActivityAffidavit;
 use App\Concept;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;
 use Auth;
 use App\Services\AffidavitService;
@@ -46,7 +45,7 @@ class AffidavitController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return DataTables::of($query)->toJson();
+        return $query;
     }
 
     public function show(Request $request, Affidavit $affidavit)

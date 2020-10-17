@@ -9,7 +9,6 @@ use App\Taxpayer;
 use App\Payment;
 use App\Liquidation;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
@@ -31,7 +30,7 @@ class ApplicationController extends Controller
             ->orderBy('applications.created_at', 'DESC')
             ->with(['concept:id,name']);
 
-        return DataTables::of($query)
+        return $query;
             ->addColumn('pretty_amount', function ($payment) {
                 return $payment->pretty_amount;
             })
