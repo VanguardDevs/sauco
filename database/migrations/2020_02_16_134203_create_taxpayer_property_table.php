@@ -19,6 +19,9 @@ class CreateTaxpayerPropertyTable extends Migration
             $table->unsignedBigInteger('property_id');
             $table->unsignedBigInteger('ownership_status_id');
             $table->unsignedBigInteger('taxpayer_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('property_id')->references('id')->on('properties')
