@@ -16,11 +16,11 @@ class CreateWithholdingsTable extends Migration
         Schema::create('withholdings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->decimal('amount', 15, 2);
-            $table->unsignedBigInteger('affidavit_id');
+            $table->unsignedBigInteger('liquidation_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('affidavit_id')->references('id')->on('affidavits')
+            $table->foreign('liquidation_id')->references('id')->on('liquidations')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -17,35 +17,25 @@ class Withholding extends Model implements Auditable
 
     protected $fillable = [
         'user_id',
-        'affidavit_id',
+        'liquidation_id',
         'amount'
     ];
 
     protected $appends = [ 'pretty_amount' ];
 
-    public function affidavit()
+    public function liquidation()
     {
-        return $this->belongsTo(Affidavit::class);
+        return $this->belongsTo(Liquidation::class);
     }
 
-    public function taxpayer()
+    public function company()
     {
-        return $this->hasOneThrough(Taxpayer::class, Affidavit::class);
+        return $this->liquidation()->company()->first();
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function liquidation()
-    {
-        return $this->hasOne(Liquidation::class);
-    }
-
-    public function payment()
-    {
-        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
     public function NullWithholding()
