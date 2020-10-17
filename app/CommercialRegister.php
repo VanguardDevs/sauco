@@ -15,11 +15,17 @@ class CommercialRegister extends Model implements Auditable
 
     protected $table = 'commercial_registers';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'num',
+        'volume',
+        'case_file',
+        'start_date',
+        'company_id'
+    ];
 
-    public function taxpayer()
+    public function company()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function setStartDateAttribute($value)
