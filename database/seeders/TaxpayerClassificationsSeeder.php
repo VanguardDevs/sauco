@@ -1,12 +1,14 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\TaxpayerClassification;
 use Illuminate\Database\Seeder;
 
 class TaxpayerClassificationsSeeder extends Seeder
 {
     protected $classifications = Array(
-        'ORDINARIO', 'FORMAL', 'ESPECIAL'
+        'Ordinario', 'Formal', 'Especial'
     );
 
     /**

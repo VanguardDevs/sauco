@@ -1,9 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Ordinance;
 use Illuminate\Database\Seeder;
 
-class OrdinancesTableSeeder extends Seeder
+class OrdinancesSeeder extends Seeder
 {
     protected $names = Array(
         'ACTIVIDAD ECONÓMICA',
