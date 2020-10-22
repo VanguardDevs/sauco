@@ -153,12 +153,6 @@ class FineController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Fine $fine)
     { 
-        $payment = $fine->payment()->first();
-
-        if ($payment->state_id == 2) {
-            return redirect()->back()
-                ->with('error', 'La multa no puede ser anulada');
-        }
         $fine->settlement->delete();
         $fine->delete();
 
@@ -166,7 +160,10 @@ class FineController extends Controller
             'user_id' => Auth::user()->id,
             'reason' => $request->get('annullment_reason')
         ]);
-        $payment->updateAmount();
+
+	if ($fine->payment()->exists()) {
+            $payment->updateAmount();
+	}
 
         return redirect()->back()
             ->with('success', '¡Multa anulada!');   

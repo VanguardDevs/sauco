@@ -157,6 +157,10 @@ class EconomicActivityController extends Controller
             $request->input('economic_activities')
         );
 
+	if ($taxpayer->licenses()->exists()) {
+	    $taxpayer->licenses()->first()->economicActivities()->sync($request->input('economic_activities'));
+	}
+
         return redirect('taxpayers/'.$taxpayer->id)
             ->withSuccess('¡Actividades económicas actualizadas!');
     }
