@@ -13,23 +13,3 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('signin', 'LoginController@signIn');
-
-
-// Authenticated only
-Route::middleware('auth:api')->group(function () {
-    Route::get('logout', 'LoginController@logout');
-    Route::get('user', 'UserController@getUser');
-
-    Route::resource('licenses', 'LicenseController');
-});
-
-Route::resource('old-payments', 'OldPaymentController');
-Route::resource('invoice-models', 'InvoiceModelController');
-Route::resource('organization', 'OrganizationController');
-Route::resource('taxpayers/{taxpayer}/withholdings', 'WithholdingController');
-
-Route::get('withholdings-months', 'WithholdingController@months');
-Route::resource('licenses', 'LicenseController');
-Route::resource('cancelled-fines', 'NullFineController');
-Route::resource('cancelled-payments', 'NullPaymentController');
