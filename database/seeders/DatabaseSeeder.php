@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,11 @@ class DatabaseSeeder extends Seeder
         $this->call(LiquidationTypesSeeder::class);
         $this->call(OwnershipStatusSeeder::class);
         $this->call(RepresentationTypesSeeder::class);
+
+        if (App::environment() == 'testing') {
+            $this->call(TestDatabase::class);
+        }
+
         /**
         $this->call(AccountTypesTableSeeder::class);
         $this->call(PaymentTypesTableSeeder::class);

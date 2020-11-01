@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialDenomination;
 use App\EconomicActivity;
 use App\TaxpayerType;
 use App\TaxpayerClassification;
-use App\Person;
 use App\Taxpayer;
 use App\License;
 use App\Community;
@@ -14,18 +12,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersUpdateFormRequest;
-use Yajra\DataTables\Facades\DataTables;
 use PDF;
 
 class TaxpayerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('can:create.taxpayers')->only(['create','store']);
-        $this->middleware('can:edit.taxpayers')->only(['edit', 'update']);
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -82,35 +72,14 @@ class TaxpayerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TaxpayersCreateFormRequest $request)
+    public function store(Request $request)
     {
-        $type = $request->input('taxpayer_type_id');
-        $denomination = $request->input('personal_firm');
-
-        if (Taxpayer::existsRif($request->input('rif'))) {
-            dd("Ya existe el rif");
-            return redirect('taxpayers/create')
-                ->withInput($request->input())
-                ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
-        }
-
-        if ($type != 1 && empty($denomination)) {
-            return redirect()->route('taxpayers.create')
-                ->withInput($request->input())
-                ->withError('¡Ingrese la denominación comercial!');
-        }
-
         $taxpayer = Taxpayer::create($request->input());
 
-        if (!empty($denomination)) {
-            CommercialDenomination::create([
-                'name' => $denomination,
-                'taxpayer_id' => $taxpayer->id
-            ]);
-        }
-
-        return redirect()->route('taxpayers.show', $taxpayer)
-            ->withSuccess('¡Contribuyente registrado!');
+        return response()->json([
+            'message' => '¡Contribuyente registrado!',
+            'data' => $taxpayer
+        ]);
     }
 
     public function downloadDeclarations(Taxpayer $taxpayer)
