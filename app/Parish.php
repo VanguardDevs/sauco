@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Parish extends Model
 {
+    use HasFactory;
+
     protected $table = 'parishes';
 
     protected $fillable = ['name'];

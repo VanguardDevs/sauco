@@ -18,10 +18,10 @@ class Taxpayer extends Model implements Auditable
         'rif',
         'name',
         'address',
-        'fiscal_address',
         'phone',
         'email',
         'community_id',
+        'municipality_id',
         'taxpayer_type_id',
         'taxpayer_classification_id',
     ];
