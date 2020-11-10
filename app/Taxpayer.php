@@ -26,14 +26,6 @@ class Taxpayer extends Model implements Auditable
         'taxpayer_classification_id',
     ];
 
-    public function hasException()
-    {
-        $query = $this->economicActivities()
-            ->whereCode(123456);
-
-        return $query->first() ? true : false;
-    }
-
     public function representations()
     {
         return $this->hasMany(Representation::class);

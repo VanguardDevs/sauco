@@ -26,34 +26,19 @@ class Affidavit extends Model implements Auditable
 
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
 
-    /**
-    * Check if this affidavit fills an exception for fine
-    * 
-     */
-    public function hasException()
-    {
-        if ($this->taxpayer->hasException()) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function shouldHaveFine()
     {
-        if (!$this->hasException()) {
-            $startPeriod = Carbon::parse($this->month->start_period_at);
-            $todayDate = Carbon::now();
-            $passedDays = $startPeriod->diffInDays($todayDate);
+        $startPeriod = Carbon::parse($this->month->start_period_at);
+        $todayDate = Carbon::now();
+        $passedDays = $startPeriod->diffInDays($todayDate);
 
-            if ($passedDays > 60) {
-                return [
-                    Concept::whereCode(3)->first(),
-                    Concept::whereCode(3)->first(),
-                ]; 
-            } else if ($passedDays > 45) {
-               return [Concept::whereCode(3)->first()]; 
-            }
+        if ($passedDays > 60) {
+            return [
+                Concept::whereCode(3)->first(),
+                Concept::whereCode(3)->first(),
+            ]; 
+        } else if ($passedDays > 45) {
+            return [Concept::whereCode(3)->first()]; 
         }
 
         return false;
