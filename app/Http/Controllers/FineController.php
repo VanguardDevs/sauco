@@ -161,9 +161,11 @@ class FineController extends Controller
             'reason' => $request->get('annullment_reason')
         ]);
 
-	if ($fine->payment()->exists()) {
-            $payment->updateAmount();
-	}
+        $payment = $fine->payment();
+
+        if ($payment->exists()) {
+            $payment->first()->updateAmount();
+        }
 
         return redirect()->back()
             ->with('success', '¡Multa anulada!');   
