@@ -14,6 +14,11 @@ Breadcrumbs::for('cancelled-fines.index', function ($trail) {
     $trail->push('Multas anuladas ', route('cancelled-fines.index'));
 });
 
+Breadcrumbs::for('affidavits.index', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Declaraciones', route('affidavits.index'));
+});
+
 Breadcrumbs::for('cancelled-payments.index', function ($trail) {
     $trail->parent('reports');
     $trail->push('Pagos anulados', route('cancelled-payments.index'));
@@ -27,12 +32,6 @@ Breadcrumbs::for('cancelled-fines.show', function ($trail, $row) {
 Breadcrumbs::for('cancelled-payments.show', function ($trail, $row) {
     $trail->parent('cancelled-payments.index');
     $trail->push('Pago anulado', route('cancelled-payments.show', $row));
-});
-
-/*----------  Reports ----------*/
-Breadcrumbs::for('taxpayer.declarations', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Declaraciones', url('taxpayers/'.$row->id.'/declarations'));
 });
 
 Breadcrumbs::for('licenses.show', function ($trail, $row) {
@@ -77,14 +76,14 @@ Breadcrumbs::for('taxpayers.uptodate', function ($trail) {
 /**
  * Taxpayer > taxpayer > Affidavits
  */
-Breadcrumbs::for('affidavits.index', function ($trail, $row) {
+Breadcrumbs::for('taxpayer.affidavits', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
-    $trail->push('Declaraciones', route('affidavits.index', $row));
+    $trail->push('Declaraciones', route('taxpayer.affidavits', $row));
 });
 
 /*----------  Taxpayers > taxpayer > Affidavits > show ----------*/
 Breadcrumbs::for('affidavits.show', function ($trail, $row) {
-    $trail->parent('affidavits.index', $row->taxpayer);
+    $trail->parent('taxpayer.affidavits', $row->taxpayer);
     $trail->push('Nueva declaración', route('affidavits.show', $row));
 });
 

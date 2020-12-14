@@ -232,10 +232,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::get('taxpayers/{taxpayer}/economic-activities', 'EconomicActivityController@editActivitiesForm')->name('taxpayer.economic-activities');
     });
     Route::get('taxpayers/{taxpayer}/affidavits/{affidavit}/download', 'AffidavitController@download');
-    Route::get('taxpayers/{taxpayer}/affidavits/list', 'AffidavitController@listAffidavits');
+    Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@byTaxpayer')->name('taxpayer.affidavits');
     Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
-    Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@index')->name('affidavits.index');
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
     Route::resource('taxpayers', 'TaxpayerController');
 
@@ -254,4 +253,6 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('change-password.show');
     Route::post('update-password', 'Settings\UserController@updatePassword')
         ->name('change-password.update');
+
+    Route::resource('affidavits', 'AffidavitController');
 });

@@ -32,22 +32,34 @@ class AffidavitController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Taxpayer $taxpayer)
+    public function index(Request $request)
     {
+        if ($request->wantsJson()) {
+            $query = Affidavit::whereNotNull('processed_at')
+                ->with('taxpayer', 'user', 'month.year')
+                ->orderBy('processed_at', 'DESC');
+
+            return DataTables::of($query)
+                ->make(true);
+        }
+
+        return view('modules.reports.affidavits.index');
+    }
+
+    public function byTaxpayer(Request $request, Taxpayer $taxpayer)
+    {
+        if ($request->wantsJson()) {
+            $query = $taxpayer->affidavits()
+                ->orderBy('id', 'DESC')
+                ->get();
+
+            return DataTables::of($query)->toJson();
+        }
         $years = Year::pluck('year', 'id');
 
         return view('modules.taxpayers.affidavits.index')
             ->with('years', $years)
             ->with('taxpayer', $taxpayer);
-    }
-
-    public function listAffidavits(Taxpayer $taxpayer)
-    {
-        $query = $taxpayer->affidavits()
-            ->orderBy('id', 'DESC')
-            ->get();
-
-        return DataTables::of($query)->toJson();
     }
 
     public function show(Request $request, Affidavit $affidavit)
