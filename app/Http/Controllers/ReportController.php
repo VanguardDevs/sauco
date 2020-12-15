@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Payment;
+use App\Affidavit;
 use App\Taxpayer;
 use App\EconomicActivity;
 use App\License;
@@ -52,6 +53,22 @@ class ReportController extends Controller
         $lastDate = Carbon::parse($request->input('last_date'));
 
         $payments = Payment::processedByDate($firstDate, $lastDate);
+
+        // Prepare pdf
+        $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 
+        $totalAmount = $payments->sum('amount');
+        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+
+        $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
+        return $pdf->download('reporte-de-pagos.pdf');
+    }
+
+    public function printAffidavitsReport(Request $request)
+    {
+        $firstDate = Carbon::parse($request->input('first_date'));
+        $lastDate = Carbon::parse($request->input('last_date'));
+
+        $payments = Affidavit::processedByDate($firstDate, $lastDate);
 
         // Prepare pdf
         $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 

@@ -25,6 +25,14 @@ class Affidavit extends Model implements Auditable
     protected $with = [ 'month' ];
 
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
+    
+    public static function processedByDate($firstDate, $lastDate)
+    {
+        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
+            ->whereStateId(2)
+            ->orderBy('processed_at', 'ASC')
+            ->get();
+    }
 
     public function shouldHaveFine()
     {

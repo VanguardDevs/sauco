@@ -871,9 +871,10 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}`,
         "columns": [
-            { data: 'taxpayer.name', name: 'taxpayer.name' },
-            { data: 'month.name', name: 'month.name' },
+            { data: 'id', name: 'id' },
             { data: 'month.year.year', name: 'month.year.year' },
+            { data: 'month.name', name: 'month.name' },
+            { data: 'taxpayer.name', name: 'taxpayer.name' },
             { data: 'processed_at', name: 'processed_at' },
             { data: 'user.login', name: 'user.login' },
             {
