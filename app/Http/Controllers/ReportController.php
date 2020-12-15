@@ -43,13 +43,23 @@ class ReportController extends Controller
                     $query->where('state_id', '=', 1);
                 });
         });
+        $total = $query->count();
+
+        if ($request->has('pdf')) {
+            $businesses = $query->get();
+            $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+            $data = compact(['emissionDate', 'businesses', 'total']);
+    
+            return PDF::LoadView('modules.reports.delinquent-companies.pdf', $data)
+                ->download('empresas-morosas'.$emissionDate.'.pdf');
+        }
 
         if ($request->wantsJson()) {
             return DataTables::eloquent($query)->toJson();
         }
 
         return view('modules.reports.delinquent-companies.index')
-            ->with('totalCompanies', $query->count());
+            ->with('totalCompanies', $total);
     }
 
     public function printPaymentReport(Request $request)

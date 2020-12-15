@@ -16,6 +16,13 @@
                         {{ $totalCompanies }} Empresas morosas
                     </h3>
                 </div>
+                <div class="kt-portlet__head-toolbar">
+                @if (Auth()->user()->can('print.reports'))
+                    <a href="{{ Route('reports.delinquent-companies', ['pdf' => true]) }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Imprimir listado" target='_blank'>
+                        <i class="fas fa-print"></i>
+                    </a>
+                @endif
+                </div>
            </div>
            <div class="kt-portlet__body">
               <table id="tDelinquentCompanies" class="table table-bordered table-striped datatables" style="text-align: center">
