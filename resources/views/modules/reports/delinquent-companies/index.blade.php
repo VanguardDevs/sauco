@@ -1,8 +1,9 @@
 @extends('layouts.template')
 
-@section('title', 'Declaraciones recibidas')
+@section('title', 'Empresas morosas')
 
 @section('content')
+
 <div class="row">
     <div class="col-lg-12">
         <div class="kt-portlet">
@@ -12,20 +13,17 @@
                         <i class="kt-font-brand fas fa-file-medical"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Declaraciones recibidas
+                        {{ $totalCompanies }} Empresas morosas
                     </h3>
                 </div>
            </div>
            <div class="kt-portlet__body">
-              <table id="tAffidavits" class="table table-bordered table-striped datatables" style="text-align: center">
+              <table id="tDelinquentCompanies" class="table table-bordered table-striped datatables" style="text-align: center">
                     <thead>
                         <tr>
-                            <th width="5%">ID</th>
-                            <th width="10%">Mes</th>
-                            <th width="10%">Año</th>
+                            <th width="15%">RIF</th>
                             <th width="40%">Razón Social</th>
-                            <th width="15%">Recibida</th>
-                            <th width="15%">Usuario</th>
+                            <th width="30%">Dirección</th>
                             <th width="15%">Acciones</th>
                         </tr>
                     </thead>
@@ -36,3 +34,7 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script type="text/javascript" src="{{ URL::asset('assets/js/delinquent-companies.js') }}"></script>
+@endpush

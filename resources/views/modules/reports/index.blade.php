@@ -58,13 +58,13 @@
                             </div>
                         </div>
                     </a>
-                    <a class="kt-notification__item" href="{{ route('affidavits.index') }}">
+                    <a class="kt-notification__item" href="{{ route('reports.delinquent-companies') }}">
                         <div class="kt-notification__item-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
-                                Morosidad 
+                                Empresas morosas 
                             </div>
                         </div>
                     </a>

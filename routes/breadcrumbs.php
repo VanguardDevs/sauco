@@ -14,6 +14,11 @@ Breadcrumbs::for('cancelled-fines.index', function ($trail) {
     $trail->push('Multas anuladas ', route('cancelled-fines.index'));
 });
 
+Breadcrumbs::for('reports.delinquent-companies', function ($trail) {
+    $trail->parent('reports');
+    $trail->push('Empresas morosas', route('reports.delinquent-companies'));
+});
+
 Breadcrumbs::for('affidavits.index', function ($trail) {
     $trail->parent('reports');
     $trail->push('Declaraciones', route('affidavits.index'));

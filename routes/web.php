@@ -118,6 +118,8 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Handle reports
      */
     Route::group(['middleware' => 'can:print.reports'], function() {
+        Route::post('reports/affidavits', 'ReportController@printAffidavitsReport')
+            ->name('print.affidavits.report');
         Route::post('reports/payment-report', 'ReportController@printPaymentReport')
             ->name('print.payments.report');
         Route::get('economic-activities/{activity}/download', 'ReportController@printActivityReport')
@@ -128,6 +130,9 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('print.activities');
         Route::get('reports/taxpayers/up-to-date/print', 'ReportController@printUpToDate')
             ->name('print.uptodate.taxpayers');
+        
+        Route::get('reports/delinquent-companies', 'ReportController@delinquentCompanies')
+            ->name('reports.delinquent-companies');
     });
     Route::get('payments/processed/list', 'PaymentController@listProcessed');
     Route::get('reports/payments', 'ReportController@payments')->name('report.payments');

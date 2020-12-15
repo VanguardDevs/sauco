@@ -35,16 +35,21 @@ class ReportController extends Controller
         return view('modules.reports.payments.payments');
     }
 
-    public function showUpToDateTaxpayers()
+    public function delinquentCompanies(Request $request)
     {
-        return view('modules.reports.up-to-date-taxpayers');
-    }
+        $query = Taxpayer::whereHas('affidavits', function ($query) {
+            $query->whereDoesntHave('payment')
+                ->orWhereHas('payment', function ($query) {
+                    $query->where('state_id', '=', 1);
+                });
+        });
 
-    public function listUpToDate()
-    {
-        $taxpayers = $this->upToDateTaxpayers();
+        if ($request->wantsJson()) {
+            return DataTables::eloquent($query)->toJson();
+        }
 
-        return DataTables::eloquent($taxpayers)->toJson();
+        return view('modules.reports.delinquent-companies.index')
+            ->with('totalCompanies', $query->count());
     }
 
     public function printPaymentReport(Request $request)
@@ -105,17 +110,6 @@ class ReportController extends Controller
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.reports.pdf.activity', $data)
             ->download('reporte-actividad-'.$activity->code.'.pdf');
-    }
-
-    public function upToDateTaxpayers()
-    {
-        $taxpayers = Taxpayer::whereHas('affidavits', function ($affidavit) {
-            $affidavit->whereHas('payment', function ($payment) {
-                $payment->where('state_id', '=', 2);
-            })->where('month_id', '=', 3);
-        });
-
-        return $taxpayers;
     }
 
     public function printActivitiesReport()
