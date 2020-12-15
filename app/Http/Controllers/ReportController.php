@@ -37,12 +37,13 @@ class ReportController extends Controller
 
     public function delinquentCompanies(Request $request)
     {
-        $query = Taxpayer::whereHas('affidavits', function ($query) {
-            $query->whereDoesntHave('payment')
-                ->orWhereHas('payment', function ($query) {
-                    $query->where('state_id', '=', 1);
-                });
-        });
+        $query = Taxpayer::whereDoesntHave('affidavits')
+            ->orWhereHas('affidavits', function ($query) {
+                $query->whereDoesntHave('payment')
+                    ->orWhereHas('payment', function ($query) {
+                        $query->where('state_id', '=', 1);
+                    });
+            });
         $total = $query->count();
 
         if ($request->has('pdf')) {
