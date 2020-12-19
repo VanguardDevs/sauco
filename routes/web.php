@@ -261,4 +261,3 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::resource('affidavits', 'AffidavitController');
 });
->>>>>>> master
