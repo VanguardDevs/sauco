@@ -19,7 +19,8 @@ class Affidavit extends Model implements Auditable
     protected $table = 'affidavits';
 
     protected $fillable = [
-        'amount',
+        'total_calc_amount',
+        'total_brute_amount',
         'taxpayer_id',
         'user_id',
         'month_id'
