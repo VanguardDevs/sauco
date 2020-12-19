@@ -33,35 +33,28 @@ class Affidavit extends Model implements Auditable
         'pretty_amount',
         'brute_amount_affidavit'
     ];
-
-    /**
-    * Check if this affidavit fills an exception for fine
-    * 
-     */
-    public function hasException()
+    
+    public static function processedByDate($firstDate, $lastDate)
     {
-        if ($this->taxpayer->hasException()) {
-            return true;
-        }
-
-        return false;
+        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
+            ->whereStateId(2)
+            ->orderBy('processed_at', 'ASC')
+            ->get();
     }
 
     public function shouldHaveFine()
     {
-        if (!$this->hasException()) {
-            $startPeriod = Carbon::parse($this->month->start_period_at);
-            $todayDate = Carbon::now();
-            $passedDays = $startPeriod->diffInDays($todayDate);
+        $startPeriod = Carbon::parse($this->month->start_period_at);
+        $todayDate = Carbon::now();
+        $passedDays = $startPeriod->diffInDays($todayDate);
 
-            if ($passedDays > 60) {
-                return [
-                    Concept::whereCode(3)->first(),
-                    Concept::whereCode(3)->first(),
-                ]; 
-            } else if ($passedDays > 45) {
-               return [Concept::whereCode(3)->first()]; 
-            }
+        if ($passedDays > 60) {
+            return [
+                Concept::whereCode(3)->first(),
+                Concept::whereCode(3)->first(),
+            ]; 
+        } else if ($passedDays > 45) {
+            return [Concept::whereCode(3)->first()]; 
         }
 
         return false;
