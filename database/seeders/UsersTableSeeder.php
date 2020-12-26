@@ -27,13 +27,11 @@ class UsersTableSeeder extends Seeder
             'slug'     =>  'admin',
             'special'  =>  'all-access'
         ]);
-        /**
-         *
-         */
+
         $roles = Role::all();
-        /***/
+        
      	User::All()->each(function ($user) use ($roles) {
-	        $user->roles()->saveMany($roles);
-	   	});
+            $user->roles()->saveMany($roles);
+        });
     }
 }

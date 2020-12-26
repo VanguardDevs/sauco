@@ -11,7 +11,7 @@
 |
 */
 
-Route::view('/{route?}', 'app')->where('route', '.*');
+Auth::routes();
 
 Route::get('/', function () {
     if (Auth::check()) {
