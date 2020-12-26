@@ -118,6 +118,24 @@ function onSelectYears() {
   });
 }
 
+function onSelectBuildingOwner() {
+  let selected = $(this).children('option:selected').html();
+  let contract = $('#contract');
+  let document = $('#document');
+
+  // Show contract input
+  if (selected == "ALQUILADO") {
+      contract.show();
+      document.hide();
+  } else if (selected == "PROPIO") {
+      contract.hide();
+      document.show();
+  } else {
+      contract.hide();
+      document.hide();
+  }
+}
+
 /*----------  Uppercase  ----------*/
 function upperCase(e) {
   e.value = e.value.toUpperCase();
@@ -394,6 +412,32 @@ $(document).ready(function() {
                     <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/people/${oData.id}/edit title='Editar'>
                             <i class='btn-sm btn-warning fas fa-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tUpToDateTaxpayers').DataTable({
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/reports/taxpayers/up-to-date/list",
+        "columns": [
+            { data: 'rif'},
+            { data: 'name'},
+            { data: 'fiscal_address'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.id} title='Ver información'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`
                     );
