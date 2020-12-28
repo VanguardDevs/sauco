@@ -6,7 +6,6 @@ use App\CommercialDenomination;
 use App\EconomicActivity;
 use App\TaxpayerType;
 use App\TaxpayerClassification;
-use App\Person;
 use App\Taxpayer;
 use App\License;
 use App\Community;
@@ -31,21 +30,15 @@ class TaxpayerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $numPersons = Person::get()->count();
-        $numLicenses = License::get()->count();
+        if ($request->wantsJson()) {
+            $query = Taxpayer::query();
 
-        return view('modules.taxpayers.index')
-            ->with('numPersons', $numPersons)
-            ->with('numLicenses', $numLicenses);
-    }
+            return DataTables::eloquent($query)->toJson();
+        }
 
-    public function list()
-    {
-        $query = Taxpayer::query();
-
-        return DataTables::eloquent($query)->toJson();
+        return view('modules.taxpayers.index');
     }
 
     public function getRepresentations(Taxpayer $taxpayer)
