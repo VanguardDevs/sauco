@@ -1,9 +1,11 @@
 <?php
 
-use App\TaxpayerType;
+namespace Database\Seeders;
+
+use App\Models\TaxpayerType;
 use Illuminate\Database\Seeder;
 
-class TaxpayerTypesTableSeeder extends Seeder
+class TaxpayerTypeSeeder extends Seeder
 {
     private $types = Array(
         'JURÍDICO' => 'J-',
