@@ -21,6 +21,7 @@ class CreateAffidavitsTable extends Migration
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamp('processed_at');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

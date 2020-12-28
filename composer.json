@@ -18,10 +18,12 @@
         "laravel/framework": "^8.0",
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
+        "laravel/ui": "^3.1",
         "laravelcollective/html": "^6.2",
         "maatwebsite/excel": "^3.1",
         "owen-it/laravel-auditing": "^11.0",
         "realrashid/sweet-alert": "^3.2",
+        "spatie/laravel-permission": "^3.18",
         "yajra/laravel-datatables-oracle": "^9.15"
     },
     "require-dev": {
