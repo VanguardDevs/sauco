@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 class TaxpayerClassificationSeeder extends Seeder
 {
     protected $classifications = Array(
-        'ORDINARIO', 'FORMAL', 'ESPECIAL'
+        'Ordinario', 'Formal', 'Especial'
     );
 
     /**

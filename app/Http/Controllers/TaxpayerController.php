@@ -6,12 +6,12 @@ use App\CommercialDenomination;
 use App\EconomicActivity;
 use App\Models\TaxpayerType;
 use App\Models\TaxpayerClassification;
-use App\Taxpayer;
+use App\Models\Taxpayer;
 use App\License;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
-use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
+use App\Http\Requests\Taxpayers\TaxpayersCreateRequest;
 use App\Http\Requests\Taxpayers\TaxpayersUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
@@ -75,32 +75,17 @@ class TaxpayerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TaxpayersCreateFormRequest $request)
+    public function store(TaxpayersCreateRequest $request)
     {
         $type = $request->input('taxpayer_type_id');
-        $denomination = $request->input('personal_firm');
 
         if (Taxpayer::existsRif($request->input('rif'))) {
-            dd("Ya existe el rif");
             return redirect('taxpayers/create')
                 ->withInput($request->input())
                 ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
         }
 
-        if ($type != 1 && empty($denomination)) {
-            return redirect()->route('taxpayers.create')
-                ->withInput($request->input())
-                ->withError('¡Ingrese la denominación comercial!');
-        }
-
         $taxpayer = Taxpayer::create($request->input());
-
-        if (!empty($denomination)) {
-            CommercialDenomination::create([
-                'name' => $denomination,
-                'taxpayer_id' => $taxpayer->id
-            ]);
-        }
 
         return redirect()->route('taxpayers.show', $taxpayer)
             ->withSuccess('¡Contribuyente registrado!');

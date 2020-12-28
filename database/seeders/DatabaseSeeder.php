@@ -17,10 +17,15 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesAndPermissionsSeeder::class);
         $this->call(TaxpayerTypeSeeder::class);
         $this->call(TaxpayerClassificationSeeder::class);
+        $this->call(StatusSeeder::class);
 
         // Testing
         if (App::environment() == 'local') {
             $this->call(UserSeeder::class);
+            $this->call(PaymentTypeSeeder::class);
+            $this->call(PaymentMethodSeeder::class);
+            $this->call(RepresentationTypeSeeder::class);
+            $this->call(GeographicAreaSeeder::class);
         }
 
         if (App::environment() == 'production') {

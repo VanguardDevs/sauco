@@ -1,24 +1,24 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentMethod extends Model
+class PaymentType extends Model
 {
-    protected $table = 'payment_methods';
+    protected $table = 'payment_types';
 
     protected $fillable = [
-        'name'
+        'description'
     ];
 
     public function payments()
     {
         return $this->hasMany(Payment::class);
     }
-    
+
     public function scopeExceptNull($query)
     {
-        return $query->where('name', '!=', 'S/N')->pluck('name', 'id');
+        return $query->where('description', '!=', 'S/N')->pluck('description', 'id');
     }
 }

@@ -1,13 +1,15 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\PaymentMethod;
+namespace Database\Seeders;
 
-class PaymentMethodsTableSeeder extends Seeder
+use Illuminate\Database\Seeder;
+use App\Models\PaymentMethod;
+
+class PaymentMethodSeeder extends Seeder
 {
     protected $methods = Array(
-        'S/N', 'TRANSFERENCIA', 'EFECTIVO',
-        'DÉBITO', 'CRÉDITO', 'DEPÓSITO'
+        'Transferencia', 'Efectivo',
+        'Débito', 'Crédito', 'Depósito'
     );
 
     /**

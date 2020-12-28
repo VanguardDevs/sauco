@@ -1,12 +1,14 @@
 <?php
 
-use App\RepresentationType;
+namespace Database\Seeders;
+
+use App\Models\RepresentationType;
 use Illuminate\Database\Seeder;
 
-class RepresentationTypesTableSeeder extends Seeder
+class RepresentationTypeSeeder extends Seeder
 {
     protected $types = [
-        'GESTOR', 'PRESIDENTE', 'SOCIO'
+        'Gestor', 'Presidente', 'Socio', 'Contador'
     ];
 
     /**

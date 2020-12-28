@@ -1,16 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Taxpayer extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable, SoftDeletes, HasFactory;
 
     protected $table = 'taxpayers';
 
@@ -18,10 +17,10 @@ class Taxpayer extends Model implements Auditable
         'rif',
         'name',
         'address',
-        'fiscal_address',
         'phone',
         'email',
         'community_id',
+        'municipality_id',
         'taxpayer_type_id',
         'taxpayer_classification_id',
     ];
@@ -123,5 +122,10 @@ class Taxpayer extends Model implements Auditable
     public function taxpayerClassification()
     {
         return $this->belongsTo(TaxpayerClassification::class);
+    }
+
+    public function municipality()
+    {
+        return $this->belongsTo(Municipality::class);
     }
 }
