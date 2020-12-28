@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PaymentMethod;
+use App\Models\TaxpayerType;
 use Illuminate\Http\Request;
 
-class PaymentMethodController extends Controller
+class TaxpayerTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class PaymentMethodController extends Controller
      */
     public function index(Request $request)
     {
-        return view('modules.payment-methods.index');
+        //
     }
 
     /**
@@ -24,8 +24,7 @@ class PaymentMethodController extends Controller
      */
     public function create()
     {
-        return view('modules.payment-methods.register')
-            ->with('typeForm', 'create');
+        //
     }
 
     /**
@@ -36,19 +35,16 @@ class PaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        $method = PaymentMethod::create($request->all());
-
-        return redirect('settings/payment-methods')
-            ->withSuccess('¡Método creado!');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\PaymentMethod  $paymentMethod
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PaymentMethod $paymentMethod)
+    public function show(TaxpayerType $taxpayerType)
     {
         //
     }
@@ -56,39 +52,33 @@ class PaymentMethodController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\PaymentMethod  $paymentMethod
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(PaymentMethod $paymentMethod)
+    public function edit($id)
     {
-        return view('modules.payment-methods.register')
-            ->with('typeForm', 'edit')
-            ->with('row', $paymentMethod);
+        //
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PaymentMethod  $paymentMethod
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PaymentMethod $paymentMethod)
+    public function update(Request $request, TaxpayerType $taxpayerType)
     {
-        $edit = PaymentMethod::find($paymentMethod->id);
-        $edit->update($request->all());
-
-        return redirect('settings/payment-methods')
-            ->withSuccess('¡Método de pago actualizado!');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\PaymentMethod  $paymentMethod
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaymentMethod $paymentMethod)
+    public function destroy(TaxpayerType $taxpayerType)
     {
         //
     }

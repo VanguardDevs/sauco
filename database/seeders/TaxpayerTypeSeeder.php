@@ -8,10 +8,10 @@ use Illuminate\Database\Seeder;
 class TaxpayerTypeSeeder extends Seeder
 {
     private $types = Array(
-        'JURÍDICO' => 'J-',
-        'NATURAL' => 'N-',
-        'EXTRANJERO' => 'E-',
-        'GUBERNAMENTAL' => 'G-'
+        'Jurídico' => 'J-',
+        'Natural' => 'N-',
+        'Extranjero' => 'E-',
+        'Gubernamental' => 'G-'
     );
 
     /**

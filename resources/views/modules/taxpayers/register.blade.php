@@ -83,21 +83,6 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
- 
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Firma personal o denominación comercial</label>
-
-                            {!!
-                            Form::text("personal_firm", old('personal_firm', @$row->commercialDenomination->name), [
-                                "class" => "form-control",
-                                "onkeyup" => "upperCase(this);"
-                            ])
-                            !!}
-
-                            @error('personal_firm')
-                            <div class="text text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
@@ -185,7 +170,7 @@
                             <label class="control-label"> Dirección <span class="text-danger">*</span></label>
 
                             {!!
-                            Form::text("fiscal_address", (isset($row->fiscal_address) ? $row->getOriginal('fiscal_address') : null), [
+                            Form::text("address", (isset($row->address) ? $row->getOriginal('fiscal_address') : null), [
                                 "Placeholder" => "Calle o avenida, # Nro. del edificio",
                                 "class" => "form-control",
                                 "onkeyup" => "upperCase(this);",
@@ -193,7 +178,7 @@
                             ])
                             !!}
 
-                            @error('fiscal_address')
+                            @error('address')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>

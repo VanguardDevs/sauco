@@ -1,12 +1,14 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\PaymentType;
+namespace Database\Seeders;
 
-class PaymentTypesTableSeeder extends Seeder
+use Illuminate\Database\Seeder;
+use App\Models\PaymentType;
+
+class PaymentTypeSeeder extends Seeder
 {
     protected $types = Array(
-        'S/N', 'DIVISA', 'DÉBITO', 'CRÉDITO', 'DEPÓSITO'
+        'Divisa', 'Débito', 'Crédito', 'Depósito'
     );
 
     /**
