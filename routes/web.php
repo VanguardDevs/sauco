@@ -41,7 +41,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Only Admin routes
      */
-    Route::group(['middleware' => ['role:Admin']], function () {
+    Route::group(['middleware' => ['permission:access.settings']], function () {
         /** General Settings */
         Route::get('settings', 'ShowSettings')->name('settings');
 
@@ -101,7 +101,6 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
     /*----------  Routes economic activities  ----------*/
-    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
     Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
     Route::resource('economic-activities', 'EconomicActivityController');
 
@@ -193,12 +192,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
     /**
-     * Taxpayer's old payments
-     */
-    Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
-        ->name('taxpayer.old-payments');
-
-    /**
      * Taxpayer's permits
      */
     Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
@@ -240,7 +233,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@byTaxpayer')->name('taxpayer.affidavits');
     Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
-    Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
     Route::resource('taxpayers', 'TaxpayerController');
 
     /** 

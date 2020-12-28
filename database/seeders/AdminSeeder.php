@@ -23,9 +23,7 @@ class AdminSeeder extends Seeder
             'password' => bcrypt(env('ADMIN_PASSWORD', 'qwerty123')),
             'active' => true 
         ]);
-
-        $role = Role::create(['name' => 'Admin']);
         
-        $user->syncRoles([$role]);
+        $user->syncRoles([Role::whereName('Root')->first()]);
     }
 }

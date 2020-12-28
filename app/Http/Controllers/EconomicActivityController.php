@@ -6,6 +6,8 @@ use App\ActivityClassification;
 use App\EconomicActivity;
 use App\Taxpayer;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Http\Request;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
 
@@ -13,10 +15,9 @@ class EconomicActivityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('has.role:admin')->only([
+        $this->middleware('permission:create.economic-activities')->only([
             'create', 'store', 'edit', 'update', 'destroy'
         ]);
-        return $this->middleware('auth');
     }
 
     /**
@@ -24,14 +25,15 @@ class EconomicActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.economic-activities.index');
-    }
+        if ($request->wantsJson()) {
+            $query = EconomicActivity::query();
 
-    public function list()
-    {
-        $query = EconomicActivity::query();
+            return DataTables::eloquent($query)->toJson();
+        }
+
+        return view('modules.economic-activities.index');
     }
 
     /**

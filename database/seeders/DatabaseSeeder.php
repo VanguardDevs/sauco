@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RolesAndPermissionsSeeder::class);
+
         if (App::environment() == 'local') {
             $this->call(UserSeeder::class);
         }

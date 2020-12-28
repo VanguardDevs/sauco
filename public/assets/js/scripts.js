@@ -364,7 +364,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/economic-activities/list",
+        "ajax": baseURL + "/economic-activities",
         "columns": [
             { data: 'code'},
             { data: 'name'},
@@ -452,7 +452,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/taxpayers/list",
+        "ajax": baseURL + "/taxpayers",
         "columns": [
             { data: 'rif'},
             { data: 'name'},
