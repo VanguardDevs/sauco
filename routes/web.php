@@ -30,7 +30,6 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Available for all users logged in
      */
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-    Route::get('about', 'ShowAbout')->name('about');
     
     // API ROUTES
     Route::get('api/taxpayers/{taxpayer}/representations', 'TaxpayerController@getRepresentations');
