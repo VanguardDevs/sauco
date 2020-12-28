@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,4 +12,9 @@ class TaxpayerType extends Model
         'description',
         'correlative'
     ];
+
+    public function taxpayers()
+    {
+        return $this->hasMany(Taxpayer::class);
+    }
 }

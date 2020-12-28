@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\CommercialDenomination;
 use App\EconomicActivity;
-use App\TaxpayerType;
-use App\TaxpayerClassification;
+use App\Models\TaxpayerType;
+use App\Models\TaxpayerClassification;
 use App\Taxpayer;
 use App\License;
-use App\Community;
+use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;

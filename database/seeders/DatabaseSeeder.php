@@ -15,7 +15,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(TaxpayerTypeSeeder::class);
+        $this->call(TaxpayerClassificationSeeder::class);
 
+        // Testing
         if (App::environment() == 'local') {
             $this->call(UserSeeder::class);
         }

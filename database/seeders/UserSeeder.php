@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\User;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -14,18 +15,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        /**
-        Role::create([
-            'name'     =>  'ADMIN',
-            'slug'     =>  'admin',
-            'special'  =>  'all-access'
-        ]);
+        $roles = Role::get();
 
-        $roles = Role::all();
-        
-     	User::All()->each(function ($user) use ($roles) {
-            $user->roles()->saveMany($roles);
-        });
-        **/
+        foreach($roles as $role) {
+            $user = User::factory()->create();
+            $user->syncRoles($role);
+        }
     }
 }
