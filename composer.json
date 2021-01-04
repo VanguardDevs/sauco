@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "barryvdh/laravel-dompdf": "^0.8.7",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
@@ -21,7 +21,7 @@
         "laravel/ui": "^3.1",
         "laravelcollective/html": "^6.2",
         "maatwebsite/excel": "^3.1",
-        "owen-it/laravel-auditing": "^11.0",
+        "owen-it/laravel-auditing": "^12.0",
         "realrashid/sweet-alert": "^3.2",
         "spatie/laravel-permission": "^3.18",
         "watson/active": "^6.0",
