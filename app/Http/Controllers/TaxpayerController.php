@@ -8,6 +8,7 @@ use App\Models\TaxpayerType;
 use App\Models\TaxpayerClassification;
 use App\Models\Taxpayer;
 use App\License;
+use App\Models\State;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
@@ -65,6 +66,7 @@ class TaxpayerController extends Controller
         return view('modules.taxpayers.register')
             ->with('types', TaxpayerType::pluck('description', 'id'))
             ->with('classifications', TaxpayerClassification::pluck('name', 'id'))
+            ->with('states', State::pluck('name', 'id'))
             ->with('communities', Community::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }

@@ -12,7 +12,6 @@ $("#form").closest('form').on('submit', function(e) {
 $(function () {
     $('#applications').on('change', onSelectApplications);
     $('#fines').on('change', onSelectFines);
-    $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#payment_methods').on('change', onSelectPaymentType);
     $('#years').on('change', onSelectYears);
@@ -41,18 +40,6 @@ const handleRequest = url => {
           })
       }
   });
-}
-
-function onSelectTaxpayerType() {
-  let selected = $(this).children('option:selected').val();
-  let commercialDenomination = $('#commercial_denomination');
-
-  // Show commercial denomination input
-  if (selected !== "1") {
-      commercialDenomination.show();
-  } else {
-      commercialDenomination.hide();
-  }
 }
 
 function onSelectPaymentType() {
@@ -118,24 +105,6 @@ function onSelectYears() {
   });
 }
 
-function onSelectBuildingOwner() {
-  let selected = $(this).children('option:selected').html();
-  let contract = $('#contract');
-  let document = $('#document');
-
-  // Show contract input
-  if (selected == "ALQUILADO") {
-      contract.show();
-      document.hide();
-  } else if (selected == "PROPIO") {
-      contract.hide();
-      document.show();
-  } else {
-      contract.hide();
-      document.hide();
-  }
-}
-
 /*----------  Uppercase  ----------*/
 function upperCase(e) {
   e.value = e.value.toUpperCase();
@@ -158,7 +127,7 @@ const nullRecord = (id, url) => {
           resolve({
             answer: $('#annullmentReason').val()
           });
-        }); 
+        });
       }
     }).then(result => {
         if (result.value) {
@@ -498,7 +467,7 @@ $(document).ready(function() {
             }
         ]
     });
-    
+
     $('#tTaxpayersByEconomicActivity').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -613,7 +582,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/tax-units/list",
+        "ajax": baseURL + "/tax-units",
         "columns": [
             { data: 'id'},
             { data: 'law'},
@@ -763,7 +732,7 @@ $(document).ready(function() {
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>               
+                        </a>
                     </div>`
                     );
                 }
@@ -794,7 +763,7 @@ $(document).ready(function() {
                       </a>
                       <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
+                      </a>
                     </div>`
                     );
                 }
@@ -820,7 +789,7 @@ $(document).ready(function() {
                     <div class="btn-group">
                       <a class="mr-2" onClick="nullRecord(${oData.id},'withholdings')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
+                      </a>
                     </div>`
                     );
                 }

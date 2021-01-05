@@ -25,20 +25,6 @@
                 @endif
                     <div class="kt-portlet__body">
                         <div class="form-group row">
-                            <div class="col-lg-12">
-                                <label class="control-label">Clasificación <span class="text-danger">*</span></label>
-                                
-                                    {!! 
-                                        Form::select('activity_classification_id', @$classifications, 
-                                        (isset($row->activityClassification) ? $row->activityClassification->id : null),                                            ['class' => 'form-control select2', 'required', 'placeholder' => 'SELECCIONE']) 
-                                    !!}
-                                
-                                @error('activity_classification_id')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror 
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             @if ($typeForm == 'create')
                             <div class="col-lg-3">
                                 <label>Código <span class="text-danger">*</span></label>
@@ -58,6 +44,17 @@
                                 {!! Form::text('name', old('name', @$row->name), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
                                 @error('name')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <label> Descripción <span class="text-danger">*</span></label>
+
+                                {!! Form::textarea('description', old('description', @$row->aliquote), ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+
+                                @error('description')
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

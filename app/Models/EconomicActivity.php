@@ -1,22 +1,23 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EconomicActivity extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $table = 'economic_activities';
 
     protected $fillable = [
         'code',
         'name',
+        'description',
         'aliquote',
         'min_tax',
-        'activity_classification_id'
     ];
 
     protected $appends = ['fullName'];
@@ -40,7 +41,7 @@ class EconomicActivity extends Model
     {
         return $this->belongsTo(ActivityClassification::class);
     }
-    
+
     public function getFullNameAttribute()
     {
         return "{$this->code} - {$this->attributes['name']}";

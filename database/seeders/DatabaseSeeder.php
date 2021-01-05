@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             $this->call(PaymentMethodSeeder::class);
             $this->call(RepresentationTypeSeeder::class);
             $this->call(GeographicAreaSeeder::class);
+            $this->call(SettingsSeeder::class);
         }
 
         if (App::environment() == 'production') {
