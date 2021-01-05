@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\TaxpayerClassification;
+use App\Models\TaxpayerClassification;
 use Illuminate\Http\Request;
 
 class TaxpayerClassificationController extends Controller

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Municipality;
+use App\Models\Municipality;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MunicipalityFactory extends Factory
@@ -24,7 +24,6 @@ class MunicipalityFactory extends Factory
         return [
             'code' => $this->faker->unique()->randomLetter,
             'name' => $this->faker->name,
-            'state_id' => 1
         ];
     }
 }

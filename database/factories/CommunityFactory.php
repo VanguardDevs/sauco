@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Community;
+use App\Models\Community;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommunityFactory extends Factory
@@ -22,7 +22,7 @@ class CommunityFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name 
+            'name' => $this->faker->name
         ];
     }
 }

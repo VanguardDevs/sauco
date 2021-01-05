@@ -2,17 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Status;
+use App\Models\Status;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder
 {
     protected $states = Array(
-        'Pendiente',
-        'Aprobado',
-        'Por confirmar',
-        'Anulado',
-        'Procesado' 
+        'Pendiente', 'Procesado', 'Anulado', 'Confirmado'
     );
 
     /**
