@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Community;
+use App\Models\Community;
 use App\Http\Requests\Communities\CommunitiesCreateFormRequest;
 use App\Http\Requests\Communities\CommunitiesUpdateFormRequest;
 use App\Parish;
