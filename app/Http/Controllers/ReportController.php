@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Payment;
+use App\Affidavit;
 use App\Taxpayer;
 use App\EconomicActivity;
 use App\License;
@@ -33,9 +34,32 @@ class ReportController extends Controller
         return view('modules.reports.payments.payments');
     }
 
-    public function showUpToDateTaxpayers()
+    public function delinquentCompanies(Request $request)
     {
-        return view('modules.reports.up-to-date-taxpayers');
+        $query = Taxpayer::whereDoesntHave('affidavits')
+            ->orWhereHas('affidavits', function ($query) {
+                $query->whereDoesntHave('payment')
+                    ->orWhereHas('payment', function ($query) {
+                        $query->where('state_id', '=', 1);
+                    });
+            });
+        $total = $query->count();
+
+        if ($request->has('pdf')) {
+            $businesses = $query->get();
+            $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+            $data = compact(['emissionDate', 'businesses', 'total']);
+    
+            return PDF::LoadView('modules.reports.delinquent-companies.pdf', $data)
+                ->download('empresas-morosas'.$emissionDate.'.pdf');
+        }
+
+        if ($request->wantsJson()) {
+            return DataTables::eloquent($query)->toJson();
+        }
+
+        return view('modules.reports.delinquent-companies.index')
+            ->with('totalCompanies', $total);
     }
 
     public function printPaymentReport(Request $request)
@@ -44,6 +68,22 @@ class ReportController extends Controller
         $lastDate = Carbon::parse($request->input('last_date'));
 
         $payments = Payment::processedByDate($firstDate, $lastDate);
+
+        // Prepare pdf
+        $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 
+        $totalAmount = $payments->sum('amount');
+        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+
+        $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
+        return $pdf->download('reporte-de-pagos.pdf');
+    }
+
+    public function printAffidavitsReport(Request $request)
+    {
+        $firstDate = Carbon::parse($request->input('first_date'));
+        $lastDate = Carbon::parse($request->input('last_date'));
+
+        $payments = Affidavit::processedByDate($firstDate, $lastDate);
 
         // Prepare pdf
         $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 
@@ -80,17 +120,6 @@ class ReportController extends Controller
         return PDF::setOptions(['isRemoteEnabled' => true])
             ->loadView('modules.reports.pdf.activity', $data)
             ->download('reporte-actividad-'.$activity->code.'.pdf');
-    }
-
-    public function upToDateTaxpayers()
-    {
-        $taxpayers = Taxpayer::whereHas('affidavits', function ($affidavit) {
-            $affidavit->whereHas('payment', function ($payment) {
-                $payment->where('state_id', '=', 2);
-            })->where('month_id', '=', 3);
-        });
-
-        return $taxpayers;
     }
 
     public function printActivitiesReport()
