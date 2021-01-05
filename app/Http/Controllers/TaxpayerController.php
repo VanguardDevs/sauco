@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\EconomicActivity;
-use App\TaxpayerType;
-use App\TaxpayerClassification;
-use App\Taxpayer;
+use App\Models\TaxpayerType;
+use App\Models\TaxpayerClassification;
+use App\Models\Taxpayer;
 use App\License;
-use App\Community;
+use App\Models\State;
+use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
-use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
+use App\Http\Requests\Taxpayers\TaxpayersCreateRequest;
 use App\Http\Requests\Taxpayers\TaxpayersUpdateFormRequest;
+use Yajra\DataTables\Facades\DataTables;
 use PDF;
 
 class TaxpayerController extends Controller
@@ -21,21 +22,15 @@ class TaxpayerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $numPersons = Person::get()->count();
-        $numLicenses = License::get()->count();
+        if ($request->wantsJson()) {
+            $query = Taxpayer::query();
 
-        return view('modules.taxpayers.index')
-            ->with('numPersons', $numPersons)
-            ->with('numLicenses', $numLicenses);
-    }
+            return DataTables::eloquent($query)->toJson();
+        }
 
-    public function list()
-    {
-        $query = Taxpayer::query();
-
-        return DataTables::eloquent($query)->toJson();
+        return view('modules.taxpayers.index');
     }
 
     public function getRepresentations(Taxpayer $taxpayer)
@@ -62,6 +57,7 @@ class TaxpayerController extends Controller
         return view('modules.taxpayers.register')
             ->with('types', TaxpayerType::pluck('description', 'id'))
             ->with('classifications', TaxpayerClassification::pluck('name', 'id'))
+            ->with('states', State::pluck('name', 'id'))
             ->with('communities', Community::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
@@ -72,14 +68,20 @@ class TaxpayerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaxpayersCreateRequest $request)
     {
+        $type = $request->input('taxpayer_type_id');
+
+        if (Taxpayer::existsRif($request->input('rif'))) {
+            return redirect('taxpayers/create')
+                ->withInput($request->input())
+                ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
+        }
+
         $taxpayer = Taxpayer::create($request->input());
 
-        return response()->json([
-            'message' => '¡Contribuyente registrado!',
-            'data' => $taxpayer
-        ]);
+        return redirect()->route('taxpayers.show', $taxpayer)
+            ->withSuccess('¡Contribuyente registrado!');
     }
 
     public function downloadDeclarations(Taxpayer $taxpayer)

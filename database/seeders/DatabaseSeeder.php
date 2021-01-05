@@ -14,30 +14,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(TaxpayerTypeSeeder::class);
+        $this->call(TaxpayerClassificationSeeder::class);
         $this->call(StatusSeeder::class);
-        $this->call(TaxpayerTypesSeeder::class);
-        $this->call(TaxpayerClassificationsSeeder::class);
-        $this->call(OrdinancesSeeder::class);
-        $this->call(LiquidationTypesSeeder::class);
-        $this->call(OwnershipStatusSeeder::class);
-        $this->call(RepresentationTypesSeeder::class);
 
-        if (App::environment() == 'testing') {
-            $this->call(TestDatabase::class);
+        // Testing
+        if (App::environment() == 'local') {
+            $this->call(UserSeeder::class);
+            $this->call(PaymentTypeSeeder::class);
+            $this->call(PaymentMethodSeeder::class);
+            $this->call(RepresentationTypeSeeder::class);
+            $this->call(GeographicAreaSeeder::class);
+            $this->call(SettingsSeeder::class);
         }
 
-        /**
-        $this->call(AccountTypesTableSeeder::class);
-        $this->call(PaymentTypesTableSeeder::class);
-        $this->call(ChargingMethodsTableSeeder::class);
-        $this->call(CorrelativeTypesTableSeeder::class);
-        $this->call(ActivityClassificationsTableSeeder::class);
-        $this->call(EconomicActivitiesTableSeeder::class);
-        $this->call(CommunitiesTableSeeder::class); 
-        $this->call(ParishesTableSeeder::class); 
-        $this->call(CommunityParishTableSeeder::class);
-        $this->call(PaymentMethodsTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        **/
+        if (App::environment() == 'production') {
+            $this->call(AdminSeeder::class);
+        }
     }
 }

@@ -15,19 +15,13 @@ class CreateAffidavitsTable extends Migration
     {
         Schema::create('affidavits', function (Blueprint $table) {
             $table->id();
+            $table->decimal('total_brute_amount', 25);
+            $table->decimal('total_calc_amount', 20);
             $table->unsignedBigInteger('month_id');
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamp('processed_at');
-            $table->timestamps();
-        });
-
-        Schema::create('economic_activity_affidavit', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('affidavit_id');
-            $table->unsignedBigInteger('economic_activity_id');
-            $table->decimal('total_amount', 15);
-            $table->decimal('brute_amount', 20);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
