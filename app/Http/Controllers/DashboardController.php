@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Taxpayer;
+use App\Models\Taxpayer;
 use App\Affidavit;
 use App\Payment;
 use App\License;

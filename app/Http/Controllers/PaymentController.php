@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\PaymentMethod;
-use App\PaymentType;
+use App\Models\PaymentMethod;
+use App\Models\PaymentType;
 use App\Payment;
 use App\Fine;
 use App\Concept;
 use App\Reference;
 use App\Liquidation;
 use App\Taxpayer;
-use App\Organization;
 use App\PaymentNull;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -152,7 +151,7 @@ class PaymentController extends Controller
             $vars = ['payment', 'reference', 'denomination'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('modules.cashbox.pdf.payment', compact($vars)) 
+                ->loadView('pdf.payment', compact($vars)) 
                 ->stream('factura-'.$payment->id.'.pdf');
         } else {
             $organization = Organization::first();
