@@ -12,7 +12,6 @@ $("#form").closest('form').on('submit', function(e) {
 $(function () {
     $('#applications').on('change', onSelectApplications);
     $('#fines').on('change', onSelectFines);
-    $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#payment_methods').on('change', onSelectPaymentType);
     $('#years').on('change', onSelectYears);
@@ -41,18 +40,6 @@ const handleRequest = url => {
           })
       }
   });
-}
-
-function onSelectTaxpayerType() {
-  let selected = $(this).children('option:selected').val();
-  let commercialDenomination = $('#commercial_denomination');
-
-  // Show commercial denomination input
-  if (selected !== "1") {
-      commercialDenomination.show();
-  } else {
-      commercialDenomination.hide();
-  }
 }
 
 function onSelectPaymentType() {
@@ -140,7 +127,7 @@ const nullRecord = (id, url) => {
           resolve({
             answer: $('#annullmentReason').val()
           });
-        }); 
+        });
       }
     }).then(result => {
         if (result.value) {
@@ -346,7 +333,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/economic-activities/list",
+        "ajax": baseURL + "/economic-activities",
         "columns": [
             { data: 'code'},
             { data: 'name'},
@@ -402,13 +389,39 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tUpToDateTaxpayers').DataTable({
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/reports/taxpayers/up-to-date/list",
+        "columns": [
+            { data: 'rif'},
+            { data: 'name'},
+            { data: 'fiscal_address'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.id} title='Ver información'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
     $('#tTaxpayers').DataTable({
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/taxpayers/list",
+        "ajax": baseURL + "/taxpayers",
         "columns": [
             { data: 'rif'},
             { data: 'name'},
@@ -454,7 +467,7 @@ $(document).ready(function() {
             }
         ]
     });
-    
+
     $('#tTaxpayersByEconomicActivity').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -569,7 +582,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/tax-units/list",
+        "ajax": baseURL + "/tax-units",
         "columns": [
             { data: 'id'},
             { data: 'law'},
@@ -719,7 +732,7 @@ $(document).ready(function() {
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>               
+                        </a>
                     </div>`
                     );
                 }
@@ -750,7 +763,7 @@ $(document).ready(function() {
                       </a>
                       <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
+                      </a>
                     </div>`
                     );
                 }
@@ -776,7 +789,7 @@ $(document).ready(function() {
                     <div class="btn-group">
                       <a class="mr-2" onClick="nullRecord(${oData.id},'withholdings')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
+                      </a>
                     </div>`
                     );
                 }

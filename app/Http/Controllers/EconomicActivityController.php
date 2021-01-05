@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\ActivityClassification;
-use App\EconomicActivity;
-use App\Taxpayer;
+use App\Models\EconomicActivity;
+use App\Models\Taxpayer;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
-use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
-use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Http\Request;
+use App\Http\Requests\EconomicActivitiesCreateRequest;
 
 class EconomicActivityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('has.role:admin')->only([
+        $this->middleware('permission:create.economic-activities')->only([
             'create', 'store', 'edit', 'update', 'destroy'
         ]);
-        return $this->middleware('auth');
     }
 
     /**
@@ -24,14 +23,15 @@ class EconomicActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.economic-activities.index');
-    }
+        if ($request->wantsJson()) {
+            $query = EconomicActivity::query();
 
-    public function list()
-    {
-        $query = EconomicActivity::query();
+            return DataTables::eloquent($query)->toJson();
+        }
+
+        return view('modules.economic-activities.index');
     }
 
     /**
@@ -42,7 +42,6 @@ class EconomicActivityController extends Controller
     public function create()
     {
         return view('modules.economic-activities.register')
-            ->with('classifications', ActivityClassification::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
 
@@ -52,18 +51,12 @@ class EconomicActivityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EconomicActivitiesCreateFormRequest $request)
+    public function store(EconomicActivitiesCreateRequest $request)
     {
-        $create = EconomicActivity::create([
-            'code' => $request->input('code'),
-            'name' => $request->input('name'),
-            'aliquote' => $request->input('aliquote'),
-            'min_tax' => $request->input('min_tax'),
-            'activity_classification_id' => $request->input('activity_classification_id')
-        ]);
+        $create = EconomicActivity::create($request->all());
 
         return redirect('economic-activities')
-            ->withSuccess('¡Actividad económica registrada!');
+            ->withSuccess('¡Actividad económica guardada!');
     }
 
     /**
@@ -124,10 +117,10 @@ class EconomicActivityController extends Controller
      * @param  \App\EconomicActivity  $economicActivity
      * @return \Illuminate\Http\Response
      */
-    public function update(EconomicActivitiesFormRequest $request, EconomicActivity $economicActivity)
+    public function update(EconomicActivitiesCreateRequest $request, EconomicActivity $economicActivity)
     {
         $row = EconomicActivity::find($economicActivity->id);
-        
+
         $row->fill($request->all())
             ->save();
 

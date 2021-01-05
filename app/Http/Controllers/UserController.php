@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 use Image;
 use File;
-use App\User;
-use Caffeinated\Shinobi\Models\Role;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Auth;
 use Hash;
 
