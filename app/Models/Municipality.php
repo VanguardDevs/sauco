@@ -26,4 +26,9 @@ class Municipality extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    public function parishes()
+    {
+        return $this->hasMany(Parish::class);
+    }
 }
