@@ -56,6 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'platform_url' => env('PLATFORM_URL', 'http://localhost'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
