@@ -14,13 +14,8 @@ class EconomicActivityAffidavit extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'amount' => 'float',
+        'calc_amount' => 'float',
         'brute_amount' => 'float' 
-    ];
-
-    protected $appends = [
-        'affidavit_amount',
-        'calc'
     ];
 
     public function economicActivity()
