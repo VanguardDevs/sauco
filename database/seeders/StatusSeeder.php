@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 class StatusSeeder extends Seeder
 {
     protected $states = Array(
-        'Pendiente', 'Procesado', 'Anulado', 'Confirmado' 
+        'Pendiente', 'Procesado', 'Anulado', 'Confirmado'
     );
 
     /**

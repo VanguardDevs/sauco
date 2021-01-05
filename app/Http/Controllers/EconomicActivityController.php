@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\EconomicActivity;
 use App\Models\Taxpayer;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Http\Requests\EconomicActivitiesCreateRequest;
 
