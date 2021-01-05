@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\PaymentMethod;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 
 class PaymentMethodController extends Controller
@@ -12,7 +12,7 @@ class PaymentMethodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('modules.payment-methods.index');
     }

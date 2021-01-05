@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,22 +14,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /**
-        $this->call(AccountTypesTableSeeder::class);
-        $this->call(StatusTableSeeder::class);
-        $this->call(PaymentTypesTableSeeder::class);
-        $this->call(ChargingMethodsTableSeeder::class);
-        $this->call(OrdinancesTableSeeder::class);
-        $this->call(CorrelativeTypesTableSeeder::class);
-        $this->call(ListsTableSeeder::class);
-        $this->call(ActivityClassificationsTableSeeder::class);
-        $this->call(EconomicActivitiesTableSeeder::class);
-        $this->call(CommunitiesTableSeeder::class); 
-        $this->call(ParishesTableSeeder::class); 
-        $this->call(CommunityParishTableSeeder::class);
-        $this->call(PaymentMethodsTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(TaxpayerClassificationsSeeder::class);
-        **/
+        $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(TaxpayerTypeSeeder::class);
+        $this->call(TaxpayerClassificationSeeder::class);
+        $this->call(StatusSeeder::class);
+
+        // Testing
+        if (App::environment() == 'local') {
+            $this->call(UserSeeder::class);
+            $this->call(PaymentTypeSeeder::class);
+            $this->call(PaymentMethodSeeder::class);
+            $this->call(RepresentationTypeSeeder::class);
+            $this->call(GeographicAreaSeeder::class);
+            $this->call(SettingsSeeder::class);
+        }
+
+        if (App::environment() == 'production') {
+            $this->call(AdminSeeder::class);
+        }
     }
 }
