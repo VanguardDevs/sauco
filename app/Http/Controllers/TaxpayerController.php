@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialDenomination;
-use App\EconomicActivity;
 use App\Models\TaxpayerType;
 use App\Models\TaxpayerClassification;
 use App\Models\Taxpayer;
@@ -19,13 +17,6 @@ use PDF;
 
 class TaxpayerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('can:create.taxpayers')->only(['create','store']);
-        $this->middleware('can:edit.taxpayers')->only(['edit', 'update']);
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Municipality;
+use App\Parish;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MunicipalityFactory extends Factory
+class ParishFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Municipality::class;
+    protected $model = Parish::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,7 @@ class MunicipalityFactory extends Factory
     public function definition()
     {
         return [
-            'code' => $this->faker->unique()->randomLetter,
-            'name' => $this->faker->name,
+            'name' => $this->faker->name
         ];
     }
 }

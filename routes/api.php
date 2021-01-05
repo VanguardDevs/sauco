@@ -13,3 +13,5 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::resource('taxpayers', 'TaxpayerController');
+
