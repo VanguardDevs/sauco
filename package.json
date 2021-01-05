@@ -10,6 +10,7 @@
     "@material-ui/icons": "^4.9.1",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.7",
     "axios": "^0.18",
     "chart.js": "^2.9.3",
     "cross-env": "^5.1",
@@ -34,5 +35,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/react-router": "^5.1.9"
+  }
 }
