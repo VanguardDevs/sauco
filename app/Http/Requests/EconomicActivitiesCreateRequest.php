@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\EconomicActivities;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EconomicActivitiesUpdateFormRequest extends FormRequest
+class EconomicActivitiesCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class EconomicActivitiesUpdateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'code' => 'required|unique:economic_activities',
+            'name' => 'required|min:20',
+            'description' => 'required|min:100',
             'aliquote' => 'required',
             'min_tax' => 'required',
         ];
@@ -33,18 +35,24 @@ class EconomicActivitiesUpdateFormRequest extends FormRequest
     public function attributes()
     {
         return [
+            'code' => 'código',
             'name' => 'nombre',
             'aliquote' => 'alícuota',
-            'min_tax' => 'mínimo tributable'
+            'min_tax' => 'mínimo tributable',
         ];
     }
 
     public function messages()
     {
         return [
+            'code.required' => 'Ingrese un :attribute',
+            'code.unique' => 'Este código ya está siendo utilizado',
             'name.required' => 'Ingrese un :attribute',
+            'name.min' => 'El nombre debe tener 20 caracteres como mínimo',
             'aliquote.required' => 'Ingrese una :attribute',
             'min_tax.required' => 'Ingrese un :attribute',
+            'description.required' => 'Ingrese una descripción',
+            'description.min' => 'La descripción debe tener 100 caracteres como mínimo',
         ];
     }
 }

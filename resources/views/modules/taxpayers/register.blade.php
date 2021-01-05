@@ -116,31 +116,33 @@
                             Dirección fiscal
                             </div>
                         </div>
-                        {{--
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label class="control-label"> Estado <span class="text-danger">*</span></label>
 
                             {!!
-                                Form::select('state', $states, null, [
-                                'class'=>'col-md-12 form-control select2',
-                                'placeholder' => ' SELECCIONE ',
-                                'id' => 'states',
-                                'required'
+                                Form::select('state_id', $states,
+                                    null, [
+                                    'class'=>'col-md-12 form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    'id' => 'states',
+                                    'required'
                                 ])
                             !!}
 
-                            @error('state')
+                            @error('state_id')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label class="control-label"> Municipio <span class="text-danger">*</span></label>
 
                             {!!
-                                Form::select('municipality_id', [], null, [
-                                'class'=>'col-md-12 form-control select2',
-                                'placeholder' => ' SELECCIONE ',
-                                'id' => 'municipalities', 'required'
+                                Form::select('municipality_id', $communities,
+                                    null, [
+                                    'class'=>'col-md-12 form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    'id' => 'municipalities',
+                                    'required'
                                 ])
                             !!}
 
@@ -148,8 +150,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        --}}
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label class="control-label"> Comunidad <span class="text-danger">*</span></label>
 
                             {!!
@@ -166,7 +167,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label class="control-label"> Dirección <span class="text-danger">*</span></label>
 
                             {!!

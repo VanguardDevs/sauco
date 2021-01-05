@@ -24,7 +24,7 @@ class TaxpayersCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'rif' => 'required',
+            'rif' => 'required|min:9',
             'name' => 'required',
             'taxpayer_type_id' => 'required',
             'taxpayer_classification_id' => 'required',
