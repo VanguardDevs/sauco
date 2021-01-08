@@ -1,12 +1,16 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\Listing;
+namespace Database\Seeders;
 
-class ListsTableSeeder extends Seeder
+use Illuminate\Database\Seeder;
+use App\LiquidationType;
+
+class LiquidationTypesSeeder extends Seeder
 {
     protected $lists = Array(
-        'SOLICITUDES', 'MULTAS', 'LIQUIDACIONES'
+        'Solicitudes',
+        'Multas',
+        'Actividad Económica'
     );
 
     /**
@@ -17,7 +21,7 @@ class ListsTableSeeder extends Seeder
     public function run()
     {
         foreach($this->lists as $value) {
-            Listing::create([
+            LiquidationType::create([
                 'name' => $value
             ]);
         }
