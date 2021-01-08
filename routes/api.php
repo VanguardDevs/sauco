@@ -48,4 +48,3 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('accounting-accounts', 'AccountingAccountController');
     Route::resource('account-types', 'AccountTypeController');
 });
-
