@@ -1,9 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\State;
 
-class StatesTableSeeder extends Seeder
+class StatesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +13,7 @@ class StatesTableSeeder extends Seeder
      * @return void
      */
     public $states = Array(
-		'AMAZONAS', 'ANZOÁTEGUI', 'APURE',
+	'AMAZONAS', 'ANZOÁTEGUI', 'APURE',
         'ARAGUA', 'BARINAS', 'BOLÍVAR',
         'CARABOBO', 'COJEDES', 'DELTA AMACURO',
         'DEPENDENCIAS FEDERALES', 'DISTRITO CAPITAL',
@@ -19,14 +21,14 @@ class StatesTableSeeder extends Seeder
         'MONAGAS', 'MONAGAS', 'MÉRIDA', 'NUEVA ESPARTA',
         'PORTUGUESA', 'SUCRE', 'TRUJILLO', 'TÁCHIRA',
         'VARGAS', 'YARACUY', 'ZULIA'
-	);
+    );
 
     public function run()
     {
     	foreach ($this->states as $key => $name) {
-    		State::create([
-    			'name' => $name
-    		]);
+	    State::create([
+		'name' => $name
+	    ]);
     	}
     }
 }

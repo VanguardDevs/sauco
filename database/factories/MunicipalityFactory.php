@@ -22,8 +22,8 @@ class MunicipalityFactory extends Factory
     public function definition()
     {
         return [
+            'code' => $this->faker->unique()->randomLetter,
             'name' => $this->faker->name,
-            'code' => $this->faker->username
         ];
     }
 }
