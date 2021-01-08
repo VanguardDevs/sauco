@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::middleware('auth:api')->group(function () {
     // Only admin
     Route::group(['middleware' => ['permission:access.settings']], function () {
