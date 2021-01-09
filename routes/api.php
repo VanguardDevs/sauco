@@ -13,5 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('logout', 'AuthenticationController@logout');
+Route::post('login', 'AuthenticationController@login');
+
 Route::resource('taxpayers', 'TaxpayerController');
 
