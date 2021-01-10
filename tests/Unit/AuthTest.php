@@ -11,7 +11,7 @@ class AuthTest extends TestCase
      *
      * @return void
      */
-    public function testLogin()
+    public function testSuccessLogin()
     {
         $response = $this->postJson('/api/login', [
             'login' => 'admin',
@@ -23,6 +23,19 @@ class AuthTest extends TestCase
                 'token' => true,
                 'expires_at' => true,
                 'user' => true
+            ]);
+    }
+
+    public function testInvalidCredentials()
+    {
+        $response = $this->postJson('/api/login', [
+            'login' => 'akfajkfhkjahgkjag',
+            'password' => 'qwerty123'
+        ]);
+
+        $response->assertStatus(401)
+            ->assertJson([
+                'success' => false
             ]);
     }
 }
