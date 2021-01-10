@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TaxpayerType;
 use App\Models\TaxpayerClassification;
 use App\Models\Taxpayer;
-use App\License;
+use App\Models\License;
 use App\Models\State;
 use App\Models\Community;
 use Illuminate\Http\Request;
@@ -102,7 +102,9 @@ class TaxpayerController extends Controller
     public function show(Request $request, Taxpayer $taxpayer)
     {
         if ($request->wantsJson()) {
-            return $taxpayer;
+            $query = $taxpayer->load('companies');
+
+            return $response->json($query);
         }
 
         return view('modules.taxpayers.show')
