@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="api-base-url" content="{{ url('').'/api/' }}">
-    <title>SIRIM | @yield('title') </title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     @include('layouts.styles')
 </head>
 <body  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed">
@@ -27,7 +27,7 @@
 
     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
           @include('layouts.nav.aside')
-          <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper"> 
+          <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
            @include('layouts.nav.top')
               <!-- begin:: Content -->
                 @include('layouts.nav.subheader')
