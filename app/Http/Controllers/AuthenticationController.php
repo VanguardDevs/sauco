@@ -21,7 +21,7 @@ class AuthenticationController extends Controller
             return response()->json([
                 'success' => false,
                 'errors' => [
-                    'email' => 'Tu contraseña o correo son inválidos.'
+                    'email' => 'Tu contraseña o usuario son inválidos.'
                 ]
             ], 401);
         }
