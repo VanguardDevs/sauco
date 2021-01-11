@@ -38,14 +38,14 @@ class Taxpayer extends Model implements Auditable
     public static function existsRif($rif)
     {
         return self::whereRif($rif)->first();
-    } 
+    }
 
     public function president()
     {
         return $this->representations->filter(function ($item, $key) {
             if ($item->representationType->name == 'PRESIDENTE') {
                 return $item;
-            } 
+            }
         });
     }
 
@@ -79,21 +79,21 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(License::class);
     }
 
-    public function commercialDenomination()
+    public function companies()
     {
-        return $this->hasOne(CommercialDenomination::class);
+        return $this->hasMany(Company::class);
     }
 
     public function applications()
     {
         return $this->hasMany(Application::class);
     }
-    
+
     public function fines()
     {
         return $this->hasMany(Fine::class);
     }
-    
+
     public function payments()
     {
         return $this->hasMany(Payment::class);
@@ -102,7 +102,7 @@ class Taxpayer extends Model implements Auditable
     public function withholdings()
     {
         return $this->hasManyThrough(Withholding::class, Affidavit::class);
-    } 
+    }
 
     public function affidavits()
     {

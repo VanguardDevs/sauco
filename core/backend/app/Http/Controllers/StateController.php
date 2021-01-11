@@ -46,7 +46,9 @@ class StateController extends Controller
      */
     public function show(State $state)
     {
-        //
+        $query = $state->load($parishes);
+
+        return $response->json($query);
     }
 
     /**
