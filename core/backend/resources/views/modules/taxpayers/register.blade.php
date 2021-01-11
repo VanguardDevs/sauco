@@ -116,7 +116,7 @@
                             Dirección fiscal
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label class="control-label"> Estado <span class="text-danger">*</span></label>
 
                             {!!
@@ -133,11 +133,11 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label class="control-label"> Municipio <span class="text-danger">*</span></label>
 
                             {!!
-                                Form::select('municipality_id', $communities,
+                                Form::select('municipality_id', [],
                                     null, [
                                     'class'=>'col-md-12 form-control select2',
                                     'placeholder' => ' SELECCIONE ',
@@ -150,11 +150,28 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
+                            <label class="control-label"> Parroquia <span class="text-danger">*</span></label>
+
+                            {!!
+                                Form::select('parish_id', [],
+                                    null, [
+                                    'class'=>'col-md-12 form-control select2',
+                                    'placeholder' => ' SELECCIONE ',
+                                    'id' => 'parishes',
+                                    'required'
+                                ])
+                            !!}
+
+                            @error('parish_id')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-3">
                             <label class="control-label"> Comunidad <span class="text-danger">*</span></label>
 
                             {!!
-                                Form::select('community_id', $communities,
+                                Form::select('community_id', [],
                                     null, [
                                     'class'=>'col-md-12 form-control select2',
                                     'placeholder' => ' SELECCIONE ',
