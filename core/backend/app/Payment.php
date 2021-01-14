@@ -19,8 +19,8 @@ class Payment extends Model implements Auditable
     protected $table = 'payments';
 
     protected $guarded = [];
- 
-    protected $casts = [ 'amount' => 'float' ];  
+
+    protected $casts = [ 'amount' => 'float' ];
 
     protected $appends = [ 'pretty_amount' ];
 
@@ -42,7 +42,7 @@ class Payment extends Model implements Auditable
         }
         $this->updateAmount();
     }
-    
+
     public function updateAmount()
     {
         $amount = $this->liquidations->sum('amount');
@@ -55,7 +55,7 @@ class Payment extends Model implements Auditable
         return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
             ->orderBy('processed_at', 'ASC')
             ->get();
-    } 
+    }
 
     public function nullPayment()
     {
@@ -66,25 +66,25 @@ class Payment extends Model implements Auditable
     {
         return $this->belongsTo(Status::class);
     }
- 
+
     public function paymentType()
     {
         return $this->belongsTo(PaymentType::class);
     }
-    
+
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
     }
-    
+
     public function reference()
     {
         return $this->hasOne(Reference::class);
     }
 
-    public function liquidations()
+    public function receivables()
     {
-        return $this->belongsToMany(Liquidation::class);
+        return $this->belongsToMany(Receivable::class);
     }
 
     public function taxpayer()

@@ -17,8 +17,8 @@ class Liquidation extends Model implements Auditable
     protected $table = 'liquidations';
 
     protected $guarded = [];
- 
-    protected $casts = ['amount' => 'float' ];  
+
+    protected $casts = ['amount' => 'float' ];
 
     protected $appends = ['pretty_amount'];
 
@@ -37,9 +37,9 @@ class Liquidation extends Model implements Auditable
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function payment()
+    public function receivable()
     {
-        return $this->belongsToMany(Payment::class);
+        return $this->hasOne(Receivable::class);
     }
 
     public function concept()
