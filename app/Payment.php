@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
+use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
 use App\Fine;
 
 class Payment extends Model implements Auditable
 {
-    use Audit, SoftDeletes, PrettyAmount, PrettyTimestamps;
+    use Audit, SoftDeletes, PrettyAmount, PrettyTimestamps, NewValue;
 
     protected $table = 'payments';
 
@@ -55,18 +56,6 @@ class Payment extends Model implements Auditable
             ->whereStateId(2)
             ->orderBy('processed_at', 'ASC')
             ->get();
-    }
-
-    public static function newNum()
-    {
-        $lastNum = Payment::withTrashed()
-            ->whereStateId(2)
-            ->orderBy('num', 'DESC')
-            ->first()
-            ->num;
-
-        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
-        return $newNum;
     }
 
     public function nullPayment()
@@ -122,25 +111,5 @@ class Payment extends Model implements Auditable
     public function invoiceModel()
     {
         return $this->belongsTo(InvoiceModel::class);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return date('d/m/Y H:m', strtotime($value));
-    }
-
-    public function getProcessedAtAttribute($value)
-    {
-        return date('d/m/Y h:i', strtotime($value));
-    }
-
-    public function getDeletedAtAttribute($value)
-    {
-        return date('d/m/Y H:m', strtotime($value));
-    }
-
-    public function getFormattedAmountAttribute()
-    {
-        return number_format($this->amount, 2, ',', '.');
     }
 }
