@@ -7,18 +7,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 use App\Fine;
 
 class Payment extends Model implements Auditable
 {
-    use Audit;
-    use SoftDeletes;
+    use Audit, SoftDeletes, PrettyAmount, PrettyTimestamps;
 
     protected $table = 'payments';
 
     protected $guarded = [];
- 
-    protected $casts = [ 'amount' => 'float' ];  
+
+    protected $casts = [ 'amount' => 'float' ];
 
     protected $appends = [ 'formatted_amount' ];
 
@@ -40,7 +41,7 @@ class Payment extends Model implements Auditable
         }
         $this->updateAmount();
     }
-    
+
     public function updateAmount()
     {
         $amount = $this->settlements->sum('amount');
@@ -54,7 +55,7 @@ class Payment extends Model implements Auditable
             ->whereStateId(2)
             ->orderBy('processed_at', 'ASC')
             ->get();
-    } 
+    }
 
     public static function newNum()
     {
@@ -66,7 +67,7 @@ class Payment extends Model implements Auditable
 
         $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
         return $newNum;
-    } 
+    }
 
     public function nullPayment()
     {
@@ -77,17 +78,17 @@ class Payment extends Model implements Auditable
     {
         return $this->belongsTo(Status::class);
     }
- 
+
     public function paymentType()
     {
         return $this->belongsTo(PaymentType::class);
     }
-    
+
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
     }
-    
+
     public function reference()
     {
         return $this->hasOne(Reference::class);
