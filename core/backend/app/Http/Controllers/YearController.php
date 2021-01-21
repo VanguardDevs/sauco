@@ -33,7 +33,7 @@ class YearController extends Controller
 
     public function listMonths(Year $year)
     {
-        if ($year->year == 2020) {
+        if ($year->year == Carbon::now()->year) {
             return $year->months()
                 ->where('id', '<', Carbon::now()->month)
                 ->get();
