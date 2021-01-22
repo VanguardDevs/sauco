@@ -1,0 +1,4 @@
+[2021-01-09 23:26:30] local.ERROR: Cannot declare class CreateStatesTable, because the name is already in use {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot declare class CreateStatesTable, because the name is already in use at /home/dei/code/sauco/core/backend/database/migrations/2020_01_20_145054_create_states_table.php:7)
+[stacktrace]
+#0 {main}
+"} 
