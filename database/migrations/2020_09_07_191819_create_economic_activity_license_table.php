@@ -24,17 +24,6 @@ class CreateEconomicActivityLicenseTable extends Migration
             $table->foreign('license_id')->references('id')->on('licenses')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
-
-        Schema::table('licenses', function (Blueprint $table) {
-            $table->date('expiration_date')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('representation_id')->nullable();
-
-            $table->foreign('representation_id')->references('id')->on('representations')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
-        });
     }
 
     /**

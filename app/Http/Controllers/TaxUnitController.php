@@ -3,32 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaxUnits\TaxUnitsCreateFormRequest;
-use App\TaxUnit;
+use App\Models\TaxUnit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class TaxUnitController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->wantsJson()) {
+            $query = TaxUnit::query();
+
+            return DataTables::eloquent($query)->toJson();
+        }
         return view('modules.tax-units.index');
-    }
-
-    public function list()
-    {
-        $query = TaxUnit::query();
-
-        return DataTables::eloquent($query)->toJson();
     }
 
     /**

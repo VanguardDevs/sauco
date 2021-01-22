@@ -5,15 +5,9 @@ namespace App\Http\Controllers;
 use App\Ordinance;
 use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
 use App\Http\Requests\Ordinances\OrdinancesUpdateFormRequest;
-use Yajra\DataTables\Facades\DataTables;
 
 class OrdinanceController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +21,6 @@ class OrdinanceController extends Controller
     public function list()
     {
         $query = Ordinance::query();
-
-        return DataTables::eloquent($query)->toJson();
     }
 
     public function listAll()

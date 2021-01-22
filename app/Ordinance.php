@@ -27,10 +27,10 @@ class Ordinance extends Model
         return date('d/m/Y', strtotime($value));
     }
 
-    public function scopeConceptsByList($query, $type)
+    public function scopeConceptsLiquidation($query, $type)
     {
         return self::concepts()
-            ->where('list_id', '=', $type)
+            ->where('liquidation_type_id', '=', $type)
             ->get();
     }
 }

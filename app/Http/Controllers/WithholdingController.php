@@ -7,13 +7,12 @@ use App\Taxpayer;
 use App\Affidavit;
 use App\Month;
 use App\Payment;
-use App\Settlement;
+use App\Liquidation;
 use App\Concept;
 use Carbon\Carbon;
 use Auth;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
-use DataTables;
 
 class WithholdingController extends Controller
 {
@@ -44,8 +43,6 @@ class WithholdingController extends Controller
     {
         $query = $taxpayer->withholdings()
             ->with(['affidavit', 'payment']);
-
-        return DataTables::of($query->get())->toJson();
     }
 
     /**
