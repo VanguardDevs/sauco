@@ -2,36 +2,43 @@
 
 namespace App;
 
-use App\Settlement;
+use App\Liquidation;
 use App\Payment;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
 
 class Fine extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, MakeLiquidation;
 
     protected $table = 'fines';
 
-    protected $guarded = [];
+    protected $appends = [ 'pretty_amount' ];
 
-    protected $appends = [ 'formatted_amount' ];
+    protected $fillable = [
+        'concept_id',
+        'active',
+        'taxpayer_id',
+        'amount',
+        'user_id'
+    ];
 
-    protected $casts = [
-        'amount' => 'float'
-    ];  
+    protected $casts = [ 'amount' => 'float' ];  
 
-    public function nullFine()
+    public function getNull()
     {
         return $this->hasOne(NullFine::class);
     }
 
     public static function applyFine($payment, $concept)
     {
-        $amount = $payment->settlements()->first()->amount;
+        $amount = $payment->liquidations()->first()->amount;
         $fineAmount = $concept->calculateAmount($amount);
         $userId = User::whereLogin('sauco')->first()->id;
 
@@ -42,11 +49,14 @@ class Fine extends Model implements Auditable
             'user_id' => $userId
         ]);
 
-        $fine->settlement()->create([
-            'num' => Settlement::newNum(),
+        $fine->liquidation()->create([
+            'num' => Liquidation::newNum(),
             'object_payment' => $concept->name,
+            'status_id' => $payment->state_id,
+            'taxpayer_id' => $payment->taxpayer_id,
+            'concept_id' => $concept->id,
+            'liquidation_type_id' => $concept->liquidationType->id,
             'amount' => $fineAmount,
-            'payment_id' => $payment->id,
         ]);
     }
 
@@ -67,22 +77,12 @@ class Fine extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
-    public function settlement()
+    public function liquidation()
     {
-        return $this->hasOne(Settlement::class)
+        return $this->morphOne(Liquidation::class, 'liquidable')
             ->withTrashed();
-    }
-
-    public function getFormattedAmountAttribute()
-    {
-        return number_format($this->amount, 2, ',', '.');
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Date('d/m/Y h:i', strtotime($value));
     }
 }

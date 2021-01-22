@@ -16,11 +16,15 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('login', 'password');
+        $user = auth()->user();
 
-        if (Auth::attempt($credentials)) {
-            return response([
-                'success' => true
+        if ($user) {
+            $tokenResult = $user->createToken('userToken');
+            $token = $tokenResult->token;
+            $token->save();
+            
+            return response()->json([
+                'token' => $tokenResult->accessToken
             ]);
         }
     }

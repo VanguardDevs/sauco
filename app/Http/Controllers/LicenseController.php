@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
@@ -26,6 +26,12 @@ class LicenseController extends Controller
      */
     public function index(Request $request)
     {
+        $query = License::with(['taxpayer'])
+            ->orderBy('created_at', 'DESC');
+
+        if ($request->has('results')) {
+            $results = $request->results;
+        }
         $ordinance = $request->get('ordinance');
         $type = $request->get('type');
         $pdf = $request->get('pdf');
@@ -50,22 +56,18 @@ class LicenseController extends Controller
         if ($request->wantsJson()) {
             $query->with(['taxpayer', 'ordinance'])
                 ->orderBy('created_at', 'DESC');
-
-            return DataTables::eloquent($query)->toJson();
+            
+            return DataTables::eloquent($query)->toJson(); 
         }
 
         if ($pdf) {
             return $this->printReport($query);
         }
 
-        return view('modules.licenses.index');
+        return view('modules.licenses.index')
+            ->with('types', CorrelativeType::pluck('description', 'id'));
     }
 
-    /**
-     * Print a pdf of all licenses
-     *
-     * Return PDF
-     */    
     private function printReport($query)
     {
         $licenses = $query->get();
@@ -78,13 +80,6 @@ class LicenseController extends Controller
         return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
     }
 
-    public function listBytaxpayer(Taxpayer $taxpayer)
-    {
-        $query = License::whereTaxpayerId($taxpayer->id);
-
-    	return DataTables::eloquent($query)->toJson();
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -95,7 +90,6 @@ class LicenseController extends Controller
         if ($request->wantsJson()) {
             $query = License::whereTaxpayerId($taxpayer->id);
 
-            return DataTables::eloquent($query)->toJson();
         }
 
         $correlatives = [

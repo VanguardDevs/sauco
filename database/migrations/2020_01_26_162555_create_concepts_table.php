@@ -20,8 +20,8 @@ class CreateConceptsTable extends Migration
             $table->string('law');
             $table->string('observations')->nullable();
             $table->unsignedBigInteger('ordinance_id');
-            $table->unsignedBigInteger('list_id');
-            $table->foreign('list_id')->references('id')->on('lists')
+            $table->unsignedBigInteger('liquidation_type_id');
+            $table->foreign('liquidation_type_id')->references('id')->on('liquidation_types')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('ordinance_id')->references('id')->on('ordinances')
                 ->onUpdate('cascade')->onDelete('cascade');

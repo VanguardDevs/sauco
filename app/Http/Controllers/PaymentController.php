@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\PaymentMethod;
-use App\PaymentType;
+use App\Models\PaymentMethod;
+use App\Models\PaymentType;
 use App\Payment;
 use App\Fine;
 use App\Concept;
 use App\Reference;
-use App\Settlement;
+use App\Liquidation;
 use App\Taxpayer;
-use App\Organization;
 use App\PaymentNull;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
 use App\Http\Requests\AnnullmentRequest;
 use PDF;
@@ -47,36 +45,15 @@ class PaymentController extends Controller
     public function listProcessed()
     { 
         $query = Payment::with('taxpayer') 
-            ->whereStateId(2)
+            ->whereStatusId(2)
             ->orderBy('num', 'DESC');
-
-        return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
-            })
-            ->make(true);
     }
 
     public function listByTaxpayer(Taxpayer $taxpayer)
     {
-        $query = Payment::with(['state', 'user'])
+        $query = Payment::whereStatusId(2)
             ->whereTaxpayerId($taxpayer->id)
             ->orderBy('processed_at', 'DESC');
-
-        return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
-            })
-            ->make(true);
-    }
-
-    public function onlyNull()
-    {
-        $query = Payment::onlyTrashed()
-            ->with(['taxpayer', 'state'])
-            ->orderBy('id', 'DESC');
-        
-        return DataTables::of($query)->toJson();
     }
 
     /**
@@ -108,7 +85,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if ($payment->state->id == 1) {
+        if ($payment->status->id == 1) {
             if (auth()->user()->can('process.payments')) {
                 $this->typeform = 'edit';
             }
@@ -143,13 +120,13 @@ class PaymentController extends Controller
             ]);
         }
 
-        $paymentNum = Payment::newNum();
+        $paymentNum = Payment::getNewNum();
         $processedAt = Carbon::now();
 
         $payment->update([
             'user_id' => Auth::user()->id, 
             'payment_method_id' => $request->input('method'),
-            'state_id' => 2,
+            'status_id' => 2,
             'observations' => $request->input('observations'),
             'num' => $paymentNum,
             'processed_at' => $processedAt
@@ -161,7 +138,7 @@ class PaymentController extends Controller
 
     public function download(Payment $payment)
     {
-        if ($payment->state->id == 1) {
+        if ($payment->status->id == 1) {
             return redirect()->back()
                 ->withError('¡La factura no ha sido procesada!');
         }
@@ -205,6 +182,7 @@ class PaymentController extends Controller
             'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id
         ]);
+        $payment->delete();
 
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
