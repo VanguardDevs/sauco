@@ -5,9 +5,6 @@
             @yield('subheader__title')                    
         </h3>
         <span class="kt-subheader__separator kt-hidden"></span>
-       <!-- Begin:: Breadcrumbs -->
-        {{ Breadcrumbs::render() }}
-        <!-- end:: Breadcrumbs --> 
     </div>
     <div class="kt-subheader__toolbar">
         <div class="kt-subheader__wrapper">
