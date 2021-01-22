@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Payment;
 use App\Affidavit;

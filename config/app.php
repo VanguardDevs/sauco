@@ -15,7 +15,6 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'recapi' => env('RECAPI_HOST', null),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -56,6 +55,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
+
+    'platform_url' => env('PLATFORM_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +108,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'es_VE',
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +170,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
     	OwenIt\Auditing\AuditingServiceProvider::class,
-	    RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -179,7 +180,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
     ],
 
     /*
@@ -194,7 +194,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -231,8 +230,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-	    'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-	    'Audit' => OwenIt\Auditing\Auditable::class,
+        'Audit' => OwenIt\Auditing\Auditable::class,
     ],
-
 ];

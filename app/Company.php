@@ -18,6 +18,7 @@ class Company extends Model
         'num_workers',
         'parish_id',
         'community_id',
+        'parish_id',
         'taxpayer_id'
     ];
 
@@ -43,10 +44,7 @@ class Company extends Model
 
     public function economicActivities()
     {
-        return $this->belongsToMany(
-            EconomicActivity::class,
-            'company_economic_activity'
-        );
+        return $this->belongsToMany(EconomicActivity::class);
     }
 
     public function payments()

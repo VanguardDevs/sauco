@@ -14,19 +14,20 @@ class CreatePropertiesTable extends Migration
     public function up()
     {
         Schema::create('properties', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('local');
-            $table->string('street');
-            $table->string('floor');
+            $table->id();
             $table->string('cadastre_num');
             $table->string('bulletin');
-            $table->string('land_valuation');
-            $table->string('square_meters');
-            $table->unsignedBigInteger('property_type_id');
-            $table->foreign('property_type_id')->references('id')->on('property_types')
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('parish_id');
+            $table->unsignedBigInteger('community_id');
+            $table->unsignedBigInteger('street_id');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('parish_id')->references('id')->on('parishes')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('community_id')->references('id')->on('communities')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('street_id')->references('id')->on('streets')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

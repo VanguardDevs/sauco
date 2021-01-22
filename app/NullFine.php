@@ -28,9 +28,4 @@ class NullFine extends Model
     {
         return $this->fine->taxpayer();
     }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return date('d/m/Y H:i', strtotime($value));
-    }
 }
