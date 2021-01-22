@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Taxpayer;
+use App\Models\Taxpayer;
 use App\Affidavit;
 use App\Payment;
 use App\License;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $taxpayerCount = Taxpayer::count();
         $licenseCount = License::count();
-        $paymentCount = Payment::whereStateId('2')
+        $paymentCount = Payment::whereStatusId('2')
             ->count();
         $affidavitCount = Affidavit::count();
 

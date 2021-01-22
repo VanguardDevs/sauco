@@ -16,11 +16,12 @@ class NullApplication extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function application()
     {
-        return $this->hasOne(Application::class);
+        return $this->belongsTo(Application::class)
+            ->onlyTrashed();
     }
 }

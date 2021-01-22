@@ -17,13 +17,16 @@ class CreateTaxpayerPropertyTable extends Migration
             $table->bigIncrements('id');
             $table->string('document');
             $table->unsignedBigInteger('property_id');
-            $table->unsignedBigInteger('ownership_state_id');
+            $table->unsignedBigInteger('ownership_status_id');
             $table->unsignedBigInteger('taxpayer_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('property_id')->references('id')->on('properties')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('ownership_state_id')->references('id')->on('ownership_states')
+            $table->foreign('ownership_status_id')->references('id')->on('ownership_status')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

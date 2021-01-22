@@ -7,18 +7,11 @@ use App\Ordinance;
 use App\Concept;
 use App\Taxpayer;
 use App\Payment;
-use App\Settlement;
+use App\Liquidation;
 use Illuminate\Http\Request;
-use App\Http\Requests\AnnullmentRequest;
-use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -37,13 +30,18 @@ class ApplicationController extends Controller
             ->orderBy('applications.created_at', 'DESC')
             ->with(['concept:id,name']);
 
-        return DataTables::eloquent($query)
-            ->toJson();
+        return $query;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
+            })
+            ->make(true);
     }
 
     public function listConcepts(Ordinance $ordinance)
     {
-        return $ordinance->conceptsByList(1);
+        return $ordinance->concepts()
+            ->whereLiquidationTypeId(1)
+            ->get();
     }
 
     /**
@@ -55,35 +53,6 @@ class ApplicationController extends Controller
     {
         //
     }
-
-    public function makePayment(Application $application)
-    {
-        if ($application->payment()->exists()) {
-            dd($application->payment()->first());
-            return redirect()
-                ->route('payments.show', $application->payment()->first());
-        }
-
-        $payment = Payment::create([
-            'state_id' => 1,
-            'user_id' => auth()->user()->id,
-            'amount' => $application->amount,
-            'payment_method_id' => 1,
-            'invoice_model_id' => 1,
-            'payment_type_id' => 1,
-            'taxpayer_id' => $application->taxpayer_id
-        ]);
-
-        $application->settlement()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' => $application->concept->name,
-            'payment_id' => $payment->id,
-            'amount' => $application->amount
-        ]);
-
-        return redirect()->route('payments.show', $payment);
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -103,8 +72,11 @@ class ApplicationController extends Controller
             'amount' => $amount
         ]);
 
-        return redirect()->route('applications.index', $taxpayer)
-            ->withSuccess('¡Solicitud creada!');
+        $application->makeLiquidation();
+
+        return redirect()
+            ->route('liquidations.index', $application->taxpayer_id)
+            ->withSuccess('¡Liquidación realizada!');
     }
 
     /**
@@ -147,22 +119,8 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Application $application)
+    public function destroy(Application $application)
     {
-        $payment = $application->payment()->first();
-
-        if ($application->settlement) {
-            $application->settlement->delete();
-            $payment->updateAmount();
-        } 
-        $application->delete();
-
-        $application->nullFine()->create([
-            'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
-        ]);
-
-        return redirect()->back()
-            ->with('success', '¡Solicitud anulada!');       
+        //
     }
 }

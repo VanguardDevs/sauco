@@ -31,72 +31,13 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('about', 'ShowAbout')->name('about');
-    
+
     // API ROUTES
     Route::get('api/taxpayers/{taxpayer}/representations', 'TaxpayerController@getRepresentations');
     Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
     Route::get('api/taxpayers/{taxpayer}/economic-activities', 'TaxpayerController@economicActivities');
     Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
 
-    /**
-     * Only Admin routes
-     */
-    Route::group(['middleware' => ['has.role:admin']], function () {
-        /** General Settings */
-        Route::get('settings', 'ShowSettings')->name('settings');
-
-        /**
-        * Settings > Years
-        */
-        Route::resource('settings/years', 'YearController');
-
-        /**
-         * Ordinance settings
-         */
-        Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
-        Route::resource('settings/ordinances', 'OrdinanceController');
-
-        /**
-         * Payment methods settings
-         */
-        Route::get('payment-methods/list', 'PaymentMethodController@list')->name('list-payment-methods');
-        Route::resource('settings/payment-methods', 'PaymentMethodController');
-
-        /**
-         * Routes Settings > Concepts
-         */
-        Route::get('concepts/list', 'ConceptController@list')->name('list-concepts');
-        Route::resource('settings/concepts', 'ConceptController');
-
-        /**
-         * Routes Settings > Concepts
-         */
-        Route::get('categories/list', 'CategoryController@list')->name('list-concepts');
-        Route::resource('settings/categories', 'CategoryController');
-
-        /*----------  Routes Settings > Tax Units ----------*/
-        Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
-        Route::resource('settings/tax-units', 'TaxUnitController');
-
-        /*----------  Routes permissions  ----------*/
-        Route::get('permissions/list', 'Settings\PermissionController@list');
-        Route::resource('settings/administration/permissions', 'Settings\PermissionController');
-
-        /*----------  Routes roles  ----------*/
-        Route::get('roles/list', 'Settings\RoleController@list');
-        Route::resource('settings/administration/roles', 'Settings\RoleController');
-
-        /*----------  Routes users  ----------*/
-        Route::get('users/list', 'Settings\UserController@list');
-        Route::resource('settings/administration/users', 'Settings\UserController');
-
-        /*---------- Accounting accounts --------*/
-        Route::resource('settings/accounting-accounts', 'AccountingAccountController');
- 
-        Route::get('settings/invoice-models', 'InvoiceModelController@index')
-            ->name('invoice-models.index');
-    });
- 
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
@@ -109,10 +50,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('communities/list', 'CommunityController@list')->name('list-communities');
     Route::get('geographic-area/communities/{community}/taxpayers/list', 'CommunityController@listTaxpayers');
     Route::resource('geographic-area/communities', 'CommunityController');
-
-    // Organization routes
-    Route::get('organization', 'OrganizationController@index')->name('organization.index');
-    Route::get('organization/withholdings', 'OrganizationController@withholdings')->name('organization.withholdings');
 
     /**
      * Handle reports
@@ -130,7 +67,7 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('print.activities');
         Route::get('reports/taxpayers/up-to-date/print', 'ReportController@printUpToDate')
             ->name('print.uptodate.taxpayers');
-        
+
         Route::get('reports/delinquent-companies', 'ReportController@delinquentCompanies')
             ->name('reports.delinquent-companies');
     });
@@ -159,7 +96,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('payments.download');
     Route::resource('payments', 'PaymentController');
 
-        
+
     /**
     * Taxpayer's affidavits
      */
@@ -179,7 +116,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
         ->name('taxpayer.fines');
     Route::post('taxpayers/{taxpayer}/fines/create', 'FineController@store')
-        ->name('fines.new');        
+        ->name('fines.new');
     Route::get('fines/{fine}/payment/new', 'FineController@makePayment')
         ->middleware('can:process.payments');
     Route::resource('fines', 'FineController');
@@ -203,7 +140,7 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
     Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
-    
+
     /**
      * Taxpayer's Withholdings
      */
@@ -243,14 +180,14 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
     Route::resource('taxpayers', 'TaxpayerController');
 
-    /** 
+    /**
      * Listing routes
      */
     Route::get('representations/list', 'RepresentationController@list');
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
-    
+
     /**
      * Update passwords
      */
