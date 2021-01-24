@@ -12,8 +12,6 @@ class RolesAndPermissionsSeeder extends Seeder
     private $permissionsByRole = [
         'Admin' => [
             'access.economic-activities',
-            'edit.economic-activities',
-            'create.economic-activities',
             'access.reports',
             'access.licenses',
             'access.settings',
@@ -22,7 +20,6 @@ class RolesAndPermissionsSeeder extends Seeder
         'Auditor' => [
             'access.economic-activities',
             'access.reports',
-            'access.settings',
             'access.licenses'
         ],
         'Root' => []
@@ -48,7 +45,7 @@ class RolesAndPermissionsSeeder extends Seeder
         foreach ($this->permissionsByRole as $roleName => $permissions) {
             $role = Role::create(['name' => $roleName]);
             $permissions = $permissionsByRole($roleName);
-
+ 
             $role->syncPermissions($permissions);
         }
     }
@@ -61,8 +58,8 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run()
     {
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions(); 
+        
         $this->createPermissions();
         $this->createRoles();
     }
