@@ -38,6 +38,45 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
 
     /**
+     * Routes available for admin, chief of inspection, inspectors and superintendent
+     */
+    /*----------  Routes economic activities  ----------*/
+    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
+    Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
+    Route::resource('economic-activities', 'EconomicActivityController');
+
+    /*----------  Routes communities  ----------*/
+    Route::get('communities/list', 'CommunityController@list')->name('list-communities');
+    Route::get('geographic-area/communities/{community}/taxpayers/list', 'CommunityController@listTaxpayers');
+    Route::resource('geographic-area/communities', 'CommunityController');
+
+    /**
+     * Handle reports
+     */
+    Route::group(['middleware' => 'can:print.reports'], function() {
+        Route::post('reports/affidavits', 'ReportController@printAffidavitsReport')
+            ->name('print.affidavits.report');
+        Route::post('reports/payment-report', 'ReportController@printPaymentReport')
+            ->name('print.payments.report');
+        Route::get('economic-activities/{activity}/download', 'ReportController@printActivityReport')
+            ->name('print.activity-report');
+        Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport')
+            ->name('print.taxpayers');
+        Route::get('reports/activities/print', 'ReportController@printActivitiesReport')
+            ->name('print.activities');
+        Route::get('reports/taxpayers/up-to-date/print', 'ReportController@printUpToDate')
+            ->name('print.uptodate.taxpayers');
+
+        Route::get('reports/delinquent-companies', 'ReportController@delinquentCompanies')
+            ->name('reports.delinquent-companies');
+    });
+    Route::get('payments/processed/list', 'PaymentController@listProcessed');
+    Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
+    Route::get('reports/taxpayers/up-to-date/list', 'ReportController@listUpToDate');
+    Route::get('reports/taxpayers/up-to-date', 'ReportController@showUpToDateTaxpayers')->name('taxpayers.uptodate');
+    Route::get('reports', 'ReportController@index')->name('reports');
+
+    /**
      * Licenses
      */
     Route::group(['middleware' => 'can:create.licenses'], function() {

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Parish;
+use App\Parish;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ParishFactory extends Factory
