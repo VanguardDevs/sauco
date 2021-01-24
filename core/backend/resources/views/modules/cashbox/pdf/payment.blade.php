@@ -30,7 +30,7 @@
             }
             table {
                 border-collapse: collapse;
-                width: 100%;                
+                width: 100%;
                 margin-top: 5px;
             }
             .tables {
@@ -90,7 +90,7 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>{{ $denomination }}</td> 
+                        <td>{{ $denomination }}</td>
                         <td>{{ $payment->taxpayer->rif }}</td>
                     </tr>
                 </tbody>
@@ -118,8 +118,8 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>{{ $payment->processed_at }}</td> 
-                        <td>{{ $payment->paymentMethod->name }}</td>   
+                        <td>{{ $payment->processed_at }}</td>
+                        <td>{{ $payment->paymentMethod->name }}</td>
                         <td>{{ $payment->reference->reference ?? 'S/N' }}</td>
                     </tr>
                 </tbody>
@@ -136,11 +136,11 @@
                 <tbody>
                 @foreach($payment->settlements as $settlement)
                  <tr>
-                    <td>{{ $settlement->num }}</td> 
-                    <td>{{ $settlement->object_payment  }}</td>   
+                    <td>{{ $settlement->num }}</td>
+                    <td>{{ $settlement->object_payment  }}</td>
                     <td style="font-weight:bold;">{{ $settlement->total_amount }}</td>
                 </tr>
-                @endforeach   
+                @endforeach
              </table>
         </div>
         <br>
@@ -150,7 +150,7 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->formattedAmount }} Bs
+                    PAGO TOTAL: {{ $payment->prettyAmount }} Bs
                 </div>
             </div>
         </div>
@@ -160,11 +160,11 @@
                 Recaudador: {{ $payment->user->first_name.' '.$payment->user->surname }}
             </div>
             <div class="collector-firm">
-               <span style="width:50%;"></span> 
+               <span style="width:50%;"></span>
             </div>
             <br>
             <div class="observations">
-                OBSERVACIONES: {{ $payment->observations }}    
+                OBSERVACIONES: {{ $payment->observations }}
             </div>
         </div>
     </body>

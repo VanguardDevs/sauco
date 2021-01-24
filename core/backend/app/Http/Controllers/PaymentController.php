@@ -43,8 +43,13 @@ class PaymentController extends Controller
     }
 
     public function listProcessed()
+<<<<<<< HEAD:core/backend/app/Http/Controllers/PaymentController.php
     { 
         $query = Payment::with('taxpayer') 
+=======
+    {
+        $query = Payment::with('taxpayer')
+>>>>>>> master:app/Http/Controllers/PaymentController.php
             ->whereStatusId(2)
             ->orderBy('num', 'DESC');
     }
@@ -54,6 +59,24 @@ class PaymentController extends Controller
         $query = Payment::whereStatusId(2)
             ->whereTaxpayerId($taxpayer->id)
             ->orderBy('processed_at', 'DESC');
+<<<<<<< HEAD:core/backend/app/Http/Controllers/PaymentController.php
+=======
+
+        return DataTables::of($query)
+            ->addColumn('formatted_amount', function ($payment) {
+                return $payment->formatted_amount;
+            })
+            ->make(true);
+    }
+
+    public function onlyNull()
+    {
+        $query = Payment::onlyTrashed()
+            ->with(['taxpayer', 'state'])
+            ->orderBy('id', 'DESC');
+
+        return DataTables::of($query)->toJson();
+>>>>>>> master:app/Http/Controllers/PaymentController.php
     }
 
     /**
@@ -116,7 +139,7 @@ class PaymentController extends Controller
 
             $payment->reference()->create([
                 'reference' => $reference,
-                'account_id' => 1, 
+                'account_id' => 1,
             ]);
         }
 
@@ -124,7 +147,7 @@ class PaymentController extends Controller
         $processedAt = Carbon::now();
 
         $payment->update([
-            'user_id' => Auth::user()->id, 
+            'user_id' => Auth::user()->id,
             'payment_method_id' => $request->input('method'),
             'status_id' => 2,
             'observations' => $request->input('observations'),
@@ -151,14 +174,14 @@ class PaymentController extends Controller
             $vars = ['payment', 'reference', 'denomination'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('pdf.payment', compact($vars)) 
+                ->loadView('pdf.payment', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         } else {
             $organization = Organization::first();
             $vars = ['payment', 'reference', 'organization'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('modules.cashbox.pdf.withholding', compact($vars)) 
+                ->loadView('modules.cashbox.pdf.withholding', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         }
    }
