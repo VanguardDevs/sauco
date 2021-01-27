@@ -108,9 +108,4 @@ class Payment extends Model implements Auditable
     {
         return $this->belongsToMany(Fine::class, Liquidation::class);
     }
-
-    public function invoiceModel()
-    {
-        return $this->belongsTo(InvoiceModel::class);
-    }
 }
