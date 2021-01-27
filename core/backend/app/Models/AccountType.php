@@ -9,7 +9,7 @@ class AccountType extends Model
     protected $table = 'account_types';
 
     protected $fillable = [
-        'denomination'
+        'name'
     ];
 
     public function accounts()
