@@ -5,7 +5,7 @@ import Row from '../../../components/Row';
 import Col from '../../../components/Col';
 import Create from './create';
 
-const Withholdings = (props) => {
+const Deductions = (props) => {
   return (
     <Col md='12'>
       <Create
@@ -16,12 +16,12 @@ const Withholdings = (props) => {
   );
 }
 
-if (document.getElementById('withholdings')) {
+if (document.getElementById('deductions')) {
   let taxpayer = document.getElementById('data');
 
   ReactDOM.render(
-    <Withholdings 
+    <Deductions 
       taxpayer={data.getAttribute('data-taxpayer-id')}
       user={data.getAttribute('data-user-id')}
-    />, document.getElementById('withholdings')) 
+    />, document.getElementById('deductions')) 
 }

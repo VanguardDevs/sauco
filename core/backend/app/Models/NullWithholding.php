@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NullWithholding extends Model
+class NullDeduction extends Model
 {
-    protected $table = 'null_withholdings';
+    protected $table = 'null_deductions';
 
     protected $fillable = [
         'reason',
         'user_id',
-        'withholding_id'
+        'deduction_id'
     ];
 
     public function user()
@@ -19,8 +19,8 @@ class NullWithholding extends Model
         return $this->hasOne(User::class);
     }
 
-    public function withholding()
+    public function deduction()
     {
-        return $this->hasOne(Withholding::class);
+        return $this->hasOne(Deduction::class);
     }
 }

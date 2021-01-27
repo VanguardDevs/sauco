@@ -135,12 +135,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
 
     /**
-     * Taxpayer's Withholdings
+     * Taxpayer's Deductions
      */
-    Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
-        ->name('withholdings.index');
-    Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
-    Route::resource('withholdings', 'WithholdingController');
+    Route::get('taxpayers/{taxpayer}/deductions', 'DeductionController@index')
+        ->name('deductions.index');
+    Route::get('taxpayers/{taxpayer}/deductions/list', 'DeductionController@list');
+    Route::resource('deductions', 'DeductionController');
 
     /**
      * Handle settlements and payments
