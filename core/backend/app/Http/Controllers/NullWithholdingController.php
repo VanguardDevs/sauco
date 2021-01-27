@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullWithholding;
+use App\Models\NullWithholding;
 use Illuminate\Http\Request;
 
 class NullWithholdingController extends Controller

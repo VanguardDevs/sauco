@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullApplication;
+use App\Models\NullApplication;
 use Illuminate\Http\Request;
 
 class NullApplicationController extends Controller

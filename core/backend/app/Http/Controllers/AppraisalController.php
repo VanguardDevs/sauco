@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Appraisal;
+use App\Models\Appraisal;
 use Illuminate\Http\Request;
 
 class AppraisalController extends Controller

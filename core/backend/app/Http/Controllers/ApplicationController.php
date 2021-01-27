@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Application;
-use App\Ordinance;
-use App\Concept;
-use App\Taxpayer;
-use App\Payment;
-use App\Liquidation;
+use App\Models\Application;
+use App\Models\Ordinance;
+use App\Models\Concept;
+use App\Models\Taxpayer;
+use App\Models\Payment;
+use App\Models\Liquidation;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller

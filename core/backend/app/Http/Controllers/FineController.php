@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Fine;
-use App\Taxpayer;
-use App\Ordinance;
-use App\Concept;
-use App\Payment;
-use App\Liquidation;
+use App\Models\Fine;
+use App\Models\Taxpayer;
+use App\Models\Ordinance;
+use App\Models\Concept;
+use App\Models\Payment;
+use App\Models\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;

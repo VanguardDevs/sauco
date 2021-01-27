@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Ordinance;
+use App\Models\Ordinance;
 use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
 use App\Http\Requests\Ordinances\OrdinancesUpdateFormRequest;
 
