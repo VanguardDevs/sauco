@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\NewValue;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
+
+class Liquidation extends Model implements Auditable
+{
+    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps;
+
+    protected $table = 'liquidations';
+
+    protected $guarded = [];
+
+    protected $casts = ['amount' => 'float' ];
+
+    protected $appends = ['pretty_amount'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
+    }
+
+    public function receivable()
+    {
+        return $this->hasOne(Receivable::class);
+    }
+
+    public function concept()
+    {
+        return $this->belongsTo(Concept::class);
+    }
+
+    public function liquidationType()
+    {
+        return $this->concept->liquidationType();
+    }
+
+    public function canceledLiquidation()
+    {
+        return $this->hasOne(CanceledLiquidation::class);
+    }
+
+    public function liquidable()
+    {
+        return $this->morphTo()->withTrashed();
+    }
+}

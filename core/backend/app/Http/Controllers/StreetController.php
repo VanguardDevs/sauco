@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Street;
+use App\Models\Street;
 use Illuminate\Http\Request;
 
 class StreetController extends Controller
