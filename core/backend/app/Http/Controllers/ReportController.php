@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Payment;
-use App\Affidavit;
-use App\Taxpayer;
-use App\EconomicActivity;
-use App\License;
+use App\Models\Payment;
+use App\Models\Affidavit;
+use App\Models\Taxpayer;
+use App\Models\EconomicActivity;
+use App\Models\License;
 use Carbon\Carbon;
 use PDF;
 use Session;

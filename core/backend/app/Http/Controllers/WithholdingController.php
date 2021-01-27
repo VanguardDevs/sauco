@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Withholding;
-use App\Taxpayer;
-use App\Affidavit;
-use App\Month;
-use App\Payment;
-use App\Liquidation;
-use App\Concept;
+use App\Models\Withholding;
+use App\Models\Taxpayer;
+use App\Models\Affidavit;
+use App\Models\Month;
+use App\Models\Payment;
+use App\Models\Liquidation;
+use App\Models\Concept;
 use Carbon\Carbon;
 use Auth;
 use App\Http\Requests\AnnullmentRequest;

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Representation;
-use App\Taxpayer;
+use App\Models\Representation;
+use App\Models\Taxpayer;
 use Illuminate\Http\Request;
-use App\Person;
-use App\RepresentationType;
-use App\Citizenship;
+use App\Models\Person;
+use App\Models\RepresentationType;
+use App\Models\Citizenship;
 use Yajra\DataTables\Facades\DataTables;
 
 class RepresentationController extends Controller

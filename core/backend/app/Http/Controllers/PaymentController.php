@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
 use App\Models\PaymentType;
-use App\Payment;
-use App\Fine;
-use App\Concept;
-use App\Reference;
-use App\Liquidation;
-use App\Taxpayer;
-use App\PaymentNull;
+use App\Models\Payment;
+use App\Models\Fine;
+use App\Models\Concept;
+use App\Models\Reference;
+use App\Models\Liquidation;
+use App\Models\Taxpayer;
+use App\Models\PaymentNull;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\AnnullmentRequest;
@@ -43,13 +43,8 @@ class PaymentController extends Controller
     }
 
     public function listProcessed()
-<<<<<<< HEAD:core/backend/app/Http/Controllers/PaymentController.php
     { 
         $query = Payment::with('taxpayer') 
-=======
-    {
-        $query = Payment::with('taxpayer')
->>>>>>> master:app/Http/Controllers/PaymentController.php
             ->whereStatusId(2)
             ->orderBy('num', 'DESC');
     }
@@ -59,12 +54,10 @@ class PaymentController extends Controller
         $query = Payment::whereStatusId(2)
             ->whereTaxpayerId($taxpayer->id)
             ->orderBy('processed_at', 'DESC');
-<<<<<<< HEAD:core/backend/app/Http/Controllers/PaymentController.php
-=======
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
             })
             ->make(true);
     }
@@ -76,7 +69,6 @@ class PaymentController extends Controller
             ->orderBy('id', 'DESC');
 
         return DataTables::of($query)->toJson();
->>>>>>> master:app/Http/Controllers/PaymentController.php
     }
 
     /**

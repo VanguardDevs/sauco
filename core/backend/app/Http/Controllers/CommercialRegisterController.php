@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialRegister;
+use App\Models\CommercialRegister;
 use App\Http\Requests\CommercialRegisters\CommercialRegistersCreateFormRequest;
 use App\Taxpayer;
 use Illuminate\Http\Request;
