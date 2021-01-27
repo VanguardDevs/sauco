@@ -9,7 +9,7 @@ const List = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`taxpayer/${props.taxpayer}/withholdings`)
+    axios.get(`taxpayer/${props.taxpayer}/deductions`)
       .then(res => setData(res.data))
       .then(res => setLoading(false))
       .catch(err => console.log(err))

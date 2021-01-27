@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Withholding;
+use App\Models\Deduction;
 use App\Models\Taxpayer;
 use App\Models\Affidavit;
 use App\Models\Month;
@@ -14,7 +14,7 @@ use Auth;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 
-class WithholdingController extends Controller
+class DeductionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,10 +24,10 @@ class WithholdingController extends Controller
     public function index(Request $request, Taxpayer $taxpayer)
     {
         if ($request->wantsJson()) {
-            return $taxpayer->withholdings;
+            return $taxpayer->deductions;
         }
 
-        return view('modules.taxpayers.withholdings.index')
+        return view('modules.taxpayers.deductions.index')
             ->with('taxpayer', $taxpayer);
     }
 
@@ -41,7 +41,7 @@ class WithholdingController extends Controller
 
     public function list(Taxpayer $taxpayer)
     {
-        $query = $taxpayer->withholdings()
+        $query = $taxpayer->deductions()
             ->with(['affidavit', 'payment']);
     }
 
@@ -94,7 +94,7 @@ class WithholdingController extends Controller
                 'message' => '¡El monto a retener se excede del monto de la liquidación!. ('.$settlement->total_amount.').'
             ]);
         }
-        if ($affidavit->withholding()->first()) {
+        if ($affidavit->deduction()->first()) {
             return response()->json([
                 'success' => false,
                 'message' => '¡Ya existe una retención realizada para la liquidación seleccionada!'
@@ -107,8 +107,8 @@ class WithholdingController extends Controller
             ]);
         }
         
-        // Save withholding
-        $withholding = $affidavit->withholding()->create([
+        // Save deduction
+        $deduction = $affidavit->deduction()->create([
             'amount' => $amount,
             'affidavit_id' => $affidavit->id,
             'user_id' => $user
@@ -116,14 +116,14 @@ class WithholdingController extends Controller
  	
 	    $settlement->update([
             'amount' => $settlementAmount,
-            'withholding_id' => $withholding->id
+            'deduction_id' => $deduction->id
         ]);
         $settlement->payment()->first()->updateAmount();
 
      
         return response()->json([
             'success' => true,
-            'message' => '¡Retención de monto '.$withholding->amount.' realizada!'
+            'message' => '¡Retención de monto '.$deduction->amount.' realizada!'
         ]);
     }
 
@@ -139,10 +139,10 @@ class WithholdingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function show(Withholding $withholding)
+    public function show(Deduction $deduction)
     {
         //
     }
@@ -150,10 +150,10 @@ class WithholdingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Withholding $withholding)
+    public function edit(Deduction $deduction)
     {
         //
     }
@@ -162,10 +162,10 @@ class WithholdingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Withholding $withholding)
+    public function update(Request $request, Deduction $deduction)
     {
         //
     }
@@ -173,22 +173,22 @@ class WithholdingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Deduction  $deduction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Withholding $withholding)
+    public function destroy(AnnullmentRequest $request, Deduction $deduction)
     {
-        $payment = $withholding->payment()->first();
+        $payment = $deduction->payment()->first();
 
-        if ($withholding->settlement) {
-            $settlement = $withholding->settlement;
-            $amount = $withholding->amount - $settlement->amount;
+        if ($deduction->settlement) {
+            $settlement = $deduction->settlement;
+            $amount = $deduction->amount - $settlement->amount;
             $settlement->update(['amount' => $amount]);
             $payment->updateAmount();
         } 
-        $withholding->delete();
+        $deduction->delete();
 
-        $withholding->nullWithholding()->create([
+        $deduction->nullDeduction()->create([
             'user_id' => Auth::user()->id,
             'reason' => $request->get('annullment_reason')
         ]);

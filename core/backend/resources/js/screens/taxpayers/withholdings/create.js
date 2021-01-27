@@ -29,7 +29,7 @@ const create = (props) => {
   const {control, register, handleSubmit} = useForm();
 
   useEffect(() => {
-    axios.get('withholdings-months')
+    axios.get('deductions-months')
       .then((res) => setMonths( getMapOfMonths(res.data) ))
       .then((res) => setLoading(false))
       .catch((err) => console.log(err));
@@ -37,7 +37,7 @@ const create = (props) => {
 
   const onSubmit = (data) => {
     setDisable(true);
-    axios.post(`taxpayers/${taxpayer}/withholdings`, {
+    axios.post(`taxpayers/${taxpayer}/deductions`, {
       ...data, user: user
     })
       .then(res => {

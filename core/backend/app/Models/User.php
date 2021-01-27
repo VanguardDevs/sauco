@@ -45,9 +45,9 @@ class User extends Authenticatable
         return $this->hasMany(Liquidation::class);
     }
 
-    public function withholdings()
+    public function deductions()
     {
-        return $this->hasMany(Withholding::class);
+        return $this->hasMany(Deduction::class);
     }
 
     public function fines()

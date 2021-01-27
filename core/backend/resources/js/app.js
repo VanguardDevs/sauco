@@ -27,7 +27,7 @@ require('./screens/Settings/InvoiceModels/Index');
 
 require('./screens/taxpayers/profile');
 
-require('./screens/taxpayers/withholdings');
+require('./screens/taxpayers/deductions');
 
 require('./components/ListAccountingAccounts');
 

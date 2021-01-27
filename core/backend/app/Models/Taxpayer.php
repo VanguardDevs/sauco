@@ -99,9 +99,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Payment::class);
     }
 
-    public function withholdings()
+    public function deductions()
     {
-        return $this->hasManyThrough(Withholding::class, Affidavit::class);
+        return $this->hasManyThrough(Deduction::class, Affidavit::class);
     }
 
     public function affidavits()
