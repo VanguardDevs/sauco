@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWithholdingsTable extends Migration
+class CreateDeductionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateWithholdingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('withholdings', function (Blueprint $table) {
+        Schema::create('deductions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->decimal('amount', 15, 2);
             $table->unsignedBigInteger('liquidation_id');
@@ -34,6 +34,6 @@ class CreateWithholdingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('withholdings');
+        Schema::dropIfExists('deductions');
     }
 }

@@ -9,11 +9,11 @@ use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
 
-class Withholding extends Model implements Auditable 
+class Deduction extends Model implements Auditable 
 {
     use SoftDeletes, Audit, PrettyAmount, PrettyTimestamps;
 
-    protected $table = 'withholdings';
+    protected $table = 'deductions';
 
     protected $fillable = [
         'user_id',
@@ -38,8 +38,8 @@ class Withholding extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
-    public function NullWithholding()
+    public function CancelledDeduction()
     {
-      return $this->hasOne(NullWithholding::class);
+      return $this->hasOne(NullDeduction::class);
     }
 }

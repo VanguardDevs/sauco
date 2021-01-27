@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NullWithholding;
+use App\Models\CancelledDeduction;
 use Illuminate\Http\Request;
 
-class NullWithholdingController extends Controller
+class CancelledDeductionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class NullWithholdingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\CancelledDeduction  $cancelledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function show(NullWithholding $nullWithholding)
+    public function show(CancelledDeduction $cancelledDeduction)
     {
         //
     }
@@ -52,10 +52,10 @@ class NullWithholdingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\CancelledDeduction  $cancelledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function edit(NullWithholding $nullWithholding)
+    public function edit(CancelledDeduction $cancelledDeduction)
     {
         //
     }
@@ -64,10 +64,10 @@ class NullWithholdingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\CancelledDeduction  $cancelledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NullWithholding $nullWithholding)
+    public function update(Request $request, CancelledDeduction $cancelledDeduction)
     {
         //
     }
@@ -75,10 +75,10 @@ class NullWithholdingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\CancelledDeduction  $cancelledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NullWithholding $nullWithholding)
+    public function destroy(CancelledDeduction $cancelledDeduction)
     {
         //
     }

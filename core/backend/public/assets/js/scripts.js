@@ -241,7 +241,7 @@ $(document).ready(function() {
         ]
     });
 
-    $('#tWithholdings').DataTable({
+    $('#tDeductions').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
@@ -257,7 +257,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                      <a class="mr-2" onClick="nullRecord(${oData.id},'withholdings')" title='Anular'>
+                      <a class="mr-2" onClick="nullRecord(${oData.id},'deductions')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                       </a>
                     </div>`
