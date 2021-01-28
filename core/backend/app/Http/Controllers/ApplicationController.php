@@ -30,7 +30,7 @@ class ApplicationController extends Controller
             ->orderBy('applications.created_at', 'DESC')
             ->with(['concept:id,name']);
 
-        return $query;
+        return $query
             ->addColumn('pretty_amount', function ($payment) {
                 return $payment->pretty_amount;
             })
