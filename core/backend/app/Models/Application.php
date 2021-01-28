@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Taxpayer;
 use Carbon\Carbon;
 use App\Traits\PrettyAmount;
+use App\Traits\NewValue;
 use App\Traits\PrettyTimestamps;
 use App\Traits\MakeLiquidation;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
@@ -14,15 +15,15 @@ use OwenIt\Auditing\Auditable as Audit;
 
 class Application extends Model implements Auditable
 {
-    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, MakeLiquidation;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, MakeLiquidation, NewValue;
 
     protected $table = 'applications';
 
     protected $fillable = [
         'amount',
         'taxpayer_id',
-        'user_id',
         'concept_id',
+        'approved_at',
         'active'
     ];
 
