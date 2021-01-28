@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TaxpayerProperty;
 use Illuminate\Http\Request;
 
 class TaxpayerPropertyController extends Controller

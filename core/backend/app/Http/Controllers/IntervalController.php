@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Interval;
+use App\Models\Interval;
 use Illuminate\Http\Request;
 
 class IntervalController extends Controller

@@ -35,16 +35,6 @@ class CreateLiquidationsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        Schema::create('liquidation_payment', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('liquidation_id');
-            $table->unsignedBigInteger('payment_id');
-            $table->foreign('liquidation_id')->references('id')->on('liquidations')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('payment_id')->references('id')->on('payments')
-                ->onUpdate('cascade')->onDelete('cascade');
-        });
     }
 
     /**
@@ -55,6 +45,5 @@ class CreateLiquidationsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('liquidations');
-        Schema::dropIfExists('liquidation_payment');
     }
 }
