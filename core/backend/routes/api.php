@@ -13,10 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     // Only admin
     Route::group(['middleware' => ['permission:access.settings']], function () {
-        Route::resource('charging-methods', 'ChargingMethodController');
         Route::resource('years', 'YearController');
         Route::resource('concepts', 'ConceptController');
         Route::resource('payment-methods', 'PaymentMethodController');
@@ -24,7 +23,6 @@ Route::middleware('auth:api')->group(function () {
         Route::resource('representation-types', 'RepresentationTypeController');
         Route::resource('taxpayer-types', 'TaxpayerTypeController');
         Route::resource('taxpayer-classifications', 'TaxpayerClassificationController');
-        Route::resource('status', 'StatusController');
         Route::resource('tax-units', 'TaxUnitController');
         Route::resource('brands', 'BrandController');
         Route::resource('colors', 'ColorController');
