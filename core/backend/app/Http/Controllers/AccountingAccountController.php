@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AccountingAccount;
+use App\Models\AccountingAccount;
 use Illuminate\Http\Request;
 
 class AccountingAccountController extends Controller

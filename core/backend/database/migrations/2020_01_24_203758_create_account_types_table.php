@@ -15,7 +15,7 @@ class CreateAccountTypesTable extends Migration
     {
         Schema::create('account_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('denomination');
+            $table->string('name');
             $table->timestamps();
         });
     }

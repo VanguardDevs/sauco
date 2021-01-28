@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullFine;
+use App\Models\NullFine;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

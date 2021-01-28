@@ -35,7 +35,7 @@ set_time_limit(120);
             }
             table {
                 border-collapse: collapse;
-                width: 100%;                
+                width: 100%;
                 margin-top: 5px;
             }
             .tables {
@@ -95,12 +95,12 @@ set_time_limit(120);
                 <tbody>
                 @foreach($payments as $payment)
                  <tr>
-                    <td>{{ $payment->num }}</td> 
-                    <td>{{ $payment->taxpayer->rif }}</td>   
+                    <td>{{ $payment->num }}</td>
+                    <td>{{ $payment->taxpayer->rif }}</td>
                     <td>{{ $payment->taxpayer->name }}</td>
-                    <td>{{ $payment->formattedAmount }}</td>
+                    <td>{{ $payment->prettyAmount }}</td>
                 </tr>
-                @endforeach   
+                @endforeach
              </table>
             <br>
             <div class="bill-info">

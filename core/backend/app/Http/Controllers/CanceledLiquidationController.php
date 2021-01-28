@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CanceledLiquidation;
+use App\Models\CanceledLiquidation;
 use Illuminate\Http\Request;
 
 class CanceledLiquidationController extends Controller
