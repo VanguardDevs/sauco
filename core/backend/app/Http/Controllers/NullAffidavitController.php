@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullAffidavit;
+use App\Models\NullAffidavit;
 use Illuminate\Http\Request;
 
 class NullAffidavitController extends Controller

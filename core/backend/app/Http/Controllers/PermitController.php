@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Permit;
-use App\Taxpayer;
+use App\Models\Permit;
+use App\Models\Taxpayer;
 use Illuminate\Http\Request;
 
 class PermitController extends Controller

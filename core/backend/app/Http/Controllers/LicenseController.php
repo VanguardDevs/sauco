@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
-use App\License;
-use App\Correlative;
-use App\CorrelativeNumber;
-use App\CorrelativeType;
-use App\Year;
-use App\Ordinance;
-use App\Taxpayer;
-use App\Application;
+use App\Models\License;
+use App\Models\Correlative;
+use App\Models\CorrelativeNumber;
+use App\Models\CorrelativeType;
+use App\Models\Year;
+use App\Models\Ordinance;
+use App\Models\Taxpayer;
+use App\Models\Application;
 use Carbon\Carbon;
 
 class LicenseController extends Controller

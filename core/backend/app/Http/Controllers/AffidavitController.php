@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Taxpayer;
-use App\Year;
-use App\Month;
-use App\Liquidation;
-use App\Affidavit;
-use App\Payment;
-use App\EconomicActivityAffidavit;
-use App\Concept;
+use App\Models\Taxpayer;
+use App\Models\Year;
+use App\Models\Month;
+use App\Models\Liquidation;
+use App\Models\Affidavit;
+use App\Models\Payment;
+use App\Models\EconomicActivityAffidavit;
+use App\Models\Concept;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;

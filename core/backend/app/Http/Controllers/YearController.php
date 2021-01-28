@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Year;
-use App\Month;
+use App\Models\Year;
+use App\Models\Month;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -33,7 +33,7 @@ class YearController extends Controller
 
     public function listMonths(Year $year)
     {
-        if ($year->year == 2020) {
+        if ($year->year == Carbon::now()->year) {
             return $year->months()
                 ->where('id', '<', Carbon::now()->month)
                 ->get();

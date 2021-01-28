@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Concept;
-use App\Ordinance;
-use App\ChargingMethod;
-use App\LiquidationType;
-use App\AccountingAccount;
+use App\Models\Concept;
+use App\Models\Ordinance;
+use App\Models\ChargingMethod;
+use App\Models\LiquidationType;
+use App\Models\AccountingAccount;
 use App\Http\Requests\Concepts\ConceptsCreateFormRequest;
 use Illuminate\Http\Request;
 

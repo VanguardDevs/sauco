@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Taxpayer;
-use App\Liquidation;
-use App\CanceledLiquidation;
-use App\Concept;
-use App\Month;
+use App\Models\Taxpayer;
+use App\Models\Liquidation;
+use App\Models\CanceledLiquidation;
+use App\Models\Concept;
+use App\Models\Month;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;

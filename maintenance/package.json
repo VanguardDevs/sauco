@@ -1,0 +1,17 @@
+{
+  "name": "maintenance",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "taxpayers": "node ./scripts/taxpayers.js"
+  },
+  "author": "Jesus Ordosgoitty",
+  "license": "MIT",
+  "dependencies": {
+    "knex": "^0.21.16",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}

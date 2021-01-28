@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullPayment;
+use App\Models\NullPayment;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 

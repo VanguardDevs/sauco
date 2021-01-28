@@ -5,7 +5,7 @@
 @section('content')
 
 @if(Auth()->user()->can('process.settlements'))
-<div id='withholdings'></div>
+<div id='deductions'></div>
 <div id="data" data-taxpayer-id="{{ $taxpayer->id }}" data-user-id="{{ auth()->user()->id }}"></id>
 
 <div class="col-xl-12">
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="kt-portlet__body">
-            <table id="tWithholdings" class="table table-bordered table-striped datatables" style="text-align: center">
+            <table id="tDeductions" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
                     <th width="40%">Mes</th>

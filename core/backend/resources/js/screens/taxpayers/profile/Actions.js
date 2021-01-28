@@ -18,7 +18,7 @@ const renderComponent = (loading, data) => {
       <Notification title='Multas y sanciones' icon='fa-stop-circle' url={id+'/fines'} />
       <Notification title='Solicitudes' icon='fa-paper-plane' url={id+'/applications'} /> 
       <Notification title='Declaración jurada de ingresos' icon='fa-address-book' url={id+'/affidavits'} />
-      <Notification title='Retenciones' icon='fa-hand-holding-usd' url={id+'/withholdings'} />
+      <Notification title='Retenciones' icon='fa-hand-holding-usd' url={id+'/deductions'} />
     </Portlet>
   ) 
 }

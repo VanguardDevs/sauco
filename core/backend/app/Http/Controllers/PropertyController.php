@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Property;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
