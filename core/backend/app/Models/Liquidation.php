@@ -61,4 +61,9 @@ class Liquidation extends Model implements Auditable
     {
         return $this->morphTo()->withTrashed();
     }
+
+    public function movement()
+    {
+    	return $this->hasOne(Movement::class);
+    }
 }
