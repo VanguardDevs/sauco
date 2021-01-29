@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NullApplication;
+use App\Models\VehicleModel;
 use Illuminate\Http\Request;
 
-class NullApplicationController extends Controller
+class VehicleModelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class NullApplicationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\VehicleModel  $vehicleModel
      * @return \Illuminate\Http\Response
      */
-    public function show(NullApplication $nullApplication)
+    public function show(VehicleModel $vehicleModel)
     {
         //
     }
@@ -52,10 +52,10 @@ class NullApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\VehicleModel  $vehicleModel
      * @return \Illuminate\Http\Response
      */
-    public function edit(NullApplication $nullApplication)
+    public function edit(VehicleModel $vehicleModel)
     {
         //
     }
@@ -64,10 +64,10 @@ class NullApplicationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\VehicleModel  $vehicleModel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NullApplication $nullApplication)
+    public function update(Request $request, VehicleModel $vehicleModel)
     {
         //
     }
@@ -75,10 +75,10 @@ class NullApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\VehicleModel  $vehicleModel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NullApplication $nullApplication)
+    public function destroy(VehicleModel $vehicleModel)
     {
         //
     }
