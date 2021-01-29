@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NullAffidavit;
+use App\Models\CanceledDeduction;
 use Illuminate\Http\Request;
 
-class NullAffidavitController extends Controller
+class CanceledDeductionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class NullAffidavitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\NullAffidavit  $nullAffidavit
+     * @param  \App\Models\CanceledDeduction  $canceledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function show(NullAffidavit $nullAffidavit)
+    public function show(CanceledDeduction $canceledDeduction)
     {
         //
     }
@@ -52,10 +52,10 @@ class NullAffidavitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\NullAffidavit  $nullAffidavit
+     * @param  \App\Models\CanceledDeduction  $canceledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function edit(NullAffidavit $nullAffidavit)
+    public function edit(CanceledDeduction $canceledDeduction)
     {
         //
     }
@@ -64,10 +64,10 @@ class NullAffidavitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NullAffidavit  $nullAffidavit
+     * @param  \App\Models\CanceledDeduction  $canceledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NullAffidavit $nullAffidavit)
+    public function update(Request $request, CanceledDeduction $canceledDeduction)
     {
         //
     }
@@ -75,10 +75,10 @@ class NullAffidavitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\NullAffidavit  $nullAffidavit
+     * @param  \App\Models\CanceledDeduction  $canceledDeduction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NullAffidavit $nullAffidavit)
+    public function destroy(CanceledDeduction $canceledDeduction)
     {
         //
     }
