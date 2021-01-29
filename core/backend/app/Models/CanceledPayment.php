@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\PrettyTimestamps;
 
-class NullPayment extends Model
+class CanceledPayment extends Model
 {
-    protected $table = 'null_payments';
+    use PrettyTimestamps;
+
+    protected $table = 'canceled_payments';
 
     protected $fillable = [
         'reason',

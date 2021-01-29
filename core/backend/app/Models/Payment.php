@@ -57,9 +57,9 @@ class Payment extends Model implements Auditable
             ->get();
     }
 
-    public function nullPayment()
+    public function canceledPayment()
     {
-        return $this->hasOne(NullPayment::class);
+        return $this->hasOne(CanceledPayment::class);
     }
 
     public function status()

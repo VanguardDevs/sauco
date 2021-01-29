@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NullFine;
+use App\Models\CanceledPayment;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class NullFineController extends Controller
+class CanceledPaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class NullFineController extends Controller
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            $query = NullFine::latest('null_fines.created_at')
-                ->with(['fine', 'user']);
+            $query = CanceledPayment::latest('canceled_payments.created_at')
+                ->with(['user', 'payment.taxpayer']);
 
             return DataTables::of($query)
                 ->addColumn('formatted_amount', function ($payment) {
@@ -26,7 +26,7 @@ class NullFineController extends Controller
                 ->make(true);
         }
 
-        return view('modules.reports.fines.cancelled-fines');
+        return view('modules.reports.payments.cancelled-payments');
     }
 
     /**
@@ -53,31 +53,34 @@ class NullFineController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\NullFine  $nullFine
+     * @param  \App\CanceledPayment  $canceledPayment
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $nullFine) 
+    public function show($canceledPayment, Request $request)
     {
-        $nullFine = NullFine::find($nullFine); 
+        $canceledPayment = CanceledPayment::find($nullPayment);
 
         if ($request->wantsJson()) {
-
-           $data = $nullFine->load('fine.taxpayer', 'user'); 
+            $data = $canceledPayment->load(
+                'payment.taxpayer',
+                'payment.state',
+                'user'
+            );
 
            return response()->json($data);
         }
 
-        return view('modules.reports.fines.show')
-            ->with('row', $nullFine);
+        return view('modules.reports.payments.show')
+            ->with('row', $canceledPayment);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\NullFine  $nullFine
+     * @param  \App\CanceledPayment  $canceledPayment
      * @return \Illuminate\Http\Response
      */
-    public function edit(NullFine $nullFine)
+    public function edit(CanceledPayment $canceledPayment)
     {
         //
     }
@@ -86,10 +89,10 @@ class NullFineController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NullFine  $nullFine
+     * @param  \App\CanceledPayment  $canceledPayment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NullFine $nullFine)
+    public function update(Request $request, CanceledPayment $canceledPayment)
     {
         //
     }
@@ -97,10 +100,10 @@ class NullFineController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\NullFine  $nullFine
+     * @param  \App\CanceledPayment  $canceledPayment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NullFine $nullFine)
+    public function destroy(CanceledPayment $canceledPayment)
     {
         //
     }
