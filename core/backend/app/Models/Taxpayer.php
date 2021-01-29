@@ -128,4 +128,9 @@ class Taxpayer extends Model implements Auditable
     {
         return $this->belongsTo(Municipality::class);
     }
+
+    public function movements()
+    {
+    	return $this->hasMany(Movement::class);
+    }
 }

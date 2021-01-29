@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
     	return $this->hasMany(Affidavit::class);
     }
+
+    public function movements()
+    {
+    	return $this->hasMany(Movement::class);
+    }
 }
