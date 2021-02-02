@@ -50,7 +50,7 @@ class ReportController extends Controller
             $businesses = $query->get();
             $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
             $data = compact(['emissionDate', 'businesses', 'total']);
-    
+
             return PDF::LoadView('modules.reports.delinquent-companies.pdf', $data)
                 ->download('empresas-morosas'.$emissionDate.'.pdf');
         }
@@ -71,7 +71,7 @@ class ReportController extends Controller
         $payments = Payment::processedByDate($firstDate, $lastDate);
 
         // Prepare pdf
-        $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 
+        $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate));
         $totalAmount = $payments->sum('amount');
         $total = number_format($totalAmount, 2, ',', '.')." Bs";
 
@@ -87,7 +87,7 @@ class ReportController extends Controller
         $payments = Affidavit::processedByDate($firstDate, $lastDate);
 
         // Prepare pdf
-        $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate)); 
+        $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate));
         $totalAmount = $payments->sum('amount');
         $total = number_format($totalAmount, 2, ',', '.')." Bs";
 
@@ -141,5 +141,5 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView('modules.reports.pdf.taxpayers-uptodate', compact(['taxpayers', 'emissionDate', 'taxpayerCount']));
         return $pdf->download('contribuyentes'.$emissionDate.'.pdf');
-    }        
+    }
 }

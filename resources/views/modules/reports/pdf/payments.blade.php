@@ -35,7 +35,7 @@ set_time_limit(120);
             }
             table {
                 border-collapse: collapse;
-                width: 100%;                
+                width: 100%;
                 margin-top: 5px;
             }
             .tables {
@@ -86,21 +86,23 @@ set_time_limit(120);
                 <caption>REPORTE DE PAGOS PROCESADOS</caption>
                 <thead>
                   <tr>
-                    <th width="10%">NO. FACTURA</th>
+                    <th width="3%">#</th>
+                    <th width="7%">NO. FACTURA</th>
                     <th width="15%">RIF</th>
                     <th width="60%">RAZÓN SOCIAL</th>
                     <th width="15%">MONTO</th>
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($payments as $payment)
+                @foreach($payments as $index => $payment)
                  <tr>
-                    <td>{{ $payment->num }}</td> 
-                    <td>{{ $payment->taxpayer->rif }}</td>   
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $payment->num }}</td>
+                    <td>{{ $payment->taxpayer->rif }}</td>
                     <td>{{ $payment->taxpayer->name }}</td>
                     <td>{{ $payment->formattedAmount }}</td>
                 </tr>
-                @endforeach   
+                @endforeach
              </table>
             <br>
             <div class="bill-info">
