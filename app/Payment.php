@@ -17,8 +17,8 @@ class Payment extends Model implements Auditable
     protected $table = 'payments';
 
     protected $guarded = [];
- 
-    protected $casts = [ 'amount' => 'float' ];  
+
+    protected $casts = [ 'amount' => 'float' ];
 
     protected $appends = [ 'formatted_amount' ];
 
@@ -40,7 +40,7 @@ class Payment extends Model implements Auditable
         }
         $this->updateAmount();
     }
-    
+
     public function updateAmount()
     {
         $amount = $this->settlements->sum('amount');
@@ -52,9 +52,9 @@ class Payment extends Model implements Auditable
     {
         return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
             ->whereStateId(2)
-            ->orderBy('processed_at', 'ASC')
+            ->orderBy('num', 'ASC')
             ->get();
-    } 
+    }
 
     public static function newNum()
     {
@@ -66,7 +66,7 @@ class Payment extends Model implements Auditable
 
         $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
         return $newNum;
-    } 
+    }
 
     public function nullPayment()
     {
@@ -77,17 +77,17 @@ class Payment extends Model implements Auditable
     {
         return $this->belongsTo(Status::class);
     }
- 
+
     public function paymentType()
     {
         return $this->belongsTo(PaymentType::class);
     }
-    
+
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
     }
-    
+
     public function reference()
     {
         return $this->hasOne(Reference::class);
