@@ -17,7 +17,13 @@ class GeographicAreaSeeder extends Seeder
      */
     public function run()
     {
-        State::factory()->count(15)->create();
-        Community::factory()->count(10)->create();
+        State::factory()->count(15)
+            ->has(
+                Municipality::factory()
+                    ->count(1)
+                    ->has(Parish::factory()
+                        ->count(3)
+                        ->has(Community::factory()->count(3)))
+            )->create();
     }
 }
