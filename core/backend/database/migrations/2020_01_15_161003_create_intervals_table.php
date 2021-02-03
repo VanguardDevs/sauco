@@ -18,14 +18,6 @@ class CreateIntervalsTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
-
-        if (!Schema::hasColumn('concepts', 'interval_id')) {
-            Schema::table('concepts', function (Blueprint $table) {
-                $table->unsignedBigInteger('interval_id')->nullable();
-                $table->foreign('interval_id')->references('id')->on('intervals')
-                    ->onUpdate('cascade')->onDelete('cascade');
-            });
-        }
     }
 
     /**

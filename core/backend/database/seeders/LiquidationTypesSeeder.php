@@ -3,14 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\LiquidationType;
+use App\Models\LiquidationType;
 
 class LiquidationTypesSeeder extends Seeder
 {
     protected $lists = Array(
         'Solicitudes',
         'Multas',
-        'Actividad Económica'
+        'Impuesto a la Actividad Económica',
+        'Permisos',
     );
 
     /**
