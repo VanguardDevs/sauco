@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use App\Traits\NewValue;
 use App\TaxUnit;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\PrettyAmount;
 
 class Concept extends Model
 {
-    use SoftDeletes, NewValue;
+    use SoftDeletes, NewValue, HasFactory, PrettyAmount;
 
     protected $table = 'concepts';
 
@@ -30,7 +32,7 @@ class Concept extends Model
     {
         $method = $this->chargingMethod()->first()->name;
         $value = $value ? $value : TaxUnit::latest()->first()->value;
-        
+
         if ($method == "TASA") {
             return $value * $this->min_amount / 100;
         } else if ($method == 'DIVISA') {
