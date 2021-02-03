@@ -18,9 +18,15 @@ class DatabaseSeeder extends Seeder
         $this->call(TaxpayerTypeSeeder::class);
         $this->call(TaxpayerClassificationSeeder::class);
         $this->call(StatusSeeder::class);
+        $this->call(LiquidationTypesSeeder::class);
+        $this->call(OrdinancesSeeder::class);
+        $this->call(ChargingMethodsSeeder::class);
+        $this->call(IntervalsSeeder::class);
+        $this->call(AccountingAccountsSeeder::class);
 
         // Testing
         if (App::environment() == 'local') {
+            $this->call(ConceptsSeeder::class);
             $this->call(UserSeeder::class);
             $this->call(PaymentTypeSeeder::class);
             $this->call(PaymentMethodSeeder::class);

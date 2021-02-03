@@ -2,14 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Ordinance;
+use App\Models\Ordinance;
 use Illuminate\Database\Seeder;
 
 class OrdinancesSeeder extends Seeder
 {
     protected $names = Array(
-        'ACTIVIDAD ECONÓMICA',
-        'INMUEBLES',
+        'Actividad Económica',
+        'Aseo urbano',
+        'Inmuebles',
+        'Vehículos',
+        'Cementerio',
+        'Mercado',
+        'Terminal de pasajeros',
+        'Mercado',
+        'Expendios del Licores'
     );
 
     /**

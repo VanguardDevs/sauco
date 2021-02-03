@@ -1,9 +1,11 @@
 <?php
 
-use App\ChargingMethod;
+namespace Database\Seeders;
+
+use App\Models\ChargingMethod;
 use Illuminate\Database\Seeder;
 
-class ChargingMethodsTableSeeder extends Seeder
+class ChargingMethodsSeeder extends Seeder
 {
     protected $methods = Array(
         'U.T', 'TASA', 'DIVISA'

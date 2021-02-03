@@ -16,6 +16,7 @@ class CreateMovementsTable extends Migration
         Schema::create('movements', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', 20);
+            $table->boolean('credit', false);
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('liquidation_id');

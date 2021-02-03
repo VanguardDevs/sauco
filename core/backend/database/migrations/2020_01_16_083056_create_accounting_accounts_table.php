@@ -18,12 +18,6 @@ class CreateAccountingAccountsTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
-
-        Schema::table('concepts', function (Blueprint $table) {
-            $table->unsignedBigInteger('accounting_account_id')->nullable();
-            $table->foreign('accounting_account_id')->references('id')->on('accounting_accounts')
-                ->onUpdate('cascade')->onDelete('cascade');
-        });
     }
 
     /**
