@@ -34,7 +34,7 @@ class Affidavit extends Model implements Auditable
         'pretty_amount',
         'brute_amount_affidavit'
     ];
-    
+
     public static function processedByDate($firstDate, $lastDate)
     {
         return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
@@ -53,17 +53,12 @@ class Affidavit extends Model implements Auditable
             return [
                 Concept::whereCode(3)->first(),
                 Concept::whereCode(3)->first(),
-            ]; 
+            ];
         } else if ($passedDays > 45) {
-            return [Concept::whereCode(3)->first()]; 
+            return [Concept::whereCode(3)->first()];
         }
 
         return false;
-    }
-
-    public function getNull()
-    {
-        return $this->hasOne(NullAffidavit::class);
     }
 
     public function month()
@@ -132,5 +127,10 @@ class Affidavit extends Model implements Auditable
         $totalAffidavit = $this->economicActivityAffidavits->sum('brute_amount');
 
         return number_format($totalAffidavit, 2, ',', '.');
+    }
+
+    public function fines()
+    {
+        return $this->belongsToMany(Fine::class);
     }
 }
