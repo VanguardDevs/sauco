@@ -33,12 +33,6 @@ class YearController extends Controller
 
     public function listMonths(Year $year)
     {
-        if ($year->year == Carbon::now()->year) {
-            return $year->months()
-                ->where('id', '<', Carbon::now()->month)
-                ->get();
-        }
-
         return $year->months()->orderBy('id', 'ASC')->get(); 
     } 
 
@@ -71,7 +65,7 @@ class YearController extends Controller
             foreach ($this->months as $key => $value) {
                 Month::create([
                     'name' => $value,
-                    'year_id' => $year->id
+                    'year_id' => $year->id,
                 ]);
             }
             
