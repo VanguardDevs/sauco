@@ -4,12 +4,8 @@ async function taxpayers() {
   const db = knex(require("../knexfile"));
 
   try {
-    const rows = await db
-      .table('taxpayers')
-      .orderBy('created_at')
-      .then(rows => {
-        rows.forEach(row => console.log(row));
-      });
+    // Rename table companies
+    await db.schema.renameTable('commercial_denominations', 'companies');
   } finally {
     await db.destroy();
   }
