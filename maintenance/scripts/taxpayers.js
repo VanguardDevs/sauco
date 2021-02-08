@@ -1,5 +1,14 @@
 const knex = require('knex');
 
+const updateCompaniesQuery = `
+  UPDATE companies 
+  SET 
+    address = taxpayers.fiscal_address,
+    community_id = taxpayers.community_id,
+    parish_id = 1
+  FROM taxpayers WHERE taxpayers.id = companies.taxpayer_id
+`;
+
 async function taxpayers() {
   const db = knex(require("../knexfile"));
 
@@ -11,12 +20,20 @@ async function taxpayers() {
       table.string('address');
       table.decimal('capital', 2);
       table.integer('num_workers');
+      table.integer('community_id').unsigned();
+      table.integer('parish_id').unsigned();
+      table.foreign('community_id').references('communities.id');
+      table.foreign('parish_id').references('parishes.id');
     });
+    
+    const updateCompanies = await db.schema.raw(updateCompaniesQuery);
 
+    // Create companies
     const taxpayers = await db.select(
         'taxpayers.name as name', 
         'taxpayers.fiscal_address as address',
         'taxpayers.id as taxpayer_id',
+        'taxpayers.community_id as community_id',
         'taxpayers.created_at as created_at',
         'taxpayers.updated_at as updated_at',
         'taxpayers.deleted_at as deleted_at'
