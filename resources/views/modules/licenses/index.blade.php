@@ -23,8 +23,9 @@
                     <tr>
                         <th width="15%">Número</th>
                         <th width="15%">RIF</th>
-                        <th width="40%">Razón social</th>
+                        <th width="30%">Razón social</th>
                         <th width="15%">Ordenanza</th>
+                        <th width="10%">Estado</th>
                         <th width="10%">Fecha</th>
                         <th width="5%">Acciones</th>
                     </tr>
@@ -36,3 +37,7 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script type="text/javascript" src="{{ URL::asset('assets/js/licenses.js') }}"></script>
+@endpush

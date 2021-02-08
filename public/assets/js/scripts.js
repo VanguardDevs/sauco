@@ -158,7 +158,7 @@ const nullRecord = (id, url) => {
           resolve({
             answer: $('#annullmentReason').val()
           });
-        }); 
+        });
       }
     }).then(result => {
         if (result.value) {
@@ -498,7 +498,7 @@ $(document).ready(function() {
             }
         ]
     });
-    
+
     $('#tTaxpayersByEconomicActivity').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -763,7 +763,7 @@ $(document).ready(function() {
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>               
+                        </a>
                     </div>`
                     );
                 }
@@ -794,7 +794,7 @@ $(document).ready(function() {
                       </a>
                       <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
+                      </a>
                     </div>`
                     );
                 }
@@ -820,7 +820,7 @@ $(document).ready(function() {
                     <div class="btn-group">
                       <a class="mr-2" onClick="nullRecord(${oData.id},'withholdings')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>               
+                      </a>
                     </div>`
                     );
                 }
@@ -890,34 +890,6 @@ $(document).ready(function() {
                         </a>
                         <a class="mr-2" onClick="nullRecord(${oData.id},'affidavits')" title='Anular'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
-                    </div>`
-                    );
-                }
-            }
-        ]
-    });
-
-    $('#tLicenses').DataTable({
-        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "oLanguage": {
-            "sUrl": baseURL + "/assets/js/spanish.json"
-        },
-        "serverSide": true,
-        "ajax": `${window.location.href}`,
-        "columns": [
-            { data: 'num' },
-            { data: 'taxpayer.rif' },
-            { data: 'taxpayer.name' },
-            { data: 'ordinance.description' },
-            { data: 'emission_date' },
-            {
-                data: "id",
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/licenses/${oData.id} title='Ver licencia'>
-                            <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`
                     );

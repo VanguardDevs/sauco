@@ -167,6 +167,40 @@ class LicenseController extends Controller
         $license->economicActivities()->sync($act);
     }
 
+    public function renovate(License $license)
+    {
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+        // Maybe for other kind of licenses, I would inject
+        // Ordinances in this method and make licences without searching for
+        // a model
+        $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = $emissionDate->copy()->endOfYear();
+
+        $correlative = $license->correlative;
+        $correlativeNumber = $correlative->correlativeNumber;
+        $newCorrelative = Correlative::create([
+            'correlative_type_id' => 2,
+            'correlative_number_id' => $correlativeNumber->id,
+            'year_id' => $currYear->id
+        ]);
+
+        $newLicense = License::create([
+            'num' => $newCorrelative->num, 
+            'emission_date' => $emissionDate,
+            'expiration_date' => $expirationDate,
+            'ordinance_id' => $ordinance->id,
+            'correlative_id' => $newCorrelative->id,
+            'taxpayer_id' => $license->taxpayer->id,
+            'representation_id' => $license->taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id
+        ]);
+
+        $license->delete();
+
+        return response()->json($newLicense);
+    }
+
     public function validateStore(Taxpayer $taxpayer, $correlativeType)
     {
         $isValid = [
