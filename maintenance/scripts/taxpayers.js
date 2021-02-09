@@ -9,6 +9,22 @@ const updateCompaniesQuery = `
   FROM taxpayers WHERE taxpayers.id = companies.taxpayer_id
 `;
 
+const updateTaxpayersRifQuery = `
+  UPDATE taxpayers
+  SET
+    rif = subquery.rif
+  FROM (
+    SELECT 
+      CONCAT(taxpayer_types.correlative, taxpayers.rif) AS rif, 
+      taxpayers.id 
+    FROM taxpayers 
+      JOIN taxpayer_types 
+      ON taxpayers.taxpayer_type_id = taxpayer_types.id
+    )
+  AS subquery
+  WHERE taxpayers.id = subquery.id
+`;
+
 async function taxpayers() {
   const db = knex(require("../knexfile"));
 
@@ -17,6 +33,7 @@ async function taxpayers() {
     await db.schema.renameTable('commercial_denominations', 'companies');
 
     await db.schema.table('companies', (table) => {
+      table.string('rif');
       table.string('address');
       table.decimal('capital', 2);
       table.integer('num_workers');
@@ -27,10 +44,12 @@ async function taxpayers() {
     });
     
     const updateCompanies = await db.schema.raw(updateCompaniesQuery);
+    const updateTaxpayersRif = await db.schema.raw(updateTaxpayersRifQuery);
 
     // Create companies
     const taxpayers = await db.select(
         'taxpayers.name as name', 
+        'taxpayers.rif as rif', 
         'taxpayers.fiscal_address as address',
         'taxpayers.id as taxpayer_id',
         'taxpayers.community_id as community_id',
