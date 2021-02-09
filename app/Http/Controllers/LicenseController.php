@@ -65,7 +65,7 @@ class LicenseController extends Controller
      * Print a pdf of all licenses
      *
      * Return PDF
-     */    
+     */
     private function printReport($query)
     {
         $licenses = $query->get();
@@ -125,7 +125,7 @@ class LicenseController extends Controller
         }
 
         $this->makeLicense($correlative, $taxpayer);
-        
+
         return redirect('taxpayers/'.$taxpayer->id.'/economic-activity-licenses')
             ->withSuccess('¡Licencia de actividad económica creada!');
     }
@@ -139,8 +139,8 @@ class LicenseController extends Controller
         // a model
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->endOfYear(); 
-    
+        $expirationDate = $emissionDate->copy()->endOfYear();
+
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
         ]);
@@ -149,10 +149,10 @@ class LicenseController extends Controller
             'year_id' => $currYear->id,
             'correlative_type_id' => $type->id,
             'correlative_number_id' => $correlativeNumber->id
-        ]);    
+        ]);
 
         $license = License::create([
-            'num' => $correlative->num, 
+            'num' => $correlative->num,
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $ordinance->id,
@@ -186,7 +186,7 @@ class LicenseController extends Controller
         ]);
 
         $newLicense = License::create([
-            'num' => $newCorrelative->num, 
+            'num' => $newCorrelative->num,
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $ordinance->id,
@@ -195,6 +195,9 @@ class LicenseController extends Controller
             'representation_id' => $license->taxpayer->president()->first()->id,
             'user_id' => Auth::user()->id
         ]);
+        // Sync economic activities
+        $act = $newLicense->taxpayer->economicActivities;
+        $newLicense->economicActivities()->sync($act);
 
         $license->delete();
 
@@ -205,7 +208,7 @@ class LicenseController extends Controller
     {
         $isValid = [
             'error' => false,
-            'msg' => ''    
+            'msg' => ''
         ];
 
         if (!$taxpayer->economicActivities->count()) {
@@ -216,7 +219,7 @@ class LicenseController extends Controller
         if (!$taxpayer->president()->count()) {
             $isValid['error'] = true;
             $isValid['msg'] = '¡El contribuyente no tiene un representante (PRESIDENTE) registrado!';
-        } 
+        }
 
         if ($taxpayer->licenses()->exists()) {
             $isValid['error'] = true;
@@ -267,7 +270,7 @@ class LicenseController extends Controller
         $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
         return PDF::setOptions(['isRemoteEnabled' => true])
-            ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 
+            ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
             ->download('Licencia '.$taxpayer->rif.'.pdf');
     }
 
