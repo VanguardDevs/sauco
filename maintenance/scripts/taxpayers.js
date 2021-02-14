@@ -29,6 +29,36 @@ async function taxpayers() {
   const db = knex(require("../knexfile"));
 
   try {
+    // Create municipalities
+    await db.schema.createTable('states', (table) => {
+      table.increments();
+      table.string('name');
+      table.string('code').unique();
+      table.timestamps();
+    });
+
+    await db.schema.createTable('municipalities', (table) => {
+      table.increments();
+      table.string('name');
+      table.string('code').unique();
+      table.integer('state_id').unsigned();
+      table.foreign('state_id').references('states.id');
+      table.timestamps();
+    });
+
+    await db.schema.createTable('municipality_parish', (table) => {
+      table.integer('municipality_id').unsigned();
+      table.integer('parish_id').unsigned();
+      table.foreign('municipality_id').references('municipalities.id');
+      table.foreign('parish_id').references('parishes.id');
+    });
+
+    await db.schema.table('parishes', (table) => {
+      table.string('code').unique();
+      table.integer('municipality_id').unsigned();
+      table.foreign('municipality_id').references('municipalities.id');
+    });
+
     // Rename table companies
     await db.schema.renameTable('commercial_denominations', 'companies');
 
