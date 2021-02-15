@@ -23,9 +23,29 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.users.index');
+        $query = User::latest()->with(['roles']);
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+            // Get fields
+            if (array_key_exists('login', $filters)) {
+                $query->whereLogin($filters['login']);
+            }
+            if (array_key_exists('roles', $filters)) {
+                $query->whereHas('roles', function ($query) use ($filters) {
+                    return $query->whereLike('name', $filters['roles']);
+                });
+            }
+            if (array_key_exists('status', $filters)) {
+                $status = ($filters['status'] == 'Activos') ? 1 : 0;
+                $query->whereActive($status);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -91,7 +111,7 @@ class UserController extends Controller
         $newPassword = $request->input('new-password');
         $currentPass = $request->input('current-password');
         $user = Auth::user();
-        
+
         if (!Hash::check($currentPass, $user->password)) {
             return Redirect::back()
                 ->withError('¡Tu contraseña actual es incorrecta!');
@@ -136,7 +156,7 @@ class UserController extends Controller
         $edit->login = $request->input('login');
         $edit->first_name = $request->input('first_name');
         $edit->surname    = $request->input('surname');
-        
+
         if ($request->input('password') != NULL) {
             $edit->password   = bcrypt($request->input('password'));
         }
@@ -146,7 +166,7 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->withSuccess('¡Usuario actualizado!');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

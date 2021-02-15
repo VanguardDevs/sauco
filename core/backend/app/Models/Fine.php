@@ -29,7 +29,7 @@ class Fine extends Model implements Auditable
         'user_id'
     ];
 
-    protected $casts = [ 'amount' => 'float' ];  
+    protected $casts = [ 'amount' => 'float' ];
 
     public function getNull()
     {
@@ -78,6 +78,11 @@ class Fine extends Model implements Auditable
     public function payment()
     {
         return $this->belongsToMany(Payment::class, Liquidation::class);
+    }
+
+    public function affidavit()
+    {
+        return $this->belongsToMany(Affidavit::class);
     }
 
     public function liquidation()
