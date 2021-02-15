@@ -7,12 +7,13 @@ import users from './users';
 import customRoutes from './routes';
 
 function App() {
+  console.log(process.env.REACT_APP_DOMAIN);
   return (
     <Admin
       dashboard={Dashboard}
       history={history}
       customRoutes={customRoutes}
-      dataProvider={apiClient('http://dev.sauco.loc/api')}
+      dataProvider={apiClient(`${process.env.REACT_APP_DOMAIN}`)}
     > 
       <Resource name='users' {...users} />
     </Admin>
