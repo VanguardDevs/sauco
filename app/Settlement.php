@@ -15,10 +15,10 @@ class Settlement extends Model implements Auditable
     protected $table = 'settlements';
 
     protected $guarded = [];
- 
+
     protected $casts = [
         'amount' => 'float'
-    ];  
+    ];
 
     public function getTotalAmountAttribute($value)
     {
@@ -34,7 +34,12 @@ class Settlement extends Model implements Auditable
 
         $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
         return $newNum;
-    }   
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class, 'taxpayer_id');
+    }
 
     public function withholding()
     {
