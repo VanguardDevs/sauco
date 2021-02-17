@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "taxpayers": "node ./scripts/taxpayers.js"
+    "taxpayers": "node ./scripts/taxpayers.js",
+    "liquidations": "node ./scripts/updateLiquidations.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",
