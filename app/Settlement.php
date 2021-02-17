@@ -6,24 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\PrettyAmount;
 
 class Settlement extends Model implements Auditable
 {
-    use SoftDeletes;
-    use Audit;
+    use PrettyAmount, SoftDeletes, Audit;
 
     protected $table = 'settlements';
 
     protected $guarded = [];
 
+    protected $appends = ['pretty_amount'];
+
     protected $casts = [
         'amount' => 'float'
     ];
-
-    public function getTotalAmountAttribute($value)
-    {
-        return number_format($this->amount, 2, ',', '.');
-    }
 
     public static function newNum()
     {

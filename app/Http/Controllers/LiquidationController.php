@@ -13,15 +13,19 @@ class LiquidationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer)
+    public function index(Taxpayer $taxpayer, Request $request)
     {
-        $query = $taxpayer->settlements();
+        $query = $taxpayer->liquidations()->with('payment')->latest();
 
         if ($request->wantsJson()) {
-            return DataTables::eloquent($query)->toJson();
+            return DataTables::of($query)
+                ->addColumn('pretty_amount', function ($query) {
+                    return $query->pretty_amount;
+                })->make(true);
         }
 
-        return view('modules.taxpayers.liquidations');
+        return view('modules.taxpayers.liquidations')
+            ->with('row', $taxpayer);
     }
 
     /**
