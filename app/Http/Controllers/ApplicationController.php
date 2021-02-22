@@ -78,6 +78,7 @@ class ApplicationController extends Controller
             'num' => Settlement::newNum(),
             'object_payment' => $application->concept->name,
             'payment_id' => $payment->id,
+            'taxpayer_id' => $application->taxpayer_id,
             'amount' => $application->amount
         ]);
 
@@ -154,7 +155,7 @@ class ApplicationController extends Controller
         if ($application->settlement) {
             $application->settlement->delete();
             $payment->updateAmount();
-        } 
+        }
         $application->delete();
 
         $application->nullFine()->create([
@@ -163,6 +164,6 @@ class ApplicationController extends Controller
         ]);
 
         return redirect()->back()
-            ->with('success', '¡Solicitud anulada!');       
+            ->with('success', '¡Solicitud anulada!');
     }
 }

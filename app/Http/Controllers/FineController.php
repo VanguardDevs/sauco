@@ -105,6 +105,7 @@ class FineController extends Controller
             'num' => Settlement::newNum(),
             'object_payment' => $fine->concept->name,
             'payment_id' => $payment->id,
+            'taxpayer_id' => $fine->taxpayer_id,
             'amount' => $fine->amount
         ]);
 
@@ -152,7 +153,7 @@ class FineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(AnnullmentRequest $request, Fine $fine)
-    { 
+    {
         $fine->settlement->delete();
         $fine->delete();
 
@@ -168,6 +169,6 @@ class FineController extends Controller
         }
 
         return redirect()->back()
-            ->with('success', '¡Multa anulada!');   
+            ->with('success', '¡Multa anulada!');
     }
 }

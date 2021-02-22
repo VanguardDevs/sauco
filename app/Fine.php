@@ -46,6 +46,7 @@ class Fine extends Model implements Auditable
             'num' => Settlement::newNum(),
             'object_payment' => $concept->name,
             'amount' => $fineAmount,
+            'taxpayer_id' => $payment->taxpayer_id,
             'payment_id' => $payment->id,
         ]);
     }

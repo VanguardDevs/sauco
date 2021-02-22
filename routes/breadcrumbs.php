@@ -8,6 +8,10 @@ Breadcrumbs::for('change-password.show', function ($trail) {
 });
 
 /*----------  Cashbox ----------*/
+Breadcrumbs::for('liquidations.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Liquidaciones ', route('liquidations.index', $row));
+});
 
 Breadcrumbs::for('cancelled-fines.index', function ($trail) {
     $trail->parent('reports');
@@ -32,6 +36,11 @@ Breadcrumbs::for('cancelled-payments.index', function ($trail) {
 Breadcrumbs::for('cancelled-fines.show', function ($trail, $row) {
     $trail->parent('cancelled-fines.index');
     $trail->push('Multa anulada', route('cancelled-fines.show', $row));
+});
+
+Breadcrumbs::for('liquidations.show', function ($trail, $row) {
+    $trail->parent('liquidations.index', $row->taxpayer);
+    $trail->push('Liquidación Nº'.$row->num, route('liquidations.show', $row));
 });
 
 Breadcrumbs::for('cancelled-payments.show', function ($trail, $row) {
@@ -242,7 +251,7 @@ Breadcrumbs::for('economic-activities.edit', function ($trail) {
 });
 
 /**
- * Settings > accounts 
+ * Settings > accounts
  */
 Breadcrumbs::for('accounts.index', function ($trail) {
     $trail->parent('settings');
@@ -262,7 +271,7 @@ Breadcrumbs::for('accounts.edit', function ($trail, $row) {
 });
 
 /**
- * Settings > years 
+ * Settings > years
  */
 Breadcrumbs::for('years.index', function ($trail) {
     $trail->parent('settings');
@@ -270,7 +279,7 @@ Breadcrumbs::for('years.index', function ($trail) {
 });
 
 /**
- * Settings > years 
+ * Settings > years
  */
 Breadcrumbs::for('years.create', function ($trail) {
     $trail->parent('years.index');

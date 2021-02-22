@@ -69,13 +69,13 @@ class AffidavitController extends Controller
             $fineData = ($fines)
                 ? [
                     'apply' => true,
-                    'concepts' => $fines 
+                    'concepts' => $fines
                 ]
                 : ['apply' => false];
 
             return response()->json([
                 'affidavit' => $affidavit->load(['user', 'payment']),
-                'fine' => $fineData 
+                'fine' => $fineData
             ]);
         }
 
@@ -89,7 +89,7 @@ class AffidavitController extends Controller
                 ->with('row', $affidavit);
         }
 
-        // The settlement it's already processed    
+        // The settlement it's already processed
         return view('modules.cashbox.register-settlement')
             ->with('typeForm', 'show')
             ->with('row', $affidavit);
@@ -106,7 +106,7 @@ class AffidavitController extends Controller
             ->with('row', $affidavit)
             ->with('typeForm', 'edit-group');
     }
-    
+
     /**
      * Show form for editing the specified resource.
      * @param \App\Settlement $settlement
@@ -135,7 +135,7 @@ class AffidavitController extends Controller
     {
         $affidavit = Affidavit::findOneByMonth($this->taxpayer, $this->month)
             ->first();
-        
+
         // No affidavit found
         if (!$affidavit) {
             $pendingAffidavit = $this->checkLastAffidavit();
@@ -162,7 +162,7 @@ class AffidavitController extends Controller
     {
         $lastAffidavit = Affidavit::whereTaxpayerId($this->taxpayer->id)
             ->latest()->first();
-        
+
         if ($lastAffidavit) {
             // If last month settlement isn't processed yet
             if ($lastAffidavit->amount == 0.00) {
@@ -178,7 +178,7 @@ class AffidavitController extends Controller
      * @return Illuminate\Response
      */
     public function store()
-    {        
+    {
         $affidavit = Affidavit::create([
             'taxpayer_id' => $this->taxpayer->id,
             'month_id' => $this->month->id,
@@ -216,7 +216,7 @@ class AffidavitController extends Controller
         $amounts = $request->input('activity_settlements');
 
         if ($isEditGroup) {
-            $amount = $amounts[0]; 
+            $amount = $amounts[0];
             $totalAmount = $this->economicActivityAffidavit->updateByGroup($affidavit, $amount);
         } else {
             $totalAmount = $this->economicActivityAffidavit->update($affidavit, $amounts);
@@ -274,6 +274,7 @@ class AffidavitController extends Controller
             'num' => Settlement::newNum(),
             'object_payment' =>  $this->message($month),
             'affidavit_id' => $affidavit->id,
+            'taxpayer_id' => $affidavit->taxpayer_id,
             'amount' => $affidavit->amount
         ]);
 
@@ -281,7 +282,7 @@ class AffidavitController extends Controller
 
         return redirect()->route('payments.show', $payment->id);
     }
-    
+
     public function message(Month $month)
     {
         $concept = Concept::whereCode(1)->first();
@@ -306,6 +307,6 @@ class AffidavitController extends Controller
         $affidavit->delete();
 
         return redirect()->back()
-            ->with('success', '¡Liquidación anulada!');   
+            ->with('success', '¡Liquidación anulada!');
     }
 }

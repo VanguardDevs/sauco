@@ -16,7 +16,7 @@
                     Datos generales del contribuyente
                 </div>
            </div>
- 
+
           <table class="table table-bordered table-striped datatables" style="text-align: center">
             <thead>
               <tr>
@@ -27,8 +27,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $row->taxpayer->rif }}</td> 
-                    <td>{{ $row->taxpayer->name  }}</td>   
+                    <td>{{ $row->taxpayer->rif }}</td>
+                    <td>{{ $row->taxpayer->name  }}</td>
                     <td>{{ $row->taxpayer->fiscal_address }}</td>
                 </tr>
             </tbody>
@@ -44,18 +44,24 @@
             <thead>
               <tr>
                 <th width="10%">Liquidación</th>
-                <th width="80%">Concepto</th>
+                <th width="70%">Concepto</th>
                 <th width="10%">Monto</th>
+                <th width="10%">Acciones</th>
               </tr>
             </thead>
             <tbody>
             @foreach($row->settlements as $settlement)
              <tr>
-                <td>{{ $settlement->num }}</td> 
-                <td>{{ $settlement->object_payment  }}</td>   
-                <td>{{ $settlement->total_amount }}</td>
+                <td>{{ $settlement->num }}</td>
+                <td>{{ $settlement->object_payment  }}</td>
+                <td>{{ $settlement->pretty_amount }}</td>
+                <td>
+                    <a href={{ route('liquidations.show', $settlement->id) }}>
+                        <i class="fas fa-search-plus"></i>
+                    </a>
+                </td>
             </tr>
-            @endforeach   
+            @endforeach
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
@@ -73,7 +79,7 @@
                 </div>
                 @endif
            </div>
-        @if ($typeForm == 'edit')        
+        @if ($typeForm == 'edit')
         <div class="row form-group">
             <div class="col-md-12 form-group">
                 <label class="control-label"> Método de pago <span class="text-danger">*</span></label>
