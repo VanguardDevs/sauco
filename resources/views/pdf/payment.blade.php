@@ -30,7 +30,7 @@
             }
             table {
                 border-collapse: collapse;
-                width: 100%;                
+                width: 100%;
                 margin-top: 5px;
             }
             .details td {
@@ -98,7 +98,7 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>{{ $denomination }}</td> 
+                        <td>{{ $denomination }}</td>
                         <td>{{ $payment->taxpayer->rif }}</td>
                     </tr>
                     <tr>
@@ -119,8 +119,8 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>{{ $payment->processed_at }}</td> 
-                        <td>{{ $payment->paymentMethod->name }}</td>   
+                        <td>{{ $payment->processed_at }}</td>
+                        <td>{{ $payment->paymentMethod->name }}</td>
                         <td>{{ $payment->reference->reference ?? 'S/N' }}</td>
                     </tr>
                 </tbody>
@@ -137,11 +137,11 @@
                 <tbody>
                 @foreach($payment->settlements as $settlement)
                  <tr>
-                    <td>{{ $settlement->num }}</td> 
-                    <td class="object-payment">{{ $settlement->object_payment  }}</td>   
-                    <td style="word-spacing:1px;font-size:16px;">{{ $settlement->total_amount }}</td>
+                    <td>{{ $settlement->num }}</td>
+                    <td class="object-payment">{{ $settlement->object_payment  }}</td>
+                    <td style="word-spacing:1px;font-size:16px;">{{ $settlement->pretty_amount }}</td>
                 </tr>
-                @endforeach   
+                @endforeach
              </table>
         </div>
         <br>
@@ -161,11 +161,11 @@
                 Recaudador: {{ $payment->user->first_name.' '.$payment->user->surname }}
             </div>
             <div class="collector-firm">
-               <span style="width:50%;"></span> 
+               <span style="width:50%;"></span>
             </div>
             <br>
             <div class="observations">
-                OBSERVACIONES: {{ $payment->observations }}    
+                OBSERVACIONES: {{ $payment->observations }}
             </div>
         </div>
     </body>

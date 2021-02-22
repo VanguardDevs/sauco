@@ -15,7 +15,7 @@
                 <div class="kt-widget__content">
                     <div class="kt-widget__head">
                         <a id="taxpayer" class="kt-widget__username" data_id="{{ $row->id }}" href="{{ Route('taxpayers.show', $row->id) }}">
-                            {{ $row->name }}   
+                            {{ $row->name }}
                             </br>
                             <small> {{ $row->rif }} </small>
                         </a>
@@ -57,6 +57,13 @@
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
                 <h3 class="kt-portlet__head-title">Pagos</h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-actions">
+                    <a href="{{ Route('liquidations.index', $row) }}" class="btn btn-outline-primary" title="Ver liquidaciones">
+                        Liquidaciones
+                    </a>
+                </div>
             </div>
         </div>
         <div class="kt-portlet__body">

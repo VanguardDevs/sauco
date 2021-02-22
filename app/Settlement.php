@@ -6,24 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\PrettyAmount;
 
 class Settlement extends Model implements Auditable
 {
-    use SoftDeletes;
-    use Audit;
+    use PrettyAmount, SoftDeletes, Audit;
 
     protected $table = 'settlements';
 
     protected $guarded = [];
- 
+
+    protected $appends = ['pretty_amount'];
+
     protected $casts = [
         'amount' => 'float'
-    ];  
-
-    public function getTotalAmountAttribute($value)
-    {
-        return number_format($this->amount, 2, ',', '.');
-    }
+    ];
 
     public static function newNum()
     {
@@ -34,7 +31,12 @@ class Settlement extends Model implements Auditable
 
         $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
         return $newNum;
-    }   
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class, 'taxpayer_id');
+    }
 
     public function withholding()
     {
@@ -53,7 +55,7 @@ class Settlement extends Model implements Auditable
 
     public function affidavit()
     {
-        return $this->belongsTo(Affidavit::class);
+        return $this->belongsTo(Affidavit::class, 'affidavit_id');
     }
 
     public function application()

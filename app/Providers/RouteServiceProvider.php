@@ -14,6 +14,7 @@ use App\Taxpayer;
 use App\Year;
 use App\EconomicActivity;
 use App\Community;
+use App\Settlement;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('year', Year::class);
         Route::model('ordinance', Ordinance::class);
         Route::model('affidavit', Affidavit::class);
+        Route::model('settlement', Settlement::class);
     }
 
     /**
