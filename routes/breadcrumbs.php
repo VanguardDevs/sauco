@@ -38,6 +38,11 @@ Breadcrumbs::for('cancelled-fines.show', function ($trail, $row) {
     $trail->push('Multa anulada', route('cancelled-fines.show', $row));
 });
 
+Breadcrumbs::for('liquidations.show', function ($trail, $row) {
+    $trail->parent('liquidations.index', $row->taxpayer);
+    $trail->push('Liquidación Nº'.$row->num, route('liquidations.show', $row));
+});
+
 Breadcrumbs::for('cancelled-payments.show', function ($trail, $row) {
     $trail->parent('cancelled-payments.index');
     $trail->push('Pago anulado', route('cancelled-payments.show', $row));

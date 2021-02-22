@@ -94,7 +94,7 @@ class Affidavit extends Model implements Auditable
 
     public function settlement()
     {
-        return $this->hasOne(Settlement::class);
+        return $this->hasOne(Settlement::class, 'affidavit_id');
     }
 
     public function getCreatedAtAttribute($value)

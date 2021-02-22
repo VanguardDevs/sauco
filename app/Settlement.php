@@ -55,7 +55,7 @@ class Settlement extends Model implements Auditable
 
     public function affidavit()
     {
-        return $this->belongsTo(Affidavit::class);
+        return $this->belongsTo(Affidavit::class, 'affidavit_id');
     }
 
     public function application()

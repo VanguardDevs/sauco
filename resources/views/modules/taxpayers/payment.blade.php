@@ -44,8 +44,9 @@
             <thead>
               <tr>
                 <th width="10%">Liquidación</th>
-                <th width="80%">Concepto</th>
+                <th width="70%">Concepto</th>
                 <th width="10%">Monto</th>
+                <th width="10%">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -54,6 +55,11 @@
                 <td>{{ $settlement->num }}</td>
                 <td>{{ $settlement->object_payment  }}</td>
                 <td>{{ $settlement->pretty_amount }}</td>
+                <td>
+                    <a href={{ route('liquidations.show', $settlement->id) }}>
+                        <i class="fas fa-search-plus"></i>
+                    </a>
+                </td>
             </tr>
             @endforeach
           </table>

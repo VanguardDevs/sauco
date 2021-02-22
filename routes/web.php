@@ -264,6 +264,8 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::get('taxpayer/{taxpayer}/liquidations', 'LiquidationController@index')
         ->name('liquidations.index');
-    Route::get('liquidations/{id}/show', 'LiquidationController@show')
+    Route::put('liquidations/{settlement}', 'LiquidationController@update')
+        ->name('liquidations.update');
+    Route::get('liquidations/{settlement}/show', 'LiquidationController@show')
         ->name('liquidations.show');
 });

@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Taxpayer;
+use App\Settlement;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\MakeWithholdingRequest;
+use Auth;
 
 class LiquidationController extends Controller
 {
+    protected $typeForm = 'edit';
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +29,7 @@ class LiquidationController extends Controller
                 })->make(true);
         }
 
-        return view('modules.taxpayers.liquidations')
+        return view('modules.taxpayers.liquidations.index')
             ->with('row', $taxpayer);
     }
 
@@ -55,9 +60,18 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Settlement $settlement)
     {
-        //
+        if ($settlement->affidavit()->exists()
+            && !($settlement->affidavit->withholding()->exists())
+            && ($settlement->payment->state_id == 1)) {
+            $this->typeForm = 'update';
+        }
+
+        return view('modules.taxpayers.liquidations.show')
+            ->with('taxpayer', $settlement->taxpayer)
+            ->with('row', $settlement)
+            ->with('typeForm', $this->typeForm);
     }
 
     /**
@@ -78,9 +92,36 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MakeWithholdingRequest $request, Settlement $liquidation)
     {
-        //
+        // Substract amount
+        $amount = $request->input('withholding_amount');
+        $newLiquidationAmount = $liquidation->amount - $amount;
+        $affidavit = $liquidation->affidavit;
+
+        if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
+            return redirect()->back()
+                ->withErrors([
+                    'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
+                ]);
+        }
+
+        // Save withholding
+        $withholding = $affidavit->withholding()->create([
+            'amount' => $amount,
+            'affidavit_id' => $affidavit->id,
+            'user_id' => Auth::user()->id
+        ]);
+ 	
+	    $liquidation->update([
+            'amount' => $newLiquidationAmount,
+            'withholding_id' => $withholding->id
+        ]);
+
+        $liquidation->payment->updateAmount();
+
+        return redirect()->back()
+            ->withSuccess('¡Retención de '.$withholding->amount.' aplicada!');
     }
 
     /**
