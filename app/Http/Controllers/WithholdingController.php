@@ -35,7 +35,7 @@ class WithholdingController extends Controller
     public function months()
     {
         $months = Month::whereYearId(1);
-        
+
         return $months->get();
     }
 
@@ -67,7 +67,7 @@ class WithholdingController extends Controller
     // {
     //     $amount = $request->get('amount');
     //     $user = $request->get('user');
-    //     $month = $request->get('month')['value']; 
+    //     $month = $request->get('month')['value'];
 
     //     $affidavit = $taxpayer->affidavits()->whereMonthId($month)
     //         ->first();
@@ -108,14 +108,14 @@ class WithholdingController extends Controller
     //             'message' => '¡El pago de ese mes se encuentra procesado!'
     //         ]);
     //     }
-        
+
     //     // Save withholding
     //     $withholding = $affidavit->withholding()->create([
     //         'amount' => $amount,
     //         'affidavit_id' => $affidavit->id,
     //         'user_id' => $user
     //     ]);
- 	
+
 	//     $settlement->update([
     //         'amount' => $settlementAmount,
     //         'withholding_id' => $withholding->id
@@ -183,10 +183,10 @@ class WithholdingController extends Controller
 
         if ($withholding->settlement) {
             $settlement = $withholding->settlement;
-            $amount = $withholding->amount - $settlement->amount;
+            $amount = $settlement->amount - $withholding->amount;
             $settlement->update(['amount' => $amount]);
             $payment->updateAmount();
-        } 
+        }
         $withholding->delete();
 
         $withholding->nullWithholding()->create([
@@ -195,6 +195,6 @@ class WithholdingController extends Controller
         ]);
 
         return redirect()->back()
-            ->with('success', '¡Retención anulada!');   
+            ->with('success', '¡Retención anulada!');
     }
 }
