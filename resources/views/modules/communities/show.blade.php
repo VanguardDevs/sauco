@@ -14,6 +14,15 @@
                         Existen {{ $row->taxpayers->count() }} contribuyentes registrados en esta comunidad 
                     </h3>
                 </div>
+               <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        @if (Auth()->user()->can('print.reports'))
+                        <a href="{{ url('geographic-area/communities/'.$row->id.'?pdf=true') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Imprimir listado">
+                            <i class="fas fa-print"></i>
+                        </a>
+                        @endif
+                    </div>
+                </div>
             </div>
             <div class="kt-portlet__body">
               <table id="tTaxpayersByCommunity" class="table table-bordered table-striped datatables" style="text-align: center">
