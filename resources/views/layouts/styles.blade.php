@@ -3,7 +3,7 @@
 <!--begin::Fonts -->
 
 <!--end::Fonts -->
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
 
 <link rel="stylesheet" href="{{ asset('assets/css/login-1.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/vendors.bundle.css') }}">

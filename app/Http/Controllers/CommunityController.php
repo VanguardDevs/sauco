@@ -6,7 +6,10 @@ use App\Community;
 use App\Http\Requests\Communities\CommunitiesCreateFormRequest;
 use App\Http\Requests\Communities\CommunitiesUpdateFormRequest;
 use App\Parish;
+use PDF;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class CommunityController extends Controller
 {
@@ -72,8 +75,17 @@ class CommunityController extends Controller
      * @param  \App\Community  $community
      * @return \Illuminate\Http\Response
      */
-    public function show(Community $community)
+    public function show(Request $request, Community $community)
     {
+        if ($request->has('pdf')) {
+            $total = $community->taxpayers()->count();
+            $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+
+            $pdf = PDF::loadView('pdf.taxpayers-community', compact(['community', 'emissionDate', 'total']))
+                ->setPaper('a4', 'letter');
+            return $pdf->download('empresas-'.$community->name.'-'.$emissionDate.'.pdf');
+        }
+
         return view('modules.communities.show')
             ->with('row', $community);
     }
