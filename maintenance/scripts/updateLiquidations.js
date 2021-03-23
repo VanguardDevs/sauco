@@ -1,29 +1,73 @@
 const knex = require('knex');
 
 const addTaxpayerID = `
-  UPDATE settlements 
+  UPDATE liquidations 
   SET 
     taxpayer_id = subquery.taxpayer_id
   FROM (
-    SELECT settlements.id, payments.taxpayer_id
-    FROM payments JOIN settlements 
-    ON settlements.payment_id = payments.id
+    SELECT liquidations.id, payments.taxpayer_id
+    FROM payments JOIN liquidations 
+    ON liquidations.payment_id = payments.id
   )
   AS subquery
-  WHERE settlements.id = subquery.id
+  WHERE liquidations.id = subquery.id
 `;
 
 async function liquidations() {
   const db = knex(require("../knexfile"));
 
+  // Update and drop columns
+  const setNewColumnValues = async (originalColumn, type) => {
+    await db('liquidations')
+      .whereNotNull(originalColumn)
+      .update({
+        'liquidable_id': db.ref(originalColumn),
+        'liquidation_type_id': type.toString(),
+      })
+      .catch((error) => console.log(error));
+  };
+
   try {
-    // Update settlements table (add taxpayer_id column)
-    await db.schema.table('settlements', (table) => {
-      table.integer('taxpayer_id').unsigned();
-      table.foreign('taxpayer_id').references('taxpayers.id');
+    /**
+     * Rename and create new tables
+     */ 
+    await db.schema.renameTable('lists', 'liquidation_types');
+
+    await db.schema.table('concepts', (table) => {
+      table.renameColumn('list_id', 'liquidation_type_id');
     });
- 
-    await db.schema.raw(addTaxpayerID);
+
+    await db.schema.renameTable('settlements', 'liquidations');
+
+    /**
+     * Set new columns to liquidations table
+     */
+    await db.schema.table('liquidations', (table) => {
+      table.integer('liquidable_id').unsigned();
+      table.integer('liquidation_type_id').unsigned();
+      table.foreign('liquidation_type_id').references('liquidation_types.id');
+    });
+
+    /**
+     * Update liquidations by type
+     */
+    await setNewColumnValues('fine_id', 2); 
+    await setNewColumnValues('affidavit_id', 3); 
+    await setNewColumnValues('application_id', 1); 
+
+    /**
+     * Drop all unnecessary columns from liquidations table
+     */
+    await db.schema.table('liquidations', table => {
+      return table.dropColumns([
+        'fine_id',
+        'permit_id',
+        'affidavit_id',
+        'application_id',
+        'withholding_id',
+        'payment_id'
+      ]);
+    });
   } finally {
     await db.destroy();
   }
