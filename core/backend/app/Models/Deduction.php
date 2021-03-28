@@ -9,7 +9,7 @@ use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
 
-class Deduction extends Model implements Auditable 
+class Deduction extends Model implements Auditable
 {
     use SoftDeletes, Audit, PrettyAmount, PrettyTimestamps;
 
@@ -38,8 +38,8 @@ class Deduction extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
-    public function CancelledDeduction()
+    public function canceledDeduction()
     {
-      return $this->hasOne(NullDeduction::class);
+      return $this->hasOne(CanceledDeduction::class);
     }
 }
