@@ -64,7 +64,7 @@ class Payment extends Model implements Auditable
 
     public function status()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
     public function paymentType()
@@ -102,6 +102,11 @@ class Payment extends Model implements Auditable
         $liquidation = $this->liquidations()->first();
 
         return $liquidation->affidavit();
+    }
+
+    public function liquidations()
+    {
+        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
     }
 
     public function fines()

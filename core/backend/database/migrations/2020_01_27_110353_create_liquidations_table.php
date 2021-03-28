@@ -20,6 +20,7 @@ class CreateLiquidationsTable extends Migration
             $table->string('liquidable_type');
             $table->unsignedBigInteger('liquidable_id');
             $table->unsignedBigInteger('taxpayer_id');
+            $table->unsignedBigInteger('liquidation_type_id');
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('user_id');
@@ -30,6 +31,8 @@ class CreateLiquidationsTable extends Migration
             $table->foreign('concept_id')->references('id')->on('concepts')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('liquidation_type_id')->references('id')->on('liquidation_types')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();

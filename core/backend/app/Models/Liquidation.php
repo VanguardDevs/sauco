@@ -37,11 +37,6 @@ class Liquidation extends Model implements Auditable
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function receivable()
-    {
-        return $this->hasOne(Receivable::class);
-    }
-
     public function concept()
     {
         return $this->belongsTo(Concept::class);
@@ -60,6 +55,11 @@ class Liquidation extends Model implements Auditable
     public function liquidable()
     {
         return $this->morphTo()->withTrashed();
+    }
+
+    public function payment()
+    {
+        return $this->belongsToMany(Payment::class, 'payment_liquidation');
     }
 
     public function movement()
