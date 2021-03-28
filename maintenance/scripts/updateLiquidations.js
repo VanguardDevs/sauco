@@ -17,12 +17,13 @@ async function liquidations() {
   const db = knex(require("../knexfile"));
 
   // Update and drop columns
-  const setNewColumnValues = async (originalColumn, type) => {
+  const setNewColumnValues = async (originalColumn, liquidableType, id) => {
     await db('liquidations')
       .whereNotNull(originalColumn)
       .update({
         'liquidable_id': db.ref(originalColumn),
-        'liquidation_type_id': type.toString(),
+        'liquidable_type': liquidableType,
+        'liquidation_type_id': id.toString(),
       })
       .catch((error) => console.log(error));
   };
@@ -43,6 +44,7 @@ async function liquidations() {
      * Set new columns to liquidations table
      */
     await db.schema.table('liquidations', (table) => {
+      table.string('liquidable_type');
       table.integer('liquidable_id').unsigned();
       table.integer('liquidation_type_id').unsigned();
       table.foreign('liquidation_type_id').references('liquidation_types.id');
@@ -51,9 +53,9 @@ async function liquidations() {
     /**
      * Update liquidations by type
      */
-    await setNewColumnValues('fine_id', 2); 
-    await setNewColumnValues('affidavit_id', 3); 
-    await setNewColumnValues('application_id', 1); 
+    await setNewColumnValues('fine_id', 'App\\Models\\Fine', 2); 
+    await setNewColumnValues('affidavit_id', 'App\\Models\\Affidavit', 3); 
+    await setNewColumnValues('application_id', 'App\\Models\\Application', 1); 
 
     /**
      * Drop all unnecessary columns from liquidations table
