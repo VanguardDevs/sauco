@@ -20,7 +20,7 @@ class CanceledDeduction extends Model
 
     public function deduction()
     {
-        return $this->belongsTo(Fine::class);
+        return $this->belongsTo(Deduction::class)->withTrashed();
     }
 
     public function user()

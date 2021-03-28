@@ -13,6 +13,22 @@ const addTaxpayerID = `
   WHERE liquidations.id = subquery.id
 `;
 
+const insertManyPaymentLiquidationQuery = `
+  INSERT INTO payment_liquidation
+    (liquidation_id, payment_id, created_at, updated_at)
+  SELECT liquidations.id, payments.id, payments.created_at, payments.created_at
+    FROM liquidations JOIN payments
+    ON liquidations.payment_id = payments.id
+`;
+
+const insertManyDeductionLiquidationQuery = `
+  INSERT INTO deduction_liquidation
+    (liquidation_id, deduction_id, created_at, updated_at)
+  SELECT liquidations.id, deductions.id, deductions.created_at, deductions.created_at
+    FROM liquidations JOIN deductions
+    ON liquidations.withholding_id = deductions.id
+`;
+
 async function liquidations() {
   const db = knex(require("../knexfile"));
 
@@ -21,6 +37,7 @@ async function liquidations() {
     await db('liquidations')
       .whereNotNull(originalColumn)
       .update({
+        'status_id': '2',
         'liquidable_id': db.ref(originalColumn),
         'liquidable_type': liquidableType,
         'liquidation_type_id': id.toString(),
@@ -30,7 +47,7 @@ async function liquidations() {
 
   try {
     /**
-     * Rename and create new tables
+     * Rename tables
      */ 
     await db.schema.renameTable('lists', 'liquidation_types');
 
@@ -41,14 +58,30 @@ async function liquidations() {
     await db.schema.renameTable('settlements', 'liquidations');
 
     /**
+     * Create new tables
+     */
+    await db.schema.createTable('payment_liquidation', (table) => {
+      table.increments();
+      table.integer('liquidation_id').unsigned();
+      table.integer('payment_id').unsigned();
+      table.timestamps();
+      table.foreign('liquidation_id').references('liquidations.id');
+      table.foreign('payment_id').references('payments.id');
+    });
+
+    /**
      * Set new columns to liquidations table
      */
     await db.schema.table('liquidations', (table) => {
       table.string('liquidable_type');
       table.integer('liquidable_id').unsigned();
       table.integer('liquidation_type_id').unsigned();
+      table.integer('status_id').unsigned();
       table.foreign('liquidation_type_id').references('liquidation_types.id');
+      table.foreign('status_id').references('status.id');
     });
+
+    await db.schema.raw(insertManyPaymentLiquidationQuery);
 
     /**
      * Update liquidations by type
@@ -56,20 +89,6 @@ async function liquidations() {
     await setNewColumnValues('fine_id', 'App\\Models\\Fine', 2); 
     await setNewColumnValues('affidavit_id', 'App\\Models\\Affidavit', 3); 
     await setNewColumnValues('application_id', 'App\\Models\\Application', 1); 
-
-    /**
-     * Drop all unnecessary columns from liquidations table
-     */
-    await db.schema.table('liquidations', table => {
-      return table.dropColumns([
-        'fine_id',
-        'permit_id',
-        'affidavit_id',
-        'application_id',
-        'withholding_id',
-        'payment_id'
-      ]);
-    });
   } finally {
     await db.destroy();
   }
