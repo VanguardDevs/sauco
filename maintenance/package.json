@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "taxpayers": "node ./scripts/taxpayers.js",
-    "liquidations": "node ./scripts/updateLiquidations.js"
+    "liquidations": "node ./scripts/updateLiquidations.js",
+    "deductions": "node ./scripts/deductions.js",
+    "remove": "node ./scripts/remove.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",

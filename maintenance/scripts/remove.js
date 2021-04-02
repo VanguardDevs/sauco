@@ -1,12 +1,12 @@
 const knex = require('knex');
 
+/**
+ * Drop all unnecessary columns and tables
+ */
 async function main() {
   const db = knex(require("../knexfile"));
 
   try {
-    /**
-     * Drop all unnecessary columns from liquidations table
-     */
     await db.schema.table('liquidations', table => {
       return table.dropColumns([
         'fine_id',
@@ -17,6 +17,16 @@ async function main() {
         'payment_id'
       ]);
     });
+
+    await db.schema.table('deductions', table => {
+      table.dropColumn('affidavit_id');
+    });
+
+    await db.schema.table('payments', table => {
+      table.dropColumn('invoice_model_id');
+    });
+
+    await db.schema.dropTable('invoice_models');
   } finally {
     await db.destroy();
   }
@@ -29,4 +39,4 @@ if (!module.parent) {
   });
 }
 
-module.exports = liquidations;
+module.exports = main;

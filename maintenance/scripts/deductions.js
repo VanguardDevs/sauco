@@ -1,14 +1,19 @@
 const knex = require('knex');
 
 const insertManyDeductionLiquidationQuery = `
-  INSERT INTO deduction_liquidation
-    (liquidation_id, deduction_id, created_at, updated_at)
-  SELECT liquidations.id, deductions.id, deductions.created_at, deductions.created_at
-    FROM liquidations JOIN deductions
-    ON liquidations.withholding_id = deductions.id
+  UPDATE deductions
+  SET
+    liquidation_id = subquery.id
+  FROM (
+    SELECT liquidations.id, liquidations.liquidable_id
+    FROM liquidations
+    WHERE liquidable_type = 'App\\Models\\Affidavit'
+  )
+  AS subquery
+  WHERE affidavit_id = subquery.liquidable_id
 `;
 
-async function liquidations() {
+async function main() {
   const db = knex(require("../knexfile"));
 
   try {
@@ -24,33 +29,22 @@ async function liquidations() {
 
     await db.schema.renameTable('withholdings', 'deductions');
 
-    await db.schema.createTable('deduction_liquidation', (table) => {
-      table.increments();
+    await db.schema.table('deductions', (table) => {
       table.integer('liquidation_id').unsigned();
-      table.integer('deduction_id').unsigned();
-      table.timestamps();
       table.foreign('liquidation_id').references('liquidations.id');
-      table.foreign('deduction_id').references('deductions.id');
     });
 
     await db.schema.raw(insertManyDeductionLiquidationQuery);
-
-    /**
-     * Update liquidations by type
-     */
-    await setNewColumnValues('fine_id', 'App\\Models\\Fine', 2); 
-    await setNewColumnValues('affidavit_id', 'App\\Models\\Affidavit', 3); 
-    await setNewColumnValues('application_id', 'App\\Models\\Application', 1); 
   } finally {
     await db.destroy();
   }
 }
 
 if (!module.parent) {
-  liquidations().catch((err) => {
+  main().catch((err) => {
     console.error(err);
     process.exit(1);
   });
 }
 
-module.exports = liquidations;
+module.exports = main;
