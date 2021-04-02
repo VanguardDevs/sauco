@@ -33,7 +33,7 @@ class Taxpayer extends Model implements Auditable
 
     public function liquidations()
     {
-        return $this->hasMany(Settlement::class, 'taxpayer_id');
+        return $this->hasMany(Liquidation::class);
     }
 
     public function commercialRegister()

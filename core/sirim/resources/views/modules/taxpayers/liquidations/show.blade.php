@@ -33,20 +33,14 @@
                     </tr>
                 </tbody>
             </table>
-            
+
             <div class="row">
                 <div class="form-group col-lg-6">
                     <div class="kt-heading kt-heading--md">
                         Información de la liquidación
                         </br>
 
-                        @if($row->affidavit()->exists())
-                            Tipo: <strong>Declaración</strong>
-                        @elseif($row->fine()->exists())
-                            Tipo: <strong>Multa</strong>
-                        @elseif($row->application()->exists())
-                            Tipo: <strong>Multa</strong>
-                        @endif
+                        Tipo: <strong>{{ $row->liquidationType->name }}</strong>
                         </br>Monto: <strong>{{ $row->pretty_amount }}</strong>
                     </div>
                 </div>
@@ -94,8 +88,8 @@
                     </a>
                 @endif
 
-                @if($row->affidavit()->exists())
-                <a href="{{ route('affidavits.show', $row->affidavit()->first() ) }}"}} class='btn btn-success' title='Ir a la declaración'>
+                @if($row->liquidation_type_id == 3)
+                <a href="{{ route('affidavits.show', $row->liquidable()->first() ) }}"}} class='btn btn-success' title='Ir a la declaración'>
                     <i class='fas fa-chevron-right'></i>
                     Ir a la declaración
                 </a>
