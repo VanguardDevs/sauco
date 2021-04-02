@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Taxpayer;
-use App\Settlement;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\MakeWithholdingRequest;
+use App\Liquidation;
 use Auth;
 
 class LiquidationController extends Controller
@@ -60,17 +60,17 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Settlement $settlement)
+    public function show(Liquidation $liquidation)
     {
-        if ($settlement->affidavit()->exists()
-            && !($settlement->affidavit->withholding()->exists())
-            && ($settlement->payment->state_id == 1)) {
+        if ($liquidation->liquidation_type_id == 1
+            && !($liquidation->deduction()->exists())
+            && ($liquidation->payment->state_id == 1)) {
             $this->typeForm = 'update';
         }
 
         return view('modules.taxpayers.liquidations.show')
-            ->with('taxpayer', $settlement->taxpayer)
-            ->with('row', $settlement)
+            ->with('taxpayer', $liquidation->taxpayer)
+            ->with('row', $liquidation)
             ->with('typeForm', $this->typeForm);
     }
 
@@ -92,7 +92,7 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MakeWithholdingRequest $request, Settlement $liquidation)
+    public function update(MakeWithholdingRequest $request, Liquidation $liquidation)
     {
         // Substract amount
         $amount = $request->input('withholding_amount');
@@ -112,7 +112,7 @@ class LiquidationController extends Controller
             'affidavit_id' => $affidavit->id,
             'user_id' => Auth::user()->id
         ]);
- 	
+
 	    $liquidation->update([
             'amount' => $newLiquidationAmount,
             'withholding_id' => $withholding->id
