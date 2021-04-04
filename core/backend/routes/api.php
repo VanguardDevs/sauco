@@ -13,36 +13,38 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     // Only admin
     Route::group(['middleware' => ['permission:access.settings']], function () {
-        Route::resource('years', 'YearController');
-        Route::resource('concepts', 'ConceptController');
-        Route::resource('payment-methods', 'PaymentMethodController');
-        Route::resource('payment-types', 'PaymentTypeController');
-        Route::resource('representation-types', 'RepresentationTypeController');
-        Route::resource('taxpayer-types', 'TaxpayerTypeController');
-        Route::resource('taxpayer-classifications', 'TaxpayerClassificationController');
-        Route::resource('tax-units', 'TaxUnitController');
-        Route::resource('brands', 'BrandController');
-        Route::resource('colors', 'ColorController');
-        Route::resource('users', 'UserController');
-        Route::resource('ordinances', 'OrdinanceController');
+        Route::apiResource('years', 'YearController');
+        Route::apiResource('concepts', 'ConceptController');
+        Route::apiResource('payment-methods', 'PaymentMethodController');
+        Route::apiResource('payment-types', 'PaymentTypeController');
+        Route::apiResource('representation-types', 'RepresentationTypeController');
+        Route::apiResource('taxpayer-types', 'TaxpayerTypeController');
+        Route::apiResource('taxpayer-classifications', 'TaxpayerClassificationController');
+        Route::apiResource('tax-units', 'TaxUnitController');
+        Route::apiResource('brands', 'BrandController');
+        Route::apiResource('colors', 'ColorController');
+        Route::apiResource('users', 'UserController');
+        Route::apiResource('ordinances', 'OrdinanceController');
     });
 
-    Route::resource('economic-activities', 'EconomicActivityController')
+    Route::apiResource('economic-activities', 'EconomicActivityController')
         ->middleware('permission:access.economic-activities');
 
     // Controlled level permissions
-    Route::resource('liquidation-types', 'LiquidationTypeController');
-    Route::resource('states', 'StateController');
-    Route::resource('municipalities', 'MunicipalityController');
-    Route::resource('communities', 'CommunityController');
-    Route::resource('parishes', 'ParishController');
-    Route::resource('license', 'LicenseController');
-    Route::resource('taxpayers', 'TaxpayerController');
-    Route::resource('companies', 'CompanyController');
-    Route::resource('accounts', 'AccountController');
-    Route::resource('accounting-accounts', 'AccountingAccountController');
-    Route::resource('account-types', 'AccountTypeController');
-});
+    Route::apiResource('liquidation-types', 'LiquidationTypeController');
+    Route::apiResource('states', 'StateController');
+    Route::apiResource('municipalities', 'MunicipalityController');
+    Route::apiResource('communities', 'CommunityController');
+    Route::apiResource('parishes', 'ParishController');
+    Route::apiResource('license', 'LicenseController');
+    Route::apiResource('taxpayers', 'TaxpayerController');
+    Route::apiResource('liquidations', 'LiquidationController');
+    Route::apiResource('companies', 'CompanyController');
+    Route::apiResource('accounts', 'AccountController');
+    Route::apiResource('accounting-accounts', 'AccountingAccountController');
+    Route::apiResource('account-types', 'AccountTypeController');
+    Route::apiResource('payments', 'PaymentController');
+// });
