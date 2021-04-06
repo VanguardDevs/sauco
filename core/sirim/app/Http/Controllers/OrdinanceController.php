@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Ordinance;
+use App\Models\Ordinance;
 use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
 use App\Http\Requests\Ordinances\OrdinancesUpdateFormRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -67,7 +67,7 @@ class OrdinanceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Models\Ordinance  $Ordinance
      * @return \Illuminate\Http\Response
      */
     public function show(Ordinance $Ordinance)
@@ -78,7 +78,7 @@ class OrdinanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Models\Ordinance  $Ordinance
      * @return \Illuminate\Http\Response
      */
     public function edit(Ordinance $Ordinance)
@@ -92,7 +92,7 @@ class OrdinanceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Models\Ordinance  $Ordinance
      * @return \Illuminate\Http\Response
      */
     public function update(OrdinancesUpdateFormRequest $request, Ordinance $Ordinance)
@@ -108,7 +108,7 @@ class OrdinanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Ordinance  $Ordinance
+     * @param  \App\Models\Ordinance  $Ordinance
      * @return \Illuminate\Http\Response
      */
     public function destroy(Ordinance $Ordinance)

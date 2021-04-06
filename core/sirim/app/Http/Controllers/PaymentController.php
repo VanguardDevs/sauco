@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\PaymentMethod;
-use App\PaymentType;
-use App\Payment;
-use App\Fine;
-use App\Concept;
-use App\Reference;
-use App\Settlement;
-use App\Taxpayer;
-use App\Organization;
-use App\PaymentNull;
+use App\Models\PaymentMethod;
+use App\Models\PaymentType;
+use App\Models\Payment;
+use App\Models\Fine;
+use App\Models\Concept;
+use App\Models\Reference;
+use App\Models\Settlement;
+use App\Models\Taxpayer;
+use App\Models\Organization;
+use App\Models\PaymentNull;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -103,7 +103,7 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Payment  $payment
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function show(Payment $payment)
@@ -124,7 +124,7 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payment  $payment
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Payment $payment)
@@ -189,7 +189,7 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Payment  $payment
+     * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function destroy(AnnullmentRequest $request, Payment $payment)

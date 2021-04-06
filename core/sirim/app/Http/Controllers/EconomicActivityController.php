@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\ActivityClassification;
-use App\EconomicActivity;
-use App\Taxpayer;
+use App\Models\ActivityClassification;
+use App\Models\EconomicActivity;
+use App\Models\Taxpayer;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesCreateFormRequest;
 use App\Http\Requests\EconomicActivities\EconomicActivitiesUpdateFormRequest;
@@ -78,7 +78,7 @@ class EconomicActivityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\EconomicActivity  $economicActivity
+     * @param  \App\Models\EconomicActivity  $economicActivity
      * @return \Illuminate\Http\Response
      */
     public function show(EconomicActivity $economicActivity)
@@ -93,7 +93,7 @@ class EconomicActivityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\EconomicActivity  $economicActivity
+     * @param  \App\Models\EconomicActivity  $economicActivity
      * @return \Illuminate\Http\Response
      */
     public function edit(EconomicActivity $economicActivity)
@@ -107,7 +107,7 @@ class EconomicActivityController extends Controller
     /**
      * Show the form for editing the specified resource
      *
-     * @param \App\Taxpayer $taxpayer
+     * @param \App\Models\Taxpayer $taxpayer
      * @return \Illuminate\Http\Respose
      */
     public function editActivitiesForm(Taxpayer $taxpayer)
@@ -130,7 +130,7 @@ class EconomicActivityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\EconomicActivity  $economicActivity
+     * @param  \App\Models\EconomicActivity  $economicActivity
      * @return \Illuminate\Http\Response
      */
     public function update(EconomicActivitiesFormRequest $request, EconomicActivity $economicActivity)
@@ -148,7 +148,7 @@ class EconomicActivityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Taxpayer  $taxpayer
+     * @param  \App\Models\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
     public function editActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
@@ -168,7 +168,7 @@ class EconomicActivityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\EconomicActivity  $economicActivity
+     * @param  \App\Models\EconomicActivity  $economicActivity
      * @return \Illuminate\Http\Response
      */
     public function destroy(EconomicActivity $economicActivity)

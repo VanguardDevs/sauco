@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Municipality;
+use App\Models\Municipality;
 use Illuminate\Http\Request;
 
 class MunicipalityController extends Controller
@@ -41,7 +41,7 @@ class MunicipalityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Municipality  $municipality
+     * @param  \App\Models\Municipality  $municipality
      * @return \Illuminate\Http\Response
      */
     public function show(Municipality $municipality)
@@ -52,7 +52,7 @@ class MunicipalityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Municipality  $municipality
+     * @param  \App\Models\Municipality  $municipality
      * @return \Illuminate\Http\Response
      */
     public function edit(Municipality $municipality)
@@ -64,7 +64,7 @@ class MunicipalityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Municipality  $municipality
+     * @param  \App\Models\Municipality  $municipality
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Municipality $municipality)
@@ -75,7 +75,7 @@ class MunicipalityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Municipality  $municipality
+     * @param  \App\Models\Municipality  $municipality
      * @return \Illuminate\Http\Response
      */
     public function destroy(Municipality $municipality)

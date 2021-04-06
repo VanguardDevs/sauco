@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Listing;
+use App\Models\Listing;
 use App\Http\Requests\Categories\CategoriesCreateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;

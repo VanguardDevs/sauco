@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Taxpayer;
-use App\Affidavit;
-use App\Payment;
-use App\License;
+use App\Models\Taxpayer;
+use App\Models\Affidavit;
+use App\Models\Payment;
+use App\Models\License;
 
 class DashboardController extends Controller
 {

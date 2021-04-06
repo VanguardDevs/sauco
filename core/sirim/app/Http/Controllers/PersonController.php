@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Citizenship;
-use App\Taxpayer;
+use App\Models\Citizenship;
+use App\Models\Taxpayer;
 use App\Http\Requests\People\PeopleCreateFormRequest;
-use App\Person;
+use App\Models\Person;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -75,7 +75,7 @@ class PersonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Person  $Person
+     * @param  \App\Models\Person  $Person
      * @return \Illuminate\Http\Response
      */
     public function show(Person $Person)
@@ -87,7 +87,7 @@ class PersonController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Person  $Person
+     * @param  \App\Models\Person  $Person
      * @return \Illuminate\Http\Response
      */
     public function edit(Person $Person)
@@ -102,7 +102,7 @@ class PersonController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Person  $Person
+     * @param  \App\Models\Person  $Person
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Person $person)
@@ -116,7 +116,7 @@ class PersonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Person  $Person
+     * @param  \App\Models\Person  $Person
      * @return \Illuminate\Http\Response
      */
     public function destroy(Person $Person)
