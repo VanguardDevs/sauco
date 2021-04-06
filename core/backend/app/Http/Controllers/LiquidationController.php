@@ -18,18 +18,43 @@ class LiquidationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Taxpayer $taxpayer)
+    public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            $query = $taxpayer->liquidations()
-                    ->with(['status', 'payment'])
-                    ->orderBy('created_at', 'DESC')
-                    ->orderBy('status_id', 'DESC');
+        $query = Liquidation::latest()
+            ->with(['taxpayer', 'liquidationType']);
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
+            if (array_key_exists('object_payment', $filters)) {
+                $query->whereLike('object_payment', $filters['object_payment']);
+            }
+            if (array_key_exists('amount', $filters)) {
+                $query->whereAmount($filters['amount']);
+            }
+            if (array_key_exists('taxpayer', $filters)) {
+                $name = $filters['taxpayer'];
+
+                $query->whereHas('taxpayer', function ($q) use ($name) {
+                    return $query->whereLike('name', $name);
+                });
+            }
+            if (array_key_exists('type', $filters)) {
+                $name = $filters['type'];
+
+                $query->whereHas('liquidationType', function ($q) use ($name) {
+                    return $query->whereLike('name', $name);
+                });
+            }
         }
-        return view('modules.taxpayers.liquidations.index')
-            ->with('taxpayer', $taxpayer);
+
+        return $query->paginate($results);
     }
-   
+
     /**
      * Display the specified resource.
      *
@@ -38,7 +63,12 @@ class LiquidationController extends Controller
      */
     public function show(Liquidation $liquidation)
     {
-        //
+        return response()->json($liquidation->load([
+            'taxpayer',
+            'status',
+            'liquidationType',
+            'liquidable'
+        ]));
     }
 
     /**
