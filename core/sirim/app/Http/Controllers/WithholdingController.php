@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Withholding;
-use App\Taxpayer;
-use App\Affidavit;
-use App\Month;
-use App\Payment;
-use App\Settlement;
-use App\Concept;
+use App\Models\Withholding;
+use App\Models\Taxpayer;
+use App\Models\Affidavit;
+use App\Models\Month;
+use App\Models\Payment;
+use App\Models\Settlement;
+use App\Models\Concept;
 use Carbon\Carbon;
 use Auth;
 use App\Http\Requests\AnnullmentRequest;
@@ -140,7 +140,7 @@ class WithholdingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Models\Withholding  $withholding
      * @return \Illuminate\Http\Response
      */
     public function show(Withholding $withholding)
@@ -151,7 +151,7 @@ class WithholdingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Models\Withholding  $withholding
      * @return \Illuminate\Http\Response
      */
     public function edit(Withholding $withholding)
@@ -163,7 +163,7 @@ class WithholdingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Models\Withholding  $withholding
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Withholding $withholding)
@@ -174,7 +174,7 @@ class WithholdingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Withholding  $withholding
+     * @param  \App\Models\Withholding  $withholding
      * @return \Illuminate\Http\Response
      */
     public function destroy(AnnullmentRequest $request, Withholding $withholding)

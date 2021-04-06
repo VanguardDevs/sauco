@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AccountingAccount;
+use App\Models\AccountingAccount;
 use Illuminate\Http\Request;
 
 class AccountingAccountController extends Controller
@@ -45,7 +45,7 @@ class AccountingAccountController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\AccountingAccount  $accountingAccount
+     * @param  \App\Models\AccountingAccount  $accountingAccount
      * @return \Illuminate\Http\Response
      */
     public function show(AccountingAccount $accountingAccount)
@@ -56,7 +56,7 @@ class AccountingAccountController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\AccountingAccount  $accountingAccount
+     * @param  \App\Models\AccountingAccount  $accountingAccount
      * @return \Illuminate\Http\Response
      */
     public function edit(AccountingAccount $accountingAccount)
@@ -68,7 +68,7 @@ class AccountingAccountController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AccountingAccount  $accountingAccount
+     * @param  \App\Models\AccountingAccount  $accountingAccount
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, AccountingAccount $accountingAccount)
@@ -79,7 +79,7 @@ class AccountingAccountController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AccountingAccount  $accountingAccount
+     * @param  \App\Models\AccountingAccount  $accountingAccount
      * @return \Illuminate\Http\Response
      */
     public function destroy(AccountingAccount $accountingAccount)

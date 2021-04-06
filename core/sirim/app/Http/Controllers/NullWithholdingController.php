@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullWithholding;
+use App\Models\NullWithholding;
 use Illuminate\Http\Request;
 
 class NullWithholdingController extends Controller
@@ -41,7 +41,7 @@ class NullWithholdingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\Models\NullWithholding  $nullWithholding
      * @return \Illuminate\Http\Response
      */
     public function show(NullWithholding $nullWithholding)
@@ -52,7 +52,7 @@ class NullWithholdingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\Models\NullWithholding  $nullWithholding
      * @return \Illuminate\Http\Response
      */
     public function edit(NullWithholding $nullWithholding)
@@ -64,7 +64,7 @@ class NullWithholdingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\Models\NullWithholding  $nullWithholding
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, NullWithholding $nullWithholding)
@@ -75,7 +75,7 @@ class NullWithholdingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\NullWithholding  $nullWithholding
+     * @param  \App\Models\NullWithholding  $nullWithholding
      * @return \Illuminate\Http\Response
      */
     public function destroy(NullWithholding $nullWithholding)

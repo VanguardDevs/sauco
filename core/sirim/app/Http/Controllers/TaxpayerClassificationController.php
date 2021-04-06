@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\TaxpayerClassification;
+use App\Models\TaxpayerClassification;
 use Illuminate\Http\Request;
 
 class TaxpayerClassificationController extends Controller
@@ -41,7 +41,7 @@ class TaxpayerClassificationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\TaxpayerClassification  $taxpayerClassification
+     * @param  \App\Models\TaxpayerClassification  $taxpayerClassification
      * @return \Illuminate\Http\Response
      */
     public function show(TaxpayerClassification $taxpayerClassification)
@@ -52,7 +52,7 @@ class TaxpayerClassificationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\TaxpayerClassification  $taxpayerClassification
+     * @param  \App\Models\TaxpayerClassification  $taxpayerClassification
      * @return \Illuminate\Http\Response
      */
     public function edit(TaxpayerClassification $taxpayerClassification)
@@ -64,7 +64,7 @@ class TaxpayerClassificationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TaxpayerClassification  $taxpayerClassification
+     * @param  \App\Models\TaxpayerClassification  $taxpayerClassification
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, TaxpayerClassification $taxpayerClassification)
@@ -75,7 +75,7 @@ class TaxpayerClassificationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\TaxpayerClassification  $taxpayerClassification
+     * @param  \App\Models\TaxpayerClassification  $taxpayerClassification
      * @return \Illuminate\Http\Response
      */
     public function destroy(TaxpayerClassification $taxpayerClassification)

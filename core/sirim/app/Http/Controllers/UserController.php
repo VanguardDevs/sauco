@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Image;
 use File;
 use DataTables;
-use App\User;
+use App\Models\User;
 use Caffeinated\Shinobi\Models\Role;
 use Auth;
 use Hash;

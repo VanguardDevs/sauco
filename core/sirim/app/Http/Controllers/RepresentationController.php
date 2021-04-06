@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Representation;
-use App\Taxpayer;
+use App\Models\Representation;
+use App\Models\Taxpayer;
 use Illuminate\Http\Request;
-use App\Person;
-use App\RepresentationType;
-use App\Citizenship;
+use App\Models\Person;
+use App\Models\RepresentationType;
+use App\Models\Citizenship;
 use Yajra\DataTables\Facades\DataTables;
 
 class RepresentationController extends Controller
@@ -123,7 +123,7 @@ class RepresentationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Representation  $Representation
+     * @param  \App\Models\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
     public function show(Representation $Representation)
@@ -134,7 +134,7 @@ class RepresentationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Representation  $Representation
+     * @param  \App\Models\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
     public function edit(Representation $Representation)
@@ -146,7 +146,7 @@ class RepresentationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Representation  $Representation
+     * @param  \App\Models\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Representation $Representation)
@@ -157,7 +157,7 @@ class RepresentationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Representation  $Representation
+     * @param  \App\Models\Representation  $Representation
      * @return \Illuminate\Http\Response
      */
     public function destroy(Representation $Representation)

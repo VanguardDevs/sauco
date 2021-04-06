@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +21,6 @@ class NullApplication extends Model
 
     public function application()
     {
-        return $this->hasOne(Application::class);
+        return $this->hasOne(App\Modelslication::class);
     }
 }

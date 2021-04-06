@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialDenomination;
+use App\Models\CommercialDenomination;
 use Illuminate\Http\Request;
 
 class CommercialDenominationController extends Controller
@@ -41,7 +41,7 @@ class CommercialDenominationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Models\CommercialDenomination  $commercialDenomination
      * @return \Illuminate\Http\Response
      */
     public function show(CommercialDenomination $commercialDenomination)
@@ -52,7 +52,7 @@ class CommercialDenominationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Models\CommercialDenomination  $commercialDenomination
      * @return \Illuminate\Http\Response
      */
     public function edit(CommercialDenomination $commercialDenomination)
@@ -64,7 +64,7 @@ class CommercialDenominationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Models\CommercialDenomination  $commercialDenomination
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CommercialDenomination $commercialDenomination)
@@ -75,7 +75,7 @@ class CommercialDenominationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CommercialDenomination  $commercialDenomination
+     * @param  \App\Models\CommercialDenomination  $commercialDenomination
      * @return \Illuminate\Http\Response
      */
     public function destroy(CommercialDenomination $commercialDenomination)

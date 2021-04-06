@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
-use App\Fine;
+use App\Models\Fine;
 
 class Payment extends Model implements Auditable
 {
@@ -30,11 +30,11 @@ class Payment extends Model implements Auditable
         if ($totalFines && $totalSettlements < 3) {
             $concept = $totalFines[0];
             if (count($totalFines) == 2 && $totalSettlements < 2) {
-                // Apply two fines
+                // App\Modelsly two fines
                 Fine::applyFine($this, $concept);
             }
             if (count($totalFines) == 1 || count($totalFines) == 2) {
-                // Apply one fine
+                // App\Modelsly one fine
                 Fine::applyFine($this, $concept);
             }
         }

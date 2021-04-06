@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialRegister;
+use App\Models\CommercialRegister;
 use App\Http\Requests\CommercialRegisters\CommercialRegistersCreateFormRequest;
-use App\Taxpayer;
+use App\Models\Taxpayer;
 use Illuminate\Http\Request;
 
 class CommercialRegisterController extends Controller
@@ -61,7 +61,7 @@ class CommercialRegisterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\CommercialRegister  $commercialRegister
+     * @param  \App\Models\CommercialRegister  $commercialRegister
      * @return \Illuminate\Http\Response
      */
     public function show(CommercialRegister $commercialRegister)
@@ -72,7 +72,7 @@ class CommercialRegisterController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CommercialRegister  $commercialRegister
+     * @param  \App\Models\CommercialRegister  $commercialRegister
      * @return \Illuminate\Http\Response
      */
     public function edit(CommercialRegister $commercialRegister)
@@ -84,7 +84,7 @@ class CommercialRegisterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CommercialRegister  $commercialRegister
+     * @param  \App\Models\CommercialRegister  $commercialRegister
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CommercialRegister $commercialRegister)
@@ -95,7 +95,7 @@ class CommercialRegisterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CommercialRegister  $commercialRegister
+     * @param  \App\Models\CommercialRegister  $commercialRegister
      * @return \Illuminate\Http\Response
      */
     public function destroy(CommercialRegister $commercialRegister)

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaxUnits\TaxUnitsCreateFormRequest;
-use App\TaxUnit;
+use App\Models\TaxUnit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -63,7 +63,7 @@ class TaxUnitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\TaxUnit  $taxUnit
+     * @param  \App\Models\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
     public function show(TaxUnit $taxUnit)
@@ -74,7 +74,7 @@ class TaxUnitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\TaxUnit  $taxUnit
+     * @param  \App\Models\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
     public function edit(TaxUnit $taxUnit)
@@ -86,7 +86,7 @@ class TaxUnitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TaxUnit  $taxUnit
+     * @param  \App\Models\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, TaxUnit $taxUnit)
@@ -97,7 +97,7 @@ class TaxUnitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\TaxUnit  $taxUnit
+     * @param  \App\Models\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
     public function destroy(TaxUnit $taxUnit)
