@@ -20,65 +20,56 @@ use Auth;
 class PaymentController extends Controller
 {
     /**
-     * Payment form type
-     * @var $typeform
-     */
-    private $typeform = 'show';
-
-    public function __construct()
-    {
-        $this->middleware('can:null.payments')->only('destroy');
-        $this->middleware('can:process.payments')->only('update');
-        $this->middleware('auth');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.cashbox.list-payments');
-    }
+        $query = Payment::orderBy('num', 'DESC')
+            ->with(['taxpayer', 'status']);
+        $results = $request->perPage;
 
-    public function listProcessed()
-    { 
-        $query = Payment::with('taxpayer') 
-            ->whereStatusId(2)
-            ->orderBy('num', 'DESC');
-    }
+        if ($request->has('filter')) {
+            $filters = $request->filter;
 
-    public function listByTaxpayer(Taxpayer $taxpayer)
-    {
-        $query = Payment::whereStatusId(2)
-            ->whereTaxpayerId($taxpayer->id)
-            ->orderBy('processed_at', 'DESC');
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
+            if (array_key_exists('amount', $filters)) {
+                $query->whereAmount($filters['amount']);
+            }
+            if (array_key_exists('taxpayer', $filters)) {
+                $name = $filters['taxpayer'];
 
-        return DataTables::of($query)
-            ->addColumn('pretty_amount', function ($payment) {
-                return $payment->pretty_amount;
-            })
-            ->make(true);
-    }
+                $query->whereHas('taxpayer', function ($q) use ($name) {
+                    return $query->whereLike('name', $name);
+                });
+            }
+            if (array_key_exists('type', $filters)) {
+                $name = $filters['type'];
 
-    public function onlyNull()
-    {
-        $query = Payment::onlyTrashed()
-            ->with(['taxpayer', 'state'])
-            ->orderBy('id', 'DESC');
+                $query->whereHas('paymentType', function ($q) use ($name) {
+                    return $query->whereLike('type', $name);
+                });
+            }
+            if (array_key_exists('method', $filters)) {
+                $name = $filters['method'];
 
-        return DataTables::of($query)->toJson();
-    }
+                $query->whereHas('paymentMethod', function ($q) use ($name) {
+                    return $query->whereLike('description', $name);
+                });
+            }
+            if (array_key_exists('status', $filters)) {
+                $name = $filters['status'];
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+                $query->whereHas('status', function ($q) use ($name) {
+                    return $query->whereLike('status', $name);
+                });
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -100,17 +91,15 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if ($payment->status->id == 1) {
-            if (auth()->user()->can('process.payments')) {
-                $this->typeform = 'edit';
-            }
-        }
+        $payment = $payment->load([
+            'status',
+            'taxpayer',
+            'paymentType',
+            'references',
+            'paymentMethod'
+        ]);
 
-        return view('modules.taxpayers.payment')
-            ->with('row', $payment)
-            ->with('types', PaymentType::exceptNull())
-            ->with('methods', PaymentMethod::exceptNull())
-            ->with('typeForm', $this->typeform);
+        return response()->json($payment);
     }
 
     /**
@@ -153,29 +142,21 @@ class PaymentController extends Controller
 
     public function download(Payment $payment)
     {
-        if ($payment->status->id == 1) {
-            return redirect()->back()
-                ->withError('¡La factura no ha sido procesada!');
-        }
+        if ($payment->status->id == 2) {
+            $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
+            $taxpayer = $payment->taxpayer;
 
-        $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
-        $taxpayer = $payment->taxpayer;
-
-        if ($payment->invoiceModel->code == 2) {
             $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
             $vars = ['payment', 'reference', 'denomination'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
                 ->loadView('pdf.payment', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
-        } else {
-            $organization = Organization::first();
-            $vars = ['payment', 'reference', 'organization'];
-
-            return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('modules.cashbox.pdf.deduction', compact($vars))
-                ->stream('factura-'.$payment->id.'.pdf');
         }
+
+        return response()->json([
+            'message' => '¡La factura no ha sido procesada!'
+        ], 400);
    }
 
     /**
@@ -186,20 +167,15 @@ class PaymentController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Payment $payment)
     {
-        // Delete receivables and payment but keep settlements
-        $settlements = Settlement::where('payment_id', $payment->id);
-
         // Delete settlements and payment
-        $settlements->delete();
-        $payment->delete();
+        $payment->liquidations()->delete();
 
-        $payment->nullPayment()->create([
+        $payment->canceledPayment()->create([
             'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id
         ]);
         $payment->delete();
 
-        return redirect()->back()
-            ->withSuccess('¡Pago anulado!');
+        return response()->json($payment);
     }
 }

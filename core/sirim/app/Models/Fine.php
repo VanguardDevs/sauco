@@ -31,7 +31,7 @@ class Fine extends Model implements Auditable
 
     public static function applyFine($payment, $concept)
     {
-        $amount = $payment->settlements()->first()->amount;
+        $amount = $payment->settlements()->whereNotNull('affidavit_id')->first()->amount;
         $fineAmount = $concept->calculateAmount($amount);
         $userId = User::whereLogin('sauco')->first()->id;
 

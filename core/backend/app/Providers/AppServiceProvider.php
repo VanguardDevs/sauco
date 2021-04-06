@@ -25,10 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
+        if (env('APP_ENV') == 'production') {
+            \URL::forceScheme('https');
+        }
 
         Builder::macro('whereLike', function (string $attribute, string $searchTerm) {
-            return $this->where($attribute, 'LIKE', "%{$searchTerm}%");
+            return $this->where($attribute, 'ILIKE', "%{$searchTerm}%");
         });
     }
 }

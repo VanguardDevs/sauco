@@ -33,7 +33,10 @@ class YearController extends Controller
 
     public function listMonths(Year $year)
     {
-        return $year->months()->orderBy('id', 'ASC')->get(); 
+        return $year->months()
+            ->whereDate('start_period_at', '<', Carbon::now()->firstOfMonth())
+            ->orderBy('id', 'ASC')
+            ->get(); 
     } 
 
     /**
