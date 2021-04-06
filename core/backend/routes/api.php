@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 // Route::middleware('auth:sanctum')->group(function () {
     // Only admin
-    Route::group(['middleware' => ['permission:access.settings']], function () {
+    // Route::group(['middleware' => ['permission:access.settings']], function () {
         Route::apiResource('years', 'YearController');
         Route::apiResource('concepts', 'ConceptController');
         Route::apiResource('payment-methods', 'PaymentMethodController');
@@ -28,7 +28,7 @@ use Illuminate\Http\Request;
         Route::apiResource('colors', 'ColorController');
         Route::apiResource('users', 'UserController');
         Route::apiResource('ordinances', 'OrdinanceController');
-    });
+    // });
 
     Route::apiResource('economic-activities', 'EconomicActivityController')
         ->middleware('permission:access.economic-activities');
