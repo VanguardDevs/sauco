@@ -7,14 +7,14 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
-use App\License;
-use App\Correlative;
-use App\CorrelativeNumber;
-use App\CorrelativeType;
-use App\Year;
-use App\Ordinance;
-use App\Taxpayer;
-use App\Application;
+use App\Models\License;
+use App\Models\Correlative;
+use App\Models\CorrelativeNumber;
+use App\Models\CorrelativeType;
+use App\Models\Year;
+use App\Models\Ordinance;
+use App\Models\Taxpayer;
+use App\Models\App\Modelslication;
 use Carbon\Carbon;
 
 class LicenseController extends Controller
@@ -232,7 +232,7 @@ class LicenseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Taxpayer $taxpayer
+     * @param  \App\Models\Taxpayer $taxpayer
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, License $license)
@@ -277,7 +277,7 @@ class LicenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\License  $License
+     * @param  \App\Models\License  $License
      * @return \Illuminate\Http\Response
      */
     public function edit(License $License)
@@ -289,7 +289,7 @@ class LicenseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\License  $License
+     * @param  \App\Models\License  $License
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, License $License)
@@ -300,7 +300,7 @@ class LicenseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\License  $License
+     * @param  \App\Models\License  $License
      * @return \Illuminate\Http\Response
      */
     public function destroy(License $License)

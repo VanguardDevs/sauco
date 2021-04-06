@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\PrettyTimestamps;
+use App\Models\Traits\PrettyTimestamps;
 
 class CanceledLiquidation extends Model
 {

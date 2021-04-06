@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Services\SettlementService;
 use App\Services\PaymentService;
-use App\Taxpayer;
-use App\Settlement;
-use App\Receivable;
-use App\Concept;
-use App\Month;
-use App\Affidavit;
+use App\Models\Taxpayer;
+use App\Models\Settlement;
+use App\Models\Receivable;
+use App\Models\Concept;
+use App\Models\Month;
+use App\Models\Affidavit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\ReceivableService;
@@ -81,7 +81,7 @@ class SettlementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Settlement  $settlement
+     * @param  \App\Models\Settlement  $settlement
      * @return \Illuminate\Http\Response
      */
     public function show(Settlement $settlement)
@@ -106,7 +106,7 @@ class SettlementController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Settlement  $settlement
+     * @param  \App\Models\Settlement  $settlement
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Settlement $settlement)
@@ -117,7 +117,7 @@ class SettlementController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Settlement  $settlement
+     * @param  \App\Models\Settlement  $settlement
      * @return \Illuminate\Http\Response
      */
     public function destroy(Settlement $settlement)

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullPayment;
+use App\Models\NullPayment;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -53,7 +53,7 @@ class NullPaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\NullPayment  $nullPayment
+     * @param  \App\Models\NullPayment  $nullPayment
      * @return \Illuminate\Http\Response
      */
     public function show($nullPayment, Request $request)
@@ -77,7 +77,7 @@ class NullPaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\NullPayment  $nullPayment
+     * @param  \App\Models\NullPayment  $nullPayment
      * @return \Illuminate\Http\Response
      */
     public function edit(NullPayment $nullPayment)
@@ -89,7 +89,7 @@ class NullPaymentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NullPayment  $nullPayment
+     * @param  \App\Models\NullPayment  $nullPayment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, NullPayment $nullPayment)
@@ -100,7 +100,7 @@ class NullPaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\NullPayment  $nullPayment
+     * @param  \App\Models\NullPayment  $nullPayment
      * @return \Illuminate\Http\Response
      */
     public function destroy(NullPayment $nullPayment)

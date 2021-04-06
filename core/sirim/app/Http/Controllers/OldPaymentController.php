@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\OldPayment;
-use App\Taxpayer;
+use App\Models\OldPayment;
+use App\Models\Taxpayer;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -60,7 +60,7 @@ class OldPaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\OldPayment  $oldPayment
+     * @param  \App\Models\OldPayment  $oldPayment
      * @return \Illuminate\Http\Response
      */
     public function show(OldPayment $oldPayment)
@@ -71,7 +71,7 @@ class OldPaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\OldPayment  $oldPayment
+     * @param  \App\Models\OldPayment  $oldPayment
      * @return \Illuminate\Http\Response
      */
     public function edit(OldPayment $oldPayment)
@@ -83,7 +83,7 @@ class OldPaymentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\OldPayment  $oldPayment
+     * @param  \App\Models\OldPayment  $oldPayment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, OldPayment $oldPayment)
@@ -94,7 +94,7 @@ class OldPaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\OldPayment  $oldPayment
+     * @param  \App\Models\OldPayment  $oldPayment
      * @return \Illuminate\Http\Response
      */
     public function destroy(OldPayment $oldPayment)

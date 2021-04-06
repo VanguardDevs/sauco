@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\InvoiceModel;
+use App\Models\InvoiceModel;
 use Illuminate\Http\Request;
 
 class InvoiceModelController extends Controller
@@ -47,7 +47,7 @@ class InvoiceModelController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\InvoiceModel  $invoiceModel
+     * @param  \App\Models\InvoiceModel  $invoiceModel
      * @return \Illuminate\Http\Response
      */
     public function show(InvoiceModel $invoiceModel)
@@ -58,7 +58,7 @@ class InvoiceModelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\InvoiceModel  $invoiceModel
+     * @param  \App\Models\InvoiceModel  $invoiceModel
      * @return \Illuminate\Http\Response
      */
     public function edit(InvoiceModel $invoiceModel)
@@ -70,7 +70,7 @@ class InvoiceModelController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\InvoiceModel  $invoiceModel
+     * @param  \App\Models\InvoiceModel  $invoiceModel
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, InvoiceModel $invoiceModel)
@@ -81,7 +81,7 @@ class InvoiceModelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\InvoiceModel  $invoiceModel
+     * @param  \App\Models\InvoiceModel  $invoiceModel
      * @return \Illuminate\Http\Response
      */
     public function destroy(InvoiceModel $invoiceModel)

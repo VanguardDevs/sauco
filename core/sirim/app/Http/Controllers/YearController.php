@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Year;
-use App\Month;
+use App\Models\Year;
+use App\Models\Month;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

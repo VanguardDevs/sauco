@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Fine;
-use App\Taxpayer;
-use App\Ordinance;
-use App\Concept;
-use App\Payment;
-use App\Settlement;
+use App\Models\Fine;
+use App\Models\Taxpayer;
+use App\Models\Ordinance;
+use App\Models\Concept;
+use App\Models\Payment;
+use App\Models\Settlement;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -115,7 +115,7 @@ class FineController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Fine  $fine
+     * @param  \App\Models\Fine  $fine
      * @return \Illuminate\Http\Response
      */
     public function show(Fine $fine)
@@ -126,7 +126,7 @@ class FineController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Fine  $fine
+     * @param  \App\Models\Fine  $fine
      * @return \Illuminate\Http\Response
      */
     public function edit(Fine $fine)
@@ -138,7 +138,7 @@ class FineController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Fine  $fine
+     * @param  \App\Models\Fine  $fine
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Fine $fine)
@@ -149,7 +149,7 @@ class FineController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Fine  $fine
+     * @param  \App\Models\Fine  $fine
      * @return \Illuminate\Http\Response
      */
     public function destroy(AnnullmentRequest $request, Fine $fine)

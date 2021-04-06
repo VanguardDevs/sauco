@@ -4,18 +4,18 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use App\Application;
-use App\Fine;
-use App\Affidavit;
-use App\Ordinance;
-use App\Payment;
-use App\License;
-use App\Taxpayer;
-use App\Year;
-use App\EconomicActivity;
-use App\Community;
-use App\Settlement;
-use App\Liquidation;
+use App\Models\Application;
+use App\Models\Fine;
+use App\Models\Affidavit;
+use App\Models\Ordinance;
+use App\Models\Payment;
+use App\Models\License;
+use App\Models\Taxpayer;
+use App\Models\Year;
+use App\Models\EconomicActivity;
+use App\Models\Community;
+use App\Models\Settlement;
+use App\Models\Liquidation;
 
 class RouteServiceProvider extends ServiceProvider
 {
