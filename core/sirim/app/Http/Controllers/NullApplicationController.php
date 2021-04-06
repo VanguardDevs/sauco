@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\NullApplication;
+use App\Models\NullApplication;
 use Illuminate\Http\Request;
 
 class NullApplicationController extends Controller
@@ -41,10 +41,10 @@ class NullApplicationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\NullApp\Modelslication  $nullApp\Modelslication
      * @return \Illuminate\Http\Response
      */
-    public function show(NullApplication $nullApplication)
+    public function show(NullApp\Modelslication $nullApp\Modelslication)
     {
         //
     }
@@ -52,10 +52,10 @@ class NullApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\NullApp\Modelslication  $nullApp\Modelslication
      * @return \Illuminate\Http\Response
      */
-    public function edit(NullApplication $nullApplication)
+    public function edit(NullApp\Modelslication $nullApp\Modelslication)
     {
         //
     }
@@ -64,10 +64,10 @@ class NullApplicationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\NullApp\Modelslication  $nullApp\Modelslication
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NullApplication $nullApplication)
+    public function update(Request $request, NullApp\Modelslication $nullApp\Modelslication)
     {
         //
     }
@@ -75,10 +75,10 @@ class NullApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\NullApplication  $nullApplication
+     * @param  \App\Models\NullApp\Modelslication  $nullApp\Modelslication
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NullApplication $nullApplication)
+    public function destroy(NullApp\Modelslication $nullApp\Modelslication)
     {
         //
     }

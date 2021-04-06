@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Taxpayer;
+use App\Models\Taxpayer;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\MakeWithholdingRequest;
-use App\Liquidation;
+use App\Models\Liquidation;
 use Auth;
 
 class LiquidationController extends Controller

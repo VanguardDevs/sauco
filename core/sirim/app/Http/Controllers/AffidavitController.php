@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Taxpayer;
-use App\Year;
-use App\Month;
-use App\Settlement;
-use App\Affidavit;
-use App\Payment;
-use App\EconomicActivityAffidavit;
-use App\Concept;
+use App\Models\Taxpayer;
+use App\Models\Year;
+use App\Models\Month;
+use App\Models\Settlement;
+use App\Models\Affidavit;
+use App\Models\Payment;
+use App\Models\EconomicActivityAffidavit;
+use App\Models\Concept;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
@@ -97,7 +97,7 @@ class AffidavitController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @param  \App\Settlement  $settlement
+     * @param  \App\Models\Settlement  $settlement
      * @return \Illuminate\Http\Response
      */
     public function groupActivityForm(Affidavit $affidavit)
@@ -109,7 +109,7 @@ class AffidavitController extends Controller
 
     /**
      * Show form for editing the specified resource.
-     * @param \App\Settlement $settlement
+     * @param \App\Models\Settlement $settlement
      * @return \Illuminate\Http\Response
      */
     public function normalCalcForm(Affidavit $affidavit)

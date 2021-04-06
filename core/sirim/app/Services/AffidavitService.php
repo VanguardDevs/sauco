@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Affidavit;
-use App\EconomicActivityAffidavit;
-use App\TaxUnit;
+use App\Models\Affidavit;
+use App\Models\EconomicActivityAffidavit;
+use App\Models\TaxUnit;
 
 class AffidavitService
 {
@@ -21,11 +21,11 @@ class AffidavitService
                 $updateSettlement = $this->calculateTax($affidavit, $amount);
             } else {
                 $updateSettlement = $this->calculateTax($affidavit, $amount, true);
-            } 
+            }
 
             array_push($totalAmounts, $updateSettlement->amount);
         }
-        
+
         return array_sum($totalAmounts);
     }
 
@@ -55,7 +55,7 @@ class AffidavitService
     {
         $total = 0.00;
         $activity = $affidavit->economicActivity;
-        
+
         if ($activity->code == '123456') {
             $total = $amount * $activity->aliquote / 100;
         } else {
@@ -63,13 +63,13 @@ class AffidavitService
                 $taxUnit = TaxUnit::latest()->first();
                 $total = $activity->aliquote * $amount / 100;
                 $minTax = $taxUnit->value * $activity->min_tax;
-                
+
                 if ($total < $minTax || $amount == 0.00) {
                     $total = $minTax;
                 }
             }
         }
-        
+
         $affidavit->update([
             'amount' => $total,
             'brute_amount' => $amount
