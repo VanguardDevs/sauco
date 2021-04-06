@@ -4,10 +4,10 @@ import apiClient from 'ra-laravel-client';
 import { history } from './utils';
 import { Dashboard } from './dashboard';
 import users from './users';
+import liquidations from './liquidations';
 import customRoutes from './routes';
 
 function App() {
-  console.log(process.env.REACT_APP_DOMAIN);
   return (
     <Admin
       dashboard={Dashboard}
@@ -16,6 +16,7 @@ function App() {
       dataProvider={apiClient(`${process.env.REACT_APP_DOMAIN}`)}
     > 
       <Resource name='users' {...users} />
+      <Resource {...liquidations} />
     </Admin>
   );
 }
