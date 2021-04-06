@@ -24,13 +24,35 @@ class TaxpayerController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            $query = Taxpayer::query();
+        $query = Taxpayer::latest();
+        $results = $request->perPage;
 
-            return DataTables::eloquent($query)->toJson();
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+            if (array_key_exists('address', $filters)) {
+                $query->whereLike('address', $filters['address']);
+            }
+            if (array_key_exists('type', $filters)) {
+                $name = $filters['type'];
+
+                $query->whereHas('taxpayerType', function ($q) use ($name) {
+                    return $query->whereLike('description', $name);
+                });
+            }
+            if (array_key_exists('classification', $filters)) {
+                $name = $filters['classification'];
+
+                $query->whereHas('taxpayerClassification', function ($q) use ($name) {
+                    return $query->whereLike('name', $name);
+                });
+            }
         }
 
-        return view('modules.taxpayers.index');
+        return $query->paginate($results);
     }
 
     public function getRepresentations(Taxpayer $taxpayer)
