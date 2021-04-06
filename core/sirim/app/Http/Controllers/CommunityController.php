@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Community;
+use App\Models\Community;
 use App\Http\Requests\Communities\CommunitiesCreateFormRequest;
 use App\Http\Requests\Communities\CommunitiesUpdateFormRequest;
-use App\Parish;
+use App\Models\Parish;
 use PDF;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -72,7 +72,7 @@ class CommunityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Community  $community
+     * @param  \App\Models\Community  $community
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Community $community)
@@ -99,7 +99,7 @@ class CommunityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Community  $community
+     * @param  \App\Models\Community  $community
      * @return \Illuminate\Http\Response
      */
     public function edit(Community $community)
@@ -114,7 +114,7 @@ class CommunityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Community  $community
+     * @param  \App\Models\Community  $community
      * @return \Illuminate\Http\Response
      */
     public function update(CommunitiesUpdateFormRequest $request, Community $community)
@@ -132,7 +132,7 @@ class CommunityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Community  $community
+     * @param  \App\Models\Community  $community
      * @return \Illuminate\Http\Response
      */
     public function destroy(Community $community)

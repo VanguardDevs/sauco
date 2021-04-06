@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Payment;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -63,7 +63,7 @@ class Taxpayer extends Model implements Auditable
 
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(App\Modelslication::class);
     }
 
     public function fines()

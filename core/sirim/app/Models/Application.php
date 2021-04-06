@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Taxpayer;
+use App\Models\Taxpayer;
 use Carbon\Carbon;
 
 class Application extends Model
@@ -19,9 +19,9 @@ class Application extends Model
         'amount' => 'float'
     ];
 
-    public function nullApplication()
+    public function nullApp\Modelslication()
     {
-        return $this->hasOne(NullApplication::class);
+        return $this->hasOne(NullApp\Modelslication::class);
     }
 
     public static function hasPaid(Taxpayer $taxpayer, $code)

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Application;
-use App\Ordinance;
-use App\Concept;
-use App\Taxpayer;
-use App\Payment;
-use App\Settlement;
+use App\Models\Application;
+use App\Models\Ordinance;
+use App\Models\Concept;
+use App\Models\Taxpayer;
+use App\Models\Payment;
+use App\Models\Settlement;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnnullmentRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -33,7 +33,7 @@ class ApplicationController extends Controller
 
     public function list(Taxpayer $taxpayer)
     {
-        $query = Application::whereTaxpayerId($taxpayer->id)
+        $query = App\Modelslication::whereTaxpayerId($taxpayer->id)
             ->orderBy('applications.created_at', 'DESC')
             ->with(['concept:id,name']);
 
@@ -56,7 +56,7 @@ class ApplicationController extends Controller
         //
     }
 
-    public function makePayment(Application $application)
+    public function makePayment(App\Modelslication $application)
     {
         if ($application->payment()->exists()) {
             dd($application->payment()->first());
@@ -148,7 +148,7 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Application $application)
+    public function destroy(AnnullmentRequest $request, App\Modelslication $application)
     {
         $payment = $application->payment()->first();
 

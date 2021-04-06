@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
-use App\Traits\PrettyAmount;
-use App\Traits\PrettyTimestamps;
+use App\Models\Traits\PrettyAmount;
+use App\Models\Traits\PrettyTimestamps;
 
 class Deduction extends Model implements Auditable
 {

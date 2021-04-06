@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\CommercialDenomination;
-use App\EconomicActivity;
-use App\TaxpayerType;
-use App\TaxpayerClassification;
-use App\Person;
-use App\Taxpayer;
-use App\License;
-use App\Community;
+use App\Models\CommercialDenomination;
+use App\Models\EconomicActivity;
+use App\Models\TaxpayerType;
+use App\Models\TaxpayerClassification;
+use App\Models\Person;
+use App\Models\Taxpayer;
+use App\Models\License;
+use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use App\Http\Requests\Taxpayers\TaxpayersCreateFormRequest;
@@ -124,7 +124,7 @@ class TaxpayerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Taxpayer  $taxpayer
+     * @param  \App\Models\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Taxpayer $taxpayer)
@@ -140,7 +140,7 @@ class TaxpayerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Taxpayer  $taxpayer
+     * @param  \App\Models\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
     public function edit(Taxpayer $taxpayer)
@@ -157,7 +157,7 @@ class TaxpayerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Taxpayer  $taxpayer
+     * @param  \App\Models\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
     public function update(TaxpayersUpdateFormRequest $request, Taxpayer $taxpayer)
@@ -181,7 +181,7 @@ class TaxpayerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Taxpayer  $taxpayer
+     * @param  \App\Models\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
     public function destroy(Taxpayer $taxpayer)
