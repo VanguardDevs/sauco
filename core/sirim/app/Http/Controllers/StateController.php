@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\State;
+use App\Models\State;
 use Illuminate\Http\Request;
 
 class StateController extends Controller
@@ -41,7 +41,7 @@ class StateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\State  $state
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
     public function show(State $state)
@@ -52,7 +52,7 @@ class StateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\State  $state
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
     public function edit(State $state)
@@ -64,7 +64,7 @@ class StateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\State  $state
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, State $state)
@@ -75,7 +75,7 @@ class StateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\State  $state
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
     public function destroy(State $state)

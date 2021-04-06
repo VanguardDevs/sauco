@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Permit;
-use App\Taxpayer;
+use App\Models\Permit;
+use App\Models\Taxpayer;
 use Illuminate\Http\Request;
 
 class PermitController extends Controller
@@ -42,7 +42,7 @@ class PermitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Permit  $permit
+     * @param  \App\Models\Permit  $permit
      * @return \Illuminate\Http\Response
      */
     public function show(Permit $permit)
@@ -53,7 +53,7 @@ class PermitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Permit  $permit
+     * @param  \App\Models\Permit  $permit
      * @return \Illuminate\Http\Response
      */
     public function edit(Permit $permit)
@@ -65,7 +65,7 @@ class PermitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Permit  $permit
+     * @param  \App\Models\Permit  $permit
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Permit $permit)
@@ -76,7 +76,7 @@ class PermitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Permit  $permit
+     * @param  \App\Models\Permit  $permit
      * @return \Illuminate\Http\Response
      */
     public function destroy(Permit $permit)
