@@ -32,15 +32,15 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $row->taxpayer->rif }}</td> 
-                        <td>{{ $row->taxpayer->name  }}</td>   
+                        <td>{{ $row->taxpayer->rif }}</td>
+                        <td>{{ $row->taxpayer->name  }}</td>
                         <td>{{ $row->taxpayer->fiscal_address }}</td>
                     </tr>
                 </tbody>
             </table>
 
             </br>
-            @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))            
+            @if (($typeForm == 'edit-normal') || ($typeForm == 'show'))
             <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
                     Declaraciones por actividad económica
@@ -72,7 +72,7 @@
                     </div>
                     @endif
                 </div>
-            @endforeach           
+            @endforeach
             @if($typeForm == 'show')
            <table class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
@@ -89,7 +89,7 @@
                 </tbody>
             </table>
 
-            <div id="paymentInfo"></div> 
+            <div id="paymentInfo"></div>
 
             @endif
             @else
@@ -104,7 +104,7 @@
             @if($typeForm == 'show')
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Ir a declaraciones</a>
             @if($row->payment()->exists())
-            <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info">
+            <a href="{{ route('payments.show', $row->liquidation->payment()->first()) }}" class="btn btn-info">
                 <i class="fas fa-money-check"></i> Ver factura
             </a>
             @endif

@@ -25,11 +25,11 @@ class Payment extends Model implements Auditable
     public function checkForFine()
     {
         $totalFines = $this->affidavit()->first()->shouldHaveFine();
-        $totalSettlements = $this->settlements()->count();
+        $totalLiquidations = $this->liquidations()->count();
 
-        if ($totalFines && $totalSettlements < 3) {
+        if ($totalFines && $totalLiquidations < 3) {
             $concept = $totalFines[0];
-            if (count($totalFines) == 2 && $totalSettlements < 2) {
+            if (count($totalFines) == 2 && $totalLiquidations < 2) {
                 // App\Modelsly two fines
                 Fine::applyFine($this, $concept);
             }
@@ -43,7 +43,7 @@ class Payment extends Model implements Auditable
 
     public function updateAmount()
     {
-        $amount = $this->settlements->sum('amount');
+        $amount = $this->liquidations->sum('amount');
 
         return $this->update([ 'amount' => $amount ]);
     }
@@ -93,9 +93,9 @@ class Payment extends Model implements Auditable
         return $this->hasOne(Reference::class);
     }
 
-    public function settlements()
+    public function liquidations()
     {
-        return $this->hasMany(Settlement::class);
+        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
     }
 
     public function taxpayer()
@@ -110,12 +110,13 @@ class Payment extends Model implements Auditable
 
     public function affidavit()
     {
-        return $this->belongsToMany(Affidavit::class, Settlement::class);
+        return $this->liquidations()
+            ->whereLiquidationTypeId(3);
     }
 
     public function fines()
     {
-        return $this->belongsToMany(Fine::class, Settlement::class);
+        return $this->belongsToMany(Fine::class, Liquidation::class);
     }
 
     public function invoiceModel()
