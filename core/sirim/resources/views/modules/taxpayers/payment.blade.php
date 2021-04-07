@@ -50,13 +50,13 @@
               </tr>
             </thead>
             <tbody>
-            @foreach($row->settlements as $settlement)
+            @foreach($row->liquidations as $liquidation)
              <tr>
-                <td>{{ $settlement->num }}</td>
-                <td>{{ $settlement->object_payment  }}</td>
-                <td>{{ $settlement->pretty_amount }}</td>
+                <td>{{ $liquidation->num }}</td>
+                <td>{{ $liquidation->object_payment  }}</td>
+                <td>{{ $liquidation->pretty_amount }}</td>
                 <td>
-                    <a href={{ route('liquidations.show', $settlement->id) }}>
+                    <a href={{ route('liquidations.show', $liquidation->id) }}>
                         <i class="fas fa-search-plus"></i>
                     </a>
                 </td>

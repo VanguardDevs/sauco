@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
-use App\Models\Traits\NewValue;
-use App\Models\Traits\PrettyAmount;
-use App\Models\Traits\PrettyTimestamps;
+use App\Traits\NewValue;
+use App\Traits\PrettyAmount;
+use App\Traits\PrettyTimestamps;
 
 class Liquidation extends Model implements Auditable
 {

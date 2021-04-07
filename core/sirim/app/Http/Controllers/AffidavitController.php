@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Taxpayer;
 use App\Models\Year;
 use App\Models\Month;
-use App\Models\Settlement;
+use App\Models\Liquidation;
 use App\Models\Affidavit;
 use App\Models\Payment;
 use App\Models\EconomicActivityAffidavit;
@@ -270,8 +270,8 @@ class AffidavitController extends Controller
 
         $month = Month::find($affidavit->month_id);
 
-        $payment->settlements()->create([
-            'num' => Settlement::newNum(),
+        $payment->liquidations()->create([
+            'num' => Liquidation::newNum(),
             'object_payment' =>  $this->message($month),
             'affidavit_id' => $affidavit->id,
             'taxpayer_id' => $affidavit->taxpayer_id,

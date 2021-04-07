@@ -25,7 +25,7 @@ class Affidavit extends Model implements Auditable
     protected $with = [ 'month' ];
 
     protected $appends = ['total_amount', 'brute_amount_affidavit'];
-    
+
     public static function processedByDate($firstDate, $lastDate)
     {
         return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
@@ -44,9 +44,9 @@ class Affidavit extends Model implements Auditable
             return [
                 Concept::whereCode(3)->first(),
                 Concept::whereCode(3)->first(),
-            ]; 
+            ];
         } else if ($passedDays > 45) {
-            return [Concept::whereCode(3)->first()]; 
+            return [Concept::whereCode(3)->first()];
         }
 
         return false;
@@ -79,7 +79,7 @@ class Affidavit extends Model implements Auditable
 
     public function payment()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
+        return $this->liquidation();
     }
 
     public function withholding()
@@ -92,19 +92,19 @@ class Affidavit extends Model implements Auditable
         return $this->belongsToMany(Payment::class, Settlement::class)->first();
     }
 
-    public function settlement()
+    public function liquidation()
     {
-        return $this->hasOne(Settlement::class, 'affidavit_id');
+        return $this->morphOne(Liquidation::class, 'liquidable');
     }
 
     public function getCreatedAtAttribute($value)
     {
-        return Date('d/m/Y', strtotime($value)); 
+        return Date('d/m/Y', strtotime($value));
     }
 
     public function getDeletedAtAttribute($value)
     {
-        return Date('d-m-Y H:m', strtotime($value)); 
+        return Date('d-m-Y H:m', strtotime($value));
     }
 
     public function scopeLastAffidavit($query)
