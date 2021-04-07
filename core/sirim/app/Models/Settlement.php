@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
-use App\Models\Traits\PrettyAmount;
+use App\Traits\PrettyAmount;
 
 class Settlement extends Model implements Auditable
 {
