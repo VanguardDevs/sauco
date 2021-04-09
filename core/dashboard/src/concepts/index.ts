@@ -1,10 +1,10 @@
 import * as React from 'react';
-import ContactMailIcon from '@material-ui/icons/ContactMail';
+import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import ConceptsList from './List';
 
 export default {
   name: 'concepts',
-  icon: ContactMailIcon,
+  icon: LocalGroceryStoreIcon,
   list: ConceptsList,
   options: {
     label: 'Conceptos'

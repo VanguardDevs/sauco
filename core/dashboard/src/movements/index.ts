@@ -1,10 +1,10 @@
 import * as React from 'react';
-import ContactMailIcon from '@material-ui/icons/ContactMail';
+import BallotIcon from '@material-ui/icons/Ballot';
 import MovementsList from './List';
 
 export default {
   name: 'movements',
-  icon: ContactMailIcon,
+  icon: BallotIcon,
   list: MovementsList,
   options: {
     label: 'Movimientos'
