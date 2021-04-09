@@ -1,10 +1,10 @@
 import * as React from 'react';
-import BallotIcon from '@material-ui/icons/Ballot';
 import MovementsList from './List';
+import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 
 export default {
   name: 'movements',
-  icon: BallotIcon,
+  icon: CompareArrowsIcon,
   list: MovementsList,
   options: {
     label: 'Movimientos'
