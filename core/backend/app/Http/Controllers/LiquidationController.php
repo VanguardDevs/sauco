@@ -40,7 +40,7 @@ class LiquidationController extends Controller
                 $name = $filters['taxpayer'];
 
                 $query->whereHas('taxpayer', function ($q) use ($name) {
-                    return $query->whereLike('name', $name);
+                    return $q->whereLike('name', $name);
                 });
             }
             if (array_key_exists('type', $filters)) {

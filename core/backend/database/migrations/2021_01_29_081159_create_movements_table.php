@@ -16,17 +16,19 @@ class CreateMovementsTable extends Migration
         Schema::create('movements', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', 20);
-            $table->boolean('credit', false);
-            $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('liquidation_id');
+            $table->unsignedBigInteger('year_id');
+            $table->unsignedBigInteger('payment_id');
             $table->timestamps();
 
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('year_id')->references('id')->on('years')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('liquidation_id')->references('id')->on('liquidations')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('payment_id')->references('id')->on('payments')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('concept_id')->references('id')->on('concepts')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }
