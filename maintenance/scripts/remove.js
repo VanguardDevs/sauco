@@ -23,6 +23,7 @@ async function main() {
     });
 
     await db.schema.table('payments', table => {
+      table.renameColumn('state_id', 'status_id');
       table.dropColumn('invoice_model_id');
     });
 
