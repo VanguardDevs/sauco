@@ -1,6 +1,6 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
-import apiClient from 'ra-laravel-client';
+import dataProvider from './dataProvider';
 import { history } from './utils';
 import { Dashboard } from './dashboard';
 import users from './users';
@@ -16,7 +16,7 @@ function App() {
       dashboard={Dashboard}
       history={history}
       customRoutes={customRoutes}
-      dataProvider={apiClient(`${process.env.REACT_APP_DOMAIN}`)}
+      dataProvider={dataProvider}
     > 
       <Resource name='users' {...users} />
       <Resource {...payments} />

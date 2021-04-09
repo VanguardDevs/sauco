@@ -1,10 +1,10 @@
 import * as React from 'react';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+import TimelineIcon from '@material-ui/icons/Timeline';
 import PaymentsList from './List';
 
 export default {
   name: 'payments',
-  icon: ReceiptIcon,
+  icon: TimelineIcon,
   list: PaymentsList,
   options: {
     label: 'Facturas'
