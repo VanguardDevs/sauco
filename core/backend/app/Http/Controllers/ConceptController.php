@@ -12,39 +12,26 @@ use Illuminate\Http\Request;
 
 class ConceptController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.concepts.index');
-    }
+        $query = Concept::latest()
+            ->with(['liquidationType']);
+        $results = $request->perPage;
 
-    public function list()
-    {
-        $query = Concept::with(['ordinance', 'chargingMethod']);
-    }
+        if ($request->has('filter')) {
+            $filters = $request->filter;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.concepts.register')
-            ->with('ordinances', Ordinance::pluck('description', 'id'))
-            ->with('accounts', AccountingAccount::pluck('name', 'id'))
-            ->with('types', LiquidationType::pluck('name', 'id'))
-            ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
-            ->with('typeForm', 'create');
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
