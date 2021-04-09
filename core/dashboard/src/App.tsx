@@ -7,6 +7,7 @@ import users from './users';
 import concepts from './concepts';
 import movements from './movements';
 import liquidations from './liquidations';
+import payments from './payments';
 import customRoutes from './routes';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       dataProvider={apiClient(`${process.env.REACT_APP_DOMAIN}`)}
     > 
       <Resource name='users' {...users} />
+      <Resource {...payments} />
       <Resource {...liquidations} />
       <Resource {...concepts} />
       <Resource {...movements} />
