@@ -15,20 +15,25 @@ class Movement extends Model
 
     protected $fillable = [
         'amount',
-        'credit',
+        'concept_id',
         'liquidation_id',
-        'taxpayer_id',
-        'user_id'
+        'year_id',
+        'payment_id'
     ];
 
-    public function taxpayer()
+    public function year()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Year::class);
     }
 
-    public function user()
+    public function payment()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Payment::class);
+    }
+
+    public function concept()
+    {
+        return $this->belongsTo(Concept::class);
     }
 
     public function liquidation()
