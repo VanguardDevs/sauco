@@ -39,7 +39,7 @@ class MovementController extends Controller
                 $name = $filters['year'];
 
                 $query->whereHas('year', function ($q) use ($name) {
-                    return $query->whereLike('year', $name);
+                    return $q->whereLike('year', $name);
                 });
             }
         }
