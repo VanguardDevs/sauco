@@ -1,32 +1,11 @@
 const knex = require('knex');
 
-const addTaxpayerID = `
-  UPDATE liquidations 
-  SET 
-    taxpayer_id = subquery.taxpayer_id
-  FROM (
-    SELECT liquidations.id, payments.taxpayer_id
-    FROM payments JOIN liquidations 
-    ON liquidations.payment_id = payments.id
-  )
-  AS subquery
-  WHERE liquidations.id = subquery.id
-`;
-
 const insertManyPaymentLiquidationQuery = `
   INSERT INTO payment_liquidation
     (liquidation_id, payment_id, created_at, updated_at)
   SELECT liquidations.id, payments.id, payments.created_at, payments.created_at
     FROM liquidations JOIN payments
     ON liquidations.payment_id = payments.id
-`;
-
-const insertManyDeductionLiquidationQuery = `
-  INSERT INTO deduction_liquidation
-    (liquidation_id, deduction_id, created_at, updated_at)
-  SELECT liquidations.id, deductions.id, deductions.created_at, deductions.created_at
-    FROM liquidations JOIN deductions
-    ON liquidations.withholding_id = deductions.id
 `;
 
 async function liquidations() {

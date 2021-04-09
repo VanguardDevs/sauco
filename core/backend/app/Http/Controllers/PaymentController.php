@@ -27,7 +27,8 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $query = Payment::orderBy('num', 'DESC')
-            ->with(['taxpayer', 'status']);
+            ->with(['taxpayer'])
+            ->whereStatusId(2);
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -37,34 +38,26 @@ class PaymentController extends Controller
                 $query->whereLike('num', $filters['num']);
             }
             if (array_key_exists('amount', $filters)) {
-                $query->whereAmount($filters['amount']);
+                $query->whereLike('amount', $filters['amount']);
             }
             if (array_key_exists('taxpayer', $filters)) {
                 $name = $filters['taxpayer'];
 
-                $query->whereHas('taxpayer', function ($q) use ($name) {
+                $query->whereHas('taxpayer', function ($query) use ($name) {
                     return $query->whereLike('name', $name);
                 });
             }
-            if (array_key_exists('type', $filters)) {
-                $name = $filters['type'];
-
-                $query->whereHas('paymentType', function ($q) use ($name) {
-                    return $query->whereLike('type', $name);
-                });
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('processed_at', '>=', $filters['gt_date']);
             }
-            if (array_key_exists('method', $filters)) {
-                $name = $filters['method'];
-
-                $query->whereHas('paymentMethod', function ($q) use ($name) {
-                    return $query->whereLike('description', $name);
-                });
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('processed_at', '<=', $filters['lt_date']);
             }
-            if (array_key_exists('status', $filters)) {
-                $name = $filters['status'];
+            if (array_key_exists('rif', $filters)) {
+                $name = $filters['rif'];
 
-                $query->whereHas('status', function ($q) use ($name) {
-                    return $query->whereLike('status', $name);
+                $query->whereHas('taxpayer', function ($query) use ($name) {
+                    return $query->whereLike('rif', $name);
                 });
             }
         }
