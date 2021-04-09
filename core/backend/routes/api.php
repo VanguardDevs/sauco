@@ -47,4 +47,5 @@ use Illuminate\Http\Request;
     Route::apiResource('accounting-accounts', 'AccountingAccountController');
     Route::apiResource('account-types', 'AccountTypeController');
     Route::apiResource('payments', 'PaymentController');
+    Route::apiResource('movements', 'MovementController');
 // });

@@ -12,9 +12,39 @@ class MovementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Movement::with(['concept', 'liquidation', 'payment', 'year'])
+            ->withCount(['concept', 'liquidation', 'payment'])
+            ->groupBy('movements.id','concept_id', 'year_id');
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('created_at', '<=', $filters['lt_date']);
+            }
+            if (array_key_exists('concept', $filters)) {
+                $name = $filters['concept'];
+
+                $query->whereHas('concept', function ($q) use ($name) {
+                    return $q->whereLike('name', $name);
+                });
+            }
+            if (array_key_exists('year', $filters)) {
+                $name = $filters['year'];
+
+                $query->whereHas('year', function ($q) use ($name) {
+                    return $query->whereLike('year', $name);
+                });
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
