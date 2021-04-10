@@ -81,4 +81,9 @@ class Concept extends Model
     {
         return $this->hasMany(Liquidation::class);
     }
+
+    public function movements()
+    {
+        return $this->hasMany(Movement::class);
+    }
 }
