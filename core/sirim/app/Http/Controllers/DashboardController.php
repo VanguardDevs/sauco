@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $taxpayerCount = Taxpayer::count();
         $licenseCount = License::count();
-        $paymentCount = Payment::whereStateId('2')
+        $paymentCount = Payment::whereStatusId('2')
             ->count();
         $affidavitCount = Affidavit::count();
 
