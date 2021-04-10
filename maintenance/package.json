@@ -6,6 +6,7 @@
     "taxpayers": "node ./scripts/taxpayers.js",
     "liquidations": "node ./scripts/updateLiquidations.js",
     "deductions": "node ./scripts/deductions.js",
+    "movements": "node ./scripts/createMovements.js",
     "remove": "node ./scripts/remove.js"
   },
   "author": "Jesus Ordosgoitty",
