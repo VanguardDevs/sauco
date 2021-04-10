@@ -22,7 +22,7 @@ $('#tLiquidations').DataTable({
                         Pendiente
                     </span>
                     `;
-                $(nTd).html(`${oData.payment.state_id == 2 ? active : inactive}`);
+                $(nTd).html(`${oData.status_id == 2 ? active : inactive}`);
             }
         },
         {

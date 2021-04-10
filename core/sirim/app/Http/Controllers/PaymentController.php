@@ -10,7 +10,6 @@ use App\Models\Concept;
 use App\Models\Reference;
 use App\Models\Settlement;
 use App\Models\Taxpayer;
-use App\Models\Organization;
 use App\Models\PaymentNull;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -45,9 +44,9 @@ class PaymentController extends Controller
     }
 
     public function listProcessed()
-    { 
-        $query = Payment::with('taxpayer') 
-            ->whereStateId(2)
+    {
+        $query = Payment::with('taxpayer')
+            ->whereStatusId(2)
             ->orderBy('num', 'DESC');
 
         return DataTables::of($query)
@@ -59,8 +58,8 @@ class PaymentController extends Controller
 
     public function listByTaxpayer(Taxpayer $taxpayer)
     {
-        $query = Payment::with(['state', 'user'])
-            ->whereTaxpayerId($taxpayer->id)
+        $query = $taxpayer->payments()
+            ->with('status')
             ->orderBy('processed_at', 'DESC');
 
         return DataTables::of($query)
@@ -73,9 +72,9 @@ class PaymentController extends Controller
     public function onlyNull()
     {
         $query = Payment::onlyTrashed()
-            ->with(['taxpayer', 'state'])
+            ->with(['taxpayer', 'status'])
             ->orderBy('id', 'DESC');
-        
+
         return DataTables::of($query)->toJson();
     }
 
@@ -108,7 +107,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if ($payment->state->id == 1) {
+        if ($payment->status->id == 1) {
             if (auth()->user()->can('process.payments')) {
                 $this->typeform = 'edit';
             }
@@ -139,17 +138,17 @@ class PaymentController extends Controller
 
             $payment->reference()->create([
                 'reference' => $reference,
-                'account_id' => 1, 
+                'account_id' => 1,
             ]);
         }
 
-        $paymentNum = Payment::newNum();
+        $paymentNum = Payment::getNewNum();
         $processedAt = Carbon::now();
 
         $payment->update([
-            'user_id' => Auth::user()->id, 
+            'user_id' => Auth::user()->id,
             'payment_method_id' => $request->input('method'),
-            'state_id' => 2,
+            'status_id' => 2,
             'observations' => $request->input('observations'),
             'num' => $paymentNum,
             'processed_at' => $processedAt
@@ -161,7 +160,7 @@ class PaymentController extends Controller
 
     public function download(Payment $payment)
     {
-        if ($payment->state->id == 1) {
+        if ($payment->status->id == 1) {
             return redirect()->back()
                 ->withError('¡La factura no ha sido procesada!');
         }
@@ -174,14 +173,14 @@ class PaymentController extends Controller
             $vars = ['payment', 'reference', 'denomination'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('pdf.payment', compact($vars)) 
+                ->loadView('pdf.payment', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         } else {
             $organization = Organization::first();
             $vars = ['payment', 'reference', 'organization'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('modules.cashbox.pdf.withholding', compact($vars)) 
+                ->loadView('modules.cashbox.pdf.withholding', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         }
    }

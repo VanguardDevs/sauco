@@ -632,7 +632,7 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/payments`,
         "columns": [
             { data: 'num' },
-            { data: 'state.name' },
+            { data: 'status.name' },
             { data: 'formatted_amount', name: 'formatted_amount' },
             {
                 data: "id",
