@@ -27,7 +27,7 @@ async function liquidations() {
   try {
     /**
      * Rename tables
-     */ 
+     */
     await db.schema.renameTable('lists', 'liquidation_types');
 
     await db.schema.table('concepts', (table) => {
@@ -65,9 +65,9 @@ async function liquidations() {
     /**
      * Update liquidations by type
      */
-    await setNewColumnValues('fine_id', 'App\\Models\\Fine', 2); 
-    await setNewColumnValues('affidavit_id', 'App\\Models\\Affidavit', 3); 
-    await setNewColumnValues('application_id', 'App\\Models\\Application', 1); 
+    await setNewColumnValues('fine_id', 'App\\Models\\Fine', 2);
+    await setNewColumnValues('affidavit_id', 'App\\Models\\Affidavit', 3);
+    await setNewColumnValues('application_id', 'App\\Models\\Application', 1);
   } finally {
     await db.destroy();
   }

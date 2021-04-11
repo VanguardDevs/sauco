@@ -2,19 +2,42 @@ const knex = require('knex');
 
 const insertMovementsQuery = `
   INSERT INTO movements
-    (amount, liquidation_id, payment_id, concept_id, year_id, created_at, updated_at)
+    (amount, liquidation_id, payment_id, concept_id, year_id, created_at, updated_at, deleted_at)
     SELECT
         liquidations.amount,
         liquidations.id AS liquidation_id,
         payment_id,
-        1,
-        1,
+        concept_id,
+        3,
         payment_liquidation.created_at,
-        payment_liquidation.updated_at
+        payment_liquidation.updated_at,
+        liquidations.deleted_at
       FROM liquidations
       JOIN payment_liquidation
         ON liquidations.id = payment_liquidation.liquidation_id
 `;
+
+const updateYearsOfEconomicActivityMovements = (id, year) => (`
+  UPDATE movements
+  SET year_id = ${id}
+  FROM (
+    SELECT id FROM liquidations WHERE object_payment ILIKE '%${year}%'
+  ) AS subquery
+  WHERE movements.liquidation_id = subquery.id;
+`);
+
+const setYearId = (id, year) => (`
+  UPDATE movements
+  SET year_id = ${id}
+  FROM (
+    SELECT id
+    FROM liquidations
+    WHERE
+      DATE_PART('year', created_at::date) = ${year}
+      AND liquidation_type_id != 3
+  ) AS subquery
+  WHERE movements.liquidation_id = subquery.id;
+`);
 
 async function main() {
   const db = knex(require("../knexfile"));
@@ -39,6 +62,11 @@ async function main() {
     });
 
     await db.schema.raw(insertMovementsQuery);
+    await db.schema.raw(updateYearsOfEconomicActivityMovements('1', '2020'));
+    await db.schema.raw(updateYearsOfEconomicActivityMovements('2', '2019'));
+    await db.schema.raw(updateYearsOfEconomicActivityMovements('3', '2021'));
+    await db.schema.raw(setYearId('3', '2021'));
+    await db.schema.raw(setYearId('1', '2020'));
   } finally {
     await db.destroy();
   }
