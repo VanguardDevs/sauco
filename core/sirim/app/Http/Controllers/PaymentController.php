@@ -50,8 +50,8 @@ class PaymentController extends Controller
             ->orderBy('num', 'DESC');
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
             })
             ->make(true);
     }
@@ -63,8 +63,8 @@ class PaymentController extends Controller
             ->orderBy('processed_at', 'DESC');
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($payment) {
+                return $payment->pretty_amount;
             })
             ->make(true);
     }
