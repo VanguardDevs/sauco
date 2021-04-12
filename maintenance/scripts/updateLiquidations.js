@@ -14,6 +14,7 @@ async function liquidations() {
   try {
     /**
      * Rename tables
+     */
     await db.schema.renameTable('lists', 'liquidation_types');
 
     await db.schema.table('concepts', (table) => {
@@ -24,6 +25,7 @@ async function liquidations() {
 
     /**
      * Create new tables
+     */
     await db.schema.createTable('payment_liquidation', (table) => {
       table.increments();
       table.integer('liquidation_id').unsigned();
@@ -35,6 +37,7 @@ async function liquidations() {
 
     /**
      * Set new columns to liquidations table
+     */
     await db.schema.table('liquidations', (table) => {
       table.string('liquidable_type');
       table.integer('liquidable_id').unsigned();
