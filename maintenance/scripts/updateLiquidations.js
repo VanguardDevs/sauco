@@ -92,6 +92,13 @@ async function liquidations() {
       WHERE fines.id = liquidations.fine_id
       `
     );
+
+    await db.schema.raw(`
+      UPDATE liquidations
+      SET status_id = state_id
+      FROM payments
+      WHERE liquidations.payment_id = payments.id
+    `);
   } finally {
     await db.destroy();
   }

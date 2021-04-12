@@ -6,7 +6,7 @@ const insertMovementsQuery = `
     SELECT
         liquidations.amount,
         liquidations.id AS liquidation_id,
-        payment_id,
+        payment_liquidation.payment_id,
         concept_id,
         3,
         payment_liquidation.created_at,
@@ -15,6 +15,7 @@ const insertMovementsQuery = `
       FROM liquidations
       JOIN payment_liquidation
         ON liquidations.id = payment_liquidation.liquidation_id
+      WHERE liquidations.status_id = 2
 `;
 
 const updateYearsOfEconomicActivityMovements = (id, year) => (`
