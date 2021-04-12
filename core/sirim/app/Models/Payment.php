@@ -22,8 +22,6 @@ class Payment extends Model implements Auditable
 
     protected $casts = [ 'amount' => 'float' ];
 
-    protected $appends = [ 'formatted_amount' ];
-
     public function checkForFine()
     {
         $totalFines = $this->affidavit()->first()->shouldHaveFine();
