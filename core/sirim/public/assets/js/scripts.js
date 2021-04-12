@@ -633,7 +633,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'num' },
             { data: 'status.name' },
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -692,7 +692,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'reason' },
             { data: 'created_at' },
-            { data: 'fine.formatted_amount', name: 'formatted_amount' },
+            { data: 'fine.pretty_amount', name: 'pretty_amount' },
             { data: 'user.login' },
             {
                 data: "id",
@@ -721,7 +721,7 @@ $(document).ready(function() {
             { data: 'num', name: 'num' },
             { data: 'taxpayer.rif', name: 'taxpayer.rif' },
             { data: 'taxpayer.name', name: 'taxpayer.name' },
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'processed_at', name: 'processed_at' },
             {
                 data: "id",
@@ -750,7 +750,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'formatted_amount', name: 'formatted_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
             {
