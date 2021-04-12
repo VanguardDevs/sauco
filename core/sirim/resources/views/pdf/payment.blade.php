@@ -20,6 +20,7 @@
             }
             #mayorLOGO {
                 float: right;
+                margin-top: -10px;
             }
             table, td, th {
                 border: 1px #000 solid;
@@ -72,7 +73,7 @@
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ base_path().'/public/assets/images/sumat.png' }}" height="90px" width="230px" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -85,7 +86,7 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ base_path().'/public/assets/images/logo.png' }}" height="70px" width="130px" alt="logo" />
+                <img src="{{ asset('/assets/images/mayor_logo.jpg') }}" height="80px" width="130px" alt="logo" />
             </div>
         </div>
         <div class="tables">
@@ -135,11 +136,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($payment->settlements as $settlement)
+                @foreach($payment->liquidations as $liquidation)
                  <tr>
-                    <td>{{ $settlement->num }}</td>
-                    <td class="object-payment">{{ $settlement->object_payment  }}</td>
-                    <td style="word-spacing:1px;font-size:16px;">{{ $settlement->pretty_amount }}</td>
+                    <td>{{ $liquidation->num }}</td>
+                    <td class="object-payment">{{ $liquidation->object_payment  }}</td>
+                    <td style="word-spacing:1px;font-size:16px;">{{ $liquidation->pretty_amount }}</td>
                 </tr>
                 @endforeach
              </table>
@@ -151,7 +152,7 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->formattedAmount }} Bs
+                    PAGO TOTAL: {{ $payment->pretty_amount }} Bs
                 </div>
             </div>
         </div>

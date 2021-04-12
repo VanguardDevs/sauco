@@ -168,21 +168,12 @@ class PaymentController extends Controller
         $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
         $taxpayer = $payment->taxpayer;
 
-        if ($payment->invoiceModel->code == 2) {
-            $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
-            $vars = ['payment', 'reference', 'denomination'];
+        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
+        $vars = ['payment', 'reference', 'denomination'];
 
-            return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('pdf.payment', compact($vars))
-                ->stream('factura-'.$payment->id.'.pdf');
-        } else {
-            $organization = Organization::first();
-            $vars = ['payment', 'reference', 'organization'];
-
-            return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('modules.cashbox.pdf.withholding', compact($vars))
-                ->stream('factura-'.$payment->id.'.pdf');
-        }
+        return PDF::setOptions(['isRemoteEnabled' => true])
+            ->loadView('pdf.payment', compact($vars))
+            ->stream('factura-'.$payment->id.'.pdf');
    }
 
     /**
