@@ -154,6 +154,12 @@ class PaymentController extends Controller
             'processed_at' => $processedAt
         ]);
 
+        $payment->liquidations()->update([
+            'status_id' => 2
+        ]);
+
+        $payment->createMovements();
+
         return redirect()->back()
             ->withSuccess('¡Factura procesada!');
     }
@@ -195,6 +201,8 @@ class PaymentController extends Controller
             'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id
         ]);
+
+        $payment->movements()->delete();
 
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');

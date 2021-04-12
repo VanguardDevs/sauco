@@ -22,6 +22,20 @@ class Payment extends Model implements Auditable
 
     protected $casts = [ 'amount' => 'float' ];
 
+    public function createMovements()
+    {
+        $liquidations = $this->liquidations;
+
+        foreach($liquidations as $liq) {
+            $this->movements()->create([
+                'amount' => $liq->amount,
+                'concept_id' => $liq->concept_id,
+                'liquidation_id' => $liq->id,
+                'year_id' => $liq->year()->id
+            ]);
+        }
+    }
+
     public function checkForFine()
     {
         $totalFines = $this->affidavit()->first()->shouldHaveFine();
@@ -46,14 +60,6 @@ class Payment extends Model implements Auditable
         $amount = $this->liquidations->sum('amount');
 
         return $this->update([ 'amount' => $amount ]);
-    }
-
-    public static function processedByDate($firstDate, $lastDate)
-    {
-        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
-            ->whereStateId(2)
-            ->orderBy('num', 'ASC')
-            ->get();
     }
 
     public function nullPayment()
@@ -107,8 +113,8 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Fine::class, Liquidation::class);
     }
 
-    public function invoiceModel()
+    public function movements()
     {
-        return $this->belongsTo(InvoiceModel::class);
+        return $this->hasMany(Movement::class);
     }
 }
