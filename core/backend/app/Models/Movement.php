@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
 
 class Movement extends Model
 {
-    use HasFactory, PrettyAmount, PrettyTimestamps;
+    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps;
 
     protected $table = 'movements';
 
