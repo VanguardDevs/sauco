@@ -65,7 +65,7 @@
           </table>
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Monto Total: {{ $row->formattedAmount }} Bs
+                    Monto Total: {{ $row->pretty_amount }} Bs
                 </div>
                 @if ($typeForm == 'show' && $row->status_id == 2)
                 <div class="kt-heading kt-heading--md">
