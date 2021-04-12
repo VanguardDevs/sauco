@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movement;
+use App\Models\Concept;
 use Illuminate\Http\Request;
 
 class MovementController extends Controller
@@ -14,9 +15,8 @@ class MovementController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Movement::with(['concept', 'liquidation', 'payment', 'year'])
-            ->withCount(['concept', 'liquidation', 'payment'])
-            ->groupBy('movements.id','concept_id', 'year_id');
+        $query = Concept::withCount(['concept', 'liquidation', 'payment'])
+            ->groupBy('concepts.id, concepts.name', 'year_id');
         $results = $request->perPage;
 
         if ($request->has('filter')) {

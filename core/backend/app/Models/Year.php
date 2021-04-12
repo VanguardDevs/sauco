@@ -21,4 +21,9 @@ class Year extends Model
     {
         return $this->hasMany(Correlative::class);
     }
+
+    public function movements()
+    {
+        return $this->hasMany(Movement::class);
+    }
 }
