@@ -7,7 +7,8 @@
     "liquidations": "node ./scripts/updateLiquidations.js",
     "deductions": "node ./scripts/deductions.js",
     "movements": "node ./scripts/createMovements.js",
-    "remove": "node ./scripts/remove.js"
+    "remove": "node ./scripts/remove.js",
+    "m170421": "npm run liquidations && npm run deductions && npm run movements && npm run remove"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",
