@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movement;
 use App\Models\Concept;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MovementController extends Controller
 {
@@ -15,46 +16,41 @@ class MovementController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Concept::withCount(['concept', 'liquidation', 'payment'])
-            ->groupBy('concepts.id, concepts.name', 'year_id');
-        $results = $request->perPage;
+        $query = DB::table('concepts')
+            ->select(
+                'concepts.name',
+                'years.year',
+                DB::raw('COUNT(movements.payment_id)AS payments_count'),
+                DB::raw('COUNT(movements.liquidation_id) AS liquidations_count'),
+                DB::raw('SUM(movements.amount) AS amount')
+            )->join('movements', 'movements.concept_id', '=', 'concepts.id')
+            ->join('years', 'years.id', '=', 'movements.year_id')
+            ->groupBy('concepts.name', 'years.year')
+            ->orderBy('years.year', 'DESC');
+        $results = $request->perPage ?? 10;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
 
             if (array_key_exists('gt_date', $filters)) {
-                $query->whereDate('created_at', '>=', $filters['gt_date']);
+                $query->whereDate('movements.created_at', '>=', $filters['gt_date']);
             }
             if (array_key_exists('lt_date', $filters)) {
-                $query->whereDate('created_at', '<=', $filters['lt_date']);
+                $query->whereDate('movements.created_at', '<=', $filters['lt_date']);
             }
             if (array_key_exists('concept', $filters)) {
                 $name = $filters['concept'];
 
-                $query->whereHas('concept', function ($q) use ($name) {
-                    return $q->whereLike('name', $name);
-                });
+                $query->where('concepts.name', 'ILIKE', "%{$name}%");
             }
             if (array_key_exists('year', $filters)) {
                 $name = $filters['year'];
 
-                $query->whereHas('year', function ($q) use ($name) {
-                    return $q->whereLike('year', $name);
-                });
+                $query->where('years.year', 'ILIKE', "%{$name}%");
             }
         }
 
         return $query->paginate($results);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -75,17 +71,6 @@ class MovementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Movement $movement)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Movement  $movement
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Movement $movement)
     {
         //
     }
