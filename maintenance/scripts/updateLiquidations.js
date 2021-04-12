@@ -11,19 +11,6 @@ const insertManyPaymentLiquidationQuery = `
 async function liquidations() {
   const db = knex(require("../knexfile"));
 
-  // Update and drop columns
-  const setNewColumnValues = async (originalColumn, liquidableType, id) => {
-    await db('liquidations')
-      .whereNotNull(originalColumn)
-      .update({
-        'status_id': '2',
-        'liquidable_id': db.ref(originalColumn),
-        'liquidable_type': liquidableType,
-        'liquidation_type_id': id.toString(),
-      })
-      .catch((error) => console.log(error));
-  };
-
   try {
     /**
      * Rename tables
@@ -54,9 +41,11 @@ async function liquidations() {
     await db.schema.table('liquidations', (table) => {
       table.string('liquidable_type');
       table.integer('liquidable_id').unsigned();
+      table.integer('concept_id').unsigned();
       table.integer('liquidation_type_id').unsigned();
       table.integer('status_id').unsigned();
       table.foreign('liquidation_type_id').references('liquidation_types.id');
+      table.foreign('concept_id').references('concepts.id');
       table.foreign('status_id').references('status.id');
     });
 
@@ -65,9 +54,44 @@ async function liquidations() {
     /**
      * Update liquidations by type
      */
-    await setNewColumnValues('fine_id', 'App\\Models\\Fine', 2);
-    await setNewColumnValues('affidavit_id', 'App\\Models\\Affidavit', 3);
-    await setNewColumnValues('application_id', 'App\\Models\\Application', 1);
+    await db.schema.raw(
+      `
+      UPDATE liquidations
+      SET
+        concept_id = applications.concept_id,
+        liquidable_id = application_id,
+        liquidable_type = 'App\\Models\\Application',
+        liquidation_type_id = 1
+      FROM applications
+      WHERE applications.id = liquidations.application_id
+      `
+    );
+
+    await db.schema.raw(
+      `
+      UPDATE liquidations
+      SET
+        concept_id = 1,
+        liquidable_id = affidavit_id,
+        liquidable_type = 'App\\Models\\Affidavit',
+        liquidation_type_id = 3
+      FROM affidavits
+      WHERE affidavits.id = liquidations.affidavit_id
+      `
+    );
+
+    await db.schema.raw(
+      `
+      UPDATE liquidations
+      SET
+        concept_id = fines.concept_id,
+        liquidable_id = fine_id,
+        liquidable_type = 'App\\Models\\Fine',
+        liquidation_type_id = 2
+      FROM fines
+      WHERE fines.id = liquidations.fine_id
+      `
+    );
   } finally {
     await db.destroy();
   }
