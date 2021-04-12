@@ -24,6 +24,20 @@ class Payment extends Model implements Auditable
 
     protected $appends = [ 'pretty_amount' ];
 
+    public function createMovements()
+    {
+        $liquidations = $this->liquidations;
+
+        foreach($liquidations as $liq) {
+            $this->movements()->create([
+                'amount' => $liq->amount,
+                'concept_id' => $liq->concept_id,
+                'liquidation_id' => $liq->id,
+                'year_id' => $liq->year()->id
+            ]);
+        }
+    }
+
     public function checkForFine()
     {
         $totalFines = $this->affidavit()->first()->shouldHaveFine();
@@ -41,20 +55,6 @@ class Payment extends Model implements Auditable
             }
         }
         $this->updateAmount();
-    }
-
-    public function updateAmount()
-    {
-        $amount = $this->liquidations->sum('amount');
-
-        return $this->update([ 'amount' => $amount ]);
-    }
-
-    public static function processedByDate($firstDate, $lastDate)
-    {
-        return self::whereBetween('processed_at', [$firstDate->toDateString(), $lastDate->toDateString()])
-            ->orderBy('processed_at', 'ASC')
-            ->get();
     }
 
     public function canceledPayment()

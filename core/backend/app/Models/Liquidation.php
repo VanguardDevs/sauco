@@ -9,6 +9,8 @@ use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
+use Carbon\Carbon;
+use App\Models\Year;
 
 class Liquidation extends Model implements Auditable
 {
@@ -21,6 +23,19 @@ class Liquidation extends Model implements Auditable
     protected $casts = ['amount' => 'float' ];
 
     protected $appends = ['pretty_amount'];
+
+    /**
+    * Return year for the movement
+    */
+    public function year()
+    {
+        $type = $this->liquidation_type_id;
+
+        if ($type == 3) {
+            return $this->liquidable->month->year()->first();
+        }
+        return Year::where('year', '=', Carbon::now()->year)->first();
+    }
 
     public function user()
     {
