@@ -43,6 +43,12 @@ class LiquidationController extends Controller
                     return $q->whereLike('name', $name);
                 });
             }
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('created_at', '<', $filters['lt_date']);
+            }
             if (array_key_exists('type', $filters)) {
                 $name = $filters['type'];
 

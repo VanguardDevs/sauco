@@ -5,7 +5,6 @@ import {
   Filter,
   TextInput,
   DateInput,
-  DateField,
   List, 
   Datagrid,
   NumberField,
@@ -17,9 +16,9 @@ import { Theme, useMediaQuery } from '@material-ui/core';
 const MovementFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Concepto" source='concept' />
-    <TextInput label="year" source='year' />
-    <DateInput source="gt_date" />
-    <DateInput source="lt_date" />
+    <TextInput label="Año" source='year' />
+    <DateInput source="gt_date" label='Procesado después de' />
+    <DateInput source="lt_date" label='Procesado antes de' />
   </Filter>
 );
 
@@ -36,26 +35,13 @@ const MovementList: React.FC = props => {
       filters={<MovementFilter />}
       exporter={false}
     >
-      { 
-        isSmall 
-        ? (      
-          <SimpleList
-            primaryText={record => `${record.concept.name}`}
-            secondaryText={record => `${record.amount}`}
-            tertiaryText={record => `${record.year.name}`}
-            linkType={"show"}
-          />
-        )
-        : (
-          <Datagrid>
-            <TextField source="concept.name" label="Concepto"/>
-            <TextField source="year.name" label="Año"/>
-            <NumberField source='amount' label='Monto' />
-            <NumberField source='liquidations_count' label='Liquidaciones' />
-            <TextField source="payments_count" label="Facturas"/>
-          </Datagrid>
-        )
-      }
+      <Datagrid>
+        <TextField source="name" label="Concepto"/>
+        <TextField source="year" label="Año"/>
+        <NumberField source='amount' label='Monto' />
+        <NumberField source='liquidations_count' label='Liquidaciones' />
+        <NumberField source="payments_count" label="Facturas"/>
+      </Datagrid>
     </List>
   );
 };
