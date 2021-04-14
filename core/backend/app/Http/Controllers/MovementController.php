@@ -18,15 +18,17 @@ class MovementController extends Controller
     {
         $query = DB::table('concepts')
             ->select(
-                'concepts.name',
-                'years.year',
+                'concepts.id AS id',
+                'concepts.name AS name',
+                DB::raw('CAST(years.year AS INTEGER) AS year'),
                 DB::raw('COUNT(movements.payment_id)AS payments_count'),
                 DB::raw('COUNT(movements.liquidation_id) AS liquidations_count'),
-                DB::raw('SUM(movements.amount) AS amount')
-            )->join('movements', 'movements.concept_id', '=', 'concepts.id')
+                DB::raw('CAST(SUM(movements.amount) AS NUMERIC) AS amount')
+            )
+            ->join('movements', 'movements.concept_id', '=', 'concepts.id')
             ->join('years', 'years.id', '=', 'movements.year_id')
-            ->groupBy('concepts.name', 'years.year')
-            ->orderBy('years.year', 'DESC');
+            ->groupBy('concepts.name', 'years.year', 'concepts.id')
+            ->orderBy('year', 'DESC');
         $results = $request->perPage ?? 10;
 
         if ($request->has('filter')) {
@@ -36,7 +38,7 @@ class MovementController extends Controller
                 $query->whereDate('movements.created_at', '>=', $filters['gt_date']);
             }
             if (array_key_exists('lt_date', $filters)) {
-                $query->whereDate('movements.created_at', '<=', $filters['lt_date']);
+                $query->whereDate('movements.created_at', '<', $filters['lt_date']);
             }
             if (array_key_exists('concept', $filters)) {
                 $name = $filters['concept'];

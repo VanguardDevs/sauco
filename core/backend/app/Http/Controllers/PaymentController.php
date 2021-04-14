@@ -51,7 +51,7 @@ class PaymentController extends Controller
                 $query->whereDate('processed_at', '>=', $filters['gt_date']);
             }
             if (array_key_exists('lt_date', $filters)) {
-                $query->whereDate('processed_at', '<=', $filters['lt_date']);
+                $query->whereDate('processed_at', '<', $filters['lt_date']);
             }
             if (array_key_exists('rif', $filters)) {
                 $name = $filters['rif'];
