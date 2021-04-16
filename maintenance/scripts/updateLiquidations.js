@@ -3,7 +3,7 @@ const knex = require('knex');
 const insertManyPaymentLiquidationQuery = `
   INSERT INTO payment_liquidation
     (liquidation_id, payment_id, created_at, updated_at)
-  SELECT liquidations.id, payments.id, payments.created_at, payments.created_at
+  SELECT liquidations.id, payments.id, payments.updated_at, payments.updated_at
     FROM liquidations JOIN payments
     ON liquidations.payment_id = payments.id
 `;

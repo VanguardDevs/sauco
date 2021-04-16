@@ -28,6 +28,10 @@ async function main() {
     });
 
     await db.schema.dropTable('invoice_models');
+    await db.schema.dropTable('settlement_reduction');
+    await db.schema.dropTable('organization_payment');
+    await db.schema.dropTable('organizations');
+    await db.schema.dropTable('affidavit_withholding');
   } finally {
     await db.destroy();
   }
