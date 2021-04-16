@@ -5,16 +5,18 @@ const insertMovementsQuery = `
     (amount, liquidation_id, payment_id, concept_id, year_id, created_at, updated_at, deleted_at)
     SELECT
         liquidations.amount,
-        liquidations.id AS liquidation_id,
-        payment_liquidation.payment_id,
+        liquidations.id,
+        payments.id,
         concept_id,
         3,
-        payment_liquidation.created_at,
-        payment_liquidation.updated_at,
+        payments.processed_at,
+        payments.processed_at,
         liquidations.deleted_at
       FROM liquidations
       JOIN payment_liquidation
         ON liquidations.id = payment_liquidation.liquidation_id
+      JOIN payments
+        ON payment_liquidation.payment_id = payments.id
       WHERE liquidations.status_id = 2
 `;
 
@@ -23,19 +25,6 @@ const updateYearsOfEconomicActivityMovements = (id, year) => (`
   SET year_id = ${id}
   FROM (
     SELECT id FROM liquidations WHERE object_payment ILIKE '%${year}%'
-  ) AS subquery
-  WHERE movements.liquidation_id = subquery.id;
-`);
-
-const setYearId = (id, year) => (`
-  UPDATE movements
-  SET year_id = ${id}
-  FROM (
-    SELECT id
-    FROM liquidations
-    WHERE
-      DATE_PART('year', created_at::date) = ${year}
-      AND liquidation_type_id != 3
   ) AS subquery
   WHERE movements.liquidation_id = subquery.id;
 `);
@@ -66,8 +55,23 @@ async function main() {
     await db.schema.raw(updateYearsOfEconomicActivityMovements('1', '2020'));
     await db.schema.raw(updateYearsOfEconomicActivityMovements('2', '2019'));
     await db.schema.raw(updateYearsOfEconomicActivityMovements('3', '2021'));
-    await db.schema.raw(setYearId('3', '2021'));
-    await db.schema.raw(setYearId('1', '2020'));
+    await db.schema.raw(`
+      UPDATE movements
+      SET year_id = 1
+      FROM (
+        SELECT liquidations.id
+        FROM liquidations
+        JOIN payment_liquidation
+          ON liquidations.id = payment_liquidation.liquidation_id
+        JOIN payments
+          ON payments.id = payment_liquidation.payment_id
+        WHERE
+          DATE_PART('year', payments.updated_at::date) = 2020
+          AND liquidation_type_id != 3 
+          AND status_id = 2
+      ) AS subquery
+      WHERE movements.liquidation_id = subquery.id;
+    `);
   } finally {
     await db.destroy();
   }
