@@ -29,8 +29,8 @@
                             Form::select('ordinance', $ordinances, null, [
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
-                                'id' => 'fines', 
-                                'required' 
+                                'id' => 'fines',
+                                'required'
                             ])
                         !!}
 
@@ -45,7 +45,7 @@
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
                                 'id' => 'concepts',
-                                'required' 
+                                'required'
                             ])
                         !!}
 
@@ -53,7 +53,21 @@
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-8">
+                        <label class="control-label">Monto</label>
+                        {!!
+                        Form::text("amount", (isset($row->rif) ? $row->getOriginal('amount') : null), [
+                            "class" => "form-control decimal-input-mask",
+                            "placeholder" => "Monto",
+                            "id" => 'rif'
+                        ])
+                        !!}
+
+                        @error('rif')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-4">
                         <button class="btn btn-success" style="margin-top:2em;"title="Enviar liquidación" type="submit">
                             <i class="fas fa-paper-plane"></i>
                             Aplicar multa
