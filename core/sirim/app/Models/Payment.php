@@ -51,8 +51,11 @@ class Payment extends Model implements Auditable
                 // App\Modelsly one fine
                 Fine::applyFine($this, $concept);
             }
+
+            $this->updateAmount();
         }
-        $this->updateAmount();
+
+        return null;
     }
 
     public function updateAmount()
