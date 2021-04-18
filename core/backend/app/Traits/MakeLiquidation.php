@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use App\Liquidation;
-use App\Concept;
+use App\Models\Liquidation;
+use App\Models\Concept;
 
 trait MakeLiquidation
 {
@@ -21,14 +21,15 @@ trait MakeLiquidation
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $objectPayment,
             'amount' => $this->amount,
-            'user_id' => $this->user_id,
-            'status_id' => 1,
+            'liquidable_type' => get_class($this),
             'concept_id' => $concept->id,
+            'liquidation_type_id' => $concept->liquidation_type_id,
+            'status_id' => 1,
             'taxpayer_id' => $this->taxpayer_id
         ]);
 
         return $liquidation;
-    } 
+    }
 
     private function getObject($concept)
     {
