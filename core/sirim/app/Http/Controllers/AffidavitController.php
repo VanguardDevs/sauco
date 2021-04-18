@@ -254,31 +254,17 @@ class AffidavitController extends Controller
     {
         $payment = $affidavit->payment();
 
-        if ($payment->exists()) {
-            return redirect()->route('payments.show', $payment->first());
+        if ($payment) {
+            return redirect()->route('payments.show', $payment);
         }
 
-        $payment = Payment::create([
-            'state_id' => 1,
-            'user_id' => $affidavit->user_id,
-            'amount' => $affidavit->amount,
-            'payment_method_id' => 1,
-            'invoice_model_id' => 1,
-            'payment_type_id' => 1,
-            'taxpayer_id' => $affidavit->taxpayer_id
-        ]);
+        $payment = $affidavit->mountPayment();
 
-        $month = Month::find($affidavit->month_id);
+        $liquidation = $affidavit->makeLiquidation();
 
-        $payment->liquidations()->create([
-            'num' => Liquidation::newNum(),
-            'object_payment' =>  $this->message($month),
-            'affidavit_id' => $affidavit->id,
-            'taxpayer_id' => $affidavit->taxpayer_id,
-            'amount' => $affidavit->amount
-        ]);
+        $payment->liquidations()->sync($liquidation);
 
-        $payment->checkForFine();
+        // $payment->checkForFine();
 
         return redirect()->route('payments.show', $payment->id);
     }

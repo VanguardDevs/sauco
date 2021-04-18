@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
+use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
+use App\Traits\PrettyAmount;
+use App\Traits\PaymentUtils;
 use App\Models\Concept;
 
 class Affidavit extends Model implements Auditable
 {
-    use Audit;
-    use SoftDeletes;
+    use Audit, SoftDeletes, PrettyAmount, PrettyTimestamps, PaymentUtils, MakeLiquidation;
 
     protected $table = 'affidavits';
 
@@ -77,35 +80,11 @@ class Affidavit extends Model implements Auditable
         return $this->hasMany(EconomicActivityAffidavit::class);
     }
 
-    public function payment()
-    {
-        return $this->liquidation();
-    }
-
-    public function withholding()
-    {
-        return $this->belongsToMany(Withholding::class);
-    }
-
-    public function processedPayment()
-    {
-        return $this->belongsToMany(Payment::class, Settlement::class)->first();
-    }
-
     public function liquidation()
     {
         return $this->morphOne(Liquidation::class, 'liquidable');
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        return Date('d/m/Y', strtotime($value));
-    }
-
-    public function getDeletedAtAttribute($value)
-    {
-        return Date('d-m-Y H:m', strtotime($value));
-    }
 
     public function scopeLastAffidavit($query)
     {
