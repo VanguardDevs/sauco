@@ -30,7 +30,7 @@ class Ordinance extends Model
     public function scopeConceptsByList($query, $type)
     {
         return self::concepts()
-            ->where('list_id', '=', $type)
+            ->where('liquidation_type_id', '=', $type)
             ->get();
     }
 }

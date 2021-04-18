@@ -254,8 +254,8 @@ class AffidavitController extends Controller
     {
         $payment = $affidavit->payment();
 
-        if ($payment) {
-            return redirect()->route('payments.show', $payment);
+        if ($payment->count()) {
+            return redirect()->route('payments.show', $payment->first());
         }
 
         $payment = $affidavit->mountPayment();

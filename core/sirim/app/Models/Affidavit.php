@@ -85,7 +85,6 @@ class Affidavit extends Model implements Auditable
         return $this->morphOne(Liquidation::class, 'liquidable');
     }
 
-
     public function scopeLastAffidavit($query)
     {
         return $query->latest()->first();

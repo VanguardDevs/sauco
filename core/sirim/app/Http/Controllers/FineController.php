@@ -40,8 +40,8 @@ class FineController extends Controller
             ->with(['concept:id,name']);
 
         return DataTables::of($query)
-            ->addColumn('formatted_amount', function ($payment) {
-                return $payment->formatted_amount;
+            ->addColumn('pretty_amount', function ($q) {
+                return $q->pretty_amount;
             })
             ->make(true);
     }
@@ -50,7 +50,6 @@ class FineController extends Controller
     {
         return $ordinance->conceptsByList(2);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -70,8 +69,13 @@ class FineController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        $concept = Concept::find($request->input('concept'));
-        $amount = $concept->calculateAmount();
+        $concept = Concept::find($request->get('concept'));
+
+        if (!$request->has('amount')) {
+            $amount = $concept->calculateAmount();
+        } else {
+            $amount = $request->get('amount');
+        }
 
         $fine = $taxpayer->fines()->create([
             'active' => 1,
@@ -86,28 +90,17 @@ class FineController extends Controller
 
     public function makePayment(Fine $fine)
     {
-        if ($fine->payment()->exists()) {
-            return redirect()
-                ->route('payments.show', $fine->payment()->first());
+        $payment = $fine->payment();
+
+        if ($payment) {
+            return redirect()->route('payments.show', $payment->first());
         }
 
-        $payment = Payment::create([
-            'state_id' => 1,
-            'user_id' => auth()->user()->id,
-            'amount' => $fine->amount,
-            'payment_method_id' => 1,
-            'invoice_model_id' => 1,
-            'payment_type_id' => 1,
-            'taxpayer_id' => $fine->taxpayer_id
-        ]);
+        $payment = $fine->mountPayment();
 
-        $fine->settlement()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' => $fine->concept->name,
-            'payment_id' => $payment->id,
-            'taxpayer_id' => $fine->taxpayer_id,
-            'amount' => $fine->amount
-        ]);
+        $liquidation = $fine->makeLiquidation();
+
+        $payment->liquidations()->sync($liquidation);
 
         return redirect()->route('payments.show', $payment);
     }

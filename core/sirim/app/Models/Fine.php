@@ -7,22 +7,24 @@ use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as Audit;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
+use App\Traits\PrettyAmount;
+use App\Traits\PaymentUtils;
 
 class Fine extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use Audit, SoftDeletes, PrettyAmount, PrettyTimestamps, PaymentUtils, MakeLiquidation;
 
     protected $table = 'fines';
 
     protected $guarded = [];
 
-    protected $appends = [ 'formatted_amount' ];
-
     protected $casts = [
         'amount' => 'float'
-    ];  
+    ];
 
     public function nullFine()
     {
@@ -66,24 +68,8 @@ class Fine extends Model implements Auditable
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function payment()
+    public function liquidation()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
-    }
-
-    public function settlement()
-    {
-        return $this->hasOne(Settlement::class)
-            ->withTrashed();
-    }
-
-    public function getFormattedAmountAttribute()
-    {
-        return number_format($this->amount, 2, ',', '.');
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Date('d/m/Y h:i', strtotime($value));
+        return $this->morphOne(Liquidation::class, 'liquidable');
     }
 }
