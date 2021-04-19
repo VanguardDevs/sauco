@@ -21,8 +21,6 @@ class Deduction extends Model implements Auditable
         'amount'
     ];
 
-    protected $appends = [ 'pretty_amount' ];
-
     public function liquidation()
     {
         return $this->belongsTo(Liquidation::class);
