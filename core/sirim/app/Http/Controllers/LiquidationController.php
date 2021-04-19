@@ -62,9 +62,9 @@ class LiquidationController extends Controller
      */
     public function show(Liquidation $liquidation)
     {
-        if ($liquidation->liquidation_type_id == 1
+        if ($liquidation->liquidation_type_id == 3
             && !($liquidation->deduction()->exists())
-            && ($liquidation->payment->state_id == 1)) {
+            && $liquidation->status_id == 1) {
             $this->typeForm = 'update';
         }
 
@@ -97,7 +97,6 @@ class LiquidationController extends Controller
         // Substract amount
         $amount = $request->input('withholding_amount');
         $newLiquidationAmount = $liquidation->amount - $amount;
-        $affidavit = $liquidation->affidavit;
 
         if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
             return redirect()->back()
@@ -107,21 +106,19 @@ class LiquidationController extends Controller
         }
 
         // Save withholding
-        $withholding = $affidavit->withholding()->create([
+        $deduction = $liquidation->deduction()->create([
             'amount' => $amount,
-            'affidavit_id' => $affidavit->id,
             'user_id' => Auth::user()->id
         ]);
 
 	    $liquidation->update([
             'amount' => $newLiquidationAmount,
-            'withholding_id' => $withholding->id
         ]);
 
-        $liquidation->payment->updateAmount();
+        $liquidation->payment->first()->updateAmount();
 
         return redirect()->back()
-            ->withSuccess('¡Retención de '.$withholding->amount.' aplicada!');
+            ->withSuccess('¡Retención de '.$deduction->amount.' aplicada!');
     }
 
     /**
