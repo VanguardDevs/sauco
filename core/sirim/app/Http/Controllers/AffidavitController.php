@@ -66,12 +66,20 @@ class AffidavitController extends Controller
     {
         if ($request->wantsJson()) {
             $fines = $affidavit->shouldHaveFine();
-            $fineData = ($fines)
-                ? [
+            $fineData = ['apply' => false];
+
+            if ($fines) {
+                $concept = [ Concept::whereCode(3)->first() ];
+
+                if ($fines > 1) {
+                    $concept = [ $concept[0], $concept[0] ];
+                }
+
+                $fineData = [
                     'apply' => true,
-                    'concepts' => $fines
-                ]
-                : ['apply' => false];
+                    'concepts' => $concept
+                ];
+            }
 
             $affidavitData = collect(Affidavit::find(14684)->load('user'))
                     ->merge([
