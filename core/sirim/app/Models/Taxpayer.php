@@ -63,7 +63,7 @@ class Taxpayer extends Model implements Auditable
 
     public function applications()
     {
-        return $this->hasMany(App\Modelslication::class);
+        return $this->hasMany(Application::class);
     }
 
     public function fines()
