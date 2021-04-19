@@ -67,11 +67,41 @@ async function main() {
           ON payments.id = payment_liquidation.payment_id
         WHERE
           DATE_PART('year', payments.updated_at::date) = 2020
-          AND liquidation_type_id != 3 
+          AND liquidation_type_id != 3
           AND status_id = 2
       ) AS subquery
       WHERE movements.liquidation_id = subquery.id;
     `);
+
+
+    /**
+     * Remove columns and tables
+     */
+    await db.schema.table('liquidations', table => {
+      return table.dropColumns([
+        'fine_id',
+        'permit_id',
+        'affidavit_id',
+        'application_id',
+        'withholding_id',
+        'payment_id'
+      ]);
+    });
+
+    await db.schema.table('deductions', table => {
+      table.dropColumn('affidavit_id');
+    });
+
+    await db.schema.table('payments', table => {
+      table.renameColumn('state_id', 'status_id');
+      table.dropColumn('invoice_model_id');
+    });
+
+    await db.schema.dropTable('invoice_models');
+    await db.schema.dropTable('settlement_reduction');
+    await db.schema.dropTable('organization_payment');
+    await db.schema.dropTable('organizations');
+    await db.schema.dropTable('affidavit_withholding');
   } finally {
     await db.destroy();
   }
