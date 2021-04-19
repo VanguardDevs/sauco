@@ -4,12 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable as Auditable;
+use OwenIt\Auditing\Auditable as Audit;
 use App\Models\Taxpayer;
 use Carbon\Carbon;
+use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
+use App\Traits\PrettyAmount;
+use App\Traits\PaymentUtils;
 
-class Application extends Model
+class Application extends Model implements Auditable
 {
-    use SoftDeletes;
+    use Audit, SoftDeletes, PrettyAmount, PrettyTimestamps, PaymentUtils, MakeLiquidation;
 
     protected $table = 'applications';
 
@@ -18,35 +24,6 @@ class Application extends Model
     protected $casts = [
         'amount' => 'float'
     ];
-
-    public function nullApp\Modelslication()
-    {
-        return $this->hasOne(NullApp\Modelslication::class);
-    }
-
-    public static function hasPaid(Taxpayer $taxpayer, $code)
-    {
-        $application = $taxpayer
-            ->applications()
-	    ->whereBetween('created_at', [Carbon::now()->subYear(1), Carbon::now()])
-            ->whereHas('concept', function ($concept) use ($code) {
-                return $concept->whereCode($code);
-            })->latest()->first();
-
-        if ($application) {
-            $payment = $application->payment()->first();
-
-            if (!$payment) {
-                return false;
-            }
-
-            if ($payment->state_id == 2) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     public function concept()
     {
@@ -63,18 +40,8 @@ class Application extends Model
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function payment()
+    public function liquidation()
     {
-        return $this->belongsToMany(Payment::class, Settlement::class);
-    }
-
-    public function settlement()
-    {
-        return $this->hasOne(Settlement::class);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Date('d/m/Y H:m', strtotime($value));
+        return $this->morphOne(Liquidation::class, 'liquidable');
     }
 }
