@@ -73,8 +73,13 @@ class AffidavitController extends Controller
                 ]
                 : ['apply' => false];
 
+            $affidavitData = collect(Affidavit::find(14684)->load('user'))
+                    ->merge([
+                        'payment' => Affidavit::find(14684)->payment()->first()
+                    ]);
+
             return response()->json([
-                'affidavit' => $affidavit->load(['user', 'payment']),
+                'affidavit' => $affidavitData,
                 'fine' => $fineData
             ]);
         }
