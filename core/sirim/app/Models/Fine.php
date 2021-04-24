@@ -72,4 +72,9 @@ class Fine extends Model implements Auditable
     {
         return $this->morphOne(Liquidation::class, 'liquidable');
     }
+
+    public function affidavit()
+    {
+        return $this->belongsToMany(Affidavit::class, 'affidavit_fine');
+    }
 }
