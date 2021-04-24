@@ -277,7 +277,7 @@ class AffidavitController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
-        // $payment->checkForFine();
+        $payment->checkForFine();
 
         return redirect()->route('payments.show', $payment->id);
     }

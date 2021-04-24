@@ -31,28 +31,6 @@ class Fine extends Model implements Auditable
         return $this->hasOne(NullFine::class);
     }
 
-    public static function applyFine($payment, $concept)
-    {
-        $amount = $payment->settlements()->whereNotNull('affidavit_id')->first()->amount;
-        $fineAmount = $concept->calculateAmount($amount);
-        $userId = User::whereLogin('sauco')->first()->id;
-
-        $fine = $concept->fines()->create([
-            'amount' => $fineAmount,
-            'active' => true,
-            'taxpayer_id' => $payment->taxpayer_id,
-            'user_id' => $userId
-        ]);
-
-        $fine->settlement()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' => $concept->name,
-            'amount' => $fineAmount,
-            'taxpayer_id' => $payment->taxpayer_id,
-            'payment_id' => $payment->id,
-        ]);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
