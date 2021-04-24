@@ -7,18 +7,12 @@ use App\Models\Ordinance;
 use App\Models\Concept;
 use App\Models\Taxpayer;
 use App\Models\Payment;
-use App\Models\Settlement;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnnullmentRequest;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +27,7 @@ class ApplicationController extends Controller
 
     public function list(Taxpayer $taxpayer)
     {
-        $query = App\Modelslication::whereTaxpayerId($taxpayer->id)
+        $query = Application::whereTaxpayerId($taxpayer->id)
             ->orderBy('applications.created_at', 'DESC')
             ->with(['concept:id,name']);
 
@@ -46,45 +40,22 @@ class ApplicationController extends Controller
         return $ordinance->conceptsByList(1);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function makePayment(Application $application)
     {
-        //
-    }
+        $payment = $application->payment();
 
-    public function makePayment(App\Modelslication $application)
-    {
-        if ($application->payment()->exists()) {
-            dd($application->payment()->first());
-            return redirect()
-                ->route('payments.show', $application->payment()->first());
+        if ($payment) {
+            return redirect()->route('payments.show', $payment->first());
         }
 
-        $payment = Payment::create([
-            'state_id' => 1,
-            'user_id' => auth()->user()->id,
-            'amount' => $application->amount,
-            'payment_method_id' => 1,
-            'invoice_model_id' => 1,
-            'payment_type_id' => 1,
-            'taxpayer_id' => $application->taxpayer_id
-        ]);
+        $payment = $application->mountPayment();
 
-        $application->settlement()->create([
-            'num' => Settlement::newNum(),
-            'object_payment' => $application->concept->name,
-            'payment_id' => $payment->id,
-            'taxpayer_id' => $application->taxpayer_id,
-            'amount' => $application->amount
-        ]);
+        $liquidation = $application->makeLiquidation();
 
-        return redirect()->route('payments.show', $payment);
+        $payment->liquidations()->sync($liquidation);
+
+        return redirect()->route('payments.show', $payment->id);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -109,28 +80,6 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -148,7 +97,7 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, App\Modelslication $application)
+    public function destroy(AnnullmentRequest $request, Application $application)
     {
         $payment = $application->payment()->first();
 
