@@ -66,15 +66,28 @@ class AffidavitController extends Controller
     {
         if ($request->wantsJson()) {
             $fines = $affidavit->shouldHaveFine();
-            $fineData = ($fines)
-                ? [
+            $fineData = ['apply' => false];
+
+            if ($fines) {
+                $concept = [ Concept::whereCode(3)->first() ];
+
+                if ($fines > 1) {
+                    $concept = [ $concept[0], $concept[0] ];
+                }
+
+                $fineData = [
                     'apply' => true,
-                    'concepts' => $fines
-                ]
-                : ['apply' => false];
+                    'concepts' => $concept
+                ];
+            }
+
+            $affidavitData = collect(Affidavit::find(14684)->load('user'))
+                    ->merge([
+                        'payment' => Affidavit::find(14684)->payment()->first()
+                    ]);
 
             return response()->json([
-                'affidavit' => $affidavit->load(['user', 'payment']),
+                'affidavit' => $affidavitData,
                 'fine' => $fineData
             ]);
         }
@@ -254,7 +267,7 @@ class AffidavitController extends Controller
     {
         $payment = $affidavit->payment();
 
-        if ($payment->count()) {
+        if ($payment) {
             return redirect()->route('payments.show', $payment->first());
         }
 
@@ -264,7 +277,7 @@ class AffidavitController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
-        // $payment->checkForFine();
+        $payment->checkForFine();
 
         return redirect()->route('payments.show', $payment->id);
     }

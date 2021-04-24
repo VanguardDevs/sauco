@@ -39,17 +39,16 @@ class Affidavit extends Model implements Auditable
 
     public function shouldHaveFine()
     {
-        $startPeriod = Carbon::parse($this->month->start_period_at);
-        $todayDate = Carbon::now();
-        $passedDays = $startPeriod->diffInDays($todayDate);
+        $period = Carbon::parse($this->month->start_period_at);
+        $lastMonth = new Carbon('first day of last month');
+        $passedDays = $period->diffInDays($lastMonth);
+        $today = Carbon::now();
 
-        if ($passedDays > 60) {
-            return [
-                Concept::whereCode(3)->first(),
-                Concept::whereCode(3)->first(),
-            ];
-        } else if ($passedDays > 45) {
-            return [Concept::whereCode(3)->first()];
+        if ($passedDays >= 28) {
+            return 2;
+        }
+        if ($today->day >= 16) {
+            return 1;
         }
 
         return false;
@@ -113,5 +112,10 @@ class Affidavit extends Model implements Auditable
     public function getTotalAmountAttribute($value)
     {
         return number_format($this->amount, 2, ',', '.');
+    }
+
+    public function fines()
+    {
+        return $this->belongsToMany(Fine::class, 'affidavit_fine');
     }
 }
