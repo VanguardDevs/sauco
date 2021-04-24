@@ -24,7 +24,7 @@ trait MakeLiquidation
             'liquidable_type' => get_class($this),
             'concept_id' => $concept->id,
             'liquidation_type_id' => $concept->liquidation_type_id,
-            'status_id' => 1,
+            'status_id' => 2,
             'taxpayer_id' => $this->taxpayer_id
         ]);
 

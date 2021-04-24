@@ -190,19 +190,15 @@ class PaymentController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Payment $payment)
     {
-        // Delete receivables and payment but keep settlements
-        $settlements = Settlement::where('payment_id', $payment->id);
-
-        // Delete settlements and payment
-        $settlements->delete();
+        if ($payment->status_id == 2) {
+            $payment->movements()->delete();
+        }
         $payment->delete();
 
         $payment->nullPayment()->create([
             'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id
         ]);
-
-        $payment->movements()->delete();
 
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');

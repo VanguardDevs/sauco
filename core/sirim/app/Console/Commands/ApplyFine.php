@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Payment;
+use App\Models\Payment;
 
 class ApplyFine extends Command
 {
@@ -38,17 +38,15 @@ class ApplyFine extends Command
      */
     public function handle()
     {
-        $payments = Payment::whereStateId(1)
-            ->whereHas('affidavit');
+        $payments = Payment::whereStatusId(1)
+            ->whereHas('liquidations', function ($q) {
+                return $q->whereLiquidationTypeId(3);
+            })->has('liquidations', '<', 3);
 
         if ($payments->count()) {
             $payments->get()->each(function ($payment) {
-                // Apply a fine to all payments except those whose
-                // Fine was annulled
-                if (!$payment->fines()->onlyTrashed()->first()) {
-                    $payment->checkForFine();
-                }
+                $payment->checkForFine();
             });
         }
-    } 
+    }
 }
