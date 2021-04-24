@@ -10,11 +10,12 @@ use Carbon\Carbon;
 use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
+use App\Traits\CheckDelinquencyStatus;
 use App\Fine;
 
 class Payment extends Model implements Auditable
 {
-    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps;
+    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps, CheckDelinquencyStatus;
 
     protected $table = 'payments';
 
@@ -34,25 +35,6 @@ class Payment extends Model implements Auditable
                 'year_id' => $liq->year()->id
             ]);
         }
-    }
-
-    public function checkForFine()
-    {
-        $totalFines = $this->affidavit()->first()->shouldHaveFine();
-        $totalLiquidations = $this->liquidations()->count();
-
-        if ($totalFines && $totalLiquidations < 3) {
-            $concept = $totalFines[0];
-            if (count($totalFines) == 2 && $totalLiquidations < 2) {
-                // App\Modelsly two fines
-                Fine::applyFine($this, $concept);
-            }
-            if (count($totalFines) == 1 || count($totalFines) == 2) {
-                // App\Modelsly one fine
-                Fine::applyFine($this, $concept);
-            }
-        }
-        $this->updateAmount();
     }
 
     public function updateAmount()
