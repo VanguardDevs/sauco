@@ -113,4 +113,9 @@ class Affidavit extends Model implements Auditable
     {
         return number_format($this->amount, 2, ',', '.');
     }
+
+    public function fines()
+    {
+        return $this->belongsToMany(Fine::class, 'affidavit_fine');
+    }
 }
