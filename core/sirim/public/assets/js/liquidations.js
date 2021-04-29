@@ -22,7 +22,7 @@ $('#tLiquidations').DataTable({
                         Pendiente
                     </span>
                     `;
-                $(nTd).html(`${oData.status_id == 2 ? active : inactive}`);
+                $(nTd).html(`${oData.payment[0].status_id == 2 ? active : inactive}`);
             }
         },
         {
@@ -32,6 +32,9 @@ $('#tLiquidations').DataTable({
                 <div class="btn-group">
                     <a class="mr-2" href=${baseURL}/liquidations/${oData.id}/show title='Ver liquidación'>
                         <i class='btn-sm btn-info fas fa-eye'></i>
+                    </a>
+                    <a class="mr-2" onClick="nullRecord(${oData.id},'liquidations')" title='Anular'>
+                        <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                     </a>
                 </div>`
                 );

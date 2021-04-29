@@ -18,7 +18,7 @@ class Concept extends Model
         'name',
         'amount',
         'charging_method_id',
-        'list_id',
+        'liquidation_type_id',
         'ordinance_id',
         'accounting_account_id'
     ];
@@ -47,9 +47,9 @@ class Concept extends Model
         return $this->belongsTo(ChargingMethod::class);
     }
 
-    public function listing()
+    public function liquidationType()
     {
-        return $this->belongsTo(Listing::class, 'list_id');
+        return $this->belongsTo(liquidationType::class);
     }
 
     public function fines()

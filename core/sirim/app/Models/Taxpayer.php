@@ -26,6 +26,11 @@ class Taxpayer extends Model implements Auditable
         'taxpayer_classification_id',
     ];
 
+    public function deductions()
+    {
+        return $this->hasManyThrough(Deduction::class, Liquidation::class);
+    }
+
     public function representations()
     {
         return $this->hasMany(Representation::class);
