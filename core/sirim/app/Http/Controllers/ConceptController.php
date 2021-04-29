@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Concept;
 use App\Models\Ordinance;
 use App\Models\ChargingMethod;
-use App\Models\Listing;
+use App\Models\LiquidationType;
 use App\Models\AccountingAccount;
 use App\Http\Requests\Concepts\ConceptsCreateFormRequest;
 use Illuminate\Http\Request;
@@ -45,7 +45,7 @@ class ConceptController extends Controller
         return view('modules.concepts.register')
             ->with('ordinances', Ordinance::pluck('description', 'id'))
             ->with('accounts', AccountingAccount::pluck('name', 'id'))
-            ->with('listings', Listing::pluck('name', 'id'))
+            ->with('listings', LiquidationType::pluck('name', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
             ->with('typeForm', 'create');
     }
@@ -87,7 +87,7 @@ class ConceptController extends Controller
             ->with('typeForm', 'edit')
             ->with('ordinances', Ordinance::pluck('description', 'id'))
             ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
-            ->with('listings', Listing::pluck('name', 'id'))
+            ->with('listings', LiquidationType::pluck('name', 'id'))
             ->with('accounts', AccountingAccount::pluck('name', 'id'))
             ->with('row', $concept);
     }

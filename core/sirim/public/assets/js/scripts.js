@@ -811,7 +811,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'affidavit.month.name' },
+            { data: 'liquidation.object_payment' },
             { data: 'amount' },
             {
                 data: "id",

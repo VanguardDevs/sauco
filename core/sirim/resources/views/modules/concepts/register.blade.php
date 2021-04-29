@@ -51,14 +51,14 @@
                         <div class="form-group col-md-4">
                             <label class="control-label"> Listado  <span class="text-danger">*</span></label>
 
-                            {!! Form::select('list_id', $listings,
+                            {!! Form::select('liquidation_type_id', $listings,
                                 (isset($row->listing) ? ($row->listing->id) : null), [
                                 'class' => 'form-control select2',
                                 'placeholder' => ' SELECCIONE ',
                                 'required'
                             ]) !!}
 
-                            @error('list_id')
+                            @error('liquidation_type_id')
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
