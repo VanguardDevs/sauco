@@ -6,10 +6,11 @@
     "taxpayers": "node ./scripts/taxpayers.js",
     "fineaffidavit": "node ./scripts/insertAffidavitFines.js",
     "liquidations": "node ./scripts/updateLiquidations.js",
+    "cancellations": "node ./scripts/cancellations.js",
     "deductions": "node ./scripts/deductions.js",
     "movements": "node ./scripts/createMovements.js",
     "remove": "node ./scripts/remove.js",
-    "m170421": "npm run fineaffidavit && npm run liquidations && npm run deductions && npm run movements"
+    "m170421": "npm run fineaffidavit && npm run liquidations && npm run deductions && npm run movements && npm run cancellations"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",

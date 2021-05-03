@@ -34,7 +34,7 @@ async function main() {
 
   try {
     /**
-     * Rename tables
+     * Create tables
     */
     await db.schema.createTable('movements', (table) => {
       table.increments();
@@ -72,7 +72,6 @@ async function main() {
       ) AS subquery
       WHERE movements.liquidation_id = subquery.id;
     `);
-
 
     /**
      * Remove columns and tables
