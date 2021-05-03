@@ -8,20 +8,23 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\PrettyAmount;
+use App\Traits\NewValue;
 use App\Traits\PrettyTimestamps;
 use App\Traits\MakeLiquidation;
+use App\Traits\PaymentUtils;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 
 class Fine extends Model implements Auditable
 {
-    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, MakeLiquidation;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, NewValue, MakeLiquidation, PaymentUtils;
 
     protected $table = 'fines';
 
     protected $appends = [ 'pretty_amount' ];
 
     protected $fillable = [
+        'num',
         'concept_id',
         'active',
         'taxpayer_id',

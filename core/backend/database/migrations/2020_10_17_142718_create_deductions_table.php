@@ -15,6 +15,7 @@ class CreateDeductionsTable extends Migration
     {
         Schema::create('deductions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('num', 8);
             $table->decimal('amount', 15, 2);
             $table->unsignedBigInteger('liquidation_id');
             $table->unsignedBigInteger('user_id');

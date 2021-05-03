@@ -15,8 +15,8 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->string('num');
-            $table->int('total');
+            $table->string('num', 8);
+            $table->integer('total');
             $table->float('amount');
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('concept_id');
