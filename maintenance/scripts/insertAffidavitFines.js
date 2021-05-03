@@ -34,19 +34,6 @@ async function main() {
   const db = knex(require("../knexfile"));
 
   try {
-    /**
-     * Rename tables
-    */
-    await db.schema.createTable('affidavit_fine', (table) => {
-      table.increments();
-      table.integer('affidavit_id').unsigned();
-      table.integer('fine_id').unsigned();
-      table.foreign('fine_id').references('fines.id');
-      table.foreign('affidavit_id').references('affidavits.id');
-      table.timestamps();
-      table.timestamp('deleted_at').nullable();
-    });
-
     await db.schema.raw(insertRowsQuery);
   } finally {
     await db.destroy();
