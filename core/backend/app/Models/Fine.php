@@ -31,9 +31,9 @@ class Fine extends Model implements Auditable
 
     protected $casts = [ 'amount' => 'float' ];
 
-    public function getNull()
+    public function cancellations()
     {
-        return $this->hasOne(NullFine::class);
+        return $this->morphMany(Cancellation::class, 'cancellable');
     }
 
     public static function applyFine($payment, $concept)

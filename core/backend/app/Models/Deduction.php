@@ -38,8 +38,8 @@ class Deduction extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
-    public function canceledDeduction()
+    public function cancellations()
     {
-      return $this->hasOne(CanceledDeduction::class);
+      return $this->morphMany(Cancellation::class, 'cancellable');
     }
 }

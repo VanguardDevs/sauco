@@ -81,8 +81,8 @@ class Application extends Model implements Auditable
             ->withTrashed();
     }
 
-    public function getNull()
+    public function cancellations()
     {
-        return $this->hasOne(NullApplication::class);
+        return $this->morphMany(Cancellation::class, 'cancellable');
     }
 }

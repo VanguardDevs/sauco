@@ -116,4 +116,9 @@ class Affidavit extends Model implements Auditable
     {
         return $this->belongsToMany(Fine::class);
     }
+
+    public function cancellations()
+    {
+        return $this->morphMany(Cancellation::class, 'cancellable');
+    }
 }
