@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\PrettyAmount;
+use App\Traits\NewValue;
 use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
 
 class Deduction extends Model implements Auditable
 {
-    use SoftDeletes, Audit, PrettyAmount, PrettyTimestamps;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, NewValue, MakeLiquidation;
 
     protected $table = 'deductions';
 
     protected $fillable = [
+        'num',
         'user_id',
         'liquidation_id',
         'amount'

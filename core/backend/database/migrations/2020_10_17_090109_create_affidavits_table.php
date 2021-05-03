@@ -15,6 +15,7 @@ class CreateAffidavitsTable extends Migration
     {
         Schema::create('affidavits', function (Blueprint $table) {
             $table->id();
+            $table->string('num', 8);
             $table->decimal('total_brute_amount', 25);
             $table->decimal('total_calc_amount', 20);
             $table->unsignedBigInteger('month_id');
