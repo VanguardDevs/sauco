@@ -53,6 +53,12 @@ async function main() {
       FROM null_affidavits
       `
     );
+
+    await db.schema.dropTable('null_affidavits');
+    await db.schema.dropTable('null_fines');
+    await db.schema.dropTable('null_applications');
+    await db.schema.dropTable('null_payments');
+    await db.schema.dropTable('canceled_deductions');
   } finally {
     await db.destroy();
   }

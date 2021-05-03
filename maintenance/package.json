@@ -8,9 +8,7 @@
     "liquidations": "node ./scripts/updateLiquidations.js",
     "cancellations": "node ./scripts/cancellations.js",
     "deductions": "node ./scripts/deductions.js",
-    "movements": "node ./scripts/createMovements.js",
-    "remove": "node ./scripts/remove.js",
-    "m170421": "npm run fineaffidavit && npm run liquidations && npm run deductions && npm run movements && npm run cancellations"
+    "movements": "node ./scripts/createMovements.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",
