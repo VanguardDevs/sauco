@@ -35,6 +35,10 @@ async function main() {
     });
 
     await db.schema.raw(insertManyDeductionLiquidationQuery);
+
+    await db.schema.table('applications', (table) => {
+      table.integer('total');
+    });
   } finally {
     await db.destroy();
   }

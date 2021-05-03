@@ -20,11 +20,13 @@ class Application extends Model implements Auditable
     protected $table = 'applications';
 
     protected $fillable = [
+        'num',
         'amount',
+        'total',
         'taxpayer_id',
         'concept_id',
-        'approved_at',
-        'active'
+        'user_id',
+        'approved_at'
     ];
 
     protected $casts = [ 'amount' => 'float' ];
@@ -68,11 +70,6 @@ class Application extends Model implements Auditable
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);
-    }
-
-    public function payment()
-    {
-        return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
     public function liquidation()
