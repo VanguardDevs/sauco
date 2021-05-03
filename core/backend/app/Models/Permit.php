@@ -4,16 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\PrettyTimestamps;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\PrettyAmount;
+use App\Traits\NewValue;
+use App\Traits\PrettyTimestamps;
+use App\Traits\MakeLiquidation;
 
 class Permit extends Model implements Auditable
 {
-    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, NewValue, MakeLiquidation;
 
     protected $table = 'permits';
+
+    protected $fillable = [
+        'num',
+        'amount',
+        'active',
+        'valid_until',
+        'concept_id',
+        'user_id',
+        'taxpayer_id'
+    ];
 
     protected $casts = [ 'amount' => 'float' ];
 
@@ -37,5 +49,10 @@ class Permit extends Model implements Auditable
     public function liquidation()
     {
         return $this->hasOne(Liquidation::class);
+    }
+
+    public function cancellations()
+    {
+        return $this->morphMany(Cancellation::class, 'cancellable');
     }
 }
