@@ -57,9 +57,9 @@ class Payment extends Model implements Auditable
         $this->updateAmount();
     }
 
-    public function canceledPayment()
+    public function cancellations()
     {
-        return $this->hasOne(CanceledPayment::class);
+        return $this->morphMany(Cancellation::class, 'cancellable');
     }
 
     public function status()
