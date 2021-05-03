@@ -17,6 +17,7 @@ class Cancellation extends Model
         'user_id',
         'cancellable_type',
         'cancellable_id',
+        'cancellation_type_id'
     ];
 
     public function taxpayer()
@@ -32,5 +33,10 @@ class Cancellation extends Model
     public function cancellable()
     {
         return $this->morphTo()->withTrashed();
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(CancellationType::class, 'cancellation_type_id');
     }
 }

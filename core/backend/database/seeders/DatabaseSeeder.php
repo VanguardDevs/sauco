@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ChargingMethodsSeeder::class);
         $this->call(IntervalsSeeder::class);
         $this->call(AccountingAccountsSeeder::class);
+        $this->call(CancellationTypesSeeder::class);
 
         // Testing
         if (App::environment() == 'local') {

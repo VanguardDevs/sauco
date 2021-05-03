@@ -4,26 +4,12 @@ async function main() {
   const db = knex(require("../knexfile"));
 
   try {
-    /**
-     * Create tables
-     */
-    await db.schema.createTable('cancellations', (table) => {
-      table.increments();
-      table.string('reason');
-      table.string('cancellable_type');
-      table.integer('cancellable_id').unsigned();
-      table.integer('user_id').unsigned();
-      table.timestamps();
-      table.timestamp('deleted_at').nullable();
-      table.foreign('user_id').references('users.id');
-    });
-
     await db.schema.raw(
       `
       INSERT INTO cancellations
-        (reason, cancellable_type, cancellable_id, user_id, created_at, updated_at)
+        (reason, cancellable_type, cancellable_id, user_id, cancellation_type_id, created_at, updated_at)
       SELECT 
-        reason, 'App\\Models\\Payment', payment_id, user_id, created_at, updated_at
+        reason, 'App\\Models\\Payment', payment_id, user_id, 4, created_at, updated_at
       FROM null_payments
       `
     );
@@ -31,9 +17,9 @@ async function main() {
     await db.schema.raw(
       `
       INSERT INTO cancellations
-        (reason, cancellable_type, cancellable_id, user_id, created_at, updated_at)
+        (reason, cancellable_type, cancellable_id, user_id, cancellation_type_id, created_at, updated_at)
       SELECT 
-        reason, 'App\\Models\\Application', application_id, user_id, created_at, updated_at
+        reason, 'App\\Models\\Application', application_id, user_id, 1, created_at, updated_at
       FROM null_applications
       `
     );
@@ -41,9 +27,9 @@ async function main() {
     await db.schema.raw(
       `
       INSERT INTO cancellations
-        (reason, cancellable_type, cancellable_id, user_id, created_at, updated_at)
+        (reason, cancellable_type, cancellable_id, user_id, cancellation_type_id, created_at, updated_at)
       SELECT 
-        reason, 'App\\Models\\Fine', fine_id, user_id, created_at, updated_at
+        reason, 'App\\Models\\Fine', fine_id, user_id, 2, created_at, updated_at
       FROM null_fines
       `
     );
@@ -51,9 +37,9 @@ async function main() {
     await db.schema.raw(
       `
       INSERT INTO cancellations
-        (reason, cancellable_type, cancellable_id, user_id, created_at, updated_at)
+        (reason, cancellable_type, cancellable_id, user_id, cancellation_type_id, created_at, updated_at)
       SELECT 
-        reason, 'App\\Models\\Deduction', deduction_id, user_id, created_at, updated_at
+        reason, 'App\\Models\\Deduction', deduction_id, user_id, 5, created_at, updated_at
       FROM canceled_deductions
       `
     );
@@ -61,9 +47,9 @@ async function main() {
     await db.schema.raw(
       `
       INSERT INTO cancellations
-        (reason, cancellable_type, cancellable_id, user_id, created_at, updated_at)
+        (reason, cancellable_type, cancellable_id, user_id, cancellation_type_id, created_at, updated_at)
       SELECT 
-        reason, 'App\\Models\\Affidavit', affidavit_id, user_id, created_at, updated_at
+        reason, 'App\\Models\\Affidavit', affidavit_id, user_id, 3, created_at, updated_at
       FROM null_affidavits
       `
     );
