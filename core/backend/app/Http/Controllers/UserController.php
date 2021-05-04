@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::latest()->with(['roles']);
+        $query = User::latest();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -46,18 +46,6 @@ class UserController extends Controller
         }
 
         return $query->paginate($results);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view("modules.users.register")
-            ->with('roles', Role::pluck('name', 'id'))
-            ->with('typeForm', 'create');
     }
 
     /**
@@ -127,20 +115,6 @@ class UserController extends Controller
 
         return Redirect::back()
             ->withSuccess('¡Contraseña actualizada!');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        return view("modules.users.register")
-            ->with('typeForm', 'update')
-            ->with('roles', Role::pluck('name', 'id'))
-            ->with('row', $user);
     }
 
     /**

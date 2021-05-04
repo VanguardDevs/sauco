@@ -12,9 +12,20 @@ class CancellationTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = CancellationType::withCount('cancellations');
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**

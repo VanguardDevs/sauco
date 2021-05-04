@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PaymentType;
+use App\Models\Cancellation;
 use Illuminate\Http\Request;
 
-class PaymentTypeController extends Controller
+class CancellationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,28 +14,19 @@ class PaymentTypeController extends Controller
      */
     public function index(Request $request)
     {
-        $query = PaymentType::withCount('payments');
+        $query = Cancellation::with(['type', 'user'])
+            ->orderBy('created_at', 'DESC');
         $results = $request->perPage;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
 
-            if (array_key_exists('description', $filters)) {
-                $query->whereLike('description', $filters['description']);
+            if (array_key_exists('cancellation_type_id', $filters)) {
+                $query->where('cancellation_type_id', '=', $filters['cancellation_type_id']);
             }
         }
 
         return $query->paginate($results);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -52,21 +43,10 @@ class PaymentTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\PaymentType  $paymentType
+     * @param  \App\Models\Cancellation  $cancellation
      * @return \Illuminate\Http\Response
      */
-    public function show(PaymentType $paymentType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\PaymentType  $paymentType
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PaymentType $paymentType)
+    public function show(Cancellation $cancellation)
     {
         //
     }
@@ -75,10 +55,10 @@ class PaymentTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PaymentType  $paymentType
+     * @param  \App\Models\Cancellation  $cancellation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PaymentType $paymentType)
+    public function update(Request $request, Cancellation $cancellation)
     {
         //
     }
@@ -86,10 +66,10 @@ class PaymentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\PaymentType  $paymentType
+     * @param  \App\Models\Cancellation  $cancellation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaymentType $paymentType)
+    public function destroy(Cancellation $cancellation)
     {
         //
     }
