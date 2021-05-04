@@ -48,4 +48,7 @@ use Illuminate\Http\Request;
     Route::apiResource('account-types', 'AccountTypeController');
     Route::apiResource('payments', 'PaymentController');
     Route::apiResource('movements', 'MovementController');
+    Route::apiResource('cancellations', 'CancellationController');
+    Route::apiResource('cancellation-types', 'CancellationTypeController')
+        ->only(['index']);
 // });

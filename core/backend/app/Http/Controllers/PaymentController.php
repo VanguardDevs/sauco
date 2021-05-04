@@ -60,6 +60,12 @@ class PaymentController extends Controller
                     return $query->whereLike('rif', $name);
                 });
             }
+            if (array_key_exists('payment_type_id', $filters)) {
+                $query->where('payment_type_id', '=', $filters['payment_type_id']);
+            }
+            if (array_key_exists('payment_method_id', $filters)) {
+                $query->where('payment_method_id', '=', $filters['payment_method_id']);
+            }
         }
 
         return $query->paginate($results);

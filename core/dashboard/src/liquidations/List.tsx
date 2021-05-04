@@ -4,12 +4,13 @@ import * as React from "react";
 import {
   Filter,
   TextInput,
-  DateField,
   List, 
   Datagrid,
   NumberField,
   TextField,
   SimpleList,
+  ReferenceArrayInput,
+  SelectInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
@@ -19,6 +20,9 @@ const StudentFilter: React.FC = props => (
     <TextInput label="Objeto de pago" source='object_payment' />
     <TextInput label="Contribuyente" source='taxpayer' />
     <TextInput label="Monto" source='amount' />
+    <ReferenceArrayInput source="liquidation_type_id" reference="liquidation-types" label="Tipo">
+      <SelectInput source="name" label="Tipo" allowEmpty={false} />
+    </ReferenceArrayInput> 
   </Filter>
 );
 
