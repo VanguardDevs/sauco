@@ -8,8 +8,12 @@ import {
   NumberField,
   TextField,
   SimpleList,
+  ReferenceArrayInput,
+  SelectInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
+
+const optionRenderer = (choice:any) => `${choice.description}`;
 
 const PaymentsFilter: React.FC = props => (
   <Filter {...props}>
@@ -19,6 +23,25 @@ const PaymentsFilter: React.FC = props => (
     <TextInput label="Monto" source='amount' />
     <DateInput source="gt_date" label='Procesado después de' />
     <DateInput source="lt_date" label='Procesado antes de' />
+    <ReferenceArrayInput
+      source="payment_type_id"
+      reference="payment-types"
+      label="Tipo de pago"
+    >
+      <SelectInput
+        source="description"
+        label="Tipo de pago"
+        optionText={optionRenderer}
+        allowEmpty={false}
+      />
+    </ReferenceArrayInput>
+    <ReferenceArrayInput
+      source="payment_method_id"
+      reference="payment-methods"
+      label="Método de pago"
+    >
+      <SelectInput source="description" label="Método de pago" allowEmpty={false} />
+    </ReferenceArrayInput>
   </Filter>
 );
 

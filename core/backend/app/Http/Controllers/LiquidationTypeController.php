@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LiquidationType;
 use Illuminate\Http\Request;
 
 class LiquidationTypeController extends Controller
@@ -11,9 +12,20 @@ class LiquidationTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = LiquidationType::withCount('liquidations');
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**

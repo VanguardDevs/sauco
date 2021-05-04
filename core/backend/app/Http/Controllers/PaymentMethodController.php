@@ -14,18 +14,18 @@ class PaymentMethodController extends Controller
      */
     public function index(Request $request)
     {
-        return view('modules.payment-methods.index');
-    }
+        $query = PaymentMethod::withCount('payments');
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.payment-methods.register')
-            ->with('typeForm', 'create');
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -51,19 +51,6 @@ class PaymentMethodController extends Controller
     public function show(PaymentMethod $paymentMethod)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PaymentMethod $paymentMethod)
-    {
-        return view('modules.payment-methods.register')
-            ->with('typeForm', 'edit')
-            ->with('row', $paymentMethod);
     }
     
     /**
