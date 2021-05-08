@@ -18,7 +18,6 @@ class Company extends Model
         'num_workers',
         'parish_id',
         'community_id',
-        'parish_id',
         'taxpayer_id'
     ];
 

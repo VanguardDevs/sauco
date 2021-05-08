@@ -12,19 +12,49 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = Property::latest()
+            ->with(['taxpayer']);
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('cadastre_num', $filters)) {
+                $query->whereLike('cadastre_num', $filters['cadastre_num']);
+            }
+            if (array_key_exists('bulletin', $filters)) {
+                $query->whereLike('bulletin', $filters['bulletin']);
+            }
+            if (array_key_exists('amount', $filters)) {
+                $query->whereAmount($filters['amount']);
+            }
+            if (array_key_exists('parish_id', $filters)) {
+                $id = $filters['parish_id'];
+
+                $query->where('parish_id', '=', $id);
+            }
+            if (array_key_exists('community_id', $filters)) {
+                $id = $filters['community_id'];
+
+                $query->where('community_id', '=', $id);
+            }
+            if (array_key_exists('street_id', $filters)) {
+                $id = $filters['street_id'];
+
+                $query->where('street_id', '=', $id);
+            }
+            if (array_key_exists('taxpayer_id', $filters)) {
+                $id = $filters['taxpayer_id'];
+
+                $query->whereHas('taxpayer', function ($q) use ($id) {
+                    $q->where('taxpayer_id', '=', $id);
+                });
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -35,7 +65,20 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $property = Property::create($request->all());
+        $taxpayer =  $request->get('taxpayer_id');
+        $ownership = $request->get('ownership_status_id');
+        $document = $request->get('document');
+
+        $property->taxpayers()->sync([
+            $taxpayer => [
+                'document' => $document,
+                'ownership_status_id' => $ownership
+                'user_id' => $request->user()->id
+            ]
+        ]);
+
+        return response()->json($property, 200);
     }
 
     /**
@@ -46,18 +89,15 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        //
-    }
+        $data = $property->load([
+            'taxpayers',
+            'uses',
+            'user',
+            'parish',
+            'community'
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Property  $property
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Property $property)
-    {
-        //
+        return response()->json($data, 200);
     }
 
     /**
@@ -69,7 +109,9 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
-        //
+        $property->update($request->all());
+
+        return response()->json($property, [200]);
     }
 
     /**

@@ -79,7 +79,41 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->input('method') != '3') {
+            $reference = $request->get('reference');
+
+            if (empty($reference)){
+                return redirect('payments/'.$payment->id)
+                        ->withError('¡Faltan datos!');
+            }
+
+            $payment->reference()->create([
+                'reference' => $reference,
+                'account_id' => 1,
+            ]);
+        }
+        $liquidations = $request->get('liquidations');
+
+        $paymentNum = Payment::getNewNum();
+        $processedAt = Carbon::now();
+
+        // Create payment and update liquidations/movmenets
+        $payment = Payment::create([
+            'user_id' => Auth::user()->id,
+            'payment_method_id' => $request->input('method'),
+            'status_id' => 2,
+            'observations' => $request->input('observations'),
+            'num' => $paymentNum,
+            'amount' => $request->get('amount'),
+            'processed_at' => $processedAt
+        ]);
+        $payment->liquidations()->sync($liquidations);
+        $payment->liquidations()->update([
+            'status_id' => 2
+        ]);
+        $payment->createMovements();
+
+        return response()->json($payment, 200);
     }
 
     /**
@@ -101,61 +135,17 @@ class PaymentController extends Controller
         return response()->json($payment);
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Payment $payment)
-    {
-        if ($request->input('method') != '3') {
-            $reference = $request->input('reference');
-
-            if (empty($reference)){
-                return redirect('payments/'.$payment->id)
-                        ->withError('¡Faltan datos!');
-            }
-
-            $payment->reference()->create([
-                'reference' => $reference,
-                'account_id' => 1,
-            ]);
-        }
-
-        $paymentNum = Payment::getNewNum();
-        $processedAt = Carbon::now();
-
-        $payment->update([
-            'user_id' => Auth::user()->id,
-            'payment_method_id' => $request->input('method'),
-            'status_id' => 2,
-            'observations' => $request->input('observations'),
-            'num' => $paymentNum,
-            'processed_at' => $processedAt
-        ]);
-
-        return redirect()->back()
-            ->withSuccess('¡Factura procesada!');
-    }
-
     public function download(Payment $payment)
     {
-        if ($payment->status->id == 2) {
-            $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
-            $taxpayer = $payment->taxpayer;
+        $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
+        $taxpayer = $payment->taxpayer;
 
-            $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
-            $vars = ['payment', 'reference', 'denomination'];
+        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
+        $vars = ['payment', 'reference', 'denomination'];
 
-            return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('pdf.payment', compact($vars))
-                ->stream('factura-'.$payment->id.'.pdf');
-        }
-
-        return response()->json([
-            'message' => '¡La factura no ha sido procesada!'
-        ], 400);
+        return PDF::setOptions(['isRemoteEnabled' => true])
+            ->loadView('pdf.payment', compact($vars))
+            ->stream('factura-'.$payment->id.'.pdf');
    }
 
     /**
