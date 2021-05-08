@@ -37,4 +37,9 @@ class Property extends Model
     {
         return $this->belongsTo(Street::class);
     }
+
+    public function taxpayers()
+    {
+        return $this->belongsToMany(Taxpayer::class, 'taxpayer_property');
+    }
 }

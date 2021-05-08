@@ -30,28 +30,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Vehicle::class);
     }
 
-    public static function existsRif($rif)
-    {
-        return self::whereRif($rif)->first();
-    }
-
-    public function president()
-    {
-        return $this->representations->filter(function ($item, $key) {
-            if ($item->representationType->name == 'PRESIDENTE') {
-                return $item;
-            }
-        });
-    }
-
     public function liquidations()
     {
         return $this->hasMany(Liquidation::class);
-    }
-
-    public function representations()
-    {
-        return $this->hasMany(Representation::class);
     }
 
     public function commercialRegister()
@@ -62,11 +43,6 @@ class Taxpayer extends Model implements Auditable
     public function taxpayerType()
     {
         return $this->belongsTo(TaxpayerType::class);
-    }
-
-    public function economicActivities()
-    {
-        return $this->belongsToMany(EconomicActivity::class);
     }
 
     public function licenses()
@@ -127,5 +103,10 @@ class Taxpayer extends Model implements Auditable
     public function movements()
     {
     	return $this->hasMany(Movement::class);
+    }
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class, 'taxpayer_property');
     }
 }

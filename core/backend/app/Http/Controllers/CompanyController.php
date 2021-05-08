@@ -14,21 +14,36 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            return Company::with(['taxpayer:id,taxpayer_type_id,rif'])->get();
+        $query = Company::latest();
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('capital', $filters)) {
+                $query->whereLike('capital', $filters['capital']);
+            }
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+            if (array_key_exists('phone', $filters)) {
+                $query->whereLike('phone', $filters['phone']);
+            }
+            if (array_key_exists('email', $filters)) {
+                $query->whereLike('email', $filters['email']);
+            }
+            if (array_key_exists('address', $filters)) {
+                $query->whereLike('address', $filters['address']);
+            }
+            if (array_key_exists('num_workers', $filters)) {
+                $query->whereLike('num_workers', $filters['num_workers']);
+            }
+            if (array_key_exists('taxpayer_id', $filters)) {
+                $query->where('taxpayer_id', '=', $filters['taxpayer_id']);
+            }
         }
 
-        return view('modules.companies.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $query->paginate($results);
     }
 
     /**
@@ -50,18 +65,9 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
-    }
+        $data = $company->load('taxpayer');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Company $company)
-    {
-        //
+        return response()->json($data, 200);
     }
 
     /**
@@ -73,7 +79,9 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+        $company->update($request->all());
+
+        return response()->json($company, 200);
     }
 
     /**

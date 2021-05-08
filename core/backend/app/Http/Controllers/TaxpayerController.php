@@ -30,8 +30,17 @@ class TaxpayerController extends Controller
         if ($request->has('filter')) {
             $filters = $request->filter;
 
+            if (array_key_exists('rif', $filters)) {
+                $query->whereLike('rif', $filters['rif']);
+            }
             if (array_key_exists('name', $filters)) {
                 $query->whereLike('name', $filters['name']);
+            }
+            if (array_key_exists('phone', $filters)) {
+                $query->whereLike('phone', $filters['phone']);
+            }
+            if (array_key_exists('email', $filters)) {
+                $query->whereLike('email', $filters['email']);
             }
             if (array_key_exists('address', $filters)) {
                 $query->whereLike('address', $filters['address']);
@@ -39,49 +48,16 @@ class TaxpayerController extends Controller
             if (array_key_exists('type', $filters)) {
                 $name = $filters['type'];
 
-                $query->whereHas('taxpayerType', function ($q) use ($name) {
-                    return $query->whereLike('description', $name);
-                });
+                $query->where('taxpayer_type_id', '=', $name);
             }
             if (array_key_exists('classification', $filters)) {
                 $name = $filters['classification'];
 
-                $query->whereHas('taxpayerClassification', function ($q) use ($name) {
-                    return $query->whereLike('name', $name);
-                });
+                $query->where('classification_type_id', '=', $name);
             }
         }
 
         return $query->paginate($results);
-    }
-
-    public function getRepresentations(Taxpayer $taxpayer)
-    {
-        $query = $taxpayer->representations()->with(['representationType', 'person']);
-
-        return response()->json($query->get());
-    }
-
-    public function economicActivities(Taxpayer $taxpayer)
-    {
-        $query = $taxpayer->economicActivities;
-
-        return $query;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.taxpayers.register')
-            ->with('types', TaxpayerType::pluck('description', 'id'))
-            ->with('classifications', TaxpayerClassification::pluck('name', 'id'))
-            ->with('states', State::pluck('name', 'id'))
-            ->with('communities', Community::pluck('name', 'id'))
-            ->with('typeForm', 'create');
     }
 
     /**
@@ -106,47 +82,23 @@ class TaxpayerController extends Controller
             ->withSuccess('¡Contribuyente registrado!');
     }
 
-    public function downloadDeclarations(Taxpayer $taxpayer)
-    {
-        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
-        $settlements = $taxpayer->settlements;
-
-        $pdf = PDF::LoadView('modules.taxpayers.pdf.declarations', compact(['taxpayer', 'denomination', 'settlements']));
-        return $pdf->stream('Contribuyente '.$taxpayer->rif.'.pdf');
-    }
-
     /**
      * Display the specified resource.
      *
      * @param  \App\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Taxpayer $taxpayer)
+    public function show(Taxpayer $taxpayer)
     {
-        if ($request->wantsJson()) {
-            $query = $taxpayer->load('companies');
+        $data = $taxpayer->load([
+            'properties',
+            'vehicles',
+            'taxpayerType',
+            'taxpayerClassification',
+            'companies'
+        ]);
 
-            return $response->json($query);
-        }
-
-        return view('modules.taxpayers.show')
-            ->with('row', $taxpayer);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Taxpayer  $taxpayer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Taxpayer $taxpayer)
-    {
-        return view('modules.taxpayers.register')
-            ->with('classifications', TaxpayerClassification::pluck('name', 'id'))
-            ->with('types', TaxpayerType::pluck('description', 'id'))
-            ->with('communities', Community::pluck('name', 'id'))
-            ->with('typeForm', 'edit')
-            ->with('row', $taxpayer);
+        return response()->json($data, 200);
     }
 
     /**
@@ -160,18 +112,7 @@ class TaxpayerController extends Controller
     {
         $taxpayer->update($request->input());
 
-        if ($request->has('personal_firm')) {
-            if (!$taxpayer->commercialDenomination()->exists()) {
-                $taxpayer->commercialDenomination()->create([
-                    'name' => $request->get('personal_firm')
-                ]);
-            }
-            $taxpayer->commercialDenomination->name = $request->get('personal_firm');
-            $taxpayer->push();
-        }
-
-        return redirect('taxpayers/'.$taxpayer->id)
-            ->withSuccess('¡Info. general del contribuyente actualizada!');
+        return response()->json($taxpayer, 200);
     }
 
     /**
