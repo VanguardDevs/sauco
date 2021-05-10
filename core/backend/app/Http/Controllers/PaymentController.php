@@ -79,16 +79,9 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->input('method') != '3') {
-            $reference = $request->get('reference');
-
-            if (empty($reference)){
-                return redirect('payments/'.$payment->id)
-                        ->withError('¡Faltan datos!');
-            }
-
-            $payment->reference()->create([
-                'reference' => $reference,
+        foreach($request->get('references') as $ref) {
+            $payment->references()->create([
+                'reference' => $ref,
                 'account_id' => 1,
             ]);
         }

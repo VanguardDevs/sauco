@@ -7,6 +7,7 @@ use App\Models\Taxpayer;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\MakeWithholdingRequest;
 use App\Models\Liquidation;
+use App\Http\Requests\AnnullmentRequest;
 use Auth;
 
 class LiquidationController extends Controller
@@ -95,8 +96,17 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(AnullmentRequest $request, Liquidation $liquidation)
     {
-        //
+        $liquidation->delete();
+
+        $liquidation->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
+            'user_id' => Auth::user()->id,
+            'cancellation_type_id' => 6
+        ]);
+
+        return redirect()->back()
+            ->withSuccess('¡Liquidación anulada!');
     }
 }

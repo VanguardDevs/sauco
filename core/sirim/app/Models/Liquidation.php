@@ -62,9 +62,9 @@ class Liquidation extends Model implements Auditable
         return $this->belongsTo(LiquidationType::class);
     }
 
-    public function canceledLiquidation()
+    public function cancellations()
     {
-        return $this->hasOne(CanceledLiquidation::class);
+        return $this->morphMany(Cancellation::class, 'cancellable');
     }
 
     public function liquidable()

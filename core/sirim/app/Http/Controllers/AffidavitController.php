@@ -298,14 +298,15 @@ class AffidavitController extends Controller
             ]);
         }
 
-        $affidavit->nullAffidavit()->create([
+        $affidavit->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
+            'cancellation_type_id' => 3
         ]);
 
         $affidavit->delete();
 
         return redirect()->back()
-            ->with('success', '¡Liquidación anulada!');
+            ->with('success', '¡Declaración anulada!');
     }
 }

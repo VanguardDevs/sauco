@@ -107,9 +107,10 @@ class ApplicationController extends Controller
         }
         $application->delete();
 
-        $application->nullFine()->create([
+        $application->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
+            'cancellation_type_id' => 1
         ]);
 
         return redirect()->back()
