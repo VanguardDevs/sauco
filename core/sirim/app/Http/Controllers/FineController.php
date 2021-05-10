@@ -150,9 +150,10 @@ class FineController extends Controller
         $fine->settlement->delete();
         $fine->delete();
 
-        $fine->nullFine()->create([
+        $fine->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
+            'cancellation_type_id' => 2
         ]);
 
         $payment = $fine->payment();

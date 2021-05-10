@@ -12,7 +12,8 @@ class CancellationTypesSeeder extends Seeder
         'Sanciones y Recargas',
         'Declaración Jurada de Ingresos',
         'Pagos',
-        'Deducciones y Retenciones'
+        'Deducciones y Retenciones',
+        'Liquidaciones'
     );
 
     /**

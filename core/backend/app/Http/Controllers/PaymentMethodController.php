@@ -52,7 +52,7 @@ class PaymentMethodController extends Controller
     {
         //
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -62,11 +62,9 @@ class PaymentMethodController extends Controller
      */
     public function update(Request $request, PaymentMethod $paymentMethod)
     {
-        $edit = PaymentMethod::find($paymentMethod->id);
-        $edit->update($request->all());
+        $paymentMethod->update($request->all());
 
-        return redirect('settings/payment-methods')
-            ->withSuccess('¡Método de pago actualizado!');
+        return response()->json($paymentMethod, 200);
     }
 
     /**
@@ -77,6 +75,8 @@ class PaymentMethodController extends Controller
      */
     public function destroy(PaymentMethod $paymentMethod)
     {
-        //
+        $paymentMethod->delete();
+
+        return response()->json($paymentMethod, 200);
     }
 }

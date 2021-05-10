@@ -15,7 +15,7 @@ use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use DataTables;
 
-class WithholdingController extends Controller
+class DeductionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -50,10 +50,10 @@ class WithholdingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Withholding  $withholding
+     * @param  \App\Models\Deduction  $withholding
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Withholding $withholding)
+    public function destroy(AnnullmentRequest $request, Deduction $withholding)
     {
         $payment = $withholding->payment()->first();
 
@@ -65,9 +65,10 @@ class WithholdingController extends Controller
         }
         $withholding->delete();
 
-        $withholding->nullWithholding()->create([
+        $withholding->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
+            'cancellation_type_id' => 5
         ]);
 
         return redirect()->back()

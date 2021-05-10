@@ -7,27 +7,35 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
+use App\Traits\PrettyAmount;
+use App\Traits\NewValue;
 use App\Traits\PrettyTimestamps;
 use App\Traits\MakeLiquidation;
-use App\Traits\PrettyAmount;
 use App\Traits\PaymentUtils;
 use App\Models\Concept;
 
 class Affidavit extends Model implements Auditable
 {
-    use Audit, SoftDeletes, PrettyAmount, PrettyTimestamps, PaymentUtils, MakeLiquidation;
+    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, NewValue, MakeLiquidation, PaymentUtils;
 
     protected $table = 'affidavits';
 
-    protected $guarded = [];
-
-    protected $casts = [
-        'amount' => 'float'
+    protected $fillable = [
+        'total_calc_amount',
+        'total_brute_amount',
+        'taxpayer_id',
+        'user_id',
+        'month_id'
     ];
+
+    protected $casts = [ 'amount' => 'float' ];
 
     protected $with = [ 'month' ];
 
-    protected $appends = ['total_amount', 'brute_amount_affidavit'];
+    protected $appends = [
+        'pretty_amount',
+        'brute_amount_affidavit'
+    ];
 
     public static function processedByDate($firstDate, $lastDate)
     {
@@ -39,49 +47,20 @@ class Affidavit extends Model implements Auditable
 
     public function shouldHaveFine()
     {
-        $period = Carbon::parse($this->month->start_period_at);
-        $lastMonth = new Carbon('first day of last month');
-        $passedDays = $period->diffInDays($lastMonth);
-        $today = Carbon::now();
+        $startPeriod = Carbon::parse($this->month->start_period_at);
+        $todayDate = Carbon::now();
+        $passedDays = $startPeriod->diffInDays($todayDate);
 
-        if ($passedDays >= 28) {
-            return 2;
-        }
-        if ($today->day >= 16) {
-            return 1;
+        if ($passedDays > 60) {
+            return [
+                Concept::whereCode(3)->first(),
+                Concept::whereCode(3)->first(),
+            ];
+        } else if ($passedDays > 45) {
+            return [Concept::whereCode(3)->first()];
         }
 
         return false;
-    }
-
-    public function nullAffidavit()
-    {
-        return $this->hasOne(NullAffidavit::class);
-    }
-
-    public function month()
-    {
-        return $this->belongsTo(Month::class);
-    }
-
-    public function taxpayer()
-    {
-        return $this->belongsTo(Taxpayer::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function economicActivityAffidavits()
-    {
-        return $this->hasMany(EconomicActivityAffidavit::class);
-    }
-
-    public function liquidation()
-    {
-        return $this->morphOne(Liquidation::class, 'liquidable');
     }
 
     public function scopeLastAffidavit($query)
@@ -109,13 +88,39 @@ class Affidavit extends Model implements Auditable
         return number_format($totalAffidavit, 2, ',', '.');
     }
 
-    public function getTotalAmountAttribute($value)
+    public function cancellations()
     {
-        return number_format($this->amount, 2, ',', '.');
+        return $this->morphMany(Cancellation::class, 'cancellable');
     }
 
     public function fines()
     {
         return $this->belongsToMany(Fine::class, 'affidavit_fine');
+    }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function economicActivityAffidavits()
+    {
+        return $this->hasMany(EconomicActivityAffidavit::class);
+    }
+
+    public function liquidation()
+    {
+        return $this->morphOne(Liquidation::class, 'liquidable')
+            ->withTrashed();
     }
 }

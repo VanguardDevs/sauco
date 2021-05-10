@@ -10,19 +10,18 @@ use Carbon\Carbon;
 use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
+use App\Traits\CheckDelinquencyStatus;
 use App\Fine;
 
 class Payment extends Model implements Auditable
 {
-    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps;
+    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps, CheckDelinquencyStatus;
 
     protected $table = 'payments';
 
     protected $guarded = [];
 
     protected $casts = [ 'amount' => 'float' ];
-
-    protected $appends = [ 'pretty_amount' ];
 
     public function createMovements()
     {
@@ -38,23 +37,11 @@ class Payment extends Model implements Auditable
         }
     }
 
-    public function checkForFine()
+    public function updateAmount()
     {
-        $totalFines = $this->affidavit()->first()->shouldHaveFine();
-        $totalLiquidations = $this->liquidations()->count();
+        $amount = $this->liquidations->sum('amount');
 
-        if ($totalFines && $totalLiquidations < 3) {
-            $concept = $totalFines[0];
-            if (count($totalFines) == 2 && $totalLiquidations < 2) {
-                // Apply two fines
-                Fine::applyFine($this, $concept);
-            }
-            if (count($totalFines) == 1 || count($totalFines) == 2) {
-                // Apply one fine
-                Fine::applyFine($this, $concept);
-            }
-        }
-        $this->updateAmount();
+        return $this->update([ 'amount' => $amount ]);
     }
 
     public function cancellations()
@@ -94,18 +81,17 @@ class Payment extends Model implements Auditable
 
     public function affidavit()
     {
-        $liquidation = $this->liquidations()->first();
-
-        return $liquidation->affidavit();
-    }
-
-    public function liquidations()
-    {
-        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
+        return $this->liquidations()
+            ->whereLiquidationTypeId(3);
     }
 
     public function fines()
     {
         return $this->belongsToMany(Fine::class, Liquidation::class);
+    }
+
+    public function movements()
+    {
+        return $this->hasMany(Movement::class);
     }
 }
