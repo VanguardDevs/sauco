@@ -29,16 +29,6 @@ class PaymentTypeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -56,17 +46,6 @@ class PaymentTypeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(PaymentType $paymentType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\PaymentType  $paymentType
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PaymentType $paymentType)
     {
         //
     }
@@ -91,6 +70,8 @@ class PaymentTypeController extends Controller
      */
     public function destroy(PaymentType $paymentType)
     {
-        //
+        $paymentType->delete();
+
+        return response()->json($paymentType, 200);
     }
 }

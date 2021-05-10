@@ -34,11 +34,6 @@ class Fine extends Model implements Auditable
 
     protected $casts = [ 'amount' => 'float' ];
 
-    public function cancellations()
-    {
-        return $this->morphMany(Cancellation::class, 'cancellable');
-    }
-
     public static function applyFine($payment, $concept)
     {
         $amount = $payment->liquidations()->first()->amount;
@@ -83,14 +78,19 @@ class Fine extends Model implements Auditable
         return $this->belongsToMany(Payment::class, Liquidation::class);
     }
 
-    public function affidavit()
-    {
-        return $this->belongsToMany(Affidavit::class);
-    }
-
     public function liquidation()
     {
         return $this->morphOne(Liquidation::class, 'liquidable')
             ->withTrashed();
+    }
+
+    public function cancellations()
+    {
+        return $this->morphMany(Cancellation::class, 'cancellable');
+    }
+
+    public function affidavit()
+    {
+        return $this->belongsToMany(Affidavit::class, 'affidavit_fine');
     }
 }

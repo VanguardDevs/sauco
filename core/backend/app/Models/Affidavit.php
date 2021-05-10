@@ -63,31 +63,6 @@ class Affidavit extends Model implements Auditable
         return false;
     }
 
-    public function month()
-    {
-        return $this->belongsTo(Month::class);
-    }
-
-    public function taxpayer()
-    {
-        return $this->belongsTo(Taxpayer::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function economicActivityAffidavits()
-    {
-        return $this->hasMany(EconomicActivityAffidavit::class);
-    }
-    public function liquidation()
-    {
-        return $this->morphOne(Liquidation::class, 'liquidable')
-            ->withTrashed();
-    }
-
     public function scopeLastAffidavit($query)
     {
         return $query->latest()->first();
@@ -113,13 +88,39 @@ class Affidavit extends Model implements Auditable
         return number_format($totalAffidavit, 2, ',', '.');
     }
 
-    public function fines()
-    {
-        return $this->belongsToMany(Fine::class);
-    }
-
     public function cancellations()
     {
         return $this->morphMany(Cancellation::class, 'cancellable');
+    }
+
+    public function fines()
+    {
+        return $this->belongsToMany(Fine::class, 'affidavit_fine');
+    }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
+    }
+
+    public function taxpayer()
+    {
+        return $this->belongsTo(Taxpayer::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function economicActivityAffidavits()
+    {
+        return $this->hasMany(EconomicActivityAffidavit::class);
+    }
+
+    public function liquidation()
+    {
+        return $this->morphOne(Liquidation::class, 'liquidable')
+            ->withTrashed();
     }
 }

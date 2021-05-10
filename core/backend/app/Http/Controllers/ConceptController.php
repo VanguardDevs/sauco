@@ -63,23 +63,6 @@ class ConceptController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Concept  $Concept
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Concept $concept)
-    {
-        return view('modules.concepts.register')
-            ->with('typeForm', 'edit')
-            ->with('ordinances', Ordinance::pluck('description', 'id'))
-            ->with('chargingMethods', ChargingMethod::pluck('name', 'id'))
-            ->with('types', LiquidationType::pluck('name', 'id'))
-            ->with('accounts', AccountingAccount::pluck('name', 'id'))
-            ->with('row', $concept);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

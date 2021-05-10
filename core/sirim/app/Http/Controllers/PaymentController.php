@@ -195,9 +195,10 @@ class PaymentController extends Controller
         }
         $payment->delete();
 
-        $payment->nullPayment()->create([
+        $payment->cancellations()->create([
             'reason' => $request->get('annullment_reason'),
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'cancellation_type_id' => 4
         ]);
 
         return redirect()->back()

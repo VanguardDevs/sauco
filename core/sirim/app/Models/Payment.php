@@ -44,14 +44,14 @@ class Payment extends Model implements Auditable
         return $this->update([ 'amount' => $amount ]);
     }
 
-    public function nullPayment()
+    public function cancellations()
     {
-        return $this->hasOne(NullPayment::class);
+        return $this->morphMany(Cancellation::class, 'cancellable');
     }
 
     public function status()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
     public function paymentType()
@@ -64,14 +64,9 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function reference()
+    public function references()
     {
-        return $this->hasOne(Reference::class);
-    }
-
-    public function liquidations()
-    {
-        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
+        return $this->hasMany(Reference::class);
     }
 
     public function taxpayer()
