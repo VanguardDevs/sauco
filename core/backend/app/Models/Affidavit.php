@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use Carbon\Carbon;
-use App\Traits\PrettyAmount;
 use App\Traits\NewValue;
 use App\Traits\PrettyTimestamps;
 use App\Traits\MakeLiquidation;
@@ -16,7 +15,7 @@ use App\Models\Concept;
 
 class Affidavit extends Model implements Auditable
 {
-    use SoftDeletes, PrettyAmount, Audit, PrettyTimestamps, NewValue, MakeLiquidation, PaymentUtils;
+    use SoftDeletes, Audit, PrettyTimestamps, NewValue, MakeLiquidation, PaymentUtils;
 
     protected $table = 'affidavits';
 
@@ -29,14 +28,7 @@ class Affidavit extends Model implements Auditable
         'month_id'
     ];
 
-    protected $casts = [ 'amount' => 'float' ];
-
     protected $with = [ 'month' ];
-
-    protected $appends = [
-        'pretty_amount',
-        'brute_amount_affidavit'
-    ];
 
     public static function processedByDate($firstDate, $lastDate)
     {
