@@ -107,7 +107,7 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        if ($payment->status->id == 1) {
+        if ($payment->status_id == 1) {
             if (auth()->user()->can('process.payments')) {
                 $this->typeform = 'edit';
             }

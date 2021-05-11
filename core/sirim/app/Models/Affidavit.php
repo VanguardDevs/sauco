@@ -25,7 +25,8 @@ class Affidavit extends Model implements Auditable
         'total_brute_amount',
         'taxpayer_id',
         'user_id',
-        'month_id'
+        'month_id',
+        'processed_at'
     ];
 
     protected $casts = [ 'amount' => 'float' ];
@@ -81,11 +82,9 @@ class Affidavit extends Model implements Auditable
             ->whereMonthId($month->id);
     }
 
-    public function getBruteAmountAffidavitAttribute($value)
+    public function getTotalBruteAmountAffidavitAttribute($value)
     {
-        $totalAffidavit = $this->economicActivityAffidavits->sum('brute_amount');
-
-        return number_format($totalAffidavit, 2, ',', '.');
+        return number_format('total_brute_amount', 2, ',', '.');
     }
 
     public function cancellations()

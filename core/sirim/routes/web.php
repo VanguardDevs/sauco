@@ -262,10 +262,10 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::resource('affidavits', 'AffidavitController');
 
+    Route::resource('liquidations', 'LiquidationController')
+        ->except(['index', 'show']);
     Route::get('taxpayer/{taxpayer}/liquidations', 'LiquidationController@index')
         ->name('liquidations.index');
-    Route::put('liquidations/{liquidation}', 'LiquidationController@update')
-        ->name('liquidations.update');
     Route::get('liquidations/{liquidation}/show', 'LiquidationController@show')
         ->name('liquidations.show');
 });

@@ -99,19 +99,21 @@ class ApplicationController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Application $application)
     {
-        $payment = $application->payment()->first();
 
-        if ($application->settlement) {
-            $application->settlement->delete();
-            $payment->updateAmount();
+        if ($application->liquidation()->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡La solicitud tiene una liquidación asociada!'
+            ]);
         }
-        $application->delete();
 
         $application->cancellations()->create([
             'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id,
             'cancellation_type_id' => 1
         ]);
+
+        $application->delete();
 
         return redirect()->back()
             ->with('success', '¡Solicitud anulada!');
