@@ -192,6 +192,7 @@ class PaymentController extends Controller
     {
         if ($payment->status_id == 2) {
             $payment->movements()->delete();
+            $payment->liquidations()->update(['status_id' => 1]);
         }
         $payment->delete();
 
