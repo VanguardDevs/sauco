@@ -94,6 +94,9 @@
                     Ir a la declaración
                 </a>
                 @endif
+                <a href="{{ route('payments.show', $row->payment()->first()) }}"}} class='btn btn-info' title='Ir al pago'>
+                    <i class="fas fa-money-check"></i> Ver factura
+                </a>
             </div>
         {!! Form::close() !!}
     </div>

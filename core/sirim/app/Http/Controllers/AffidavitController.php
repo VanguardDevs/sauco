@@ -237,8 +237,13 @@ class AffidavitController extends Controller
 
         $processedAt = Carbon::now();
 
+        $totalBruteAmount = $affidavit
+            ->economicActivityAffidavits()
+            ->sum('brute_amount');
+
         $affidavit->update([
-            'amount' => $totalAmount,
+            'total_brute_amount' => $totalBruteAmount,
+            'total_calc_amount' => $totalAmount,
             'user_id' => auth()->user()->id,
             'processed_at' => $processedAt,
         ]);
@@ -291,7 +296,7 @@ class AffidavitController extends Controller
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)
     {
-        if ($affidavit->payment()->first()) {
+        if ($affidavit->liquidation()->exists()) {
             return response()->json([
                 'success' => false,
                 'message' => '¡La declaración tiene una liquidación asociada!'
