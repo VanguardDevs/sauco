@@ -27,148 +27,53 @@ class AffidavitController extends Controller
     {
         $this->economicActivityAffidavit = $economicActivityAffidavit;
         $this->middleware('can:null.settlements')->only('destroy');
-        $this->middleware('auth');
     }
 
     public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            $query = Affidavit::whereNotNull('processed_at')
-                ->with('taxpayer', 'user', 'month.year')
-                ->orderBy('processed_at', 'DESC');
+        $query = Affidavit::with(['taxpayer'])->where('total_calc_amount', '!=', 0);
+        $results = $request->perPage;
 
-            return DataTables::of($query)
-                ->make(true);
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
+            if (array_key_exists('total_brute_amount', $filters)) {
+                $query->where('total_brute_amount', '=', $filters['total_brute_amount']);
+            }
+            if (array_key_exists('total_calc_amount', $filters)) {
+                $query->whereLike('total_calc_amount', $filters['total_calc_amount']);
+            }
+            if (array_key_exists('taxpayer', $filters)) {
+                $name = $filters['taxpayer'];
+
+                $query->whereHas('taxpayer', function ($query) use ($name) {
+                    return $query->whereLike('name', $name);
+                });
+            }
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('createded_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('createded_at', '<', $filters['lt_date']);
+            }
+            if (array_key_exists('rif', $filters)) {
+                $name = $filters['rif'];
+
+                $query->whereHas('taxpayer', function ($query) use ($name) {
+                    return $query->whereLike('rif', $name);
+                });
+            }
         }
 
-        return view('modules.reports.affidavits.index');
-    }
-
-    public function byTaxpayer(Request $request, Taxpayer $taxpayer)
-    {
-        if ($request->wantsJson()) {
-            $query = $taxpayer->affidavits()
-                ->orderBy('id', 'DESC')
-                ->get();
-
-            return DataTables::of($query)->toJson();
-        }
-        $years = Year::pluck('year', 'id');
-
-        return view('modules.taxpayers.affidavits.index')
-            ->with('years', $years)
-            ->with('taxpayer', $taxpayer);
+        return $query->paginate($results);
     }
 
     public function show(Request $request, Affidavit $affidavit)
     {
-        if ($request->wantsJson()) {
-            $fines = $affidavit->shouldHaveFine();
-            $fineData = ($fines)
-                ? [
-                    'apply' => true,
-                    'concepts' => $fines 
-                ]
-                : ['apply' => false];
-
-            return response()->json([
-                'affidavit' => $affidavit->load(['user', 'payment']),
-                'fine' => $fineData 
-            ]);
-        }
-
-        if ($affidavit->amount == 0.00) {
-            if (!Auth::user()->can('process.liquidations'))  {
-                return redirect('cashbox/liquidations')
-                    ->withError('¡No puede procesar la liquidación!');
-            }
-
-            return view('modules.taxpayers.affidavits.select')
-                ->with('row', $affidavit);
-        }
-
-        // The liquidation it's already processed    
-        return view('modules.taxpayers.affidavits.register')
-            ->with('typeForm', 'show')
-            ->with('row', $affidavit);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param  \App\Liquidation  $liquidation
-     * @return \Illuminate\Http\Response
-     */
-    public function groupActivityForm(Affidavit $affidavit)
-    {
-        return view('modules.taxpayers.affidavits.register')
-            ->with('row', $affidavit)
-            ->with('typeForm', 'edit-group');
-    }
-    
-    /**
-     * Show form for editing the specified resource.
-     * @param \App\Liquidation $liquidation
-     * @return \Illuminate\Http\Response
-     */
-    public function normalCalcForm(Affidavit $affidavit)
-    {
-        return view('modules.taxpayers.affidavits.register')
-            ->with('typeForm', 'edit-normal')
-            ->with('row', $affidavit);
-    }
-
-    public function create(AffidavitsCreateFormRequest $request, Taxpayer $taxpayer)
-    {
-        $month = Month::find($request->input('month'));
-        $this->month = $month;
-        $this->taxpayer = $taxpayer;
-
-        return $this->validateStore();
-    }
-
-    /**
-     * Validate by month
-     */
-    public function validateStore()
-    {
-        $affidavit = Affidavit::findOneByMonth($this->taxpayer, $this->month)
-            ->first();
-        
-        // No affidavit found
-        if (!$affidavit) {
-            $pendingAffidavit = $this->checkLastAffidavit();
-
-            if (!$pendingAffidavit) {
-                return $this->store();
-            } else {
-               return $this->fireError("Debe procesar la declaración del mes de ".$pendingAffidavit->month->name.' - '.$pendingAffidavit->month->year->year);
-            }
-        // Selected month has already an affidavit created
-        } else {
-            return $this->fireError("La declaración del mes de ".
-                $this->month->name." -  ".
-                $this->month->year->year.
-                " fue generada"
-            );
-        }
-    }
-
-    /**
-     * Check last liquidation status
-     */
-    public function checkLastAffidavit()
-    {
-        $lastAffidavit = Affidavit::whereTaxpayerId($this->taxpayer->id)
-            ->latest()->first();
-        
-        if ($lastAffidavit) {
-            // If last month liquidation isn't processed yet
-            if ($lastAffidavit->amount == 0.00) {
-                return $lastAffidavit;
-            }
-        }
-
-        return false;
+        //
     }
 
     /**
@@ -176,7 +81,7 @@ class AffidavitController extends Controller
      * @return Illuminate\Response
      */
     public function store()
-    {        
+    {
         $affidavit = Affidavit::create([
             'taxpayer_id' => $this->taxpayer->id,
             'month_id' => $this->month->id,
@@ -214,7 +119,7 @@ class AffidavitController extends Controller
         $amounts = $request->input('activity_liquidations');
 
         if ($isEditGroup) {
-            $amount = $amounts[0]; 
+            $amount = $amounts[0];
             $totalAmount = $this->economicActivityAffidavit->updateByGroup($affidavit, $amount);
         } else {
             $totalAmount = $this->economicActivityAffidavit->update($affidavit, $amounts);
@@ -243,25 +148,6 @@ class AffidavitController extends Controller
             ->withError($message);
     }
 
-    /**
-     * Make a payment
-     * @param Liquidation $liquidation
-     * @return Illuminate\Response
-     */
-    public function makePayment(Affidavit $affidavit)
-    {
-        $liquidation = $affidavit->liquidation();
-        $concept = Concept::whereCode(1)->first();
-
-        if ($liquidation->exists()) {
-            return redirect()->route('payments.show', $liquidation->first()->payment->first());
-        }
-
-        $affidavit->makeLiquidation();
-
-        return redirect()->route('liquidations.index', $affidavit->taxpayer_id);
-    }
-
     public function destroy(Affidavit $affidavit)
     {
         if ($affidavit->payment()->first()) {
@@ -279,6 +165,6 @@ class AffidavitController extends Controller
         $affidavit->delete();
 
         return redirect()->back()
-            ->with('success', '¡Liquidación anulada!');   
+            ->with('success', '¡Liquidación anulada!');
     }
 }
