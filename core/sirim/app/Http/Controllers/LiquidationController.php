@@ -98,19 +98,28 @@ class LiquidationController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Liquidation $liquidation)
     {
-        $liquidation->delete();
+        if ($liquidation->status_id == 1) {
+            $liquidation->delete();
 
-        $liquidation->cancellations()->create([
-            'reason' => $request->get('annullment_reason'),
-            'user_id' => Auth::user()->id,
-            'cancellation_type_id' => 6
-        ]);
+            $liquidation->cancellations()->create([
+                'reason' => $request->get('annullment_reason'),
+                'user_id' => Auth::user()->id,
+                'cancellation_type_id' => 6
+            ]);
 
-        if ($liquidation->payment()->exists()) {
-            $liquidation->payment()->first()->updateAmount();
+            if ($liquidation->payment()->exists()) {
+                $liquidation->payment()->first()->updateAmount();
+            }
+            if ($liquidation->deduction()->exists()) {
+                $liquidation->deduction()->delete();
+            }
+            $liquidation->liquidable()->delete();
+
+            return redirect()->back()
+                ->withSuccess('¡Liquidación anulada!');
         }
 
         return redirect()->back()
-            ->withSuccess('¡Liquidación anulada!');
+            ->withErrors('La liquidación no puede ser anulada.');
     }
 }
