@@ -85,6 +85,11 @@ class Payment extends Model implements Auditable
             ->whereLiquidationTypeId(3);
     }
 
+    public function liquidations()
+    {
+        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
+    }
+
     public function fines()
     {
         return $this->belongsToMany(Fine::class, Liquidation::class);

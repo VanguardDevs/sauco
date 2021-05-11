@@ -90,6 +90,11 @@ class Payment extends Model implements Auditable
         return $this->belongsToMany(Fine::class, Liquidation::class);
     }
 
+    public function liquidations()
+    {
+        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
+    }
+
     public function movements()
     {
         return $this->hasMany(Movement::class);

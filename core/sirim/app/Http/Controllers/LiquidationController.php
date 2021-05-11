@@ -96,7 +96,7 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnullmentRequest $request, Liquidation $liquidation)
+    public function destroy(AnnullmentRequest $request, Liquidation $liquidation)
     {
         $liquidation->delete();
 
@@ -105,6 +105,10 @@ class LiquidationController extends Controller
             'user_id' => Auth::user()->id,
             'cancellation_type_id' => 6
         ]);
+
+        if ($liquidation->payment()->exists()) {
+            $liquidation->payment()->first()->updateAmount();
+        }
 
         return redirect()->back()
             ->withSuccess('¡Liquidación anulada!');
