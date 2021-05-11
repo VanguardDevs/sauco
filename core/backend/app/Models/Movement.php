@@ -16,6 +16,8 @@ class Movement extends Model
 
     protected $fillable = [
         'amount',
+        'concurrent',
+        'own_income',
         'concept_id',
         'liquidation_id',
         'year_id',

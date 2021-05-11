@@ -15,6 +15,8 @@ class CreateMovementsTable extends Migration
     {
         Schema::create('movements', function (Blueprint $table) {
             $table->id();
+            $table->boolean('own_income')->default(1);
+            $table->boolean('concurrent')->default(1);
             $table->decimal('amount', 20);
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('liquidation_id');
