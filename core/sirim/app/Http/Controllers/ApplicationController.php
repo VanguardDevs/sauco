@@ -99,8 +99,7 @@ class ApplicationController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Application $application)
     {
-
-        if ($application->liquidation()->exists()) {
+        if (!$application->liquidation()->exists()) {
             return response()->json([
                 'success' => false,
                 'message' => '¡La solicitud tiene una liquidación asociada!'
