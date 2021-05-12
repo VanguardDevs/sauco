@@ -839,8 +839,8 @@ $(document).ready(function() {
         "columns": [
             { data: 'month.year.year' },
             { data: 'month.name' },
-            { data: 'brute_amount_affidavit', name: 'brute_amount_affidavit' },
-            { data: 'pretty_amount', name: 'pretty_amount' },
+            { data: 'total_brute_amount', name: 'total_brute_amount' },
+            { data: 'total_calc_amount', name: 'total_calc_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

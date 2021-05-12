@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Liquidation;
-use App\Payment;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\PrettyAmount;
@@ -14,6 +11,8 @@ use App\Traits\MakeLiquidation;
 use App\Traits\PaymentUtils;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Models\Liquidation;
+use App\Models\User;
 
 class Fine extends Model implements Auditable
 {
