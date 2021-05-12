@@ -296,7 +296,7 @@ class AffidavitController extends Controller
 
     public function destroy(AnnullmentRequest $request, Affidavit $affidavit)
     {
-        if ($affidavit->liquidation()->exists()) {
+        if (!$affidavit->liquidation()->exists()) {
             return response()->json([
                 'success' => false,
                 'message' => '¡La declaración tiene una liquidación asociada!'

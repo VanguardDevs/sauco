@@ -14,6 +14,8 @@ use App\Traits\MakeLiquidation;
 use App\Traits\PaymentUtils;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Models\Liquidation;
+use App\Models\User;
 
 class Fine extends Model implements Auditable
 {
