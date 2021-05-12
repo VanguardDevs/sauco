@@ -16,7 +16,7 @@ class Taxpayer extends Model implements Auditable
     protected $fillable = [
         'rif',
         'name',
-        'address',
+        'fiscal_address',
         'phone',
         'email',
         'community_id',

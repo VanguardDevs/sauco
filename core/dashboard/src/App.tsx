@@ -10,6 +10,7 @@ import payments from './payments';
 import cancellations from './cancellations';
 import customRoutes from './routes';
 import affidavits from './affidavits';
+import taxpayers from './taxpayers';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       customRoutes={customRoutes}
       dataProvider={dataProvider}
     >
+      <Resource {...taxpayers} />
       <Resource {...payments} />
       <Resource {...cancellations} />
       <Resource {...liquidations} />
@@ -29,6 +31,8 @@ function App() {
       <Resource name="liquidation-types" />
       <Resource name="payment-types" />
       <Resource name="payment-methods" />
+      <Resource name="taxpayer-types" />
+      <Resource name="taxpayer-classifications" />
     </Admin>
   );
 }
