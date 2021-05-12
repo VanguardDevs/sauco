@@ -8,6 +8,10 @@ class TaxpayerClassification extends Model
 {
     protected $table = 'taxpayer_classifications';
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function taxpayers()
     {
         return $this->hasMany(Taxpayer::class);
