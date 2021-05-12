@@ -812,7 +812,7 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/list`,
         "columns": [
             { data: 'liquidation.object_payment' },
-            { data: 'amount' },
+            { data: 'pretty_amount' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

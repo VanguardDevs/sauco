@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Taxpayer;
+use App\Models\Concept;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\MakeWithholdingRequest;
 use App\Models\Liquidation;
@@ -83,6 +84,24 @@ class LiquidationController extends Controller
 	    $liquidation->update([
             'amount' => $newLiquidationAmount,
         ]);
+
+        $affidavit = $liquidation->liquidable()->first();
+
+        // Adjust fines
+        if ($affidavit->fines()->exists()) {
+            $concept = Concept::find(3);
+
+            foreach($affidavit->fines as $fine) {
+                $amount = $concept->calculateAmount($newLiquidationAmount);
+
+                $fine->update([
+                    'amount' => $amount
+                ]);
+                $fine->liquidation()->update([
+                    'amount' => $amount
+                ]);
+            }
+        }
 
         $liquidation->payment->first()->updateAmount();
 
