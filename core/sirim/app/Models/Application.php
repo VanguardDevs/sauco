@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Taxpayer;
+use App\Models\Taxpayer;
 use Carbon\Carbon;
 use App\Traits\PrettyAmount;
 use App\Traits\NewValue;

@@ -147,8 +147,12 @@ class FineController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Fine $fine)
     {
-        $fine->settlement->delete();
-        $fine->delete();
+        if ($fine->liquidation()->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => '¡La multa tiene una liquidación asociada!'
+            ]);
+        }
 
         $fine->cancellations()->create([
             'reason' => $request->get('annullment_reason'),
@@ -156,11 +160,7 @@ class FineController extends Controller
             'cancellation_type_id' => 2
         ]);
 
-        $payment = $fine->payment();
-
-        if ($payment->exists()) {
-            $payment->first()->updateAmount();
-        }
+        $fine->delete();
 
         return redirect()->back()
             ->with('success', '¡Multa anulada!');

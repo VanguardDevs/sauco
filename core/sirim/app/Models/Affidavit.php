@@ -29,14 +29,7 @@ class Affidavit extends Model implements Auditable
         'processed_at'
     ];
 
-    protected $casts = [ 'amount' => 'float' ];
-
     protected $with = [ 'month' ];
-
-    protected $appends = [
-        'pretty_amount',
-        'brute_amount_affidavit'
-    ];
 
     public static function processedByDate($firstDate, $lastDate)
     {
