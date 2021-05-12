@@ -14,17 +14,18 @@ class TaxpayerTypeController extends Controller
      */
     public function index(Request $request)
     {
-        //
-    }
+        $query = TaxpayerType::withCount('taxpayers');
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('description', $filters)) {
+                $query->whereLike('description', $filters['description']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -45,17 +46,6 @@ class TaxpayerTypeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(TaxpayerType $taxpayerType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
