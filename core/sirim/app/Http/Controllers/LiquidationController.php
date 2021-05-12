@@ -107,9 +107,11 @@ class LiquidationController extends Controller
                 'cancellation_type_id' => 6
             ]);
 
+            // Update payment amount
             if ($liquidation->payment()->exists()) {
                 $liquidation->payment()->first()->updateAmount();
             }
+            // Soft delete current liquidable and deduction if exists
             if ($liquidation->deduction()->exists()) {
                 $liquidation->deduction()->delete();
             }
