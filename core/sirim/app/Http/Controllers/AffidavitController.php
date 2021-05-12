@@ -92,7 +92,7 @@ class AffidavitController extends Controller
             ]);
         }
 
-        if ($affidavit->amount == 0.00) {
+        if ($affidavit->total_calc_amount == 0.00) {
             if (!Auth::user()->can('process.settlements'))  {
                 return redirect('cashbox/settlements')
                     ->withError('¡No puede procesar la liquidación!');

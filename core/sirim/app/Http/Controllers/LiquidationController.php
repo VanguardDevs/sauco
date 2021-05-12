@@ -87,6 +87,7 @@ class LiquidationController extends Controller
 
         $affidavit = $liquidation->liquidable()->first();
 
+        // Adjust fines
         if ($affidavit->fines()->exists()) {
             $concept = Concept::find(3);
 
