@@ -15,7 +15,7 @@ use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use DataTables;
 
-class DeductionController extends Controller
+class WithholdingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -55,23 +55,42 @@ class DeductionController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Deduction $withholding)
     {
-        $payment = $withholding->payment()->first();
+        $liquidation = $withholding->liquidation;
 
-        if ($withholding->settlement) {
-            $settlement = $withholding->settlement;
-            $amount = $settlement->amount - $withholding->amount;
-            $settlement->update(['amount' => $amount]);
-            $payment->updateAmount();
+        if ($liquidation->status_id == 2) {
+            return redirect()->back()
+                ->withErrors('¡La liquidación ya fue procesada!');
         }
-        $withholding->delete();
+        $affidavit = $liquidation->liquidable;
+        $liquidation->update([
+            'amount' => $affidavit->total_calc_amount
+        ]);
+
+        if ($affidavit->fines()->exists()) {
+            $concept = Concept::find(3);
+
+            foreach($affidavit->fines as $fine) {
+                $amount = $concept->calculateAmount($affidavit->total_calc_amount);
+
+                $fine->update([
+                    'amount' => $amount
+                ]);
+                $fine->liquidation()->update([
+                    'amount' => $amount
+                ]);
+            }
+        }
+
+        $liquidation->payment()->first()->updateAmount();
 
         $withholding->cancellations()->create([
             'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id,
             'cancellation_type_id' => 5
         ]);
+        $withholding->delete();
 
         return redirect()->back()
-            ->with('success', '¡Retención anulada!');
+            ->with('success', '¡Deducción anulada!');
     }
 }

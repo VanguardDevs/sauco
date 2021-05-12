@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Liquidation;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\PrettyAmount;
