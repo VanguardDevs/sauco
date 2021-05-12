@@ -43,17 +43,17 @@ class TaxpayerController extends Controller
                 $query->whereLike('email', $filters['email']);
             }
             if (array_key_exists('address', $filters)) {
-                $query->whereLike('address', $filters['address']);
+                $query->whereLike('fiscal_address', $filters['address']);
             }
-            if (array_key_exists('type', $filters)) {
-                $name = $filters['type'];
+            if (array_key_exists('taxpayer_type_id', $filters)) {
+                $name = $filters['taxpayer_type_id'];
 
                 $query->where('taxpayer_type_id', '=', $name);
             }
-            if (array_key_exists('classification', $filters)) {
-                $name = $filters['classification'];
+            if (array_key_exists('taxpayer_classification_id', $filters)) {
+                $name = $filters['taxpayer_classification_id'];
 
-                $query->where('classification_type_id', '=', $name);
+                $query->where('taxpayer_classification_id', '=', $name);
             }
         }
 
