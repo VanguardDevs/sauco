@@ -29,7 +29,8 @@
                             Form::select('ordinance', $ordinances, null, [
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
-                                'id' => 'applications' 
+                                'id' => 'applications',
+                                'required'
                             ])
                         !!}
 
@@ -40,20 +41,36 @@
                     <div class="col-lg-5">
                         <label class="col-lg-12">Seleccione el concepto<span class="text-danger"> *</span></label>
                         {!!
-                            Form::select('concepts', [], null, [
+                            Form::select('concept', [], null, [
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
-                                'id' => 'concepts' 
+                                'id' => 'concepts',
+                                'required'
                             ])
                         !!}
 
-                        @error('concepts')
+                        @error('concept')
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-8">
+                        <label class="control-label">Número total de solicitudes</label>
+                        {!!
+                        Form::number("total", (isset($row->rif) ? $row->getOriginal('amount') : null), [
+                            "class" => "form-control",
+                            "placeholder" => "Monto",
+                            "id" => 'rif'
+                        ])
+                        !!}
+
+                        @error('rif')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-4">
                         <button class="btn btn-success" style="margin-top:2em;"title="Enviar liquidación" type="submit">
                             <i class="fas fa-paper-plane"></i>
+                            Realizar solicitud
                         </button>
                     </div>
                 </div>

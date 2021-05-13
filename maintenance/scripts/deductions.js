@@ -19,7 +19,7 @@ async function main() {
   try {
     /**
      * Rename tables
-     */ 
+     */
 
     await db.schema.renameTable('null_withholdings', 'canceled_deductions');
 
@@ -37,7 +37,7 @@ async function main() {
     await db.schema.raw(insertManyDeductionLiquidationQuery);
 
     await db.schema.table('applications', (table) => {
-      table.integer('total');
+      table.integer('total').defaultTo(1);
     });
   } finally {
     await db.destroy();

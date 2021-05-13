@@ -51,7 +51,6 @@ class ApplicationController extends Controller
         $payment = $application->mountPayment();
 
         $liquidation = $application->makeLiquidation();
-
         $payment->liquidations()->sync($liquidation);
 
         return redirect()->route('payments.show', $payment->id);
@@ -65,14 +64,19 @@ class ApplicationController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
-        $concept = Concept::find($request->input('concepts'));
+        $concept = Concept::find($request->input('concept'));
         $amount = $concept->calculateAmount();
+
+        if ($request->total) {
+            $amount = $amount * $request->total;
+        }
 
         $application = $taxpayer->applications()->create([
             'active' => 1,
-            'concept_id' => $request->input('concepts'),
+            'concept_id' => $request->input('concept'),
             'user_id' => auth()->user()->id,
-            'amount' => $amount
+            'amount' => $amount,
+            'total' => $request->total
         ]);
 
         return redirect()->route('applications.index', $taxpayer)
