@@ -27,17 +27,34 @@ class FineController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Fine::query();
+        $query = Fine::with(['concept', 'taxpayer']);
         $results = $request->perPage;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
 
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
+            if (array_key_exists('taxpayer', $filters)) {
+                $query->whereHas('taxpayer', function ($q) use ($filters) {
+                    $query->whereLike('taxpayer', $filters['taxpayer']);
+                });
+            }
             if (array_key_exists('amount', $filters)) {
                 $query->whereLike('amount', $filters['amount']);
             }
+            if (array_key_exists('concept_id', $filters)) {
+                $query->where('concept_id', '=', $filters['concept_id']);
+            }
             if (array_key_exists('taxpayer_id', $filters)) {
                 $query->where('taxpayer_id', '=', $filters['taxpayer_id']);
+            }
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('created_at', '<', $filters['lt_date']);
             }
         }
 
