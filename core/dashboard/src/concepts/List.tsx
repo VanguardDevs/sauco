@@ -1,15 +1,13 @@
 import * as React from "react";
-// import { useDispatch } from 'react-redux';
-// import { setDialog } from '../actions';
 import {
+  ReferenceArrayInput,
   Filter,
   TextInput,
-  DateField,
-  List, 
+  List,
   Datagrid,
-  NumberField,
   TextField,
   SimpleList,
+  SelectInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
@@ -17,6 +15,9 @@ const ConceptFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Nombre" source='name' />
     <TextInput label="Monto" source='amount' />
+    <ReferenceArrayInput source="liquidation_type_id" reference="liquidation-types" label="Tipo">
+      <SelectInput source="name" label="Tipo" allowEmpty={false} />
+    </ReferenceArrayInput>
   </Filter>
 );
 
@@ -33,9 +34,9 @@ const ConceptList: React.FC = props => {
       filters={<ConceptFilter />}
       exporter={false}
     >
-      { 
-        isSmall 
-        ? (      
+      {
+        isSmall
+        ? (
           <SimpleList
             primaryText={record => `${record.name}`}
             linkType={"show"}
