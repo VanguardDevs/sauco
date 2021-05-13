@@ -54,4 +54,5 @@ use Illuminate\Http\Request;
     Route::apiResource('affidavits', 'AffidavitController');
     Route::apiResource('applications', 'ApplicationController');
     Route::apiResource('fines', 'FineController');
+    Route::apiResource('deductions', 'DeductionController');
 // });

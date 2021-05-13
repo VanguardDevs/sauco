@@ -29,6 +29,9 @@ class ConceptController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->whereLike('name', $filters['name']);
             }
+            if (array_key_exists('liquidation_type_id', $filters)) {
+                $query->where('liquidation_type_id', '=', $filters['liquidation_type_id']);
+            }
         }
 
         return $query->paginate($results);
