@@ -13,7 +13,7 @@ import {
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
-const FinesFilter: React.FC = props => (
+const ApplicationsFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Número" source='num' />
     <TextInput label="Contribuyente" source='taxpayer' />
@@ -22,7 +22,7 @@ const FinesFilter: React.FC = props => (
         source="concept_id"
         reference="concepts"
         label="Rubro"
-        filter={{ 'liquidation_type_id': 2 }}
+        filter={{ 'liquidation_type_id': 1 }}
     >
       <SelectInput source="name" label="Tipo" allowEmpty={false} />
     </ReferenceArrayInput>
@@ -31,14 +31,14 @@ const FinesFilter: React.FC = props => (
   </Filter>
 );
 
-const FinesList: React.FC = props => {
+const ApplicationsList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
   return (
     <List {...props}
-      title="Sanciones"
+      title="Solicitudes"
       bulkActionButtons={false}
-      filters={<FinesFilter />}
+      filters={<ApplicationsFilter />}
       exporter={false}
     >
       {
@@ -46,7 +46,7 @@ const FinesList: React.FC = props => {
         ? (
           <SimpleList
             primaryText={record => `${record.num}`}
-            secondaryText={record => `${record.concept.name }`}
+            secondaryText={record => `${record.concept.name}`}
             tertiaryText={record => `${record.taxpayer.rif}`}
             linkType={"show"}
           />
@@ -64,4 +64,4 @@ const FinesList: React.FC = props => {
   );
 };
 
-export default FinesList;
+export default ApplicationsList;

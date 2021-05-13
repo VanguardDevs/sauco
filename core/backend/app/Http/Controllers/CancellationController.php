@@ -14,7 +14,7 @@ class CancellationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Cancellation::with(['type', 'user'])
+        $query = Cancellation::with(['type', 'user', 'cancellable.taxpayer'])
             ->orderBy('created_at', 'DESC');
         $results = $request->perPage;
 
@@ -23,6 +23,12 @@ class CancellationController extends Controller
 
             if (array_key_exists('cancellation_type_id', $filters)) {
                 $query->where('cancellation_type_id', '=', $filters['cancellation_type_id']);
+            }
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('created_at', '<', $filters['lt_date']);
             }
         }
 
