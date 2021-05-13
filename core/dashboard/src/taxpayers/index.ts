@@ -7,6 +7,6 @@ export default {
   icon: TaxpayerIcon,
   list: TaxpayersList,
   options: {
-    label: 'Conribuyentes'
+    label: 'Contribuyentes'
   }
 }

@@ -8,30 +8,42 @@ import {
   TextField,
   SimpleList,
   ReferenceArrayInput,
-  SelectInput
+  SelectInput,
+  DateInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
-const StudentFilter: React.FC = props => (
+const optionRenderer = (choice:any) => `${choice.description}`;
+
+const LicensesFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Número" source='num' />
-    <TextInput label="Objeto de pago" source='object_payment' />
     <TextInput label="Contribuyente" source='taxpayer' />
-    <TextInput label="Monto" source='amount' />
-    <ReferenceArrayInput source="liquidation_type_id" reference="liquidation-types" label="Tipo">
-      <SelectInput source="name" label="Tipo" allowEmpty={false} />
+    <ReferenceArrayInput
+      source="ordinance_id"
+      reference="ordinances"
+      label="Ordenanza"
+    >
+      <SelectInput
+        source="description"
+        label="Ordenanza"
+        optionText={optionRenderer}
+        allowEmpty={false}
+      />
     </ReferenceArrayInput>
+    <DateInput source="gt_date" label='Emitida después de' />
+    <DateInput source="lt_date" label='Emitida antes de' />
   </Filter>
 );
 
-const StudentList: React.FC = props => {
+const LicensesList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
   return (
     <List {...props}
-      title="Liquidaciones"
+      title="Sanciones"
       bulkActionButtons={false}
-      filters={<StudentFilter />}
+      filters={<LicensesFilter />}
       exporter={false}
     >
       {
@@ -39,17 +51,16 @@ const StudentList: React.FC = props => {
         ? (
           <SimpleList
             primaryText={record => `${record.num}`}
-            secondaryText={record => `${record.object_payment}`}
+            secondaryText={record => `${record.ordinance.description }`}
+            tertiaryText={record => `${record.taxpayer.rif}`}
             linkType={"show"}
           />
         )
         : (
           <Datagrid>
             <TextField source="num" label="Número"/>
-            <TextField source="object_payment" label="Objeto de pago"/>
-            <NumberField source='amount' label='Monto' />
+            <TextField source="ordinance.description" label="Ordenanza"/>
             <TextField source="taxpayer.name" label="Contribuyente"/>
-            <TextField source="liquidation_type.name" label="Tipo"/>
           </Datagrid>
         )
       }
@@ -57,4 +68,4 @@ const StudentList: React.FC = props => {
   );
 };
 
-export default StudentList;
+export default LicensesList;

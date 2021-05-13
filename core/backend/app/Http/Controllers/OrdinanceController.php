@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ordinance;
+use Illuminate\Http\Request;
 use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
 use App\Http\Requests\Ordinances\OrdinancesUpdateFormRequest;
 
@@ -13,9 +14,20 @@ class OrdinanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.ordinances.index');
+        $query = Ordinance::query();
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('description', $filters)) {
+                $query->whereLike('description', $filters['description']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     public function list()
