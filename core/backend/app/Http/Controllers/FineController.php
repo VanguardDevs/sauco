@@ -50,6 +50,12 @@ class FineController extends Controller
             if (array_key_exists('taxpayer_id', $filters)) {
                 $query->where('taxpayer_id', '=', $filters['taxpayer_id']);
             }
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('created_at', '<', $filters['lt_date']);
+            }
         }
 
         return $query->paginate($results);

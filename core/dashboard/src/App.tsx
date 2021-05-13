@@ -12,6 +12,7 @@ import customRoutes from './routes';
 import affidavits from './affidavits';
 import taxpayers from './taxpayers';
 import fines from './fines';
+import applications from './applications';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Resource {...liquidations} />
       <Resource {...concepts} />
       <Resource {...movements} />
+      <Resource {...applications} />
       <Resource {...fines} />
       <Resource {...affidavits} />
       <Resource name="cancellation-types" />
