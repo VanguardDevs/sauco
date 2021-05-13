@@ -8,13 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
 use App\Models\License;
-use App\Models\Correlative;
-use App\Models\CorrelativeNumber;
-use App\Models\CorrelativeType;
-use App\Models\Year;
-use App\Models\Ordinance;
-use App\Models\Taxpayer;
-use App\Models\Application;
 use Carbon\Carbon;
 
 class LicenseController extends Controller
@@ -26,46 +19,35 @@ class LicenseController extends Controller
      */
     public function index(Request $request)
     {
-        $query = License::with(['taxpayer'])
-            ->orderBy('created_at', 'DESC');
+        $query = License::orderBy('id', 'DESC')
+            ->with(['taxpayer', 'ordinance']);
+        $results = $request->perPage;
 
-        if ($request->has('results')) {
-            $results = $request->results;
-        }
-        $ordinance = $request->get('ordinance');
-        $type = $request->get('type');
-        $pdf = $request->get('pdf');
-        $from = $request->get('from');
-        $to = $request->get('to');
+        if ($request->has('filter')) {
+            $filters = $request->filter;
 
-        $query = License::orderBy('created_at', 'DESC');
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
+            if (array_key_exists('taxpayer', $filters)) {
+                $name = $filters['taxpayer'];
 
-        if ($ordinance) {
-            $query->whereOrdinanceId($ordinance);
-        }
-        if ($type) {
-            $query->whereHas('correlative', function (Builder $query) use ($type) {
-                $query->whereCorrelativeTypeId($type);
-            });
-        }
-        if ($from) {
-            $query->whereBetween('emission_date',  [$from, $to]);
-        }
-
-        // Return responses
-        if ($request->wantsJson()) {
-            $query->with(['taxpayer', 'ordinance'])
-                ->orderBy('created_at', 'DESC');
-            
-            return DataTables::eloquent($query)->toJson(); 
+                $query->whereHas('taxpayer', function ($q) use ($name) {
+                    return $q->whereLike('name', $name);
+                });
+            }
+            if (array_key_exists('ordinance_id', $filters)) {
+                $query->where('ordinance_id', '=', $filters['ordinance_id']);
+            }
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('emission_date', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('emission_date', '<', $filters['lt_date']);
+            }
         }
 
-        if ($pdf) {
-            return $this->printReport($query);
-        }
-
-        return view('modules.licenses.index')
-            ->with('types', CorrelativeType::pluck('description', 'id'));
+        return $query->paginate($results);
     }
 
     private function printReport($query)
@@ -119,7 +101,7 @@ class LicenseController extends Controller
         }
 
         $this->makeLicense($correlative, $taxpayer);
-        
+
         return redirect('taxpayers/'.$taxpayer->id.'/economic-activity-licenses')
             ->withSuccess('¡Licencia de actividad económica creada!');
     }
@@ -133,8 +115,8 @@ class LicenseController extends Controller
         // a model
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->endOfYear(); 
-    
+        $expirationDate = $emissionDate->copy()->endOfYear();
+
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
         ]);
@@ -143,10 +125,10 @@ class LicenseController extends Controller
             'year_id' => $currYear->id,
             'correlative_type_id' => $type->id,
             'correlative_number_id' => $correlativeNumber->id
-        ]);    
+        ]);
 
         $license = License::create([
-            'num' => $correlative->num, 
+            'num' => $correlative->num,
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $ordinance->id,
@@ -165,7 +147,7 @@ class LicenseController extends Controller
     {
         $isValid = [
             'error' => false,
-            'msg' => ''    
+            'msg' => ''
         ];
 
         if (!$taxpayer->economicActivities->count()) {
@@ -176,7 +158,7 @@ class LicenseController extends Controller
         if (!$taxpayer->president()->count()) {
             $isValid['error'] = true;
             $isValid['msg'] = '¡El contribuyente no tiene un representante (PRESIDENTE) registrado!';
-        } 
+        }
 
         if ($taxpayer->licenses()->exists()) {
             $isValid['error'] = true;
@@ -227,7 +209,7 @@ class LicenseController extends Controller
         $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
         return PDF::setOptions(['isRemoteEnabled' => true])
-            ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars)) 
+            ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
             ->download('Licencia '.$taxpayer->rif.'.pdf');
     }
 

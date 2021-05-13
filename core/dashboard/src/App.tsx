@@ -16,6 +16,7 @@ import affidavits from './affidavits';
 import taxpayers from './taxpayers';
 import fines from './fines';
 import applications from './applications';
+import licenses from './licenses';
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
       <Resource {...applications} />
       <Resource {...fines} />
       <Resource {...affidavits} />
+      <Resource {...licenses} />
+      <Resource name="ordinances" />
       <Resource name="cancellation-types" />
       <Resource name="liquidation-types" />
       <Resource name="payment-types" />

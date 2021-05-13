@@ -21,6 +21,9 @@ class CancellationController extends Controller
         if ($request->has('filter')) {
             $filters = $request->filter;
 
+            if (array_key_exists('reason', $filters)) {
+                $query->whereLike('reason', $filters['reason']);
+            }
             if (array_key_exists('cancellation_type_id', $filters)) {
                 $query->where('cancellation_type_id', '=', $filters['cancellation_type_id']);
             }

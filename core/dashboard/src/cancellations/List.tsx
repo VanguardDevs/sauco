@@ -14,7 +14,7 @@ import { Theme, useMediaQuery } from '@material-ui/core';
 
 const CancellationsFilter: React.FC = props => (
   <Filter {...props}>
-    <TextInput label="Nombre" source='name' />
+    <TextInput label="Razón de anulación" source='reason' />
     <TextInput label="Monto" source='amount' />
     <ReferenceArrayInput source="cancellation_type_id" reference="cancellation-types" label="Tipo">
       <SelectInput source="name" label="Tipo" allowEmpty={false} />
@@ -50,7 +50,7 @@ const CancellationsList: React.FC = props => {
         : (
           <Datagrid>
             <TextField source="cancellable.taxpayer.name" label="Razón social"/>
-            <TextField source="reason" label="Razón del contribuyente"/>
+            <TextField source="reason" label="Razón de anulación"/>
             <TextField source="type.name" label="Tipo"/>
             <TextField source="user.login" label="Login"/>
           </Datagrid>
