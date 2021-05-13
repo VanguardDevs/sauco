@@ -17,7 +17,6 @@ class FineController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
         $this->middleware('can:null.settlements')->only('destroy');
     }
 
@@ -26,42 +25,23 @@ class FineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer)
+    public function index(Request $request)
     {
-        return view('modules.taxpayers.fines.index')
-            ->with('taxpayer', $taxpayer)
-            ->with('ordinances', Ordinance::pluck('description', 'id'));
-    }
+        $query = Fine::query();
+        $results = $request->perPage;
 
-    public function list(Taxpayer $taxpayer)
-    {
-        $query = $taxpayer->fines()
-            ->orderBy('fines.created_at', 'DESC')
-            ->with(['concept:id,name']);
+        if ($request->has('filter')) {
+            $filters = $request->filter;
 
-        return DataTables::of($query)
-            ->addColumn('pretty_amount', function ($payment) {
-                return $payment->pretty_amount;
-            })
-            ->make(true);
-    }
+            if (array_key_exists('amount', $filters)) {
+                $query->whereLike('amount', $filters['amount']);
+            }
+            if (array_key_exists('taxpayer_id', $filters)) {
+                $query->where('taxpayer_id', '=', $filters['taxpayer_id']);
+            }
+        }
 
-    public function listConcepts(Ordinance $ordinance)
-    {
-        return $ordinance->concepts()
-            ->whereLiquidationTypeId(2)
-            ->get();
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $query->paginate($results);
     }
 
     /**
@@ -131,17 +111,6 @@ class FineController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Fine  $fine
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Fine $fine)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -160,22 +129,20 @@ class FineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Fine $fine)
-    { 
-        $fine->settlement->delete();
-        $fine->delete();
-
-        $fine->nullFine()->create([
-            'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
-        ]);
-
-        $payment = $fine->payment();
-
-        if ($payment->exists()) {
-            $payment->first()->updateAmount();
+    {
+        if ($fine->liquidation()->exists()) {
+            return response()
+                ->json('¡La multa tiene una liquidación asociada!', 400);
         }
 
-        return redirect()->back()
-            ->with('success', '¡Multa anulada!');   
+        $fine->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
+            'user_id' => Auth::user()->id,
+            'cancellation_type_id' => 2
+        ]);
+
+        $fine->delete();
+
+        return response()->json('¡Multa '.$fine->num.' anulada!', 200);
     }
 }

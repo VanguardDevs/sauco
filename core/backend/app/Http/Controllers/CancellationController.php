@@ -48,7 +48,9 @@ class CancellationController extends Controller
      */
     public function show(Cancellation $cancellation)
     {
-        //
+        $data = $cancellation->load('type', 'user', 'cancellable.taxpayer');
+
+        return response()->json($data);
     }
 
     /**

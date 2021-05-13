@@ -310,6 +310,7 @@ class AffidavitController extends Controller
         ]);
 
         $affidavit->delete();
+        $affidavit->fines()->delete();
 
         return redirect()->back()
             ->with('success', '¡Declaración anulada!');

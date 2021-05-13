@@ -20,11 +20,6 @@ class Cancellation extends Model
         'cancellation_type_id'
     ];
 
-    public function taxpayer()
-    {
-        return $this->liquidation()->first()->taxpayer();
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

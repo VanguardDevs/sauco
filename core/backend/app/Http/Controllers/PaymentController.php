@@ -149,15 +149,16 @@ class PaymentController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Payment $payment)
     {
-        // Delete settlements and payment
-        $payment->liquidations()->delete();
-
-        $payment->canceledPayment()->create([
-            'reason' => $request->get('annullment_reason'),
-            'user_id' => Auth::user()->id
-        ]);
+        $payment->movements()->delete();
+        $payment->liquidations()->update(['status_id' => 1]);
         $payment->delete();
 
-        return response()->json($payment);
+        $payment->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
+            'user_id' => Auth::user()->id,
+            'cancellation_type_id' => 4
+        ]);
+
+        return response()->json('¡Pago '.$payment->num.' anulado!', 200);
     }
 }
