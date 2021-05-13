@@ -2,13 +2,11 @@ import * as React from "react";
 import {
   Filter,
   TextInput,
-  DateField,
-  List, 
+  List,
   Datagrid,
-  NumberField,
   TextField,
   SimpleList,
-  ReferenceInput,
+  DateInput,
   SelectInput,
   ReferenceArrayInput
 } from 'react-admin';
@@ -20,7 +18,9 @@ const CancellationsFilter: React.FC = props => (
     <TextInput label="Monto" source='amount' />
     <ReferenceArrayInput source="cancellation_type_id" reference="cancellation-types" label="Tipo">
       <SelectInput source="name" label="Tipo" allowEmpty={false} />
-    </ReferenceArrayInput> 
+    </ReferenceArrayInput>
+    <DateInput source="gt_date" label='Realizado después de' />
+    <DateInput source="lt_date" label='Realizado antes de' />
   </Filter>
 );
 
@@ -37,9 +37,9 @@ const CancellationsList: React.FC = props => {
       filters={<CancellationsFilter />}
       exporter={false}
     >
-      { 
-        isSmall 
-        ? (      
+      {
+        isSmall
+        ? (
           <SimpleList
             primaryText={record => `${record.reason}`}
             secondaryText={record => `${record.type.name}`}
@@ -49,7 +49,8 @@ const CancellationsList: React.FC = props => {
         )
         : (
           <Datagrid>
-            <TextField source="reason" label="Razón"/>
+            <TextField source="cancellable.taxpayer.name" label="Razón social"/>
+            <TextField source="reason" label="Razón del contribuyente"/>
             <TextField source="type.name" label="Tipo"/>
             <TextField source="user.login" label="Login"/>
           </Datagrid>
