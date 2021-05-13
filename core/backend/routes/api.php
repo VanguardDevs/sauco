@@ -51,6 +51,7 @@ use Illuminate\Http\Request;
     Route::apiResource('cancellations', 'CancellationController');
     Route::apiResource('cancellation-types', 'CancellationTypeController')
         ->only(['index']);
+    Route::apiResource('licenses', 'LicenseController');
     Route::apiResource('affidavits', 'AffidavitController');
     Route::apiResource('applications', 'ApplicationController');
     Route::apiResource('fines', 'FineController');

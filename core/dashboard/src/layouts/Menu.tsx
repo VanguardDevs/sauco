@@ -20,6 +20,7 @@ import affidavits from '../affidavits';
 import taxpayers from '../taxpayers';
 import fines from '../fines';
 import applications from '../applications';
+import licenses from '../licenses';
 import SubMenu from './SubMenu';
 import { AppState } from '../types';
 
@@ -73,9 +74,9 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 dense={dense}
             >
                 <MenuItemLink
-                    to={applications.name}
-                    primaryText={applications.options.label}
-                    leftIcon={<applications.icon />}
+                    to={licenses.name}
+                    primaryText={licenses.options.label}
+                    leftIcon={<licenses.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}
@@ -132,6 +133,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     to={concepts.name}
                     primaryText={concepts.options.label}
                     leftIcon={<concepts.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={applications.name}
+                    primaryText={applications.options.label}
+                    leftIcon={<applications.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}
