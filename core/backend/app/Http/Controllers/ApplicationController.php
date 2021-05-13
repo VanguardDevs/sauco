@@ -17,41 +17,23 @@ class ApplicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer)
+    public function index(Request $request)
     {
-        return view('modules.taxpayers.applications.index')
-            ->with('taxpayer', $taxpayer)
-            ->with('ordinances', Ordinance::pluck('description', 'id'));
-    }
+        $query = Application::query();
+        $results = $request->perPage;
 
-    public function list(Taxpayer $taxpayer)
-    {
-        $query = Application::whereTaxpayerId($taxpayer->id)
-            ->orderBy('applications.created_at', 'DESC')
-            ->with(['concept:id,name']);
+        if ($request->has('filter')) {
+            $filters = $request->filter;
 
-        return $query
-            ->addColumn('pretty_amount', function ($payment) {
-                return $payment->pretty_amount;
-            })
-            ->make(true);
-    }
+            if (array_key_exists('amount', $filters)) {
+                $query->whereLike('amount', $filters['amount']);
+            }
+            if (array_key_exists('taxpayer_id', $filters)) {
+                $query->where('taxpayer_id', '=', $filters['taxpayer_id']);
+            }
+        }
 
-    public function listConcepts(Ordinance $ordinance)
-    {
-        return $ordinance->concepts()
-            ->whereLiquidationTypeId(1)
-            ->get();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $query->paginate($results);
     }
 
     /**
@@ -91,17 +73,6 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -121,6 +92,20 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
-        //
+        if (!$application->liquidation()->exists()) {
+            return response()
+                ->json('¡La solicitud tiene una liquidación asociada!', 400);
+        }
+
+        $application->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
+            'user_id' => Auth::user()->id,
+            'cancellation_type_id' => 1
+        ]);
+
+        $application->delete();
+
+        return response()
+            ->json('¡Solicitud '.$application->num.' anulada!', 200);
     }
 }

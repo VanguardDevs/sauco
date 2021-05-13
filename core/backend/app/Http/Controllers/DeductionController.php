@@ -3,12 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deduction;
-use App\Models\Taxpayer;
-use App\Models\Affidavit;
-use App\Models\Month;
-use App\Models\Payment;
-use App\Models\Liquidation;
-use App\Models\Concept;
 use Carbon\Carbon;
 use Auth;
 use App\Http\Requests\AnnullmentRequest;
@@ -21,38 +15,29 @@ class DeductionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Taxpayer $taxpayer)
+    public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            return $taxpayer->deductions;
+        $query = Deduction::latest();
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
+            if (array_key_exists('amount', $filters)) {
+                $query->whereAmount($filters['amount']);
+            }
+            if (array_key_exists('gt_date', $filters)) {
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
+            }
+            if (array_key_exists('lt_date', $filters)) {
+                $query->whereDate('created_at', '<', $filters['lt_date']);
+            }
         }
 
-        return view('modules.taxpayers.deductions.index')
-            ->with('taxpayer', $taxpayer);
-    }
-
-    public function months()
-    {
-        $months = Month::whereYearId(1)
-            ->where('id', '<', Carbon::now()->month);
-        
-        return $months->get();
-    }
-
-    public function list(Taxpayer $taxpayer)
-    {
-        $query = $taxpayer->deductions()
-            ->with(['affidavit', 'payment']);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $query->paginate($results);
     }
 
     /**
@@ -61,79 +46,9 @@ class DeductionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Taxpayer $taxpayer)
+    public function store(Request $request)
     {
-        $amount = $request->get('amount');
-        $user = $request->get('user');
-        $month = $request->get('month')['value']; 
-
-        $affidavit = $taxpayer->affidavits()->whereMonthId($month)
-            ->first();
-
-        if (!$affidavit) {
-            return response([
-                'success' => false,
-                'message' => '¡El mes no ha sido declarado!'
-            ]);
-        }
-
-        $amount = $request->input('amount');
-        $settlementAmount = $affidavit->amount - $amount;
-
-        $settlement = $affidavit->settlement()->first();
-
-        if (!$settlement) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡La declaración del mes de '.$affidavit->month->name.' no ha sido facturada!'
-            ]);
-        }
-        if ($settlementAmount < 0) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡El monto a retener se excede del monto de la liquidación!. ('.$settlement->total_amount.').'
-            ]);
-        }
-        if ($affidavit->deduction()->first()) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡Ya existe una retención realizada para la liquidación seleccionada!'
-            ]);
-        }
-        if ($affidavit->payment()->first()->state_id == 2) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡El pago de ese mes se encuentra procesado!'
-            ]);
-        }
-        
-        // Save deduction
-        $deduction = $affidavit->deduction()->create([
-            'amount' => $amount,
-            'affidavit_id' => $affidavit->id,
-            'user_id' => $user
-        ]);
- 	
-	    $settlement->update([
-            'amount' => $settlementAmount,
-            'deduction_id' => $deduction->id
-        ]);
-        $settlement->payment()->first()->updateAmount();
-
-     
-        return response()->json([
-            'success' => true,
-            'message' => '¡Retención de monto '.$deduction->amount.' realizada!'
-        ]);
-    }
-
-    public function message(Affidavit $affidavit)
-    {
-        $concept = Concept::whereCode(8)->first();
-        $conceptName = $concept->listing->name.': '.$concept->name.': ';
-        $monthYear = ' ('.$affidavit->month->name.' - '.$affidavit->month->year->year.')';
-
-        return $conceptName.$affidavit->taxpayer->name.$monthYear;
+        //
     }
 
     /**
@@ -148,29 +63,6 @@ class DeductionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Deduction  $deduction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Deduction $deduction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Deduction  $deduction
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Deduction $deduction)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Deduction  $deduction
@@ -178,22 +70,40 @@ class DeductionController extends Controller
      */
     public function destroy(AnnullmentRequest $request, Deduction $deduction)
     {
-        $payment = $deduction->payment()->first();
+        $liquidation = $deduction->liquidation;
 
-        if ($deduction->settlement) {
-            $settlement = $deduction->settlement;
-            $amount = $deduction->amount - $settlement->amount;
-            $settlement->update(['amount' => $amount]);
-            $payment->updateAmount();
-        } 
-        $deduction->delete();
+        if ($liquidation->status_id == 2) {
+            return response()->json('La liquidación ya fue procesada', 400);
+        }
 
-        $deduction->nullDeduction()->create([
-            'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
+        $affidavit = $liquidation->liquidable;
+        $liquidation->update([
+            'amount' => $affidavit->total_calc_amount
         ]);
 
-        return redirect()->back()
-            ->with('success', '¡Multa anulada!');   
+        if ($affidavit->fines()->exists()) {
+            $concept = Concept::find(3);
+
+            foreach($affidavit->fines as $fine) {
+                $amount = $concept->calculateAmount($affidavit->total_calc_amount);
+
+                $fine->update([
+                    'amount' => $amount
+                ]);
+                $fine->liquidation()->update([
+                    'amount' => $amount
+                ]);
+            }
+        }
+
+        $deduction->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
+            'user_id' => Auth::user()->id,
+            'cancellation_type_id' => 5
+        ]);
+        $deduction->delete();
+
+        return response()
+            ->json('¡Deducción '.$deduction->num.' anulada!', 200);
     }
 }

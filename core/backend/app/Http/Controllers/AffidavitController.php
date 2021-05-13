@@ -150,21 +150,21 @@ class AffidavitController extends Controller
 
     public function destroy(Affidavit $affidavit)
     {
-        if ($affidavit->payment()->first()) {
-            return response()->json([
-                'success' => false,
-                'message' => '¡La declaración tiene una liquidación asociada!'
-            ]);
+        if ($affidavit->liquidation()->exists()) {
+            return response()
+                ->json('¡La multa tiene una liquidación asociada!', 400);
         }
 
-        $affidavit->nullAffidavit()->create([
+        $affidavit->cancellations()->create([
+            'reason' => $request->get('annullment_reason'),
             'user_id' => Auth::user()->id,
-            'reason' => $request->get('annullment_reason')
+            'cancellation_type_id' => 3
         ]);
 
         $affidavit->delete();
+        $affidavit->fines()->delete();
 
-        return redirect()->back()
-            ->with('success', '¡Liquidación anulada!');
+        return response()
+            ->json('¡La declaración '.$affidavit->num.' ha sido anulada exitosamente!', 200);
     }
 }
