@@ -3,6 +3,9 @@ import { Admin, Resource } from 'react-admin';
 import dataProvider from './dataProvider';
 import { history } from './utils';
 import { Dashboard } from './dashboard';
+import { Layout } from './layouts';
+import i18nProvider from './i18nProvider';
+// Resources
 import concepts from './concepts';
 import movements from './movements';
 import liquidations from './liquidations';
@@ -17,10 +20,12 @@ import applications from './applications';
 function App() {
   return (
     <Admin
+      layout={Layout}
       dashboard={Dashboard}
       history={history}
       customRoutes={customRoutes}
       dataProvider={dataProvider}
+      i18nProvider={i18nProvider}
     >
       <Resource {...taxpayers} />
       <Resource {...payments} />
