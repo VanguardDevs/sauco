@@ -12,26 +12,30 @@ import {
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
-const StudentFilter: React.FC = props => (
+const FinesFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Número" source='num' />
-    <TextInput label="Objeto de pago" source='object_payment' />
     <TextInput label="Contribuyente" source='taxpayer' />
     <TextInput label="Monto" source='amount' />
-    <ReferenceArrayInput source="liquidation_type_id" reference="liquidation-types" label="Tipo">
+    <ReferenceArrayInput
+        source="concept_id"
+        reference="concepts"
+        label="Rubro"
+        filter={{ 'liquidation_type_id': 2 }}
+    >
       <SelectInput source="name" label="Tipo" allowEmpty={false} />
     </ReferenceArrayInput>
   </Filter>
 );
 
-const StudentList: React.FC = props => {
+const FinesList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
   return (
     <List {...props}
-      title="Liquidaciones"
+      title="Sanciones"
       bulkActionButtons={false}
-      filters={<StudentFilter />}
+      filters={<FinesFilter />}
       exporter={false}
     >
       {
@@ -46,10 +50,9 @@ const StudentList: React.FC = props => {
         : (
           <Datagrid>
             <TextField source="num" label="Número"/>
-            <TextField source="object_payment" label="Objeto de pago"/>
+            <TextField source="concept.name" label="Rubro"/>
             <NumberField source='amount' label='Monto' />
             <TextField source="taxpayer.name" label="Contribuyente"/>
-            <TextField source="liquidation_type.name" label="Tipo"/>
           </Datagrid>
         )
       }
@@ -57,4 +60,4 @@ const StudentList: React.FC = props => {
   );
 };
 
-export default StudentList;
+export default FinesList;
