@@ -7,7 +7,8 @@ import {
   Datagrid,
   NumberField,
   TextField,
-  SimpleList
+  SimpleList,
+  ReferenceField
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
@@ -49,8 +50,9 @@ const AffidavitsList: React.FC = props => {
         : (
           <Datagrid>
             <TextField source="num" label="Número"/>
-            <TextField source="taxpayer.rif" label="RIF"/>
-            <TextField source="taxpayer.name" label="Razón social"/>
+            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
+                <TextField source="name" />
+            </ReferenceField>
             <NumberField source='total_brute_amount' label='Monto bruto' />
             <NumberField source='total_calc_amount' label='Monto calculado' />
             <TextField source="month.name" label="Mes" />

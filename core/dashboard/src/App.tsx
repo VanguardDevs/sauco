@@ -17,6 +17,9 @@ import taxpayers from './taxpayers';
 import fines from './fines';
 import applications from './applications';
 import licenses from './licenses';
+import paymentTypes from './payment-types';
+import paymentMethods from './payment-methods';
+import users from './users';
 
 function App() {
   return (
@@ -28,6 +31,8 @@ function App() {
       dataProvider={dataProvider}
       i18nProvider={i18nProvider}
     >
+      <Resource {...paymentTypes} />
+      <Resource {...paymentMethods} />
       <Resource {...taxpayers} />
       <Resource {...payments} />
       <Resource {...cancellations} />
@@ -38,13 +43,13 @@ function App() {
       <Resource {...fines} />
       <Resource {...affidavits} />
       <Resource {...licenses} />
+      <Resource {...users} />
       <Resource name="ordinances" />
       <Resource name="cancellation-types" />
       <Resource name="liquidation-types" />
-      <Resource name="payment-types" />
-      <Resource name="payment-methods" />
       <Resource name="taxpayer-types" />
       <Resource name="taxpayer-classifications" />
+      <Resource name="status" />
     </Admin>
   );
 }

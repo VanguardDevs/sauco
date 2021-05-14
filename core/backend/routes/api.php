@@ -56,4 +56,5 @@ use Illuminate\Http\Request;
     Route::apiResource('applications', 'ApplicationController');
     Route::apiResource('fines', 'FineController');
     Route::apiResource('deductions', 'DeductionController');
+    Route::get('status', 'StatusController@index');
 // });

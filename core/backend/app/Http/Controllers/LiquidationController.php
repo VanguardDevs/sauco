@@ -21,7 +21,7 @@ class LiquidationController extends Controller
     public function index(Request $request)
     {
         $query = Liquidation::latest()
-            ->with(['taxpayer', 'liquidationType']);
+            ->with(['liquidationType']);
         $results = $request->perPage;
 
         if ($request->has('filter')) {
