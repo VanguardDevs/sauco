@@ -1,16 +1,23 @@
 import * as React from 'react';
 import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
-import SettingsIcon from '@material-ui/icons/Settings';
-import LabelIcon from '@material-ui/icons/Label';
 import { useMediaQuery, Theme, Box } from '@material-ui/core';
 import {
-    useTranslate,
     DashboardMenuItem,
     MenuItemLink,
     MenuProps,
 } from 'react-admin';
+import SubMenu from './SubMenu';
+import { AppState } from '../types';
 
+// Menu icons
+import TaxpayersMenuIcon from '@material-ui/icons/AssignmentInd';
+import ReportIcon from '@material-ui/icons/Assessment';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LabelIcon from '@material-ui/icons/Label';
+
+// Resources
+import users from '../users';
 import concepts from '../concepts';
 import movements from '../movements';
 import liquidations from '../liquidations';
@@ -21,20 +28,18 @@ import taxpayers from '../taxpayers';
 import fines from '../fines';
 import applications from '../applications';
 import licenses from '../licenses';
-import SubMenu from './SubMenu';
-import { AppState } from '../types';
+import paymentTypes from '../payment-types';
+import paymentMethods from '../payment-methods';
 
-// Menu icons
-import TaxpayersMenuIcon from '@material-ui/icons/AssignmentInd';
-import ReportIcon from '@material-ui/icons/Assessment';
-type MenuName = 'reports' | 'taxpayers';
+type MenuName = 'reports' | 'taxpayers' | 'settings' | 'administration';
 
 const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
     const [state, setState] = useState({
-        reports: true,
         taxpayers: true,
+        reports: false,
+        settings: false,
+        administration: false
     });
-    const translate = useTranslate();
     const isXSmall = useMediaQuery((theme: Theme) =>
         theme.breakpoints.down('xs')
     );
@@ -130,6 +135,39 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
+                    to={applications.name}
+                    primaryText={applications.options.label}
+                    leftIcon={<applications.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+            </SubMenu>
+            <SubMenu
+                handleToggle={() => handleToggle('settings')}
+                isOpen={state.settings}
+                sidebarIsOpen={open}
+                name="pos.menu.settings"
+                icon={<SettingsIcon />}
+                dense={dense}
+            >
+                <MenuItemLink
+                    to={paymentTypes.name}
+                    primaryText={paymentTypes.options.label}
+                    leftIcon={<paymentTypes.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={paymentMethods.name}
+                    primaryText={paymentMethods.options.label}
+                    leftIcon={<paymentMethods.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
                     to={concepts.name}
                     primaryText={concepts.options.label}
                     leftIcon={<concepts.icon />}
@@ -137,10 +175,19 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     sidebarIsOpen={open}
                     dense={dense}
                 />
+            </SubMenu>
+            <SubMenu
+                handleToggle={() => handleToggle('administration')}
+                isOpen={state.administration}
+                sidebarIsOpen={open}
+                name="pos.menu.administration"
+                icon={<LabelIcon />}
+                dense={dense}
+            >
                 <MenuItemLink
-                    to={applications.name}
-                    primaryText={applications.options.label}
-                    leftIcon={<applications.icon />}
+                    to={users.name}
+                    primaryText={users.options.label}
+                    leftIcon={<users.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}

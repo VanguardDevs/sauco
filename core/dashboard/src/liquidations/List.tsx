@@ -7,6 +7,7 @@ import {
   NumberField,
   TextField,
   SimpleList,
+  ReferenceField,
   ReferenceArrayInput,
   SelectInput
 } from 'react-admin';
@@ -18,6 +19,9 @@ const StudentFilter: React.FC = props => (
     <TextInput label="Objeto de pago" source='object_payment' />
     <TextInput label="Contribuyente" source='taxpayer' />
     <TextInput label="Monto" source='amount' />
+    <ReferenceArrayInput source="status_id" reference="status" label="Estado">
+      <SelectInput source="name" label="Estado" allowEmpty={false} />
+    </ReferenceArrayInput>
     <ReferenceArrayInput source="liquidation_type_id" reference="liquidation-types" label="Tipo">
       <SelectInput source="name" label="Tipo" allowEmpty={false} />
     </ReferenceArrayInput>
@@ -48,7 +52,9 @@ const StudentList: React.FC = props => {
             <TextField source="num" label="Número"/>
             <TextField source="object_payment" label="Objeto de pago"/>
             <NumberField source='amount' label='Monto' />
-            <TextField source="taxpayer.name" label="Contribuyente"/>
+            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
+                <TextField source="name" />
+            </ReferenceField>
             <TextField source="liquidation_type.name" label="Tipo"/>
           </Datagrid>
         )
