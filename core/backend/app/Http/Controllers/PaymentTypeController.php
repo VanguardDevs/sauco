@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentType;
+use App\Http\Requests\PaymentTypeCreateRequest;
 use Illuminate\Http\Request;
 
 class PaymentTypeController extends Controller
@@ -34,9 +35,11 @@ class PaymentTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PaymentTypeCreateRequest $request)
     {
-        //
+        $model = PaymentType::create($request->all());
+
+        return $model;
     }
 
     /**
@@ -59,7 +62,9 @@ class PaymentTypeController extends Controller
      */
     public function update(Request $request, PaymentType $paymentType)
     {
-        //
+        $paymentType->update($request->all());
+
+        return response()->json($paymentType, 200);
     }
 
     /**
