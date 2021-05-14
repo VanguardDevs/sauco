@@ -55,6 +55,9 @@ class TaxpayerController extends Controller
 
                 $query->where('taxpayer_classification_id', '=', $name);
             }
+            if (array_key_exists('id', $filters)) {
+                $query->find($filters['id']);
+            }
         }
 
         return $query->paginate($results);

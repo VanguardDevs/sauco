@@ -9,6 +9,7 @@ import {
   SimpleList,
   ReferenceArrayInput,
   SelectInput,
+  ReferenceField,
   DateInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
@@ -56,7 +57,9 @@ const ApplicationsList: React.FC = props => {
             <TextField source="num" label="Número"/>
             <TextField source="concept.name" label="Rubro"/>
             <NumberField source='amount' label='Monto' />
-            <TextField source="taxpayer.name" label="Contribuyente"/>
+            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
+                <TextField source="name" />
+            </ReferenceField>
           </Datagrid>
         )
       }

@@ -53,7 +53,7 @@ const Dashboard: React.FC = () => {
             {
                 filter: { gt_date: aMonthAgo.toISOString() },
                 sort: { field: 'processed_at', order: 'DESC' },
-                pagination: { page: 1, perPage: 1200 },
+                pagination: { page: 1, perPage: 1336 },
             }
         );
         const aggregations = payments

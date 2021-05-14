@@ -11,7 +11,7 @@ const i18nProvider = polyglotI18nProvider(() => ({
       'reports': 'Reportes',
       'taxpayers': 'Contribuyentes',
       'settings': 'Configuraciones',
-      'institution': 'Administración'
+      'administration': 'Administración'
     }
   }
 }));

@@ -4,7 +4,7 @@ import {
   TextInput,
   List,
   Datagrid,
-  NumberField,
+  ReferenceField,
   TextField,
   SimpleList,
   ReferenceArrayInput,
@@ -12,6 +12,7 @@ import {
   DateInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
+import { format, subDays, addDays, parse } from 'date-fns';
 
 const optionRenderer = (choice:any) => `${choice.description}`;
 
@@ -41,7 +42,7 @@ const LicensesList: React.FC = props => {
 
   return (
     <List {...props}
-      title="Sanciones"
+      title="Licencias"
       bulkActionButtons={false}
       filters={<LicensesFilter />}
       exporter={false}
@@ -60,7 +61,9 @@ const LicensesList: React.FC = props => {
           <Datagrid>
             <TextField source="num" label="Número"/>
             <TextField source="ordinance.description" label="Ordenanza"/>
-            <TextField source="taxpayer.name" label="Contribuyente"/>
+            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
+                <TextField source="name" />
+            </ReferenceField>
           </Datagrid>
         )
       }
