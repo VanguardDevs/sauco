@@ -31,14 +31,15 @@ import licenses from '../licenses';
 import paymentTypes from '../payment-types';
 import paymentMethods from '../payment-methods';
 
-type MenuName = 'reports' | 'taxpayers' | 'settings' | 'administration';
+type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre';
 
 const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
     const [state, setState] = useState({
-        taxpayers: true,
+        people: true,
         reports: false,
         settings: false,
-        administration: false
+        administration: false,
+        cadastre: false
     });
     const isXSmall = useMediaQuery((theme: Theme) =>
         theme.breakpoints.down('xs')
@@ -54,10 +55,10 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
             {' '}
             <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
             <SubMenu
-                handleToggle={() => handleToggle('taxpayers')}
-                isOpen={state.taxpayers}
+                handleToggle={() => handleToggle('people')}
+                isOpen={state.people}
                 sidebarIsOpen={open}
-                name="pos.menu.taxpayers"
+                name="pos.menu.people"
                 icon={<TaxpayersMenuIcon />}
                 dense={dense}
             >
