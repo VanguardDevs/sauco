@@ -12,19 +12,20 @@ class ColorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = Color::withCount('vehicles');
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -35,7 +36,9 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $color = Color::create($request->all());
+
+        return response()->json($color, 201);
     }
 
     /**
@@ -46,18 +49,7 @@ class ColorController extends Controller
      */
     public function show(Color $color)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Color  $color
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Color $color)
-    {
-        //
+        return $response->json($color, 201);
     }
 
     /**
@@ -69,7 +61,9 @@ class ColorController extends Controller
      */
     public function update(Request $request, Color $color)
     {
-        //
+        $color->update($request->all());
+
+        return response()->json($color, 201);
     }
 
     /**
@@ -80,6 +74,8 @@ class ColorController extends Controller
      */
     public function destroy(Color $color)
     {
-        //
+        $color->delete();
+
+        return response()->json($color, 201);
     }
 }
