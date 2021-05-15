@@ -30,8 +30,7 @@ use Illuminate\Http\Request;
         Route::apiResource('ordinances', 'OrdinanceController');
     // });
 
-    Route::apiResource('economic-activities', 'EconomicActivityController')
-        ->middleware('permission:access.economic-activities');
+    Route::apiResource('economic-activities', 'EconomicActivityController');
 
     // Controlled level permissions
     Route::apiResource('liquidation-types', 'LiquidationTypeController');
