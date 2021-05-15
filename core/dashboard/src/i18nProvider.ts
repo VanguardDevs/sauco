@@ -9,7 +9,8 @@ const i18nProvider = polyglotI18nProvider(() => ({
   pos: {
     menu: {
       'reports': 'Reportes',
-      'taxpayers': 'Contribuyentes',
+      'people': 'Personas',
+      'cadastre': 'Catastro',
       'settings': 'Configuraciones',
       'administration': 'Administración'
     }
