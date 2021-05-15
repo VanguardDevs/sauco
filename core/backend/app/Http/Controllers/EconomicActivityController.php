@@ -10,13 +10,6 @@ use App\Http\Requests\EconomicActivitiesCreateRequest;
 
 class EconomicActivityController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:create.economic-activities')->only([
-            'create', 'store', 'edit', 'update', 'destroy'
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,24 +17,33 @@ class EconomicActivityController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            $query = EconomicActivity::query();
+        $query = EconomicActivity::withCount('taxpayers');
+        $results = $request->perPage;
 
-            return DataTables::eloquent($query)->toJson();
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+            if (array_key_exists('code', $filters)) {
+                $query->whereLike('code', $filters['code']);
+            }
+            if (array_key_exists('lt_min_tax', $filters)) {
+                $query->where('min_tax', '<', $filters['lt_min_tax']);
+            }
+            if (array_key_exists('gt_min_tax', $filters)) {
+                $query->where('min_tax', '>=', $filters['gt_min_tax']);
+            }
+            if (array_key_exists('gt_aliquote', $filters)) {
+                $query->where('aliquote', '>=', $filters['gt_aliquote']);
+            }
+            if (array_key_exists('lt_aliquote', $filters)) {
+                $query->where('aliquote', '<', $filters['lt_aliquote']);
+            }
         }
 
-        return view('modules.economic-activities.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.economic-activities.register')
-            ->with('typeForm', 'create');
+        return $query->paginate($results);
     }
 
     /**
@@ -52,10 +54,9 @@ class EconomicActivityController extends Controller
      */
     public function store(EconomicActivitiesCreateRequest $request)
     {
-        $create = EconomicActivity::create($request->all());
+        $act = EconomicActivity::create($request->all());
 
-        return redirect('economic-activities')
-            ->withSuccess('¡Actividad económica guardada!');
+        return response()->json($act, 201);
     }
 
     /**
@@ -66,47 +67,9 @@ class EconomicActivityController extends Controller
      */
     public function show(EconomicActivity $economicActivity)
     {
-        $taxpayersCount = $economicActivity->getTaxpayers()->count();
+        $data = $economicActivity->getTaxpayers()->count();
 
-        return view('modules.economic-activities.show')
-            ->with('row', $economicActivity)
-            ->with('numTaxpayers', $taxpayersCount);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\EconomicActivity  $economicActivity
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(EconomicActivity $economicActivity)
-    {
-        return view('modules.economic-activities.register')
-            ->with('classifications', ActivityClassification::pluck('name', 'id'))
-            ->with('typeForm', 'update')
-            ->with('row', $economicActivity);
-    }
-
-    /**
-     * Show the form for editing the specified resource
-     *
-     * @param \App\Taxpayer $taxpayer
-     * @return \Illuminate\Http\Respose
-     */
-    public function editActivitiesForm(Taxpayer $taxpayer)
-    {
-        if (($taxpayer->taxpayerType->description != 'JURÍDICO') &&
-            (!$taxpayer->commercialDenomination)) {
-                return redirect('taxpayers/'.$taxpayer->id)
-                    ->withError('¡Este contribuyente no admite actividades económicas!');
-        }
-
-        $activities = EconomicActivity::all()->pluck('fullName','id');
-
-        return view('modules.taxpayers.register-economic-activities')
-            ->with('row', $taxpayer)
-            ->with('activities', $activities)
-            ->with('typeForm', 'update');
+        return response()->json($data, 201);
     }
 
     /**
@@ -118,34 +81,9 @@ class EconomicActivityController extends Controller
      */
     public function update(EconomicActivitiesCreateRequest $request, EconomicActivity $economicActivity)
     {
-        $row = EconomicActivity::find($economicActivity->id);
+        $economicActivity->update($request->all());
 
-        $row->fill($request->all())
-            ->save();
-
-        return redirect('economic-activities')
-            ->withSuccess('¡Actividad económica actualizada!');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Taxpayer  $taxpayer
-     * @return \Illuminate\Http\Response
-     */
-    public function editActivities(Taxpayer $taxpayer, TaxpayerActivitiesFormRequest $request)
-    {
-        $taxpayer->economicActivities()->sync(
-            $request->input('economic_activities')
-        );
-
-	if ($taxpayer->licenses()->exists()) {
-	    $taxpayer->licenses()->first()->economicActivities()->sync($request->input('economic_activities'));
-	}
-
-        return redirect('taxpayers/'.$taxpayer->id)
-            ->withSuccess('¡Actividades económicas actualizadas!');
+        return response()->json($economicActivity, 201);
     }
 
     /**
