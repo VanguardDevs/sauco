@@ -51,10 +51,15 @@ const StudentList: React.FC = props => {
           <Datagrid>
             <TextField source="num" label="Número"/>
             <TextField source="object_payment" label="Objeto de pago"/>
-            <NumberField source='amount' label='Monto' />
-            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
-                <TextField source="name" />
+            <ReferenceField
+              label="Contribuyente"
+              source="taxpayer_id"
+              reference="taxpayers"
+              link="show"
+            >
+              <TextField source="name" />
             </ReferenceField>
+            <NumberField source='amount' label='Monto' />
             <TextField source="liquidation_type.name" label="Tipo"/>
           </Datagrid>
         )

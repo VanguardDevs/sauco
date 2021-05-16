@@ -50,8 +50,13 @@ const AffidavitsList: React.FC = props => {
         : (
           <Datagrid>
             <TextField source="num" label="Número"/>
-            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
-                <TextField source="name" />
+            <ReferenceField
+              label="Contribuyente"
+              source="taxpayer_id"
+              reference="taxpayers"
+              link="show"
+            >
+              <TextField source="name" />
             </ReferenceField>
             <NumberField source='total_brute_amount' label='Monto bruto' />
             <NumberField source='total_calc_amount' label='Monto calculado' />

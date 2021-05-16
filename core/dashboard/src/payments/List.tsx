@@ -72,8 +72,13 @@ const PaymentsList: React.FC = props => {
         : (
           <Datagrid>
             <TextField source="num" label="Número"/>
-            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
-                <TextField source="name" />
+            <ReferenceField
+              label="Contribuyente"
+              source="taxpayer_id"
+              reference="taxpayers"
+              link="show"
+            >
+              <TextField source="name" />
             </ReferenceField>
             <NumberField source='amount' label='Monto' />
           </Datagrid>
