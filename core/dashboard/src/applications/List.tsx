@@ -17,7 +17,14 @@ import { Theme, useMediaQuery } from '@material-ui/core';
 const ApplicationsFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Número" source='num' />
-    <TextInput label="Contribuyente" source='taxpayer' />
+    <ReferenceField
+      label="Contribuyente"
+      source="taxpayer_id"
+      reference="taxpayers"
+      link="show"
+    >
+      <TextField source="name" />
+    </ReferenceField>
     <TextInput label="Monto" source='amount' />
     <ReferenceArrayInput
         source="concept_id"
