@@ -20,6 +20,7 @@ import licenses from './licenses';
 import paymentTypes from './payment-types';
 import paymentMethods from './payment-methods';
 import users from './users';
+import ordinances from './ordinances';
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
       <Resource {...affidavits} />
       <Resource {...licenses} />
       <Resource {...users} />
-      <Resource name="ordinances" />
+      <Resource {...ordinances} />
       <Resource name="cancellation-types" />
       <Resource name="liquidation-types" />
       <Resource name="taxpayer-types" />
