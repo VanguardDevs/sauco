@@ -64,7 +64,12 @@ const ApplicationsList: React.FC = props => {
             <TextField source="num" label="Número"/>
             <TextField source="concept.name" label="Rubro"/>
             <NumberField source='amount' label='Monto' />
-            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
+            <ReferenceField
+                label="Contribuyente"
+                source="taxpayer_id"
+                reference="taxpayers"
+                link='show'
+            >
                 <TextField source="name" />
             </ReferenceField>
           </Datagrid>

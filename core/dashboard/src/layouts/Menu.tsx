@@ -30,6 +30,7 @@ import applications from '../applications';
 import licenses from '../licenses';
 import paymentTypes from '../payment-types';
 import paymentMethods from '../payment-methods';
+import ordinances from '../ordinances';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre';
 
@@ -172,6 +173,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     to={concepts.name}
                     primaryText={concepts.options.label}
                     leftIcon={<concepts.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={ordinances.name}
+                    primaryText={ordinances.options.label}
+                    leftIcon={<ordinances.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}
