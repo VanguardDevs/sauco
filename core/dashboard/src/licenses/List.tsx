@@ -19,12 +19,6 @@ const optionRenderer = (choice:any) => `${choice.description}`;
 const LicensesFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Número" source='num' />
-    <ReferenceField
-      label="Contribuyente"
-      source="taxpayer_id"
-      reference="taxpayers"
-      link="show"
-    >
     <ReferenceArrayInput
       source="ordinance_id"
       reference="ordinances"
@@ -66,7 +60,7 @@ const LicensesList: React.FC = props => {
           <Datagrid>
             <TextField source="num" label="Número"/>
             <TextField source="ordinance.description" label="Ordenanza"/>
-            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers">
+            <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers" link='show'>
                 <TextField source="name" />
             </ReferenceField>
           </Datagrid>

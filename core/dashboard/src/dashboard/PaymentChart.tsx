@@ -9,7 +9,7 @@ import {
     CartesianGrid,
     Tooltip,
 } from 'recharts';
-import { format, subDays, addDays, parseISO, parse } from 'date-fns';
+import { format, subDays, addDays, parse } from 'date-fns';
 import abbreviate from "number-abbreviate";
 import { Payment } from '../types';
 
