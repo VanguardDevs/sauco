@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ApplyFine;
 use App\Console\Commands\MigrateLicenseMetadata;
 use App\Console\Commands\MigrateLiquidations;
+use App\Console\Commands\RetrievePetroPrice;
 
 class Kernel extends ConsoleKernel
 {
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         ApplyFine::class,
         MigrateLicenseMetadata::class,
-        MigrateLiquidations::class
+        MigrateLiquidations::class,
+        RetrievePetroPrice::class
     ];
 
     /**
@@ -33,6 +35,9 @@ class Kernel extends ConsoleKernel
             ->monthlyOn(16, '01:42')
             ->lastDayOfMonth('01:42')
             ->evenInMaintenanceMode();
+
+        $schedule->command('get:petro-price')
+            ->dailyAt('09:00');
     }
 
     /**

@@ -55,5 +55,7 @@ use Illuminate\Http\Request;
     Route::apiResource('applications', 'ApplicationController');
     Route::apiResource('fines', 'FineController');
     Route::apiResource('deductions', 'DeductionController');
+    Route::apiResource('petro-prices', 'PetroPriceController')
+        ->except(['store', 'update', 'destroy', 'show']);
     Route::get('status', 'StatusController@index');
 // });
