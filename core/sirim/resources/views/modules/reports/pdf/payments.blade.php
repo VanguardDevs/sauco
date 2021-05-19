@@ -100,7 +100,7 @@ set_time_limit(120);
                     <td>{{ $payment->num }}</td>
                     <td>{{ $payment->taxpayer->rif }}</td>
                     <td>{{ $payment->taxpayer->name }}</td>
-                    <td>{{ $payment->formattedAmount }}</td>
+                    <td>{{ $payment->prettyAmount }}</td>
                 </tr>
                 @endforeach
              </table>
