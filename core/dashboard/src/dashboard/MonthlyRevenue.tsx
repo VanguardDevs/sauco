@@ -9,7 +9,6 @@ interface Props {
 }
 
 const MonthlyRevenue: React.FC<Props> = ({ value }) => {
-
     return (
         <CardWithIcon
             to="/payments"
