@@ -65,10 +65,11 @@ class ReportController extends Controller
 
     public function printPaymentReport(Request $request)
     {
-        $firstDate = Carbon::parse($request->input('first_date'));
-        $lastDate = Carbon::parse($request->input('last_date'));
+        $firstDate = Carbon::parse($request->input('first_date'))->toDateString();
+        $lastDate = Carbon::parse($request->input('last_date'))->toDateString();
 
-        $payments = Payment::processedByDate($firstDate, $lastDate);
+        $payments = Payment::whereDate('processed_at', '>=', $firstDate)
+            ->whereDate('processed_at', '<', $lastDate)->get();
 
         // Prepare pdf
         $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate));

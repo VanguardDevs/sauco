@@ -136,13 +136,13 @@ class PaymentController extends Controller
                         ->withError('¡Faltan datos!');
             }
 
-            $payment->reference()->create([
+            $payment->references()->create([
                 'reference' => $reference,
                 'account_id' => 1,
             ]);
         }
 
-        $paymentNum = Payment::getNewNum();
+        $paymentNum = Payment::getNewNum(2);
         $processedAt = Carbon::now();
 
         $payment->update([

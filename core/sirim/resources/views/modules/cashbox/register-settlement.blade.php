@@ -83,8 +83,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $row->bruteAmountAffidavit }}
-                        <td>{{ $row->totalAmount }}
+                        <td>{{ $row->prettyTotalBruteAmount }}
+                        <td>{{ $row->prettyTotalCalcAmount }}
                     </tr>
                 </tbody>
             </table>

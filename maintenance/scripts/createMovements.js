@@ -20,9 +20,11 @@ const insertMovementsQuery = `
       WHERE liquidations.status_id = 2
 `;
 
-const updateYearsOfEconomicActivityMovements = (id, year) => (`
+const updateYearsOfEconomicActivityMovements = (id, year, status) => (`
   UPDATE movements
-  SET year_id = ${id}
+  SET
+    year_id = ${id},
+    concurrent = ${status}
   FROM (
     SELECT id FROM liquidations WHERE object_payment ILIKE '%${year}%'
   ) AS subquery
@@ -39,6 +41,8 @@ async function main() {
     await db.schema.createTable('movements', (table) => {
       table.increments();
       table.decimal('amount', 15, 2);
+      table.boolean('own_income').defaultTo(1);
+      table.boolean('concurrent').defaultTo(1);
       table.integer('liquidation_id').unsigned();
       table.integer('concept_id').unsigned();
       table.integer('payment_id').unsigned();
@@ -52,9 +56,9 @@ async function main() {
     });
 
     await db.schema.raw(insertMovementsQuery);
-    await db.schema.raw(updateYearsOfEconomicActivityMovements('1', '2020'));
-    await db.schema.raw(updateYearsOfEconomicActivityMovements('2', '2019'));
-    await db.schema.raw(updateYearsOfEconomicActivityMovements('3', '2021'));
+    await db.schema.raw(updateYearsOfEconomicActivityMovements('1', '2020', false));
+    await db.schema.raw(updateYearsOfEconomicActivityMovements('2', '2019', false));
+    await db.schema.raw(updateYearsOfEconomicActivityMovements('3', '2021', true));
     await db.schema.raw(`
       UPDATE movements
       SET year_id = 1
