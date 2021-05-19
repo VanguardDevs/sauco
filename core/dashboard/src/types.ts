@@ -11,6 +11,11 @@ export interface Payment extends Record {
     total: number;
 }
 
+export interface PetroPrice extends Record {
+    date: Date;
+    total: number;
+}
+
 export interface Liquidation extends Record {
     date: Date;
     total: number;
