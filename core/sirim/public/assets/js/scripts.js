@@ -21,27 +21,22 @@ $(function () {
 const token = $("meta[name='csrf-token']").attr("content");
 const apiURL = $("meta[name='api-base-url']").attr("content");
 
-const handleRequest = url => {
-  fetch(`${baseURL}/${url}`, {
-      method: 'POST',
-      headers: {
-          "X-CSRF-TOKEN": token
-      }
-  }).then(response => response.json())
-  .then(data => {
-      if (!data.ok) {
-          Swal.fire({
-              title: data.message,
-              type: 'error'
-          })
-      } else {
-          Swal.fire({
-              title: data.message,
-              type: 'success'
-          })
-      }
-  });
-}
+const status = model => (
+    (!model.liquidation) ? `
+    <span class="kt-badge kt-badge--info kt-badge--inline">
+        Liquidar
+    </span>
+    ` : (model.liquidation.status_id == 2) ? `
+        <span class="kt-badge kt-badge--success kt-badge--inline">
+            Procesada
+        </span>
+        `
+        : `
+            <span class="kt-badge kt-badge--danger kt-badge--inline">
+                Pendiente
+            </span>
+        `
+);
 
 function onSelectTaxpayerType() {
   let selected = $(this).children('option:selected').val();
@@ -754,6 +749,12 @@ $(document).ready(function() {
             { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
             {
+                data: 'id',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`${status(oData)}`);
+                }
+            },
+            {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
@@ -814,10 +815,19 @@ $(document).ready(function() {
             { data: 'liquidation.object_payment' },
             { data: 'pretty_amount' },
             {
+                data: 'id',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`${status(oData)}`);
+                }
+            },
+            {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/liquidations/${oData.id}/show title='Ver liquidación'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
                       <a class="mr-2" onClick="nullRecord(${oData.id},'withholdings')" title='Anular'>
                         <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                       </a>
@@ -839,8 +849,14 @@ $(document).ready(function() {
         "columns": [
             { data: 'month.year.year' },
             { data: 'month.name' },
-            { data: 'total_brute_amount', name: 'total_brute_amount' },
-            { data: 'total_calc_amount', name: 'total_calc_amount' },
+            { data: 'pretty_total_brute_amount', name: 'pretty_total_brute_amount' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
+            {
+                data: 'id',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`${status(oData)}`);
+                }
+            },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

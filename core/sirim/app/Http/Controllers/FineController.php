@@ -37,7 +37,7 @@ class FineController extends Controller
     {
         $query = $taxpayer->fines()
             ->orderBy('fines.created_at', 'DESC')
-            ->with(['concept:id,name']);
+            ->with(['concept:id,name', 'liquidation']);
 
         return DataTables::of($query)
             ->addColumn('pretty_amount', function ($q) {

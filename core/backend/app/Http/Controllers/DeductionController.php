@@ -78,14 +78,14 @@ class DeductionController extends Controller
 
         $affidavit = $liquidation->liquidable;
         $liquidation->update([
-            'amount' => $affidavit->total_calc_amount
+            'amount' => $affidavit->amount
         ]);
 
         if ($affidavit->fines()->exists()) {
             $concept = Concept::find(3);
 
             foreach($affidavit->fines as $fine) {
-                $amount = $concept->calculateAmount($affidavit->total_calc_amount);
+                $amount = $concept->calculateAmount($affidavit->amount);
 
                 $fine->update([
                     'amount' => $amount

@@ -97,7 +97,8 @@
                   <tr>
                     <th width="20%">Monto</th>
                     <th width="40%">Concepto</th>
-                    <th width="20%">Realizada</th>
+                    <th width="10%">Realizada</th>
+                    <th width="10%">Estado</th>
                     <th width="20%">Acciones</th>
                   </tr>
                 </thead>

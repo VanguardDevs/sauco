@@ -29,7 +29,7 @@
                             Form::select('year', $years, null, [
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
-                                'id' => 'years' 
+                                'id' => 'years'
                             ])
                         !!}
 
@@ -43,7 +43,7 @@
                             Form::select('month', [], null, [
                                 'class' => 'col-md-12 select2',
                                 'placeholder' => 'SELECCIONE',
-                                'id' => 'months' 
+                                'id' => 'months'
                             ])
                         !!}
 
@@ -78,11 +78,12 @@
             <table id="tTaxpayerAffidavits" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                   <tr>
-                    <th width="15%">Año</th>
+                    <th width="10%">Año</th>
                     <th width="15%">Mes</th>
                     <th width="25%">Declarado</th>
                     <th width="25%">Calculado</th>
-                    <th width="20%">Acciones</th>
+                    <th width="10%">Estado</th>
+                    <th width="15%">Acciones</th>
                   </tr>
                 </thead>
             </table>
