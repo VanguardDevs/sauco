@@ -25,6 +25,8 @@ const StudentFilter: React.FC = props => (
     <ReferenceArrayInput source="liquidation_type_id" reference="liquidation-types" label="Tipo">
       <SelectInput source="name" label="Tipo" allowEmpty={false} />
     </ReferenceArrayInput>
+    <DateInput source="gt_date" label='Procesado después de' />
+    <DateInput source="lt_date" label='Procesado antes de' />
   </Filter>
 );
 
