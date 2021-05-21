@@ -20,7 +20,9 @@ class EconomicActivity extends Model
         'min_tax',
     ];
 
-    protected $appends = ['fullName'];
+    protected $casts = [
+        'min_tax' => 'integer'
+    ];
 
     public function licenses()
     {

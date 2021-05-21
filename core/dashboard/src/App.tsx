@@ -21,6 +21,7 @@ import paymentTypes from './payment-types';
 import paymentMethods from './payment-methods';
 import users from './users';
 import ordinances from './ordinances';
+import economicActivities from './economic-activities';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
       <Resource {...licenses} />
       <Resource {...users} />
       <Resource {...ordinances} />
+      <Resource {...economicActivities} />
       <Resource name="cancellation-types" />
       <Resource name="liquidation-types" />
       <Resource name="taxpayer-types" />

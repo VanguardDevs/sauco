@@ -12,6 +12,7 @@ const i18nProvider = polyglotI18nProvider(() => ({
       'people': 'Personas',
       'cadastre': 'Catastro',
       'settings': 'Configuraciones',
+      'rates': 'Tasas',
       'administration': 'Administración'
     }
   }
