@@ -24,9 +24,7 @@ class Movement extends Model
         'payment_id'
     ];
 
-    protected $casts = [
-        'amount' => 'float',
-    ];
+    protected $casts = [ 'amount' => 'float' ];
 
     public function year()
     {
