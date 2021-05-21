@@ -18,11 +18,11 @@ class MovementController extends Controller
     {
         $query = DB::table('concepts')
             ->select(
-                'concepts.id AS id',
+                DB::raw('CONCAT(concepts.id || CAST(concurrent AS varchar)) AS id'),
                 'concepts.name AS name',
                 'concurrent',
                 DB::raw('COUNT(movements.id) AS movements_count'),
-                DB::raw('CAST(SUM(movements.amount) AS NUMERIC) AS amount')
+                DB::raw('SUM(movements.amount) AS amount')
             )
             ->join('movements', 'movements.concept_id', '=', 'concepts.id')
             ->groupBy('concurrent', 'concepts.id')
