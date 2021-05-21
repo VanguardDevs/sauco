@@ -103,7 +103,11 @@
         <div class="card-footer">
             @if($typeForm == 'show')
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Ir a declaraciones</a>
-            @if($row->payment())
+            @if(!$row->payment() && auth()->user()->can('process.payments'))
+            <a href="{{ route('affidavits.payment', $row) }}" class="btn btn-warning">
+                <i class="fas fa-money-check"></i> Realizar factura
+            </a>
+            @elseif ($row->payment())
             <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info">
                 <i class="fas fa-money-check"></i> Ver factura
             </a>
