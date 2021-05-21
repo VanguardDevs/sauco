@@ -1,22 +1,19 @@
 import * as React from "react";
-// import { useDispatch } from 'react-redux';
-// import { setDialog } from '../actions';
 import {
   Filter,
   TextInput,
   DateInput,
-  List, 
+  List,
   Datagrid,
   NumberField,
-  TextField,
-  SimpleList,
+  TextField
 } from 'react-admin';
+import { MovementTypeField } from '../components';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
 const MovementFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="Concepto" source='concept' />
-    <TextInput label="Año" source='year' />
     <DateInput source="gt_date" label='Procesado después de' />
     <DateInput source="lt_date" label='Procesado antes de' />
   </Filter>
@@ -37,10 +34,9 @@ const MovementList: React.FC = props => {
     >
       <Datagrid>
         <TextField source="name" label="Concepto"/>
-        <TextField source="year" label="Año"/>
-        <NumberField source='amount' label='Monto' />
-        <NumberField source='liquidations_count' label='Liquidaciones' />
-        <NumberField source="payments_count" label="Facturas"/>
+        <NumberField source='amount' label='Monto' options={{ style: 'currency', currency: 'USD' }}/>
+        <MovementTypeField label="Tipo de movimiento" />
+        <NumberField source='movements_count' label='Movimientos' />
       </Datagrid>
     </List>
   );

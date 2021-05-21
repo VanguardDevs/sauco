@@ -15,6 +15,7 @@ import TaxpayersMenuIcon from '@material-ui/icons/AssignmentInd';
 import ReportIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LabelIcon from '@material-ui/icons/Label';
+import EmojiSymbolsIcon from '@material-ui/icons/EmojiSymbols';
 
 // Resources
 import users from '../users';
@@ -31,8 +32,9 @@ import licenses from '../licenses';
 import paymentTypes from '../payment-types';
 import paymentMethods from '../payment-methods';
 import ordinances from '../ordinances';
+import economicActivities from '../economic-activities';
 
-type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre';
+type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
 const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
     const [state, setState] = useState({
@@ -40,7 +42,8 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
         reports: false,
         settings: false,
         administration: false,
-        cadastre: false
+        cadastre: false,
+        rates: false
     });
     const isXSmall = useMediaQuery((theme: Theme) =>
         theme.breakpoints.down('xs')
@@ -67,6 +70,31 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     to={taxpayers.name}
                     primaryText={taxpayers.options.label}
                     leftIcon={<taxpayers.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+            </SubMenu>
+            <SubMenu
+                handleToggle={() => handleToggle('rates')}
+                isOpen={state.rates}
+                sidebarIsOpen={open}
+                name="pos.menu.rates"
+                icon={<EmojiSymbolsIcon />}
+                dense={dense}
+            >
+                <MenuItemLink
+                    to={concepts.name}
+                    primaryText={concepts.options.label}
+                    leftIcon={<concepts.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={economicActivities.name}
+                    primaryText={economicActivities.options.label}
+                    leftIcon={<economicActivities.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}
@@ -165,14 +193,6 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     to={paymentMethods.name}
                     primaryText={paymentMethods.options.label}
                     leftIcon={<paymentMethods.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={concepts.name}
-                    primaryText={concepts.options.label}
-                    leftIcon={<concepts.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}
