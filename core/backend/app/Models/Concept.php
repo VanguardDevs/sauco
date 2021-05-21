@@ -28,9 +28,7 @@ class Concept extends Model
         'accounting_account_id'
     ];
 
-    protected $casts = [
-        'amount' => 'float',
-    ];
+    protected $casts = [ 'amount' => 'float' ];
 
     public function calculateAmount($value = null)
     {
