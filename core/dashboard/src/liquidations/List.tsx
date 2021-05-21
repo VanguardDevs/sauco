@@ -9,7 +9,8 @@ import {
   SimpleList,
   ReferenceField,
   ReferenceArrayInput,
-  SelectInput
+  SelectInput,
+  DateInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
