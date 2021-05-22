@@ -15,6 +15,7 @@ class Appraisal extends Model
         'amount',
         'user_id',
         'property_id',
+        'petro_price_id',
         'year_id'
     ];
 
@@ -31,5 +32,16 @@ class Appraisal extends Model
     public function year()
     {
         return $this->hasOne(Year::class);
+    }
+
+    public function petroPrice()
+    {
+        return $this->belongsTo(PetroPrice::class);
+    }
+
+    public function liquidation()
+    {
+        return $this->morphOne(Liquidation::class, 'liquidable')
+            ->withTrashed();
     }
 }
