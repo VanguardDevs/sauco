@@ -5,8 +5,6 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ApplyFine;
-use App\Console\Commands\MigrateLicenseMetadata;
-use App\Console\Commands\MigrateLiquidations;
 use App\Console\Commands\RetrievePetroPrice;
 
 class Kernel extends ConsoleKernel
@@ -18,8 +16,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ApplyFine::class,
-        MigrateLicenseMetadata::class,
-        MigrateLiquidations::class,
         RetrievePetroPrice::class
     ];
 
