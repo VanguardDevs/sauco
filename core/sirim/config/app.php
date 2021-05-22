@@ -15,7 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'recapi' => env('RECAPI_HOST', null),
+    'sauco_url' => env('SAUCO_PLATFORM_URL', null),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
