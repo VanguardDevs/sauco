@@ -16,7 +16,7 @@ const optionRenderer = (choice:any) => `${choice.description}`;
 const TaxpayersFilter: React.FC = props => (
   <Filter {...props}>
     <TextInput label="RIF" source='rif' />
-    <TextInput label="Nombre" source='taxpayer' />
+    <TextInput label="Nombre" source='name' />
     <TextInput label="Teléfono" source='phone' />
     <TextInput label="Correo" source='email' />
     <TextInput label="Dirección" source='address' />
