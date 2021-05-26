@@ -95,6 +95,15 @@
             </a>
         </li>
         @endif
+
+        @if (Config::get('app.sauco_url'))
+        <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
+            <a  href="{{ Config::get('app.sauco_url') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon fas fa-star-half-alt"></i>
+                <span class="kt-menu__link-text">Sauco</span>
+            </a>
+        </li>
+        @endif
    </ul>
   </div>
 </div>
