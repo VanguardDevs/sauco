@@ -8,6 +8,13 @@ class Vehicle extends Model
 {
     protected $table = 'vehicles';
 
+    protected $fillable = [
+        'plate',
+        'brand_id',
+        'model_id',
+        'color_id'
+    ];
+
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);
@@ -15,7 +22,7 @@ class Vehicle extends Model
 
     public function model()
     {
-        return $this->belongsTo(Model::class);
+        return $this->belongsTo(VehicleModel::class, 'model_id');
     }
 
     public function color()
