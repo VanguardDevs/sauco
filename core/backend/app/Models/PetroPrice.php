@@ -14,4 +14,9 @@ class PetroPrice extends Model
     protected $fillable = [
         'value'
     ];
+
+    public function appraissals()
+    {
+        return $this->hasMany(Appraisal::class);
+    }
 }
