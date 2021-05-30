@@ -24,6 +24,8 @@ class Movement extends Model
         'payment_id'
     ];
 
+    protected $casts = [ 'amount' => 'float' ];
+
     public function year()
     {
         return $this->belongsTo(Year::class);

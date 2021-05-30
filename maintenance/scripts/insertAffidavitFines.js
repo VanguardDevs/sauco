@@ -53,8 +53,7 @@ async function main() {
     await db.schema.raw(insertRowsQuery);
 
     await db.schema.table('affidavits', (table) => {
-      table.decimal('total_brute_amount', 25);
-      table.renameColumn('amount', 'total_calc_amount');
+      table.decimal('total_brute_amount', 25).defaultTo('0.00');
     });
 
     await db.schema.raw(setBruteAmounts);

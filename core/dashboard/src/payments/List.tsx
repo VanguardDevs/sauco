@@ -3,11 +3,12 @@ import {
   Filter,
   TextInput,
   DateInput,
-  List, 
+  List,
   Datagrid,
   NumberField,
   TextField,
   SimpleList,
+  ReferenceField,
   ReferenceArrayInput,
   SelectInput
 } from 'react-admin';
@@ -58,12 +59,12 @@ const PaymentsList: React.FC = props => {
       filters={<PaymentsFilter />}
       exporter={false}
     >
-      { 
-        isSmall 
-        ? (      
+      {
+        isSmall
+        ? (
           <SimpleList
             primaryText={record => `${record.num}`}
-            secondaryText={record => `${record.taxpayer.name}`}
+            secondaryText={record => `${record.processed_at}`}
             tertiaryText={record => `${record.pretty_amount}`}
             linkType={"show"}
           />
@@ -71,8 +72,14 @@ const PaymentsList: React.FC = props => {
         : (
           <Datagrid>
             <TextField source="num" label="Número"/>
-            <TextField source="taxpayer.rif" label="RIF"/>
-            <TextField source="taxpayer.name" label="Nombre"/>
+            <ReferenceField
+              label="Contribuyente"
+              source="taxpayer_id"
+              reference="taxpayers"
+              link="show"
+            >
+              <TextField source="name" />
+            </ReferenceField>
             <NumberField source='amount' label='Monto' />
           </Datagrid>
         )

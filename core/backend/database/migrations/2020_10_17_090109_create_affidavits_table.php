@@ -17,7 +17,7 @@ class CreateAffidavitsTable extends Migration
             $table->id();
             $table->string('num', 8);
             $table->decimal('total_brute_amount', 25);
-            $table->decimal('total_calc_amount', 20);
+            $table->decimal('amount', 20);
             $table->unsignedBigInteger('month_id');
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('user_id');

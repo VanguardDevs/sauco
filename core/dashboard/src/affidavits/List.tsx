@@ -7,7 +7,8 @@ import {
   Datagrid,
   NumberField,
   TextField,
-  SimpleList
+  SimpleList,
+  ReferenceField
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
@@ -17,7 +18,7 @@ const AffidavitsFilter: React.FC = props => (
     <TextInput label="RIF" source='rif' />
     <TextInput label="Nombre" source='taxpayer' />
     <TextInput label="Monto bruto" source='total_brute_amount' />
-    <TextInput label="Monto calculado" source='total_calc_amount' />
+    <TextInput label="Monto calculado" source='amount' />
     <DateInput source="gt_date" label='Recibido después de' />
     <DateInput source="lt_date" label='Recibido antes de' />
   </Filter>
@@ -42,17 +43,23 @@ const AffidavitsList: React.FC = props => {
           <SimpleList
             primaryText={record => `${record.num}`}
             secondaryText={record => `${record.taxpayer.name}`}
-            tertiaryText={record => `${record.total_calc_amount}`}
+            tertiaryText={record => `${record.amount}`}
             linkType={"show"}
           />
         )
         : (
           <Datagrid>
             <TextField source="num" label="Número"/>
-            <TextField source="taxpayer.rif" label="RIF"/>
-            <TextField source="taxpayer.name" label="Razón social"/>
+            <ReferenceField
+              label="Contribuyente"
+              source="taxpayer_id"
+              reference="taxpayers"
+              link="show"
+            >
+              <TextField source="name" />
+            </ReferenceField>
             <NumberField source='total_brute_amount' label='Monto bruto' />
-            <NumberField source='total_calc_amount' label='Monto calculado' />
+            <NumberField source='amount' label='Monto calculado' />
             <TextField source="month.name" label="Mes" />
             <TextField source="month.year.year" label="Año" />
           </Datagrid>

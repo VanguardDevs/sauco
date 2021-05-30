@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Payment, Liquidation, License, Taxpayer } from '../types';
+import { Payment, Liquidation, License, PetroPrice } from '../types';
 import { subDays } from 'date-fns';
 import { useDataProvider } from 'react-admin';
 import { useMediaQuery, Theme } from '@material-ui/core';
@@ -11,6 +11,7 @@ import PaymentChart from './PaymentChart';
 import PendingLiquidations from './PendingLiquidations';
 import EmmitedLicenses from './EmmitedLicenses';
 import RegisteredTaxpayers from './RegisteredTaxpayers';
+import CurrentPetroPrice from './CurrentPetroPrice';
 
 interface State {
     payments?: Payment[];
@@ -18,6 +19,7 @@ interface State {
     pendingLiquidations?: number;
     emmittedLicenses?: number;
     registeredTaxpayers?: number;
+    currentPetroPrice?: string;
 }
 
 interface PaymentStats {
@@ -53,7 +55,7 @@ const Dashboard: React.FC = () => {
             {
                 filter: { gt_date: aMonthAgo.toISOString() },
                 sort: { field: 'processed_at', order: 'DESC' },
-                pagination: { page: 1, perPage: 1200 },
+                pagination: { page: 1, perPage: 1336 },
             }
         );
         const aggregations = payments
@@ -67,6 +69,7 @@ const Dashboard: React.FC = () => {
                     payments: [],
                 }
             );
+
         setState(state => ({
             ...state,
             payments,
@@ -90,7 +93,7 @@ const Dashboard: React.FC = () => {
         );
 
         setState(state => ({ ...state, pendingLiquidations: total }));
-    }, [useDataProvider])
+    }, [useDataProvider]);
 
     const fetchLicenses = React.useCallback(async () => {
         const { total } = await dataProvider.getList<License>(
@@ -118,11 +121,35 @@ const Dashboard: React.FC = () => {
         setState(state => ({ ...state, registeredTaxpayers: total }));
     }, [useDataProvider]);
 
+    const fetchPetroPrice = React.useCallback(async () => {
+        const { data: prices } = await dataProvider.getList<License>(
+            'petro-prices',
+            {
+                filter: { status_id: 1 },
+                sort: { field: 'created_at', order: 'DESC' },
+                pagination: { page: 1, perPage: 50 },
+            }
+        );
+
+        const price: number = +prices[0].value;
+
+        setState(state => ({
+            ...state,
+            currentPetroPrice: price.toLocaleString(undefined, {
+                style: 'currency',
+                currency: 'VES',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            })
+        }));
+    }, [useDataProvider]);
+
     React.useEffect(() => {
         fetchPayments();
         fetchLiquidations();
         fetchTaxpayers();
         fetchLicenses();
+        fetchPetroPrice();
     }, []);
 
     const {
@@ -130,7 +157,8 @@ const Dashboard: React.FC = () => {
         pendingLiquidations,
         payments,
         emmittedLicenses,
-        registeredTaxpayers
+        registeredTaxpayers,
+        currentPetroPrice
     } = state;
 
     return isXSmall ? (
@@ -144,6 +172,9 @@ const Dashboard: React.FC = () => {
                 <EmmitedLicenses value={emmittedLicenses} />
                 <VerticalSpacer />
                 <RegisteredTaxpayers value={registeredTaxpayers} />
+                <VerticalSpacer />
+                <CurrentPetroPrice value={currentPetroPrice} />
+                <VerticalSpacer />
                 <PaymentChart payments={payments} />
             </div>
         </div>
@@ -156,6 +187,8 @@ const Dashboard: React.FC = () => {
                 <MonthlyRevenue value={revenue} />
                 <Spacer />
                 <PendingLiquidations value={pendingLiquidations} />
+                <Spacer />
+                <CurrentPetroPrice value={currentPetroPrice} />
             </div>
             <VerticalSpacer />
             <div style={styles.flex}>
@@ -186,6 +219,9 @@ const Dashboard: React.FC = () => {
                         <RegisteredTaxpayers value={registeredTaxpayers} />
                         <VerticalSpacer />
                         <PendingLiquidations value={pendingLiquidations} />
+                        <VerticalSpacer />
+                        <CurrentPetroPrice value={currentPetroPrice} />
+                        <VerticalSpacer />
                     </div>
                 </div>
             </div>

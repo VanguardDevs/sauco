@@ -1,9 +1,10 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
 import dataProvider from './dataProvider';
+import authProvider from './authProvider';
 import { history } from './utils';
 import { Dashboard } from './dashboard';
-import { Layout } from './layouts';
+import { Layout, Login } from './layouts';
 import i18nProvider from './i18nProvider';
 // Resources
 import concepts from './concepts';
@@ -17,6 +18,11 @@ import taxpayers from './taxpayers';
 import fines from './fines';
 import applications from './applications';
 import licenses from './licenses';
+import paymentTypes from './payment-types';
+import paymentMethods from './payment-methods';
+import users from './users';
+import ordinances from './ordinances';
+import economicActivities from './economic-activities';
 
 function App() {
   return (
@@ -27,7 +33,11 @@ function App() {
       customRoutes={customRoutes}
       dataProvider={dataProvider}
       i18nProvider={i18nProvider}
+      loginPage={Login}
+      authProvider={authProvider}
     >
+      <Resource {...paymentTypes} />
+      <Resource {...paymentMethods} />
       <Resource {...taxpayers} />
       <Resource {...payments} />
       <Resource {...cancellations} />
@@ -38,13 +48,14 @@ function App() {
       <Resource {...fines} />
       <Resource {...affidavits} />
       <Resource {...licenses} />
-      <Resource name="ordinances" />
+      <Resource {...users} />
+      <Resource {...ordinances} />
+      <Resource {...economicActivities} />
       <Resource name="cancellation-types" />
       <Resource name="liquidation-types" />
-      <Resource name="payment-types" />
-      <Resource name="payment-methods" />
       <Resource name="taxpayer-types" />
       <Resource name="taxpayer-classifications" />
+      <Resource name="status" />
     </Admin>
   );
 }

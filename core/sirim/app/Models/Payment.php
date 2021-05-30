@@ -27,9 +27,13 @@ class Payment extends Model implements Auditable
     {
         $liquidations = $this->liquidations;
 
+        $currYear = Carbon::today()->year;
         foreach($liquidations as $liq) {
+            $concurrent = ($liq->year()->year == $currYear) ? true : false;
+
             $this->movements()->create([
                 'amount' => $liq->amount,
+                'concurrent' => $concurrent,
                 'concept_id' => $liq->concept_id,
                 'liquidation_id' => $liq->id,
                 'year_id' => $liq->year()->id

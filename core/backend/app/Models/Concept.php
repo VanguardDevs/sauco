@@ -28,6 +28,8 @@ class Concept extends Model
         'accounting_account_id'
     ];
 
+    protected $casts = [ 'amount' => 'float' ];
+
     public function calculateAmount($value = null)
     {
         $method = $this->chargingMethod()->first()->name;

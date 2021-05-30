@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import { AppBar, UserMenu, MenuItemLink, useTranslate } from 'react-admin';
 import Typography from '@material-ui/core/Typography';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { makeStyles } from '@material-ui/core/styles';
+import { useMediaQuery, Theme, makeStyles } from '@material-ui/core';
 
 import Logo from './Logo';
 
@@ -41,6 +41,10 @@ const CustomUserMenu = (props: any) => (
 
 const CustomAppBar = (props: any) => {
     const classes = useStyles();
+    const isXSmall = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.down('xs')
+    );
+
     return (
         <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
             <Typography
@@ -49,7 +53,7 @@ const CustomAppBar = (props: any) => {
                 className={classes.title}
                 id="react-admin-title"
             />
-            <Logo />
+            {!isXSmall && <Logo />}
             <span className={classes.spacer} />
         </AppBar>
     );

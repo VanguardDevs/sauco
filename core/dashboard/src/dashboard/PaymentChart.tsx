@@ -9,8 +9,8 @@ import {
     CartesianGrid,
     Tooltip,
 } from 'recharts';
-import { format, subDays, addDays } from 'date-fns';
-
+import { format, subDays, addDays, parse } from 'date-fns';
+import abbreviate from "number-abbreviate";
 import { Payment } from '../types';
 
 const lastDay = new Date();
@@ -23,7 +23,10 @@ const dateFormatter = (date: number): string =>
 const aggregatePaymentsByDay = (payments: Payment[]): { [key: string]: number } =>
     payments
         .reduce((acc, curr) => {
-            const day = format(curr.processed_at, 'YYYY-DD-MM');
+            const day = format(
+                parse(curr.processed_at, 'dd/MM/yyyy H:m', new Date()),
+                'yyyy-MM-dd'
+            );
             if (!acc[day]) {
                 acc[day] = 0;
             }
@@ -36,12 +39,13 @@ const getRevenuePerDay = (payments: Payment[]): TotalByDay[] => {
     const daysWithRevenue = aggregatePaymentsByDay(payments);
     return lastMonthDays.map(date => ({
         date: date.getTime(),
-        amount: daysWithRevenue[format(date, 'YYYY-MM-DD')] || 0,
+        amount: daysWithRevenue[format(date, 'yyyy-MM-dd')] || 0,
     }));
 };
 
 const PaymentChart: React.FC<{ payments?: Payment[] }> = ({ payments }) => {
     if (!payments) return null;
+
     return (
         <Card>
             <CardHeader title={'Ingresos durante el último mes'} />
@@ -81,6 +85,7 @@ const PaymentChart: React.FC<{ payments?: Payment[] }> = ({ payments }) => {
                                 tickFormatter={dateFormatter}
                             />
                             <YAxis
+                                tickFormatter={abbreviate}
                                 dataKey="amount"
                                 name="Ingresos"
                                 unit="VES"

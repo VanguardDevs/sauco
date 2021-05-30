@@ -18,17 +18,16 @@ class MovementController extends Controller
     {
         $query = DB::table('concepts')
             ->select(
-                'concepts.id AS id',
+                DB::raw('CONCAT(concepts.id || CAST(concurrent AS varchar)) AS id'),
                 'concepts.name AS name',
-                DB::raw('CAST(years.year AS INTEGER) AS year'),
-                DB::raw('COUNT(movements.payment_id)AS payments_count'),
-                DB::raw('COUNT(movements.liquidation_id) AS liquidations_count'),
-                DB::raw('CAST(SUM(movements.amount) AS NUMERIC) AS amount')
+                'concurrent',
+                DB::raw('COUNT(movements.id) AS movements_count'),
+                DB::raw('SUM(movements.amount) AS amount')
             )
             ->join('movements', 'movements.concept_id', '=', 'concepts.id')
-            ->join('years', 'years.id', '=', 'movements.year_id')
-            ->groupBy('concepts.name', 'years.year', 'concepts.id')
-            ->orderBy('year', 'DESC');
+            ->groupBy('concurrent', 'concepts.id')
+            ->whereNull('movements.deleted_at')
+            ->orderBy('concepts.id', 'ASC');
         $results = $request->perPage ?? 10;
 
         if ($request->has('filter')) {
@@ -44,11 +43,6 @@ class MovementController extends Controller
                 $name = $filters['concept'];
 
                 $query->where('concepts.name', 'ILIKE', "%{$name}%");
-            }
-            if (array_key_exists('year', $filters)) {
-                $name = $filters['year'];
-
-                $query->where('years.year', 'ILIKE', "%{$name}%");
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,13 +13,20 @@ class RedirectIfAuthenticated
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  string|null  ...$guards
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next, ...$guards)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/dashboard');
+        $guards = empty($guards) ? [null] : $guards;
+
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+              if ($request->expectsJson()) {
+                return response()->json(['error' => 'Already authenticated.'], 200);
+              }
+              return response()->json(['success' => 'Authenticated!'], 200);
+            }
         }
 
         return $next($request);

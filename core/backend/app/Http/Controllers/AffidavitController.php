@@ -31,7 +31,7 @@ class AffidavitController extends Controller
 
     public function index(Request $request)
     {
-        $query = Affidavit::with(['taxpayer'])->where('total_calc_amount', '!=', 0);
+        $query = Affidavit::with(['taxpayer'])->where('amount', '!=', 0);
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -43,8 +43,8 @@ class AffidavitController extends Controller
             if (array_key_exists('total_brute_amount', $filters)) {
                 $query->where('total_brute_amount', '=', $filters['total_brute_amount']);
             }
-            if (array_key_exists('total_calc_amount', $filters)) {
-                $query->whereLike('total_calc_amount', $filters['total_calc_amount']);
+            if (array_key_exists('amount', $filters)) {
+                $query->whereLike('amount', $filters['amount']);
             }
             if (array_key_exists('taxpayer', $filters)) {
                 $name = $filters['taxpayer'];

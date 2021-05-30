@@ -50,6 +50,7 @@ class AffidavitController extends Controller
     {
         if ($request->wantsJson()) {
             $query = $taxpayer->affidavits()
+                ->with('liquidation')
                 ->orderBy('id', 'DESC')
                 ->get();
 
@@ -92,7 +93,7 @@ class AffidavitController extends Controller
             ]);
         }
 
-        if ($affidavit->total_calc_amount == 0.00) {
+        if ($affidavit->amount == 0.00) {
             if (!Auth::user()->can('process.settlements'))  {
                 return redirect('cashbox/settlements')
                     ->withError('¡No puede procesar la liquidación!');
@@ -243,7 +244,7 @@ class AffidavitController extends Controller
 
         $affidavit->update([
             'total_brute_amount' => $totalBruteAmount,
-            'total_calc_amount' => $totalAmount,
+            'amount' => $totalAmount,
             'user_id' => auth()->user()->id,
             'processed_at' => $processedAt,
         ]);
