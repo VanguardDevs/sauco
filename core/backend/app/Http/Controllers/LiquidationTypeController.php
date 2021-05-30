@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LiquidationType;
+use App\Http\Requests\LiquidationTypeCreateRequest;
 use Illuminate\Http\Request;
 
 class LiquidationTypeController extends Controller
@@ -29,24 +30,16 @@ class LiquidationTypeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LiquidationTypeCreateRequest $request)
     {
-        //
+        $model = LiquidationType::create($request->all());
+
+        return $model;
     }
 
     /**
@@ -61,26 +54,17 @@ class LiquidationTypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(LiquidationTypeCreateRequest $request, LiquidationType $liquidationType)
     {
-        //
+        $liquidationType->update($request->all());
+
+        return response()->json($liquidationType, 200);
     }
 
     /**
@@ -89,8 +73,10 @@ class LiquidationTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(LiquidationType $liquidationType)
     {
-        //
+        $liquidationType->delete();
+
+        return response()->json($liquidationType, 200);
     }
 }
