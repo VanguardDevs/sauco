@@ -16,81 +16,44 @@ class MovementController extends Controller
      */
     public function index(Request $request)
     {
-        $query = DB::table('concepts')
-            ->select(
-                DB::raw('CONCAT(concepts.id || CAST(concurrent AS varchar)) AS id'),
-                'concepts.name AS name',
-                'concurrent',
-                DB::raw('COUNT(movements.id) AS movements_count'),
-                DB::raw('SUM(movements.amount) AS amount')
-            )
-            ->join('movements', 'movements.concept_id', '=', 'concepts.id')
-            ->groupBy('concurrent', 'concepts.id')
-            ->whereNull('movements.deleted_at')
-            ->orderBy('concepts.id', 'ASC');
-        $results = $request->perPage ?? 10;
+        $query = Movement::latest();
+        $results = $request->perPage;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
 
+            if (array_key_exists('own_income', $filters)) {
+                $query->whereLike('own_income', $filters['own_income']);
+            }
+            if (array_key_exists('amount', $filters)) {
+                $query->whereLike('amount', $filters['amount']);
+            }
+            if (array_key_exists('concurrent', $filters)) {
+                $query->whereLike('concurrent', $filters['concurrent']);
+            }
+            if (array_key_exists('taxpayer_id', $filters)) {
+                $query->where('taxpayer_id', '=', $filters['taxpayer_id']);
+            }
+            if (array_key_exists('concept_id', $filters)) {
+                $query->where('concept_id', '=', $filters['concept_id']);
+            }
+            if (array_key_exists('year_id', $filters)) {
+                $query->where('year_id', '=', $filters['year_id']);
+            }
+            if (array_key_exists('concept_id', $filters)) {
+                $query->where('concept_id', '=', $filters['concept_id']);
+            }
+            if (array_key_exists('payment_id', $filters)) {
+                $query->where('payment_id', '=', $filters['payment_id']);
+            }
             if (array_key_exists('gt_date', $filters)) {
-                $query->whereDate('movements.created_at', '>=', $filters['gt_date']);
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
             }
             if (array_key_exists('lt_date', $filters)) {
-                $query->whereDate('movements.created_at', '<', $filters['lt_date']);
-            }
-            if (array_key_exists('concept', $filters)) {
-                $name = $filters['concept'];
-
-                $query->where('concepts.name', 'ILIKE', "%{$name}%");
+                $query->whereDate('created_at', '<', $filters['lt_date']);
             }
         }
 
         return $query->paginate($results);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Movement  $movement
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Movement $movement)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Movement  $movement
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Movement $movement)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Movement  $movement
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Movement $movement)
-    {
-        //
     }
 }

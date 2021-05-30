@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Community;
 use App\Http\Requests\Communities\CommunitiesCreateFormRequest;
 use App\Http\Requests\Communities\CommunitiesUpdateFormRequest;
-use App\Parish;
-use Yajra\DataTables\Facades\DataTables;
 
 class CommunityController extends Controller
 {
@@ -22,28 +20,20 @@ class CommunityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('modules.communities.index');
-    }
+        $query = Community::latest();
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.communities.register')
-            ->with('parishes', Parish::pluck('name', 'id'))
-            ->with('typeForm', 'create');
-    }
+        if ($request->has('filter')) {
+            $filters = $request->filter;
 
-    public function list()
-    {
-        $query = Community::get();
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
 
-        return DataTables::of($query)->toJson();
+        return $query->paginate($results);
     }
 
     /**
@@ -54,16 +44,10 @@ class CommunityController extends Controller
      */
     public function store(CommunitiesCreateFormRequest $request)
     {
-        $parishes = $request->input('parishes');
-        $community = new Community([
-            'name' => $request->input('name')
-        ]);
-        $community->save();
+        $community = Community::create($request->all());
+        $community->parishes()->sync($request->parishes);
 
-        $community->parishes()->attach($parishes);
-
-        return redirect('geographic-area/communities')
-            ->withSuccess('¡Comunidad añadida!');
+        return response()->json($community, 201);
     }
 
     /**
@@ -74,28 +58,7 @@ class CommunityController extends Controller
      */
     public function show(Community $community)
     {
-        return view('modules.communities.show')
-            ->with('row', $community);
-    }
-
-    public function listTaxpayers(Community $community)
-    {
-        return DataTables::eloquent($community->taxpayers())
-            ->toJson();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Community  $community
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Community $community)
-    {
-        return view('modules.communities.register')
-            ->with('typeForm', 'update')
-            ->with('parishes', Parish::pluck('name', 'id'))
-            ->with('row', $community);
+        return $community;
     }
 
     /**
@@ -107,14 +70,10 @@ class CommunityController extends Controller
      */
     public function update(CommunitiesUpdateFormRequest $request, Community $community)
     {
-        $parishes = $request->input('parishes');
-        $row = Community::find($community->id);
-        $row->name = $request->input('name');
+        $community->update($request->all());
+        $community->parishes()->sync($request->parishes);
 
-        $row->parishes()->sync($parishes);
-
-        return redirect('geographic-area/communities')
-            ->withSuccess('¡Comunidad actualizada!');
+        return response()->json($community, 201);
     }
 
     /**
@@ -125,6 +84,8 @@ class CommunityController extends Controller
      */
     public function destroy(Community $community)
     {
-        //
+        $community->delete();
+
+        return response()->json($community, 201);
     }
 }

@@ -40,17 +40,6 @@ class TaxpayerClassificationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\TaxpayerClassification  $taxpayerClassification
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TaxpayerClassification $taxpayerClassification)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

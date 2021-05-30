@@ -43,17 +43,6 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PaymentMethod $paymentMethod)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

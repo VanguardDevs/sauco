@@ -48,9 +48,7 @@ class PropertyController extends Controller
             if (array_key_exists('taxpayer_id', $filters)) {
                 $id = $filters['taxpayer_id'];
 
-                $query->whereHas('taxpayer', function ($q) use ($id) {
-                    $q->where('taxpayer_id', '=', $id);
-                });
+                $q->where('taxpayer_id', '=', $id);
             }
         }
 
@@ -111,7 +109,7 @@ class PropertyController extends Controller
     {
         $property->update($request->all());
 
-        return response()->json($property, [200]);
+        return response()->json($property, 201);
     }
 
     /**

@@ -23,17 +23,12 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('payment-types', 'PaymentTypeController')
          ->except(['show']);
      Route::apiResource('representation-types', 'RepresentationTypeController');
-     Route::apiResource('taxpayer-types', 'TaxpayerTypeController')
-         ->except(['show']);
-     Route::apiResource('taxpayer-classifications', 'TaxpayerClassificationController')
-         ->except(['show']);
      Route::apiResource('tax-units', 'TaxUnitController')
          ->except(['show']);
      Route::apiResource('brands', 'BrandController')
          ->except(['show']);
      Route::apiResource('colors', 'ColorController');
      Route::apiResource('users', 'UserController');
-     Route::get('intervals', 'IntervalController@index');
      Route::apiResource('ordinances', 'OrdinanceController')
          ->except(['show']);
      Route::apiResource('charging-methods', 'ChargingMethodController')
@@ -52,11 +47,11 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('taxpayers', 'TaxpayerController');
      Route::apiResource('liquidations', 'LiquidationController');
      Route::apiResource('companies', 'CompanyController');
+     Route::apiResource('commercial-registers', 'CommercialRegisterController');
      Route::apiResource('accounts', 'AccountController');
      Route::apiResource('accounting-accounts', 'AccountingAccountController');
      Route::apiResource('account-types', 'AccountTypeController');
      Route::apiResource('payments', 'PaymentController');
-     Route::apiResource('movements', 'MovementController');
      Route::apiResource('cancellations', 'CancellationController');
      Route::apiResource('cancellation-types', 'CancellationTypeController');
      Route::apiResource('licenses', 'LicenseController');
@@ -64,7 +59,15 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('applications', 'ApplicationController');
      Route::apiResource('fines', 'FineController');
      Route::apiResource('deductions', 'DeductionController');
-     Route::apiResource('petro-prices', 'PetroPriceController')
-         ->except(['store', 'update', 'destroy', 'show']);
+
+     /**
+      * Consults
+      */
+     Route::get('petro-prices', 'PetroPriceController@index');
+     Route::get('taxpayer-types', 'TaxpayerTypeController@index');
+     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
      Route::get('status', 'StatusController@index');
+     Route::get('intervals', 'IntervalController@index');
+     Route::get('movements', 'MovementController@index');
+     Route::get('closures', 'ClosureController@index');
 });

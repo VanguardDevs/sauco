@@ -2,17 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TaxpayerType;
-use App\Models\TaxpayerClassification;
 use App\Models\Taxpayer;
-use App\Models\License;
-use App\Models\State;
-use App\Models\Community;
 use Illuminate\Http\Request;
-use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
-use App\Http\Requests\Taxpayers\TaxpayersCreateRequest;
-use App\Http\Requests\Taxpayers\TaxpayersUpdateFormRequest;
-use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\TaxpayersCreateRequest;
 use PDF;
 
 class TaxpayerController extends Controller
@@ -71,18 +63,9 @@ class TaxpayerController extends Controller
      */
     public function store(TaxpayersCreateRequest $request)
     {
-        $type = $request->input('taxpayer_type_id');
+        $taxpayer = Taxpayer::create($request->all());
 
-        if (Taxpayer::existsRif($request->input('rif'))) {
-            return redirect('taxpayers/create')
-                ->withInput($request->input())
-                ->withError('¡El RIF '.$request->input('rif').' se encuentra registrado!');
-        }
-
-        $taxpayer = Taxpayer::create($request->input());
-
-        return redirect()->route('taxpayers.show', $taxpayer)
-            ->withSuccess('¡Contribuyente registrado!');
+        return response()->json($taxpayer, 200);
     }
 
     /**
@@ -95,10 +78,8 @@ class TaxpayerController extends Controller
     {
         $data = $taxpayer->load([
             'properties',
-            'vehicles',
             'taxpayerType',
             'taxpayerClassification',
-            'companies'
         ]);
 
         return response()->json($data, 200);
@@ -111,9 +92,9 @@ class TaxpayerController extends Controller
      * @param  \App\Taxpayer  $taxpayer
      * @return \Illuminate\Http\Response
      */
-    public function update(TaxpayersUpdateFormRequest $request, Taxpayer $taxpayer)
+    public function update(TaxpayersCreateRequest $request, Taxpayer $taxpayer)
     {
-        $taxpayer->update($request->input());
+        $taxpayer->update($request->all());
 
         return response()->json($taxpayer, 200);
     }
