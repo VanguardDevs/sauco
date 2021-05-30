@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+platespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -12,19 +12,28 @@ class VehicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = Vehicle::latest();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('plate', $filters)) {
+                $query->whereLike('plate', $filters['plate']);
+            }
+            if (array_key_exists('color_id', $filters)) {
+                $query->whereLike('color_id', $filters['color_id']);
+            }
+            if (array_key_exists('brand_id', $filters)) {
+                $query->whereLike('brand_id', $filters['brand_id']);
+            }
+            if (array_key_exists('taxpayer_id', $filters)) {
+                $query->whereLike('plate', $filters['plate']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -45,17 +54,6 @@ class VehicleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Vehicle $vehicle)
     {
         //
     }

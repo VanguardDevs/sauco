@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TaxUnits\TaxUnitsCreateFormRequest;
 use App\Models\TaxUnit;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class TaxUnitController extends Controller
 {
@@ -16,23 +15,18 @@ class TaxUnitController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            $query = TaxUnit::query();
+        $query = TaxUnit::latest();
+        $results = $request->perPage;
 
-            return DataTables::eloquent($query)->toJson();
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
         }
-        return view('modules.tax-units.index');
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.tax-units.register')
-            ->with('typeForm', 'create');
+        return $query->paginate($results);
     }
 
     /**
@@ -43,14 +37,9 @@ class TaxUnitController extends Controller
      */
     public function store(TaxUnitsCreateFormRequest $request)
     {
-        $create = TaxUnit::create([
-            'law' => $request->input('law'),
-            'value' => $request->input('value'),
-            'publication_date' => $request->input('publication_date')
-        ]);
-        $create->save();
+        $model = TaxUnit::create($request->all());
 
-        return redirect('settings/tax-units')->withSuccess('¡Unidad Tributaria actualizada!');
+        return $model;
     }
 
     /**
@@ -65,26 +54,17 @@ class TaxUnitController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TaxUnit  $taxUnit
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TaxUnit $taxUnit)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\TaxUnit  $taxUnit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TaxUnit $taxUnit)
+    public function update(TaxUnitsCreateFormRequest $request, TaxUnit $taxUnit)
     {
-        //
+        $taxUnit->update($request->all());
+
+        return $taxUnit;
     }
 
     /**
@@ -95,6 +75,8 @@ class TaxUnitController extends Controller
      */
     public function destroy(TaxUnit $taxUnit)
     {
-        //
+        $taxUnit->delete();
+
+        return $taxUnit;
     }
 }
