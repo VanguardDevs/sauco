@@ -15,9 +15,9 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/core/backend/vendor/autoload.php';
+require __DIR__.'/api/backend/vendor/autoload.php';
 
-$app = require_once __DIR__.'/core/backend/bootstrap/app.php';
+$app = require_once __DIR__.'/api/backend/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
