@@ -16,7 +16,7 @@ class Taxpayer extends Model implements Auditable
     protected $fillable = [
         'rif',
         'name',
-        'fiscal_address',
+        'address',
         'phone',
         'email',
         'community_id',
@@ -33,11 +33,6 @@ class Taxpayer extends Model implements Auditable
     public function liquidations()
     {
         return $this->hasMany(Liquidation::class);
-    }
-
-    public function commercialRegister()
-    {
-        return $this->hasOne(CommercialRegister::class);
     }
 
     public function taxpayerType()

@@ -20,10 +20,13 @@ class CreateMovementsTable extends Migration
             $table->decimal('amount', 20);
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('liquidation_id');
+            $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('year_id');
             $table->unsignedBigInteger('payment_id');
             $table->timestamps();
 
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('year_id')->references('id')->on('years')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('liquidation_id')->references('id')->on('liquidations')

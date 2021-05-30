@@ -14,21 +14,29 @@ class CommercialRegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = CommercialRegister::latest();
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Taxpayer $taxpayer)
-    {
-        return view('modules.commercial-registers.register')
-            ->with('taxpayer', $taxpayer)
-            ->with('typeForm', 'create');
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
+            if (array_key_exists('volume', $filters)) {
+                $query->whereLike('volume', $filters['volume']);
+            }
+            if (array_key_exists('case_file', $filters)) {
+                $query->whereLike('case_file', $filters['case_file']);
+            }
+            if (array_key_exists('start_date', $filters)) {
+                $query->whereLike('start_date', $filters['start_date']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -37,20 +45,11 @@ class CommercialRegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CommercialRegistersCreateFormRequest $request, Taxpayer $taxpayer)
+    public function store(CommercialRegistersCreateFormRequest $request)
     {
-        $data = [
-            'num' => $request->input('num'),
-            'volume' => $request->input('volume'),
-            'case_file' => $request->input('case_file'),
-            'start_date' => $request->input('start_date'),
-        ];
-        
-        $taxpayer->commercialRegister()
-            ->create($data);
+        $commercialRegister = CommercialRegister::create($request->all());
 
-        return redirect('taxpayers/'.$taxpayer->id)
-            ->withSuccess('¡Registro comercial añadido!');
+        return $commercialRegister;
     }
 
     /**
@@ -61,18 +60,7 @@ class CommercialRegisterController extends Controller
      */
     public function show(CommercialRegister $commercialRegister)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\CommercialRegister  $commercialRegister
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CommercialRegister $commercialRegister)
-    {
-        //
+        return $commercialRegister;
     }
 
     /**
@@ -84,7 +72,9 @@ class CommercialRegisterController extends Controller
      */
     public function update(Request $request, CommercialRegister $commercialRegister)
     {
-        //
+        $commercialRegister->update($request->all());
+
+        return $commercialRegister;
     }
 
     /**
@@ -95,6 +85,8 @@ class CommercialRegisterController extends Controller
      */
     public function destroy(CommercialRegister $commercialRegister)
     {
-        //
+        $commercialRegister->delete();
+
+        return $commercialRegister;
     }
 }
