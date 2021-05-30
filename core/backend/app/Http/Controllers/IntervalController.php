@@ -12,74 +12,19 @@ class IntervalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = Interval::latest();
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        if ($request->has('filter')) {
+            $filters = $request->filter;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Interval  $interval
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Interval $interval)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Interval  $interval
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Interval $interval)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Interval  $interval
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Interval $interval)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Interval  $interval
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Interval $interval)
-    {
-        //
+        return $query->paginate($results);   //
     }
 }

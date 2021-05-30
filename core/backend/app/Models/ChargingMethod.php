@@ -12,23 +12,8 @@ class ChargingMethod extends Model
         'name'
     ];
 
-    public function conceptPrices()
+    public function concepts()
     {
-        return $this->hasMany(ConceptPrice::class);
-    }
-
-    public function propertyTypes()
-    {
-        return $this->hasMany(PropertyType::class);
-    }
-
-    public function ordinances()
-    {
-        return $this->hasMany(Ordinance::class);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return date('d/m/Y', strtotime($value));
+        return $this->hasMany(Concept::class);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ChargingMethod;
+use App\Http\Requests\ChargingMethodCreateRequest;
 
 class ChargingMethodController extends Controller
 {
@@ -11,19 +13,21 @@ class ChargingMethodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = ChargingMethod::latest()
+            ->withCount('concepts');
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -32,31 +36,11 @@ class ChargingMethodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ChargingMethodCreateRequest $request)
     {
-        //
-    }
+        $model = ChargingMethod::create($request->all());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $model;
     }
 
     /**
@@ -66,9 +50,11 @@ class ChargingMethodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ChargingMethodCreateRequest $request, $chargingMethod)
     {
-        //
+        $chargingMethod->update($request->all());
+
+        return $chargingMethod;
     }
 
     /**
