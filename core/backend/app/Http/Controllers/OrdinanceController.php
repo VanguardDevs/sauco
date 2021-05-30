@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ordinance;
 use Illuminate\Http\Request;
-use App\Http\Requests\Ordinances\OrdinancesCreateFormRequest;
-use App\Http\Requests\Ordinances\OrdinancesUpdateFormRequest;
+use App\Http\Requests\OrdinancesCreateRequest;
 
 class OrdinanceController extends Controller
 {
@@ -16,7 +15,7 @@ class OrdinanceController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Ordinance::query();
+        $query = Ordinance::withCount('concepts');
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -30,66 +29,17 @@ class OrdinanceController extends Controller
         return $query->paginate($results);
     }
 
-    public function list()
-    {
-        $query = Ordinance::query();
-    }
-
-    public function listAll()
-    {
-        return Ordinance::get();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.ordinances.register')
-            ->with('typeForm', 'create');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrdinancesCreateFormRequest $request)
+    public function store(OrdinancesCreateRequest $request)
     {
-        $create = new Ordinance([
-            'description' => $request->input('description')
-        ]);
-        $create->save();
+        $model = Ordinance::create($request->all());
 
-        return redirect('settings/ordinances')
-            ->withSuccess('¡Nuevo tipo de ordenanza creada!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Ordinance  $Ordinance
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ordinance $Ordinance)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ordinance  $Ordinance
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ordinance $Ordinance)
-    {
-        return view('modules.ordinances.register')
-            ->with('typeForm', 'update')
-            ->with('row', $Ordinance);
+        return $model;
     }
 
     /**
@@ -99,14 +49,11 @@ class OrdinanceController extends Controller
      * @param  \App\Ordinance  $Ordinance
      * @return \Illuminate\Http\Response
      */
-    public function update(OrdinancesUpdateFormRequest $request, Ordinance $Ordinance)
+    public function update(OrdinancesCreateRequest $request, Ordinance $ordinance)
     {
-        $edit = Ordinance::find($Ordinance->id);
-        $edit->description = $request->input('description');
-        $edit->save();
+        $ordinance->update($request->all());
 
-        return redirect('settings/ordinances')
-            ->withSuccess('¡Ordenanza actualizada!');
+        return $ordinance;
     }
 
     /**
@@ -115,8 +62,10 @@ class OrdinanceController extends Controller
      * @param  \App\Ordinance  $Ordinance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ordinance $Ordinance)
+    public function destroy(Ordinance $ordinance)
     {
-        //
+        $ordinance->delete();
+
+        return $ordinance;
     }
 }

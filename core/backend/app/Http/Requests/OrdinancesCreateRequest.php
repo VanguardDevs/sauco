@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Ordinances;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrdinancesUpdateFormRequest extends FormRequest
+class OrdinancesCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,17 +28,10 @@ class OrdinancesUpdateFormRequest extends FormRequest
         ];
     }
 
-    public function attributes()
-    {
-        return [
-            'description' => 'descripción'
-        ];
-    }
-
     public function messages()
     {
         return [
-            'description.required' => 'Ingrese una :attribute',
+            'description.required' => 'Ingrese un nombre'
         ];
     }
 }

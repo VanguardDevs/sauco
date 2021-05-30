@@ -29,6 +29,18 @@ class ConceptController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->whereLike('name', $filters['name']);
             }
+            if (array_key_exists('charging_method_id', $filters)) {
+                $query->where('charging_method_id', '=', $filters['charging_method_id']);
+            }
+            if (array_key_exists('ordinance_id', $filters)) {
+                $query->where('ordinance_id', '=', $filters['ordinance_id']);
+            }
+            if (array_key_exists('accounting_account_id', $filters)) {
+                $query->where('accounting_account_id', '=', $filters['accounting_account_id']);
+            }
+            if (array_key_exists('interval_id', $filters)) {
+                $query->where('interval_id', '=', $filters['interval_id']);
+            }
             if (array_key_exists('liquidation_type_id', $filters)) {
                 $query->where('liquidation_type_id', '=', $filters['liquidation_type_id']);
             }
@@ -50,8 +62,7 @@ class ConceptController extends Controller
             $request->input()
         ));
 
-        return redirect('settings/concepts')
-            ->withSuccess('¡Concepto de recaudación creado!');
+        return $concept;
     }
 
     /**
@@ -72,12 +83,11 @@ class ConceptController extends Controller
      * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Concept $concept)
+    public function update(ConceptsCreateFormRequest $request, Concept $concept)
     {
         $concept->update($request->input());
 
-        return redirect('settings/concepts')
-            ->withSuccess('¡Concepto de recaudación actualizado!');
+        return $concept;
     }
 
     /**
@@ -88,6 +98,8 @@ class ConceptController extends Controller
      */
     public function destroy(Concept $Concept)
     {
-        //
+        $concept->destroy();
+
+        return $concept;
     }
 }

@@ -26,34 +26,26 @@ class ConceptsCreateFormRequest extends FormRequest
         return [
             'name' => 'required',
             'min_amount' => 'required',
+            'max_amount' => 'required',
             'ordinance_id' => 'required',
+            'interval_id' => 'required',
             'charging_method_id' => 'required',
             'accounting_account_id' => 'required',
             'liquidation_type_id' => 'required'
         ];
     }
 
-    public function attributes()
-    {
-        return [
-            'name' => 'nombre',
-            'min_amount' => 'nombre',
-            'ordinance_id' => 'tipo de ordenanza',
-            'liquidation_type_id' => 'listado',
-            'accounting_account_id' => 'cuenta contable',
-            'charging_method_id' => 'método de cálculo'
-        ];
-    }
-
     public function messages()
     {
         return [
-            'name.required' => 'Ingrese un :attribute',
-            'ordinance_id.required' => 'Seleccione un :attribute',
-            'accounting_account_id.required' => 'Seleccione un :attribute',
-            'liquidation_type_id.required' => 'Seleccione un :attribute',
-            'charging_method_id.required' => 'Seleccione un :attribute',
-            'min_amount.required' => 'Ingrese un :attribute'
+            'name.required' => 'Ingrese un nombre',
+            'ordinance_id.required' => 'Seleccione una ordenanza',
+            'accounting_account_id.required' => 'Seleccione una cuenta contable',
+            'liquidation_type_id.required' => 'Seleccione un tipo de liquidación',
+            'charging_method_id.required' => 'Seleccione un método de cobro',
+            'min_amount.required' => 'Ingrese un monto mínimo',
+            'max_amount.required' => 'Ingrese un monto máximo',
+            'interval_id.required' => 'Seleccione un intervalo'
         ];
     }
 }

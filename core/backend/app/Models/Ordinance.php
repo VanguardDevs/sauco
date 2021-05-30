@@ -21,16 +21,4 @@ class Ordinance extends Model
     {
         return $this->hasMany(License::class);
     }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return date('d/m/Y', strtotime($value));
-    }
-
-    public function scopeConceptsLiquidation($query, $type)
-    {
-        return self::concepts()
-            ->where('liquidation_type_id', '=', $type)
-            ->get();
-    }
 }
