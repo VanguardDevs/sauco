@@ -15,10 +15,11 @@ class CreateConceptsTable extends Migration
     {
         Schema::create('concepts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('code');
+            $table->integer('code')->index();
             $table->float('min_amount');
             $table->float('max_amount');
             $table->string('name');
+            $table->boolean('has_requisite')->default(0);
             $table->unsignedBigInteger('interval_id');
             $table->unsignedBigInteger('charging_method_id');
             $table->unsignedBigInteger('accounting_account_id');
