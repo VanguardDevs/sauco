@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
+use App\Http\Requests\PaymentMethodCreateRequest;
 use Illuminate\Http\Request;
 
 class PaymentMethodController extends Controller
@@ -34,12 +35,11 @@ class PaymentMethodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PaymentMethodCreateRequest $request)
     {
         $method = PaymentMethod::create($request->all());
 
-        return redirect('settings/payment-methods')
-            ->withSuccess('¡Método creado!');
+        return $method;
     }
 
     /**
