@@ -15,7 +15,7 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('cadastre_num');
+            $table->string('cadastre_num')->unique();
             $table->string('bulletin');
             $table->unsignedBigInteger('parish_id');
             $table->unsignedBigInteger('community_id');

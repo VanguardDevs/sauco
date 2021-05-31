@@ -15,7 +15,7 @@ class CreateTaxpayersTable extends Migration
     {
         Schema::create('taxpayers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('rif');
+            $table->string('rif')->unique();
             $table->string('name');
             $table->string('address');
             $table->string('phone')->nullable();
