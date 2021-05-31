@@ -15,7 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('num');
+            $table->string('num')->unique();
             $table->decimal('amount', 15, 2);
             $table->string('observations')->nullable();
             $table->unsignedBigInteger('payment_type_id');
