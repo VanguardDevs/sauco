@@ -133,7 +133,7 @@
             @endif
 
             @if($row->affidavit()->exists())
-            <a href="{{ route('affidavits.show', $row->affidavit()->first() ) }}"}} class='btn btn-success' title='Ir a la declaración'>
+            <a href="{{ route('affidavits.show', $row->affidavit()->first()->liquidable ) }}"}} class='btn btn-success' title='Ir a la declaración'>
                 <i class='fas fa-chevron-right'></i>
                 Ir a la declaración
             </a>
