@@ -89,8 +89,6 @@
                 </tbody>
             </table>
 
-            <div id="paymentInfo"></div>
-
             @endif
             @else
             <div class="form-group row">
@@ -103,15 +101,18 @@
         <div class="card-footer">
             @if($typeForm == 'show')
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-secondary" id="cancel"><i class="fas fa-reply"></i>Ir a declaraciones</a>
-            @if(!$row->payment() && auth()->user()->can('process.payments'))
-            <a href="{{ route('affidavits.payment', $row) }}" class="btn btn-warning">
-                <i class="fas fa-money-check"></i> Realizar factura
-            </a>
-            @elseif ($row->payment())
-            <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info">
-                <i class="fas fa-money-check"></i> Ver factura
-            </a>
-            @endif
+                @if(!$row->payment() && auth()->user()->can('process.payments'))
+                <a href="{{ route('affidavits.payment', $row) }}" class="btn btn-warning">
+                    <i class="fas fa-money-check"></i> Realizar factura
+                </a>
+                @elseif ($row->payment())
+                <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info">
+                    <i class="fas fa-money-check"></i> Ver factura
+                </a>
+                <a href="{{ route('liquidations.show', $row->liquidation->first()) }}" class="btn btn-success">
+                    <i class="fas fa-eye"></i> Ver liquidación
+                </a>
+                @endif
             @endif
             @if($typeForm == 'edit-group' || $typeForm == 'edit-normal')
             <a href="{{ url('taxpayers/'.$row->taxpayer->id.'/affidavits') }}" class="btn btn-danger" id="cancel"><i class="flaticon-cancel"></i>Cancelar</a>

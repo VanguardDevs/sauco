@@ -42,6 +42,8 @@
 
                         Tipo: <strong>{{ $row->liquidationType->name }}</strong>
                         </br>Monto: <strong>{{ $row->pretty_amount }}</strong>
+                        </br>Fecha: <strong>{{ $row->created_at }}</strong>
+                        </br>Usuario: <strong>{{ $row->liquidable->user->full_name }}</strong>
                     </div>
                 </div>
                 @if($typeForm == 'update')
