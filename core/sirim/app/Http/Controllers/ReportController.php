@@ -70,7 +70,7 @@ class ReportController extends Controller
 
         $payments = Payment::whereDate('processed_at', '>=', $firstDate)
             ->whereDate('processed_at', '<', $lastDate)
-            ->orderBy('num', 'DESC')
+            ->orderBy('num', 'ASC')
             ->get();
 
         // Prepare pdf
