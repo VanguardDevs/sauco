@@ -18,6 +18,7 @@ Route::post('tokens/login', 'ManageTokenController@login');
 Route::middleware('auth:sanctum')->group(function () {
      Route::get('years', 'YearController@index');
      Route::apiResource('concepts', 'ConceptController');
+     Route::apiResource('purposes', 'PurposeController');
      Route::apiResource('payment-methods', 'PaymentMethodController')
          ->except(['show']);
      Route::apiResource('payment-types', 'PaymentTypeController')

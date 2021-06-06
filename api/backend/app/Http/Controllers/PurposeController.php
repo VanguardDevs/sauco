@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purpose;
+use App\Http\Requests\PurposeValidateRequest;
 use Illuminate\Http\Request;
 
 class PurposeController extends Controller
@@ -12,19 +13,23 @@ class PurposeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = Purpose::withCount('properties');
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+            if (array_key_exists('value', $filters)) {
+                $query->whereLike('value', $filters['value']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -33,9 +38,11 @@ class PurposeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PurposeValidateRequest $request)
     {
-        //
+        $purpose = Purpose::create($request->all());
+
+        return $purpose;
     }
 
     /**
@@ -44,20 +51,9 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Purpose $purpose)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $purpose;
     }
 
     /**
@@ -67,9 +63,11 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PurposeValidateRequest $request, Purpose $purpose)
     {
-        //
+        $purpose->update($request->all());
+
+        return $purpose;
     }
 
     /**
@@ -78,8 +76,10 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Purpose $purpose)
     {
-        //
+        $purpose->delete();
+
+        return $purpose;
     }
 }
