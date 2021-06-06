@@ -20,7 +20,7 @@ class Property extends Model
 
     public function uses()
     {
-        $this->belongsToMany(Purpose::class);
+        $this->belongsToMany(Purpose::class, 'property_purpose');
     }
 
     public function community()
