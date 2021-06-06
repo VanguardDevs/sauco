@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PurposeValidateRequest extends FormRequest
+class TerrainClassificationValidateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,8 +32,8 @@ class PurposeValidateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Ingrese el nombre del uso',
-            'value.required' => 'Ingrese un valor para el uso'
+            'name.required' => 'Ingrese el nombre para la clasificación',
+            'value.required' => 'Ingrese un valor para la clasificación'
         ];
     }
 }

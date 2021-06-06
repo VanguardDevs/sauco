@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::get('years', 'YearController@index');
      Route::apiResource('concepts', 'ConceptController');
      Route::apiResource('purposes', 'PurposeController');
+     Route::apiResource('terrain-classifications', 'TerrainClassificationController');
      Route::apiResource('payment-methods', 'PaymentMethodController')
          ->except(['show']);
      Route::apiResource('payment-types', 'PaymentTypeController')
