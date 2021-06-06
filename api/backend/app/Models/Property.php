@@ -15,6 +15,7 @@ class Property extends Model
         'bulletin',
         'community_id',
         'street_id',
+        'terrain_classification_id',
         'parish_id'
     ];
 
@@ -31,6 +32,11 @@ class Property extends Model
     public function parish()
     {
         return $this->belongsTo(Community::class);
+    }
+
+    public function terrainClassification()
+    {
+        return $this->belongsTo(TerrainClassification::class);
     }
 
     public function street()

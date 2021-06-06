@@ -19,6 +19,7 @@ class Concept extends Model
     protected $fillable = [
         'code',
         'name',
+        'own_income',
         'min_amount',
         'max_amount',
         'charging_method_id',

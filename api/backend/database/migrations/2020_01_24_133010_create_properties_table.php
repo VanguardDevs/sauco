@@ -18,10 +18,13 @@ class CreatePropertiesTable extends Migration
             $table->string('cadastre_num')->unique();
             $table->string('bulletin');
             $table->unsignedBigInteger('parish_id');
+            $table->unsignedBigInteger('terrain_classification_id');
             $table->unsignedBigInteger('community_id');
             $table->unsignedBigInteger('street_id');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('terrain_classification_id')->references('id')
+                ->on('terrain_classifications')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('parish_id')->references('id')->on('parishes')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('community_id')->references('id')->on('communities')
