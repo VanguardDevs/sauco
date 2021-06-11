@@ -8,7 +8,7 @@ import {
     MenuProps,
 } from 'react-admin';
 import SubMenu from './SubMenu';
-import { AppState } from '../types';
+import { AppState } from '@sauco/common/types';
 
 // Menu icons
 import TaxpayersMenuIcon from '@material-ui/icons/AssignmentInd';

@@ -13,7 +13,7 @@ class ManageTokenController extends Controller
     public function login(LoginRequest $request)
     {
         // Check email
-        $user = User::where('login', $request->login)->first();
+        $user = User::where('email', $request->email)->first();
 
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)) {
@@ -27,9 +27,9 @@ class ManageTokenController extends Controller
             ->merge($user->permissions()->pluck('name'));
 
         return response()->json([
-            'user' => $user,
+            'user' => $user->toJson(),
             'token' => $token,
-            'permissions' => base64_encode($permissions)
+            'permissions' => $permissions->toJson()
         ], 201);
     }
 

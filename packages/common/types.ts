@@ -1,4 +1,4 @@
-import { ReduxState, Record, Identifier } from 'react-admin';
+import { ReduxState, Record, Identifier, ShowProps } from 'react-admin';
 
 export type ThemeName = 'light' | 'dark';
 
@@ -29,4 +29,8 @@ export interface License extends Record {
 export interface Taxpayer extends Record {
     date: Date;
     total: number;
+}
+
+export interface Cancellation extends Record {
+    cancellable?: any;
 }

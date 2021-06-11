@@ -10,9 +10,11 @@ import {
   SimpleList,
   ReferenceField,
   ReferenceArrayInput,
-  SelectInput
+  SelectInput,
+  ListBase
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
+import { TotalCount } from "@sauco/common/components";
 
 const optionRenderer = (choice:any) => `${choice.description}`;
 
@@ -48,12 +50,9 @@ const PaymentsFilter: React.FC = props => (
 
 const PaymentsList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
-  // const dispatch = useDispatch();
-
-  // const handleClick = () => dispatch(setDialog());
 
   return (
-    <List {...props}
+    <ListBase {...props}
       title="Facturas"
       bulkActionButtons={false}
       filters={<PaymentsFilter />}
@@ -62,29 +61,35 @@ const PaymentsList: React.FC = props => {
       {
         isSmall
         ? (
-          <SimpleList
-            primaryText={record => `${record.num}`}
-            secondaryText={record => `${record.processed_at}`}
-            tertiaryText={record => `${record.pretty_amount}`}
-            linkType={"show"}
-          />
+            <>
+                <TotalCount title='Pagos procesados' />
+                <SimpleList
+                    primaryText={record => `${record.num}`}
+                    secondaryText={record => `${record.processed_at}`}
+                    tertiaryText={record => `${record.pretty_amount}`}
+                    linkType={"show"}
+                />
+            </>
         )
         : (
-          <Datagrid>
-            <TextField source="num" label="Número"/>
-            <ReferenceField
-              label="Contribuyente"
-              source="taxpayer_id"
-              reference="taxpayers"
-              link="show"
-            >
-              <TextField source="name" />
-            </ReferenceField>
-            <NumberField source='amount' label='Monto' />
-          </Datagrid>
+            <>
+                <TotalCount title='Pagos procesados' />
+                <Datagrid>
+                    <TextField source="num" label="Número"/>
+                    <ReferenceField
+                    label="Contribuyente"
+                    source="taxpayer_id"
+                    reference="taxpayers"
+                    link="show"
+                    >
+                    <TextField source="name" />
+                    </ReferenceField>
+                    <NumberField source='amount' label='Monto' />
+                </Datagrid>
+            </>
         )
       }
-    </List>
+    </ListBase>
   );
 };
 
