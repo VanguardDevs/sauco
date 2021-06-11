@@ -6,10 +6,19 @@ import {
   List,
   Datagrid,
   NumberField,
-  TextField
+  TextField,
+  useRecordContext
 } from 'react-admin';
+import numeral from 'numeral';
 import { MovementTypeField } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
+
+const CustomAmountField = (props: any) => {
+    const record = useRecordContext(props);
+    const amount = numeral(record.amount).format('0,0.00');
+
+    return <span>{amount}</span>;
+}
 
 const MovementFilter: React.FC = props => (
   <Filter {...props}>
@@ -21,9 +30,6 @@ const MovementFilter: React.FC = props => (
 
 const MovementList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
-  // const dispatch = useDispatch();
-
-  // const handleClick = () => dispatch(setDialog());
 
   return (
     <List {...props}
@@ -34,12 +40,17 @@ const MovementList: React.FC = props => {
     >
       <Datagrid>
         <TextField source="name" label="Concepto"/>
-        <NumberField source='amount' label='Monto' options={{ style: 'currency', currency: 'USD' }}/>
+        <CustomAmountField label="Monto" />
         <MovementTypeField label="Tipo de movimiento" />
         <NumberField source='movements_count' label='Movimientos' />
       </Datagrid>
     </List>
   );
 };
+
+CustomAmountField.defaultProps = {
+    label: 'Monto',
+    addLabel: true
+}
 
 export default MovementList;
