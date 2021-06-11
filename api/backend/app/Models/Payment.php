@@ -21,7 +21,9 @@ class Payment extends Model implements Auditable
 
     protected $guarded = [];
 
-    protected $casts = [ 'amount' => 'float' ];
+    protected $casts = [
+        'amount' => 'float'
+    ];
 
     public function createMovements()
     {

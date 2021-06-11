@@ -15,6 +15,10 @@ class PetroPrice extends Model
         'value'
     ];
 
+    protected $casts = [
+        'value' => 'float'
+    ];
+
     public function appraissals()
     {
         return $this->hasMany(Appraisal::class);
