@@ -24,7 +24,7 @@ class TaxpayersCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'rif' => 'required|min:12|max:12',
+            'rif' => 'required|min:12|max:12|unique:taxpayers',
             'name' => 'required',
             'address' => 'required',
             'taxpayer_type_id' => 'required',
@@ -41,6 +41,7 @@ class TaxpayersCreateRequest extends FormRequest
             'rif.required' => 'Ingrese un nombre para el contribuyente',
             'rif.min' => 'El RIF debe tener 9 caracteres',
             'rif.max' => 'El RIF debe tener 9 caracteres',
+            'rif.unique' => 'El RIF se encuentra registrado',
             'taxpayer_type_id.required' => 'Seleccione un tipo',
             'taxpayer_classification_id.required' => 'Seleccione una clasificación',
             'municipality_id.required' => 'Seleccione un municipio',

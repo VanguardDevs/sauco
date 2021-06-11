@@ -15,7 +15,7 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->string('num', 8);
+            $table->string('num', 8)->unique();
             $table->integer('total')->default(1);
             $table->float('amount');
             $table->unsignedBigInteger('taxpayer_id');
