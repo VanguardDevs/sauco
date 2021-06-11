@@ -8,9 +8,13 @@ import {
   SimpleList,
   DateInput,
   SelectInput,
+  ShowButton,
   ReferenceArrayInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
+import {
+    RecordActions
+} from '@sauco/common/components';
 
 const CancellationsFilter: React.FC = props => (
   <Filter {...props}>
@@ -26,9 +30,6 @@ const CancellationsFilter: React.FC = props => (
 
 const CancellationsList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
-  // const dispatch = useDispatch();
-
-  // const handleClick = () => dispatch(setDialog());
 
   return (
     <List {...props}
@@ -53,6 +54,9 @@ const CancellationsList: React.FC = props => {
             <TextField source="reason" label="Razón de anulación"/>
             <TextField source="type.name" label="Tipo"/>
             <TextField source="user.login" label="Login"/>
+            <RecordActions>
+                <ShowButton />
+            </RecordActions>
           </Datagrid>
         )
       }
