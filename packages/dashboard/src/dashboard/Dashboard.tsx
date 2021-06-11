@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Payment, Liquidation, License, PetroPrice } from '../types';
+import { Payment, Liquidation, License, PetroPrice } from '@sauco/common/types';
 import { subDays } from 'date-fns';
 import { useDataProvider } from 'react-admin';
 import { useMediaQuery, Theme } from '@material-ui/core';
