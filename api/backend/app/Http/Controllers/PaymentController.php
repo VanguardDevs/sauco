@@ -67,7 +67,22 @@ class PaymentController extends Controller
             }
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $totalAmount = $query->sum('amount');
+        $payments = $query->get();
+        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+
+        $pdf = PDF::LoadView('pdf.payments', compact(['payments', 'total']));
+        return $pdf->stream('reporte-de-pagos.pdf');
     }
 
     /**
