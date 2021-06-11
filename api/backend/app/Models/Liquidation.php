@@ -20,7 +20,9 @@ class Liquidation extends Model implements Auditable
 
     protected $guarded = [];
 
-    protected $casts = ['amount' => 'float' ];
+    protected $casts = [
+        'amount' => 'float'
+    ];
 
     protected $appends = ['pretty_amount'];
 

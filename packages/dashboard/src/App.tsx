@@ -21,6 +21,7 @@ import paymentMethods from './payment-methods';
 import users from './users';
 import ordinances from './ordinances';
 import economicActivities from './economic-activities';
+import petroPrices from './petro-prices';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
       <Resource {...users} />
       <Resource {...ordinances} />
       <Resource {...economicActivities} />
+      <Resource {...petroPrices} />
       <Resource name="cancellation-types" />
       <Resource name="liquidation-types" />
       <Resource name="taxpayer-types" />

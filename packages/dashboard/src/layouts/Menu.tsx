@@ -33,6 +33,7 @@ import paymentTypes from '../payment-types';
 import paymentMethods from '../payment-methods';
 import ordinances from '../ordinances';
 import economicActivities from '../economic-activities';
+import petroPrices from '../petro-prices';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -95,6 +96,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     to={economicActivities.name}
                     primaryText={economicActivities.options.label}
                     leftIcon={<economicActivities.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={petroPrices.name}
+                    primaryText={petroPrices.options.label}
+                    leftIcon={<petroPrices.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}
