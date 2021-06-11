@@ -13,6 +13,8 @@ const CancellationShow: React.FC<ShowProps> = props => (
             <TextField source="type.name" label="Tipo de anulación" />
             <TextField source="user.full_name" label="Usuario" />
             <TextField source="created_at" label="Fecha de anulación" />
+            <TextField source="type.name" label="Tipo de anulación" />
+            <TextField source="cancellable.num" label="Nro. del movimiento cancelado" />
         </SimpleShowLayout>
     </Show>
 );
