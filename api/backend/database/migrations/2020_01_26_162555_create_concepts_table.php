@@ -19,6 +19,7 @@ class CreateConceptsTable extends Migration
             $table->float('min_amount');
             $table->float('max_amount');
             $table->string('name');
+            $table->boolean('own_income')->default(1);
             $table->boolean('has_requisite')->default(0);
             $table->unsignedBigInteger('interval_id');
             $table->unsignedBigInteger('charging_method_id');

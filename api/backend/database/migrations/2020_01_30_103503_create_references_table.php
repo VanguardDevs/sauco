@@ -15,7 +15,7 @@ class CreateReferencesTable extends Migration
     {
         Schema::create('references', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('reference');
+            $table->string('reference')->unique();
             $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('payment_id');
             $table->foreign('payment_id')->references('id')->on('payments')

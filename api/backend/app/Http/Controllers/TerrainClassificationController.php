@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Purpose;
-use App\Http\Requests\PurposeValidateRequest;
+use App\Models\TerrainClassification;
+use App\Http\Requests\TerrainClassificationValidateRequest;
 use Illuminate\Http\Request;
 
-class PurposeController extends Controller
+class TerrainClassificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class PurposeController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Purpose::withCount('properties');
+        $query = TerrainClassification::withCount('properties');
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -38,11 +38,11 @@ class PurposeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PurposeValidateRequest $request)
+    public function store(TerrainClassificationValidateRequest $request)
     {
-        $purpose = Purpose::create($request->all());
+        $terrainClassification = TerrainClassification::create($request->all());
 
-        return $purpose;
+        return $terrainClassification;
     }
 
     /**
@@ -51,9 +51,9 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Purpose $purpose)
+    public function show(TerrainClassification $terrainClassification)
     {
-        return $purpose;
+        return $terrainClassification;
     }
 
     /**
@@ -63,11 +63,11 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PurposeValidateRequest $request, Purpose $purpose)
+    public function update(TerrainClassificationValidateRequest $request, TerrainClassification $terrainClassification)
     {
-        $purpose->update($request->all());
+        $terrainClassification->update($request->all());
 
-        return $purpose;
+        return $terrainClassification;
     }
 
     /**
@@ -76,10 +76,10 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Purpose $purpose)
+    public function destroy(TerrainClassification $terrainClassification)
     {
-        $purpose->delete();
+        $terrainClassification->delete();
 
-        return $purpose;
+        return $terrainClassification;
     }
 }

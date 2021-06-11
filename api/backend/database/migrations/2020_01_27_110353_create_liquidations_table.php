@@ -15,7 +15,7 @@ class CreateLiquidationsTable extends Migration
     {
         Schema::create('liquidations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('num', 8);
+            $table->string('num', 8)->unique();
             $table->decimal('amount', 15, 2);
             $table->string('liquidable_type');
             $table->unsignedBigInteger('liquidable_id');
