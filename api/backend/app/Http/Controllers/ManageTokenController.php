@@ -12,8 +12,8 @@ class ManageTokenController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        // Check email
-        $user = User::where('email', $request->email)->first();
+        // Check login
+        $user = User::where('login', $request->login)->first();
 
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)) {
