@@ -22,11 +22,15 @@ class TaxpayerFactory extends Factory
     public function definition()
     {
         return [
-            'rif' => $this->faker->taxpayerIdentificationNumber,
-            'name' => $this->faker->company,
-            'address' => $this->faker->address,
-            'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->email
+            'rif' => $this->faker->taxpayerIdentificationNumber(),
+            'name' => $this->faker->name(),
+            'address' => $this->faker->address(),
+            'phone' => $this->faker->phoneNumber(),
+            'email' => $this->faker->email(),
+            'taxpayer_classification_id' => 1,
+            'taxpayer_type_id' => 1,
+            'municipality_id' => 1,
+            'community_id' => 1
         ];
     }
 }
