@@ -49,7 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('taxpayers', 'TaxpayerController');
      Route::apiResource('liquidations', 'LiquidationController');
      Route::apiResource('companies', 'CompanyController');
-     Route::apiResource('commercial-registers', 'CommercialRegisterController');
      Route::apiResource('accounts', 'AccountController');
      Route::apiResource('accounting-accounts', 'AccountingAccountController');
      Route::apiResource('account-types', 'AccountTypeController');

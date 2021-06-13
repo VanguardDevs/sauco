@@ -27,6 +27,9 @@ class CompanyFactory extends Factory
             'capital' => 1000,
             'num_workers' => 1,
             'constitution_date' => $this->faker->date(),
+            'case_file' => 1,
+            'num' => 1,
+            'volume' => '32 p'
         ];
     }
 }
