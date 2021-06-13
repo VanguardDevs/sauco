@@ -32,7 +32,10 @@ class CompanyValidateRequest extends FormRequest
             'community_id' => 'required',
             'capital' => 'required',
             'num_workers' => 'required',
-            'principal' => 'required'
+            'principal' => 'required',
+            'volume' => 'required',
+            'num' => 'required',
+            'case_file' => 'required'
         ];
     }
 
@@ -47,7 +50,10 @@ class CompanyValidateRequest extends FormRequest
             'community_id.required' => 'Seleccione una comunidad',
             'constitution_date.required' => 'Ingrese la fecha de constitución de la empresa',
             'capital.required' => 'Ingrese el capital de la empresa',
-            'num_workers.required' => 'Ingrese el número de trabajadores de la empresa'
+            'num_workers.required' => 'Ingrese el número de trabajadores de la empresa',
+            'volume.required' => 'Ingrese el volumen del expediente',
+            'case_file.required' => 'Ingrese el expendiente',
+            'num.required' => 'Ingrese el número del registro comercial'
         ];
     }
 }
