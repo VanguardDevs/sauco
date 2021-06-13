@@ -38,6 +38,7 @@ class TaxpayersCreateRequest extends FormRequest
     {
         return [
             'name.required' => 'Ingrese un nombre para el contribuyente',
+            'address.required' => 'Ingrese la dirección del contribuyente',
             'rif.required' => 'Ingrese un nombre para el contribuyente',
             'rif.min' => 'El RIF debe tener 9 caracteres',
             'rif.max' => 'El RIF debe tener 9 caracteres',

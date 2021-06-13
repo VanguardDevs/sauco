@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Http\Requests\CompanyValidateRequest;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -72,9 +73,11 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyValidateRequest $request)
     {
-        //
+        $company = Company::create($request->all());
+
+        return response()->json($company, 201);
     }
 
     /**
@@ -97,11 +100,11 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(CompanyValidateRequest $request, Company $company)
     {
         $company->update($request->all());
 
-        return response()->json($company, 200);
+        return response()->json($company, 201);
     }
 
     /**
@@ -112,6 +115,8 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+
+        return response()->json($company, 201);
     }
 }
