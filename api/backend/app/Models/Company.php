@@ -16,7 +16,9 @@ class Company extends Model
         'name',
         'address',
         'capital',
+        'principal',
         'num_workers',
+        'constitution_date',
         'parish_id',
         'community_id',
         'taxpayer_id'
