@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::post('tokens/login', 'ManageTokenController@login');
 
 Route::middleware('auth:sanctum')->group(function () {
+    /**
+     * Configurations
+     */
      Route::get('years', 'YearController@index');
      Route::apiResource('concepts', 'ConceptController');
      Route::apiResource('purposes', 'PurposeController');
@@ -35,7 +38,6 @@ Route::middleware('auth:sanctum')->group(function () {
          ->except(['show']);
      Route::apiResource('charging-methods', 'ChargingMethodController')
          ->except(['show']);
-
      Route::apiResource('economic-activities', 'EconomicActivityController');
 
      // Controlled level permissions

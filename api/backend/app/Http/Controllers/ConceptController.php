@@ -7,11 +7,17 @@ use App\Models\Ordinance;
 use App\Models\ChargingMethod;
 use App\Models\LiquidationType;
 use App\Models\AccountingAccount;
-use App\Http\Requests\Concepts\ConceptsCreateFormRequest;
+use App\Http\Requests\ConceptsValidateRequest;
 use Illuminate\Http\Request;
 
 class ConceptController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:super-admin')
+            ->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +61,7 @@ class ConceptController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConceptsCreateFormRequest $request)
+    public function store(ConceptsValidateRequest $request)
     {
         $concept = Concept::create(array_merge(
             ['code' => Concept::getNewCode()],
@@ -83,7 +89,7 @@ class ConceptController extends Controller
      * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function update(ConceptsCreateFormRequest $request, Concept $concept)
+    public function update(ConceptsValidateRequest $request, Concept $concept)
     {
         $concept->update($request->input());
 
@@ -96,9 +102,9 @@ class ConceptController extends Controller
      * @param  \App\Concept  $Concept
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Concept $Concept)
+    public function destroy(Concept $concept)
     {
-        $concept->destroy();
+        $concept->delete();
 
         return $concept;
     }

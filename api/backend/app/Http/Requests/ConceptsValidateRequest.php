@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Concepts;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ConceptsCreateFormRequest extends FormRequest
+class ConceptsValidateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class ConceptsCreateFormRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'own_income' => 'required',
             'min_amount' => 'required',
             'max_amount' => 'required',
             'ordinance_id' => 'required',
@@ -39,6 +40,7 @@ class ConceptsCreateFormRequest extends FormRequest
     {
         return [
             'name.required' => 'Ingrese un nombre',
+            'own_income.required' => 'Defina si es un ingreso propio o extraordinario',
             'ordinance_id.required' => 'Seleccione una ordenanza',
             'accounting_account_id.required' => 'Seleccione una cuenta contable',
             'liquidation_type_id.required' => 'Seleccione un tipo de liquidación',
