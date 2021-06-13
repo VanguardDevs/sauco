@@ -22,15 +22,5 @@ class UserSeeder extends Seeder
             $user = User::factory()->create();
             $user->syncRoles($role);
         }
-
-        $admin = User::create([
-            'dni' => '1234567',
-            'first_name' => 'Admin',
-            'surname' => 'User',
-            'password' => bcrypt('qwerty123'),
-            'login' => 'admin',
-            'remember_token' => Str::random(10),
-        ]);
-        $admin->syncRoles($role->find(3));
     }
 }
