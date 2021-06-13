@@ -21,7 +21,9 @@ class Company extends Model
         'constitution_date',
         'parish_id',
         'community_id',
-        'taxpayer_id'
+        'taxpayer_id',
+        'phone',
+        'email'
     ];
 
     public function affidavits()
