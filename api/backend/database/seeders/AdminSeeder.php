@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\User;
 
 class AdminSeeder extends Seeder
@@ -22,7 +23,8 @@ class AdminSeeder extends Seeder
             'login' => env('ADMIN_LOGIN', 'admin'),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'qwerty123')),
         ]);
-        
-        $user->syncRoles([Role::whereName('Root')->first()]);
+
+        $user->syncRoles([Role::whereName('Admin')->first()]);
+        $user->syncPermissions([Permission::whereName('super-admin')->first()]);
     }
 }

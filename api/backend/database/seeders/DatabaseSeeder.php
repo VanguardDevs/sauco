@@ -36,8 +36,6 @@ class DatabaseSeeder extends Seeder
             $this->call(SettingsSeeder::class);
         }
 
-        if (App::environment() == 'production') {
-            $this->call(AdminSeeder::class);
-        }
+        $this->call(AdminSeeder::class);
     }
 }
