@@ -21,7 +21,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'access.economic-activities',
             'access.reports',
             'access.licenses'
-        ]
+        ],
+    ];
+
+    private $specialPermissions = [
+        'super-admin',
+        'cadastre-admin'
     ];
 
     private function createPermissions()
@@ -30,6 +35,10 @@ class RolesAndPermissionsSeeder extends Seeder
         $permissions = array_merge(...$permissionsValues);
 
         foreach (array_unique($permissions) as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+
+        foreach($this->specialPermissions as $permission) {
             Permission::create(['name' => $permission]);
         }
     }
@@ -47,9 +56,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
             $role->syncPermissions($permissions);
         }
-
-        // Super admin
-        Permission::create(['name' => 'super-admin']);
     }
 
     /**
