@@ -11,7 +11,6 @@ class CreateConceptsTable extends Migration
      *
      * @return void
      */
-    public function up()
     {
         Schema::create('concepts', function (Blueprint $table) {
             $table->bigIncrements('id');
