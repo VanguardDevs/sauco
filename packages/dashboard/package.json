@@ -17,6 +17,7 @@
     "date-fns": "^2.21.3",
     "history": "^4.10.1",
     "is-empty": "^1.2.0",
+    "js-file-download": "^0.4.12",
     "number-abbreviate": "^2.0.0",
     "numeral": "^2.0.6",
     "ra-laravel-client": "^1.2.5",
