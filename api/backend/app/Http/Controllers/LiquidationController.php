@@ -21,7 +21,7 @@ class LiquidationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Liquidation::latest()
+        $query = Liquidation::orderBy('num', 'ASC')
             ->with(['liquidationType']);
         $results = $request->perPage;
 
