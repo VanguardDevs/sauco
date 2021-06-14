@@ -10,6 +10,7 @@ use App\Models\Month;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
+use PDF;
 
 class LiquidationController extends Controller
 {
@@ -61,7 +62,22 @@ class LiquidationController extends Controller
             }
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $totalAmount = $query->sum('amount');
+        $liquidations = $query->get();
+        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+
+        $pdf = PDF::LoadView('pdf.liquidations', compact(['liquidations', 'total']));
+        return $pdf->download('reporte.pdf');
     }
 
     /**

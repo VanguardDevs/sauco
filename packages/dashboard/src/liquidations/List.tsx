@@ -12,6 +12,7 @@ import {
   SelectInput,
   DateInput
 } from 'react-admin';
+import { Actions, DownloadReportButton } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
 const StudentFilter: React.FC = props => (
@@ -40,6 +41,7 @@ const StudentList: React.FC = props => {
       bulkActionButtons={false}
       filters={<StudentFilter />}
       exporter={false}
+      actions={<Actions {...props}><DownloadReportButton /></Actions>}
     >
       {
         isSmall
