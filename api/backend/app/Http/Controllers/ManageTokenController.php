@@ -17,6 +17,7 @@ class ManageTokenController extends Controller
 
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)) {
+
             return response()->json([
                 'message' => 'Credenciales inválidas'
             ], 401);
