@@ -12,6 +12,7 @@ import {
   ReferenceArrayInput,
   SelectInput
 } from 'react-admin';
+import { Actions, DownloadReportButton } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
 const optionRenderer = (choice:any) => `${choice.description}`;
@@ -55,6 +56,7 @@ const PaymentsList: React.FC = props => {
       bulkActionButtons={false}
       filters={<PaymentsFilter />}
       exporter={false}
+      actions={<Actions {...props}><DownloadReportButton /></Actions>}
     >
       {
         isSmall
