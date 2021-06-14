@@ -25,7 +25,7 @@
             }
             .taxpayer-info {
                 position: absolute;
-                top: 110px; 
+                top: 110px;
                 left: 0px;
             }
             .activity {
@@ -60,7 +60,7 @@
     </head>
     <body>
         <div id="watermark">
-            <img src="{{ base_path().'/public/assets/images/licenses/economic-activity-license.jpg' }}" height="100%" width="100%"/> 
+            <img src="{{ asset('/assets/images/licenses/economic-activity-license.jpg') }}" height="100%" width="100%"/>
         </div>
         <div class="container">
             <div class="correlative">
@@ -79,7 +79,7 @@
                 <div class="taxpayer-information row">
                    @foreach($license->economicActivities as $activity)
                         <li class="activity">{{ $activity->code.' - '.$activity->name }}</li>
-                   @endforeach 
+                   @endforeach
                 </div>
             </div>
         </div>
