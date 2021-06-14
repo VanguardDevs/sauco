@@ -69,7 +69,9 @@ class ReportController extends Controller
         $lastDate = Carbon::parse($request->input('last_date'))->toDateString();
 
         $payments = Payment::whereDate('processed_at', '>=', $firstDate)
-            ->whereDate('processed_at', '<', $lastDate)->get();
+            ->whereDate('processed_at', '<', $lastDate)
+            ->orderBy('num', 'ASC')
+            ->get();
 
         // Prepare pdf
         $dateFormat = date('d-m-Y', strtotime($firstDate)).' - '.date('d-m-Y', strtotime($lastDate));
@@ -77,7 +79,7 @@ class ReportController extends Controller
         $total = number_format($totalAmount, 2, ',', '.')." Bs";
 
         $pdf = PDF::LoadView('modules.reports.pdf.payments', compact(['dateFormat', 'payments', 'total']));
-        return $pdf->download('reporte-de-pagos.pdf');
+        return $pdf->stream('reporte-de-pagos.pdf');
     }
 
     public function printAffidavitsReport(Request $request)
