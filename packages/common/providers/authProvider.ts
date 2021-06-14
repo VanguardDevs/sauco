@@ -4,7 +4,7 @@ import apiClient from './dataProvider';
 const authProvider: AuthProvider = {
   login: async (data) => {
     await apiClient.get('csrf-cookie');
-    const response = await apiClient.post('login', data);
+    const response = await apiClient.post('tokens/login', data);
 
     if (response.status < 200 || response.status >= 300) {
       throw new Error(response.statusText);
