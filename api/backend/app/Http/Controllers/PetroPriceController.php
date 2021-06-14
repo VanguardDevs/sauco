@@ -14,7 +14,7 @@ class PetroPriceController extends Controller
      */
     public function index(Request $request)
     {
-        $query = PetroPrice::query();
+        $query = PetroPrice::latest();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
