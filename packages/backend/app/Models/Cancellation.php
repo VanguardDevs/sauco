@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\PrettyTimestamps;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cancellation extends Model
 {
-    use PrettyTimestamps;
+    use PrettyTimestamps, SoftDeletes;
 
     protected $table = 'cancellations';
 
