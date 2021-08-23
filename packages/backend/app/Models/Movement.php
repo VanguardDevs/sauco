@@ -21,7 +21,9 @@ class Movement extends Model
         'concept_id',
         'liquidation_id',
         'year_id',
-        'payment_id'
+        'payment_id',
+        'created_at',
+        'updated_at'
     ];
 
     protected $casts = [ 'amount' => 'float' ];

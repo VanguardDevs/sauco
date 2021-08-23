@@ -56,7 +56,7 @@ class AffidavitService
         $total = 0.00;
         $activity = $affidavit->economicActivity;
 
-        if ($activity->code == '123456') {
+        if ($activity->code == '123456' && $amount != 0.00) {
             $total = $amount * $activity->aliquote / 100;
         } else {
             if ($update) {

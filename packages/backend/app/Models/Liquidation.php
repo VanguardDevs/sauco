@@ -24,8 +24,6 @@ class Liquidation extends Model implements Auditable
         'amount' => 'float'
     ];
 
-    protected $appends = ['pretty_amount'];
-
     /**
     * Return year for the movement
     */
