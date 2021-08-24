@@ -1,5 +1,5 @@
-import React from 'react';
-import { Admin, Resource } from 'react-admin';
+import * as React from 'react'
+import { Admin, Resource, useAuthState, useRedirect } from 'react-admin';
 import { dataProvider, authProvider } from '@sauco/common/providers';
 import { history } from '@sauco/common/utils';
 import { Dashboard } from './dashboard';
@@ -23,40 +23,64 @@ import ordinances from './ordinances';
 import economicActivities from './economic-activities';
 import petroPrices from './petro-prices';
 
-function App() {
-  return (
-    <Admin
-      layout={Layout}
-      dashboard={Dashboard}
-      history={history}
-      dataProvider={dataProvider}
-      i18nProvider={i18nProvider}
-      loginPage={Login}
-      authProvider={authProvider}
-    >
-      <Resource {...paymentTypes} />
-      <Resource {...paymentMethods} />
-      <Resource {...taxpayers} />
-      <Resource {...payments} />
-      <Resource {...cancellations} />
-      <Resource {...liquidations} />
-      <Resource {...concepts} />
-      <Resource {...movements} />
-      <Resource {...applications} />
-      <Resource {...fines} />
-      <Resource {...affidavits} />
-      <Resource {...licenses} />
-      <Resource {...users} />
-      <Resource {...ordinances} />
-      <Resource {...economicActivities} />
-      <Resource {...petroPrices} />
-      <Resource name="cancellation-types" />
-      <Resource name="liquidation-types" />
-      <Resource name="taxpayer-types" />
-      <Resource name="taxpayer-classifications" />
-      <Resource name="status" />
-    </Admin>
-  );
+const AAdmin: React.FC = ({ children }) => {
+    const { loading: loadingAuth, authenticated } = useAuthState();
+    const redirect = useRedirect();
+
+    /**
+     * Check authentication status
+     */
+    React.useEffect(() => {
+        if (loadingAuth && !authenticated) {
+            redirect('/login');
+        }
+    }, [loadingAuth, authenticated]);
+
+    if (loadingAuth) return <></>;
+
+    return (
+        <React.Fragment>
+            {children}
+        </React.Fragment>
+    );
 }
+
+const App = () => (
+    <Admin
+        layout={Layout}
+        dashboard={Dashboard}
+        history={history}
+        dataProvider={dataProvider}
+        i18nProvider={i18nProvider}
+        loginPage={Login}
+        authProvider={authProvider}
+    >
+        <AAdmin>
+            {() => [
+                <Resource {...paymentTypes} />,
+                <Resource {...paymentMethods} />,
+                <Resource {...taxpayers} />,
+                <Resource {...payments} />,
+                <Resource {...cancellations} />,
+                <Resource {...liquidations} />,
+                <Resource {...concepts} />,
+                <Resource {...movements} />,
+                <Resource {...applications} />,
+                <Resource {...fines} />,
+                <Resource {...affidavits} />,
+                <Resource {...licenses} />,
+                <Resource {...users} />,
+                <Resource {...ordinances} />,
+                <Resource {...economicActivities} />,
+                <Resource {...petroPrices} />,
+                <Resource name="cancellation-types" />,
+                <Resource name="liquidation-types" />,
+                <Resource name="taxpayer-types" />,
+                <Resource name="taxpayer-classifications" />,
+                <Resource name="status" />,
+            ]}
+        </AAdmin>
+    </Admin>
+)
 
 export default App;
