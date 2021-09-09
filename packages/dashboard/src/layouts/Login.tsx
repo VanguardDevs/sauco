@@ -3,7 +3,6 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field, withTypes } from 'react-final-form';
 import { useLocation } from 'react-router-dom';
-
 import {
     Avatar,
     Button,
@@ -15,7 +14,7 @@ import {
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import LockIcon from '@material-ui/icons/Lock';
-import { Notification, useTranslate, useLogin, useNotify } from 'react-admin';
+import { Notification, useAuthState, useRedirect, useLogin, useNotify } from 'react-admin';
 
 import { lightTheme } from './themes';
 
@@ -66,19 +65,31 @@ const renderInput = ({
 );
 
 interface FormValues {
-    username?: string;
+    login?: string;
     password?: string;
 }
+
+const validate = (values: FormValues) => {
+    const errors: FormValues = {};
+    if (!values.login) {
+        errors.login = 'Ingrese el nombre de usuario';
+    }
+    if (!values.password) {
+        errors.password = 'Ingrese su contraseña';
+    }
+    return errors;
+};
 
 const { Form } = withTypes<FormValues>();
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
-    const translate = useTranslate();
     const classes = useStyles();
     const notify = useNotify();
     const login = useLogin();
     const location = useLocation<{ nextPathname: string } | null>();
+    const { loading: loadingAuth, authenticated } = useAuthState();
+    const redirect = useRedirect();
 
     const handleSubmit = (auth: FormValues) => {
         setLoading(true);
@@ -105,16 +116,16 @@ const Login = () => {
         );
     };
 
-    const validate = (values: FormValues) => {
-        const errors: FormValues = {};
-        if (!values.username) {
-            errors.username = translate('ra.validation.required');
-        }
-        if (!values.password) {
-            errors.password = translate('ra.validation.required');
-        }
-        return errors;
-    };
+    /**
+     * Check authentication status
+     */
+    React.useEffect(() => {
+      if (!loadingAuth && authenticated) {
+        redirect('/');
+      }
+    }, [loadingAuth, authenticated]);
+
+    if (loadingAuth) return <></>;
 
     return (
         <Form
@@ -133,10 +144,10 @@ const Login = () => {
                                 <div className={classes.input}>
                                     <Field
                                         autoFocus
-                                        name="username"
+                                        name="login"
                                         // @ts-ignore
                                         component={renderInput}
-                                        label={translate('ra.auth.username')}
+                                        label={'Usuario'}
                                         disabled={loading}
                                     />
                                 </div>
@@ -145,7 +156,7 @@ const Login = () => {
                                         name="password"
                                         // @ts-ignore
                                         component={renderInput}
-                                        label={translate('ra.auth.password')}
+                                        label={'Contraseña'}
                                         type="password"
                                         disabled={loading}
                                     />
@@ -165,7 +176,7 @@ const Login = () => {
                                             thickness={2}
                                         />
                                     )}
-                                    {translate('ra.auth.sign_in')}
+                                    {'Acceder'}
                                 </Button>
                             </CardActions>
                         </Card>

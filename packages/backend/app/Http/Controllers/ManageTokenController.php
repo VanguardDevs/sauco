@@ -14,7 +14,7 @@ class ManageTokenController extends Controller
     public function login(LoginRequest $request)
     {
         // Check email
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('login', $request->login)->first();
 
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)) {
@@ -24,13 +24,13 @@ class ManageTokenController extends Controller
         }
 
         $token = $user->createToken(Str::random(20))->plainTextToken;
-        $permissions = collect($user->roles()->pluck('name'))
-            ->merge($user->permissions()->pluck('name'));
+        // $permissions = collect($user->roles()->pluck('name'))
+        //     ->merge($user->permissions()->pluck('name'));
 
         return response()->json([
             'user' => $user->toJson(),
             'token' => $token,
-            'permissions' => $permissions->toJson()
+            'permissions' => ''
         ], 201);
     }
 
