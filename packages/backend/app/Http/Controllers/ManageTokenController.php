@@ -7,17 +7,17 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Str;
+use Session;
 
 class ManageTokenController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        // Check login
-        $user = User::where('login', $request->login)->first();
+        // Check email
+        $user = User::where('email', $request->email)->first();
 
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)) {
-
             return response()->json([
                 'message' => 'Credenciales inválidas'
             ], 401);
@@ -47,15 +47,11 @@ class ManageTokenController extends Controller
     {
         $user = $request->user();
         // Revoke token
+        $request->session()->flush();
         $user->tokens()->delete();
 
-        // Save logging out
-        $user->sessions()->create([
-            'active' => 0,
-        ]);
-
         return response()->json([
-            'message' => 'Logged out!'
+            'data' => 'Logged out!'
         ], 200);
     }
 }

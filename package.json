@@ -20,5 +20,7 @@
     "url": "https://github.com/jodaz/sauco/issues"
   },
   "homepage": "https://github.com/jodaz/sauco#readme",
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ]
 }

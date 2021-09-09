@@ -25,16 +25,6 @@ class ReportController extends Controller
         return view('modules.reports.index');
     }
 
-    /**
-     * Display a listing of processed payments.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function payments()
-    {
-        return view('modules.reports.payments.payments');
-    }
-
     public function delinquentCompanies(Request $request)
     {
         $query = Taxpayer::whereDoesntHave('affidavits')
@@ -134,15 +124,5 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView('modules.reports.pdf.activities', compact(['activities', 'total', 'emissionDate' ]))->setPaper('a4', 'letter');
         return $pdf->download('actividades-economicas.pdf');
-    }
-
-    public function printUpToDate()
-    {
-        $taxpayers = $this->upToDateTaxpayers()->get();
-        $taxpayerCount = $taxpayers->count();
-        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
-
-        $pdf = PDF::loadView('modules.reports.pdf.taxpayers-uptodate', compact(['taxpayers', 'emissionDate', 'taxpayerCount']));
-        return $pdf->download('contribuyentes'.$emissionDate.'.pdf');
     }
 }

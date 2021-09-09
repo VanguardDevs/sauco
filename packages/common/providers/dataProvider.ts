@@ -1,11 +1,5 @@
 import apiClient from 'ra-laravel-client';
 
-const dataProvider = apiClient(`${process.env.REACT_APP_API_DOMAIN}`, {
-  withCredentials: true
-}, 'saucosauth');
+console.log(process.env.REACT_APP_API_DOMAIN)
 
-const customDataProvider = {
-  ...dataProvider
-};
-
-export default customDataProvider;
+export const dataProvider = apiClient(`${process.env.REACT_APP_API_DOMAIN}/api`);
