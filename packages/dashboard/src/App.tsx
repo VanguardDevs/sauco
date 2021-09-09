@@ -52,8 +52,6 @@ const App = () => (
         history={history}
         dataProvider={dataProvider}
         i18nProvider={i18nProvider}
-        loginPage={Login}
-        authProvider={authProvider}
     >
         <AAdmin>
             {() => [

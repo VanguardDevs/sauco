@@ -1,5 +1,5 @@
 import { AuthProvider } from 'react-admin';
-import apiClient from './dataProvider';
+import { dataProvider as apiClient } from './dataProvider';
 
 const CONFIG_NAMES = {
   IDENTIFICATION: `${process.env.REACT_APP_IDENTIFICATIONS_NAME}`,
@@ -7,10 +7,10 @@ const CONFIG_NAMES = {
   PERMISSIONS: `${process.env.REACT_APP_PERMISSIONS_NAME}`,
 }
 
-const authProvider: AuthProvider = {
+export const authProvider: AuthProvider = {
   login: async (data) => {
     await apiClient.get('csrf-cookie');
-    const response = await apiClient.post('login', data);
+    const response = await apiClient.post('tokens/login', data);
 
     if (response.status < 200 || response.status >= 300) {
       throw new Error(response.statusText);
@@ -67,4 +67,3 @@ const authProvider: AuthProvider = {
   }
 };
 
-export default authProvider;

@@ -127,7 +127,6 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('print.activities');
     });
     Route::get('payments/processed/list', 'PaymentController@listProcessed');
-    Route::get('reports/payments', 'ReportController@payments')->name('report.payments');
     Route::get('reports/taxpayers/up-to-date/list', 'ReportController@listUpToDate');
     Route::get('reports/taxpayers/up-to-date', 'ReportController@showUpToDateTaxpayers')->name('taxpayers.uptodate');
     Route::get('reports', 'ReportController@index')->name('reports');
@@ -186,27 +185,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
     /**
-     * Taxpayer's old payments
-     */
-    Route::get('taxpayers/{taxpayer}/old-payments', 'OldPaymentController@index')
-        ->name('taxpayer.old-payments');
-
-    /**
-     * Taxpayer's permits
-     */
-    Route::get('taxpayers/{taxpayer}/permits/list', 'PermitController@list');
-    Route::resource('taxpayers/{taxpayer}/permits', 'PermitController');
-
-    /**
      * Taxpayer's Withholdings
      */
     Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
         ->name('withholdings.index');
     Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
     Route::resource('withholdings', 'WithholdingController');
-
-    Route::resource('reports/cancelled-payments', 'NullPaymentController');
-    Route::resource('reports/cancelled-fines', 'NullFineController');
 
     /**
      * Handle settlements and payments
