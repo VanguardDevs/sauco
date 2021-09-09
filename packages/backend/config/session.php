@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'encrypt' => false,
+    'encrypt' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -196,4 +196,5 @@ return [
 
     'same_site' => null,
 
+    'domain' => env('SESSION_DOMAIN', null),
 ];

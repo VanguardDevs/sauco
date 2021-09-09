@@ -23,61 +23,39 @@ import ordinances from './ordinances';
 import economicActivities from './economic-activities';
 import petroPrices from './petro-prices';
 
-const AAdmin: React.FC = ({ children }) => {
-    const { loading: loadingAuth, authenticated } = useAuthState();
-    const redirect = useRedirect();
-
-    /**
-     * Check authentication status
-     */
-    React.useEffect(() => {
-        if (loadingAuth && !authenticated) {
-            redirect('/login');
-        }
-    }, [loadingAuth, authenticated]);
-
-    if (loadingAuth) return <></>;
-
-    return (
-        <React.Fragment>
-            {children}
-        </React.Fragment>
-    );
-}
-
 const App = () => (
     <Admin
         layout={Layout}
         dashboard={Dashboard}
         history={history}
+        loginPage={Login}
+        authProvider={authProvider}
         dataProvider={dataProvider}
         i18nProvider={i18nProvider}
     >
-        <AAdmin>
-            {() => [
-                <Resource {...paymentTypes} />,
-                <Resource {...paymentMethods} />,
-                <Resource {...taxpayers} />,
-                <Resource {...payments} />,
-                <Resource {...cancellations} />,
-                <Resource {...liquidations} />,
-                <Resource {...concepts} />,
-                <Resource {...movements} />,
-                <Resource {...applications} />,
-                <Resource {...fines} />,
-                <Resource {...affidavits} />,
-                <Resource {...licenses} />,
-                <Resource {...users} />,
-                <Resource {...ordinances} />,
-                <Resource {...economicActivities} />,
-                <Resource {...petroPrices} />,
-                <Resource name="cancellation-types" />,
-                <Resource name="liquidation-types" />,
-                <Resource name="taxpayer-types" />,
-                <Resource name="taxpayer-classifications" />,
-                <Resource name="status" />,
-            ]}
-        </AAdmin>
+        {() => [
+            <Resource {...paymentTypes} />,
+            <Resource {...paymentMethods} />,
+            <Resource {...taxpayers} />,
+            <Resource {...payments} />,
+            <Resource {...cancellations} />,
+            <Resource {...liquidations} />,
+            <Resource {...concepts} />,
+            <Resource {...movements} />,
+            <Resource {...applications} />,
+            <Resource {...fines} />,
+            <Resource {...affidavits} />,
+            <Resource {...licenses} />,
+            <Resource {...users} />,
+            <Resource {...ordinances} />,
+            <Resource {...economicActivities} />,
+            <Resource {...petroPrices} />,
+            <Resource name="cancellation-types" />,
+            <Resource name="liquidation-types" />,
+            <Resource name="taxpayer-types" />,
+            <Resource name="taxpayer-classifications" />,
+            <Resource name="status" />,
+        ]}
     </Admin>
 )
 
