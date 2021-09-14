@@ -7,7 +7,9 @@ import {
   TextField,
   SimpleList,
   ReferenceArrayInput,
-  SelectInput
+  SelectInput,
+  TopToolbar,
+  CreateButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
@@ -42,11 +44,14 @@ const TaxpayersFilter: React.FC = props => (
   </Filter>
 );
 
+const ListActions = () => (
+    <TopToolbar>
+        <CreateButton basePath="/taxpayers" />
+    </TopToolbar>
+);
+
 const TaxpayersList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
-  // const dispatch = useDispatch();
-
-  // const handleClick = () => dispatch(setDialog());
 
   return (
     <List {...props}
@@ -54,6 +59,7 @@ const TaxpayersList: React.FC = props => {
       bulkActionButtons={false}
       filters={<TaxpayersFilter />}
       exporter={false}
+      actions={<ListActions />}
     >
       {
         isSmall

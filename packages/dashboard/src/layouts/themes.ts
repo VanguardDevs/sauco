@@ -77,6 +77,18 @@ export const lightTheme = {
                 borderLeft: '3px solid #4f3cc9',
             },
         },
+        MuiInputBase: {
+            root: {
+                borderRadius: '0'
+            },
+            input: {
+              padding: '10px 12px !important',
+              fontSize: 16,
+              border: '1px solid #ced4da',
+              transition: "none",
+              borderRadius: '0'
+            }
+        },
         MuiPaper: {
             elevation1: {
                 boxShadow: 'none',
@@ -134,6 +146,7 @@ export const lightTheme = {
         MuiFilledInput: {
             root: {
                 backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                borderRadius: '0',
                 '&$disabled': {
                     backgroundColor: 'rgba(0, 0, 0, 0.04)',
                 },
