@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Box, Card, CardActions, Button, Typography } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
+import { Box, Card, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -41,20 +40,6 @@ const Welcome: React.FC = () => {
                     <Typography variant="h5" component="h2" gutterBottom>
                         {'Sistema Único de Atención al Contribuyente'}
                     </Typography>
-                    <Box maxWidth="40em">
-                        <Typography variant="body1" component="p" gutterBottom>
-                            {'subtitulo'}
-                        </Typography>
-                    </Box>
-                    <CardActions className={classes.actions}>
-                        <Button
-                            variant="contained"
-                            href="https://marmelab.com/react-admin"
-                            startIcon={<HomeIcon />}
-                        >
-                            {'Acerca de'}
-                        </Button>
-                    </CardActions>
                 </Box>
             </Box>
         </Card>

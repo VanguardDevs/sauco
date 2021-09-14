@@ -95,6 +95,7 @@ const Login = () => {
         setLoading(true);
         login(auth, location.state ? location.state.nextPathname : '/').catch(
             (error: Error) => {
+                console.log(error.message)
                 setLoading(false);
                 notify(
                     typeof error === 'string'

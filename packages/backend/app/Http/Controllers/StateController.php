@@ -12,19 +12,20 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = State::query();
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -49,17 +50,6 @@ class StateController extends Controller
         $query = $state->load($parishes);
 
         return $response->json($query);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\State  $state
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(State $state)
-    {
-        //
     }
 
     /**
