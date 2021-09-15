@@ -1,4 +1,3 @@
-import * as React from 'react';
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore';
 import ConceptsList from './List';
 

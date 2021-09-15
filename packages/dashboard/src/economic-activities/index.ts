@@ -1,4 +1,3 @@
-import * as React from 'react';
 import EconomicActivitiesList from './List';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 

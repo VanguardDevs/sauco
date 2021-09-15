@@ -1,4 +1,3 @@
-import * as React from 'react';
 import UsersList from './List';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 

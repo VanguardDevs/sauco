@@ -1,4 +1,3 @@
-import * as React from 'react';
 import ApplicationsList from './List';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 

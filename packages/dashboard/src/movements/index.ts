@@ -1,4 +1,3 @@
-import * as React from 'react';
 import MovementsList from './List';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 
