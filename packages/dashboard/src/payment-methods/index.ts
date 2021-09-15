@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PaymentMethodsList from './List';
 import PaymentIcon from '@material-ui/icons/Payment';
 

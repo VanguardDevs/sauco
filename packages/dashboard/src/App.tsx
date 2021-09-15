@@ -1,10 +1,8 @@
-import * as React from 'react'
-import { Admin, Resource, useAuthState, useRedirect } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import { dataProvider, authProvider } from '@sauco/common/providers';
 import { history } from '@sauco/common/utils';
 import { Dashboard } from './dashboard';
 import { Layout, Login } from './layouts';
-import i18nProvider from './i18nProvider';
 // Resources
 import concepts from './concepts';
 import movements from './movements';
@@ -31,7 +29,6 @@ const App = () => (
         loginPage={Login}
         authProvider={authProvider}
         dataProvider={dataProvider}
-        i18nProvider={i18nProvider}
     >
         {() => [
             <Resource {...paymentTypes} />,

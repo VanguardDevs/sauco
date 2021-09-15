@@ -1,4 +1,3 @@
-import * as React from 'react';
 import OrdinancesList from './List';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import BookIcon from '@material-ui/icons/Book';
 import AffidavitsList from './List';
 

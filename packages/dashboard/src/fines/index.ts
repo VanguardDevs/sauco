@@ -1,4 +1,3 @@
-import * as React from 'react';
 import FinesList from './List';
 import BlockIcon from '@material-ui/icons/Block';
 

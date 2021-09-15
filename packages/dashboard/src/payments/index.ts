@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import PaymentsList from './List';
 
