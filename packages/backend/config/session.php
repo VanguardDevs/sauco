@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => '.domain.com',
+    'domain' => env('SESSION_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +195,4 @@ return [
     */
 
     'same_site' => null,
-
-    'domain' => env('SESSION_DOMAIN', null),
 ];
