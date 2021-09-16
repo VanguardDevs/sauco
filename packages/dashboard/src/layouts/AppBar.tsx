@@ -30,7 +30,6 @@ const CustomAppBar = (props: any) => {
                 className={classes.title}
                 id="react-admin-title"
             />
-            {!isXSmall && <Logo />}
             <span className={classes.spacer} />
         </AppBar>
     );
