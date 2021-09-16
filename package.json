@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start:dashboard": "yarn workspace @sauco/dashboard run start",
-    "build:dashboard": "yarn workspace @sauco/dashboard run build"
+    "build:dashboard": "yarn workspace @sauco/dashboard run build && cp docs/htaccess_build packages/dashboard/build/.htaccess"
   },
   "repository": {
     "type": "git",

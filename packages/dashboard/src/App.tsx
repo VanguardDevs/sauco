@@ -1,5 +1,5 @@
 import { Admin, Resource } from 'react-admin';
-import { dataProvider, authProvider } from '@sauco/common/providers';
+import { authProvider, dataProvider } from '@sauco/common/providers';
 import { history } from '@sauco/common/utils';
 import { Dashboard } from './dashboard';
 import { Layout, Login } from './layouts';
