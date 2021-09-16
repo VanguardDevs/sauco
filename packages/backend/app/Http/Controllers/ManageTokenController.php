@@ -16,10 +16,20 @@ class ManageTokenController extends Controller
         // Check email
         $user = User::where('login', $request->login)->first();
 
+        if (!$user) {
+            return response()->json([
+                'errors' => [
+                    'login' => ['Login incorrecto']
+                ]
+            ], 401);
+        }
+
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Credenciales inválidas'
+                'errors' => [
+                    'password' => ['Contraseña incorrecta']
+                ]
             ], 401);
         }
 

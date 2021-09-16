@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field, withTypes } from 'react-final-form';
 import { useLocation } from 'react-router-dom';
@@ -15,7 +14,7 @@ import {
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import LockIcon from '@material-ui/icons/Lock';
-import { Notification, useTranslate, useLogin, useNotify } from 'react-admin';
+import { Notification, useLogin, useNotify, useRedirect, useAuthState } from 'react-admin';
 
 import theme from './themes';
 
@@ -75,36 +74,34 @@ interface FormValues {
 const { Form } = withTypes<FormValues>();
 
 const Login = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = React.useState(false);
     const classes = useStyles();
     const notify = useNotify();
     const login = useLogin();
     const location = useLocation<{ nextPathname: string } | null>();
+    const { loading: loadingAuth, authenticated } = useAuthState();
+    const redirect = useRedirect();
 
-    const handleSubmit = (auth: FormValues) => {
-        setLoading(true);
-        login(auth, location.state ? location.state.nextPathname : '/').catch(
-            (error: Error) => {
-                setLoading(false);
-                notify(
-                    typeof error === 'string'
-                        ? error
-                        : typeof error === 'undefined' || !error.message
-                        ? 'Ha ocurrido un error durante su inicio de sesión'
-                        : error.message,
-                    'warning',
-                    {
-                        _:
-                            typeof error === 'string'
-                                ? error
-                                : error && error.message
-                                ? error.message
-                                : undefined,
-                    }
-                );
+    const handleSubmit = React.useCallback(
+      (auth) => {
+        setLoading(true)
+        login(auth, '/').catch(
+          (error) => {
+            setLoading(false)
+            notify(
+              error.response.status === 401
+                ? 'Su contraseña o login no coinciden'
+                : 'Ha ocurrido un error durante su autenticación',
+              'warning'
+            )
+            if (error.response.data.errors) {
+                return error.response.data.errors;
             }
-        );
-    };
+          }
+        )
+      },
+      [login, notify, setLoading, location]
+    )
 
     const validate = (values: FormValues) => {
         const errors: FormValues = {};
@@ -116,6 +113,17 @@ const Login = () => {
         }
         return errors;
     };
+
+    /**
+     * Check authentication status
+     */
+    React.useEffect(() => {
+      if (!loadingAuth && authenticated) {
+        redirect('/');
+      }
+    }, [loadingAuth, authenticated]);
+
+    if (loadingAuth) return <></>;
 
     return (
         <Form
