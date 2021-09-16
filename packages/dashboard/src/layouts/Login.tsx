@@ -3,6 +3,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field, withTypes } from 'react-final-form';
 import { useLocation } from 'react-router-dom';
+
 import {
     Avatar,
     Button,
@@ -14,9 +15,9 @@ import {
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import LockIcon from '@material-ui/icons/Lock';
-import { Notification, useAuthState, useRedirect, useLogin, useNotify } from 'react-admin';
+import { Notification, useTranslate, useLogin, useNotify } from 'react-admin';
 
-import { lightTheme } from './themes';
+import theme from './themes';
 
 const useStyles = makeStyles(theme => ({
     main: {
@@ -25,7 +26,9 @@ const useStyles = makeStyles(theme => ({
         minHeight: '100vh',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        background: 'rgb(168,168,168)',
+        background: `url(${process.env.PUBLIC_URL}/background.jpg)`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
     },
     card: {
         minWidth: 300,
@@ -69,17 +72,6 @@ interface FormValues {
     password?: string;
 }
 
-const validate = (values: FormValues) => {
-    const errors: FormValues = {};
-    if (!values.login) {
-        errors.login = 'Ingrese el nombre de usuario';
-    }
-    if (!values.password) {
-        errors.password = 'Ingrese su contraseña';
-    }
-    return errors;
-};
-
 const { Form } = withTypes<FormValues>();
 
 const Login = () => {
@@ -88,20 +80,17 @@ const Login = () => {
     const notify = useNotify();
     const login = useLogin();
     const location = useLocation<{ nextPathname: string } | null>();
-    const { loading: loadingAuth, authenticated } = useAuthState();
-    const redirect = useRedirect();
 
     const handleSubmit = (auth: FormValues) => {
         setLoading(true);
         login(auth, location.state ? location.state.nextPathname : '/').catch(
             (error: Error) => {
-                console.log(error.message)
                 setLoading(false);
                 notify(
                     typeof error === 'string'
                         ? error
                         : typeof error === 'undefined' || !error.message
-                        ? 'ra.auth.sign_in_error'
+                        ? 'Ha ocurrido un error durante su inicio de sesión'
                         : error.message,
                     'warning',
                     {
@@ -117,16 +106,16 @@ const Login = () => {
         );
     };
 
-    /**
-     * Check authentication status
-     */
-    React.useEffect(() => {
-      if (!loadingAuth && authenticated) {
-        redirect('/');
-      }
-    }, [loadingAuth, authenticated]);
-
-    if (loadingAuth) return <></>;
+    const validate = (values: FormValues) => {
+        const errors: FormValues = {};
+        if (!values.login) {
+            errors.login = 'Ingrese su nombre de usuario';
+        }
+        if (!values.password) {
+            errors.password = 'Ingrese su contraseña';
+        }
+        return errors;
+    };
 
     return (
         <Form
@@ -198,7 +187,7 @@ Login.propTypes = {
 // Because otherwise the useStyles() hook used in Login won't get
 // the right theme
 const LoginWithTheme = (props: any) => (
-    <ThemeProvider theme={createMuiTheme(lightTheme)}>
+    <ThemeProvider theme={createMuiTheme(theme)}>
         <Login {...props} />
     </ThemeProvider>
 );

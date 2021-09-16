@@ -1,65 +1,25 @@
-export const darkTheme = {
-    palette: {
-        primary: {
-            main: '#90caf9',
-        },
-        secondary: {
-            main: '#FBBA72',
-        },
-        type: 'dark' as 'dark', // Switching the dark mode on is a single property value change.
+const palette = {
+    primary: {
+        main: '#3F51B5',
     },
-    overrides: {
-        MuiAppBar: {
-            colorSecondary: {
-                color: '#ffffffb3',
-                backgroundColor: '#616161e6',
-            },
-        },
-        MuiButtonBase: {
-            root: {
-                '&:hover:active::after': {
-                    // recreate a static ripple color
-                    // use the currentColor to make it work both for outlined and contained buttons
-                    // but to dim the background without dimming the text,
-                    // put another element on top with a limited opacity
-                    content: '""',
-                    display: 'block',
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    backgroundColor: 'currentColor',
-                    opacity: 0.3,
-                    borderRadius: 'inherit',
-                },
-            },
-        },
+    secondary: {
+        light: '#C5CAE9',
+        main: '#448AFF',
+        dark: '#303F9F',
+        contrastText: '#fff',
     },
-    props: {
-        MuiButtonBase: {
-            // disable ripple for perf reasons
-            disableRipple: true,
-        },
+    text: {
+        primary: '#212121',
+        secondary: '#757575',
+        divider: '#BDBDBD'
     },
-};
+    background: {
+        default: '#fcfcfe',
+    },
+}
 
-export const lightTheme = {
-    palette: {
-        primary: {
-            main: '#4f3cc9',
-        },
-        secondary: {
-            light: '#5f5fc4',
-            main: '#283593',
-            dark: '#001064',
-            contrastText: '#fff',
-        },
-        background: {
-            default: '#fcfcfe',
-        },
-        type: 'light' as 'light',
-    },
+export default {
+    palette: palette,
     shape: {
         borderRadius: 10,
     },
@@ -74,7 +34,7 @@ export const lightTheme = {
                 borderLeft: '3px solid #fff',
             },
             active: {
-                borderLeft: '3px solid #4f3cc9',
+                borderLeft: `3px solid ${palette.secondary.main}`,
             },
         },
         MuiInputBase: {
@@ -104,7 +64,7 @@ export const lightTheme = {
         MuiButton: {
             contained: {
                 backgroundColor: '#fff',
-                color: '#4f3cc9',
+                color: `${palette.secondary.main}`,
                 boxShadow: 'none',
                 borderRadius: '0 !important'
             },
