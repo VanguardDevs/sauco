@@ -63,7 +63,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 handleToggle={() => handleToggle('people')}
                 isOpen={state.people}
                 sidebarIsOpen={open}
-                name="pos.menu.people"
+                name="Contribuyentes"
                 icon={<TaxpayersMenuIcon />}
                 dense={dense}
             >
@@ -80,7 +80,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 handleToggle={() => handleToggle('rates')}
                 isOpen={state.rates}
                 sidebarIsOpen={open}
-                name="pos.menu.rates"
+                name="Tasas"
                 icon={<EmojiSymbolsIcon />}
                 dense={dense}
             >
@@ -113,7 +113,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 handleToggle={() => handleToggle('reports')}
                 isOpen={state.reports}
                 sidebarIsOpen={open}
-                name="pos.menu.reports"
+                name="Reportes"
                 icon={<ReportIcon />}
                 dense={dense}
             >
@@ -186,7 +186,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 handleToggle={() => handleToggle('settings')}
                 isOpen={state.settings}
                 sidebarIsOpen={open}
-                name="pos.menu.settings"
+                name="Configuraciones"
                 icon={<SettingsIcon />}
                 dense={dense}
             >
@@ -219,7 +219,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 handleToggle={() => handleToggle('administration')}
                 isOpen={state.administration}
                 sidebarIsOpen={open}
-                name="pos.menu.administration"
+                name="Personal"
                 icon={<LabelIcon />}
                 dense={dense}
             >
