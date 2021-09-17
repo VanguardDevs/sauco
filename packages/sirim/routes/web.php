@@ -41,9 +41,6 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Only Admin routes
      */
     Route::group(['middleware' => ['has.role:admin']], function () {
-        /** General Settings */
-        Route::get('settings', 'ShowSettings')->name('settings');
-
         /**
         * Settings > Years
         */

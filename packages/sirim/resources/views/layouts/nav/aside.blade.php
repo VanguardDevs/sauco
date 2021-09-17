@@ -64,22 +64,6 @@
             </a>
         </li>
 
-        <li class="kt-menu__item {{ active('economic-activities*') }}" aria-haspopup="true" >
-            <a href="{{ url('economic-activities') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon2-percentage"></i>
-                <span class="kt-menu__link-text">Actividades económicas</span>
-            </a>
-        </li>
-
-        @if (@Auth::user()->can('access.geographic-area'))
-        <li class="kt-menu__item {{ active('geographic-area/communities*') }}" aria-haspopup="true" >
-            <a href="{{ route('communities.index') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon fas fa-globe-americas"></i>
-                <span class="kt-menu__link-text">Área geográfica</span>
-            </a>
-        </li>
-        @endif
-
         <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
             <a  href="{{ route('reports') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon flaticon-squares-2"></i>
@@ -87,20 +71,11 @@
             </a>
         </li>
 
-        @if (@Auth::user()->hasRole('admin'))
-        <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
-            <a  href="{{ url('settings') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon2-dashboard"></i>
-                <span class="kt-menu__link-text">Configuraciones</span>
-            </a>
-        </li>
-        @endif
-
         @if (Config::get('app.sauco_url'))
         <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
             <a  href="{{ Config::get('app.sauco_url') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon fas fa-star-half-alt"></i>
-                <span class="kt-menu__link-text">Sauco</span>
+                <span class="kt-menu__link-text">Sauco V2.0</span>
             </a>
         </li>
         @endif
