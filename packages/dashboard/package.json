@@ -2,6 +2,7 @@
   "name": "@sauco/dashboard",
   "version": "0.1.0",
   "private": true,
+  "home": "/",
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.10",

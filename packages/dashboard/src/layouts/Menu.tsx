@@ -34,6 +34,7 @@ import paymentMethods from '../payment-methods';
 import ordinances from '../ordinances';
 import economicActivities from '../economic-activities';
 import petroPrices from '../petro-prices';
+import items from '../items';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -210,6 +211,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     to={ordinances.name}
                     primaryText={ordinances.options.label}
                     leftIcon={<ordinances.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={items.name}
+                    primaryText={items.options.label}
+                    leftIcon={<items.icon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}

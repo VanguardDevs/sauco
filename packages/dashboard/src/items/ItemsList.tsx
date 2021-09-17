@@ -6,37 +6,40 @@ import {
   Datagrid,
   NumberField,
   TextField,
-  SimpleList
+  SimpleList,
+  EditButton,
+  DeleteButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
-const PaymentTypesFilter: React.FC = props => (
+const ItemsFilter: React.FC = props => (
   <Filter {...props}>
-    <TextInput label="Nombre" source='description' />
+    <TextInput label="Nombre" source='name' />
   </Filter>
 );
 
-const PaymentTypesList: React.FC = props => {
+const ItemsList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
   return (
     <List {...props}
-      title="Tipos de pago"
+      title="Rubros del mercado"
       bulkActionButtons={false}
-      filters={<PaymentTypesFilter />}
+      filters={<ItemsFilter />}
       exporter={false}
     >
       {
         isSmall
         ? (
           <SimpleList
-            primaryText={record => `${record.description}`}
+            primaryText={record => `${record.name}`}
           />
         )
         : (
           <Datagrid>
-            <TextField source="description" label="Nombre"/>
-            <NumberField source="payments_count" label="Facturas"/>
+              <TextField source="name" label="Nombre"/>
+              <EditButton />
+              <DeleteButton />
           </Datagrid>
         )
       }
@@ -44,4 +47,4 @@ const PaymentTypesList: React.FC = props => {
   );
 };
 
-export default PaymentTypesList;
+export default ItemsList;

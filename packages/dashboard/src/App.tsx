@@ -18,17 +18,20 @@ import paymentTypes from './payment-types';
 import paymentMethods from './payment-methods';
 import users from './users';
 import ordinances from './ordinances';
+import items from './items';
 import economicActivities from './economic-activities';
 import petroPrices from './petro-prices';
 
 const App = () => (
     <Admin
+        title=""
         layout={Layout}
         dashboard={Dashboard}
         history={history}
         loginPage={Login}
         authProvider={authProvider}
         dataProvider={dataProvider}
+        disableTelemetry
     >
         {() => [
             <Resource {...paymentTypes} />,
@@ -47,6 +50,7 @@ const App = () => (
             <Resource {...ordinances} />,
             <Resource {...economicActivities} />,
             <Resource {...petroPrices} />,
+            <Resource {...items} />,
             <Resource name="cancellation-types" />,
             <Resource name="liquidation-types" />,
             <Resource name="taxpayer-types" />,
