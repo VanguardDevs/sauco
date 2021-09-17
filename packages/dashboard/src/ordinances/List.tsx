@@ -21,7 +21,7 @@ const OrdinancesList: React.FC = props => {
 
   return (
     <List {...props}
-      title="Tipos de pago"
+      title="Ordenanzas"
       bulkActionButtons={false}
       filters={<OrdinancesFilter />}
       exporter={false}

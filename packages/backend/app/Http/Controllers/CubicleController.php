@@ -2,28 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permit;
-use App\Models\Taxpayer;
+use App\Models\Cubicle;
 use Illuminate\Http\Request;
 
-class PermitController extends Controller
+class CubicleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer)
-    {
-        dd($taxpayer);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index()
     {
         //
     }
@@ -42,21 +31,10 @@ class PermitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Permit  $permit
+     * @param  \App\Models\Cubicle  $cubicle
      * @return \Illuminate\Http\Response
      */
-    public function show(Permit $permit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Permit  $permit
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Permit $permit)
+    public function show(Cubicle $cubicle)
     {
         //
     }
@@ -65,10 +43,10 @@ class PermitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Permit  $permit
+     * @param  \App\Models\Cubicle  $cubicle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permit $permit)
+    public function update(Request $request, Cubicle $cubicle)
     {
         //
     }
@@ -76,10 +54,10 @@ class PermitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Permit  $permit
+     * @param  \App\Models\Cubicle  $cubicle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permit $permit)
+    public function destroy(Cubicle $cubicle)
     {
         //
     }
