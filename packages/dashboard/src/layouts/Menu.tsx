@@ -45,7 +45,8 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
         settings: false,
         administration: false,
         cadastre: false,
-        rates: false
+        rates: false,
+        env: process.env.REACT_APP_ENV
     });
     const isXSmall = useMediaQuery((theme: Theme) =>
         theme.breakpoints.down('xs')
@@ -60,56 +61,60 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
         <Box mt={1}>
             {' '}
             <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
-            <SubMenu
-                handleToggle={() => handleToggle('people')}
-                isOpen={state.people}
-                sidebarIsOpen={open}
-                name="Contribuyentes"
-                icon={<TaxpayersMenuIcon />}
-                dense={dense}
-            >
-                <MenuItemLink
-                    to={taxpayers.name}
-                    primaryText={taxpayers.options.label}
-                    leftIcon={<taxpayers.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-            </SubMenu>
-            <SubMenu
-                handleToggle={() => handleToggle('rates')}
-                isOpen={state.rates}
-                sidebarIsOpen={open}
-                name="Tasas"
-                icon={<EmojiSymbolsIcon />}
-                dense={dense}
-            >
-                <MenuItemLink
-                    to={concepts.name}
-                    primaryText={concepts.options.label}
-                    leftIcon={<concepts.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={economicActivities.name}
-                    primaryText={economicActivities.options.label}
-                    leftIcon={<economicActivities.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={petroPrices.name}
-                    primaryText={petroPrices.options.label}
-                    leftIcon={<petroPrices.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-            </SubMenu>
+            {(state.env !== 'PRODUCTION') && (
+                <>
+                    <SubMenu
+                        handleToggle={() => handleToggle('people')}
+                        isOpen={state.people}
+                        sidebarIsOpen={open}
+                        name="Contribuyentes"
+                        icon={<TaxpayersMenuIcon />}
+                        dense={dense}
+                    >
+                        <MenuItemLink
+                            to={taxpayers.name}
+                            primaryText={taxpayers.options.label}
+                            leftIcon={<taxpayers.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                    </SubMenu>
+                    <SubMenu
+                        handleToggle={() => handleToggle('rates')}
+                        isOpen={state.rates}
+                        sidebarIsOpen={open}
+                        name="Tasas"
+                        icon={<EmojiSymbolsIcon />}
+                        dense={dense}
+                    >
+                        <MenuItemLink
+                            to={concepts.name}
+                            primaryText={concepts.options.label}
+                            leftIcon={<concepts.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={economicActivities.name}
+                            primaryText={economicActivities.options.label}
+                            leftIcon={<economicActivities.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={petroPrices.name}
+                            primaryText={petroPrices.options.label}
+                            leftIcon={<petroPrices.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                    </SubMenu>
+                </>
+            )}
             <SubMenu
                 handleToggle={() => handleToggle('reports')}
                 isOpen={state.reports}
@@ -118,38 +123,66 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 icon={<ReportIcon />}
                 dense={dense}
             >
-                <MenuItemLink
-                    to={licenses.name}
-                    primaryText={licenses.options.label}
-                    leftIcon={<licenses.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={payments.name}
-                    primaryText={payments.options.label}
-                    leftIcon={<payments.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={cancellations.name}
-                    primaryText={cancellations.options.label}
-                    leftIcon={<cancellations.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={liquidations.name}
-                    primaryText={liquidations.options.label}
-                    leftIcon={<liquidations.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
+                {(state.env !== 'PRODUCTION') && (
+                    <>
+                        <MenuItemLink
+                            to={licenses.name}
+                            primaryText={licenses.options.label}
+                            leftIcon={<licenses.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={payments.name}
+                            primaryText={payments.options.label}
+                            leftIcon={<payments.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={cancellations.name}
+                            primaryText={cancellations.options.label}
+                            leftIcon={<cancellations.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={liquidations.name}
+                            primaryText={liquidations.options.label}
+                            leftIcon={<liquidations.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={affidavits.name}
+                            primaryText={affidavits.options.label}
+                            leftIcon={<affidavits.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={fines.name}
+                            primaryText={fines.options.label}
+                            leftIcon={<fines.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={applications.name}
+                            primaryText={applications.options.label}
+                            leftIcon={<applications.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                    </>
+                )}
                 <MenuItemLink
                     to={movements.name}
                     primaryText={movements.options.label}
@@ -158,89 +191,69 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     sidebarIsOpen={open}
                     dense={dense}
                 />
-                <MenuItemLink
-                    to={affidavits.name}
-                    primaryText={affidavits.options.label}
-                    leftIcon={<affidavits.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={fines.name}
-                    primaryText={fines.options.label}
-                    leftIcon={<fines.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={applications.name}
-                    primaryText={applications.options.label}
-                    leftIcon={<applications.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
             </SubMenu>
-            <SubMenu
-                handleToggle={() => handleToggle('settings')}
-                isOpen={state.settings}
-                sidebarIsOpen={open}
-                name="Configuraciones"
-                icon={<SettingsIcon />}
-                dense={dense}
-            >
-                <MenuItemLink
-                    to={paymentTypes.name}
-                    primaryText={paymentTypes.options.label}
-                    leftIcon={<paymentTypes.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={paymentMethods.name}
-                    primaryText={paymentMethods.options.label}
-                    leftIcon={<paymentMethods.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={ordinances.name}
-                    primaryText={ordinances.options.label}
-                    leftIcon={<ordinances.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to={items.name}
-                    primaryText={items.options.label}
-                    leftIcon={<items.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-            </SubMenu>
-            <SubMenu
-                handleToggle={() => handleToggle('administration')}
-                isOpen={state.administration}
-                sidebarIsOpen={open}
-                name="Personal"
-                icon={<LabelIcon />}
-                dense={dense}
-            >
-                <MenuItemLink
-                    to={users.name}
-                    primaryText={users.options.label}
-                    leftIcon={<users.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-            </SubMenu>
+            {(state.env !== 'PRODUCTION') && (
+                <>
+                    <SubMenu
+                        handleToggle={() => handleToggle('settings')}
+                        isOpen={state.settings}
+                        sidebarIsOpen={open}
+                        name="Configuraciones"
+                        icon={<SettingsIcon />}
+                        dense={dense}
+                    >
+                        <MenuItemLink
+                            to={paymentTypes.name}
+                            primaryText={paymentTypes.options.label}
+                            leftIcon={<paymentTypes.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={paymentMethods.name}
+                            primaryText={paymentMethods.options.label}
+                            leftIcon={<paymentMethods.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={ordinances.name}
+                            primaryText={ordinances.options.label}
+                            leftIcon={<ordinances.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={items.name}
+                            primaryText={items.options.label}
+                            leftIcon={<items.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                    </SubMenu>
+                    <SubMenu
+                        handleToggle={() => handleToggle('administration')}
+                        isOpen={state.administration}
+                        sidebarIsOpen={open}
+                        name="Personal"
+                        icon={<LabelIcon />}
+                        dense={dense}
+                    >
+                        <MenuItemLink
+                            to={users.name}
+                            primaryText={users.options.label}
+                            leftIcon={<users.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                    </SubMenu>
+                </>
+            )}
             {isXSmall && logout}
         </Box>
     );
