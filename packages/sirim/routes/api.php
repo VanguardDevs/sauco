@@ -16,3 +16,4 @@ use Illuminate\Http\Request;
 Route::resource('taxpayers/{taxpayer}/withholdings', 'WithholdingController');
 
 Route::get('withholdings-months', 'WithholdingController@months');
+Route::get('licenses/{license}', 'LicenseController@show');
