@@ -23,6 +23,7 @@ class CreateApplicationsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamp('approved_at');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('concept_id')->references('id')->on('concepts')

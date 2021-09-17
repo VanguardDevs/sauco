@@ -21,7 +21,7 @@ const validate = (values: FormValues) => {
 
 const ItemCreate = (props: CreateProps) => (
     <Create {...props}>
-        <SimpleForm validate={validate}>
+        <SimpleForm validate={validate} redirect='/items'>
             <TextInput
                 label={false}
                 source="name"

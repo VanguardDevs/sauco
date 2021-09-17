@@ -14,20 +14,20 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;
 use Auth;
-use App\Services\AffidavitService;
+// use App\Services\AffidavitService;
 
 class AffidavitController extends Controller
 {
-    /** Initial variables
-     * @var $liquidation, $concept, $taxpayer, $month, $receivable, $payment
-     */
-    protected $economicActivityAffidavit;
+    // /** Initial variables
+    //  * @var $liquidation, $concept, $taxpayer, $month, $receivable, $payment
+    //  */
+    // protected $economicActivityAffidavit;
 
-    public function __construct(AffidavitService $economicActivityAffidavit)
-    {
-        $this->economicActivityAffidavit = $economicActivityAffidavit;
-        $this->middleware('can:null.settlements')->only('destroy');
-    }
+    // public function __construct(AffidavitService $economicActivityAffidavit)
+    // {
+    //     $this->economicActivityAffidavit = $economicActivityAffidavit;
+    //     $this->middleware('can:null.settlements')->only('destroy');
+    // }
 
     public function index(Request $request)
     {
