@@ -1,8 +1,10 @@
-import { AppBar, UserMenu } from 'react-admin';
+import { forwardRef } from 'react';
+import { AppBar, UserMenu, MenuItemLink } from 'react-admin';
 import Typography from '@material-ui/core/Typography';
-import { useMediaQuery, Theme, makeStyles } from '@material-ui/core';
-
-import Logo from './Logo';
+import Box from '@material-ui/core/Box';
+import SecurityIcon from '@material-ui/icons/Security';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
     title: {
@@ -16,14 +18,36 @@ const useStyles = makeStyles({
     },
 });
 
+const CustomUserMenu = forwardRef<any, any>((props, ref) => (
+    <UserMenu {...props}>
+        <Box>
+            <MenuItemLink
+                ref={ref}
+                to="/profile"
+                primaryText='Perfil'
+                title='Configuraciones de perfil'
+                leftIcon={<AccountBoxIcon />}
+                onClick={props.onClick}
+                sidebarIsOpen
+            />
+            <MenuItemLink
+                ref={ref}
+                to="/security"
+                primaryText='Seguridad'
+                title='Configuraciones de seguridad'
+                leftIcon={<SecurityIcon />}
+                onClick={props.onClick}
+                sidebarIsOpen
+            />
+        </Box>
+    </UserMenu>
+));
+
 const CustomAppBar = (props: any) => {
     const classes = useStyles();
-    const isXSmall = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.down('xs')
-    );
 
     return (
-        <AppBar {...props} elevation={1} userMenu={<UserMenu {...props} />}>
+        <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
             <Typography
                 variant="h6"
                 color="inherit"

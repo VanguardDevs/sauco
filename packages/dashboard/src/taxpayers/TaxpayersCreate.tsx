@@ -8,8 +8,7 @@ import {
     CreateContextProvider,
     CreateProps,
     ReferenceInput,
-    SelectInput,
-    Toolbar
+    SelectInput
 } from 'react-admin'
 import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
 

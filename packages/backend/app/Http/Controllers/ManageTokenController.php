@@ -44,20 +44,9 @@ class ManageTokenController extends Controller
         ], 201);
     }
 
-    public function authenticate(Request $request)
-    {
-        $token = $request->user()->createToken(Str::random(20));
-
-        return response()->json([
-            'token' => $token->plainTextToken
-        ], 201);
-    }
-
-    public function revoke(Request $request)
+    public function logout(Request $request)
     {
         $user = $request->user();
-        // Revoke token
-        $request->session()->flush();
         $user->tokens()->delete();
 
         return response()->json([
