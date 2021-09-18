@@ -58,6 +58,17 @@ class ChargingMethodController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(ChargingMethod $method)
+    {
+        return $method;
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

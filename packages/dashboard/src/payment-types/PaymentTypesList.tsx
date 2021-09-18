@@ -6,7 +6,9 @@ import {
   Datagrid,
   NumberField,
   TextField,
-  SimpleList
+  SimpleList,
+  EditButton,
+  DeleteButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
@@ -37,6 +39,8 @@ const PaymentTypesList: React.FC = props => {
           <Datagrid>
             <TextField source="description" label="Nombre"/>
             <NumberField source="payments_count" label="Facturas"/>
+            <EditButton />
+            <DeleteButton />
           </Datagrid>
         )
       }

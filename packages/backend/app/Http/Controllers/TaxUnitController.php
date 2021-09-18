@@ -50,7 +50,7 @@ class TaxUnitController extends Controller
      */
     public function show(TaxUnit $taxUnit)
     {
-        //
+        return $taxUnit;
     }
 
     /**
