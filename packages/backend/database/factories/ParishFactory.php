@@ -22,7 +22,8 @@ class ParishFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name
+            'name' => $this->faker->name,
+            'code' => $this->faker->username
         ];
     }
 }

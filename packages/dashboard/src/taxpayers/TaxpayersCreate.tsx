@@ -21,7 +21,7 @@ const MunicipalitiesSelectInput = (props: any) => {
             <Grid item xs={12} sm={12} md={4}>
                 <InputLabel>Municipio</InputLabel>
                 <ReferenceInput
-                    source="state_id"
+                    source="municipality_id"
                     reference="municipalities"
                     sort={{ field: 'id', order: 'ASC' }}
                     label=''
@@ -44,7 +44,7 @@ const ParishesSelectInput = (props: any) => {
             <Grid item xs={12} sm={12} md={4}>
                 <InputLabel>Parroquia</InputLabel>
                 <ReferenceInput
-                    source="municipality_id"
+                    source="parish_id"
                     reference="parishes"
                     sort={{ field: 'id', order: 'ASC' }}
                     label=''
@@ -109,7 +109,7 @@ const TaxpayerCreateForm: React.FC<any> = props => (
                             <InputLabel>RIF</InputLabel>
                             <TextInput
                                 label={false}
-                                source="name"
+                                source="rif"
                                 placeholder="Ej. 12345678-9"
                                 fullWidth
                             />

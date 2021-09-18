@@ -131,7 +131,7 @@ const Dashboard: React.FC = () => {
             }
         );
 
-        const price: number = +prices[0].value;
+        const price: number = (prices.length) ? +prices[0].value : 0;
 
         setState(state => ({
             ...state,

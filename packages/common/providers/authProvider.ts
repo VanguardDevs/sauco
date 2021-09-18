@@ -45,8 +45,8 @@ export const authProvider: AuthProvider = {
         return Promise.resolve();
     },
     checkAuth: async () => await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN)
-        ? Promise.resolve({ redirectTo: '/' })
-        : Promise.reject({ message: false, redirectTo: '/login' }),
+        ? Promise.resolve()
+        : Promise.reject({ message: false }),
     getPermissions: async () => {
         const permissions = await localStorage.getItem(CONFIG_NAMES.PERMISSIONS);
 
