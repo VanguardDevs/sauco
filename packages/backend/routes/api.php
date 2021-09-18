@@ -36,8 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('economic-activities', 'EconomicActivityController');
 
      // Controlled level permissions
-     Route::apiResource('liquidation-types', 'LiquidationTypeController')
-         ->except(['show']);
+     Route::apiResource('liquidation-types', 'LiquidationTypeController');
      Route::apiResource('states', 'StateController');
      Route::apiResource('municipalities', 'MunicipalityController');
      Route::apiResource('communities', 'CommunityController');

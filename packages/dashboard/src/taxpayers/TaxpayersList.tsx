@@ -67,7 +67,7 @@ const TaxpayersList: React.FC = props => {
           <SimpleList
             primaryText={record => `${record.name}`}
             secondaryText={record => `${record.rif}`}
-            tertiaryText={record => `${record.fiscal_address}`}
+            tertiaryText={record => `${record.address}`}
             linkType={"show"}
           />
         )
@@ -75,7 +75,7 @@ const TaxpayersList: React.FC = props => {
           <Datagrid>
             <TextField source="rif" label="RIF"/>
             <TextField source="name" label="Nombre"/>
-            <TextField source="fiscal_address" label="Dirección"/>
+            <TextField source="address" label="Dirección"/>
           </Datagrid>
         )
       }
