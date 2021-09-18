@@ -11,6 +11,54 @@ import {
     SelectInput
 } from 'react-admin'
 import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
+import { useFormState } from 'react-final-form'
+
+const MunicipalitiesSelectInput = (props: any) => {
+    const { values } = useFormState();
+
+    if (values.state_id) {
+        return (
+            <Grid item xs={12} sm={12} md={4}>
+                <InputLabel>Municipio</InputLabel>
+                <ReferenceInput
+                    source="state_id"
+                    reference="municipalities"
+                    sort={{ field: 'id', order: 'ASC' }}
+                    label=''
+                    filter={{ state_id: values.state_id }}
+                    fullWidth
+                >
+                    <SelectInput source="name" />
+                </ReferenceInput>
+            </Grid>
+        )
+    }
+
+    return null;
+}
+const ParishesSelectInput = (props: any) => {
+    const { values } = useFormState();
+
+    if (values.municipality_id) {
+        return (
+            <Grid item xs={12} sm={12} md={4}>
+                <InputLabel>Parroquia</InputLabel>
+                <ReferenceInput
+                    source="municipality_id"
+                    reference="parishes"
+                    sort={{ field: 'id', order: 'ASC' }}
+                    label=''
+                    filter={{ municipality_id: values.municipality_id }}
+                    fullWidth
+                >
+                    <SelectInput source="name" />
+                </ReferenceInput>
+            </Grid>
+        )
+    }
+
+    return null;
+}
 
 const TaxpayerCreateForm: React.FC<any> = props => (
     <FormWithRedirect
@@ -83,6 +131,8 @@ const TaxpayerCreateForm: React.FC<any> = props => (
                                 <SelectInput source="name" />
                             </ReferenceInput>
                         </Grid>
+                        <MunicipalitiesSelectInput />
+                        <ParishesSelectInput />
                         <Grid item xs={12} sm={12} md={12}>
                             <InputLabel>Calle o avenida</InputLabel>
                             <TextInput

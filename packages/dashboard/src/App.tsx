@@ -19,6 +19,7 @@ import paymentTypes from './payment-types';
 import paymentMethods from './payment-methods';
 import users from './users';
 import ordinances from './ordinances';
+import municipalities from './municipalities';
 import items from './items';
 import permissions from './permissions';
 import economicActivities from './economic-activities';
@@ -57,6 +58,7 @@ const App = () => (
             <Resource {...items} />,
             <Resource {...permissions} />,
             <Resource {...states} />,
+            <Resource {...municipalities} />,
             <Resource name="cancellation-types" />,
             <Resource name="liquidation-types" />,
             <Resource name="taxpayer-types" />,

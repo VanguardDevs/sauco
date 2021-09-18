@@ -12,19 +12,26 @@ class MunicipalityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $query = Municipality::query();
+        $results = $request->perPage;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+            if (array_key_exists('code', $filters)) {
+                $query->whereLike('code', $filters['code']);
+            }
+            if (array_key_exists('state_id', $filters)) {
+                $query->whereLike('state_id', $filters['state_id']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -35,7 +42,9 @@ class MunicipalityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mun = Municipality::create($request->all());
+
+        return $mun;
     }
 
     /**
@@ -46,18 +55,7 @@ class MunicipalityController extends Controller
      */
     public function show(Municipality $municipality)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Municipality  $municipality
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Municipality $municipality)
-    {
-        //
+        return $municipality;
     }
 
     /**
@@ -69,7 +67,9 @@ class MunicipalityController extends Controller
      */
     public function update(Request $request, Municipality $municipality)
     {
-        //
+        $municipality->update($request->all());
+
+        return $municipality;
     }
 
     /**
@@ -80,6 +80,8 @@ class MunicipalityController extends Controller
      */
     public function destroy(Municipality $municipality)
     {
-        //
+        $municipality->delete();
+
+        return $municipality;
     }
 }
