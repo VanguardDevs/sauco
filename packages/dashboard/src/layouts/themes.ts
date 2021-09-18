@@ -34,7 +34,7 @@ export default {
                 borderLeft: '3px solid #fff',
             },
             active: {
-                borderLeft: `3px solid ${palette.secondary.main}`,
+                borderLeft: `15px solid ${palette.secondary.main}`,
             },
         },
         MuiInputBase: {

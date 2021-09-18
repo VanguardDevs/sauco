@@ -38,6 +38,8 @@ import petroPrices from '../petro-prices';
 import items from '../items';
 import permissions from '../permissions';
 import states from '../states';
+import municipalities from '../municipalities';
+import parishes from '../parishes';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -128,6 +130,22 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             to={states.name}
                             primaryText={states.options.label}
                             leftIcon={<states.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={municipalities.name}
+                            primaryText={municipalities.options.label}
+                            leftIcon={<municipalities.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={parishes.name}
+                            primaryText={parishes.options.label}
+                            leftIcon={<parishes.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}

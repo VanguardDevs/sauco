@@ -24,6 +24,9 @@ class StateController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->whereLike('name', $filters['name']);
             }
+            if (array_key_exists('code', $filters)) {
+                $query->whereLike('code', $filters['code']);
+            }
         }
 
         return $query->paginate($results);
