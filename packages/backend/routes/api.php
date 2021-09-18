@@ -24,21 +24,15 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('items', 'ItemController');
      Route::apiResource('purposes', 'PurposeController');
      Route::apiResource('terrain-classifications', 'TerrainClassificationController');
-     Route::apiResource('payment-methods', 'PaymentMethodController')
-         ->except(['show']);
-     Route::apiResource('payment-types', 'PaymentTypeController')
-         ->except(['show']);
+     Route::apiResource('payment-methods', 'PaymentMethodController');
+     Route::apiResource('payment-types', 'PaymentTypeController');
      Route::apiResource('representation-types', 'RepresentationTypeController');
-     Route::apiResource('tax-units', 'TaxUnitController')
-         ->except(['show']);
-     Route::apiResource('brands', 'BrandController')
-         ->except(['show']);
+     Route::apiResource('tax-units', 'TaxUnitController');
+     Route::apiResource('brands', 'BrandController');
      Route::apiResource('colors', 'ColorController');
      Route::apiResource('users', 'UserController');
-     Route::apiResource('ordinances', 'OrdinanceController')
-         ->except(['show']);
-     Route::apiResource('charging-methods', 'ChargingMethodController')
-         ->except(['show']);
+     Route::apiResource('ordinances', 'OrdinanceController');
+     Route::apiResource('charging-methods', 'ChargingMethodController');
      Route::apiResource('economic-activities', 'EconomicActivityController');
 
      // Controlled level permissions
@@ -74,6 +68,8 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::get('intervals', 'IntervalController@index');
      Route::get('movements', 'MovementController@index');
      Route::get('closures', 'ClosureController@index');
-     Route::get('logout', 'ManageTokenController@logout');
+
+     // Account
      Route::post('update-password', 'UpdatePasswordController');
+     Route::get('logout', 'ManageTokenController@logout');
 });
