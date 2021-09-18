@@ -16,6 +16,7 @@ import ReportIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LabelIcon from '@material-ui/icons/Label';
 import EmojiSymbolsIcon from '@material-ui/icons/EmojiSymbols';
+import LanguageIcon from '@material-ui/icons/Language';
 
 // Resources
 import users from '../users';
@@ -35,6 +36,8 @@ import ordinances from '../ordinances';
 import economicActivities from '../economic-activities';
 import petroPrices from '../petro-prices';
 import items from '../items';
+import permissions from '../permissions';
+import states from '../states';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -108,6 +111,23 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             to={petroPrices.name}
                             primaryText={petroPrices.options.label}
                             leftIcon={<petroPrices.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                    </SubMenu>
+                    <SubMenu
+                        handleToggle={() => handleToggle('cadastre')}
+                        isOpen={state.cadastre}
+                        sidebarIsOpen={open}
+                        name="Catastro"
+                        icon={<LanguageIcon />}
+                        dense={dense}
+                    >
+                        <MenuItemLink
+                            to={states.name}
+                            primaryText={states.options.label}
+                            leftIcon={<states.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}
@@ -243,6 +263,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         icon={<LabelIcon />}
                         dense={dense}
                     >
+                        <MenuItemLink
+                            to={permissions.name}
+                            primaryText={permissions.options.label}
+                            leftIcon={<permissions.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
                         <MenuItemLink
                             to={users.name}
                             primaryText={users.options.label}

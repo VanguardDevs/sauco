@@ -18,7 +18,8 @@ class CreateParishesTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('municipality_id');
             $table->timestamps();
-            $table->foreign('municipality_id')->references('id')->on('municipalities');
+            $table->foreign('municipality_id')->references('id')->on('municipalities')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
