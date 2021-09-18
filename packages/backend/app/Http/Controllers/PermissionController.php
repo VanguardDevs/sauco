@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\State;
 use Illuminate\Http\Request;
-use App\Http\Requests\StatesCreateRequest;
+use Spatie\Permission\Models\Permission;
 
-class StateController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class StateController extends Controller
      */
     public function index(Request $request)
     {
-        $query = State::query();
+        $query = Permission::latest();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -35,50 +34,42 @@ class StateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StatesCreateRequest $request)
+    public function store(Request $request)
     {
-        $model = State::create($request->all());
-
-        return $model;
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\State  $state
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(State $state)
+    public function show($id)
     {
-        $query = $state;
-
-        return $state;
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\State  $state
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StatesCreateRequest $request, State $state)
+    public function update(Request $request, $id)
     {
-        $model = $state->update($request->all());
-
-        return $model;
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\State  $state
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(State $state)
+    public function destroy($id)
     {
-        $state->delete();
-
-        return $state;
+        //
     }
 }

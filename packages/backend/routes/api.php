@@ -57,6 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('applications', 'ApplicationController');
      Route::apiResource('fines', 'FineController');
      Route::apiResource('deductions', 'DeductionController');
+     Route::apiResource('permissions', 'PermissionController');
 
      /**
       * Consults

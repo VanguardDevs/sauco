@@ -4,6 +4,7 @@ import { history } from '@sauco/common/utils';
 import { Dashboard } from './dashboard';
 import { Layout, Login } from './layouts';
 // Resources
+import states from './states';
 import concepts from './concepts';
 import movements from './movements';
 import liquidations from './liquidations';
@@ -19,6 +20,7 @@ import paymentMethods from './payment-methods';
 import users from './users';
 import ordinances from './ordinances';
 import items from './items';
+import permissions from './permissions';
 import economicActivities from './economic-activities';
 import petroPrices from './petro-prices';
 import routes from './routes'
@@ -53,6 +55,8 @@ const App = () => (
             <Resource {...economicActivities} />,
             <Resource {...petroPrices} />,
             <Resource {...items} />,
+            <Resource {...permissions} />,
+            <Resource {...states} />,
             <Resource name="cancellation-types" />,
             <Resource name="liquidation-types" />,
             <Resource name="taxpayer-types" />,
