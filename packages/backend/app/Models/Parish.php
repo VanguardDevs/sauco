@@ -11,7 +11,7 @@ class Parish extends Model
 
     protected $table = 'parishes';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'code', 'municipality_id'];
 
     public function communities()
     {

@@ -7,6 +7,28 @@ import {
     SelectInput
 } from 'react-admin';
 import validate from './validateParishes'
+import { useFormState } from 'react-final-form'
+
+const MunicipalitiesSelectInput = (props: any) => {
+    const { values } = useFormState();
+
+    if (values.state_id) {
+        return (
+            <ReferenceInput
+                source="municipality_id"
+                reference="municipalities"
+                sort={{ field: 'id', order: 'ASC' }}
+                label=''
+                filter={{ state_id: values.state_id }}
+                fullWidth
+            >
+                <SelectInput source="name" />
+            </ReferenceInput>
+        )
+    }
+
+    return null;
+}
 
 const ParishEdit = (props: EditProps) => (
     <Edit {...props}>
@@ -22,14 +44,15 @@ const ParishEdit = (props: EditProps) => (
                 fullWidth
             />
             <ReferenceInput
-                source="municipality_id"
-                reference="municipalities"
+                source="state_id"
+                reference="states"
                 sort={{ field: 'id', order: 'ASC' }}
                 label=''
                 fullWidth
             >
                 <SelectInput source="name" />
             </ReferenceInput>
+            <MunicipalitiesSelectInput />
         </SimpleForm>
     </Edit>
 );

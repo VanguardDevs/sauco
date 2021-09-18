@@ -26,6 +26,7 @@ import economicActivities from './economic-activities';
 import petroPrices from './petro-prices';
 import routes from './routes'
 import liquidationTypes from './liquidation-types';
+import parishes from './parishes';
 
 const App = () => (
     <Admin
@@ -60,6 +61,7 @@ const App = () => (
             <Resource {...permissions} />,
             <Resource {...states} />,
             <Resource {...municipalities} />,
+            <Resource {...parishes} />,
             <Resource {...liquidationTypes} />,
             <Resource name="cancellation-types" />,
             <Resource name="taxpayer-types" />,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Parish;
 
 class ParishController extends Controller
 {
@@ -41,7 +42,9 @@ class ParishController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = Parish::create($request->all());
+
+        return $model;
     }
 
     /**
@@ -50,9 +53,9 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Parish $parish)
     {
-        //
+        return $parish;
     }
 
     /**
@@ -62,9 +65,11 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Parish $parish)
     {
-        //
+        $parish->update($request->all());
+
+        return $parish;
     }
 
     /**
@@ -73,8 +78,10 @@ class ParishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Parish $parish)
     {
-        //
+        $parish->delete();
+
+        return $parish;
     }
 }
