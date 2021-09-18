@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('tokens/login', 'ManageTokenController@login');
+Route::post('login', 'ManageTokenController@login');
 
 Route::middleware('auth:sanctum')->group(function () {
     // /**
@@ -74,4 +74,6 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::get('intervals', 'IntervalController@index');
      Route::get('movements', 'MovementController@index');
      Route::get('closures', 'ClosureController@index');
+     Route::get('logout', 'ManageTokenController@logout');
+     Route::post('update-password', 'UpdatePasswordController');
 });

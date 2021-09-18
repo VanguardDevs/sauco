@@ -10,7 +10,7 @@ const CONFIG_NAMES = {
 export const authProvider: AuthProvider = {
     login: async (data) => {
         await apiClient.get('csrf-cookie')
-        const response = await apiClient.post('tokens/login', data);
+        const response = await apiClient.post('login', data);
 
         if (response.status < 200 || response.status >= 300) {
             throw new Error(response.statusText);
@@ -25,6 +25,7 @@ export const authProvider: AuthProvider = {
         }
     },
     logout: async () => {
+        await apiClient.get('logout');
         await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
         await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
         await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);

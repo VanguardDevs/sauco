@@ -21,6 +21,7 @@ import ordinances from './ordinances';
 import items from './items';
 import economicActivities from './economic-activities';
 import petroPrices from './petro-prices';
+import routes from './routes'
 
 const App = () => (
     <Admin
@@ -29,6 +30,7 @@ const App = () => (
         dashboard={Dashboard}
         history={history}
         loginPage={Login}
+        customRoutes={routes}
         authProvider={authProvider}
         dataProvider={dataProvider}
         disableTelemetry

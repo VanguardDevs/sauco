@@ -39,14 +39,17 @@ export default {
         },
         MuiInputBase: {
             root: {
-                borderRadius: '0'
+                borderRadius: '0 !important'
             },
             input: {
               padding: '10px 12px !important',
               fontSize: 16,
               border: '1px solid #ced4da',
               transition: "none",
-              borderRadius: '0'
+              borderRadius: '0 !important',
+              '&:focus': {
+                  borderColor: palette.primary.main
+              }
             }
         },
         MuiPaper: {
@@ -106,7 +109,7 @@ export default {
         MuiFilledInput: {
             root: {
                 backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                borderRadius: '0',
+                borderRadius: '0 !important',
                 '&$disabled': {
                     backgroundColor: 'rgba(0, 0, 0, 0.04)',
                 },
@@ -117,6 +120,11 @@ export default {
                 border: 'none',
             },
         },
+        MuiFormLabel: {
+            root: {
+                color: palette.text.primary
+            }
+        }
     },
     props: {
         MuiButtonBase: {
