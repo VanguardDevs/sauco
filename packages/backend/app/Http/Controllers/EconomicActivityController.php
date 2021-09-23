@@ -17,7 +17,7 @@ class EconomicActivityController extends Controller
      */
     public function index(Request $request)
     {
-        $query = EconomicActivity::withCount('taxpayers');
+        $query = EconomicActivity::query();
         $results = $request->perPage;
 
         if ($request->has('filter')) {

@@ -1,4 +1,4 @@
-import EconomicActivitiesList from './List';
+import EconomicActivitiesList from './EconomicActivitiesList';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 
 export default {
