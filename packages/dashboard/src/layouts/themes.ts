@@ -25,9 +25,19 @@ export default {
     },
     overrides: {
         RaList: {
-          content: {
-            borderRadius: 0
-          }
+            root: {
+                marginTop: '2em'
+            },
+            content: {
+                borderRadius: 0,
+            }
+        },
+        RaListToolbar: {
+            actions: {
+                paddingTop: 0,
+                display: 'flex',
+                alignItems: 'center'
+            }
         },
         RaMenuItemLink: {
             root: {
