@@ -7,11 +7,11 @@ import {
     NumberField,
     TextField,
     SimpleList,
-    TopToolbar,
-    ExportButton,
     NumberInput
 } from 'react-admin';
+import { Actions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
+import DownloadButton from '../components/DownloadButton'
 
 const EconomicActivitiesListFilter: React.FC = props => (
     <Filter {...props}>
@@ -24,10 +24,10 @@ const EconomicActivitiesListFilter: React.FC = props => (
     </Filter>
 );
 
-const ListActions = () => (
-    <TopToolbar>
-        <ExportButton />
-    </TopToolbar>
+const ListActions: React.FC = props => (
+    <Actions {...props}>
+        <DownloadButton />
+    </Actions>
 );
 
 const EconomicActivitiesDatagrid = ({ isSmall }: any) => (

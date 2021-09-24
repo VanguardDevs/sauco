@@ -4,9 +4,7 @@ import MovementTypeFieldComponent from './MovementTypeField';
 import TotalCountComponent from './TotalCount';
 import RecordActionsComponent from './RecordActions';
 import ActionsComponent from './Actions';
-import DownloadReportButtonComponent from './DownloadReportButton';
 
-export const DownloadReportButton = DownloadReportButtonComponent;
 export const MovementTypeField = MovementTypeFieldComponent;
 export const ListWrapper = ListWrapperComponent;
 export const ListActions = ListActionsComponent;

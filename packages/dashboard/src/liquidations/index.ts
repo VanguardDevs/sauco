@@ -1,4 +1,4 @@
-import LiquidationsList from './List';
+import LiquidationsList from './LiquidationsList';
 import BallotIcon from '@material-ui/icons/Ballot';
 
 export default {
