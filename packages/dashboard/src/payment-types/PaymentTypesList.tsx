@@ -13,9 +13,9 @@ import {
 import { Theme, useMediaQuery } from '@material-ui/core';
 
 const PaymentTypesFilter: React.FC = props => (
-  <Filter {...props}>
-    <TextInput label="Nombre" source='description' />
-  </Filter>
+    <Filter {...props}>
+        <TextInput label="Nombre" source='description' />
+    </Filter>
 );
 
 const PaymentTypesList: React.FC = props => {
@@ -23,10 +23,10 @@ const PaymentTypesList: React.FC = props => {
 
   return (
     <List {...props}
-      title="Tipos de pago"
-      bulkActionButtons={false}
-      filters={<PaymentTypesFilter />}
-      exporter={false}
+        title="Tipos de pago"
+        bulkActionButtons={false}
+        filters={<PaymentTypesFilter />}
+        exporter={false}
     >
       {
         isSmall
