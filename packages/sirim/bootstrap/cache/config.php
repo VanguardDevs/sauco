@@ -1,8 +1,8 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Sirim',
-    'sauco_url' => 'http://10.42.0.1:1234',
+    'name' => 'SirimPRUEBA',
+    'sauco_url' => 'http://10.42.0.1:5481',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -171,7 +171,7 @@
   'breadcrumbs' => 
   array (
     'view' => 'partials.breadcrumbs',
-    'files' => '/var/www/sauco/packages/sirim/routes/breadcrumbs.php',
+    'files' => '/home/dei/code/sauco/packages/sirim/routes/breadcrumbs.php',
     'unnamed-route-exception' => true,
     'missing-route-bound-breadcrumb-exception' => true,
     'invalid-named-breadcrumb-exception' => true,
@@ -232,7 +232,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/var/www/sauco/packages/sirim/storage/framework/cache/data',
+        'path' => '/home/dei/code/sauco/packages/sirim/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -270,7 +270,7 @@
         'table' => 'cache',
       ),
     ),
-    'prefix' => 'sirim_cache',
+    'prefix' => 'sirimprueba_cache',
   ),
   'database' => 
   array (
@@ -281,7 +281,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'sauco',
+        'database' => 'sauco_reconversion',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -291,7 +291,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '5432',
-        'database' => 'sauco',
+        'database' => 'sauco_reconversion',
         'username' => 'dei',
         'password' => 'dei_2020',
         'unix_socket' => '',
@@ -311,7 +311,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '5432',
-        'database' => 'sauco',
+        'database' => 'sauco_reconversion',
         'username' => 'dei',
         'password' => 'dei_2020',
         'charset' => 'utf8',
@@ -341,7 +341,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '5432',
-        'database' => 'sauco',
+        'database' => 'sauco_reconversion',
         'username' => 'dei',
         'password' => 'dei_2020',
         'charset' => 'utf8',
@@ -356,7 +356,7 @@
       'options' => 
       array (
         'cluster' => 'predis',
-        'prefix' => 'sirim_database_',
+        'prefix' => 'sirimprueba_database_',
       ),
       'default' => 
       array (
@@ -383,12 +383,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/var/www/sauco/packages/sirim/storage/app',
+        'root' => '/home/dei/code/sauco/packages/sirim/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/var/www/sauco/packages/sirim/storage/app/public',
+        'root' => '/home/dei/code/sauco/packages/sirim/storage/app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -434,13 +434,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => '/var/www/sauco/packages/sirim/storage/logs/laravel.log',
+        'path' => '/home/dei/code/sauco/packages/sirim/storage/logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => '/var/www/sauco/packages/sirim/storage/logs/laravel.log',
+        'path' => '/home/dei/code/sauco/packages/sirim/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -504,7 +504,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/var/www/sauco/packages/sirim/resources/views/vendor/mail',
+        0 => '/home/dei/code/sauco/packages/sirim/resources/views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -597,7 +597,7 @@
     'lifetime' => '120',
     'expire_on_close' => true,
     'encrypt' => false,
-    'files' => '/var/www/sauco/packages/sirim/storage/framework/sessions',
+    'files' => '/home/dei/code/sauco/packages/sirim/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -606,7 +606,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'sirim_session',
+    'cookie' => 'sirimprueba_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => false,
@@ -690,9 +690,9 @@
   array (
     'paths' => 
     array (
-      0 => '/var/www/sauco/packages/sirim/resources/views',
+      0 => '/home/dei/code/sauco/packages/sirim/resources/views',
     ),
-    'compiled' => '/var/www/sauco/packages/sirim/storage/framework/views',
+    'compiled' => '/home/dei/code/sauco/packages/sirim/storage/framework/views',
   ),
   'dompdf' => 
   array (
@@ -700,10 +700,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => '/var/www/sauco/packages/sirim/storage/fonts/',
-      'font_cache' => '/var/www/sauco/packages/sirim/storage/fonts/',
+      'font_dir' => '/home/dei/code/sauco/packages/sirim/storage/fonts/',
+      'font_cache' => '/home/dei/code/sauco/packages/sirim/storage/fonts/',
       'temp_dir' => '/tmp',
-      'chroot' => '/var/www/sauco/packages/sirim',
+      'chroot' => '/home/dei/code/sauco/packages/sirim',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -895,7 +895,7 @@
     ),
     'temporary_files' => 
     array (
-      'local_path' => '/var/www/sauco/packages/sirim/storage/framework/laravel-excel',
+      'local_path' => '/home/dei/code/sauco/packages/sirim/storage/framework/laravel-excel',
       'remote_disk' => NULL,
       'remote_prefix' => NULL,
       'force_resync_remote' => NULL,

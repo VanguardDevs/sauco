@@ -15,7 +15,7 @@ class CreatePetroPricesTable extends Migration
     {
         Schema::create('petro_prices', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
+            $table->decimal('value', 10);
             $table->timestamps();
         });
     }
