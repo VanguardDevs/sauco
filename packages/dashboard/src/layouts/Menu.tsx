@@ -86,26 +86,22 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                     </SubMenu>
-                    <SubMenu
-                        handleToggle={() => handleToggle('rates')}
-                        isOpen={state.rates}
-                        sidebarIsOpen={open}
-                        name="Tasas"
-                        icon={<EmojiSymbolsIcon />}
-                        dense={dense}
-                    >
+                </>
+            )}
+            <SubMenu
+                handleToggle={() => handleToggle('rates')}
+                isOpen={state.rates}
+                sidebarIsOpen={open}
+                name="Tasas"
+                icon={<EmojiSymbolsIcon />}
+                dense={dense}
+            >
+                {(state.env !== 'PRODUCTION') && (
+                    <>
                         <MenuItemLink
                             to={concepts.name}
                             primaryText={concepts.options.label}
                             leftIcon={<concepts.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
-                        <MenuItemLink
-                            to={economicActivities.name}
-                            primaryText={economicActivities.options.label}
-                            leftIcon={<economicActivities.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}
@@ -118,7 +114,19 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             sidebarIsOpen={open}
                             dense={dense}
                         />
-                    </SubMenu>
+                    </>
+                )}
+                <MenuItemLink
+                    to={economicActivities.name}
+                    primaryText={economicActivities.options.label}
+                    leftIcon={<economicActivities.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+            </SubMenu>
+            {(state.env !== 'PRODUCTION') && (
+                <>
                     <SubMenu
                         handleToggle={() => handleToggle('cadastre')}
                         isOpen={state.cadastre}
