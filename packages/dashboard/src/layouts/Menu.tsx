@@ -106,16 +106,16 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             sidebarIsOpen={open}
                             dense={dense}
                         />
-                        <MenuItemLink
-                            to={petroPrices.name}
-                            primaryText={petroPrices.options.label}
-                            leftIcon={<petroPrices.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
                     </>
                 )}
+                <MenuItemLink
+                    to={petroPrices.name}
+                    primaryText={petroPrices.options.label}
+                    leftIcon={<petroPrices.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
                 <MenuItemLink
                     to={economicActivities.name}
                     primaryText={economicActivities.options.label}
