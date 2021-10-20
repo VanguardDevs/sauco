@@ -45,25 +45,25 @@ const LiquidationsDatagrid = ({ isSmall }: any) => (
             isSmall
             ? (
                 <SimpleList
-                primaryText={record => `${record.num}`}
-                secondaryText={record => `${record.object_payment}`}
-                linkType={"show"}
+                    primaryText={record => `${record.num}`}
+                    secondaryText={record => `${record.object_payment}`}
+                    linkType={"show"}
                 />
             )
             : (
                 <Datagrid>
-                <TextField source="num" label="Número"/>
-                <TextField source="object_payment" label="Objeto de pago"/>
-                <ReferenceField
-                    label="Contribuyente"
-                    source="taxpayer_id"
-                    reference="taxpayers"
-                    link="show"
-                >
-                    <TextField source="name" />
-                </ReferenceField>
-                <NumberField source='amount' label='Monto' />
-                <TextField source="liquidation_type.name" label="Tipo"/>
+                    <TextField source="num" label="Número"/>
+                    <TextField source="object_payment" label="Objeto de pago"/>
+                    <ReferenceField
+                        label="Contribuyente"
+                        source="taxpayer_id"
+                        reference="taxpayers"
+                        link="show"
+                    >
+                        <TextField source="name" />
+                    </ReferenceField>
+                    <NumberField source='amount' label='Monto' />
+                    <TextField source="liquidation_type.name" label="Tipo"/>
                 </Datagrid>
             )
         }
@@ -78,6 +78,10 @@ const LiquidationList: React.FC = props => {
             title="Liquidaciones"
             filters={<LiquidationFilter />}
             actions={<ListActions />}
+<<<<<<< HEAD
+=======
+            bulkActionButtons={false}
+>>>>>>> a2124a8edf3e1bbf59867ef0df00ca5eb7765699
         >
             <LiquidationsDatagrid isSmall={isSmall} />
         </List>

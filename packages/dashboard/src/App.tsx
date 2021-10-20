@@ -27,6 +27,7 @@ import petroPrices from './petro-prices';
 import routes from './routes'
 import liquidationTypes from './liquidation-types';
 import parishes from './parishes';
+import { i18nProvider } from './i18nProvider';
 
 const App = () => (
     <Admin
@@ -37,7 +38,9 @@ const App = () => (
         loginPage={Login}
         customRoutes={routes}
         authProvider={authProvider}
+        i18nProvider={i18nProvider}
         dataProvider={dataProvider}
+        locale="es"
         disableTelemetry
     >
         {() => [

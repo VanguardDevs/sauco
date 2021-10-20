@@ -6,36 +6,40 @@ import {
   Datagrid,
   NumberField,
   TextField,
-  SimpleList
+  SimpleList,
+  EditButton,
+  DeleteButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
-const UsersFilter: React.FC = props => (
+const ItemsFilter: React.FC = props => (
   <Filter {...props}>
-    <TextInput label="Nombre" source='description' />
+    <TextInput label="Nombre" source='name' />
   </Filter>
 );
 
-const UsersList: React.FC = props => {
+const ItemsList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
   return (
     <List {...props}
-      title="Usuarios"
+      title="Rubros del mercado"
       bulkActionButtons={false}
-      filters={<UsersFilter />}
+      filters={<ItemsFilter />}
       exporter={false}
     >
       {
         isSmall
         ? (
           <SimpleList
-            primaryText={record => `${record.login}`}
+            primaryText={record => `${record.name}`}
           />
         )
         : (
           <Datagrid>
-            <TextField source="login" label="Login"/>
+              <TextField source="name" label="Nombre"/>
+              <EditButton />
+              <DeleteButton />
           </Datagrid>
         )
       }
@@ -43,4 +47,4 @@ const UsersList: React.FC = props => {
   );
 };
 
-export default UsersList;
+export default ItemsList;

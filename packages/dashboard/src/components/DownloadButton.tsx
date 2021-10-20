@@ -68,8 +68,10 @@ const ExportButton = (props: ExportButtonProps) => {
             apiProvider
                 .get(`/${URL}`)
                 .then((res: any) => {
-                    if (!isEmpty(res.data)) {
-                        fileDownload(res, 'reporte.pdf');
+                    const { data } = res
+
+                    if (!isEmpty(data)) {
+                        fileDownload(data, 'reporte.pdf');
                     }
                 })
                 .catch((error: any) => {

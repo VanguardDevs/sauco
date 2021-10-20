@@ -1,5 +1,5 @@
 import TimelineIcon from '@material-ui/icons/Timeline';
-import PaymentsList from './List';
+import PaymentsList from './PaymentsList';
 
 export default {
   name: 'payments',

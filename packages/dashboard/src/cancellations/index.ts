@@ -1,5 +1,5 @@
 import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
-import CancellationsList from './List';
+import CancellationsList from './CancellationList';
 import CancellationShow from './CancellationShow';
 
 export default {

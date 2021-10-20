@@ -27,7 +27,8 @@ class FineController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Fine::with(['concept', 'taxpayer']);
+        $query = Fine::orderBy('num', 'ASC')
+            ->with(['concept', 'taxpayer']);
         $results = $request->perPage;
 
         if ($request->has('filter')) {
