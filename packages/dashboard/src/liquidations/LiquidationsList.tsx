@@ -78,10 +78,7 @@ const LiquidationList: React.FC = props => {
             title="Liquidaciones"
             filters={<LiquidationFilter />}
             actions={<ListActions />}
-<<<<<<< HEAD
-=======
             bulkActionButtons={false}
->>>>>>> a2124a8edf3e1bbf59867ef0df00ca5eb7765699
         >
             <LiquidationsDatagrid isSmall={isSmall} />
         </List>
