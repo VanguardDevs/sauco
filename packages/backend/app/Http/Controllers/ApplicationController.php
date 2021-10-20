@@ -19,7 +19,8 @@ class ApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Application::with('concept', 'taxpayer');
+        $query = Application::orderBy('num', 'ASC')
+            ->with('concept', 'taxpayer');
         $results = $request->perPage;
 
         if ($request->has('filter')) {

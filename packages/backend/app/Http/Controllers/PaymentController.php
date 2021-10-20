@@ -26,7 +26,7 @@ class PaymentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Payment::orderBy('num', 'DESC')
+        $query = Payment::orderBy('num', 'ASC')
             ->whereStatusId(2);
         $results = $request->perPage;
 

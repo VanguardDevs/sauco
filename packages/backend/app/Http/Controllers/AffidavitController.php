@@ -31,7 +31,9 @@ class AffidavitController extends Controller
 
     public function index(Request $request)
     {
-        $query = Affidavit::with(['taxpayer'])->where('amount', '!=', 0);
+        $query = Affidavit::orderBy('num', 'ASC')
+            ->with(['taxpayer'])
+            ->where('amount', '!=', 0);
         $results = $request->perPage;
 
         if ($request->has('filter')) {

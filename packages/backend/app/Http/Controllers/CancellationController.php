@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cancellation;
 use Illuminate\Http\Request;
+use PDF;
 
 class CancellationController extends Controller
 {
@@ -35,7 +36,20 @@ class CancellationController extends Controller
             }
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $pdf = PDF::LoadView('pdf.cancellations', compact(['models']));
+
+        return $pdf->download('reporte.pdf');
     }
 
     /**
