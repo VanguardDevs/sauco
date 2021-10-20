@@ -170,36 +170,36 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 icon={<ReportIcon />}
                 dense={dense}
             >
+            <MenuItemLink
+                to={payments.name}
+                primaryText={payments.options.label}
+                leftIcon={<payments.icon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+            />
+                <MenuItemLink
+                    to={cancellations.name}
+                    primaryText={cancellations.options.label}
+                    leftIcon={<cancellations.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={liquidations.name}
+                    primaryText={liquidations.options.label}
+                    leftIcon={<liquidations.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
                 {(state.env !== 'PRODUCTION') && (
                     <>
                         <MenuItemLink
                             to={licenses.name}
                             primaryText={licenses.options.label}
                             leftIcon={<licenses.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
-                        <MenuItemLink
-                            to={payments.name}
-                            primaryText={payments.options.label}
-                            leftIcon={<payments.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
-                        <MenuItemLink
-                            to={cancellations.name}
-                            primaryText={cancellations.options.label}
-                            leftIcon={<cancellations.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
-                        <MenuItemLink
-                            to={liquidations.name}
-                            primaryText={liquidations.options.label}
-                            leftIcon={<liquidations.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}
