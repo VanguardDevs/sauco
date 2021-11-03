@@ -1,47 +1,14 @@
-import { useCallback } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import {
-    useDataProvider,
-    useNotify,
     useListContext,
     SortPayload,
     FilterPayload,
-    useResourceContext,
     ButtonProps,
     Button
 } from 'react-admin';
-import { stringify } from 'qs';
-import isEmpty from 'is-empty';
-import axios from 'axios'
-import fileDownload from 'js-file-download';
-
-const token = localStorage.getItem(`${process.env.REACT_APP_AUTH_TOKEN_NAME}`);
-
-const apiProvider = axios.create({
-    baseURL: `${process.env.REACT_APP_API_DOMAIN}`,
-    headers: {
-        'Authorization': `Bearer ${token}`
-    },
-    responseType: 'blob'
-})
-
-const getUrl = (props: any) => {
-    const { basePath, page, perPage, filterValues } = props;
-    const query = {
-        page: page,
-        perPage: perPage,
-        type: 'pdf'
-    }
-
-    // Add all filter params to query.
-    Object.keys(filterValues || {}).forEach((key: any) => {
-        //@ts-ignore
-        query[`filter[${key}]`] = filterValues[key];
-    });
-
-    return `${basePath.substring(1)}?${stringify(query)}`;
-}
+import { fileProvider } from '@sauco/common/providers'
 
 const ExportButton = (props: ExportButtonProps) => {
     const {
@@ -52,47 +19,19 @@ const ExportButton = (props: ExportButtonProps) => {
         sort, // deprecated, to be removed in v4
         ...rest
     } = props;
-    const {
-        filter,
-        filterValues,
-        currentSort,
-        total,
-    } = useListContext(props);
-    const resource = useResourceContext(props);
-    const dataProvider = useDataProvider();
-    const notify = useNotify();
-    const handleClick = useCallback(
+    const { total } = useListContext(props);
+    const downloader = fileProvider({
+        apiUrl: `${process.env.REACT_APP_API_DOMAIN}`,
+        tokenName: `${process.env.REACT_APP_AUTH_TOKEN_NAME}`,
+        fileName: 'reporte-de-pagos.pdf',
+        ...props
+    })
+
+    const handleClick = React.useCallback(
         event => {
-            const URL = getUrl(props);
-
-            apiProvider
-                .get(`/${URL}`)
-                .then((res: any) => {
-                    const { data } = res
-
-                    if (!isEmpty(data)) {
-                        fileDownload(data, 'reporte.pdf');
-                    }
-                })
-                .catch((error: any) => {
-                    console.error(error);
-                    notify('ra.notification.http_error', 'warning');
-                });
-            if (typeof onClick === 'function') {
-                onClick(event);
-            }
+            downloader.getFile()
         },
-        [
-            currentSort,
-            dataProvider,
-            filter,
-            filterValues,
-            maxResults,
-            notify,
-            onClick,
-            resource,
-            sort,
-        ]
+        [downloader]
     );
 
     return (
