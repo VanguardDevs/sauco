@@ -8,37 +8,42 @@ import {
     ButtonProps,
     Button
 } from 'react-admin';
+import { useFileProvider } from '@jodaz_/file-provider'
 import { fileProvider } from '@sauco/common/providers'
 
 const ExportButton = (props: ExportButtonProps) => {
     const {
-        maxResults = 1000,
         onClick,
         label = 'ra.action.export',
         icon = defaultIcon,
+        resource,
         sort, // deprecated, to be removed in v4
         ...rest
     } = props;
     const { total } = useListContext(props);
-    const downloader = fileProvider({
-        apiUrl: `${process.env.REACT_APP_API_DOMAIN}`,
-        tokenName: `${process.env.REACT_APP_AUTH_TOKEN_NAME}`,
-        fileName: 'reporte-de-pagos.pdf',
-        ...props
-    })
+    const [provider, { loading, loaded }] = useFileProvider(fileProvider);
 
     const handleClick = React.useCallback(
-        event => {
-            downloader.getFile()
+        async (e) => {
+            await provider({
+                type: 'get',
+                resource: resource,
+                payload: {
+                    name: 'reporte',
+                    ext: 'pdf',
+                    ...props
+                }
+            })
+            e.preventDefault();
         },
-        [downloader]
+        [props]
     );
 
     return (
         <Button
             onClick={handleClick}
             label={label}
-            disabled={total === 0}
+            disabled={total === 0 || loading}
             {...sanitizeRestProps(rest)}
         >
             {icon}
