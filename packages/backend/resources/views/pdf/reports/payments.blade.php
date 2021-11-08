@@ -1,7 +1,8 @@
 @extends('pdf.reports.layouts.template')
 
 @section('content')
-    <caption>REPORTE DE PAGOS PROCESADOS</caption>
+<table style="text-align: center">
+    <caption>{{ strtoupper($title) }}</caption>
     <thead>
         <tr>
         <th width="3%">#</th>
@@ -21,4 +22,16 @@
         <td>{{ $payment->prettyAmount }}</td>
     </tr>
     @endforeach
+</table>
+<br>
+<div class="bill-info">
+    <div class="col-bill-info">
+        FECHA: {{ $dates }}
+    </div>
+    <div class="col-bill-info">
+        <div class="total-amount">
+            MONTO TOTAL PROCESADO: {{ $total }}
+        </div>
+    </div>
+</div>
 @endsection

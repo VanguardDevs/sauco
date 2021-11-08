@@ -7,6 +7,7 @@ use App\Models\Taxpayer;
 use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\EconomicActivitiesCreateRequest;
+use PDF;
 
 class EconomicActivityController extends Controller
 {
@@ -43,7 +44,25 @@ class EconomicActivityController extends Controller
             }
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $title = "Listado de Actividades Económicas";
+
+        $pdf = PDF::LoadView('pdf.reports.economic-activities', compact([
+            'models',
+            'title'
+        ]));
+
+        return $pdf->download('reporte-de-pagos.pdf');
     }
 
     /**

@@ -4,9 +4,7 @@
     <body>
         @include('pdf.reports.layouts.header')
         <div class="tables">
-           <table style="text-align: center">
-                @yield('content')
-            </table>
+            @yield('content')
             <br>
         </div>
     </body>

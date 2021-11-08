@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
+use App\Traits\ReportUtils;
 
 class ClosureController extends Controller
 {
+    use ReportUtils;
+
     /**
      * Display a listing of the resource.
      *

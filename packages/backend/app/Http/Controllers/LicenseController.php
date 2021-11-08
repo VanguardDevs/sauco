@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
+use App\Traits\ReportUtils;
 use App\Models\License;
 use Carbon\Carbon;
 
 class LicenseController extends Controller
 {
+    use ReportUtils;
+
     /**
      * Display a listing of the resource.
      *

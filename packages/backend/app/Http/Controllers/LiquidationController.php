@@ -11,9 +11,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
 use PDF;
+use App\Traits\ReportUtils;
 
 class LiquidationController extends Controller
 {
+    use ReportUtils;
+
     /**
      * Display a listing of the resource.
      *
@@ -72,12 +75,19 @@ class LiquidationController extends Controller
     public function report($query)
     {
         // Prepare pdf
-        $totalAmount = $query->sum('amount');
         $liquidations = $query->get();
-        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+        $total = ReportUtils::getTotalFormattedAmount($query, 'amount');
+        $dates = ReportUtils::getDatesFormatted($liquidations, 'updated_at');
+        $title = "Reporte de liquidaciones";
 
-        $pdf = PDF::LoadView('pdf.reports.liquidations', compact(['liquidations', 'total']));
-        return $pdf->download('reporte.pdf');
+        $pdf = PDF::LoadView('pdf.reports.liquidations', compact([
+            'liquidations',
+            'total',
+            'title',
+            'dates'
+        ]));
+
+        return $pdf->download();
     }
 
     /**

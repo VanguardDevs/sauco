@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- CSRF Token -->
-    <title> Reporte de pagos </title>
+    <title> {{ $title }} </title>
     <style>
         body {
             font-family: sans-serif, serif;

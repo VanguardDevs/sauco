@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Cancellation;
 use Illuminate\Http\Request;
 use PDF;
+use App\Traits\ReportUtils;
 
 class CancellationController extends Controller
 {
+    use ReportUtils;
+
     /**
      * Display a listing of the resource.
      *
@@ -47,9 +50,15 @@ class CancellationController extends Controller
     {
         // Prepare pdf
         $models = $query->get();
-        $pdf = PDF::LoadView('pdf.reports.cancellations', compact(['models']));
+        $title = "Reporte de anulaciones";
+        $dates = ReportUtils::getDatesFormatted($models, 'created_at');
 
-        return $pdf->download('reporte.pdf');
+        $pdf = PDF::LoadView('pdf.reports.cancellations', compact([
+            'models',
+            'title',
+            'dates'
+        ]));
+        return $pdf->download();
     }
 
     /**

@@ -16,9 +16,12 @@ use Carbon\Carbon;
 use App\Http\Requests\AnnullmentRequest;
 use PDF;
 use Auth;
+use App\Traits\ReportUtils;
 
 class PaymentController extends Controller
 {
+    use ReportUtils;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,12 +80,19 @@ class PaymentController extends Controller
     public function report($query)
     {
         // Prepare pdf
-        $totalAmount = $query->sum('amount');
+        $total = ReportUtils::getTotalFormattedAmount($query, 'amount');
         $payments = $query->get();
-        $total = number_format($totalAmount, 2, ',', '.')." Bs";
+        $dates = ReportUtils::getDatesFormatted($payments, 'processed_at');
+        $title = "Reporte de pagos";
 
-        $pdf = PDF::LoadView('pdf.reports.payments', compact(['payments', 'total']));
-        return $pdf->download('reporte-de-pagos.pdf');
+        $pdf = PDF::LoadView('pdf.reports.payments', compact([
+            'payments',
+            'total',
+            'title',
+            'dates'
+        ]));
+
+        return $pdf->download();
     }
 
     /**

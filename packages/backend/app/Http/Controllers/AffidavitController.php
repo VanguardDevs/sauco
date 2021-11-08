@@ -14,10 +14,13 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;
 use Auth;
-// use App\Services\AffidavitService;
+use PDF;
+use App\Traits\ReportUtils;
 
 class AffidavitController extends Controller
 {
+    use ReportUtils;
+
     // /** Initial variables
     //  * @var $liquidation, $concept, $taxpayer, $month, $receivable, $payment
     //  */
