@@ -1,105 +1,49 @@
-import { useCallback } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import DownloadIcon from '@material-ui/icons/GetApp';
 import {
-    useDataProvider,
-    useNotify,
     useListContext,
     SortPayload,
     FilterPayload,
-    useResourceContext,
     ButtonProps,
     Button
 } from 'react-admin';
-import { stringify } from 'qs';
-import isEmpty from 'is-empty';
-import axios from 'axios'
-import fileDownload from 'js-file-download';
-
-const token = localStorage.getItem(`${process.env.REACT_APP_AUTH_TOKEN_NAME}`);
-
-const apiProvider = axios.create({
-    baseURL: `${process.env.REACT_APP_API_DOMAIN}`,
-    headers: {
-        'Authorization': `Bearer ${token}`
-    },
-    responseType: 'blob'
-})
-
-const getUrl = (props: any) => {
-    const { basePath, page, perPage, filterValues } = props;
-    const query = {
-        page: page,
-        perPage: perPage,
-        type: 'pdf'
-    }
-
-    // Add all filter params to query.
-    Object.keys(filterValues || {}).forEach((key: any) => {
-        //@ts-ignore
-        query[`filter[${key}]`] = filterValues[key];
-    });
-
-    return `${basePath.substring(1)}?${stringify(query)}`;
-}
+import { useFileProvider } from '@jodaz_/file-provider'
+import { fileProvider } from '@sauco/common/providers'
 
 const ExportButton = (props: ExportButtonProps) => {
     const {
-        maxResults = 1000,
         onClick,
         label = 'ra.action.export',
         icon = defaultIcon,
+        resource,
         sort, // deprecated, to be removed in v4
         ...rest
     } = props;
-    const {
-        filter,
-        filterValues,
-        currentSort,
-        total,
-    } = useListContext(props);
-    const resource = useResourceContext(props);
-    const dataProvider = useDataProvider();
-    const notify = useNotify();
-    const handleClick = useCallback(
-        event => {
-            const URL = getUrl(props);
+    const { total } = useListContext(props);
+    const [provider, { loading, loaded }] = useFileProvider(fileProvider);
 
-            apiProvider
-                .get(`/${URL}`)
-                .then((res: any) => {
-                    const { data } = res
-
-                    if (!isEmpty(data)) {
-                        fileDownload(data, 'reporte.pdf');
-                    }
-                })
-                .catch((error: any) => {
-                    console.error(error);
-                    notify('ra.notification.http_error', 'warning');
-                });
-            if (typeof onClick === 'function') {
-                onClick(event);
-            }
+    const handleClick = React.useCallback(
+        async (e) => {
+            await provider({
+                type: 'get',
+                resource: resource,
+                payload: {
+                    name: 'reporte',
+                    ext: 'pdf',
+                    ...props
+                }
+            })
+            e.preventDefault();
         },
-        [
-            currentSort,
-            dataProvider,
-            filter,
-            filterValues,
-            maxResults,
-            notify,
-            onClick,
-            resource,
-            sort,
-        ]
+        [props]
     );
 
     return (
         <Button
             onClick={handleClick}
             label={label}
-            disabled={total === 0}
+            disabled={total === 0 || loading}
             {...sanitizeRestProps(rest)}
         >
             {icon}
