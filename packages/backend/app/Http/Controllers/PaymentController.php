@@ -81,7 +81,7 @@ class PaymentController extends Controller
         $payments = $query->get();
         $total = number_format($totalAmount, 2, ',', '.')." Bs";
 
-        $pdf = PDF::LoadView('pdf.payments', compact(['payments', 'total']));
+        $pdf = PDF::LoadView('pdf.reports.payments', compact(['payments', 'total']));
         return $pdf->download('reporte-de-pagos.pdf');
     }
 

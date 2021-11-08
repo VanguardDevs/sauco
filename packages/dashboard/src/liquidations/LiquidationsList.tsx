@@ -18,7 +18,9 @@ import DownloadButton from '../components/DownloadButton'
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
-        <DownloadButton />
+        <DownloadButton
+            downloableName='liquidaciones'
+        />
     </Actions>
 );
 

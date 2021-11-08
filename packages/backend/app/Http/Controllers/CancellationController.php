@@ -47,7 +47,7 @@ class CancellationController extends Controller
     {
         // Prepare pdf
         $models = $query->get();
-        $pdf = PDF::LoadView('pdf.cancellations', compact(['models']));
+        $pdf = PDF::LoadView('pdf.reports.cancellations', compact(['models']));
 
         return $pdf->download('reporte.pdf');
     }

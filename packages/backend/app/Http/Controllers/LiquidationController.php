@@ -76,7 +76,7 @@ class LiquidationController extends Controller
         $liquidations = $query->get();
         $total = number_format($totalAmount, 2, ',', '.')." Bs";
 
-        $pdf = PDF::LoadView('pdf.liquidations', compact(['liquidations', 'total']));
+        $pdf = PDF::LoadView('pdf.reports.liquidations', compact(['liquidations', 'total']));
         return $pdf->download('reporte.pdf');
     }
 

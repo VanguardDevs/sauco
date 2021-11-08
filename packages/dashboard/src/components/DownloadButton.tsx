@@ -6,7 +6,8 @@ import {
     SortPayload,
     FilterPayload,
     ButtonProps,
-    Button
+    Button,
+    useNotify
 } from 'react-admin';
 import { useFileProvider } from '@jodaz_/file-provider'
 import { fileProvider } from '@sauco/common/providers'
@@ -15,13 +16,13 @@ const ExportButton = (props: ExportButtonProps) => {
     const {
         onClick,
         label = 'ra.action.export',
-        icon = defaultIcon,
-        resource,
+        resource = 'string',
         sort, // deprecated, to be removed in v4
         ...rest
     } = props;
     const { total } = useListContext(props);
-    const [provider, { loading, loaded }] = useFileProvider(fileProvider);
+    const [provider, { loading }] = useFileProvider(fileProvider);
+    const notify = useNotify();
 
     const handleClick = React.useCallback(
         async (e) => {
@@ -29,7 +30,7 @@ const ExportButton = (props: ExportButtonProps) => {
                 type: 'get',
                 resource: resource,
                 payload: {
-                    name: 'reporte',
+                    name: `reporte-${props.downloableName}`,
                     ext: 'pdf',
                     ...props
                 }
@@ -39,6 +40,10 @@ const ExportButton = (props: ExportButtonProps) => {
         [props]
     );
 
+    React.useEffect(() => {
+        if (loading) notify('Espere mientras procesamos su reporte.', 'info');
+    }, [loading]);
+
     return (
         <Button
             onClick={handleClick}
@@ -46,30 +51,28 @@ const ExportButton = (props: ExportButtonProps) => {
             disabled={total === 0 || loading}
             {...sanitizeRestProps(rest)}
         >
-            {icon}
+            <DownloadIcon />
         </Button>
     );
 };
-
-const defaultIcon = <DownloadIcon />;
 
 const sanitizeRestProps = ({
     basePath,
     filterValues,
     resource,
     ...rest
-}: Omit<ExportButtonProps, 'sort' | 'maxResults' | 'label' | 'exporter'>) =>
+}: Omit<ExportButtonProps, 'sort' | 'maxResults' | 'label' | 'exporter' | 'downloableName'>) =>
     rest;
 
 interface Props {
     basePath?: string;
     filterValues?: FilterPayload;
-    icon?: JSX.Element;
     label?: string;
     maxResults?: number;
     onClick?: (e: Event) => void;
     resource?: string;
     sort?: SortPayload;
+    downloableName?: string;
 }
 
 export type ExportButtonProps = Props & ButtonProps;
@@ -85,6 +88,7 @@ ExportButton.propTypes = {
         order: PropTypes.string,
     }),
     icon: PropTypes.element,
+    downloableName: PropTypes.string
 };
 
 export default ExportButton;

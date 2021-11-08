@@ -50,7 +50,7 @@ const PaymentsFilter: React.FC = props => (
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
-        <DownloadButton />
+        <DownloadButton downloableName='pagos' />
     </Actions>
 );
 

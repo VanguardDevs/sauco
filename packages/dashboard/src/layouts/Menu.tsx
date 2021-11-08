@@ -170,14 +170,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 icon={<ReportIcon />}
                 dense={dense}
             >
-            <MenuItemLink
-                to={payments.name}
-                primaryText={payments.options.label}
-                leftIcon={<payments.icon />}
-                onClick={onMenuClick}
-                sidebarIsOpen={open}
-                dense={dense}
-            />
+                <MenuItemLink
+                    to={payments.name}
+                    primaryText={payments.options.label}
+                    leftIcon={<payments.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
                 <MenuItemLink
                     to={cancellations.name}
                     primaryText={cancellations.options.label}
@@ -194,24 +194,32 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     sidebarIsOpen={open}
                     dense={dense}
                 />
+                <MenuItemLink
+                    to={licenses.name}
+                    primaryText={licenses.options.label}
+                    leftIcon={<licenses.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={affidavits.name}
+                    primaryText={affidavits.options.label}
+                    leftIcon={<affidavits.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to={movements.name}
+                    primaryText={movements.options.label}
+                    leftIcon={<movements.icon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                />
                 {(state.env !== 'PRODUCTION') && (
                     <>
-                        <MenuItemLink
-                            to={licenses.name}
-                            primaryText={licenses.options.label}
-                            leftIcon={<licenses.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
-                        <MenuItemLink
-                            to={affidavits.name}
-                            primaryText={affidavits.options.label}
-                            leftIcon={<affidavits.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
                         <MenuItemLink
                             to={fines.name}
                             primaryText={fines.options.label}
@@ -230,14 +238,6 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         />
                     </>
                 )}
-                <MenuItemLink
-                    to={movements.name}
-                    primaryText={movements.options.label}
-                    leftIcon={<movements.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
             </SubMenu>
             {(state.env !== 'PRODUCTION') && (
                 <>

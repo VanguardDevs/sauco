@@ -39,14 +39,16 @@ export const authProvider: AuthProvider = {
             await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
             await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
             await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
-            return Promise.reject({ message: false });
+            return Promise.reject();
         }
 
         return Promise.resolve();
     },
-    checkAuth: async () => await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN)
-        ? Promise.resolve()
-        : Promise.reject({ message: false }),
+    checkAuth: async () => {
+        const token = await localStorage.getItem(CONFIG_NAMES.AUTH_TOKEN)
+        if (token) return Promise.resolve()
+        return Promise.reject()
+    },
     getPermissions: async () => {
         const permissions = await localStorage.getItem(CONFIG_NAMES.PERMISSIONS);
 
