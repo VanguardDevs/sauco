@@ -12,6 +12,8 @@ import {
 import numeral from 'numeral';
 import { MovementTypeField } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
+import { Actions } from '@sauco/common/components';
+import DownloadButton from '../components/DownloadButton'
 
 const CustomAmountField = (props: any) => {
     const record = useRecordContext(props);
@@ -28,24 +30,30 @@ const MovementFilter: React.FC = props => (
   </Filter>
 );
 
-const MovementList: React.FC = props => {
-  const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
+const ListActions: React.FC = props => (
+    <Actions {...props}>
+        <DownloadButton downloableName='movimientos' />
+    </Actions>
+);
 
-  return (
-    <List {...props}
-      title="Movimientos"
-      bulkActionButtons={false}
-      filters={<MovementFilter />}
-      exporter={false}
-    >
-      <Datagrid>
-        <TextField source="name" label="Concepto"/>
-        <CustomAmountField label="Monto" />
-        <MovementTypeField label="Tipo de movimiento" />
-        <NumberField source='movements_count' label='Movimientos' />
-      </Datagrid>
-    </List>
-  );
+const MovementList: React.FC = props => {
+    const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
+
+    return (
+        <List {...props}
+            title="Movimientos"
+            bulkActionButtons={false}
+            filters={<MovementFilter />}
+            actions={<ListActions />}
+        >
+        <Datagrid>
+            <TextField source="name" label="Concepto"/>
+            <CustomAmountField label="Monto" />
+            <MovementTypeField label="Tipo de movimiento" />
+            <NumberField source='movements_count' label='Movimientos' />
+        </Datagrid>
+        </List>
+    );
 };
 
 CustomAmountField.defaultProps = {

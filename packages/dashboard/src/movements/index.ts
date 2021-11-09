@@ -1,4 +1,4 @@
-import MovementsList from './List';
+import MovementsList from './MovementList';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 
 export default {

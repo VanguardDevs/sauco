@@ -48,6 +48,24 @@ class ClosureController extends Controller
             }
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $title = "Cierre";
+
+        $pdf = PDF::LoadView('pdf.reports.closures', compact([
+            'models',
+            'title',
+        ]));
+
+        return $pdf->download();
     }
 }
