@@ -27,22 +27,23 @@ class UserController extends Controller
     {
         $query = User::latest();
         $results = $request->perPage;
+        $filters = $request->has('filter') ? $request->filter : [];
 
-        if ($request->has('filter')) {
-            $filters = $request->filter;
-            // Get fields
-            if (array_key_exists('login', $filters)) {
-                $query->whereLogin($filters['login']);
-            }
-            if (array_key_exists('roles', $filters)) {
-                $query->whereHas('roles', function ($query) use ($filters) {
-                    return $query->whereLike('name', $filters['roles']);
-                });
-            }
-            if (array_key_exists('status', $filters)) {
-                $status = ($filters['status'] == 'Activos') ? 1 : 0;
-                $query->whereActive($status);
-            }
+        // Get fields
+        if (array_key_exists('login', $filters)) {
+            $query->whereLogin($filters['login']);
+        }
+        if (array_key_exists('roles', $filters)) {
+            $query->whereHas('roles', function ($query) use ($filters) {
+                return $query->whereLike('name', $filters['roles']);
+            });
+        }
+        if (array_key_exists('status', $filters)) {
+            $status = ($filters['status'] == 'Activos') ? 1 : 0;
+            $query->whereActive($status);
+        }
+        if (array_key_exists('id', $filters)) {
+            $query->find($filters['id']);
         }
 
         return $query->paginate($results);

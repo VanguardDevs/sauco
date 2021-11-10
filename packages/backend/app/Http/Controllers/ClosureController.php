@@ -61,7 +61,7 @@ class ClosureController extends Controller
         // Prepare pdf
         $models = $query->get();
         $total = ReportUtils::getTotalFormattedAmount($models, 'amount');
-        $title = "Cierre";
+        $title = "Cierre de recaudacion";
 
         if (array_key_exists('gt_date', $filters)) {
             $startDate = Date('d/m/Y', strtotime($filters['gt_date']));

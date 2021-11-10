@@ -13,7 +13,7 @@ import {
 } from 'react-admin';
 import { Actions, RecordActions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
-import DownloadButton from '../components/DownloadButton'
+import ExportButton from '../components/ExportButton'
 
 const CancellationsFilter: React.FC = props => (
     <Filter {...props}>
@@ -29,7 +29,7 @@ const CancellationsFilter: React.FC = props => (
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
-        <DownloadButton
+        <ExportButton
             downloableName='anulaciones'
         />
     </Actions>

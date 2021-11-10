@@ -13,7 +13,7 @@ import {
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import { Actions } from '@sauco/common/components';
-import DownloadButton from '../components/DownloadButton'
+import ExportButton from '../components/ExportButton'
 
 const optionRenderer = (choice:any) => `${choice.description}`;
 
@@ -51,7 +51,7 @@ const LicensesFilter: React.FC = props => (
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
-        <DownloadButton downloableName='licencias' />
+        <ExportButton downloableName='licencias' />
     </Actions>
 );
 

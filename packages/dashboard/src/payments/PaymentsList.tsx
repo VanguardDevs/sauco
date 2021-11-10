@@ -1,20 +1,21 @@
 import * as React from "react";
 import {
-  Filter,
-  TextInput,
-  DateInput,
-  List,
-  Datagrid,
-  NumberField,
-  TextField,
-  SimpleList,
-  ReferenceField,
-  ReferenceArrayInput,
-  SelectInput
+    Filter,
+    TextInput,
+    DateInput,
+    List,
+    Datagrid,
+    NumberField,
+    TextField,
+    SimpleList,
+    ReferenceField,
+    ReferenceArrayInput,
+    SelectInput
 } from 'react-admin';
 import { Actions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
-import DownloadButton from '../components/DownloadButton'
+import ExportButton from '../components/ExportButton'
+import InvoiceShow from './InvoiceShow'
 
 const optionRenderer = (choice:any) => `${choice.description}`;
 
@@ -31,26 +32,26 @@ const PaymentsFilter: React.FC = props => (
             reference="payment-types"
             label="Tipo de pago"
         >
-        <SelectInput
-            source="description"
-            label="Tipo de pago"
-            optionText={optionRenderer}
-            allowEmpty={false}
-        />
+            <SelectInput
+                source="description"
+                label="Tipo de pago"
+                optionText={optionRenderer}
+                allowEmpty={false}
+            />
         </ReferenceArrayInput>
         <ReferenceArrayInput
-        source="payment_method_id"
-        reference="payment-methods"
-        label="Método de pago"
+            source="payment_method_id"
+            reference="payment-methods"
+            label="Método de pago"
         >
-        <SelectInput source="description" label="Método de pago" allowEmpty={false} />
+            <SelectInput source="description" label="Método de pago" allowEmpty={false} />
         </ReferenceArrayInput>
     </Filter>
 );
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
-        <DownloadButton downloableName='pagos' />
+        <ExportButton downloableName='pagos' />
     </Actions>
 );
 
@@ -75,7 +76,7 @@ const PaymentsList: React.FC = props => {
                 />
             )
             : (
-                <Datagrid>
+                <Datagrid rowClick="expand" expand={<InvoiceShow />}>
                     <TextField source="num" label="Número"/>
                     <ReferenceField
                         label="Contribuyente"

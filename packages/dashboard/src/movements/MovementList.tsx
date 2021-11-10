@@ -13,7 +13,7 @@ import numeral from 'numeral';
 import { MovementTypeField } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import { Actions } from '@sauco/common/components';
-import DownloadButton from '../components/DownloadButton'
+import ExportButton from '../components/ExportButton'
 
 const CustomAmountField = (props: any) => {
     const record = useRecordContext(props);
@@ -32,7 +32,7 @@ const MovementFilter: React.FC = props => (
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
-        <DownloadButton downloableName='movimientos' />
+        <ExportButton downloableName='movimientos' />
     </Actions>
 );
 

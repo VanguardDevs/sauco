@@ -11,7 +11,7 @@ import {
 } from 'react-admin';
 import { Actions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
-import DownloadButton from '../components/DownloadButton'
+import ExportButton from '../components/ExportButton'
 
 const EconomicActivitiesListFilter: React.FC = props => (
     <Filter {...props}>
@@ -26,7 +26,7 @@ const EconomicActivitiesListFilter: React.FC = props => (
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
-        <DownloadButton
+        <ExportButton
             downloableName='actividades-economicas'
         />
     </Actions>
