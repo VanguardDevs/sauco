@@ -8,7 +8,8 @@
         <th width="3%">#</th>
         <th width="7%">NO.</th>
         <th width="15%">RIF</th>
-        <th width="60%">RAZÓN SOCIAL</th>
+        <th width="45%">RAZÓN SOCIAL</th>
+        <th width="15%">TIPO</th>
         <th width="15%">MONTO</th>
         </tr>
     </thead>
@@ -19,6 +20,7 @@
         <td>{{ $liquidation->num }}</td>
         <td>{{ $liquidation->taxpayer->rif }}</td>
         <td>{{ $liquidation->taxpayer->name }}</td>
+        <td>{{ $liquidation->liquidationType->name }}</td>
         <td>{{ $liquidation->prettyAmount }}</td>
     </tr>
     @endforeach
