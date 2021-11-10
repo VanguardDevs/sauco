@@ -48,21 +48,38 @@ class LicenseController extends Controller
             if (array_key_exists('lt_date', $filters)) {
                 $query->whereDate('emission_date', '<', $filters['lt_date']);
             }
+            if (array_key_exists('type', $filters)) {
+                $query->whereLike('num', $filters['type']);
+            }
+        }
+
+        if ($request->type == 'pdf') {
+            return $this->report($query, $filters);
         }
 
         return $query->paginate($results);
     }
 
-    private function printReport($query)
+    public function report($query, $filters)
     {
-        $licenses = $query->get();
-        $total = $query->count();
-        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
+        // Prepare pdf
+        $models = $query->get();
+        $dates = ReportUtils::getDatesFormatted($models, 'downloaded_at');
 
-        $data = compact(['licenses', 'emissionDate', 'total']);
-        $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
+        if (array_key_exists('type', $filters)) {
+            $type = ($filters['type'] == 'I-') ? 'instaladas' : 'renovadas';
+            $title = 'Listado de licencias '.$type;
+        } else {
+            $title = 'Listado de licencias emitidas';
+        }
 
-        return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
+        $pdf = PDF::LoadView('pdf.reports.licenses', compact([
+            'models',
+            'title',
+            'dates'
+        ]));
+
+        return $pdf->download();
     }
 
     /**

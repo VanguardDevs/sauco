@@ -22,14 +22,14 @@ const PaymentsFilter: React.FC = props => (
     <Filter {...props}>
         <TextInput label="Número" source='num' />
         <TextInput label="RIF" source='rif' />
-        <TextInput label="Nombre" source='taxpayer' />
+        <TextInput label="Razón social" source='taxpayer' />
         <TextInput label="Monto" source='amount' />
         <DateInput source="gt_date" label='Procesado después de' />
         <DateInput source="lt_date" label='Procesado antes de' />
         <ReferenceArrayInput
-        source="payment_type_id"
-        reference="payment-types"
-        label="Tipo de pago"
+            source="payment_type_id"
+            reference="payment-types"
+            label="Tipo de pago"
         >
         <SelectInput
             source="description"

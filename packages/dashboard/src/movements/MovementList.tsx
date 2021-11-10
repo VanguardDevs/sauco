@@ -23,11 +23,11 @@ const CustomAmountField = (props: any) => {
 }
 
 const MovementFilter: React.FC = props => (
-  <Filter {...props}>
-    <TextInput label="Concepto" source='concept' />
-    <DateInput source="gt_date" label='Procesado después de' />
-    <DateInput source="lt_date" label='Procesado antes de' />
-  </Filter>
+    <Filter {...props}>
+        <TextInput label="Concepto" source='concept' />
+        <DateInput source="gt_date" label='Procesado después de' />
+        <DateInput source="lt_date" label='Procesado antes de' />
+    </Filter>
 );
 
 const ListActions: React.FC = props => (
@@ -46,12 +46,12 @@ const MovementList: React.FC = props => {
             filters={<MovementFilter />}
             actions={<ListActions />}
         >
-        <Datagrid>
-            <TextField source="name" label="Concepto"/>
-            <CustomAmountField label="Monto" />
-            <MovementTypeField label="Tipo de movimiento" />
-            <NumberField source='movements_count' label='Movimientos' />
-        </Datagrid>
+            <Datagrid>
+                <TextField source="name" label="Concepto"/>
+                <CustomAmountField label="Monto" />
+                <MovementTypeField label="Tipo de movimiento" />
+                <NumberField source='movements_count' label='Movimientos' />
+            </Datagrid>
         </List>
     );
 };

@@ -29,7 +29,7 @@ class License extends Model implements Auditable
 
     public function taxpayer()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Taxpayer::class)->withTrashed();
     }
 
     public function user()
@@ -69,7 +69,7 @@ class License extends Model implements Auditable
     {
         return date('d-m-Y', strtotime($value));
     }
-    
+
     public function getExpirationDateAttribute($value)
     {
         return date('d-m-Y', strtotime($value));

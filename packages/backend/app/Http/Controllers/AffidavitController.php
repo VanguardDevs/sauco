@@ -21,17 +21,6 @@ class AffidavitController extends Controller
 {
     use ReportUtils;
 
-    // /** Initial variables
-    //  * @var $liquidation, $concept, $taxpayer, $month, $receivable, $payment
-    //  */
-    // protected $economicActivityAffidavit;
-
-    // public function __construct(AffidavitService $economicActivityAffidavit)
-    // {
-    //     $this->economicActivityAffidavit = $economicActivityAffidavit;
-    //     $this->middleware('can:null.settlements')->only('destroy');
-    // }
-
     public function index(Request $request)
     {
         $query = Affidavit::orderBy('num', 'ASC')
@@ -59,10 +48,10 @@ class AffidavitController extends Controller
                 });
             }
             if (array_key_exists('gt_date', $filters)) {
-                $query->whereDate('createded_at', '>=', $filters['gt_date']);
+                $query->whereDate('created_at', '>=', $filters['gt_date']);
             }
             if (array_key_exists('lt_date', $filters)) {
-                $query->whereDate('createded_at', '<', $filters['lt_date']);
+                $query->whereDate('created_at', '<', $filters['lt_date']);
             }
             if (array_key_exists('rif', $filters)) {
                 $name = $filters['rif'];
@@ -78,7 +67,7 @@ class AffidavitController extends Controller
 
     public function show(Request $request, Affidavit $affidavit)
     {
-        //
+        return $affidavit->load(['taxpayer', 'company']);
     }
 
     /**
@@ -140,17 +129,6 @@ class AffidavitController extends Controller
 
         return redirect('affidavits/'.$affidavit->id)
             ->withSuccess('¡Declaración procesada!');
-    }
-
-    /**
-     * Returns an error message
-     * @param $message
-     * @return Illuminate\Response
-     */
-    public function fireError($message)
-    {
-        return redirect('taxpayers/'.$this->taxpayer->id.'/affidavits')
-            ->withError($message);
     }
 
     public function destroy(Affidavit $affidavit)

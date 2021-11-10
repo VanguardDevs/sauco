@@ -1,4 +1,4 @@
-import LicensesList from './List';
+import LicensesList from './LicenseList';
 import WallpaperIcon from '@material-ui/icons/Wallpaper';
 
 export default {
