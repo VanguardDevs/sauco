@@ -10,9 +10,9 @@
         }
         .header {
             width: 100%;
-            font-size: 9px;
-            position: relative;
-            display: block;
+            font-size: 10px;
+            margin-bottom: 50px;
+            height: 100px;
         }
         .header div {
             display: inline-block;
@@ -55,6 +55,11 @@
             font-size: 10px;
         }
         caption {
+            font-weight: bold;
+        }
+        .current-date {
+            font-size: 10px;
+            float: right;
             font-weight: bold;
         }
     </style>

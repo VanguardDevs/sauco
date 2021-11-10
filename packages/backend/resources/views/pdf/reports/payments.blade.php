@@ -6,7 +6,7 @@
     <thead>
         <tr>
         <th width="3%">#</th>
-        <th width="7%">NO. FACTURA</th>
+        <th width="7%">NO.</th>
         <th width="15%">RIF</th>
         <th width="60%">RAZÓN SOCIAL</th>
         <th width="15%">MONTO</th>

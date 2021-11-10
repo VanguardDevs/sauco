@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Traits\ReportUtils;
+use App\Models\Movement;
+use DateTime;
 
 class ClosureController extends Controller
 {
@@ -30,40 +32,60 @@ class ClosureController extends Controller
             ->groupBy('concurrent', 'concepts.id')
             ->whereNull('movements.deleted_at')
             ->orderBy('concepts.id', 'ASC');
+
         $results = $request->perPage ?? 10;
 
-        if ($request->has('filter')) {
-            $filters = $request->filter;
+        $filters = $request->has('filter') ? $request->filter : [];
 
-            if (array_key_exists('gt_date', $filters)) {
-                $query->whereDate('movements.created_at', '>=', $filters['gt_date']);
-            }
-            if (array_key_exists('lt_date', $filters)) {
-                $query->whereDate('movements.created_at', '<', $filters['lt_date']);
-            }
-            if (array_key_exists('concept', $filters)) {
-                $name = $filters['concept'];
+        if (array_key_exists('gt_date', $filters)) {
+            $query->whereDate('movements.created_at', '>=', $filters['gt_date']);
+        }
+        if (array_key_exists('lt_date', $filters)) {
+            $query->whereDate('movements.created_at', '<', $filters['lt_date']);
+        }
+        if (array_key_exists('concept', $filters)) {
+            $name = $filters['concept'];
 
-                $query->where('concepts.name', 'ILIKE', "%{$name}%");
-            }
+            $query->where('concepts.name', 'ILIKE', "%{$name}%");
         }
 
         if ($request->type == 'pdf') {
-            return $this->report($query);
+            return $this->report($query, $filters);
         }
 
         return $query->paginate($results);
     }
 
-    public function report($query)
+    public function report($query, $filters = [])
     {
         // Prepare pdf
         $models = $query->get();
+        $total = ReportUtils::getTotalFormattedAmount($models, 'amount');
         $title = "Cierre";
+
+        if (array_key_exists('gt_date', $filters)) {
+            $startDate = Date('d/m/Y', strtotime($filters['gt_date']));
+        } else {
+            $startDate = DateTime::createFromFormat(
+                "d/m/Y h:i",
+                Movement::first()->created_at
+            )->format("d/m/Y");
+        }
+        if (array_key_exists('lt_date', $filters)) {
+            $endDate = Date('d/m/Y', strtotime($filters['lt_date']));
+        } else {
+            $endDate = DateTime::createFromFormat(
+                "d/m/Y h:i",
+                Movement::orderBy('created_at', 'desc')->first()->created_at
+            )->format("d/m/Y");
+        }
 
         $pdf = PDF::LoadView('pdf.reports.closures', compact([
             'models',
             'title',
+            'total',
+            'startDate',
+            'endDate'
         ]));
 
         return $pdf->download();

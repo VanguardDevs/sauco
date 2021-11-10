@@ -17,9 +17,9 @@ import DownloadButton from '../components/DownloadButton'
 
 const CustomAmountField = (props: any) => {
     const record = useRecordContext(props);
-    const amount = numeral(record.amount).format('0,0.00');
+    const amount = numeral(record.amount).format('0.0,');
 
-    return <span>{amount}</span>;
+    return <span>{'Bs. ' + amount}</span>;
 }
 
 const MovementFilter: React.FC = props => (
@@ -48,7 +48,7 @@ const MovementList: React.FC = props => {
         >
             <Datagrid>
                 <TextField source="name" label="Concepto"/>
-                <CustomAmountField label="Monto" />
+                <CustomAmountField label="Monto" options={{ style: 'currency', currency: 'VES' }} />
                 <MovementTypeField label="Tipo de movimiento" />
                 <NumberField source='movements_count' label='Movimientos' />
             </Datagrid>

@@ -15,7 +15,7 @@ import { Actions, RecordActions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import DownloadButton from '../components/DownloadButton'
 
-const PaymentsFilter: React.FC = props => (
+const CancellationsFilter: React.FC = props => (
     <Filter {...props}>
         <TextInput label="Razón de anulación" source='reason' />
         <TextInput label="Monto" source='amount' />
@@ -35,13 +35,13 @@ const ListActions: React.FC = props => (
     </Actions>
 );
 
-const PaymentsList: React.FC = props => {
+const CancellationsList: React.FC = props => {
     const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
     return (
         <List {...props}
-            title="Facturas"
-            filters={<PaymentsFilter />}
+            title="Anulaciones"
+            filters={<CancellationsFilter />}
             actions={<ListActions />}
             bulkActionButtons={false}
         >
@@ -71,4 +71,4 @@ const PaymentsList: React.FC = props => {
     );
 };
 
-export default PaymentsList;
+export default CancellationsList;

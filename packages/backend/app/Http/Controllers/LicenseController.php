@@ -26,31 +26,29 @@ class LicenseController extends Controller
             ->with(['taxpayer', 'ordinance']);
         $results = $request->perPage;
 
-        if ($request->has('filter')) {
-            $filters = $request->filter;
+        $filters = $request->has('filter') ? $request->filter : [];
 
-            if (array_key_exists('num', $filters)) {
-                $query->whereLike('num', $filters['num']);
-            }
-            if (array_key_exists('taxpayer', $filters)) {
-                $name = $filters['taxpayer'];
+        if (array_key_exists('num', $filters)) {
+            $query->whereLike('num', $filters['num']);
+        }
+        if (array_key_exists('taxpayer', $filters)) {
+            $name = $filters['taxpayer'];
 
-                $query->whereHas('taxpayer', function ($q) use ($name) {
-                    return $q->whereLike('name', $name);
-                });
-            }
-            if (array_key_exists('ordinance_id', $filters)) {
-                $query->where('ordinance_id', '=', $filters['ordinance_id']);
-            }
-            if (array_key_exists('gt_date', $filters)) {
-                $query->whereDate('emission_date', '>=', $filters['gt_date']);
-            }
-            if (array_key_exists('lt_date', $filters)) {
-                $query->whereDate('emission_date', '<', $filters['lt_date']);
-            }
-            if (array_key_exists('type', $filters)) {
-                $query->whereLike('num', $filters['type']);
-            }
+            $query->whereHas('taxpayer', function ($q) use ($name) {
+                return $q->whereLike('name', $name);
+            });
+        }
+        if (array_key_exists('ordinance_id', $filters)) {
+            $query->where('ordinance_id', '=', $filters['ordinance_id']);
+        }
+        if (array_key_exists('gt_date', $filters)) {
+            $query->whereDate('emission_date', '>=', $filters['gt_date']);
+        }
+        if (array_key_exists('lt_date', $filters)) {
+            $query->whereDate('emission_date', '<', $filters['lt_date']);
+        }
+        if (array_key_exists('type', $filters)) {
+            $query->whereLike('num', $filters['type']);
         }
 
         if ($request->type == 'pdf') {

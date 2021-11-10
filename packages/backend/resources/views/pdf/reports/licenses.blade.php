@@ -9,7 +9,7 @@
         <th width="10%">NO.</th>
         <th width="12%">RIF</th>
         <th width="60%">RAZÓN SOCIAL</th>
-        <th width="15%">FECHA DE EMISIÓN</th>
+        <th width="15%">F. DE EMISIÓN</th>
         </tr>
     </thead>
     <tbody>
