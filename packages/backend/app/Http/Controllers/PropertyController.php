@@ -71,7 +71,7 @@ class PropertyController extends Controller
         $property->taxpayers()->sync([
             $taxpayer => [
                 'document' => $document,
-                'ownership_status_id' => $ownership
+                'ownership_status_id' => $ownership,
                 'user_id' => $request->user()->id
             ]
         ]);
