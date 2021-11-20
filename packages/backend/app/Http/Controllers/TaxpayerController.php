@@ -52,7 +52,25 @@ class TaxpayerController extends Controller
             }
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $title = "Padrón de contribuyentes";
+
+        $pdf = PDF::LoadView('pdf.reports.taxpayers', compact([
+            'models',
+            'title'
+        ]));
+
+        return $pdf->download();
     }
 
     /**
