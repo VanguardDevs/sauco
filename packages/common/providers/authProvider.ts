@@ -1,5 +1,5 @@
 import { AuthProvider } from 'react-admin';
-import { dataProvider as apiClient } from './dataProvider';
+import { apiClient } from './api'
 
 const CONFIG_NAMES = {
     IDENTIFICATION: `${process.env.REACT_APP_IDENTIFICATIONS_NAME}`,
@@ -15,13 +15,15 @@ export const authProvider: AuthProvider = {
         if (response.status < 200 || response.status >= 300) {
             throw new Error(response.statusText);
         } else {
-            if (response.token) {
-                await localStorage.setItem(CONFIG_NAMES.IDENTIFICATION, response.user);
-                await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, response.token);
-                await localStorage.setItem(CONFIG_NAMES.PERMISSIONS, response.permissions);
+            const { data } = response
+
+            if (data.token) {
+                await localStorage.setItem(CONFIG_NAMES.IDENTIFICATION, data.user);
+                await localStorage.setItem(CONFIG_NAMES.AUTH_TOKEN, data.token);
+                await localStorage.setItem(CONFIG_NAMES.PERMISSIONS, data.permissions);
             }
 
-            return Promise.resolve(response.data);
+            return Promise.resolve(data);
         }
     },
     logout: async () => {
@@ -39,6 +41,7 @@ export const authProvider: AuthProvider = {
             await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
             await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
             await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
+
             return Promise.reject();
         }
 

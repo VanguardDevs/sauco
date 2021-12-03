@@ -85,18 +85,18 @@ const Login = () => {
       (auth) => {
         setLoading(true)
         login(auth, '/').catch(
-          (error) => {
-            setLoading(false)
-            notify(
-              error.response.status === 401
-                ? 'Su contraseña o login no coinciden'
-                : 'Ha ocurrido un error durante su autenticación',
-              'warning'
-            )
-            if (error.response.data.errors) {
-                return error.response.data.errors;
+            (error) => {
+                setLoading(false)
+                notify(
+                    error.response.status === 401
+                    ? 'Su contraseña o login no coinciden'
+                    : 'Ha ocurrido un error durante su autenticación',
+                    'warning'
+                )
+                if (error.response.data.errors) {
+                    return error.response.data.errors;
+                }
             }
-          }
         )
       },
       [login, notify, setLoading, location]

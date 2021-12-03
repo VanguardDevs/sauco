@@ -51,36 +51,36 @@ const ListActions: React.FC = props => (
 );
 
 const TaxpayersList: React.FC = props => {
-  const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
-  return (
-    <List {...props}
-        title="Contribuyentes"
-        bulkActionButtons={false}
-        filters={<TaxpayersFilter />}
-        exporter={false}
-        actions={<ListActions />}
-    >
-        {
-            isSmall
-            ? (
-                <SimpleList
-                    primaryText={record => `${record.name}`}
-                    secondaryText={record => `${record.rif}`}
-                    tertiaryText={record => `${record.address}`}
-                    linkType={"show"}
-                />
-            )
-            : (
-                <Datagrid>
-                    <TextField source="rif" label="RIF"/>
-                    <TextField source="name" label="Nombre"/>
-                    <TextField source="fiscal_address" label="Dirección"/>
-                </Datagrid>
-            )
-        }
-    </List>
-  );
+    return (
+        <List {...props}
+            title="Contribuyentes"
+            bulkActionButtons={false}
+            filters={<TaxpayersFilter />}
+            exporter={false}
+            actions={<ListActions />}
+        >
+            {
+                isSmall
+                ? (
+                    <SimpleList
+                        primaryText={record => `${record.name}`}
+                        secondaryText={record => `${record.rif}`}
+                        tertiaryText={record => `${record.address}`}
+                        linkType={"show"}
+                    />
+                )
+                : (
+                    <Datagrid>
+                        <TextField source="rif" label="RIF"/>
+                        <TextField source="name" label="Nombre"/>
+                        <TextField source="fiscal_address" label="Dirección"/>
+                    </Datagrid>
+                )
+            }
+        </List>
+    );
 };
 
 export default TaxpayersList;
