@@ -60,7 +60,7 @@
     </head>
     <body>
         <div id="watermark">
-            <img src="{{ asset('/assets/images/licenses/economic-activity-license.jpg') }}" height="100%" width="100%"/>
+            <img src="{{ asset('/assets/images/licenses/licencia.jpg') }}" height="100%" width="100%"/>
         </div>
         <div class="container">
             <div class="correlative">

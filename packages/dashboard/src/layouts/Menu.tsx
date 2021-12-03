@@ -41,6 +41,7 @@ import states from '../states';
 import municipalities from '../municipalities';
 import parishes from '../parishes';
 import liquidationTypes from '../liquidation-types';
+import signatures from '../signatures';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -298,6 +299,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         icon={<LabelIcon />}
                         dense={dense}
                     >
+                        <MenuItemLink
+                            to={signatures.name}
+                            primaryText={signatures.options.label}
+                            leftIcon={<signatures.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
                         <MenuItemLink
                             to={permissions.name}
                             primaryText={permissions.options.label}
