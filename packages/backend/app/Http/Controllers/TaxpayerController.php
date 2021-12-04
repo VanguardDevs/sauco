@@ -47,6 +47,11 @@ class TaxpayerController extends Controller
 
                 $query->where('taxpayer_classification_id', '=', $name);
             }
+            if (array_key_exists('community_id', $filters)) {
+                $name = $filters['community_id'];
+
+                $query->where('community_id', '=', $name);
+            }
             if (array_key_exists('id', $filters)) {
                 $query->find($filters['id']);
             }

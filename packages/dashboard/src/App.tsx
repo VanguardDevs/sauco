@@ -71,6 +71,7 @@ const App = () => (
         <Resource name="taxpayer-types" />
         <Resource name="taxpayer-classifications" />
         <Resource name="status" />
+        <Resource name="communities" />
     </Admin>
 )
 
