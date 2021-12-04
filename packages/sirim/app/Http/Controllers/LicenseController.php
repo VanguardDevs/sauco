@@ -16,6 +16,7 @@ use App\Models\Ordinance;
 use App\Models\Taxpayer;
 use App\Models\App\Modelslication;
 use Carbon\Carbon;
+use App\Models\Signature;
 
 class LicenseController extends Controller
 {
@@ -265,13 +266,14 @@ class LicenseController extends Controller
                              .$correlative->correlativeNumber->num;
 
         $representation = $license->representation->person->name;
+        $signature = Signature::latest()->first();
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature'];
         $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
-        return PDF::setOptions(['isRemoteEnabled' => true])
-            ->loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
-            ->download('Licencia '.$taxpayer->rif.'.pdf');
+        return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
+            ->stream();
+            // ->download('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**
