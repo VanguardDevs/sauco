@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FC, Fragment, ReactElement } from 'react';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import List from '@material-ui/core/List';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTranslate } from 'react-admin';
 
 const useStyles = makeStyles(theme => ({
     icon: { minWidth: theme.spacing(5) },
@@ -29,13 +27,13 @@ const useStyles = makeStyles(theme => ({
 interface Props {
     dense: boolean;
     handleToggle: () => void;
-    icon: ReactElement;
+    icon: React.ReactElement;
     isOpen: boolean;
     name: string;
     sidebarIsOpen: boolean;
 }
 
-const SubMenu: FC<Props> = ({
+const SubMenu: React.FC<Props> = ({
     handleToggle,
     sidebarIsOpen,
     isOpen,
@@ -44,7 +42,6 @@ const SubMenu: FC<Props> = ({
     children,
     dense,
 }) => {
-    const translate = useTranslate();
     const classes = useStyles();
 
     const header = (
@@ -52,18 +49,22 @@ const SubMenu: FC<Props> = ({
             <ListItemIcon className={classes.icon}>
                 {isOpen ? <ExpandMore /> : icon}
             </ListItemIcon>
-            <Typography variant="inherit" color="textSecondary">
-                {translate(name)}
-            </Typography>
+            {
+                (sidebarIsOpen) && (
+                    <Typography variant="inherit" color="textSecondary">
+                        {name}
+                    </Typography>
+                )
+            }
         </MenuItem>
     );
 
     return (
-        <Fragment>
+        <React.Fragment>
             {sidebarIsOpen || isOpen ? (
                 header
             ) : (
-                <Tooltip title={translate(name)} placement="right">
+                <Tooltip title={name} placement="right">
                     {header}
                 </Tooltip>
             )}
@@ -81,7 +82,7 @@ const SubMenu: FC<Props> = ({
                     {children}
                 </List>
             </Collapse>
-        </Fragment>
+        </React.Fragment>
     );
 };
 

@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useMediaQuery, Theme, Box } from '@material-ui/core';
 import {
     DashboardMenuItem,
-    MenuItemLink,
     MenuProps,
 } from 'react-admin';
 import SubMenu from './SubMenu';
 import { AppState } from '@sauco/common/types';
-
+import MenuItemLink from './MenuItemLink'
 // Menu icons
 import TaxpayersMenuIcon from '@material-ui/icons/AssignmentInd';
 import ReportIcon from '@material-ui/icons/Assessment';
@@ -17,7 +15,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LabelIcon from '@material-ui/icons/Label';
 import EmojiSymbolsIcon from '@material-ui/icons/EmojiSymbols';
 import LanguageIcon from '@material-ui/icons/Language';
-
+import DashboardIcon from '@material-ui/icons/Dashboard';
 // Resources
 import users from '../users';
 import concepts from '../concepts';
@@ -45,8 +43,8 @@ import signatures from '../signatures';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
-const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
-    const [state, setState] = useState({
+const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
+    const [state, setState] = React.useState({
         people: true,
         reports: false,
         settings: false,
@@ -67,7 +65,15 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
     return (
         <Box mt={1}>
             {' '}
-            <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+            <MenuItemLink
+                to="/"
+                primaryText={open ? 'Inicio' : <></>}
+                leftIcon={<DashboardIcon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+                exact
+            />
             {(state.env !== 'PRODUCTION') && (
                 <>
                     <SubMenu
@@ -79,7 +85,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         dense={dense}
                     >
                         <MenuItemLink
-                            to={taxpayers.name}
+                            to={'/'+taxpayers.name}
                             primaryText={taxpayers.options.label}
                             leftIcon={<taxpayers.icon />}
                             onClick={onMenuClick}
@@ -100,7 +106,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 {(state.env !== 'PRODUCTION') && (
                     <>
                         <MenuItemLink
-                            to={concepts.name}
+                            to={'/'+concepts.name}
                             primaryText={concepts.options.label}
                             leftIcon={<concepts.icon />}
                             onClick={onMenuClick}
@@ -110,7 +116,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     </>
                 )}
                 <MenuItemLink
-                    to={petroPrices.name}
+                    to={'/'+petroPrices.name}
                     primaryText={petroPrices.options.label}
                     leftIcon={<petroPrices.icon />}
                     onClick={onMenuClick}
@@ -118,7 +124,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to={economicActivities.name}
+                    to={'/'+economicActivities.name}
                     primaryText={economicActivities.options.label}
                     leftIcon={<economicActivities.icon />}
                     onClick={onMenuClick}
@@ -137,7 +143,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         dense={dense}
                     >
                         <MenuItemLink
-                            to={states.name}
+                            to={'/'+states.name}
                             primaryText={states.options.label}
                             leftIcon={<states.icon />}
                             onClick={onMenuClick}
@@ -145,7 +151,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={municipalities.name}
+                            to={'/'+municipalities.name}
                             primaryText={municipalities.options.label}
                             leftIcon={<municipalities.icon />}
                             onClick={onMenuClick}
@@ -153,7 +159,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={parishes.name}
+                            to={'/'+parishes.name}
                             primaryText={parishes.options.label}
                             leftIcon={<parishes.icon />}
                             onClick={onMenuClick}
@@ -172,7 +178,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 dense={dense}
             >
                 <MenuItemLink
-                    to={payments.name}
+                    to={'/'+payments.name}
                     primaryText={payments.options.label}
                     leftIcon={<payments.icon />}
                     onClick={onMenuClick}
@@ -180,7 +186,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to={cancellations.name}
+                    to={'/'+cancellations.name}
                     primaryText={cancellations.options.label}
                     leftIcon={<cancellations.icon />}
                     onClick={onMenuClick}
@@ -188,7 +194,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to={liquidations.name}
+                    to={'/'+liquidations.name}
                     primaryText={liquidations.options.label}
                     leftIcon={<liquidations.icon />}
                     onClick={onMenuClick}
@@ -196,7 +202,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to={licenses.name}
+                    to={'/'+licenses.name}
                     primaryText={licenses.options.label}
                     leftIcon={<licenses.icon />}
                     onClick={onMenuClick}
@@ -204,7 +210,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to={affidavits.name}
+                    to={'/'+affidavits.name}
                     primaryText={affidavits.options.label}
                     leftIcon={<affidavits.icon />}
                     onClick={onMenuClick}
@@ -212,7 +218,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to={movements.name}
+                    to={'/'+movements.name}
                     primaryText={movements.options.label}
                     leftIcon={<movements.icon />}
                     onClick={onMenuClick}
@@ -222,7 +228,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                 {(state.env !== 'PRODUCTION') && (
                     <>
                         <MenuItemLink
-                            to={fines.name}
+                            to={'/'+fines.name}
                             primaryText={fines.options.label}
                             leftIcon={<fines.icon />}
                             onClick={onMenuClick}
@@ -230,7 +236,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={applications.name}
+                            to={'/'+applications.name}
                             primaryText={applications.options.label}
                             leftIcon={<applications.icon />}
                             onClick={onMenuClick}
@@ -251,7 +257,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         dense={dense}
                     >
                         <MenuItemLink
-                            to={paymentTypes.name}
+                            to={'/'+paymentTypes.name}
                             primaryText={paymentTypes.options.label}
                             leftIcon={<paymentTypes.icon />}
                             onClick={onMenuClick}
@@ -259,7 +265,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={paymentMethods.name}
+                            to={'/'+paymentMethods.name}
                             primaryText={paymentMethods.options.label}
                             leftIcon={<paymentMethods.icon />}
                             onClick={onMenuClick}
@@ -267,7 +273,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={ordinances.name}
+                            to={'/'+ordinances.name}
                             primaryText={ordinances.options.label}
                             leftIcon={<ordinances.icon />}
                             onClick={onMenuClick}
@@ -275,7 +281,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={items.name}
+                            to={'/'+items.name}
                             primaryText={items.options.label}
                             leftIcon={<items.icon />}
                             onClick={onMenuClick}
@@ -283,7 +289,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={liquidationTypes.name}
+                            to={'/'+liquidationTypes.name}
                             primaryText={liquidationTypes.options.label}
                             leftIcon={<liquidationTypes.icon />}
                             onClick={onMenuClick}
@@ -300,7 +306,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         dense={dense}
                     >
                         <MenuItemLink
-                            to={signatures.name}
+                            to={'/'+signatures.name}
                             primaryText={signatures.options.label}
                             leftIcon={<signatures.icon />}
                             onClick={onMenuClick}
@@ -308,7 +314,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={permissions.name}
+                            to={'/'+permissions.name}
                             primaryText={permissions.options.label}
                             leftIcon={<permissions.icon />}
                             onClick={onMenuClick}
@@ -316,7 +322,7 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             dense={dense}
                         />
                         <MenuItemLink
-                            to={users.name}
+                            to={'/'+users.name}
                             primaryText={users.options.label}
                             leftIcon={<users.icon />}
                             onClick={onMenuClick}

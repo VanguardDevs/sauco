@@ -129,13 +129,13 @@
     </head>
     <body>
         <div id="watermark">
-            <img src="{{ asset('/assets/images/licenses/licencia.jpg') }}" height="100%" width="100%"/>
+            <img src="{{ asset('images/licenses/actividad-economica.jpg') }}" height="100%" width="100%"/>
         </div>
         <div class="container">
             <div class="header">
                 <div class="qr-code">
                     <img
-                        src="{{ asset('assets/images/escudo.jpg') }}"
+                        src="{{ asset('images/escudo.jpg') }}"
                         height="120px"
                         width="150px"
                     />
