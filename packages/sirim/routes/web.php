@@ -41,39 +41,6 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Only Admin routes
      */
     Route::group(['middleware' => ['has.role:admin']], function () {
-        /**
-        * Settings > Years
-        */
-        Route::resource('settings/years', 'YearController');
-
-        /**
-         * Ordinance settings
-         */
-        Route::get('ordinances/list', 'OrdinanceController@list')->name('list-ordinances');
-        Route::resource('settings/ordinances', 'OrdinanceController');
-
-        /**
-         * Payment methods settings
-         */
-        Route::get('payment-methods/list', 'PaymentMethodController@list')->name('list-payment-methods');
-        Route::resource('settings/payment-methods', 'PaymentMethodController');
-
-        /**
-         * Routes Settings > Concepts
-         */
-        Route::get('concepts/list', 'ConceptController@list')->name('list-concepts');
-        Route::resource('settings/concepts', 'ConceptController');
-
-        /**
-         * Routes Settings > Concepts
-         */
-        Route::get('categories/list', 'CategoryController@list')->name('list-concepts');
-        Route::resource('settings/categories', 'CategoryController');
-
-        /*----------  Routes Settings > Tax Units ----------*/
-        Route::get('tax-units/list', 'TaxUnitController@list')->name('list-tax-units');
-        Route::resource('settings/tax-units', 'TaxUnitController');
-
         /*----------  Routes permissions  ----------*/
         Route::get('permissions/list', 'Settings\PermissionController@list');
         Route::resource('settings/administration/permissions', 'Settings\PermissionController');
@@ -85,48 +52,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*----------  Routes users  ----------*/
         Route::get('users/list', 'Settings\UserController@list');
         Route::resource('settings/administration/users', 'Settings\UserController');
-
-        /*---------- Accounting accounts --------*/
-        Route::resource('settings/accounting-accounts', 'AccountingAccountController');
-
-        Route::get('settings/invoice-models', 'InvoiceModelController@index')
-            ->name('invoice-models.index');
     });
 
     /**
      * Routes available for admin, chief of inspection, inspectors and superintendent
      */
-    /*----------  Routes economic activities  ----------*/
-    Route::get('economic-activities/list', 'EconomicActivityController@list')->name('list-economic-activities');
-    Route::get('economic-activities/{activity}/taxpayers/list', 'EconomicActivityController@listTaxpayers');
-    Route::resource('economic-activities', 'EconomicActivityController');
-
-    /*----------  Routes communities  ----------*/
-    Route::get('communities/list', 'CommunityController@list')->name('list-communities');
-    Route::get('geographic-area/communities/{community}/taxpayers/list', 'CommunityController@listTaxpayers');
-    Route::resource('geographic-area/communities', 'CommunityController');
-
-    // Organization routes
-    Route::get('organization', 'OrganizationController@index')->name('organization.index');
-    Route::get('organization/withholdings', 'OrganizationController@withholdings')->name('organization.withholdings');
-
-    /**
-     * Handle reports
-     */
-    Route::group(['middleware' => 'can:print.reports'], function() {
-        Route::post('reports/payment-report', 'ReportController@printPaymentReport')
-            ->name('print.payments.report');
-        Route::get('economic-activities/{activity}/download', 'ReportController@printActivityReport')
-            ->name('print.activity-report');
-        Route::get('reports/taxpayers/print', 'ReportController@printTaxpayersReport')
-            ->name('print.taxpayers');
-        Route::get('reports/activities/print', 'ReportController@printActivitiesReport')
-            ->name('print.activities');
-    });
-    Route::get('payments/processed/list', 'PaymentController@listProcessed');
-    Route::get('reports/taxpayers/up-to-date/list', 'ReportController@listUpToDate');
-    Route::get('reports/taxpayers/up-to-date', 'ReportController@showUpToDateTaxpayers')->name('taxpayers.uptodate');
-    Route::get('reports', 'ReportController@index')->name('reports');
 
     /**
      * Licenses
@@ -147,7 +77,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('payments/{payment}/download', 'PaymentController@download')
         ->name('payments.download');
     Route::resource('payments', 'PaymentController');
-
 
     /**
     * Taxpayer's affidavits

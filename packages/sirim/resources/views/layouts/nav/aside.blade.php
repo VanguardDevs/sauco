@@ -64,13 +64,6 @@
             </a>
         </li>
 
-        <li class="kt-menu__item {{ active('reports*') }}" aria-haspopup="true" >
-            <a  href="{{ route('reports') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon flaticon-squares-2"></i>
-                <span class="kt-menu__link-text">Reportes</span>
-            </a>
-        </li>
-
         @if (Config::get('app.sauco_url'))
         <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
             <a  href="{{ Config::get('app.sauco_url') }}" class="kt-menu__link">

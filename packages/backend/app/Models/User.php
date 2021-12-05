@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
     	return $this->hasMany(Movement::class);
     }
+
+    public function signature()
+    {
+        return $this->hasOne(Signature::class);
+    }
 }

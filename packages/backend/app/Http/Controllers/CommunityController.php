@@ -5,16 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Community;
 use App\Http\Requests\Communities\CommunitiesCreateFormRequest;
 use App\Http\Requests\Communities\CommunitiesUpdateFormRequest;
+use Illuminate\Http\Request;
 
 class CommunityController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('has.role:admin')
-            ->only(['create', 'edit', 'store', 'update']);
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *

@@ -47,12 +47,35 @@ class TaxpayerController extends Controller
 
                 $query->where('taxpayer_classification_id', '=', $name);
             }
+            if (array_key_exists('community_id', $filters)) {
+                $name = $filters['community_id'];
+
+                $query->where('community_id', '=', $name);
+            }
             if (array_key_exists('id', $filters)) {
                 $query->find($filters['id']);
             }
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $title = "Padrón de contribuyentes";
+
+        $pdf = PDF::LoadView('pdf.reports.taxpayers', compact([
+            'models',
+            'title'
+        ]));
+
+        return $pdf->download();
     }
 
     /**

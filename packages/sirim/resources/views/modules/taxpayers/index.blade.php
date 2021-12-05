@@ -47,11 +47,6 @@
                             <i class="fas fa-plus"></i>
                         </a>
                         @endif
-                        @if (Auth()->user()->can('print.reports'))
-                        <a href="{{ Route('print.taxpayers') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Imprimir listado" target='_blank'>
-                            <i class="fas fa-print"></i>
-                        </a>
-                        @endif
                     </div>
                 </div>
             </div>

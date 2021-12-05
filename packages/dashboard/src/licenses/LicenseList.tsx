@@ -68,22 +68,22 @@ const LicensesList: React.FC = props => {
         {
             isSmall
             ? (
-            <SimpleList
-                primaryText={record => `${record.num}`}
-                secondaryText={record => `${record.ordinance.description }`}
-                tertiaryText={record => `${record.taxpayer.rif}`}
-                linkType={"show"}
-            />
+                <SimpleList
+                    primaryText={record => `${record.num}`}
+                    secondaryText={record => `${record.ordinance.description }`}
+                    tertiaryText={record => `${record.taxpayer.rif}`}
+                    linkType={"show"}
+                />
             )
             : (
-            <Datagrid>
-                <TextField source="num" label="Número"/>
-                <TextField source="ordinance.description" label="Ordenanza"/>
-                <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers" link='show'>
-                    <TextField source="name" />
-                </ReferenceField>
-                <TextField source="emission_date" label="Emisión"/>
-            </Datagrid>
+                <Datagrid>
+                    <TextField source="num" label="Número"/>
+                    <TextField source="ordinance.description" label="Ordenanza"/>
+                    <ReferenceField label="Contribuyente" source="taxpayer_id" reference="taxpayers" link='show'>
+                        <TextField source="name" />
+                    </ReferenceField>
+                    <TextField source="emission_date" label="Emisión"/>
+                </Datagrid>
             )
         }
         </List>

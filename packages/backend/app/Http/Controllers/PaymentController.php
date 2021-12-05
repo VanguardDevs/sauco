@@ -139,7 +139,7 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show(Request $request, Payment $payment)
     {
         $payment = $payment->load([
             'status',
@@ -149,21 +149,26 @@ class PaymentController extends Controller
             'paymentMethod'
         ]);
 
+        if ($request->download) {
+            $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
+            $taxpayer = $payment->taxpayer;
+            $title = 'Factura #'.$payment->num;
+
+            $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
+            $vars = ['payment', 'reference', 'denomination'];
+
+            return PDF::loadView('pdf.bills.invoice', compact([
+                'title',
+                'payment',
+                'reference',
+                'denomination',
+                'title'
+            ]))
+                ->stream('factura-'.$payment->id.'.pdf');
+        }
+
         return response()->json($payment);
     }
-
-    public function download(Payment $payment)
-    {
-        $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
-        $taxpayer = $payment->taxpayer;
-
-        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
-        $vars = ['payment', 'reference', 'denomination'];
-
-        return PDF::setOptions(['isRemoteEnabled' => true])
-            ->loadView('pdf.payment', compact($vars))
-            ->stream('factura-'.$payment->id.'.pdf');
-   }
 
     /**
      * Remove the specified resource from storage.
