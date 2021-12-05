@@ -17,6 +17,7 @@ class CreateTaxpayersTable extends Migration
             $table->bigIncrements('id');
             $table->string('rif')->unique();
             $table->string('name');
+            $table->boolean('active')->default(1);
             $table->string('address');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();

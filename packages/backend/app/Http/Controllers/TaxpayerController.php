@@ -42,6 +42,9 @@ class TaxpayerController extends Controller
 
                 $query->where('taxpayer_type_id', '=', $name);
             }
+            if (array_key_exists('status', $filters)) {
+                $query->where('active', '=', $filters['status']);
+            }
             if (array_key_exists('taxpayer_classification_id', $filters)) {
                 $name = $filters['taxpayer_classification_id'];
 
@@ -120,16 +123,5 @@ class TaxpayerController extends Controller
         $taxpayer->update($request->all());
 
         return response()->json($taxpayer, 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Taxpayer  $taxpayer
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Taxpayer $taxpayer)
-    {
-        //
     }
 }

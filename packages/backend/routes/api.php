@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'ManageTokenController@login');
 
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     // /**
     //  * Configurations
     //  */
@@ -42,7 +42,8 @@ Route::post('login', 'ManageTokenController@login');
      Route::apiResource('communities', 'CommunityController');
      Route::apiResource('parishes', 'ParishController');
      Route::apiResource('licenses', 'LicenseController');
-     Route::apiResource('taxpayers', 'TaxpayerController');
+     Route::apiResource('taxpayers', 'TaxpayerController')
+        ->except('destroy');
      Route::apiResource('liquidations', 'LiquidationController');
      Route::apiResource('companies', 'CompanyController');
      Route::apiResource('accounts', 'AccountController');
@@ -75,4 +76,4 @@ Route::post('login', 'ManageTokenController@login');
      // Account
      Route::post('update-password', 'UpdatePasswordController');
      Route::get('logout', 'ManageTokenController@logout');
-// });
+});

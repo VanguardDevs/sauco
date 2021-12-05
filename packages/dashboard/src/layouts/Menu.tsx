@@ -210,14 +210,6 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                     dense={dense}
                 />
                 <MenuItemLink
-                    to={'/'+affidavits.name}
-                    primaryText={affidavits.options.label}
-                    leftIcon={<affidavits.icon />}
-                    onClick={onMenuClick}
-                    sidebarIsOpen={open}
-                    dense={dense}
-                />
-                <MenuItemLink
                     to={'/'+movements.name}
                     primaryText={movements.options.label}
                     leftIcon={<movements.icon />}
@@ -239,6 +231,14 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             to={'/'+applications.name}
                             primaryText={applications.options.label}
                             leftIcon={<applications.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={'/'+affidavits.name}
+                            primaryText={affidavits.options.label}
+                            leftIcon={<affidavits.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}
