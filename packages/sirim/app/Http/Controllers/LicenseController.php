@@ -267,13 +267,13 @@ class LicenseController extends Controller
 
         $representation = $license->representation->person->name;
         $signature = Signature::latest()->first();
+        $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString'];
         $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
         return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
-            ->stream();
-            // ->download('Licencia '.$taxpayer->rif.'.pdf');
+            ->download('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**

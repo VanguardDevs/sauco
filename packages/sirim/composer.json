@@ -25,6 +25,7 @@
         "maatwebsite/excel": "^3.1",
         "owen-it/laravel-auditing": "^10.0",
         "realrashid/sweet-alert": "^3.1",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^3.0",
         "yajra/laravel-datatables-oracle": "^9.2"
     },

@@ -134,11 +134,8 @@
         <div class="container">
             <div class="header">
                 <div class="qr-code">
-                    <img
-                        src="{{ asset('assets/images/escudo.jpg') }}"
-                        height="120px"
-                        width="150px"
-                    />
+                    
+                    <img src="data:image/png;base64, {{ base64_encode(QrCode::size(150)->generate($qrLicenseString)) }} ">
                 </div>
                 <div class="header-title">
                     LICENCIA DE ACTIVIDADES ECONÓMICAS <br/>Nº
