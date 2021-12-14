@@ -1,5 +1,5 @@
 import { AuthProvider } from 'react-admin';
-import { apiClient } from './api'
+import { axios } from './dataProvider'
 
 const CONFIG_NAMES = {
     IDENTIFICATION: `${process.env.REACT_APP_IDENTIFICATIONS_NAME}`,
@@ -9,8 +9,8 @@ const CONFIG_NAMES = {
 
 export const authProvider: AuthProvider = {
     login: async (data) => {
-        await apiClient.get('csrf-cookie')
-        const response = await apiClient.post('login', data);
+        await axios.get('csrf-cookie')
+        const response = await axios.post('login', data);
 
         if (response.status < 200 || response.status >= 300) {
             throw new Error(response.statusText);
@@ -27,7 +27,7 @@ export const authProvider: AuthProvider = {
         }
     },
     logout: async () => {
-        await apiClient.get('logout');
+        await axios.get('logout');
         await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
         await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
         await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);

@@ -5,7 +5,7 @@
   "home": "/",
   "dependencies": {
     "@blackbox-vision/ra-language-spanish": "^3.16.2",
-    "@jodaz_/data-provider": "^1.0.0",
+    "@jodaz_/data-provider": "^1.1.0",
     "@jodaz_/file-provider": "^0.6.0",
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.10",

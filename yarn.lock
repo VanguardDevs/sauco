@@ -1491,10 +1491,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jodaz_/data-provider@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@jodaz_/data-provider/-/data-provider-1.0.0.tgz#dacb03fb5e1805563ec86a0858c1b66644743ec8"
-  integrity sha512-fBmJzTpDJuoeUjf90+7O2ynrFyYMAapPd1kq4CuZiTQYMeGj4T9ZRqRcsJxb/uLzv6y4j1BLB1sn7Z4/7MMZPw==
+"@jodaz_/data-provider@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@jodaz_/data-provider/-/data-provider-1.1.0.tgz#00b1a8b4f703f5341a4c536b19850b2481abd2d3"
+  integrity sha512-jz5u2ot2AjY7ljyODKqsBn0KTJIa6nAfTD5v00QYAWnSIseBkWpU6/a7OlSbpRuQorVOxpnElvrjSsg9az+qDg==
   dependencies:
     axios "^0.24.0"
     qs "^6.10.1"

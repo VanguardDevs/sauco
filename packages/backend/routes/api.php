@@ -65,7 +65,8 @@ Route::middleware('auth:sanctum')->group(function () {
      /**
       * Consults
       */
-     Route::get('petro-prices', 'PetroPriceController@index');
+     Route::apiResource('petro-prices', 'PetroPriceController')
+        ->except('show');
      Route::get('taxpayer-types', 'TaxpayerTypeController@index');
      Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
      Route::get('status', 'StatusController@index');
