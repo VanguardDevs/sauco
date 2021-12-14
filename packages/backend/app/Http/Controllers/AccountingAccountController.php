@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class AccountingAccountController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:super-admin')
+            ->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,21 +20,19 @@ class AccountingAccountController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            return response()->json(AccountingAccount::query());  
+        $query = AccountingAccount::latest()
+            ->withCount('concepts');
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
         }
 
-        return view('modules.accounting-accounts.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('modules.accounting-accounts.register');
+        return $query->paginate($results);
     }
 
     /**
@@ -39,7 +43,9 @@ class AccountingAccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $accountingAccount = AccountingAccount::create($request->input());
+
+        return $accountingAccount;
     }
 
     /**
@@ -50,18 +56,7 @@ class AccountingAccountController extends Controller
      */
     public function show(AccountingAccount $accountingAccount)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\AccountingAccount  $accountingAccount
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(AccountingAccount $accountingAccount)
-    {
-        //
+        return $accountingAccount;
     }
 
     /**
@@ -71,9 +66,11 @@ class AccountingAccountController extends Controller
      * @param  \App\AccountingAccount  $accountingAccount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AccountingAccount $accountingAccount)
+    public function update(AccountingAccountsValidateRequest $request, AccountingAccount $accountingAccount)
     {
-        //
+        $accountingAccount->update($request->input());
+
+        return $accountingAccount;
     }
 
     /**
@@ -84,6 +81,8 @@ class AccountingAccountController extends Controller
      */
     public function destroy(AccountingAccount $accountingAccount)
     {
-        //
+        $accountingAccount->delete();
+
+        return $accountingAccount;
     }
 }

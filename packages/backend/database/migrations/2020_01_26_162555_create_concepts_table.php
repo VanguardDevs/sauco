@@ -15,7 +15,7 @@ class CreateConceptsTable extends Migration
     {
         Schema::create('concepts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('code')->index();
+            $table->string('code')->index();
             $table->float('min_amount');
             $table->float('max_amount');
             $table->string('name');

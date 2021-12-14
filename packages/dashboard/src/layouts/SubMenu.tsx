@@ -51,7 +51,7 @@ const SubMenu: React.FC<Props> = ({
             </ListItemIcon>
             {
                 (sidebarIsOpen) && (
-                    <Typography variant="inherit" color="textSecondary">
+                    <Typography variant="subtitle1" color="textSecondary">
                         {name}
                     </Typography>
                 )

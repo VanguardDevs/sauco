@@ -77,7 +77,11 @@ const MenuItemLink = React.forwardRef((props: MenuItemLinkProps, ref) => {
                         })}
                     </ListItemIcon>
                 )}
-                {sidebarIsOpen && primaryText}
+                {sidebarIsOpen &&
+                    <Typography variant="inherit" color="textSecondary">
+                        {primaryText}
+                    </Typography>
+                }
             </MenuItem>
         );
     };

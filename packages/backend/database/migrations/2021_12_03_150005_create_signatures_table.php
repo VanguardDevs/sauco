@@ -17,7 +17,7 @@ class CreateSignaturesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('decree');
-            $table->string('active')->default(1);
+            $table->boolean('active')->default(1);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');

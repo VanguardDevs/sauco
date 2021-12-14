@@ -42,18 +42,7 @@ class PetroPriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PetroPrice  $petroPrice
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PetroPrice $petroPrice)
-    {
-        //
+        return PetroPrice::create($request->all());
     }
 
     /**
@@ -65,7 +54,9 @@ class PetroPriceController extends Controller
      */
     public function update(Request $request, PetroPrice $petroPrice)
     {
-        //
+        $petroPrice->update($request->all());
+
+        return $petroPrice;
     }
 
     /**
@@ -76,6 +67,8 @@ class PetroPriceController extends Controller
      */
     public function destroy(PetroPrice $petroPrice)
     {
-        //
+        $petroPrice->delete();
+
+        return $petroPrice;
     }
 }
