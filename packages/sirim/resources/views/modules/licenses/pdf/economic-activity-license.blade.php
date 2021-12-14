@@ -110,7 +110,7 @@
             }
             .bottom {
                 width: 100%;
-                height: 150px;
+                height: 170px;
                 z-index: 1000;
                 text-transform: uppercase;
                 font-weight: 700;
@@ -211,7 +211,8 @@
                 <span class="row"><hr/></span>
                 <span class="row">{{ $signature->title }}</span>
                 <span class="row">superintendente de administración tributaria</span>
-                <span class="row">{{ $signature->title }}</span>
+                <span class="row">{{ $signature->decree }}</span>
+                <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
             </div>
         </div>
     </body>

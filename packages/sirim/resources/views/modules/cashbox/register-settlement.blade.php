@@ -105,7 +105,7 @@
                 <a href="{{ route('affidavits.payment', $row) }}" class="btn btn-warning">
                     <i class="fas fa-money-check"></i> Realizar factura
                 </a>
-                @elseif ($row->payment())
+                @elseif (count($row->payment()))
                 <a href="{{ route('payments.show', $row->payment()->first()) }}" class="btn btn-info">
                     <i class="fas fa-money-check"></i> Ver factura
                 </a>

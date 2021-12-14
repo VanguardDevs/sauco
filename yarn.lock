@@ -867,6 +867,8 @@
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.14.5.tgz#9676fd5707ed28f522727c5b3c0aa8544440b04f"
   integrity sha512-NVIY1W3ITDP5xQl50NgTKlZ0GrotKtLna08/uGY6ErQt6VEQZXla86x/CTddm5gZdcr+5GSsvMeTmWA5Ii6pkg==
+  dependencies:
+    regenerator-transform "^0.14.2"
 
 "@babel/plugin-transform-reserved-words@^7.12.1", "@babel/plugin-transform-reserved-words@^7.14.5":
   version "7.14.5"
@@ -1491,10 +1493,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jodaz_/data-provider@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@jodaz_/data-provider/-/data-provider-1.0.0.tgz#dacb03fb5e1805563ec86a0858c1b66644743ec8"
-  integrity sha512-fBmJzTpDJuoeUjf90+7O2ynrFyYMAapPd1kq4CuZiTQYMeGj4T9ZRqRcsJxb/uLzv6y4j1BLB1sn7Z4/7MMZPw==
+"@jodaz_/data-provider@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@jodaz_/data-provider/-/data-provider-1.0.1.tgz#d919b6821b31c75ba0643a704465b65b8325ef94"
+  integrity sha512-lMszVj30CQwBDkWNnEkKthLugR9/CZDx1jy82IArtv/VC+z67sMNEMQV+PmtnLtUt3dEEojVqdO/NZd/YXpHGw==
   dependencies:
     axios "^0.24.0"
     qs "^6.10.1"
@@ -8814,6 +8816,8 @@ parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
   integrity sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==
+  dependencies:
+    callsites "^3.0.0"
 
 parse-asn1@^5.0.0, parse-asn1@^5.1.5:
   version "5.1.6"
