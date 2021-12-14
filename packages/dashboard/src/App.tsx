@@ -29,6 +29,7 @@ import liquidationTypes from './liquidation-types';
 import parishes from './parishes';
 import signatures from './signatures';
 import { i18nProvider } from './i18nProvider';
+import accoutingAccounts from './accounting-accounts';
 
 const App = () => (
     <Admin
@@ -44,6 +45,7 @@ const App = () => (
         locale="es"
         disableTelemetry
     >
+        <Resource {...accoutingAccounts} />
         <Resource {...paymentTypes} />
         <Resource {...paymentMethods} />
         <Resource {...taxpayers} />

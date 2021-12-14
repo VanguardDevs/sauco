@@ -63,10 +63,7 @@ class ConceptController extends Controller
      */
     public function store(ConceptsValidateRequest $request)
     {
-        $concept = Concept::create(array_merge(
-            ['code' => Concept::getNewCode()],
-            $request->input()
-        ));
+        $concept = Concept::create($request->input());
 
         return $concept;
     }
@@ -74,19 +71,19 @@ class ConceptController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Concept  $Concept
+     * @param  \App\Concept  $concept
      * @return \Illuminate\Http\Response
      */
-    public function show(Concept $Concept)
+    public function show(Concept $concept)
     {
-        //
+        return $concept;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Concept  $Concept
+     * @param  \App\Concept  $concept
      * @return \Illuminate\Http\Response
      */
     public function update(ConceptsValidateRequest $request, Concept $concept)
@@ -99,7 +96,7 @@ class ConceptController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Concept  $Concept
+     * @param  \App\Concept  $concept
      * @return \Illuminate\Http\Response
      */
     public function destroy(Concept $concept)

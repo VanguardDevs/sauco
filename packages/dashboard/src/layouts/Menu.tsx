@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useMediaQuery, Theme, Box } from '@material-ui/core';
 import {
-    DashboardMenuItem,
     MenuProps,
 } from 'react-admin';
 import SubMenu from './SubMenu';
@@ -40,6 +39,7 @@ import municipalities from '../municipalities';
 import parishes from '../parishes';
 import liquidationTypes from '../liquidation-types';
 import signatures from '../signatures';
+import accoutingAccounts from '../accounting-accounts';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -256,6 +256,14 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                         icon={<SettingsIcon />}
                         dense={dense}
                     >
+                        <MenuItemLink
+                            to={'/'+accoutingAccounts.name}
+                            primaryText={accoutingAccounts.options.label}
+                            leftIcon={<accoutingAccounts.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
                         <MenuItemLink
                             to={'/'+paymentTypes.name}
                             primaryText={paymentTypes.options.label}

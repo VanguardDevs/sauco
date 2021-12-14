@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
-use App\Traits\NewValue;
 use App\TaxUnit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\PrettyAmount;
 
 class Concept extends Model
 {
-    use SoftDeletes, NewValue, HasFactory, PrettyAmount;
+    use SoftDeletes, HasFactory, PrettyAmount;
 
     protected $table = 'concepts';
 
