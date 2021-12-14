@@ -1,12 +1,12 @@
 import * as React from 'react'
 import {
-    useDataProvider,
     TextInput,
     FormWithRedirect,
     SaveButton
 } from 'react-admin'
 import { Box, Grid, InputLabel } from '@material-ui/core'
 import UpdateIcon from '@material-ui/icons/Cached';
+import { axios } from '@sauco/common/providers'
 
 interface FormValues {
     current_password?: string;
@@ -86,13 +86,11 @@ const UpdatePasswordForm = (props: any) => (
 );
 
 const UpdatePassword = (props: any) => {
-    const dataProvider = useDataProvider()
-
     const save = React.useCallback(async (values) => {
-        const { data } = await dataProvider.post('update-password', values);
+        const { data } = await axios.post('update-password', values);
 
         console.log(data)
-    }, [dataProvider])
+    }, [axios])
 
     return (
         <UpdatePasswordForm save={save} validate={validate} {...props} />
