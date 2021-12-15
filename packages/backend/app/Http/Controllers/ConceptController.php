@@ -86,7 +86,7 @@ class ConceptController extends Controller
      * @param  \App\Concept  $concept
      * @return \Illuminate\Http\Response
      */
-    public function update(ConceptsValidateRequest $request, Concept $concept)
+    public function update(Request $request, Concept $concept)
     {
         $concept->update($request->input());
 
