@@ -61,9 +61,9 @@ class ConceptController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ConceptsValidateRequest $request)
+    public function store(Request $request)
     {
-        $concept = Concept::create($request->input());
+        $concept = Concept::create($request->all());
 
         return $concept;
     }

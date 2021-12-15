@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use App\Models\TaxUnit;
+use App\Models\PetroPrice;
 
 class Concept extends Model
 {
@@ -27,8 +28,13 @@ class Concept extends Model
     {
         $method = $this->chargingMethod()->first()->name;
         $value = $value ? $value : TaxUnit::latest()->first()->value;
-        
+
         if ($method == "TASA") {
+            if ($this->ordinance->name == 'ACTIVIDADES ECONÓMICAS') {
+                return $value * $this->amount / 100;
+            }
+            $value = $value ? $value : PetroPrice::latest()->first()->value;
+
             return $value * $this->amount / 100;
         } else if ($method == 'DIVISA') {
             return $this->amount;

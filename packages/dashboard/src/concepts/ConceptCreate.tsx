@@ -19,6 +19,9 @@ import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
 const ConceptCreateForm: React.FC<any> = props => (
     <FormWithRedirect
         {...props}
+        initialValues={{
+            'charging_method_id': 2
+        }}
         render={ ({ handleSubmitWithRedirect, saving }) => (
             <Card>
                 <Box maxWidth="90em" padding='2em'>
@@ -37,64 +40,8 @@ const ConceptCreateForm: React.FC<any> = props => (
                                 fullWidth
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12} md={9}>
-                            <InputLabel>Nombre</InputLabel>
-                            <TextInput
-                                label={false}
-                                source="name"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={3}>
-                            <InputLabel>¿Simultáneo o moroso?</InputLabel>
-                            <BooleanInput
-                                source="own_income"
-                                label={false}
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={3}>
-                            <InputLabel>Monto mínimo</InputLabel>
-                            <NumberInput
-                                source="min_amount"
-                                label={false}
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={3}>
-                            <InputLabel>Monto máximo</InputLabel>
-                            <NumberInput
-                                source="max_amount"
-                                label={false}
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={3}>
-                            <InputLabel>Método de cobro</InputLabel>
-                            <ReferenceInput
-                                source="charging_method_id"
-                                reference="charging-methods"
-                                sort={{ field: 'id', order: 'ASC' }}
-                                label=''
-                                fullWidth
-                            >
-                                <SelectInput />
-                            </ReferenceInput>
-                        </Grid>
                         <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Ordenanza</InputLabel>
-                            <ReferenceInput
-                                source="ordinance_id"
-                                reference="ordinances"
-                                sort={{ field: 'id', order: 'ASC' }}
-                                label=''
-                                fullWidth
-                            >
-                                <SelectInput optionText="description" />
-                            </ReferenceInput>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Cuentas contables</InputLabel>
+                            <InputLabel>Cuentas contable</InputLabel>
                             <ReferenceInput
                                 source="accounting_account_id"
                                 reference="accounting-accounts"
@@ -115,6 +62,42 @@ const ConceptCreateForm: React.FC<any> = props => (
                                 fullWidth
                             >
                                 <SelectInput optionText="name" />
+                            </ReferenceInput>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12}>
+                            <InputLabel>Nombre</InputLabel>
+                            <TextInput
+                                label={false}
+                                source="name"
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={3}>
+                            <InputLabel>¿Simultáneo o moroso?</InputLabel>
+                            <BooleanInput
+                                source="own_income"
+                                label={false}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={3}>
+                            <InputLabel>Monto</InputLabel>
+                            <NumberInput
+                                source="amount"
+                                label={false}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={4}>
+                            <InputLabel>Ordenanza</InputLabel>
+                            <ReferenceInput
+                                source="ordinance_id"
+                                reference="ordinances"
+                                sort={{ field: 'id', order: 'ASC' }}
+                                label=''
+                                fullWidth
+                            >
+                                <SelectInput optionText="description" />
                             </ReferenceInput>
                         </Grid>
                     </Grid>
