@@ -8,6 +8,7 @@
     "liquidations": "node ./scripts/updateLiquidations.js",
     "cancellations": "node ./scripts/cancellations.js",
     "deductions": "node ./scripts/deductions.js",
+    "rates": "node ./scripts/updateRatesTable.js",
     "movements": "node ./scripts/createMovements.js"
   },
   "author": "Jesus Ordosgoitty",

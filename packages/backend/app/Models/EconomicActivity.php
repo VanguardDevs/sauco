@@ -17,6 +17,7 @@ class EconomicActivity extends Model
         'name',
         'description',
         'aliquote',
+        'active',
         'min_tax',
     ];
 
