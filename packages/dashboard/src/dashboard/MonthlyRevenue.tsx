@@ -1,6 +1,5 @@
 import * as React from 'react';
 import DollarIcon from '@material-ui/icons/AttachMoney';
-import { useTranslate } from 'react-admin';
 
 import CardWithIcon from './CardWithIcon';
 
@@ -13,7 +12,7 @@ const MonthlyRevenue: React.FC<Props> = ({ value }) => {
         <CardWithIcon
             to="/payments"
             icon={DollarIcon}
-            title={'Total de ingresos mensual'}
+            title={'Ingresos en los últimos 30 días'}
             subtitle={value}
         />
     );
