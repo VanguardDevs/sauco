@@ -16,6 +16,8 @@ class PetroPriceController extends Controller
     {
         $query = PetroPrice::latest();
         $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -29,6 +31,10 @@ class PetroPriceController extends Controller
             if (array_key_exists('lt_date', $filters)) {
                 $query->whereDate('created_at', '<', $filters['lt_date']);
             }
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
         }
 
         return $query->paginate($results);

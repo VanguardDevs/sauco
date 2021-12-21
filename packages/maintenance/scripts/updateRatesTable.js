@@ -7,6 +7,8 @@ async function main() {
 
     await db.schema.table('economic_activities', (table) => {
       table.boolean('active').defaultTo(true);
+      table.dropForeign('activity_classification_id');
+      table.dropColumn('activity_classification_id');
     });
 
     await db.schema.raw(

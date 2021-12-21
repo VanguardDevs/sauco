@@ -153,7 +153,6 @@ const Dashboard: React.FC = () => {
     }, []);
 
     const {
-        revenue,
         pendingLiquidations,
         payments,
         emmittedLicenses,
@@ -165,7 +164,6 @@ const Dashboard: React.FC = () => {
         <div>
             <div style={styles.flexColumn as React.CSSProperties}>
                 <Welcome />
-                <MonthlyRevenue value={revenue} />
                 <VerticalSpacer />
                 <PendingLiquidations value={pendingLiquidations} />
                 <VerticalSpacer />
@@ -184,8 +182,6 @@ const Dashboard: React.FC = () => {
                 <Welcome />
             </div>
             <div style={styles.flex}>
-                <MonthlyRevenue value={revenue} />
-                <Spacer />
                 <PendingLiquidations value={pendingLiquidations} />
                 <Spacer />
                 <CurrentPetroPrice value={currentPetroPrice} />
@@ -205,9 +201,6 @@ const Dashboard: React.FC = () => {
             <Welcome />
             <div style={styles.flex}>
                 <div style={styles.leftCol}>
-                    <div style={styles.flex}>
-                        <MonthlyRevenue value={revenue} />
-                    </div>
                     <div style={styles.singleCol}>
                         <PaymentChart payments={payments} />
                     </div>

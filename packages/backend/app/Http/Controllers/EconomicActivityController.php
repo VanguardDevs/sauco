@@ -20,6 +20,8 @@ class EconomicActivityController extends Controller
     {
         $query = EconomicActivity::query();
         $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -42,6 +44,10 @@ class EconomicActivityController extends Controller
             if (array_key_exists('lt_aliquote', $filters)) {
                 $query->where('aliquote', '<', $filters['lt_aliquote']);
             }
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
         }
 
         if ($request->type == 'pdf') {
