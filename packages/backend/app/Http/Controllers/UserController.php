@@ -57,13 +57,16 @@ class UserController extends Controller
      */
     public function store(UsersCreateFormRequest $request)
     {
+        
+
         $create = new User([
-            'identity_card' => $request->input('identity_card'),
+            'dni' => $request->input('identity_card'),
             'first_name' => $request->input('first_name'),
             'password' => bcrypt($request->input('password')),
             'surname' => $request->input('surname'),
             'phone' => $request->input('phone'),
-            'login' => $request->input('login')
+            'login' => $request->input('login'),
+            'avatar'=> $request->input('avatar')
         ]);
         $create->save();
 
@@ -127,10 +130,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        
+
         $edit             = User::find($user->id);
         $edit->login = $request->input('login');
         $edit->first_name = $request->input('first_name');
         $edit->surname    = $request->input('surname');
+        $edit->phone    = $request->input('phone');
+        $edit->dni = $request->input('identity_card');
 
         if ($request->input('password') != NULL) {
             $edit->password   = bcrypt($request->input('password'));
@@ -151,6 +158,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $destroy  = User::find($user->id);
+        $destroy->active=0;
+
+        $destroy->save();
+        
     }
 }
