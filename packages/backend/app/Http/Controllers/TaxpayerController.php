@@ -102,13 +102,7 @@ class TaxpayerController extends Controller
      */
     public function show(Taxpayer $taxpayer)
     {
-        $data = $taxpayer->load([
-            'properties',
-            'taxpayerType',
-            'taxpayerClassification',
-        ]);
-
-        return response()->json($data, 200);
+        return $taxpayer;
     }
 
     /**

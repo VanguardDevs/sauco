@@ -27,8 +27,7 @@ export interface License extends Record {
 }
 
 export interface Taxpayer extends Record {
-    date: Date;
-    total: number;
+    name: string;
 }
 
 export interface Cancellation extends Record {

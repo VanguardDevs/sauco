@@ -7,11 +7,12 @@ import {
     TextField,
     SimpleList,
     ReferenceArrayInput,
-    SelectInput
+    SelectInput,
+    ShowButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import ExportButton from '../components/ExportButton'
-import { Actions } from '@sauco/common/components';
+import { Actions, RecordActions } from '@sauco/common/components';
 
 const optionRenderer = (choice:any) => `${choice.description}`;
 
@@ -23,9 +24,9 @@ const TaxpayersFilter: React.FC = props => (
         <TextInput label="Correo" source='email' />
         <TextInput label="Dirección" source='address' />
         <ReferenceArrayInput
-        source="taxpayer_type_id"
-        reference="taxpayer-types"
-        label="Tipo de contribuyente"
+            source="taxpayer_type_id"
+            reference="taxpayer-types"
+            label="Tipo de contribuyente"
         >
             <SelectInput
                 source="description"
@@ -42,9 +43,9 @@ const TaxpayersFilter: React.FC = props => (
             <SelectInput source="name" label="Comunidad" allowEmpty={false} />
         </ReferenceArrayInput>
         <ReferenceArrayInput
-        source="taxpayer_classification_id"
-        reference="taxpayer-classifications"
-        label="Clasificación"
+            source="taxpayer_classification_id"
+            reference="taxpayer-classifications"
+            label="Clasificación"
         >
             <SelectInput source="name" label="Clasificación" allowEmpty={false} />
         </ReferenceArrayInput>
@@ -83,6 +84,9 @@ const TaxpayersList: React.FC = props => {
                         <TextField source="rif" label="RIF"/>
                         <TextField source="name" label="Nombre"/>
                         <TextField source="fiscal_address" label="Dirección"/>
+                        <RecordActions>
+                            <ShowButton />
+                        </RecordActions>
                     </Datagrid>
                 )
             }
