@@ -32,10 +32,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
     // API ROUTES
-    Route::get('api/taxpayers/{taxpayer}/representations', 'TaxpayerController@getRepresentations');
+    Route::get('api/taxpayers/{taxpayer}/representations', 'CompanyController@getRepresentations');
     Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
-    Route::get('api/taxpayers/{taxpayer}/economic-activities', 'TaxpayerController@economicActivities');
-    Route::get('api/taxpayers/{taxpayer}', 'TaxpayerController@show')->name('taxpayer.profile');
+    Route::get('api/taxpayers/{taxpayer}/economic-activities', 'CompanyController@economicActivities');
+    Route::get('api/taxpayers/{taxpayer}', 'CompanyController@show')->name('taxpayer.profile');
 
     /**
      * Only Admin routes
@@ -143,8 +143,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@byTaxpayer')->name('taxpayer.affidavits');
     Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
     Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
-    Route::get('taxpayers/list', 'TaxpayerController@list')->name('list-taxpayers');
-    Route::resource('taxpayers', 'TaxpayerController');
+    Route::get('taxpayers/list', 'CompanyController@list')->name('list-taxpayers');
+    Route::resource('taxpayers', 'CompanyController')->only(['index', 'show']);
 
     /**
      * Listing routes

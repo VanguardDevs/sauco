@@ -40,6 +40,7 @@ import parishes from '../parishes';
 import liquidationTypes from '../liquidation-types';
 import signatures from '../signatures';
 import accoutingAccounts from '../accounting-accounts';
+import companies from '../companies';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -88,6 +89,14 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             to={'/'+taxpayers.name}
                             primaryText={taxpayers.options.label}
                             leftIcon={<taxpayers.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={'/'+companies.name}
+                            primaryText={companies.options.label}
+                            leftIcon={<companies.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}

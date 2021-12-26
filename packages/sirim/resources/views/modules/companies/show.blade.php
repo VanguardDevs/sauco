@@ -19,22 +19,11 @@
                             </br>
                             <small> {{ $row->rif }} </small>
                         </a>
-                        @if(Auth::user()->can('edit.taxpayers'))
-                        <div class="kt-widget__action">
-                            <a href="{{ route('taxpayers.edit', $row) }}" class="btn btn-circle btn-icon">
-                                <i class="flaticon2-edit kt-font-brand"></i>
-                            </a>
-                        </div>
-                        @endif
                     </div>
                     <div class="kt-widget__subhead">
                         <a>
-                            <i class="fas fa-tag"></i>
-                            {{ $row->taxpayerClassification->name }}
-                        </a>
-                        <a>
                             <i class="flaticon2-maps"></i>
-                             {{ $row->fiscal_address }}
+                             {{ $row->addess }}
                         </a>
                         <a>
                             <i class="flaticon2-new-email"></i>
@@ -85,7 +74,7 @@
 <div id="profile"></div>
 
 <div class="row">
-    @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
+    <!-- @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
     <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">
@@ -105,7 +94,7 @@
             </div>
         </div>
     </div>
-    @endif
+    @endif -->
     <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">

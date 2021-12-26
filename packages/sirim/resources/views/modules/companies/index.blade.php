@@ -37,17 +37,8 @@
                         <i class="fas fa-user"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Control de contribuyentes
+                        Control de empresas
                     </h3>
-                </div>
-               <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-actions">
-                       @if (Auth()->user()->can('create.taxpayers'))
-                        <a href="{{ Route('taxpayers.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nuevo contribuyente">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                        @endif
-                    </div>
                 </div>
             </div>
             <div class="kt-portlet__body">
@@ -56,7 +47,7 @@
                     <tr>
                         <th width="10%">RIF</th>
                         <th width="50%">Razón Social</th>
-                        <th width="30%">Dirección fiscal</th>
+                        <th width="30%">Dirección</th>
                         <th width="10%">Acciones</th>
                     </tr>
                 </thead>

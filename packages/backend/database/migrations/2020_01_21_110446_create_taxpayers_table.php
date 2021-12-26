@@ -22,12 +22,12 @@ class CreateTaxpayersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->unsignedBigInteger('taxpayer_type_id');
-            $table->unsignedBigInteger('municipality_id');
+            $table->unsignedBigInteger('parish_id');
             $table->unsignedBigInteger('community_id');
             $table->unsignedBigInteger('taxpayer_classification_id');
             $table->foreign('community_id')->references('id')->on('communities')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('municipality_id')->references('id')->on('municipalities')
+            $table->foreign('parish_id')->references('id')->on('parishes')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('taxpayer_type_id')->references('id')->on('taxpayer_types')
                 ->onUpdate('cascade')->onDelete('cascade');
