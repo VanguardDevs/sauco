@@ -7,9 +7,11 @@ import {
     NumberField,
     TextField,
     SimpleList,
-    NumberInput
+    ShowButton,
+    NumberInput,
+    EditButton
 } from 'react-admin';
-import { Actions } from '@sauco/common/components';
+import { Actions, RecordActions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import ExportButton from '../components/ExportButton'
 
@@ -50,6 +52,9 @@ const EconomicActivitiesDatagrid = ({ isSmall }: any) => (
                     <TextField source="name" label="Nombre"/>
                     <TextField source="aliquote" label="Alícuota"/>
                     <NumberField source='min_tax' label='Mínimo tributable' />
+                    <RecordActions>
+                        <ShowButton />
+                    </RecordActions>
                 </Datagrid>
             )
         }

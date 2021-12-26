@@ -30,6 +30,14 @@ export interface Taxpayer extends Record {
     name: string;
 }
 
+export interface EconomicActivity extends Record {
+    name: string;
+    min_tax: number;
+    aliquote: number;
+    code: string;
+    active: boolean;
+}
+
 export interface Cancellation extends Record {
     cancellable?: any;
 }

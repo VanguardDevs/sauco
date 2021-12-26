@@ -24,6 +24,11 @@ export default {
         borderRadius: 10,
     },
     overrides: {
+        RaLayout: {
+            contentWithSidebar: {
+                padding: '1rem'
+            }
+        },
         RaList: {
             root: {
                 marginTop: '2em'

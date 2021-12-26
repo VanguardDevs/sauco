@@ -92,9 +92,7 @@ class EconomicActivityController extends Controller
      */
     public function show(EconomicActivity $economicActivity)
     {
-        $data = $economicActivity->getTaxpayers()->count();
-
-        return response()->json($data, 201);
+        return response()->json($economicActivity, 201);
     }
 
     /**

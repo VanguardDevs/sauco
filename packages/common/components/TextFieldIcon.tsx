@@ -29,6 +29,9 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         '&:hover': {
             color: theme.palette.primary.main,
+        },
+        '& > *:nth-child(2)': {
+            marginLeft: '0.5rem'
         }
     }
 }));
@@ -39,5 +42,5 @@ TextFieldIcon.defaultProps = {
 
 interface Props {
     icon?: React.ReactElement,
-    text: string
+    text: string | number
 }
