@@ -451,7 +451,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'rif'},
             { data: 'name'},
-            { data: 'fiscal_address'},
+            { data: 'address'},
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

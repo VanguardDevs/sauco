@@ -8,8 +8,7 @@ import {
     TextField,
     SimpleList,
     ShowButton,
-    NumberInput,
-    EditButton
+    NumberInput
 } from 'react-admin';
 import { Actions, RecordActions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';

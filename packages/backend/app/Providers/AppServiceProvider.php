@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +33,9 @@ class AppServiceProvider extends ServiceProvider
         Builder::macro('whereLike', function (string $attribute, string $searchTerm) {
             return $this->where($attribute, 'ILIKE', "%{$searchTerm}%");
         });
+
+        Relation::morphMap([
+            'company' => 'App\Models\Company',
+        ]);
     }
 }

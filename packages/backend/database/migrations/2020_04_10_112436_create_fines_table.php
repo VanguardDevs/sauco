@@ -21,6 +21,8 @@ class CreateFinesTable extends Migration
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('user_id');
+            $table->string('ownable_type')->nullable();
+            $table->unsignedBigInteger('ownable_id')->nullable();
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('concept_id')->references('id')->on('concepts')

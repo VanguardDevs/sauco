@@ -15,7 +15,7 @@ class Representation extends Model implements Auditable
     protected $fillable = [
         'taxpayer_id',
         'representation_type_id',
-        'person_id'
+        'company_id'
     ];
 
     public function licenses()
@@ -33,8 +33,8 @@ class Representation extends Model implements Auditable
         return $this->belongsTo(RepresentationType::class);
     }
 
-    public function person()
+    public function company()
     {
-        return $this->belongsTo(Person::class);
+        return $this->belongsTo(Company::class);
     }
 }

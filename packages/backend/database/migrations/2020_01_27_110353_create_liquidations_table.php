@@ -18,6 +18,8 @@ class CreateLiquidationsTable extends Migration
             $table->string('num', 8)->unique();
             $table->decimal('amount', 15, 2);
             $table->string('liquidable_type');
+            $table->string('ownable_type')->nullable();
+            $table->unsignedBigInteger('ownable_id')->nullable();
             $table->unsignedBigInteger('liquidable_id');
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('liquidation_type_id');

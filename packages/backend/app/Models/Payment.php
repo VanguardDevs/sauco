@@ -85,6 +85,11 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
+    public function ownable()
+    {
+        return $this->morphTo()->withTrashed();
+    }
+
     public function affidavit()
     {
         return $this->liquidations()

@@ -14,7 +14,7 @@
   "author": "Jesus Ordosgoitty",
   "license": "MIT",
   "dependencies": {
-    "knex": "^0.21.16",
+    "knex": "^0.95.11",
     "pg": "^8.5.1"
   },
   "devDependencies": {

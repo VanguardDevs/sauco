@@ -30,6 +30,7 @@ import parishes from './parishes';
 import signatures from './signatures';
 import { i18nProvider } from './i18nProvider';
 import accoutingAccounts from './accounting-accounts';
+import companies from './companies';
 
 const App = () => (
     <Admin
@@ -68,6 +69,7 @@ const App = () => (
         <Resource {...municipalities} />
         <Resource {...parishes} />
         <Resource {...signatures} />
+        <Resource {...companies} />
         <Resource {...liquidationTypes} />
         <Resource name="cancellation-types" />
         <Resource name="taxpayer-types" />
