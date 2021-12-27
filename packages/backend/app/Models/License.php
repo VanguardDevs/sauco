@@ -24,7 +24,9 @@ class License extends Model implements Auditable
         'representation_id',
         'correlative_id',
         'ordinance_id',
-        'downloaded_at'
+        'downloaded_at',
+        'ownable_type',
+        'ownable_id'
     ];
 
     public function taxpayer()
@@ -45,6 +47,11 @@ class License extends Model implements Auditable
     public function ordinance()
     {
         return $this->belongsTo(Ordinance::class);
+    }
+
+    public function ownable()
+    {
+        return $this->morphTo()->withTrashed();
     }
 
     public function economicActivities()

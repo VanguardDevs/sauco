@@ -26,6 +26,72 @@ const updateTaxpayersRifQuery = `
   WHERE taxpayers.id = subquery.id
 `;
 
+const setTaxpayerIdToMovementsTable = `
+    UPDATE movements
+    SET
+        taxpayer_id = subquery.taxpayer_id
+    FROM (
+        SELECT
+            id,
+            taxpayer_id
+        FROM payments
+    )
+    AS subquery
+    WHERE movements.payment_id = subquery.id
+`;
+
+const setCompanyId = (tableName) => (`
+    UPDATE ${tableName}
+    SET
+        company_id = subquery.id
+    FROM (
+        SELECT
+            companies.id,
+            taxpayer_id
+        FROM taxpayers
+        JOIN
+            companies
+            ON companies.taxpayer_id = taxpayers.id
+    )
+    AS subquery
+    WHERE ${tableName}.taxpayer_id = subquery.taxpayer_id;
+`);
+
+const updateOwnableIdQuery = (tableName) => (`
+    UPDATE ${tableName}
+    SET
+        ownable_type = 'company',
+        ownable_id = subquery.id
+    FROM (
+    SELECT
+        companies.id AS id,
+        taxpayers.id AS taxpayer_id
+    FROM taxpayers
+        JOIN companies
+        ON taxpayers.id = companies.taxpayer_id
+    )
+    AS subquery
+    WHERE ${tableName}.taxpayer_id = subquery.taxpayer_id;
+`);
+
+const updateTaxpayerIdFromRepresentations = `
+    UPDATE representations
+    SET
+        taxpayer_id = subquery.id
+    FROM (
+        SELECT
+            taxpayers.id,
+            company_id
+        FROM taxpayers
+            JOIN people
+                ON rif ILIKE '%' || people.document || '%'
+            JOIN representations
+                ON representations.person_id = people.id
+    )
+    AS subquery
+    WHERE representations.company_id = subquery.company_id;
+`;
+
 const insertTaxpayersQuery = `
   INSERT INTO taxpayers
     (name, rif, taxpayer_type_id, taxpayer_classification_id, phone, email, address, parish_id, community_id)
@@ -46,6 +112,9 @@ const insertTaxpayersQuery = `
         ON taxpayer_types.correlative = citizenships.correlative
       WHERE people.deleted_at IS NULL;
 `;
+
+const ownableTables = ['applications', 'fines', 'liquidations', 'movements', 'payments', 'licenses'];
+const companiesTables = ['representations', 'affidavits', 'economic_activity_taxpayer'];
 
 async function taxpayers() {
   const db = knex(require("../knexfile"));
@@ -83,6 +152,12 @@ async function taxpayers() {
       table.string('address');
       table.decimal('capital', 2);
       table.integer('num_workers');
+      table.boolean('active').defaultsTo(true);
+      table.boolean('principal').defaultsTo(true);
+      table.date('constitution_date').nullable();
+      table.string('register_num').nullable();
+      table.string('register_volume').nullable();
+      table.string('register_casefile').nullable();
       table.integer('community_id').unsigned();
       table.integer('parish_id').unsigned();
       table.foreign('community_id').references('communities.id');
@@ -124,24 +199,57 @@ async function taxpayers() {
         table.foreign('company_id').references('companies.id');
     });
 
+    await db.schema.table('affidavits', (table) => {
+        table.string('num').nullable();
+        table.integer('company_id').unsigned();
+        table.foreign('company_id').references('companies.id');
+    });
+
+    await db.schema.table('economic_activity_taxpayer', (table) => {
+        table.integer('company_id').unsigned();
+        table.foreign('company_id').references('companies.id');
+    });
+
     // create taxpayers from people table
     await db.schema.raw(insertTaxpayersQuery);
 
-    /**
-     *  FALTA
-     *  Asociar contribuyente con empresa, a través de la relación representante
-     *  Asociar empresas con actividades económicas
-     *  Asociar empresas con facturas
-     *  Asociar empresas con liquidaciones
-     *  Asociar empresas con declaraciones
-     *  Asociar empresas con solicitudes
-     *  Asociar empresas con sanciones
-     *  Asociar empresas con movimientos
-     */
+    // Set taxpayer_id column for movements table
+    await db.schema.table('movements', (table) => {
+        table.integer('taxpayer_id').unsigned();
+        table.foreign('taxpayer_id').references('taxpayers.id');
+    });
+
+    // Set taxpayer_id to movements
+    await db.schema.raw(setTaxpayerIdToMovementsTable);
+
+    // Associate existing records with companies
+    await ownableTables.forEach(async (relation) => {
+        await db.schema.table(relation, (table) => {
+            table.string('ownable_type').nullable();
+            table.integer('ownable_id').nullable();
+        });
+
+        await db.schema.raw(updateOwnableIdQuery(relation));
+    })
+
+    // Set company id to affidavits and representations
+    await companiesTables.forEach(async (relation) => {
+        await db.schema.raw(setCompanyId(relation));
+    })
 
     // Clean up
+    await db.schema.renameTable('economic_activity_taxpayer', 'economic_activity_company');
+
+    await db.schema.raw(updateTaxpayerIdFromRepresentations);
+
+    await db.schema.table('affidavits', (table) => {
+        table.dropColumn('taxpayer_id');
+    });
+    await db.schema.table('economic_activity_company', (table) => {
+        table.dropColumn('taxpayer_id');
+    });
     await db.schema.table('representations', (table) => {
-        table.dropColumn('people_id');
+        table.dropColumn('person_id');
     });
     await db.schema.dropTable('people');
     await db.schema.dropTable('permits');

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EconomicActivity;
-use App\Models\Person;
 use App\Models\Company;
-use App\Models\License;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -25,12 +23,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $numPersons = Person::get()->count();
-        $numLicenses = License::get()->count();
-
-        return view('modules.companies.index')
-            ->with('numPersons', $numPersons)
-            ->with('numLicenses', $numLicenses);
+        return view('modules.companies.index');
     }
 
     public function list()

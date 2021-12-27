@@ -23,6 +23,11 @@ class Movement extends Model
         'year_id',
         'payment_id',
         'created_at',
+        'taxpayer_id',
+        'ownable_type',
+        'ownable_id',
+        'ownable_type',
+        'ownable_id',
         'updated_at'
     ];
 
@@ -46,5 +51,10 @@ class Movement extends Model
     public function liquidation()
     {
         return $this->belongsTo(Liquidation::class);
+    }
+
+    public function ownable()
+    {
+        return $this->morphTo()->withTrashed();
     }
 }

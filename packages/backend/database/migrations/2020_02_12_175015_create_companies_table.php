@@ -22,9 +22,9 @@ class CreateCompaniesTable extends Migration
             $table->boolean('principal')->default(1);
             $table->decimal('capital', 20, 2);
             $table->date('constitution_date');
-            $table->string('num');
-            $table->string('volume');
-            $table->string('case_file');
+            $table->string('register_num');
+            $table->string('register_volume');
+            $table->string('register_casefile');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->unsignedBigInteger('community_id');

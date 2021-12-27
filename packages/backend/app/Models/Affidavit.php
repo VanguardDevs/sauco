@@ -24,7 +24,7 @@ class Affidavit extends Model implements Auditable
         'num',
         'amount',
         'total_brute_amount',
-        'taxpayer_id',
+        'company_id',
         'user_id',
         'month_id',
         'processed_at'
@@ -104,9 +104,9 @@ class Affidavit extends Model implements Auditable
         return $this->belongsTo(Month::class);
     }
 
-    public function taxpayer()
+    public function company()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function user()

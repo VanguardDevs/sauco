@@ -71,11 +71,6 @@ class Taxpayer extends Model implements Auditable
         return $this->hasManyThrough(Deduction::class, Affidavit::class);
     }
 
-    public function affidavits()
-    {
-        return $this->hasMany(Affidavit::class);
-    }
-
     public function community()
     {
         return $this->belongsTo(Community::class);

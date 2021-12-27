@@ -22,6 +22,8 @@ class CreateApplicationsTable extends Migration
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamp('approved_at');
+            $table->string('ownable_type')->nullable();
+            $table->unsignedBigInteger('ownable_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')

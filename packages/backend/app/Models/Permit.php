@@ -25,6 +25,8 @@ class Permit extends Model implements Auditable
         'valid_until',
         'concept_id',
         'user_id',
+        'ownable_type',
+        'ownable_id',
         'taxpayer_id'
     ];
 
@@ -45,7 +47,7 @@ class Permit extends Model implements Auditable
     public function user()
     {
         return $this->belongsTo(User::class);
-    } 
+    }
 
     public function liquidation()
     {

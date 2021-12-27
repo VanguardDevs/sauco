@@ -29,7 +29,9 @@ class Fine extends Model implements Auditable
         'active',
         'taxpayer_id',
         'amount',
-        'user_id'
+        'user_id',
+        'ownable_type',
+        'ownable_id'
     ];
 
     protected $casts = [ 'amount' => 'float' ];
@@ -82,6 +84,11 @@ class Fine extends Model implements Auditable
     {
         return $this->morphOne(Liquidation::class, 'liquidable')
             ->withTrashed();
+    }
+
+    public function ownable()
+    {
+        return $this->morphTo()->withTrashed();
     }
 
     public function cancellations()

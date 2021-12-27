@@ -49,6 +49,12 @@ class Company extends Model
         );
     }
 
+    public function liquidations()
+    {
+        return $this->morphMany(Liquidation::class, 'ownable')
+            ->withTrashed();
+    }
+
     public function payments()
     {
         return $this->belongsToMany(Payment::class);

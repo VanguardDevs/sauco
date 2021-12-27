@@ -18,6 +18,8 @@ class CreatePaymentsTable extends Migration
             $table->string('num')->unique();
             $table->decimal('amount', 15, 2);
             $table->string('observations')->nullable();
+            $table->string('ownable_type')->nullable();
+            $table->unsignedBigInteger('ownable_id')->nullable();
             $table->unsignedBigInteger('payment_type_id');
             $table->unsignedBigInteger('payment_method_id');
             $table->unsignedBigInteger('status_id');

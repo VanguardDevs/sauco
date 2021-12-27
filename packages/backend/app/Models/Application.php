@@ -27,6 +27,8 @@ class Application extends Model implements Auditable
         'taxpayer_id',
         'concept_id',
         'user_id',
+        'ownable_type',
+        'ownable_id',
         'approved_at'
     ];
 
@@ -77,6 +79,11 @@ class Application extends Model implements Auditable
     {
         return $this->morphOne(Liquidation::class, 'liquidable')
             ->withTrashed();
+    }
+
+    public function ownable()
+    {
+        return $this->morphTo()->withTrashed();
     }
 
     public function cancellations()

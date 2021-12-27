@@ -19,6 +19,8 @@ class CreatePermitsTable extends Migration
             $table->float('amount');
             $table->boolean('active');
             $table->date('valid_until');
+            $table->string('ownable_type')->nullable();
+            $table->unsignedBigInteger('ownable_id')->nullable();
             $table->unsignedBigInteger('concept_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('taxpayer_id');

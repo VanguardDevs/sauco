@@ -39,6 +39,11 @@ class Company extends Model
         return $this->belongsTo(Taxpayer::class);
     }
 
+    public function representations()
+    {
+        return $this->hasMany(Representation::class);
+    }
+
     public function parish()
     {
         return $this->belongsTo(Parish::class);
@@ -49,13 +54,44 @@ class Company extends Model
         return $this->belongsTo(Community::class);
     }
 
-    public function economicActivities()
+    public function movements()
     {
-        return $this->belongsToMany(EconomicActivity::class);
+        return $this->morphMany(Movement::class, 'ownable')
+            ->withTrashed();
+    }
+
+    public function applications()
+    {
+        return $this->morphMany(Movement::class, 'ownable')
+            ->withTrashed();
+    }
+
+    public function licenses()
+    {
+        return $this->morphMany(License::class, 'ownable')
+            ->withTrashed();
+    }
+
+    public function fines()
+    {
+        return $this->morphMany(Fine::class, 'ownable')
+            ->withTrashed();
+    }
+
+    public function liquidations()
+    {
+        return $this->morphMany(Liquidation::class, 'ownable')
+            ->withTrashed();
     }
 
     public function payments()
     {
-        return $this->belongsToMany(Payment::class);
+        return $this->morphMany(Payment::class, 'ownable')
+            ->withTrashed();
+    }
+
+    public function economicActivities()
+    {
+        return $this->belongsToMany(EconomicActivity::class, 'economic_activity_company');
     }
 }

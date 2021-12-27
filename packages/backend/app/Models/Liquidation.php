@@ -72,6 +72,11 @@ class Liquidation extends Model implements Auditable
         return $this->morphTo()->withTrashed();
     }
 
+    public function ownable()
+    {
+        return $this->morphTo()->withTrashed();
+    }
+
     public function payment()
     {
         return $this->belongsToMany(Payment::class, 'payment_liquidation');
