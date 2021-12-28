@@ -26,16 +26,15 @@ class Concept extends Model
 
     public function calculateAmount($value = null)
     {
+        if ($value) {
+            return $value;
+        }
+
         $method = $this->chargingMethod()->first()->name;
-        $value = $value ? $value : TaxUnit::latest()->first()->value;
+        $value = PetroPrice::latest()->first()->value;
 
         if ($method == "TASA") {
-            if ($this->ordinance->name == 'ACTIVIDADES ECONÓMICAS') {
-                return $value * $this->amount / 100;
-            }
-            $value = $value ? $value : PetroPrice::latest()->first()->value;
-
-            return $value * $this->amount / 100;
+            return $value * $this->amount;
         } else if ($method == 'DIVISA') {
             return $this->amount;
         } else if ($method == 'U.T') {
