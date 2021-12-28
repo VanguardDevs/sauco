@@ -102,10 +102,11 @@ const ConceptCreateForm: React.FC<any> = props => (
                             />
                         </Grid>
                         <Grid item xs={12} sm={12} md={3}>
-                            <InputLabel>¿Simultáneo o moroso?</InputLabel>
+                            <InputLabel>¿Es ingreso propio?</InputLabel>
                             <BooleanInput
                                 source="own_income"
                                 label={false}
+                                defaultValue={true}
                                 fullWidth
                             />
                         </Grid>
