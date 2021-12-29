@@ -37,10 +37,7 @@ const ConceptFilter: React.FC = props => (
 );
 
 const ConceptList: React.FC = props => {
-  const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
-  // const dispatch = useDispatch();
-
-  // const handleClick = () => dispatch(setDialog());
+    const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));  
 
     return (
         <List {...props}
@@ -60,6 +57,7 @@ const ConceptList: React.FC = props => {
                 : (
                     <Datagrid>
                         <TextField source="name" label="Nombre"/>
+                        <TextField source="amount" label="Monto"/>
                         <TextField source="liquidation_type.name" label="Tipo"/>
                         <EditButton />
                     </Datagrid>

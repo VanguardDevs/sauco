@@ -21,6 +21,7 @@ class Concept extends Model
         'own_income',
         'min_amount',
         'max_amount',
+        'amount',
         'charging_method_id',
         'liquidation_type_id',
         'ordinance_id',

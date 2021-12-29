@@ -11,6 +11,10 @@ async function main() {
       table.dropColumn('activity_classification_id');
     });
 
+    await db.schema.table('concepts', (table) => {
+      table.boolean('own_income').defaultTo(false);
+    });
+
     await db.schema.raw(
       `
       UPDATE economic_activities
