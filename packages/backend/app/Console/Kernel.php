@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
             ->evenInMaintenanceMode();
 
         $schedule->command('get:petro-price')
-            ->dailyAt('09:00');
+            ->lastDayOfMonth('21:00');
 
         $schedule->command('create:year')
             ->yearly();
