@@ -11,38 +11,23 @@ use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view("modules.roles.index");
-    }
+        $query = Role::latest();
+        $results = $request->perPage;
+        $filters = $request->has('filter') ? $request->filter : [];
 
-    public function list()
-    {
-        $query = Role::query()->orderBy('created_at', 'desc');
+        // Get fields
+        if (array_key_exists('name', $filters)) {
+            $query->whereLogin($filters['name']);
+        }
 
-        return DataTables::eloquent($query)->toJson();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view("modules.roles.register")
-            ->with('permissions', Permission::pluck('name', 'id'))
-            ->with('typeForm', 'create');
+        return $query->paginate($results);
     }
 
     /**
@@ -56,7 +41,7 @@ class RoleController extends Controller
         $role = Role::create($request->all());
         $role->permissions()->sync($request->get('permissions'));
 
-        return redirect()->route('roles.index')->withSuccess('Rol agregado!!');
+        return $role;
     }
 
     /**
@@ -65,23 +50,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $rol)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Role $role)
-    {
-        return view("modules.roles.register")
-            ->with('typeForm', 'update')
-            ->with('permissions', Permission::pluck('name', 'id'))
-            ->with('row', $role);
+        return $rol;
     }
 
     /**
@@ -96,7 +67,7 @@ class RoleController extends Controller
         $role->update($request->all());
         $role->permissions()->sync($request->get('permissions'));
 
-        return redirect()->route('roles.index')->withSuccess('¡Rol actualizado!');
+        return $role;
     }
 
     /**
@@ -105,8 +76,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $rol)
     {
-        //
+        $rol->delete();
+
+        return $rol;
     }
 }

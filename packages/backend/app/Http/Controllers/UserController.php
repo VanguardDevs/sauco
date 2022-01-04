@@ -57,22 +57,17 @@ class UserController extends Controller
      */
     public function store(UsersCreateFormRequest $request)
     {
-        
-
-        $create = new User([
-            'dni' => $request->input('identity_card'),
-            'first_name' => $request->input('first_name'),
-            'password' => bcrypt($request->input('password')),
-            'surname' => $request->input('surname'),
-            'phone' => $request->input('phone'),
-            'login' => $request->input('login'),
-            'avatar'=> $request->input('avatar')
+        $user = User::create([
+            'dni' => $request->identity_card,
+            'first_name' => $request->first_name,
+            'password' => bcrypt($request->password),
+            'surname' => $request->surname,
+            'login' => $request->login
         ]);
-        $create->save();
 
-        $create->roles()->sync($request->get('roles'));
+        // $user->roles()->sync($request->get('roles'));
 
-        return redirect()->route('users.index')->withSuccess('¡Usuario agregado!');
+        return $user;
     }
 
     /**
