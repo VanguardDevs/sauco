@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ApplyFine;
 use App\Console\Commands\RetrievePetroPrice;
+use App\Console\Commands\CreateNewYear;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ApplyFine::class,
-        RetrievePetroPrice::class
+        RetrievePetroPrice::class,
+        CreateNewYear::class
     ];
 
     /**
@@ -34,6 +36,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('get:petro-price')
             ->dailyAt('09:00');
+
+        $schedule->command('create:year')
+            ->yearly();
     }
 
     /**
