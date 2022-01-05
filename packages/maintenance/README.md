@@ -1,5 +1,16 @@
-## Maintenance
+# Maintenance
+
+Colección de scripts orientados al mantenimiento y actualización de la DB existente
+
+## Tecnologías
+
+- Nodejs
+- Knex
+- PostgreSQL
 
 ## Comandos
 
-- `m170421`: Corre los scripts `liquidations`, `deductions`, `movements` y `remove`. Corresponde a la actualización diferida para el día 17-04-21.
+- `npm run taxpayers` **EN ESPERA**: Corre el archivo `/scripts/taxpayers.js`.
+- `npm run rates` **26-12-2021**: Corre el archivo `/scripts/updateRatesTable.js`.
+- `npm run reconversion` **30-09-2021**: Corre el archivo `/scripts/reconversion.js`.
+- `./run_migrations.sh` **05-05-2021**: Corre multiples comandos.
