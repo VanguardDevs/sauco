@@ -44,6 +44,6 @@ Revisar [README](https://github.com/jodaz/sauco/tree/main/packages/maintenance#r
 
 ## Contribuidores
 
-- [jodaz](https://github.com/Papelonin)
+- [jodaz](https://github.com/jodaz)
 - [ELNOOB3100](https://github.com/ELNOOB3100)
 - [Papelonin](https://github.com/Papelonin)
