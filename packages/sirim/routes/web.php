@@ -106,8 +106,7 @@ Route::prefix('/')->middleware('auth')->group(function()
      * Taxpayer's application
      */
     Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
-    Route::get('applications/{application}/payment/new', 'ApplicationController@makePayment')
-        ->middleware('can:process.payments');
+    Route::get('applications/{application}/payment/new', 'ApplicationController@makePayment');
     Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
     /**
