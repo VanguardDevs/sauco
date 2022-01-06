@@ -37,12 +37,14 @@ const UsersList: React.FC = props => {
                 ? (
                     <SimpleList
                         primaryText={record => `${record.login}`}
+                        secondaryText={record => `${record.full_name}`}
                         linkType={"show"}
                     />
                 )
                 : (
                     <Datagrid>
                         <TextField source="login" label="Login"/>
+                        <TextField source="full_name" label="Nombre"/>
                     </Datagrid>
                 )
             }

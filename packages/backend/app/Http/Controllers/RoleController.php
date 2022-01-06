@@ -1,13 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Roles\RolesCreateFormRequest;
 use Illuminate\Http\Request;
-use Caffeinated\Shinobi\Models\Role;
-use Caffeinated\Shinobi\Models\Permission;
-use Yajra\DataTables\Facades\DataTables;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -24,7 +20,7 @@ class RoleController extends Controller
 
         // Get fields
         if (array_key_exists('name', $filters)) {
-            $query->whereLogin($filters['name']);
+            $query->whereLike('name', $filters['login']);
         }
 
         return $query->paginate($results);
@@ -36,12 +32,9 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RolesCreateFormRequest $request)
+    public function store(Request $request)
     {
-        $role = Role::create($request->all());
-        $role->permissions()->sync($request->get('permissions'));
-
-        return $role;
+        //
     }
 
     /**
@@ -52,7 +45,7 @@ class RoleController extends Controller
      */
     public function show(Role $rol)
     {
-        return $rol;
+        //
     }
 
     /**
@@ -62,12 +55,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Role $rol)
     {
-        $role->update($request->all());
-        $role->permissions()->sync($request->get('permissions'));
-
-        return $role;
+        //
     }
 
     /**
@@ -78,8 +68,6 @@ class RoleController extends Controller
      */
     public function destroy(Role $rol)
     {
-        $rol->delete();
-
-        return $rol;
+        //
     }
 }

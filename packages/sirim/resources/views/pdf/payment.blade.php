@@ -159,7 +159,7 @@
         <br>
         <div class="miscellaneus">
             <div class="liquidator-info">
-                Recaudador: {{ $payment->user->first_name.' '.$payment->user->surname }}
+                Recaudador: {{ $payment->user->full_name }}
             </div>
             <div class="collector-firm">
                <span style="width:50%;"></span>

@@ -18,22 +18,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'dni',
-        'first_name',
+        'identity_card',
         'password',
-        'surname',
+        'full_name',
         'phone',
         'avatar',
         'login'
     ];
-
-    protected $appends = [ 'full_name' ];
-
-    public function getFullNameAttribute()
-    {
-        return $this->attributes['first_name'].' '.
-            $this->attributes['surname'];
-    }
 
     public function payments()
     {

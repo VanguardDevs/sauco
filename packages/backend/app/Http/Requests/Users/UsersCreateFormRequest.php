@@ -24,10 +24,9 @@ class UsersCreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'identity_card' => 'required',
-            'first_name' => 'required',
+            'identity_card' => 'required|unique:users',
+            'full_name' => 'required',
             'password' => 'required',
-            'surname' => 'required',
             'login' => 'required|unique:users'
         ];
     }
@@ -36,9 +35,8 @@ class UsersCreateFormRequest extends FormRequest
     {
         return [
             'identity_card' => 'número de cédula',
-            'first_name' => 'primer nombre',
+            'full_name' => 'primer nombre',
             'password' => 'contraseña',
-            'surname' => 'apellido',
             'login' => 'login',
         ];
     }
@@ -47,9 +45,8 @@ class UsersCreateFormRequest extends FormRequest
     {
         return [
             'identity_card.required' => 'Ingrese el :attribute',
-            'first_name.required' => 'Ingrese el :attribute',
+            'full_name.required' => 'Ingrese el :attribute',
             'password.required' => 'Ingrese la :attribute',
-            'surname.required' => 'Ingrese el :attribute',
             'login.required' => 'Ingrese el :attribute',
             'login.unique' => 'El :attribute se encuentra en uso',
         ];

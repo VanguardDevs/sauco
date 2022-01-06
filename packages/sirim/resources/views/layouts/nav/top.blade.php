@@ -9,7 +9,7 @@
     <div class="kt-header__topbar-item kt-header__topbar-item--user">
         <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
             <div class="kt-header__topbar-user">
-                <span class="kt-header__topbar-username kt-hidden-mobile">{{ Auth::user()->first_name.' '.Auth::user()->surname }}</span>
+                <span class="kt-header__topbar-username kt-hidden-mobile">{{ Auth::user()->full_name }}</span>
                 <img class="kt-image" alt="Pic" src="{{ asset('uploads/users/'.Auth::user()->avatar) }}"/>
             </div>
         </div>

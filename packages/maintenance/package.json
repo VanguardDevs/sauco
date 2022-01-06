@@ -9,6 +9,7 @@
     "cancellations": "node ./scripts/cancellations.js",
     "deductions": "node ./scripts/deductions.js",
     "rates": "node ./scripts/updateRatesTable.js",
+    "users": "node ./scripts/updateUsers.js",
     "movements": "node ./scripts/createMovements.js"
   },
   "author": "Jesus Ordosgoitty",

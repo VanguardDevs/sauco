@@ -12,7 +12,6 @@ use Carbon\Carbon;
 use Image;
 use File;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use Auth;
 use Hash;
 
@@ -25,7 +24,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::latest();
+        $query = User::latest()->with('roles');
         $results = $request->perPage;
         $filters = $request->has('filter') ? $request->filter : [];
 
@@ -58,14 +57,14 @@ class UserController extends Controller
     public function store(UsersCreateFormRequest $request)
     {
         $user = User::create([
-            'dni' => $request->identity_card,
-            'first_name' => $request->first_name,
+            'identity_card' => $request->identity_card,
+            'full_name' => $request->full_name,
             'password' => bcrypt($request->password),
             'surname' => $request->surname,
             'login' => $request->login
         ]);
 
-        // $user->roles()->sync($request->get('roles'));
+        $user->roles()->sync($request->roles_ids);
 
         return $user;
     }
@@ -78,7 +77,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return $user;
     }
 
     public function getUser(Request $request)
@@ -125,7 +124,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        
+
 
         $edit             = User::find($user->id);
         $edit->login = $request->input('login');
@@ -157,6 +156,6 @@ class UserController extends Controller
         $destroy->active=0;
 
         $destroy->save();
-        
+
     }
 }
