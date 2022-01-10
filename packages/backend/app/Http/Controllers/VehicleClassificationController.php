@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\VehicleClassification;
 
 class VehicleClassificationController extends Controller
 {
@@ -35,9 +36,9 @@ class VehicleClassificationController extends Controller
      */
     public function store(Request $request)
     {
-        $V = VehicleClassification::create($request->all());
+        $model = VehicleClassification::create($request->all());
 
-        return response()->json($VehicleClassification, 201);
+        return response()->json($model, 201);
     }
 
     /**
@@ -48,7 +49,7 @@ class VehicleClassificationController extends Controller
      */
     public function show(VehicleClassification $VehicleClassification)
     {
-        return $response->json($VehicleClassification, 201);
+        return response()->json($VehicleClassification, 201);
     }
 
     /**
@@ -77,5 +78,4 @@ class VehicleClassificationController extends Controller
 
         return response()->json($VehicleClassification, 201);
     }
-    //
 }

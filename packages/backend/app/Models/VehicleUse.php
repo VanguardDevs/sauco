@@ -9,7 +9,7 @@ class VehicleUse extends Model
 {
     use HasFactory;
 
-    protected $table = 'VehicleUses';
+    protected $table = 'vehicle_uses';
 
     protected $fillable = ['name'];
 

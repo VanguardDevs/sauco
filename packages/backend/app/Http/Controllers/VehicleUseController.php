@@ -36,9 +36,9 @@ class VehicleUseController extends Controller
      */
     public function store(Request $request)
     {
-        $VehicleUse = VehicleUse::create($request->all());
+        $model = VehicleUse::create($request->all());
 
-        return response()->json($VehicleUse, 201);
+        return response()->json($model, 201);
     }
 
     /**
@@ -49,7 +49,7 @@ class VehicleUseController extends Controller
      */
     public function show(VehicleUse $VehicleUse)
     {
-        return $response->json($VehicleUse, 201);
+        return response()->json($VehicleUse, 201);
     }
 
     /**
