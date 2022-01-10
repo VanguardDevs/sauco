@@ -77,9 +77,21 @@ class CompanyController extends Controller
     {
         $company = Company::create($request->all());
 
+
         return response()->json($company, 201);
     }
 
+    public function test(CompanyValidateRequest $request)
+    {
+       // $company = Company::create($request->all());
+
+        return "holas";
+
+
+
+
+        //return response()->json($company, 201);
+    }
     /**
      * Display the specified resource.
      *
