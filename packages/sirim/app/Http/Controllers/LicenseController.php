@@ -176,7 +176,7 @@ class LicenseController extends Controller
         // a model
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->endOfYear();
+        $expirationDate = $emissionDate->copy()->addYears(1);
 
         $correlative = $license->correlative;
         $correlativeNumber = $correlative->correlativeNumber;
