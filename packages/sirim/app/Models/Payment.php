@@ -21,7 +21,9 @@ class Payment extends Model implements Auditable
 
     protected $guarded = [];
 
-    protected $casts = [ 'amount' => 'float' ];
+    protected $casts = [
+        'amount' => 'float'
+    ];
 
     public function createMovements()
     {
@@ -83,20 +85,25 @@ class Payment extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
+    public function ownable()
+    {
+        return $this->morphTo()->withTrashed();
+    }
+
     public function affidavit()
     {
         return $this->liquidations()
             ->whereLiquidationTypeId(3);
     }
 
-    public function liquidations()
-    {
-        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
-    }
-
     public function fines()
     {
         return $this->belongsToMany(Fine::class, Liquidation::class);
+    }
+
+    public function liquidations()
+    {
+        return $this->belongsToMany(Liquidation::class, 'payment_liquidation');
     }
 
     public function movements()

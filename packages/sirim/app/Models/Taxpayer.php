@@ -9,31 +9,25 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Taxpayer extends Model implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable, SoftDeletes;
 
     protected $table = 'taxpayers';
 
     protected $fillable = [
         'rif',
         'name',
+        'active',
         'address',
-        'fiscal_address',
         'phone',
         'email',
-        'community_id',
+        'parish_id',
         'taxpayer_type_id',
-        'taxpayer_classification_id',
+        'taxpayer_classification_id'
     ];
 
-    public function deductions()
+    public function vehicles()
     {
-        return $this->hasManyThrough(Deduction::class, Liquidation::class);
-    }
-
-    public function representations()
-    {
-        return $this->hasMany(Representation::class);
+        return $this->hasMany(Vehicle::class);
     }
 
     public function liquidations()
@@ -41,19 +35,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Liquidation::class);
     }
 
-    public function commercialRegister()
-    {
-        return $this->hasOne(CommercialRegister::class);
-    }
-
     public function taxpayerType()
     {
         return $this->belongsTo(TaxpayerType::class);
-    }
-
-    public function economicActivities()
-    {
-        return $this->belongsToMany(EconomicActivity::class);
     }
 
     public function licenses()
@@ -61,9 +45,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(License::class);
     }
 
-    public function commercialDenomination()
+    public function companies()
     {
-        return $this->hasOne(CommercialDenomination::class);
+        return $this->hasMany(Company::class);
     }
 
     public function applications()
@@ -81,14 +65,9 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Payment::class);
     }
 
-    public function withholdings()
+    public function deductions()
     {
-        return $this->hasManyThrough(Withholding::class, Affidavit::class);
-    }
-
-    public function affidavits()
-    {
-        return $this->hasMany(Affidavit::class);
+        return $this->hasManyThrough(Deduction::class, Affidavit::class);
     }
 
     public function community()
@@ -96,27 +75,28 @@ class Taxpayer extends Model implements Auditable
         return $this->belongsTo(Community::class);
     }
 
+    public function requirement()
+    {
+        return $this->belongsToMany(Requirement::class);
+    }
+
     public function taxpayerClassification()
     {
         return $this->belongsTo(TaxpayerClassification::class);
     }
 
-    public function getRifAttribute($value)
+    public function municipality()
     {
-        return $this->taxpayerType->correlative.$value;
+        return $this->belongsTo(Municipality::class);
     }
 
-    public static function existsRif($rif)
+    public function movements()
     {
-        return self::whereRif($rif)->first();
+    	return $this->hasMany(Movement::class);
     }
 
-    public function president()
+    public function properties()
     {
-        return $this->representations->filter(function ($item, $key) {
-            if ($item->representationType->name == 'PRESIDENTE') {
-                return $item;
-            }
-        });
+        return $this->belongsToMany(Property::class, 'taxpayer_property');
     }
 }

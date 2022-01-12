@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Taxpayer;
+use App\Models\Company;
 use App\Models\Concept;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\MakeWithholdingRequest;
@@ -20,9 +20,12 @@ class LiquidationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Taxpayer $taxpayer, Request $request)
+    public function index(Company $company, Request $request)
     {
-        $query = $taxpayer->liquidations()->with('payment')->latest();
+        $query = $company->liquidations()
+            ->whereNull('deleted_at')
+            ->with('payment')
+            ->latest();
 
         if ($request->wantsJson()) {
             return DataTables::of($query)
@@ -31,8 +34,8 @@ class LiquidationController extends Controller
                 })->make(true);
         }
 
-        return view('modules.taxpayers.liquidations.index')
-            ->with('row', $taxpayer);
+        return view('modules.companies.liquidations.index')
+            ->with('row', $company);
     }
 
     /**
@@ -49,8 +52,8 @@ class LiquidationController extends Controller
             $this->typeForm = 'update';
         }
 
-        return view('modules.taxpayers.liquidations.show')
-            ->with('taxpayer', $liquidation->taxpayer)
+        return view('modules.companies.liquidations.show')
+            ->with('company', $liquidation->ownable)
             ->with('row', $liquidation)
             ->with('typeForm', $this->typeForm);
     }

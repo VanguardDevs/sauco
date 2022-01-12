@@ -32,10 +32,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
     // API ROUTES
-    Route::get('api/taxpayers/{taxpayer}/representations', 'CompanyController@getRepresentations');
+    Route::get('api/companies/{company}/representations', 'CompanyController@getRepresentations');
     Route::get('api/affidavits/{affidavit}', 'AffidavitController@show')->name('affidavitApi');
-    Route::get('api/taxpayers/{taxpayer}/economic-activities', 'CompanyController@economicActivities');
-    Route::get('api/taxpayers/{taxpayer}', 'CompanyController@show')->name('taxpayer.profile');
+    Route::get('api/companies/{company}/economic-activities', 'CompanyController@economicActivities');
+    Route::get('api/companies/{company}', 'CompanyController@show')->name('taxpayer.profile');
 
     /**
      * Only Admin routes
@@ -64,10 +64,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::group(['middleware' => 'can:create.licenses'], function() {
         Route::get('licenses/{license}/download', 'LicenseController@download');
         Route::post('licenses/{license}/renovate', 'LicenseController@renovate');
-        Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
+        Route::post('companies/{company}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
     });
-    Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
+    Route::get('companies/{company}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
     Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
 
@@ -93,10 +93,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Taxpayer's Fines
      */
-    Route::get('taxpayers/{taxpayer}/fines/list', 'FineController@list');
-    Route::get('taxpayers/{taxpayer}/fines', 'FineController@index')
+    Route::get('companies/{company}/fines/list', 'FineController@list');
+    Route::get('companies/{company}/fines', 'FineController@index')
         ->name('taxpayer.fines');
-    Route::post('taxpayers/{taxpayer}/fines/create', 'FineController@store')
+    Route::post('companies/{company}/fines/create', 'FineController@store')
         ->name('fines.new');
     Route::get('fines/{fine}/payment/new', 'FineController@makePayment')
         ->middleware('can:process.payments');
@@ -105,46 +105,46 @@ Route::prefix('/')->middleware('auth')->group(function()
     /**
      * Taxpayer's application
      */
-    Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
+    Route::get('companies/{company}/applications/list', 'ApplicationController@list');
     Route::get('applications/{application}/payment/new', 'ApplicationController@makePayment')
         ->middleware('can:process.payments');
-    Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
+    Route::resource('companies/{company}/applications', 'ApplicationController');
 
     /**
      * Taxpayer's Withholdings
      */
-    Route::get('taxpayers/{taxpayer}/withholdings', 'WithholdingController@index')
+    Route::get('companies/{company}/withholdings', 'WithholdingController@index')
         ->name('withholdings.index');
-    Route::get('taxpayers/{taxpayer}/withholdings/list', 'WithholdingController@list');
+    Route::get('companies/{company}/withholdings/list', 'WithholdingController@list');
     Route::resource('withholdings', 'WithholdingController');
 
     /**
      * Handle settlements and payments
      */
-    Route::post('settlements/{taxpayer}/create', 'AffidavitController@create')->name('settlements.create');
+    Route::post('settlements/{company}/create', 'AffidavitController@create')->name('settlements.create');
 
     /*----------  Routes representations ----------*/
-    Route::group(['middleware' => 'can:edit.taxpayers'], function () {
-        Route::post('people/{taxpayer}', 'RepresentationController@storePerson')->name('person.store');
-        Route::get('taxpayers/{taxpayer}/representation/add', 'RepresentationController@create')->name('representations.add');
-        Route::post('taxpayers/{taxpayer}/representation/create', 'RepresentationController@store')->name('representation.store');
+    Route::group(['middleware' => 'can:edit.companies'], function () {
+        Route::post('people/{company}', 'RepresentationController@storePerson')->name('person.store');
+        Route::get('companies/{company}/representation/add', 'RepresentationController@create')->name('representations.add');
+        Route::post('companies/{company}/representation/create', 'RepresentationController@store')->name('representation.store');
     });
     Route::resource('people', 'PersonController');
-    Route::resource('taxpayers/representations', 'RepresentationController')->except(['create', 'store']);
+    Route::resource('companies/representations', 'RepresentationController')->except(['create', 'store']);
 
     /**
      * Taxpayer's routes
      */
-    Route::group(['middleware' => 'can:edit.taxpayers'], function () {
-        Route::patch('taxpayer/{taxpayer}/update-economic-activities', 'EconomicActivityController@editActivities')->name('taxpayer-activities.update');
-        Route::get('taxpayers/{taxpayer}/economic-activities', 'EconomicActivityController@editActivitiesForm')->name('taxpayer.economic-activities');
+    Route::group(['middleware' => 'can:edit.companies'], function () {
+        Route::patch('taxpayer/{company}/update-economic-activities', 'EconomicActivityController@editActivities')->name('taxpayer-activities.update');
+        Route::get('companies/{company}/economic-activities', 'EconomicActivityController@editActivitiesForm')->name('taxpayer.economic-activities');
     });
-    Route::get('taxpayers/{taxpayer}/affidavits/{affidavit}/download', 'AffidavitController@download');
-    Route::get('taxpayers/{taxpayer}/affidavits', 'AffidavitController@byTaxpayer')->name('taxpayer.affidavits');
-    Route::get('taxpayers/{taxpayer}/payments', 'PaymentController@listByTaxpayer');
-    Route::get('taxpayers/{taxpayer}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
-    Route::get('taxpayers/list', 'CompanyController@list')->name('list-taxpayers');
-    Route::resource('taxpayers', 'CompanyController')->only(['index', 'show']);
+    Route::get('companies/{company}/affidavits/{affidavit}/download', 'AffidavitController@download');
+    Route::get('companies/{company}/affidavits', 'AffidavitController@byTaxpayer')->name('taxpayer.affidavits');
+    Route::get('companies/{company}/payments', 'PaymentController@listByTaxpayer');
+    Route::get('companies/{company}/payments/{payment}', 'PaymentController@showTaxpayerPayment');
+    Route::get('companies/list', 'CompanyController@list')->name('list-companies');
+    Route::resource('companies', 'CompanyController')->only(['index', 'show']);
 
     /**
      * Listing routes
@@ -166,7 +166,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::resource('liquidations', 'LiquidationController')
         ->except(['index', 'show']);
-    Route::get('taxpayer/{taxpayer}/liquidations', 'LiquidationController@index')
+    Route::get('taxpayer/{company}/liquidations', 'LiquidationController@index')
         ->name('liquidations.index');
     Route::get('liquidations/{liquidation}/show', 'LiquidationController@show')
         ->name('liquidations.show');

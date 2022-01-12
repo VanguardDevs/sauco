@@ -447,7 +447,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/taxpayers/list",
+        "ajax": baseURL + "/companies/list",
         "columns": [
             { data: 'rif'},
             { data: 'name'},
@@ -457,7 +457,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/taxpayers/${oData.id} title='Ver información'>
+                        <a class="mr-2" href=${baseURL}/companies/${oData.id} title='Ver información'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`

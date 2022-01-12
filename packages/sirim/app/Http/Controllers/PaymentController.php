@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use App\Http\Requests\AnnullmentRequest;
 use PDF;
 use Auth;
+use App\Models\Company;
 
 class PaymentController extends Controller
 {
@@ -56,9 +57,10 @@ class PaymentController extends Controller
             ->make(true);
     }
 
-    public function listByTaxpayer(Taxpayer $taxpayer)
+    public function listByTaxpayer($company)
     {
-        $query = $taxpayer->payments()
+        $query = $company->payments()
+            ->whereNull('deleted_at')
             ->with('status')
             ->orderBy('processed_at', 'DESC');
 
@@ -113,7 +115,7 @@ class PaymentController extends Controller
             }
         }
 
-        return view('modules.taxpayers.payment')
+        return view('modules.companies.payment')
             ->with('row', $payment)
             ->with('types', PaymentType::exceptNull())
             ->with('methods', PaymentMethod::exceptNull())

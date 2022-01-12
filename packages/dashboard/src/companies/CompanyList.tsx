@@ -8,7 +8,8 @@ import {
     SimpleList,
     ReferenceArrayInput,
     AutocompleteInput,
-    ShowButton
+    ShowButton,
+    CreateButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import ExportButton from '../components/ExportButton'
@@ -35,6 +36,7 @@ const CompaniesFilter: React.FC = props => (
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
+        <CreateButton />
         <ExportButton downloableName='empresas' />
     </Actions>
 );

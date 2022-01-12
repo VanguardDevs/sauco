@@ -14,7 +14,7 @@
             <div class="kt-widget__top">
                 <div class="kt-widget__content">
                     <div class="kt-widget__head">
-                        <a id="taxpayer" class="kt-widget__username" data_id="{{ $row->id }}" href="{{ Route('taxpayers.show', $row->id) }}">
+                        <a id="taxpayer" class="kt-widget__username" data_id="{{ $row->id }}" href="{{ Route('companies.show', $row->id) }}">
                             {{ $row->name }}
                             </br>
                             <small> {{ $row->rif }} </small>
@@ -74,7 +74,6 @@
 <div id="profile"></div>
 
 <div class="row">
-    <!-- @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
     <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">
@@ -94,7 +93,6 @@
             </div>
         </div>
     </div>
-    @endif -->
     <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">

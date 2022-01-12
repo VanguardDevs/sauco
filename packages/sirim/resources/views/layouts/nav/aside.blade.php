@@ -50,10 +50,10 @@
             </a>
         </li>
 
-        <li class="kt-menu__item {{ active('taxpayers*') }}" aria-haspopup="true" >
-            <a href="{{ url('taxpayers') }}" class="kt-menu__link">
+        <li class="kt-menu__item {{ active('companies*') }}" aria-haspopup="true" >
+            <a href="{{ url('companies') }}" class="kt-menu__link">
                 <i class="kt-menu__link-icon fas fa-user-tie"></i>
-                <span class="kt-menu__link-text">Contribuyentes</span>
+                <span class="kt-menu__link-text">Empresas</span>
             </a>
         </li>
 

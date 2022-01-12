@@ -9,7 +9,7 @@ Breadcrumbs::for('change-password.show', function ($trail) {
 
 /*----------  Cashbox ----------*/
 Breadcrumbs::for('liquidations.index', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
+    $trail->parent('companies.show', $row);
     $trail->push('Liquidaciones ', route('liquidations.index', $row));
 });
 
@@ -39,7 +39,7 @@ Breadcrumbs::for('cancelled-fines.show', function ($trail, $row) {
 });
 
 Breadcrumbs::for('liquidations.show', function ($trail, $row) {
-    $trail->parent('liquidations.index', $row->taxpayer);
+    $trail->parent('liquidations.index', $row->ownable);
     $trail->push('Liquidación Nº'.$row->num, route('liquidations.show', $row));
 });
 
@@ -82,27 +82,27 @@ Breadcrumbs::for('report.payments', function ($trail) {
 });
 
 /*----------  Reports ----------*/
-Breadcrumbs::for('taxpayers.uptodate', function ($trail) {
+Breadcrumbs::for('companies.uptodate', function ($trail) {
     $trail->parent('reports');
-    $trail->push('Contribuyentes al día', route('taxpayers.uptodate'));
+    $trail->push('Empresas al día', route('companies.uptodate'));
 });
 
 /**
- * Taxpayer > taxpayer > Affidavits
+ * company > company > Affidavits
  */
-Breadcrumbs::for('taxpayer.affidavits', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Declaraciones', route('taxpayer.affidavits', $row));
+Breadcrumbs::for('company.affidavits', function ($trail, $row) {
+    $trail->parent('companies.show', $row);
+    $trail->push('Declaraciones', route('company.affidavits', $row));
 });
 
-/*----------  Taxpayers > taxpayer > Affidavits > show ----------*/
+/*----------  companies > company > Affidavits > show ----------*/
 Breadcrumbs::for('affidavits.show', function ($trail, $row) {
-    $trail->parent('taxpayer.affidavits', $row->taxpayer);
+    $trail->parent('company.affidavits', $row->company);
     $trail->push('Nueva declaración', route('affidavits.show', $row));
 });
 
 /**
- * Taxpayers > taxpayer > Affidavits > show > group
+ * companies > company > Affidavits > show > group
  */
 Breadcrumbs::for('affidavits.group', function ($trail, $row) {
     $trail->parent('affidavits.show', $row);
@@ -114,9 +114,9 @@ Breadcrumbs::for('null.payments', function ($trail) {
     $trail->push('Pagos anulados', route('null.payments'));
 });
 
-/*----------  Taxpayers > taxpayer > payment ----------*/
+/*----------  companies > company > payment ----------*/
 Breadcrumbs::for('payments.show', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row->taxpayer);
+    $trail->parent('companies.show', $row->ownable);
     $trail->push('Pago '.$row->num, route('payments.show', $row));
 });
 
@@ -324,49 +324,49 @@ Breadcrumbs::for('economic-sectors.edit', function ($trail) {
     $trail->push('Editar sector económico', url('settings/economic-sectors/edit'));
 });
 
-/*------------- Taxpayers -------------*/
-Breadcrumbs::for('taxpayers.index', function ($trail) {
+/*------------- companies -------------*/
+Breadcrumbs::for('companies.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Contribuyentes', url('taxpayers'));
+    $trail->push('Empresas', url('companies'));
 });
 
-/*------------- Taxpayers > create -------------*/
-Breadcrumbs::for('taxpayers.create', function ($trail) {
-    $trail->parent('taxpayers.index');
-    $trail->push('Crear contribuyente', url('taxpayers/create'));
+/*------------- companies > create -------------*/
+Breadcrumbs::for('companies.create', function ($trail) {
+    $trail->parent('companies.index');
+    $trail->push('Crear contribuyente', url('companies/create'));
 });
 
-/*------------- Taxpayers > update -------------*/
-Breadcrumbs::for('taxpayers.edit', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Editar contribuyente', route('taxpayers.edit', $row));
-});
-
-/**
- * Taxpayers > show
- */
-Breadcrumbs::for('taxpayers.show', function ($trail, $row) {
-    $trail->parent('taxpayers.index');
-    $trail->push($row->rif, url('taxpayers', $row->id));
+/*------------- companies > update -------------*/
+Breadcrumbs::for('companies.edit', function ($trail, $row) {
+    $trail->parent('companies.show', $row);
+    $trail->push('Editar contribuyente', route('companies.edit', $row));
 });
 
 /**
- * Economic activities > add to taxpayer
+ * companies > show
  */
-Breadcrumbs::for('taxpayer.economic-activities', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Editar actividades económicas', route('taxpayer.economic-activities', $row));
+Breadcrumbs::for('companies.show', function ($trail, $row) {
+    $trail->parent('companies.index');
+    $trail->push($row->rif, url('companies', $row->id));
+});
+
+/**
+ * Economic activities > add to company
+ */
+Breadcrumbs::for('company.economic-activities', function ($trail, $row) {
+    $trail->parent('companies.show', $row);
+    $trail->push('Editar actividades económicas', route('company.economic-activities', $row));
 });
 
 /*------------- Representations -------------*/
 Breadcrumbs::for('representations.index', function ($trail) {
-    $trail->parent('taxpayers.index');
+    $trail->parent('companies.index');
     $trail->push('Representantes', url('representations'));
 });
 
 /*------------- Representations -------------*/
-Breadcrumbs::for('taxpayer.economic-activity-licenses', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
+Breadcrumbs::for('company.economic-activity-licenses', function ($trail, $row) {
+    $trail->parent('companies.show', $row);
     $trail->push('Patentes de actividad económica', route('licenses.show', $row));
 });
 
@@ -374,16 +374,16 @@ Breadcrumbs::for('taxpayer.economic-activity-licenses', function ($trail, $row) 
  * Representations > add
  */
 Breadcrumbs::for('representations.add', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Añadir representante', url('taxpayers'.$row->id.'representation/add'));
+    $trail->parent('companies.show', $row);
+    $trail->push('Añadir representante', url('companies'.$row->id.'representation/add'));
 });
 
 /**
  * Representations > store person
  */
 Breadcrumbs::for('representation.store', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Añadir representante', url('taxpayers'.$row->id.'representation/add'));
+    $trail->parent('companies.show', $row);
+    $trail->push('Añadir representante', url('companies'.$row->id.'representation/add'));
 });
 
 Breadcrumbs::for('people.edit', function ($trail, $row) {
@@ -424,20 +424,20 @@ Breadcrumbs::for('settings/application-types/update', function ($trail) {
 
 /*------------- Applications -------------*/
 Breadcrumbs::for('withholdings.index', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
+    $trail->parent('companies.show', $row);
     $trail->push('Retenciones', route('withholdings.index', $row));
 });
 
 /*------------- Applications -------------*/
 Breadcrumbs::for('applications.index', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
+    $trail->parent('companies.show', $row);
     $trail->push('Solicitudes', route('applications.index', $row));
 });
 
 /*------------- Fines -------------*/
-Breadcrumbs::for('taxpayer.fines', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
-    $trail->push('Multas y sanciones', route('taxpayer.fines', $row));
+Breadcrumbs::for('company.fines', function ($trail, $row) {
+    $trail->parent('companies.show', $row);
+    $trail->push('Multas y sanciones', route('company.fines', $row));
 });
 
 
@@ -497,7 +497,7 @@ Breadcrumbs::for('concepts.edit', function ($trail, $row) {
 
 /*------------- Fines -------------*/
 Breadcrumbs::for('fines.index', function ($trail, $row) {
-    $trail->parent('taxpayers.show', $row);
+    $trail->parent('companies.show', $row);
     $trail->push('Multas', route('fines.index', $row));
 });
 
@@ -539,8 +539,8 @@ Breadcrumbs::for('properties', function ($trail) {
 
 /*------------- Properties > create -------------*/
 Breadcrumbs::for('properties/create', function ($trail) {
-    $trail->parent('taxpayers');
-    $trail->push('Crear inmueble', url('taxpayer/{id}/property/create'));
+    $trail->parent('companies');
+    $trail->push('Crear inmueble', url('company/{id}/property/create'));
 });
 
 /*------------- Commercial registers -------------*/
@@ -551,8 +551,8 @@ Breadcrumbs::for('commercial-registers', function ($trail) {
 
 /*------------- Commercial registers > create -------------*/
 Breadcrumbs::for('commercial-registers/create', function ($trail) {
-    $trail->parent('taxpayers');
-    $trail->push('Crear inmueble', url('taxpayer/{id}/commercial-registers/create'));
+    $trail->parent('companies');
+    $trail->push('Crear inmueble', url('company/{id}/commercial-registers/create'));
 });
 
 /*------------- Payment Methods -------------*/

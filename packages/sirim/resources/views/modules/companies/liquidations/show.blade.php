@@ -13,23 +13,23 @@
         <div class="kt-portlet__body">
            <div class="form-group col-lg-12">
                 <div class="kt-heading kt-heading--md">
-                    Datos generales del contribuyente
+                    Datos generales de la empresa
                 </div>
            </div>
 
             <table class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                     <tr>
-                    <th width="20%">RIF</th>
-                    <th width="40%">Nombre</th>
-                    <th width="40%">Dirección</th>
+                        <th width="20%">RIF</th>
+                        <th width="40%">Nombre</th>
+                        <th width="40%">Dirección</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $taxpayer->rif }}</td>
-                        <td>{{ $taxpayer->name  }}</td>
-                        <td>{{ $taxpayer->fiscal_address }}</td>
+                        <td>{{ $company->rif }}</td>
+                        <td>{{ $company->name  }}</td>
+                        <td>{{ $company->fiscal_address }}</td>
                     </tr>
                 </tbody>
             </table>

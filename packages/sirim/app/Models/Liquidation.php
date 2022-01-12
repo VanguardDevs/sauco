@@ -20,9 +20,9 @@ class Liquidation extends Model implements Auditable
 
     protected $guarded = [];
 
-    protected $casts = ['amount' => 'float' ];
-
-    protected $appends = ['pretty_amount'];
+    protected $casts = [
+        'amount' => 'float'
+    ];
 
     /**
     * Return year for the movement
@@ -49,7 +49,7 @@ class Liquidation extends Model implements Auditable
 
     public function taxpayer()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Taxpayer::class)->withTrashed();
     }
 
     public function concept()
@@ -68,6 +68,11 @@ class Liquidation extends Model implements Auditable
     }
 
     public function liquidable()
+    {
+        return $this->morphTo()->withTrashed();
+    }
+
+    public function ownable()
     {
         return $this->morphTo()->withTrashed();
     }

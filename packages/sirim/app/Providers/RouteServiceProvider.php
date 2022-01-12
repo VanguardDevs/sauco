@@ -10,7 +10,7 @@ use App\Models\Affidavit;
 use App\Models\Ordinance;
 use App\Models\Payment;
 use App\Models\License;
-use App\Models\Taxpayer;
+use App\Models\Company;
 use App\Models\Year;
 use App\Models\EconomicActivity;
 use App\Models\Community;
@@ -41,7 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('fine', Fine::class);
         Route::model('payment', Payment::class);
         Route::model('community', Community::class);
-        Route::model('taxpayer', Taxpayer::class);
+        Route::model('company', Company::class);
         Route::model('license', License::class);
         Route::model('activity', EconomicActivity::class);
         Route::model('year', Year::class);
