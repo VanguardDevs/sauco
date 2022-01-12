@@ -7,8 +7,9 @@ import {
     TextField,
     SimpleList,
     ReferenceArrayInput,
-    SelectInput,
-    ShowButton
+    AutocompleteInput,
+    ShowButton,
+    CreateButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import ExportButton from '../components/ExportButton'
@@ -28,7 +29,7 @@ const TaxpayersFilter: React.FC = props => (
             reference="taxpayer-types"
             label="Tipo de contribuyente"
         >
-            <SelectInput
+            <AutocompleteInput
                 source="description"
                 label="Tipo de contribuyente"
                 optionText={optionRenderer}
@@ -40,20 +41,21 @@ const TaxpayersFilter: React.FC = props => (
             reference="communities"
             label="Comunidad"
         >
-            <SelectInput source="name" label="Comunidad" allowEmpty={false} />
+            <AutocompleteInput source="name" label="Comunidad" allowEmpty={false} />
         </ReferenceArrayInput>
         <ReferenceArrayInput
             source="taxpayer_classification_id"
             reference="taxpayer-classifications"
             label="Clasificación"
         >
-            <SelectInput source="name" label="Clasificación" allowEmpty={false} />
+            <AutocompleteInput source="name" label="Clasificación" allowEmpty={false} />
         </ReferenceArrayInput>
     </Filter>
 );
 
 const ListActions: React.FC = props => (
     <Actions {...props}>
+        <CreateButton />
         <ExportButton downloableName='contribuyentes' />
     </Actions>
 );
@@ -83,7 +85,7 @@ const TaxpayersList: React.FC = props => {
                     <Datagrid>
                         <TextField source="rif" label="RIF"/>
                         <TextField source="name" label="Nombre"/>
-                        <TextField source="fiscal_address" label="Dirección"/>
+                        <TextField source="address" label="Dirección"/>
                         <RecordActions>
                             <ShowButton />
                         </RecordActions>

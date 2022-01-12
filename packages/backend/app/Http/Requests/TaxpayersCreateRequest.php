@@ -24,29 +24,29 @@ class TaxpayersCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'rif' => 'required|min:12|max:12|unique:taxpayers',
+            'rif' => 'required|min:8|unique:taxpayers',
             'name' => 'required',
-            'address' => 'required',
             'taxpayer_type_id' => 'required',
             'taxpayer_classification_id' => 'required',
             'municipality_id' => 'required',
-            'community_id' => 'required'
+            'parish_id' => 'required',
+            'state_id' => 'required',
+            'address' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Ingrese un nombre para el contribuyente',
-            'address.required' => 'Ingrese la dirección del contribuyente',
-            'rif.required' => 'Ingrese un nombre para el contribuyente',
-            'rif.min' => 'El RIF debe tener 9 caracteres',
-            'rif.max' => 'El RIF debe tener 9 caracteres',
-            'rif.unique' => 'El RIF se encuentra registrado',
-            'taxpayer_type_id.required' => 'Seleccione un tipo',
-            'taxpayer_classification_id.required' => 'Seleccione una clasificación',
+            'rif.required' => 'Ingrese el RIF',
+            'rif.unique' => 'El RIF ingresado ya ha sido registrado',
+            'name.required' => 'Ingrese el nombre',
+            'address.required' => 'Ingrese la dirección',
             'municipality_id.required' => 'Seleccione un municipio',
-            'community_id.required' => 'Seleccione una comunidad',
+            'state_id.required' => 'Seleccione un estado',
+            'parish_id.required' => 'Seleccione una parroquia',
+            'taxpayer_type_id.required' => 'Seleccione el tipo de contribuyente',
+            'taxpayer_classification_id.required' => 'Seleccione la clasificación del contribuyente',
         ];
     }
 }

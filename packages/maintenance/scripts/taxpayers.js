@@ -148,7 +148,7 @@ async function taxpayers() {
 
     await db.schema.table('companies', (table) => {
       table.string('rif');
-      table.string('picture').nullable();
+      table.string('picture').defaultsTo('default/forum.svg');
       table.string('address');
       table.decimal('capital', 2);
       table.integer('num_workers');
@@ -166,7 +166,7 @@ async function taxpayers() {
 
     await db.schema.table('taxpayers', (table) => {
         table.renameColumn('fiscal_address', 'address')
-        table.string('picture').nullable();
+        table.string('picture').defaultsTo('default/emotions.svg');
         table.setNullable('address')
         table.integer('parish_id').unsigned();
         table.foreign('parish_id').references('parishes.id');
@@ -253,6 +253,10 @@ async function taxpayers() {
     });
     await db.schema.dropTable('people');
     await db.schema.dropTable('permits');
+
+    await db.schema.table('taxpayers', (table) => {
+        table.dropColumn('community_id');
+    });
   } finally {
     await db.destroy();
   }

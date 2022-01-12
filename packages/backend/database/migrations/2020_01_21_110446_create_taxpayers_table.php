@@ -19,6 +19,7 @@ class CreateTaxpayersTable extends Migration
             $table->string('name');
             $table->boolean('active')->default(1);
             $table->string('address');
+            $table->string('picture')->default('/public/default/emotions.svg');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->unsignedBigInteger('taxpayer_type_id');

@@ -16,6 +16,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('picture')->default('/public/default/forum.svg');
             $table->integer('num_workers');
             $table->string('address');
             $table->boolean('active')->default(1);

@@ -13,6 +13,7 @@ import AddLocationIcon from '@material-ui/icons/AddLocation';
 import LocalPhoneIcon from '@material-ui/icons/LocalPhone';
 import EmailIcon from '@material-ui/icons/Email';
 import TextFieldIcon from '@sauco/common/components/TextFieldIcon'
+import Avatar from '@sauco/common/components/Avatar';
 
 const TaxpayerShow = (props: any) => {
     const { record } = useShowController<Taxpayer>(props);
@@ -25,7 +26,10 @@ const TaxpayerShow = (props: any) => {
             <Card className={classes.header}>
                 <CardContent>
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                        <Grid item xs={1}>
+                            <Avatar picture={record.picture} />
+                        </Grid>
+                        <Grid item xs={11}>
                             <Typography variant="h6" gutterBottom align="left">
                                 {record.name}
                             </Typography>

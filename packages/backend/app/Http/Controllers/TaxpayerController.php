@@ -35,25 +35,16 @@ class TaxpayerController extends Controller
                 $query->whereLike('email', $filters['email']);
             }
             if (array_key_exists('address', $filters)) {
-                $query->whereLike('fiscal_address', $filters['address']);
+                $query->whereLike('address', $filters['address']);
             }
             if (array_key_exists('taxpayer_type_id', $filters)) {
-                $name = $filters['taxpayer_type_id'];
-
-                $query->where('taxpayer_type_id', '=', $name);
+                $query->whereTaxpayerTypeId($filters['taxpayer_type_id']);
             }
             if (array_key_exists('status', $filters)) {
                 $query->where('active', '=', $filters['status']);
             }
             if (array_key_exists('taxpayer_classification_id', $filters)) {
-                $name = $filters['taxpayer_classification_id'];
-
-                $query->where('taxpayer_classification_id', '=', $name);
-            }
-            if (array_key_exists('community_id', $filters)) {
-                $name = $filters['community_id'];
-
-                $query->where('community_id', '=', $name);
+                $query->whereTaxpayerClassificationId($filters['taxpayer_classification_id']);
             }
             if (array_key_exists('id', $filters)) {
                 $query->find($filters['id']);
@@ -91,7 +82,7 @@ class TaxpayerController extends Controller
     {
         $taxpayer = Taxpayer::create($request->all());
 
-        return response()->json($taxpayer, 200);
+        return $taxpayer;
     }
 
     /**

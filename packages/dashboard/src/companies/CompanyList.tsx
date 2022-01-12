@@ -7,7 +7,7 @@ import {
     TextField,
     SimpleList,
     ReferenceArrayInput,
-    SelectInput,
+    AutocompleteInput,
     ShowButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
@@ -24,23 +24,11 @@ const CompaniesFilter: React.FC = props => (
         <TextInput label="Correo" source='email' />
         <TextInput label="Dirección" source='address' />
         <ReferenceArrayInput
-            source="parish_id"
-            reference="parishes"
-            label="Parroquia"
-        >
-            <SelectInput
-                source="description"
-                label="Parroquia"
-                optionText={optionRenderer}
-                allowEmpty={false}
-            />
-        </ReferenceArrayInput>
-        <ReferenceArrayInput
             source="community_id"
             reference="communities"
             label="Comunidad"
         >
-            <SelectInput source="name" label="Comunidad" allowEmpty={false} />
+            <AutocompleteInput source="name" label="Comunidad" allowEmpty={false} />
         </ReferenceArrayInput>
     </Filter>
 );

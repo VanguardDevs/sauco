@@ -8,10 +8,13 @@ import {
     CreateContextProvider,
     CreateProps,
     ReferenceInput,
-    SelectInput
+    SelectInput,
+    useRedirect,
+    useNotify
 } from 'react-admin'
 import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
 import { useFormState } from 'react-final-form'
+import validateTaxpayer from './validateTaxpayer'
 
 const MunicipalitiesSelectInput = (props: any) => {
     const { values } = useFormState();
@@ -36,6 +39,7 @@ const MunicipalitiesSelectInput = (props: any) => {
 
     return null;
 }
+
 const ParishesSelectInput = (props: any) => {
     const { values } = useFormState();
 
@@ -63,6 +67,7 @@ const ParishesSelectInput = (props: any) => {
 const TaxpayerCreateForm: React.FC<any> = props => (
     <FormWithRedirect
         {...props}
+        validate={validateTaxpayer}
         render={ ({ handleSubmitWithRedirect, saving }) => (
             <Card>
                 <Box maxWidth="90em" padding='2em'>
@@ -157,7 +162,9 @@ const TaxpayerCreateForm: React.FC<any> = props => (
 
 const TaxpayerCreate: React.FC<any> = (props: CreateProps) => {
     const createControllerProps = useCreateController(props);
-    const [mutate] = useMutation();
+    const [mutate, { loaded, data }] = useMutation();
+    const redirect = useRedirect();
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -172,6 +179,14 @@ const TaxpayerCreate: React.FC<any> = (props: CreateProps) => {
             }
         }
     }, [mutate])
+
+    React.useEffect(() => {
+        if (loaded) {
+            console.log(data)
+            notify(`¡Ha registrado al contribuyente ${data.name}`)
+            redirect(`/taxpayers/${data.id}/show`);
+        }
+    }, [loaded])
 
     return (
         <CreateContextProvider value={createControllerProps}>

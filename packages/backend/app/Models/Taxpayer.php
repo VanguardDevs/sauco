@@ -20,10 +20,9 @@ class Taxpayer extends Model implements Auditable
         'address',
         'phone',
         'email',
-        'community_id',
-        'municipality_id',
+        'parish_id',
         'taxpayer_type_id',
-        'taxpayer_classification_id',
+        'taxpayer_classification_id'
     ];
 
     public function vehicles()
