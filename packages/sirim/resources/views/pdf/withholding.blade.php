@@ -6,7 +6,7 @@
         <title> Factura </title>
         <style>
            body {
-                font-family: sans-serif, serif;
+                font-family: 'Helvetica';
                 font-size: 15px;
             }
             .header {
@@ -20,18 +20,26 @@
             }
             #mayorLOGO {
                 float: right;
+                margin-top: -10px;
             }
             table, td, th {
-                border: 1px #000 dashed;
+                border: 1px #000 solid;
             }
             td {
-                font-size: 13px;
-                padding: 2px;
+                font-size: 12px;
+                padding: 2px 1px;
             }
             table {
                 border-collapse: collapse;
                 width: 100%;
                 margin-top: 5px;
+            }
+            .details td {
+                text-align: center;
+            }
+            .details .object-payment {
+                text-align: left;
+                padding-left: 3px;
             }
             .tables {
                 display:block;
@@ -44,7 +52,7 @@
             .col-bill-info {
                 float: left;
                 width: 50%;
-                font-size: 15px;
+                font-size: 16px;
             }
             .total-amount {
                 text-align: right;
@@ -57,6 +65,7 @@
             }
             th {
                 font-size: 10px;
+                padding: 3px 1px;
             }
         </style>
     </head>
@@ -64,7 +73,7 @@
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ base_path().'/public/assets/images/sumat.png' }}" height="90px" width="230px" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -76,36 +85,21 @@
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>
-            <div id="mayorLOGO">
-                <img src="{{ base_path().'/public/assets/images/logo.png' }}" height="70px" width="130px" alt="logo" />
-            </div>
         </div>
         <div class="tables">
             <table class="table" style="text-align: center;margin-bottom:0;">
                 <thead>
-                  <tr>
-                    <th width="85%">RAZÓN SOCIAL O DENOMINACIÓN COMERCIAL</th>
-                    <th width="15%">RIF</th>
-                  </tr>
-                </thead>
-                <tbody>
-                     <tr>
-                        <td>{{ $denomination }}</td>
-                        <td>{{ $payment->taxpayer->rif }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table" style="text-align: center;margin-top:0;border-top:none;">
-                <thead>
-                  <tr>
-                    <th width="100%">DIRECCIÓN FISCAL</th>
-                  </tr>
-                </thead>
-                <tbody>
                     <tr>
-                        <td>{{ $payment->taxpayer->fiscal_address }}</td>
+                        <td style="text-align: left; padding-left: 3px;">
+                            <strong>RAZÓN SOCIAL:</strong> {{ $liquidation->taxpayer->name }}
+                        </td>
                     </tr>
-                </tbody>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">
+                            <strong>RETENEDOR:</strong> {{ $liquidation->liquidable->retainer->name }}
+                        </td>
+                    </tr>
+                </thead>
             </table>
             <table class="table" style="text-align: center">
                 <caption>OBJETO DE PAGO</caption>
@@ -124,21 +118,21 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="" style="text-align: center">
+            <table class="details">
                 <caption>DETALLES DEL PAGO</caption>
                 <thead>
                   <tr>
-                    <th width="20%">LIQUIDACIÓN</th>
-                    <th width="60%">DETALLES</th>
+                    <th width="12%">Nº LIQUIDACIÓN</th>
+                    <th width="68%">DETALLES</th>
                     <th width="20%">MONTO TOTAL</th>
                   </tr>
                 </thead>
                 <tbody>
-                @foreach($payment->settlements as $settlement)
+                @foreach($payment->liquidations as $liquidation)
                  <tr>
-                    <td>{{ $settlement->num }}</td>
-                    <td>{{ $settlement->object_payment  }}</td>
-                    <td style="font-weight:bold;">{{ $settlement->total_amount }}</td>
+                    <td>{{ $liquidation->num }}</td>
+                    <td class="object-payment">{{ $liquidation->object_payment  }}</td>
+                    <td style="word-spacing:1px;font-size:16px;">{{ $liquidation->pretty_amount }}</td>
                 </tr>
                 @endforeach
              </table>
@@ -150,14 +144,14 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->formattedAmount }} Bs
+                    PAGO TOTAL: {{ $payment->pretty_amount }} Bs
                 </div>
             </div>
         </div>
         <br>
         <div class="miscellaneus">
             <div class="liquidator-info">
-                Recaudador: {{ $payment->user->first_name.' '.$payment->user->surname }}
+                Recaudador: {{ $payment->user->full_name }}
             </div>
             <div class="collector-firm">
                <span style="width:50%;"></span>

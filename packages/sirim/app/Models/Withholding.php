@@ -26,12 +26,12 @@ class Withholding extends Model
 
     public function taxpayer()
     {
-        return $this->hasMany(Taxpayer::class);
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function retainer()
     {
-        return $this->hasMany(Taxpayer::class);
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function liquidation()
