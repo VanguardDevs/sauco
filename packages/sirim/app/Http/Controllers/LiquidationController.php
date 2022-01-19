@@ -10,6 +10,7 @@ use App\Http\Requests\MakeWithholdingRequest;
 use App\Models\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
+use App\Models\Withholding;
 
 class LiquidationController extends Controller
 {
@@ -104,6 +105,17 @@ class LiquidationController extends Controller
         }
 
         $liquidation->payment->first()->updateAmount();
+
+        $withholding = Withholding::create([
+            'num' => Withholding::getNewNum(),
+            'amount' => $amount,
+            'taxpayer_id' => 1085,
+            'retainer_id' =>  $liquidation->taxpayer_id
+        ]);
+
+        $withholding->mountPayment();
+
+        $liquidation = $withholding->makeLiquidation();
 
         return redirect()->back()
             ->withSuccess('¡Retención de '.$deduction->amount.' aplicada!');

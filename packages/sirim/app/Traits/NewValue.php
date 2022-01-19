@@ -12,7 +12,11 @@ trait NewValue
             $query->whereStatusId($status);
         }
 
-        $lastNum = $query->orderBy('num', 'DESC')->first()->num;
+        $lastNum = '00000000';
+
+        if ($query->count()) {
+            $lastNum = $query->orderBy('num', 'DESC')->first()->num;
+        }
 
         $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
         return $newNum;
