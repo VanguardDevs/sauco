@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             $this->call(RepresentationTypeSeeder::class);
             $this->call(GeographicAreaSeeder::class);
             $this->call(SettingsSeeder::class);
-            $this->call(DevEnvironmentSeeder::class);
+            // $this->call(DevEnvironmentSeeder::class);
         }
 
         $this->call(AdminSeeder::class);

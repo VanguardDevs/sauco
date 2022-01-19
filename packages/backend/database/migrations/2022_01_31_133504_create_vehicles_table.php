@@ -20,6 +20,8 @@ class CreateVehiclesTable extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('model_id');
             $table->unsignedBigInteger('color_id');
+            $table->unsignedBigInteger('vehicle_use_id');
+            $table->unsignedBigInteger('vehicle_classification_id');
             $table->foreign('brand_id')->references('id')->on('brands')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('model_id')->references('id')->on('vehicle_models')
@@ -28,6 +30,10 @@ class CreateVehiclesTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('color_id')->references('id')->on('colors')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('vehicle_use_id')->references('id')->on('vehicle_uses')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('vehicle_classification_id')->references('id')->on('vehicle_classifications')
+                ->onUpdate('cascade')->onDelete('cascade'); 
             $table->timestamps();
             $table->softDeletes();
         });

@@ -61,6 +61,8 @@ Route::middleware('auth:sanctum')->group(function () {
      Route::apiResource('properties', 'PropertyController');
      Route::apiResource('vehicles', 'VehicleController');
      Route::apiResource('signatures', 'SignatureController');
+     Route::apiResource('vehicle-uses', 'VehicleUseController');
+     Route::apiResource('vehicle-classifications', 'VehicleClassificationController');
 
      /**
       * Consults
