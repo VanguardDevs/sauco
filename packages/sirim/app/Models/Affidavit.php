@@ -45,7 +45,7 @@ class Affidavit extends Model implements Auditable
         if ($startPeriod->diffInMonths($todayDate) >= 2){
             return 2;
         }
-        if ($todayDate->subDays(15) > $firstDay) {
+        if ($todayDate->subDays(17) > $firstDay) {
             return 1;
         }
 
