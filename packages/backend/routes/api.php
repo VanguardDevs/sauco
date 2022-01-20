@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('parishes', 'ParishController');
     Route::apiResource('licenses', 'LicenseController');
     Route::apiResource('taxpayers', 'TaxpayerController')
-    ->except('destroy');
+        ->except('destroy');
     Route::apiResource('liquidations', 'LiquidationController');
     Route::apiResource('companies', 'CompanyController');
     Route::apiResource('accounts', 'AccountController');
@@ -61,12 +61,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('vehicles', 'VehicleController');
     Route::apiResource('signatures', 'SignatureController');
     Route::apiResource('roles', 'RoleController');
+    Route::apiResource('Liquerzone','LiquerzoneController');
 
     /**
      * Consults
     */
-    Route::apiResource('petro-prices', 'PetroPriceController')
-    ->except('show');
+    Route::get('petro-prices', 'PetroPriceController@index');
     Route::get('taxpayer-types', 'TaxpayerTypeController@index');
     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
     Route::get('status', 'StatusController@index');
