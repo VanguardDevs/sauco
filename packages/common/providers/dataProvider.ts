@@ -1,6 +1,6 @@
 import apiClient from '@jodaz_/data-provider';
 
-const providers = apiClient(`${process.env.REACT_APP_API_DOMAIN}`, {
+const providers = apiClient(`http://localhost:8000/api`, {
     withCredentials: true,
     offsetPageNum: 0
 }, `${process.env.REACT_APP_AUTH_TOKEN_NAME}`);

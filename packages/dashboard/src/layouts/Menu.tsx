@@ -40,6 +40,7 @@ import parishes from '../parishes';
 import liquidationTypes from '../liquidation-types';
 import signatures from '../signatures';
 import accoutingAccounts from '../accounting-accounts';
+import propertyUses from '../property-uses';
 
 type MenuName = 'reports' | 'people' | 'settings' | 'administration' | 'cadastre' | 'rates';
 
@@ -284,6 +285,14 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             to={'/'+ordinances.name}
                             primaryText={ordinances.options.label}
                             leftIcon={<ordinances.icon />}
+                            onClick={onMenuClick}
+                            sidebarIsOpen={open}
+                            dense={dense}
+                        />
+                        <MenuItemLink
+                            to={'/'+propertyUses.name}
+                            primaryText={propertyUses.options.label}
+                            leftIcon={<propertyUses.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}

@@ -11,20 +11,21 @@ import {
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
-const OrdinancesFilter: React.FC = props => (
+const PropertyUseFilter: React.FC = props => (
     <Filter {...props}>
-        <TextInput label="Nombre" source='description' />
+        <TextInput label="Nombre" source='name' />
+        <TextInput label="Valor" source='value' />
     </Filter>
 );
 
-const OrdinancesList: React.FC = props => {
+const PropertyUseList: React.FC = props => {
     const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
     return (
         <List {...props}
-            title="Ordenanzas"
+            title="Usos de inmuebles"
             bulkActionButtons={false}
-            filters={<OrdinancesFilter />}
+            filters={<PropertyUseFilter />}
             exporter={false}
         >
         {
@@ -35,15 +36,16 @@ const OrdinancesList: React.FC = props => {
             />
             )
             : (
-                <Datagrid>
-                    <TextField source="description" label="Nombre"/>
-                    <EditButton />
-                    <DeleteButton />
-                </Datagrid>
+            <Datagrid>
+                <TextField source="name" label="Nombre"/>
+                <TextField source="value" label="Valor"/>
+                <EditButton />
+                <DeleteButton />
+            </Datagrid>
             )
         }
         </List>
     );
 };
 
-export default OrdinancesList;
+export default PropertyUseList;

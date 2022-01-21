@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('ordinances', 'OrdinanceController');
     Route::apiResource('charging-methods', 'ChargingMethodController');
     Route::apiResource('economic-activities', 'EconomicActivityController');
+    Route::apiResource('property-uses', 'PropertyUseController');
 
     // Controlled level permissions
     Route::apiResource('liquidation-types', 'LiquidationTypeController');
