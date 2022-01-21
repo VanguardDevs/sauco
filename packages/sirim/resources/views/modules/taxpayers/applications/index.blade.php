@@ -53,14 +53,26 @@
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
                         <label class="control-label">Número total de solicitudes</label>
                         {!!
-                        Form::number("total", (isset($row->rif) ? $row->getOriginal('amount') : null), [
-                            "class" => "form-control",
-                            "placeholder" => "Monto",
-                            "id" => 'rif'
-                        ])
+                            Form::number("total", null, [
+                                "class" => "form-control",
+                                "placeholder" => "Monto"
+                            ])
+                        !!}
+
+                        @error('rif')
+                        <div class="text text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="control-label">Monto</label>
+                        {!!
+                            Form::number("amount", null, [
+                                "class" => "form-control",
+                                "placeholder" => "Monto",
+                            ])
                         !!}
 
                         @error('rif')

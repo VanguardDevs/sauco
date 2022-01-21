@@ -106,19 +106,6 @@ class LiquidationController extends Controller
 
         $liquidation->payment->first()->updateAmount();
 
-        $withholding = Withholding::create([
-            'num' => Withholding::getNewNum(),
-            'amount' => $deduction->amount,
-            'taxpayer_id' => $affidavit->taxpayer_id,
-            'retainer_id' =>  $liquidation->taxpayer_id
-        ]);
-
-        $payment = $withholding->mountPayment();
-
-        $liquidation = $withholding->makeLiquidation();
-
-        $payment->liquidations()->sync($liquidation);
-
         return redirect()->back()
             ->withSuccess('¡Retención de '.$deduction->amount.' aplicada!');
     }
