@@ -69,8 +69,8 @@
                     <div class="col-lg-4">
                         <label class="control-label">Monto</label>
                         {!!
-                            Form::number("amount", null, [
-                                "class" => "form-control",
+                            Form::text("amount", null, [
+                                "class" => "form-control decimal-input-mask",
                                 "placeholder" => "Monto",
                             ])
                         !!}
