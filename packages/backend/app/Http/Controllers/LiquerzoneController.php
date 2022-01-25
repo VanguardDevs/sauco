@@ -13,7 +13,19 @@ class LiquerzoneController extends Controller
      */
     public function index()
     {
-        //
+        $query = Liquerzone::query();
+        $results = $Liquerzone->perPage;
+
+        if ($Liquerzone->has('filter')) {
+            $filters = $Liquerzone->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+               
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -24,7 +36,9 @@ class LiquerzoneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = Liquerzone::create($Liquerzone->all());
+
+        return $model;
     }
 
     /**
@@ -35,7 +49,7 @@ class LiquerzoneController extends Controller
      */
     public function show(LiquerzoneModel $LiquerzoneModel)
     {
-        //
+        return $Liquerzone;
     }
 
     /**
@@ -47,7 +61,9 @@ class LiquerzoneController extends Controller
      */
     public function update(Request $request, LiquerzoneModel $LiquerzoneModel)
     {
-        //
+        $Liquerzone->update($Liquerzone->all());
+
+        return $Liquerzone;
     }
 
     /**
@@ -58,6 +74,8 @@ class LiquerzoneController extends Controller
      */
     public function destroy (LiquerzoneModel $LiquerzoneModel)
     {
-        //
+        $Liquerzone->delete();
+
+        return $Liquer;
     }
 }
