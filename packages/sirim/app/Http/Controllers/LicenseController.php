@@ -273,7 +273,7 @@ class LicenseController extends Controller
         $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
         return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
-            ->download('Licencia '.$taxpayer->rif.'.pdf');
+            ->stream('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**

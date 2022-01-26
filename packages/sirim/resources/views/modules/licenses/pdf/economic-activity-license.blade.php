@@ -39,7 +39,7 @@
             .container {
                 position: relative;
                 display: block;
-                top: 130px;
+                top: 180px;
                 left: 14px;
                 overflow: hidden;
                 width: 670px;
@@ -74,10 +74,10 @@
                 }
                 .header-title {
                     margin-top: 10px;
-                    height: 180px;
+                    height: 150px;
                     width: 50%;
                     float: right;
-                    font-size: 35px;
+                    font-size: 28px;
                     font-weight: 700;
                     color: red;
                     line-height: 35px;
@@ -134,7 +134,6 @@
         <div class="container">
             <div class="header">
                 <div class="qr-code">
-                    
                     <img src="data:image/png;base64, {{ base64_encode(QrCode::size(150)->generate($qrLicenseString)) }} ">
                 </div>
                 <div class="header-title">
