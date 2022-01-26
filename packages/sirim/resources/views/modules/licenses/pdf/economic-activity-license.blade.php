@@ -43,7 +43,7 @@
                 left: 14px;
                 overflow: hidden;
                 width: 670px;
-                height: 785px;
+                height: 850px;
                 z-index: 9;
             }
             .c-text-right {
@@ -212,6 +212,7 @@
                 <span class="row">superintendente de administración tributaria</span>
                 <span class="row">{{ $signature->decree }}</span>
                 <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                <span class="row" style='font-size:10px'>Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
             </div>
         </div>
     </body>
