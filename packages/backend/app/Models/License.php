@@ -27,6 +27,10 @@ class License extends Model implements Auditable
         'downloaded_at'
     ];
 
+    protected $casts = [
+        'active' => 'boolean'
+    ];
+
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class)->withTrashed();

@@ -33,7 +33,7 @@ class LicenseController extends Controller
         $from = $request->get('from');
         $to = $request->get('to');
 
-        $query = License::orderBy('created_at', 'DESC');
+        $query = License::orderBy('active', 'ASC');
 
         if ($ordinance) {
             $query->whereOrdinanceId($ordinance);
@@ -49,8 +49,7 @@ class LicenseController extends Controller
 
         // Return responses
         if ($request->wantsJson()) {
-            $query->with(['taxpayer', 'ordinance'])
-                ->orderBy('created_at', 'DESC');
+            $query->with(['taxpayer', 'ordinance']);
 
             return DataTables::eloquent($query)->toJson();
         }

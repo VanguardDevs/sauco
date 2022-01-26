@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ApplyFine;
 use App\Console\Commands\RetrievePetroPrice;
 use App\Console\Commands\CreateNewYear;
+use App\Console\Commands\ExpireLicense;
 
 class Kernel extends ConsoleKernel
 {
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         ApplyFine::class,
         RetrievePetroPrice::class,
-        CreateNewYear::class
+        CreateNewYear::class,
+        ExpireLicense::class
     ];
 
     /**
@@ -36,6 +38,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('get:petro-price')
             ->lastDayOfMonth('21:00');
+
+        $schedule->command('expire:licenses')
+            ->dailyAt('01:00');
 
         $schedule->command('create:year')
             ->yearly();
