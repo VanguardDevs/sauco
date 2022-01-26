@@ -9,7 +9,8 @@ import {
     SimpleList,
     ReferenceArrayInput,
     SelectInput,
-    DateInput
+    DateInput,
+    BooleanInput
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import { Actions } from '@sauco/common/components';
@@ -46,6 +47,7 @@ const LicensesFilter: React.FC = props => (
             allowEmpty={false}
         />
         <TextInput label="Razón social" source='taxpayer' />
+        <BooleanInput label="Estado" source="active" />
     </Filter>
 );
 

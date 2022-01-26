@@ -33,7 +33,7 @@ class License extends Model implements Auditable
 
     public function taxpayer()
     {
-        return $this->belongsTo(Taxpayer::class)->withTrashed();
+        return $this->belongsTo(Taxpayer::class);
     }
 
     public function user()
