@@ -82,6 +82,7 @@ $(document).ready(function() {
                 }
             },
             { data: 'emission_date' },
+            { data: 'expiration_date' },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
