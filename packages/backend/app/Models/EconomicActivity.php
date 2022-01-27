@@ -15,7 +15,6 @@ class EconomicActivity extends Model
     protected $fillable = [
         'code',
         'name',
-        'description',
         'aliquote',
         'active',
         'min_tax',
@@ -29,6 +28,11 @@ class EconomicActivity extends Model
     public function licenses()
     {
         return $this->belongsToMany(License::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public function taxpayers()

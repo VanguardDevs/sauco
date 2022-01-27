@@ -17,11 +17,13 @@ class CreateEconomicActivitiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('code');
             $table->string('name', 500);
-            $table->string('description', 1000);
             $table->string('aliquote');
             $table->string('min_tax');
+            $table->unsignedBigInteger('branch_id');
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('branch_id')->references('id')->on('branches')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
