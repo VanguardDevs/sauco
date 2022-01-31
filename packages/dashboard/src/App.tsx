@@ -71,6 +71,7 @@ const App = () => (
         <Resource {...liquidationTypes} />
         <Resource name="cancellation-types" />
         <Resource name="taxpayer-types" />
+        <Resource name="charging-methods" />
         <Resource name="taxpayer-classifications" />
         <Resource name="status" />
         <Resource name="communities" />
