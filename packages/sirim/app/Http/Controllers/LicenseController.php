@@ -61,23 +61,6 @@ class LicenseController extends Controller
         return view('modules.licenses.index');
     }
 
-    /**
-     * Print a pdf of all licenses
-     *
-     * Return PDF
-     */
-    private function printReport($query)
-    {
-        $licenses = $query->get();
-        $total = $query->count();
-        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
-
-        $data = compact(['licenses', 'emissionDate', 'total']);
-        $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
-
-        return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
-    }
-
     public function listBytaxpayer(Taxpayer $taxpayer)
     {
         $query = License::whereTaxpayerId($taxpayer->id);
