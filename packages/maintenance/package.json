@@ -11,7 +11,8 @@
     "deductions": "node ./scripts/deductions.js",
     "rates": "node ./scripts/updateRatesTable.js",
     "users": "node ./scripts/updateUsers.js",
-    "movements": "node ./scripts/createMovements.js"
+    "movements": "node ./scripts/createMovements.js",
+    "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",

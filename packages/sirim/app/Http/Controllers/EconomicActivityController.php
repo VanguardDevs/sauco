@@ -118,7 +118,9 @@ class EconomicActivityController extends Controller
                     ->withError('¡Este contribuyente no admite actividades económicas!');
         }
 
-        $activities = EconomicActivity::all()->pluck('fullName','id');
+        $activities = EconomicActivity::where('active', true)
+            ->get()
+            ->pluck('fullName','id');
 
         return view('modules.taxpayers.register-economic-activities')
             ->with('row', $taxpayer)
@@ -136,7 +138,7 @@ class EconomicActivityController extends Controller
     public function update(EconomicActivitiesFormRequest $request, EconomicActivity $economicActivity)
     {
         $row = EconomicActivity::find($economicActivity->id);
-        
+
         $row->fill($request->all())
             ->save();
 
