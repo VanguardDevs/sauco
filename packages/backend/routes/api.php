@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('ordinances', 'OrdinanceController');
     Route::apiResource('charging-methods', 'ChargingMethodController');
     Route::apiResource('economic-activities', 'EconomicActivityController');
+    Route::post('economic-activities/upload', 'EconomicActivityController@upload');
 
     // Controlled level permissions
     Route::apiResource('liquidation-types', 'LiquidationTypeController');
@@ -42,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('parishes', 'ParishController');
     Route::apiResource('licenses', 'LicenseController');
     Route::apiResource('taxpayers', 'TaxpayerController')
-    ->except('destroy');
+        ->except('destroy');
     Route::apiResource('liquidations', 'LiquidationController');
     Route::apiResource('companies', 'CompanyController');
     Route::apiResource('accounts', 'AccountController');
@@ -66,12 +67,12 @@ Route::middleware('auth:sanctum')->group(function () {
      * Consults
     */
     Route::apiResource('petro-prices', 'PetroPriceController')
-    ->except('show');
+        ->except('show');
     Route::get('taxpayer-types', 'TaxpayerTypeController@index');
     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
     Route::get('status', 'StatusController@index');
     Route::get('intervals', 'IntervalController@index');
-    Route::get('movements', 'MovementController@index');
+    Route::get('movements', 'ClosureController@index');
     Route::get('closures', 'ClosureController@index');
 
     // Account

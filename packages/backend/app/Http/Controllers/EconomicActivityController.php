@@ -8,6 +8,8 @@ use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\EconomicActivitiesCreateRequest;
 use PDF;
+use App\Imports\EconomicActivitiesImport;
+use Excel;
 
 class EconomicActivityController extends Controller
 {
@@ -82,6 +84,23 @@ class EconomicActivityController extends Controller
         $act = EconomicActivity::create($request->all());
 
         return response()->json($act, 201);
+    }
+
+    /**
+     * Upload economic activities from an excel
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(Request $request)
+    {
+        try {
+            Excel::import(new EconomicActivitiesImport, $request->file);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        return true;
     }
 
     /**

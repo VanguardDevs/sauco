@@ -14,6 +14,6 @@ class SettingsSeeder extends Seeder
      */
     public function run()
     {
-        EconomicActivity::factory()->count(100)->create();
+        // EconomicActivity::factory()->count(100)->create();
     }
 }

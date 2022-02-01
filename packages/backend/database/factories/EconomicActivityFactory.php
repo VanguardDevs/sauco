@@ -24,7 +24,6 @@ class EconomicActivityFactory extends Factory
         return [
             'code' => $this->faker->numberBetween(10000,99999),
             'name' => $this->faker->sentence(6),
-            'description' => $this->faker->text(300),
             'aliquote' => $this->faker->randomFloat(2, 0, 8),
             'min_tax' => $this->faker->numberBetween(1000, 9999)
         ];

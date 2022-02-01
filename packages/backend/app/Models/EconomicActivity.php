@@ -30,11 +30,6 @@ class EconomicActivity extends Model
         return $this->belongsToMany(License::class);
     }
 
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class);
-    }
-
     public function taxpayers()
     {
         return $this->belongsToMany(Taxpayer::class);
