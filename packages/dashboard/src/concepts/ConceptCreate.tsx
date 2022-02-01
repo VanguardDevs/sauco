@@ -15,41 +15,11 @@ import {
     useNotify
 } from 'react-admin'
 import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
-
-const validate = (values: FormValues) => {
-    const errors: FormValues = {};
-
-    if (!values.name) {
-        errors.name = "Ingrese el nombre.";
-    }
-    if (!values.charging_method_id) {
-        errors.charging_method_id = "Seleccione un tipo de método de carga.";
-    }
-    if (!values.ordinance_id) {
-        errors.ordinance_id = "Seleccione una ordenanza.";
-    }
-    if (!values.accounting_account_id) {
-        errors.accounting_account_id = "Seleccione una cuenta contable.";
-    }
-    if (!values.liquidation_type_id) {
-        errors.liquidation_type_id = "Seleccione un tipo de liquidación.";
-    }
-    if (!values.amount) {
-        errors.amount = "Ingrese un monto para el cobro (Mínimo 0).";
-    }
-    if (!values.code) {
-        errors.code = "Ingrese un código para el concepto de recaudación";
-    }
-
-    return errors;
-}
+import validate from './validate'
 
 const ConceptCreateForm: React.FC<any> = props => (
     <FormWithRedirect
         {...props}
-        initialValues={{
-            'charging_method_id': 2
-        }}
         validate={validate}
         render={ ({ handleSubmitWithRedirect, saving }) => (
             <Card>
@@ -130,6 +100,18 @@ const ConceptCreateForm: React.FC<any> = props => (
                                 <SelectInput optionText="description" />
                             </ReferenceInput>
                         </Grid>
+                        <Grid item xs={12} sm={12} md={4}>
+                            <InputLabel>Forma de cálculo</InputLabel>
+                            <ReferenceInput
+                                source="charging_method_id"
+                                reference="charging-methods"
+                                sort={{ field: 'id', order: 'DESC' }}
+                                label=''
+                                fullWidth
+                            >
+                                <SelectInput optionText="name" />
+                            </ReferenceInput>
+                        </Grid>
                     </Grid>
                     <SaveButton
                         handleSubmitWithRedirect={
@@ -175,16 +157,6 @@ const ConceptCreate: React.FC<any> = (props: CreateProps) => {
             <ConceptCreateForm save={save} />
         </CreateContextProvider>
     )
-}
-
-interface FormValues {
-    accounting_account_id?: string;
-    amount?: string;
-    liquidation_type_id?: string;
-    charging_method_id?: string;
-    ordinance_id?: string;
-    name?: string;
-    code?: string;
 }
 
 export default ConceptCreate
