@@ -20,8 +20,11 @@ class CreateEconomicActivitiesTable extends Migration
             $table->string('name', 500);
             $table->string('aliquote');
             $table->string('min_tax');
+            $table->unsignedBigInteger('charging_method_id');
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('charging_method_id')->references('id')->on('charging_methods')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

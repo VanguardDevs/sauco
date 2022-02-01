@@ -18,12 +18,18 @@ class EconomicActivity extends Model
         'aliquote',
         'active',
         'min_tax',
+        'charging_method_id'
     ];
 
     protected $casts = [
         'aliquote' => 'float',
         'min_tax' => 'integer'
     ];
+
+    public function chargingMethod()
+    {
+        return $this->belongsTo(ChargingMethod::class);
+    }
 
     public function licenses()
     {

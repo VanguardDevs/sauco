@@ -44,7 +44,8 @@ class EconomicActivitiesImport implements ToModel, WithHeadingRow, WithMultipleS
             'name' => $row['nombre'],
             'aliquote' => $row['aliquota'],
             'min_tax' => $row['minimo'],
-            'active' => true
+            'active' => true,
+            'charging_method_id' => 2 // Tasa petro
         ]);
     }
 

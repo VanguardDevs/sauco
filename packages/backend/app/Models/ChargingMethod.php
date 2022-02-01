@@ -16,4 +16,9 @@ class ChargingMethod extends Model
     {
         return $this->hasMany(Concept::class);
     }
+
+    public function economicActivities()
+    {
+        return $this->hasMany(EconomicActivity::class);
+    }
 }

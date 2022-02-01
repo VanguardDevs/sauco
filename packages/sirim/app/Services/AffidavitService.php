@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Affidavit;
 use App\Models\EconomicActivityAffidavit;
 use App\Models\TaxUnit;
+use App\Models\PetroPrice;
 
 class AffidavitService
 {
@@ -60,9 +61,9 @@ class AffidavitService
             $total = $amount * $activity->aliquote / 100;
         } else {
             if ($update) {
-                $taxUnit = TaxUnit::latest()->first();
+                $unit = ($activity->charging_method_id == 1) ? TaxUnit::latest()->first() : PetroPrice::latest()->first();
                 $total = $activity->aliquote * $amount / 100;
-                $minTax = $taxUnit->value * $activity->min_tax;
+                $minTax = $unit->value * $activity->min_tax;
 
                 if ($total < $minTax || $amount == 0.00) {
                     $total = $minTax;
