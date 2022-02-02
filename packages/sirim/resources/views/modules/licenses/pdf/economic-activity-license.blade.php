@@ -142,7 +142,7 @@
             <div class="header">
                 <div class="qr-code-container">
                     <div class="qr-code">
-                        <img 
+                        <img
                             src="data:image/png;base64, {{ base64_encode(QrCode::size(150)->generate($qrLicenseString)) }}"
                             width="100%"
                             height="100%"
@@ -210,7 +210,7 @@
                         {{ $representation }}
                     </div>
                     <div class="row">
-                        {{ substr($license->taxpayer->fiscal_address, 0, 39) }}
+                        {{ substr($license->taxpayer->fiscal_address, 0, 40) }}
                     </div>
                     @foreach($license->economicActivities->take(5) as $activity)
                     <span class="row">
