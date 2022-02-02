@@ -16,7 +16,8 @@
 - docs: Documentos
 - packages
 ---- backend: Servidor principal
----- dashboard: Frontend de la app interna de recaudación interna.
+---- dashboard: Frontend de la app interna de recaudación.
+---- market: Frontend de la app interna para el mercado municipal.
 ---- common: paquetes comunes para todas las React Apps
 ---- maintenance: scripts de mantenimiento para la base de datos
 ---- sirim: Sistema Legacy
