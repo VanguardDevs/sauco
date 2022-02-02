@@ -4,17 +4,20 @@ import {
     TextInput,
     CreateProps,
 } from 'react-admin';
+import InputContainer from '@sauco/common/components/InputContainer'
 import validate from './validate'
 
 const ItemCreate = (props: CreateProps) => (
-    <Create {...props}>
+    <Create title="Nuevo rubro" {...props}>
         <SimpleForm validate={validate} redirect='/items'>
-            <TextInput
-                label={false}
-                source="name"
-                placeholder="Ej. Avenida Libertad #217"
-                fullWidth
-            />
+            <InputContainer labelName='Nombre'>
+                <TextInput
+                    label={false}
+                    source="name"
+                    placeholder="Ej. Avenida Libertad #217"
+                    fullWidth
+                />
+            </InputContainer>
         </SimpleForm>
     </Create>
 );

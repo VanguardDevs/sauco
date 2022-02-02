@@ -4,30 +4,20 @@ import {
     TextInput,
     EditProps,
 } from 'react-admin';
-
-interface FormValues {
-    name?: string;
-}
-  
-const validate = (values: FormValues) => {
-    const errors: FormValues = {};
-
-    if (!values.name) {
-        errors.name = "Ingrese el nombre del rubro";
-    }
-
-    return errors;
-};
+import InputContainer from '@sauco/common/components/InputContainer'
+import validate from './validate'
 
 const ItemsEdit = (props: EditProps) => (
-    <Edit {...props}>
+    <Edit title="Editar rubro" {...props}>
         <SimpleForm validate={validate}>
-            <TextInput
-                label={false}
-                source="name"
-                placeholder="Ej. Avenida Libertad #217"
-                fullWidth
-            />
+            <InputContainer labelName='Nombre'>
+                <TextInput
+                    label={false}
+                    source="name"
+                    placeholder="Ej. Avenida Libertad #217"
+                    fullWidth
+                />
+            </InputContainer>
         </SimpleForm>
     </Edit>
 );
