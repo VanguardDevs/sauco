@@ -39,11 +39,11 @@
             .container {
                 position: relative;
                 display: block;
-                top: 200px;
+                top: 150px;
                 left: 14px;
                 overflow: hidden;
                 width: 670px;
-                height: 785px;
+                height: 835px;
                 z-index: 9;
             }
             .c-text-right {
@@ -121,6 +121,9 @@
                 font-weight: 700;
                 font-size: 12px;
                 margin: auto;
+                bottom: 25px;
+                position: absolute;
+                left: 10%;
             }
             hr {
                 display: block;
