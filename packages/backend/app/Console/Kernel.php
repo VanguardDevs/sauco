@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
             ->evenInMaintenanceMode();
 
         $schedule->command('get:petro-price')
-            ->lastDayOfMonth('21:00');
+            ->lastDayOfMonth('23:35');
 
         $schedule->command('expire:licenses')
             ->dailyAt('01:00');

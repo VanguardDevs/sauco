@@ -20,7 +20,9 @@ class EconomicActivityController extends Controller
      */
     public function index(Request $request)
     {
-        $query = EconomicActivity::query();
+        $query = EconomicActivity::query()
+            ->with('chargingMethod')
+            ->withCount('taxpayers');
         $results = $request->perPage;
         $sort = $request->sort;
         $order = $request->order;
@@ -34,8 +36,14 @@ class EconomicActivityController extends Controller
             if (array_key_exists('code', $filters)) {
                 $query->whereLike('code', $filters['code']);
             }
+            if (array_key_exists('code', $filters)) {
+                $query->whereLike('code', $filters['code']);
+            }
             if (array_key_exists('lt_min_tax', $filters)) {
                 $query->where('min_tax', '<', $filters['lt_min_tax']);
+            }
+            if (array_key_exists('active', $filters)) {
+                $query->where('active', '=', $filters['active']);
             }
             if (array_key_exists('gt_min_tax', $filters)) {
                 $query->where('min_tax', '>=', $filters['gt_min_tax']);

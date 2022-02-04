@@ -23,7 +23,7 @@ class EconomicActivity extends Model
 
     protected $casts = [
         'aliquote' => 'float',
-        'min_tax' => 'integer'
+        'min_tax' => 'float'
     ];
 
     public function chargingMethod()
