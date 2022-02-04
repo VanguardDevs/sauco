@@ -135,6 +135,9 @@
                 width: 50%;
                 margin-left: 170px;
             }
+            .spacing {
+                margin-top: 45px;
+            }
         </style>
     </head>
     <body>
@@ -193,9 +196,9 @@
                         REPRESENTANTE LEGAL:
                     </div>
                     <div class="row">
-                        DIRECCIÓN:
+                        DIRECCIÓN FISCAL:
                     </div>
-                    <div class="row">
+                    <div class="row spacing">
                         ACTIVIDADES ECONÓMICAS:
                     </div>
                 </div>
@@ -213,7 +216,7 @@
                         {{ $representation }}
                     </div>
                     <div class="row">
-                        {{ substr($license->taxpayer->fiscal_address, 0, 40) }}
+                        {{ $license->taxpayer->fiscal_address }}
                     </div>
                     @foreach($license->economicActivities->take(5) as $activity)
                     <span class="row">
