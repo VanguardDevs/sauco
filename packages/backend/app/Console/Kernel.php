@@ -31,11 +31,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('apply:fine')
-            ->monthlyOn(16, '01:42')
-            ->lastDayOfMonth('01:42')
-            ->evenInMaintenanceMode();
-
         $schedule->command('get:petro-price')
             ->lastDayOfMonth('21:00');
 
