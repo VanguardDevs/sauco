@@ -6,6 +6,7 @@ use App\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\EconomicActivity;
 
 class Taxpayer extends Model implements Auditable
 {
@@ -25,6 +26,23 @@ class Taxpayer extends Model implements Auditable
         'taxpayer_type_id',
         'taxpayer_classification_id',
     ];
+
+    public static function replaceActivities($oldCode, $newCode)
+    {
+        $taxpayers = self::whereHas('economicActivities', function ($q) use ($oldCode) {
+            $q->where('code', $oldCode);
+        })->get();
+
+        $oldAct = EconomicActivity::where('code', '=', $oldCode)->first();
+        $newAct = EconomicActivity::where('code', '=', $newCode)->first();
+
+        foreach($taxpayers as $taxpayer) {
+            $taxpayer->economicActivities()->detach($oldAct);
+            $taxpayer->economicActivities()->attach($newAct);
+        }
+
+        return true;
+    }
 
     public function deductions()
     {
