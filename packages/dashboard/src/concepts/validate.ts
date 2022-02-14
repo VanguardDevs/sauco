@@ -16,7 +16,7 @@ const validate = (values: FormValues) => {
     if (!values.liquidation_type_id) {
         errors.liquidation_type_id = "Seleccione un tipo de liquidación.";
     }
-    if (!values.amount) {
+    if (values.amount == null) {
         errors.amount = "Ingrese un monto para el cobro (Mínimo 0).";
     }
     if (!values.code) {
