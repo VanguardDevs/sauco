@@ -143,7 +143,7 @@ class PaymentController extends Controller
         }
 
         $paymentNum = Payment::getNewNum(2);
-        $processedAt = Carbon::now();
+        $processedAt = $request->processed_at.' '.Carbon::now()->toTimeString();
 
         $payment->update([
             'user_id' => Auth::user()->id,
