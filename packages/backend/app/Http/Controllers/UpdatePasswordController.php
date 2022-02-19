@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdatePasswordRequest;
+use Hash;
 
 class UpdatePasswordController extends Controller
 {
@@ -15,10 +16,10 @@ class UpdatePasswordController extends Controller
      */
     public function __invoke(UpdatePasswordRequest $request)
     {
-        $newPassword = $request->input('new-password');
-        $currentPass = $request->input('current-password');
+        $newPassword = $request->input('new_password');
+        $currentPass = $request->input('current_password');
         $user = $request->user;
-        
+
         if (!Hash::check($currentPass, $user->password)) {
             return $request->json([
                 'current_password' => 'Contraseña incorrecta'

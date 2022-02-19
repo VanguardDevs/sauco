@@ -12,7 +12,10 @@ const InputContainer: React.FC<InputContainerProps> = ({
 }) => (
     <Grid item xs={xs} sm={sm} md={md}>
         <InputLabel>{labelName}</InputLabel>
-        {React.cloneElement(children, rest)}
+        {React.cloneElement(children, {
+            label: '',
+            ...rest
+        })}
     </Grid>
 )
 
