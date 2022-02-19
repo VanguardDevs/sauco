@@ -122,7 +122,7 @@
                      <tr>
                         <td>{{ $payment->processed_at }}</td>
                         <td>{{ $payment->paymentMethod->name }}</td>
-                        <td>{{ $payment->reference->reference ?? 'S/N' }}</td>
+                        <td>{{ $payment->references->first()->reference ?? 'S/N' }}</td>
                     </tr>
                 </tbody>
             </table>

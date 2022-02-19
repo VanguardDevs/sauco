@@ -128,6 +128,11 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
+        $validator = $request->validate([
+            'processed_at'     => 'required',
+            'method'  => 'required'
+        ]);
+
         if ($request->input('method') != '3') {
             $reference = $request->input('reference');
 

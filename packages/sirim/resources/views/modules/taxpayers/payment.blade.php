@@ -97,10 +97,10 @@
 
                 {!!
                     Form::text("processed_at", '', [
-                        "class" => "form-control kt_datepicker_1",
-                        'id' => 'kt_datepicker_1',
-                        'readonly' => 'readonly',
-                        "placeholder" => "Seleccione una fecha",
+                        'class' => 'form-control',
+                        'id' => 'datepicker',
+                        'placeholder' => 'Seleccione una fecha',
+                        'readonly',
                         'required'
                     ])
                 !!}
