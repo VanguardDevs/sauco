@@ -11,6 +11,7 @@ interface Props {
     to: string;
     title?: string;
     subtitle?: string | number;
+    extra?: string;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CardWithIcon: React.FC<Props> = props => {
-    const { icon, title, subtitle, to, children } = props;
+    const { icon, title, subtitle, to, children, extra } = props;
     const classes = useStyles(props);
     return (
         <Card className={classes.card}>
@@ -60,6 +61,11 @@ const CardWithIcon: React.FC<Props> = props => {
                         <Typography variant="h5" component="h2">
                             {subtitle || ' '}
                         </Typography>
+                        {(extra) && (
+                            <Typography variant="p" component="small">
+                                {extra}
+                            </Typography>
+                        )}
                     </Box>
                 </div>
             </Link>

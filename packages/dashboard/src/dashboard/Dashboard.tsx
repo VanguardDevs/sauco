@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Payment, Liquidation, License, PetroPrice } from '@sauco/common/types';
-import { subDays } from 'date-fns';
+import { subDays, parse, format } from 'date-fns';
 import { useDataProvider } from 'react-admin';
 import { useMediaQuery, Theme } from '@material-ui/core';
 import Welcome from './Welcome';
-import MonthlyRevenue from './MonthlyRevenue';
 
 // Components
 import PaymentChart from './PaymentChart';
@@ -19,7 +18,7 @@ interface State {
     pendingLiquidations?: number;
     emmittedLicenses?: number;
     registeredTaxpayers?: number;
-    currentPetroPrice?: string;
+    currentPetroPrice?: any;
 }
 
 interface PaymentStats {
@@ -131,16 +130,19 @@ const Dashboard: React.FC = () => {
             }
         );
 
-        const price: number = (prices.length) ? +prices[0].value : 0;
+        const price: any = (prices.length) ? prices[0] : 0;
 
         setState(state => ({
             ...state,
-            currentPetroPrice: price.toLocaleString(undefined, {
-                style: 'currency',
-                currency: 'VES',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-            })
+            currentPetroPrice: {
+                value: price.value.toLocaleString(undefined, {
+                    style: 'currency',
+                    currency: 'VES',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2,
+                }),
+                created_at: price.created_at
+            }
         }));
     }, [useDataProvider]);
 
@@ -160,6 +162,8 @@ const Dashboard: React.FC = () => {
         currentPetroPrice
     } = state;
 
+    console.log(currentPetroPrice)
+
     return isXSmall ? (
         <div>
             <div style={styles.flexColumn as React.CSSProperties}>
@@ -171,7 +175,7 @@ const Dashboard: React.FC = () => {
                 <VerticalSpacer />
                 <RegisteredTaxpayers value={registeredTaxpayers} />
                 <VerticalSpacer />
-                <CurrentPetroPrice value={currentPetroPrice} />
+                <CurrentPetroPrice {...currentPetroPrice} />
                 <VerticalSpacer />
                 <PaymentChart payments={payments} />
             </div>
@@ -184,7 +188,7 @@ const Dashboard: React.FC = () => {
             <div style={styles.flex}>
                 <PendingLiquidations value={pendingLiquidations} />
                 <Spacer />
-                <CurrentPetroPrice value={currentPetroPrice} />
+                <CurrentPetroPrice {...currentPetroPrice} />
             </div>
             <VerticalSpacer />
             <div style={styles.flex}>
@@ -213,7 +217,7 @@ const Dashboard: React.FC = () => {
                         <VerticalSpacer />
                         <PendingLiquidations value={pendingLiquidations} />
                         <VerticalSpacer />
-                        <CurrentPetroPrice value={currentPetroPrice} />
+                        <CurrentPetroPrice {...currentPetroPrice} />
                         <VerticalSpacer />
                     </div>
                 </div>

@@ -42,9 +42,9 @@ const TaxpayersFilter: React.FC = props => (
             <SelectInput source="name" label="Comunidad" allowEmpty={false} />
         </ReferenceArrayInput>
         <ReferenceArrayInput
-        source="taxpayer_classification_id"
-        reference="taxpayer-classifications"
-        label="Clasificación"
+            source="taxpayer_classification_id"
+            reference="taxpayer-classifications"
+            label="Clasificación"
         >
             <SelectInput source="name" label="Clasificación" allowEmpty={false} />
         </ReferenceArrayInput>

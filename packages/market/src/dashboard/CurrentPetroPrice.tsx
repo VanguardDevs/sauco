@@ -11,8 +11,9 @@ const PetroPrice: React.FC<Props> = ({ value }) => {
         <CardWithIcon
             to="/petro-prices"
             icon={MoneyIcon}
-            title={'Tasa del día'}
+            title='Tasa del día'
             subtitle={value}
+            extra='Ultima actualización'
         />
     );
 };
