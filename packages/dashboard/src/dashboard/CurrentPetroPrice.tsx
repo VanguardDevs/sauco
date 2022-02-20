@@ -12,7 +12,7 @@ const PetroPrice: React.FC<Props> = ({ value, created_at }) => {
         <CardWithIcon
             to="/petro-prices"
             icon={MoneyIcon}
-            title='Tasa del día'
+            title='Valor del Petro'
             subtitle={value}
             extra={`Última actualización ${created_at}`}
         />

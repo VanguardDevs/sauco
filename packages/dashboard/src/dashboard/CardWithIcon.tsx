@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 const CardWithIcon: React.FC<Props> = props => {
     const { icon, title, subtitle, to, children, extra } = props;
     const classes = useStyles(props);
+
     return (
         <Card className={classes.card}>
             <Link to={to}>

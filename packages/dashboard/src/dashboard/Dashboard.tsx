@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Payment, Liquidation, License, PetroPrice } from '@sauco/common/types';
-import { subDays, parse, format } from 'date-fns';
+import { subDays, parse, format, parseISO } from 'date-fns';
 import { useDataProvider } from 'react-admin';
 import { useMediaQuery, Theme } from '@material-ui/core';
 import Welcome from './Welcome';
@@ -141,7 +141,7 @@ const Dashboard: React.FC = () => {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 2,
                 }),
-                created_at: price.created_at
+                created_at: format(parseISO(price.created_at), "dd-MM-yyyy h:m a").toUpperCase()
             }
         }));
     }, [useDataProvider]);
