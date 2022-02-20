@@ -1,12 +1,12 @@
 import * as React from 'react'
-import Button from '@material-ui/core/Button';
+import { default as MuiButton } from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Typography from '@material-ui/core/Typography';
-import { useMediaQuery, ThemeProvider } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import { useMediaQuery, Theme } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
-import { ReactComponent as PlusIcon } from '@material-ui/icons/Add'
+import PlusIcon from '@material-ui/icons/Add'
 
 const useStyles = makeStyles(theme => ({
     loader: {
@@ -27,11 +27,14 @@ const useStyles = makeStyles(theme => ({
         }
     },
     button: {
-        padding: '0.7rem 2rem',
+        padding: '0.7rem 1rem',
         textTransform: 'none',
-        fontSize: '16px',
-        borderRadius: '6px',
+        fontSize: '1rem',
+        borderRadius: '8px !important',
         boxShadow: 'none',
+        display: 'flex',
+        justifyContent: 'space-between',
+        maxWidth: '12rem',
         '&:hover': {
             boxShadow: `0px 2px 2px -2px ${theme.palette.primary.main}`,
             backgroundColor: fade(theme.palette.secondary.main, 0.95)
@@ -39,40 +42,42 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const CustomButton: React.FC<CustomButtonProps> = ({ disabled, children, unresponsive, ...rest }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({
+    disabled,
+    children,
+    unresponsive,
+    icon,
+    ...rest
+}) => {
     const classes = useStyles();
-    const isSmall = useMediaQuery((theme: ThemeProvider) =>
-        theme.breakpoints.down('sm')
-    );
+    const isXSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('xs'));
 
-    if (isSmall && !unresponsive) {
+    if (isXSmall && !unresponsive) {
         return (
             <Fab
-                variant='contained'
-                color='secondary'
-                type="submit"
                 className={classes.floating}
                 disabled={disabled}
                 {...rest}
             >
-                <PlusIcon />
+                {icon}
             </Fab>
         )
     }
 
     const FullWidthButton = () => (
-        <Button
+        <MuiButton
             className={classes.button}
             disabled={disabled}
             {...rest}
         >
             {(!disabled)
-                ? <Typography variant="subtitle1">
+                ? <Box display="flex" justifyContent="space-between" width="100%">
+                    {icon}
                     {children}
-                </Typography>
+                </Box>
                 : <CircularProgress className={classes.loader} size={'1rem'} />
             }
-        </Button>
+        </MuiButton>
     )
 
     return <FullWidthButton />
@@ -88,7 +93,8 @@ interface CustomButtonProps {
     fullWidth: boolean;
     type: string;
     variant: SupportedVariants;
-    color: SupportedButtonColors
+    color: SupportedButtonColors;
+    icon: React.ReactNode
 }
 
 CustomButton.defaultProps = {
@@ -97,7 +103,8 @@ CustomButton.defaultProps = {
     unresponsive: false,
     variant: 'contained',
     color: 'primary',
-    type: 'submit'
+    type: 'submit',
+    icon: <PlusIcon />
 }
 
 export default CustomButton

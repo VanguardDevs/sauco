@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { PasswordInput } from 'react-admin'
+import { PasswordInput, useNotify } from 'react-admin'
 import { axios } from '@sauco/common/providers'
 import InputContainer from '@sauco/common/components/InputContainer'
 import BaseForm from '@sauco/common/components/BaseForm'
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 interface FormValues {
     current_password?: string;
@@ -33,14 +34,28 @@ const validate = (values: FormValues) => {
 };
 
 const UpdatePassword = (props: any) => {
-    const save = React.useCallback(async (values) => {
-        const { data } = await axios.post('update-password', values);
+    const notify = useNotify();
 
-        console.log(data)
+    const save = React.useCallback(async (values) => {
+        try {
+            await axios.post('update-password', values);
+            notify('Hemos cambiado tu contraseña con éxito', 'success')
+        } catch (error: any) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
     }, [axios])
 
     return (
-        <BaseForm save={save} validate={validate} {...props}>
+        <BaseForm
+            save={save}
+            validate={validate}
+            title='Actualizar contraseña'
+            icon={<VpnKeyIcon />}
+            buttonName='Actualizar'
+            {...props}
+        >
             <InputContainer labelName='Contraseña actual' md={8}>
                 <PasswordInput
                     source='current_password'

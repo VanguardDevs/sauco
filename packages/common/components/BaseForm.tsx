@@ -39,12 +39,12 @@ function getValues(values, record) {
 }
 
 const BaseForm: React.FC<BaseFormProps> = ({
-    formName,
+    title,
     children,
-    saveButtonLabel,
-    loading,
+    buttonName,
     noButton,
     unresponsive,
+    icon,
     validate,
     save,
     record,
@@ -59,21 +59,21 @@ const BaseForm: React.FC<BaseFormProps> = ({
 
     return (
         <Box component='div'>
-            { formName && <Typography component='h1' variant='h5'>{formName}</Typography> }
+            { title && <Typography component='h1' variant='h5'>{title}</Typography> }
             <Box component='div' paddingTop='2rem'>
                 <Form
                     onSubmit={save}
                     validate={validate}
                     initialValues={finalInitialValues}
                     {...rest}
-                    render={ ({ handleSubmit }) => (
+                    render={ ({ handleSubmit, submitting }) => (
                         <form id="exampleForm" onSubmit={handleSubmit}>
                             <Box maxWidth="90em">
                                 <Grid container spacing={1}>
                                     {
                                         React.Children.map(children, (child: any) =>
                                             React.cloneElement(child, {
-                                                disabled: loading
+                                                disabled: submitting
                                             })
                                         )
                                     }
@@ -81,7 +81,7 @@ const BaseForm: React.FC<BaseFormProps> = ({
                                         <Grid container>
                                             <Grid item xs={12} sm={12} md={4} lg={3}>
                                                 <Button
-                                                    disabled={loading}
+                                                    disabled={submitting}
                                                     onClick={event => {
                                                         if (event) {
                                                             event.preventDefault();
@@ -90,8 +90,9 @@ const BaseForm: React.FC<BaseFormProps> = ({
                                                     }}
                                                     unresponsive={unresponsive}
                                                     type="submit"
+                                                    icon={icon}
                                                 >
-                                                    {saveButtonLabel}
+                                                    {buttonName}
                                                 </Button>
                                             </Grid>
                                         </Grid>
@@ -107,21 +108,21 @@ const BaseForm: React.FC<BaseFormProps> = ({
 }
 
 interface BaseFormProps {
-    formName?: string;
-    saveButtonLabel?: string;
+    title?: string;
+    buttonName?: string;
     disabled: boolean;
-    loading?: any;
     noButton?: any;
     unresponsive?: any;
     validate?: any;
     save: any;
+    icon: React.ReactNode,
     record?: any;
     initialValues?: any;
     defaultValue?: any;
 }
 
 BaseForm.defaultProps = {
-    saveButtonLabel: 'Guardar',
+    buttonName: 'Guardar',
     disabled: false,
     noButton: false,
     unresponsive: false,

@@ -18,7 +18,7 @@ class UpdatePasswordController extends Controller
     {
         $newPassword = $request->input('new_password');
         $currentPass = $request->input('current_password');
-        $user = $request->user;
+        $user = $request->user();
 
         if (!Hash::check($currentPass, $user->password)) {
             return $request->json([
@@ -37,6 +37,6 @@ class UpdatePasswordController extends Controller
 
         return $request->json([
             'success' => true
-        ], 422);
+        ], 200);
     }
 }
