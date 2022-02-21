@@ -108,14 +108,14 @@ const BaseForm: React.FC<BaseFormProps> = ({
 }
 
 interface BaseFormProps {
-    title?: string;
+    title?: any;
     buttonName?: string;
-    disabled: boolean;
+    disabled?: boolean;
     noButton?: any;
     unresponsive?: any;
     validate?: any;
     save: any;
-    icon: React.ReactNode,
+    icon?: React.ReactNode,
     record?: any;
     initialValues?: any;
     defaultValue?: any;

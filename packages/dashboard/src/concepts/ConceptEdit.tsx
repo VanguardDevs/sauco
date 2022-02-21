@@ -4,7 +4,6 @@ import {
     FormWithRedirect,
     SaveButton,
     useEditController,
-    useMutation,
     EditContextProvider,
     EditProps,
     SelectInput,
@@ -127,23 +126,9 @@ const ConceptEditForm: React.FC<any> = props => (
 
 const ConceptEdit: React.FC<any> = (props: EditProps) => {
     const editControllerProps = useEditController(props);
-    const [mutate, { data, loaded }] = useMutation();
     const redirect = useRedirect();
     const notify = useNotify();
-
-    const save = React.useCallback(async (values) => {
-        try {
-            await mutate({
-                type: 'update',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
-        } catch (error: any) {
-            if (error.response.data.errors) {
-                return error.response.data.errors;
-            }
-        }
-    }, [mutate])
+    const { data, loaded } = editControllerProps
 
     React.useEffect(() => {
         if (data && loaded) {

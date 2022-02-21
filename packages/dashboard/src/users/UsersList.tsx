@@ -1,55 +1,49 @@
 import * as React from "react";
 import {
-    TextInput,
-    List,
-    Datagrid,
-    TextField,
-    SimpleList,
-    TopToolbar,
-    CreateButton,
-    BooleanInput
+  Filter,
+  TextInput,
+  List,
+  Datagrid,
+  TextField,
+  SimpleList,
+  EditButton
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
-const usersFilters = [
-    <TextInput label="login" source='Login' />,
-    <BooleanInput label='Activo' source='status' />
-];
-
-const ListActions: React.FC = props => (
-    <TopToolbar>
-        <CreateButton basePath="/users" />
-    </TopToolbar>
+const UsersFilter: React.FC = props => (
+  <Filter {...props}>
+    <TextInput label="Login" source='login' />
+    <TextInput label="Nombre" source='full_name' />
+  </Filter>
 );
 
-const UsersList: React.FC = props => {
+const ItemsList: React.FC = props => {
   const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('sm'));
 
-    return (
-        <List
-            title="Usuarios"
-            filters={usersFilters}
-            actions={<ListActions />}
-            {...props}
-        >
-            {
-                isSmall
-                ? (
-                    <SimpleList
-                        primaryText={record => `${record.login}`}
-                        secondaryText={record => `${record.full_name}`}
-                        linkType={"show"}
-                    />
-                )
-                : (
-                    <Datagrid>
-                        <TextField source="login" label="Login"/>
-                        <TextField source="full_name" label="Nombre"/>
-                    </Datagrid>
-                )
-            }
-        </List>
-    );
+  return (
+    <List {...props}
+      title="Usuarios"
+      bulkActionButtons={false}
+      filters={<UsersFilter />}
+      exporter={false}
+    >
+      {
+        isSmall
+        ? (
+          <SimpleList
+            primaryText={record => `${record.name}`}
+          />
+        )
+        : (
+          <Datagrid>
+              <TextField source="full_name" label="Nombre"/>
+              <TextField source="login" label="Usuario"/>
+              <EditButton />
+          </Datagrid>
+        )
+      }
+    </List>
+  );
 };
 
-export default UsersList;
+export default ItemsList;

@@ -26,6 +26,10 @@ class User extends Authenticatable
         'login'
     ];
 
+    protected $hidden = [
+        'password'
+    ];
+
     public function payments()
     {
         return $this->hasMany(Payment::class);

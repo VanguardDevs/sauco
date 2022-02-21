@@ -1,53 +1,40 @@
 import * as React from 'react'
 import {
     TextInput,
-    useMutation,
-    useRedirect,
-    CreateProps,
+    useEditController,
     PasswordInput,
-    useNotify,
+    EditProps,
+    SelectInput,
     ReferenceInput,
-    SelectInput
+    useRedirect,
+    useNotify
 } from 'react-admin'
 import InputContainer from '@sauco/common/components/InputContainer'
 import BaseForm from '@sauco/common/components/BaseForm'
 import validate from './validateUserSchema'
+import CachedIcon from '@material-ui/icons/Cached';
 
-const UserCreate: React.FC<any> = (props: CreateProps) => {
-    const [mutate, { loaded, data }] = useMutation();
-    const redirect = useRedirect()
+const UserEdit: React.FC<any> = (props: EditProps) => {
+    const editControllerProps = useEditController(props);
+    const redirect = useRedirect();
     const notify = useNotify();
-
-    const save = React.useCallback(async (values) => {
-        try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
-        } catch (error: any) {
-            if (error.response.data.errors) {
-                return error.response.data.errors;
-            }
-        }
-    }, [mutate])
+    const { record, save, data, loaded } = editControllerProps
 
     React.useEffect(() => {
-        if (loaded) {
-            redirect('/users')
-            notify(`¡Ha creado el usuario de ${data.login}`)
+        if (data && loaded) {
+            notify('¡Se ha actualizado el usuario de manera exitosa!', 'success');
+            redirect(`/users`)
         }
-    }, [loaded])
+    }, [data, loaded]);
 
     return (
         <BaseForm
             save={save}
             validate={validate}
-            buttonName='Guardar'
-            title='Crear usuario'
-            defaultValue={{
-                isCreateForm: true
-            }}
+            record={record}
+            buttonName='Actualizar'
+            title='Editar usuario'
+            icon={<CachedIcon />}
             {...props}
         >
             <InputContainer labelName='Cédula' xs={12} sm={12} md={4}>
@@ -62,7 +49,7 @@ const UserCreate: React.FC<any> = (props: CreateProps) => {
                 <TextInput
                     label={false}
                     source="full_name"
-                    placeholder="Ej. María López"
+                    placeholder="Ej. María"
                     fullWidth
                 />
             </InputContainer>
@@ -97,4 +84,4 @@ const UserCreate: React.FC<any> = (props: CreateProps) => {
     )
 }
 
-export default UserCreate
+export default UserEdit
