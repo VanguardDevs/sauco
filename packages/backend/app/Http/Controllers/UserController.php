@@ -29,8 +29,11 @@ class UserController extends Controller
         $filters = $request->has('filter') ? $request->filter : [];
 
         // Get fields
+        if (array_key_exists('full_name', $filters)) {
+            $query->whereLike('full_name', $filters['full_name']);
+        }
         if (array_key_exists('login', $filters)) {
-            $query->whereLogin($filters['login']);
+            $query->whereLike('login', $filters['login']);
         }
         if (array_key_exists('roles', $filters)) {
             $query->whereHas('roles', function ($query) use ($filters) {

@@ -1,6 +1,6 @@
 const validate = (values: FormValues) => {
     const errors: FormValues = {};
-    console.log(values)
+
     if (!values.full_name) {
         errors.full_name = "Ingrese el nombre.";
     }
