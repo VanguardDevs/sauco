@@ -1,3 +1,7 @@
+p, span, h1, h2, h3, h4, h5, h6, small, strong, td, a, th, label, div {
+    font-family: sans-serif !important;
+}
+
 .logo {
 	margin-left: 30px;
 	width: 65px;
