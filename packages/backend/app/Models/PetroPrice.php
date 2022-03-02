@@ -12,7 +12,9 @@ class PetroPrice extends Model
     protected $table = 'petro_prices';
 
     protected $fillable = [
-        'value'
+        'value',
+        'created_at',
+        'updated_at'
     ];
 
     protected $casts = [
