@@ -162,8 +162,6 @@ const Dashboard: React.FC = () => {
         currentPetroPrice
     } = state;
 
-    console.log(currentPetroPrice)
-
     return isXSmall ? (
         <div>
             <div style={styles.flexColumn as React.CSSProperties}>
