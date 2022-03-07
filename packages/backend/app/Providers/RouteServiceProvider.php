@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Models\EconomicActivity;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,8 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Route::model('activity', EconomicActivity::class);
     }
 
     /**
