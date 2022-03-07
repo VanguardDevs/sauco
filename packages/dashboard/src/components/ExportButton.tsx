@@ -15,7 +15,6 @@ import { fileProvider } from '@sauco/common/providers'
 const ExportButton = (props: ExportButtonProps) => {
     const {
         onClick,
-        label = 'ra.action.export',
         resource = 'string',
         sort, // deprecated, to be removed in v4
         ...rest
@@ -24,10 +23,10 @@ const ExportButton = (props: ExportButtonProps) => {
     const [provider, { loading }] = useFileProvider(fileProvider);
     const notify = useNotify();
 
-    const handleClick = React.useCallback(
-        async (e) => {
+    const handleClick = React.useCallback(async () => {
+        try {
             await provider({
-                type: 'get',
+                type: 'list',
                 resource: resource,
                 payload: {
                     name: `reporte-${props.downloableName}`,
@@ -35,10 +34,10 @@ const ExportButton = (props: ExportButtonProps) => {
                     ...props
                 }
             })
-            e.preventDefault();
-        },
-        [props]
-    );
+        } catch (error) {
+            console.log(error)
+        }
+    }, [props]);
 
     React.useEffect(() => {
         if (loading) notify('Espere mientras procesamos su reporte.', 'info');
@@ -47,7 +46,7 @@ const ExportButton = (props: ExportButtonProps) => {
     return (
         <Button
             onClick={handleClick}
-            label={label}
+            label='Descargar'
             disabled={total === 0 || loading}
             {...sanitizeRestProps(rest)}
         >

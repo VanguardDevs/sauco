@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class YearController extends Controller
-{   
+{
     public function __construct()
     {
         $this->middleware('auth');
@@ -34,10 +34,10 @@ class YearController extends Controller
     public function listMonths(Year $year)
     {
         return $year->months()
-            ->whereDate('start_period_at', '<', Carbon::now()->firstOfMonth())
+            // ->whereDate('start_period_at', '<', Carbon::now()->firstOfMonth())
             ->orderBy('id', 'ASC')
-            ->get(); 
-    } 
+            ->get();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -71,11 +71,11 @@ class YearController extends Controller
                     'year_id' => $year->id,
                 ]);
             }
-            
+
             return redirect('settings/years')
-               ->withSuccess('¡Año fiscal '.$year->year.' abierto!'); 
-        } 
-            
+               ->withSuccess('¡Año fiscal '.$year->year.' abierto!');
+        }
+
         return redirect()->back()
            ->withError('¡El año '.$requestYear. ' se encuentra abierto!');
     }

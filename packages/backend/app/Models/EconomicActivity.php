@@ -15,16 +15,21 @@ class EconomicActivity extends Model
     protected $fillable = [
         'code',
         'name',
-        'description',
         'aliquote',
         'active',
         'min_tax',
+        'charging_method_id'
     ];
 
     protected $casts = [
         'aliquote' => 'float',
-        'min_tax' => 'integer'
+        'min_tax' => 'float'
     ];
+
+    public function chargingMethod()
+    {
+        return $this->belongsTo(ChargingMethod::class);
+    }
 
     public function licenses()
     {

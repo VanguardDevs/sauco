@@ -4,13 +4,14 @@ import {
     TextInput,
     List,
     Datagrid,
-    NumberField,
     TextField,
     SimpleList,
-    ShowButton,
-    NumberInput
+    NumberInput,
+    ReferenceArrayInput,
+    SelectInput,
+    BooleanInput
 } from 'react-admin';
-import { Actions, RecordActions } from '@sauco/common/components';
+import { Actions } from '@sauco/common/components';
 import { Theme, useMediaQuery } from '@material-ui/core';
 import ExportButton from '../components/ExportButton'
 
@@ -18,10 +19,22 @@ const EconomicActivitiesListFilter: React.FC = props => (
     <Filter {...props}>
         <TextInput label="Nombre" source='name' />
         <TextInput label="Código" source='code' />
+        <BooleanInput label="Activo" source='active' />
         <NumberInput label="Alícuota mayor que" source='gt_aliquote' />
         <NumberInput label="Alícuota menor que" source='lt_aliquote' />
         <NumberInput label="Mínimo tributable mayor que" source='gt_min_tax' />
         <NumberInput label="Mínimo tributable menor que" source='lt_min_tax' />
+        <ReferenceArrayInput
+            source="charging_method_id"
+            reference="charging-methods"
+            label="Método de cobro"
+            allowEmpty={false}
+        >
+            <SelectInput
+                source="name"
+                label="Método de cobro"
+            />
+        </ReferenceArrayInput>
     </Filter>
 );
 
@@ -50,10 +63,9 @@ const EconomicActivitiesDatagrid = ({ isSmall }: any) => (
                     <TextField source="code" label="Código"/>
                     <TextField source="name" label="Nombre"/>
                     <TextField source="aliquote" label="Alícuota"/>
-                    <NumberField source='min_tax' label='Mínimo tributable' />
-                    <RecordActions>
-                        <ShowButton />
-                    </RecordActions>
+                    <TextField source="charging_method.name" label="Forma de cálculo"/>
+                    <TextField source='min_tax' label='Mínimo tributable' />
+                    <TextField source='taxpayers_count' label='Empresas' />
                 </Datagrid>
             )
         }

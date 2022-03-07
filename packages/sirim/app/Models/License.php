@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
+use App\Traits\PrettyTimestamps;
 
 class License extends Model implements Auditable
 {
-    use Audit;
-    use SoftDeletes;
+    use Audit, SoftDeletes, PrettyTimestamps;
 
     protected $table = 'licenses';
 
@@ -27,9 +27,13 @@ class License extends Model implements Auditable
         'downloaded_at'
     ];
 
+    protected $casts = [
+        'active' => 'boolean'
+    ];
+
     public function taxpayer()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Taxpayer::class)->withTrashed();
     }
 
     public function user()
@@ -62,6 +66,7 @@ class License extends Model implements Auditable
         if (self::whereTaxpayerId($taxpayer->id)->exists()) {
             return self;
         }
+
         return false;
     }
 
@@ -69,7 +74,7 @@ class License extends Model implements Auditable
     {
         return date('d-m-Y', strtotime($value));
     }
-    
+
     public function getExpirationDateAttribute($value)
     {
         return date('d-m-Y', strtotime($value));

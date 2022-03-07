@@ -20,7 +20,6 @@ import paymentMethods from './payment-methods';
 import users from './users';
 import ordinances from './ordinances';
 import municipalities from './municipalities';
-import items from './items';
 import permissions from './permissions';
 import economicActivities from './economic-activities';
 import petroPrices from './petro-prices';
@@ -63,7 +62,6 @@ const App = () => (
         <Resource {...ordinances} />
         <Resource {...economicActivities} />
         <Resource {...petroPrices} />
-        <Resource {...items} />
         <Resource {...permissions} />
         <Resource {...states} />
         <Resource {...municipalities} />
@@ -73,6 +71,7 @@ const App = () => (
         <Resource {...liquidationTypes} />
         <Resource name="cancellation-types" />
         <Resource name="taxpayer-types" />
+        <Resource name="charging-methods" />
         <Resource name="taxpayer-classifications" />
         <Resource name="status" />
         <Resource name="communities" />

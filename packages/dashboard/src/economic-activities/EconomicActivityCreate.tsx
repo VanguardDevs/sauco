@@ -8,6 +8,8 @@ import {
     SaveButton,
     CreateContextProvider,
     useRedirect,
+    ReferenceInput,
+    SelectInput,
     useNotify
 } from 'react-admin';
 import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
@@ -16,6 +18,7 @@ interface FormValues {
     name?: string;
     code?: string;
     min_tax?: string;
+    charging_method_id?: string;
     aliquote?: string;
 };
 
@@ -33,6 +36,9 @@ const validate = (values: FormValues) => {
     }
     if (!values.aliquote) {
         errors.aliquote = "Ingrese una alícuota";
+    }
+    if (!values.charging_method_id) {
+        errors.charging_method_id = "Ingrese una alícuota";
     }
 
     return errors;
@@ -85,6 +91,18 @@ const TaxpayerCreateForm: React.FC<any> = props => (
                                 placeholder="Ej. María Pérez"
                                 fullWidth
                             />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={4}>
+                            <InputLabel>Forma de cálculo</InputLabel>
+                            <ReferenceInput
+                                source="charging_method_id"
+                                reference="charging-methods"
+                                sort={{ field: 'id', order: 'DESC' }}
+                                label=''
+                                fullWidth
+                            >
+                                <SelectInput optionText="name" />
+                            </ReferenceInput>
                         </Grid>
                     </Grid>
                     <SaveButton

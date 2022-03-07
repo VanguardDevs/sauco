@@ -56,8 +56,10 @@ const ConceptList: React.FC = props => {
                 )
                 : (
                     <Datagrid>
+                        <TextField source="code" label="Código"/>
                         <TextField source="name" label="Nombre"/>
                         <TextField source="amount" label="Monto"/>
+                        <TextField source="charging_method.name" label="Cálculo"/>
                         <TextField source="liquidation_type.name" label="Tipo"/>
                         <EditButton />
                     </Datagrid>

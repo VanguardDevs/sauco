@@ -33,7 +33,7 @@ class LicenseController extends Controller
         $from = $request->get('from');
         $to = $request->get('to');
 
-        $query = License::orderBy('created_at', 'DESC');
+        $query = License::orderBy('active', 'ASC');
 
         if ($ordinance) {
             $query->whereOrdinanceId($ordinance);
@@ -49,8 +49,7 @@ class LicenseController extends Controller
 
         // Return responses
         if ($request->wantsJson()) {
-            $query->with(['taxpayer', 'ordinance'])
-                ->orderBy('created_at', 'DESC');
+            $query->with(['taxpayer', 'ordinance']);
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -60,23 +59,6 @@ class LicenseController extends Controller
         }
 
         return view('modules.licenses.index');
-    }
-
-    /**
-     * Print a pdf of all licenses
-     *
-     * Return PDF
-     */
-    private function printReport($query)
-    {
-        $licenses = $query->get();
-        $total = $query->count();
-        $emissionDate = date('d-m-Y', strtotime(Carbon::now()));
-
-        $data = compact(['licenses', 'emissionDate', 'total']);
-        $pdf = PDF::loadView('modules.reports.pdf.licenses', $data);
-
-        return $pdf->download('licencias-emitidas-'.$emissionDate.'.pdf');
     }
 
     public function listBytaxpayer(Taxpayer $taxpayer)
@@ -273,7 +255,7 @@ class LicenseController extends Controller
         $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
 
         return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
-            ->download('Licencia '.$taxpayer->rif.'.pdf');
+            ->stream('Licencia '.$taxpayer->rif.'.pdf');
     }
 
     /**

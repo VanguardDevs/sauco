@@ -17,6 +17,8 @@ class ItemController extends Controller
     {
         $query = Item::query();
         $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -24,6 +26,10 @@ class ItemController extends Controller
             if (array_key_exists('name', $filters)) {
                 $query->whereLike('name', $filters['name']);
             }
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
         }
 
         return $query->paginate($results);

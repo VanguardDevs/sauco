@@ -1,3 +1,6 @@
+* {
+    font-family: 'sans-serif !important';
+}
 .kt-login.kt-login--v1 .kt-login__aside {
   width: 605px;
   padding: 3rem 3.5rem;

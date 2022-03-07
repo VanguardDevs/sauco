@@ -8,6 +8,8 @@ use App\Http\Requests\Taxpayers\TaxpayerActivitiesFormRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\EconomicActivitiesCreateRequest;
 use PDF;
+use App\Imports\EconomicActivitiesImport;
+use Excel;
 
 class EconomicActivityController extends Controller
 {
@@ -18,7 +20,9 @@ class EconomicActivityController extends Controller
      */
     public function index(Request $request)
     {
-        $query = EconomicActivity::query();
+        $query = EconomicActivity::query()
+            ->with('chargingMethod')
+            ->withCount('taxpayers');
         $results = $request->perPage;
         $sort = $request->sort;
         $order = $request->order;
@@ -32,8 +36,14 @@ class EconomicActivityController extends Controller
             if (array_key_exists('code', $filters)) {
                 $query->whereLike('code', $filters['code']);
             }
+            if (array_key_exists('code', $filters)) {
+                $query->whereLike('code', $filters['code']);
+            }
             if (array_key_exists('lt_min_tax', $filters)) {
                 $query->where('min_tax', '<', $filters['lt_min_tax']);
+            }
+            if (array_key_exists('active', $filters)) {
+                $query->where('active', '=', $filters['active']);
             }
             if (array_key_exists('gt_min_tax', $filters)) {
                 $query->where('min_tax', '>=', $filters['gt_min_tax']);
@@ -85,6 +95,23 @@ class EconomicActivityController extends Controller
     }
 
     /**
+     * Upload economic activities from an excel
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(Request $request)
+    {
+        try {
+            Excel::import(new EconomicActivitiesImport, $request->file);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        return true;
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\EconomicActivity  $economicActivity
@@ -93,6 +120,21 @@ class EconomicActivityController extends Controller
     public function show(EconomicActivity $economicActivity)
     {
         return response()->json($economicActivity, 201);
+    }
+
+    public function download(EconomicActivity $economicActivity)
+    {
+        // Prepare pdf
+        $models = $economicActivity->taxpayers()->get();
+        $title = "Listado de Contribuyentes por Actividad Económica";
+
+        $pdf = PDF::LoadView('pdf.reports.economic-activity-taxpayer', compact([
+            'models',
+            'title',
+            'economicActivity'
+        ]));
+
+        return $pdf->stream('reporte-contribuyentes-actividad.pdf');
     }
 
     /**

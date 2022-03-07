@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\PetroPrice;
 use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 
 class RetrievePetroPrice extends Command
 {
@@ -39,23 +40,25 @@ class RetrievePetroPrice extends Command
      */
     public function handle()
     {
-        $response = Http::post('https://petroapp-price.petro.gob.ve/price/', [
-            "coins" => [
-		        "PTR"
-            ],
-            "fiats" => [
-		        "Bs"
-	        ]
-        ]);
-
-        $data = json_decode($response->getBody(), true);
-
-        if ($data['status'] == 200) {
-            $price = $data['data']['PTR']['BS'];
-
-            PetroPrice::create([
-                'value' => $price
+        if (!(PetroPrice::whereDate('created_at', Carbon::today())->count())) {
+            $response = Http::post('https://petroapp-price.petro.gob.ve/price/', [
+                "coins" => [
+                    "PTR"
+                ],
+                "fiats" => [
+                    "Bs"
+                ]
             ]);
+
+            $data = json_decode($response->getBody(), true);
+
+            if ($data['status'] == 200) {
+                $price = $data['data']['PTR']['BS'];
+
+                PetroPrice::create([
+                    'value' => $price
+                ]);
+            }
         }
     }
 }

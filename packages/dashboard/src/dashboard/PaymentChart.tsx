@@ -27,6 +27,7 @@ const aggregatePaymentsByDay = (payments: Payment[]): { [key: string]: number } 
                 parse(curr.processed_at, 'dd/MM/yyyy H:m', new Date()),
                 'yyyy-MM-dd'
             );
+
             if (!acc[day]) {
                 acc[day] = 0;
             }

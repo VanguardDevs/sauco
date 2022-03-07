@@ -38,6 +38,9 @@ class LicenseController extends Controller
                 return $q->whereLike('name', $name);
             });
         }
+        if (array_key_exists('active', $filters)) {
+            $query->where('active', $filters['active']);
+        }
         if (array_key_exists('ordinance_id', $filters)) {
             $query->where('ordinance_id', '=', $filters['ordinance_id']);
         }

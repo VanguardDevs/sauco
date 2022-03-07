@@ -1,17 +1,14 @@
 import * as React from 'react'
-import {
-    TextInput,
-    FormWithRedirect,
-    SaveButton
-} from 'react-admin'
-import { Box, Grid, InputLabel } from '@material-ui/core'
-import UpdateIcon from '@material-ui/icons/Cached';
+import { PasswordInput, useNotify } from 'react-admin'
 import { axios } from '@sauco/common/providers'
+import InputContainer from '@sauco/common/components/InputContainer'
+import BaseForm from '@sauco/common/components/BaseForm'
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 interface FormValues {
     current_password?: string;
     new_password?: string;
-    new_password_confirm?: string;
+    new_password_confirmation?: string;
 }
 
 const validate = (values: FormValues) => {
@@ -23,77 +20,64 @@ const validate = (values: FormValues) => {
     if (!values.new_password) {
         errors.new_password = "Ingrese una nueva contraseña.";
     }
-    if (!values.new_password_confirm) {
-        errors.new_password_confirm = "Ingrese una nueva contraseña.";
+    if (!values.new_password_confirmation) {
+        errors.new_password_confirmation = "Ingrese una nueva contraseña.";
     }
     if (values.current_password === values.new_password) {
         errors.new_password = "La nueva contraseña no debe ser igual a la anterior."
     }
-    if (values.new_password !== values.new_password_confirm) {
-        errors.new_password_confirm = "Las contraseñas no coinciden.";
+    if (values.new_password !== values.new_password_confirmation) {
+        errors.new_password_confirmation = "Las contraseñas no coinciden.";
     }
 
     return errors;
 };
 
-const UpdatePasswordForm = (props: any) => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Box maxWidth="45em" paddingTop='2em'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12}>
-                        <InputLabel>Contraseña actual</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='current_password' 
-                            placeholder="Contraseña actual"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InputLabel>Nueva contraseña</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='new_password' 
-                            placeholder="Nueva contraseña"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InputLabel>Confirmación de contraseña</InputLabel>
-                        <TextInput
-                            label={false} 
-                            source='new_password_confirm' 
-                            placeholder="Repita la nueva contraseña"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
-                            saving={saving}
-                            label='Actualizar'
-                            icon={<UpdateIcon />}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
-        )}
-    />
-);
-
 const UpdatePassword = (props: any) => {
-    const save = React.useCallback(async (values) => {
-        const { data } = await axios.post('update-password', values);
+    const notify = useNotify();
 
-        console.log(data)
+    const save = React.useCallback(async (values) => {
+        try {
+            await axios.post('update-password', values);
+            notify('Hemos cambiado tu contraseña con éxito', 'success')
+        } catch (error: any) {
+            if (error.response.data.errors) {
+                return error.response.data.errors;
+            }
+        }
     }, [axios])
 
     return (
-        <UpdatePasswordForm save={save} validate={validate} {...props} />
+        <BaseForm
+            save={save}
+            validate={validate}
+            title='Actualizar contraseña'
+            icon={<VpnKeyIcon />}
+            buttonName='Actualizar'
+            {...props}
+        >
+            <InputContainer labelName='Contraseña actual' md={8}>
+                <PasswordInput
+                    source='current_password'
+                    placeholder="Contraseña actual"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Nueva contraseña' md={8}>
+                <PasswordInput
+                    source='new_password'
+                    placeholder="Nueva contraseña"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Nueva contraseña' md={8}>
+                <PasswordInput
+                    source='new_password_confirmation'
+                    placeholder="Repita la nueva contraseña"
+                    fullWidth
+                />
+            </InputContainer>
+        </BaseForm>
     )
 }
 

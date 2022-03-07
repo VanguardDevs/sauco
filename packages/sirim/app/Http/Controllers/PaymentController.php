@@ -130,6 +130,11 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
+        $validator = $request->validate([
+            'processed_at'     => 'required',
+            'method'  => 'required'
+        ]);
+
         if ($request->input('method') != '3') {
             $reference = $request->input('reference');
 
@@ -145,7 +150,7 @@ class PaymentController extends Controller
         }
 
         $paymentNum = Payment::getNewNum(2);
-        $processedAt = Carbon::now();
+        $processedAt = $request->processed_at.' '.Carbon::now()->toTimeString();
 
         $payment->update([
             'user_id' => Auth::user()->id,
@@ -177,11 +182,21 @@ class PaymentController extends Controller
         $taxpayer = $payment->taxpayer;
 
         $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
-        $vars = ['payment', 'reference', 'denomination'];
 
-        return PDF::setOptions(['isRemoteEnabled' => true])
-            ->loadView('pdf.payment', compact($vars))
-            ->stream('factura-'.$payment->id.'.pdf');
+        if ($payment->type == 1) { // Retención
+            $liquidation = $payment->liquidations()->first();
+            $vars = ['payment', 'reference', 'denomination', 'liquidation'];
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.withholding', compact($vars))
+                ->stream('factura-'.$payment->id.'.pdf');
+        } else {
+            $vars = ['payment', 'reference', 'denomination'];
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.payment', compact($vars))
+                ->stream('factura-'.$payment->id.'.pdf');
+        }
    }
 
     /**

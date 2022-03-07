@@ -30,7 +30,7 @@
             }
             table {
                 border-collapse: collapse;
-                width: 100%;                
+                width: 100%;
                 margin-top: 5px;
             }
             .tables {
@@ -90,8 +90,8 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>REPÚBLICA BOLIVARIANA DE VENEZUELA</td>
-                        <td>G-20000222-1</td>
+                        <td>{{ $denomination }}</td>
+                        <td>{{ $payment->taxpayer->rif }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -103,7 +103,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>AV. CARABOBO, EDIFICIO MUNICIPAL</td>
+                        <td>{{ $payment->taxpayer->fiscal_address }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -118,8 +118,8 @@
                 </thead>
                 <tbody>
                      <tr>
-                        <td>{{ $payment->processed_at }}</td> 
-                        <td>{{ $payment->paymentMethod->name }}</td>   
+                        <td>{{ $payment->processed_at }}</td>
+                        <td>{{ $payment->paymentMethod->name }}</td>
                         <td>{{ $payment->reference->reference ?? 'S/N' }}</td>
                     </tr>
                 </tbody>
@@ -136,11 +136,11 @@
                 <tbody>
                 @foreach($payment->settlements as $settlement)
                  <tr>
-                    <td>{{ $settlement->num }}</td> 
-                    <td>{{ $settlement->object_payment  }}</td>   
+                    <td>{{ $settlement->num }}</td>
+                    <td>{{ $settlement->object_payment  }}</td>
                     <td style="font-weight:bold;">{{ $settlement->total_amount }}</td>
                 </tr>
-                @endforeach   
+                @endforeach
              </table>
         </div>
         <br>
@@ -150,21 +150,21 @@
             </div>
             <div class="col-bill-info">
                 <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->amount }} Bs
+                    PAGO TOTAL: {{ $payment->formattedAmount }} Bs
                 </div>
             </div>
         </div>
         <br>
         <div class="miscellaneus">
             <div class="liquidator-info">
-                Liquidador: {{ $payment->user->first_name.' '.$payment->user->surname }}
+                Recaudador: {{ $payment->user->first_name.' '.$payment->user->surname }}
             </div>
             <div class="collector-firm">
-               <span style="width:50%;"></span> 
+               <span style="width:50%;"></span>
             </div>
             <br>
             <div class="observations">
-                OBSERVACIONES: {{ $payment->observations }}    
+                OBSERVACIONES: {{ $payment->observations }}
             </div>
         </div>
     </body>

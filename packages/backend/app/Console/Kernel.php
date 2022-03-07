@@ -4,8 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\ApplyFine;
 use App\Console\Commands\RetrievePetroPrice;
+use App\Console\Commands\CreateNewYear;
+use App\Console\Commands\ExpireLicense;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,8 +16,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        ApplyFine::class,
-        RetrievePetroPrice::class
+        RetrievePetroPrice::class,
+        CreateNewYear::class,
+        ExpireLicense::class
     ];
 
     /**
@@ -27,13 +29,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('apply:fine')
-            ->monthlyOn(16, '01:42')
-            ->lastDayOfMonth('01:42')
-            ->evenInMaintenanceMode();
-
         $schedule->command('get:petro-price')
-            ->dailyAt('09:00');
+            ->lastDayOfMonth()
+            ->everyTenMinutes()
+            ->between('21:00', '23:59');
+
+        $schedule->command('expire:licenses')
+            ->dailyAt('01:00');
+
+        $schedule->command('create:year')
+            ->yearly();
     }
 
     /**

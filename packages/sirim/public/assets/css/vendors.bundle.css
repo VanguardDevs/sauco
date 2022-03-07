@@ -2,6 +2,10 @@
 /*
  * Container style
  */
+ * {
+    font-family: 'sans-serif !important';
+}
+
 .ps {
   overflow: hidden !important;
   overflow-anchor: none;

@@ -16,12 +16,15 @@ class CreateEconomicActivitiesTable extends Migration
         Schema::create('economic_activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code');
+            $table->boolean('active')->default(true);
             $table->string('name', 500);
-            $table->string('description', 1000);
             $table->string('aliquote');
             $table->string('min_tax');
+            $table->unsignedBigInteger('charging_method_id');
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('charging_method_id')->references('id')->on('charging_methods')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
