@@ -132,10 +132,11 @@ class EconomicActivityController extends Controller
 
         $pdf = PDF::LoadView('pdf.reports.economic-activity-taxpayer', compact([
             'models',
-            'title'
+            'title',
+            'economicActivity'
         ]));
 
-        return $pdf->download('reporte-contribuyentes-actividad.pdf');
+        return $pdf->stream('reporte-contribuyentes-actividad.pdf');
     }
 
     /**

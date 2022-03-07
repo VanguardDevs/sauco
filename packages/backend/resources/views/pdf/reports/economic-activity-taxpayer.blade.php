@@ -1,8 +1,17 @@
 @extends('pdf.reports.layouts.template')
 
 @section('content')
+<div>
+    <br />
+    <span><strong>CÓDIGO</strong>: {{ $economicActivity->code }}</span>
+    <br />
+    <span><strong>ACTIVIDAD</strong>: {{ $economicActivity->name }}</span>
+    <br />
+    <span><strong>ALÍCUOTA</strong>: {{ $economicActivity->aliquote }}</span>
+    <br />
+    <span><strong>MÍNIMO</strong>: {{ $economicActivity->min_tax }}</span>
+</div>
 <table style="text-align: center">
-    <caption>{{ strtoupper($title) }}</caption>
     <thead>
         <tr>
             <th width="5%">#</th>
