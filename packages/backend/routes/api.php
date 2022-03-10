@@ -50,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('accounting-accounts', 'AccountingAccountController');
     Route::apiResource('account-types', 'AccountTypeController');
     Route::apiResource('payments', 'PaymentController');
-    Route::get('payments/{payment}/downlaod', 'PaymentController@download');
+    Route::get('payments/{payment}/download', 'PaymentController@download');
     Route::apiResource('cancellations', 'CancellationController');
     Route::apiResource('cancellation-types', 'CancellationTypeController');
     Route::apiResource('licenses', 'LicenseController');
@@ -80,3 +80,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('update-password', 'UpdatePasswordController');
     Route::get('logout', 'ManageTokenController@logout');
 });
+
+Route::get('economic-activities/{activity}/download', 'EconomicActivityController@download');

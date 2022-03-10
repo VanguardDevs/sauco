@@ -124,6 +124,21 @@ class EconomicActivityController extends Controller
         return response()->json($data, 201);
     }
 
+    public function download(EconomicActivity $economicActivity)
+    {
+        // Prepare pdf
+        $models = $economicActivity->taxpayers()->get();
+        $title = "Listado de Contribuyentes por Actividad Económica";
+
+        $pdf = PDF::LoadView('pdf.reports.economic-activity-taxpayer', compact([
+            'models',
+            'title',
+            'economicActivity'
+        ]));
+
+        return $pdf->stream('reporte-contribuyentes-actividad.pdf');
+    }
+
     /**
      * Update the specified resource in storage.
      *
