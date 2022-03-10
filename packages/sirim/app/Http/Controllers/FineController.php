@@ -90,12 +90,6 @@ class FineController extends Controller
 
     public function makePayment(Fine $fine)
     {
-        $payment = $fine->payment();
-
-        if ($payment) {
-            return redirect()->route('payments.show', $payment->first());
-        }
-
         $payment = $fine->mountPayment();
 
         $liquidation = $fine->makeLiquidation();
