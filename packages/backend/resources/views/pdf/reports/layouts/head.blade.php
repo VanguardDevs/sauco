@@ -62,5 +62,10 @@
             float: right;
             font-weight: bold;
         }
+        .description {
+            position: absolute;
+            top: 20px;
+            left: 290px;
+        }
     </style>
 </head>
