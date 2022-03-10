@@ -184,4 +184,8 @@ class BrandTableSeeder extends Seeder
             ]);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 93596b22969c13f5eeab9a57b96f71a9f658bf9b
