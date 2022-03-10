@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -33,17 +33,17 @@ class UpdatePasswordRequest extends FormRequest
     {
         return [
             'current_password' => 'contraseña actual',
-            'new_password' => 'nueva contraseña' 
+            'new_password' => 'nueva contraseña'
         ];
     }
 
     public function messages()
     {
         return [
-            'current-password.required' => 'Ingrese la :attribute',
-            'new-password.required' => 'Ingrese la :attribute',
-            'new-password.min' => 'La :attribute debe ser mayor a 6 caracteres',
-            'new-password.confirmed' => 'Las contraseñas no coinciden'
+            'current_password.required' => 'Ingrese la :attribute',
+            'new_password.required' => 'Ingrese la :attribute',
+            'new_password.min' => 'La :attribute debe ser mayor a 6 caracteres',
+            'new_password.confirmed' => 'Las contraseñas no coinciden'
         ];
     }
 }

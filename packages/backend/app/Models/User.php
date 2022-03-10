@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'dni',
+        'full_name',
         'first_name',
         'password',
         'surname',
@@ -27,13 +28,9 @@ class User extends Authenticatable
         'login'
     ];
 
-    protected $appends = [ 'full_name' ];
-
-    public function getFullNameAttribute()
-    {
-        return $this->attributes['first_name'].' '.
-            $this->attributes['surname'];
-    }
+    protected $hidden = [
+        'password'
+    ];
 
     public function payments()
     {

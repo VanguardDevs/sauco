@@ -73,7 +73,7 @@
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ asset('/assets/images/sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -86,7 +86,7 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('/assets/images/mayor_logo.jpg') }}" height="80px" width="130px" alt="logo" />
+                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
             </div>
         </div>
         <div class="tables">
@@ -122,7 +122,7 @@
                      <tr>
                         <td>{{ $payment->processed_at }}</td>
                         <td>{{ $payment->paymentMethod->name }}</td>
-                        <td>{{ $payment->reference->reference ?? 'S/N' }}</td>
+                        <td>{{ $payment->references->first()->reference ?? 'S/N' }}</td>
                     </tr>
                 </tbody>
             </table>

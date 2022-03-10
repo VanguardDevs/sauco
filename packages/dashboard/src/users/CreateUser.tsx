@@ -1,90 +1,22 @@
 import * as React from 'react'
 import {
     TextInput,
-    FormWithRedirect,
-    SaveButton,
-    useCreateController,
     useMutation,
-    CreateContextProvider,
-    CreateProps
+    useRedirect,
+    CreateProps,
+    PasswordInput,
+    useNotify,
+    ReferenceInput,
+    SelectInput
 } from 'react-admin'
-import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
+import InputContainer from '@sauco/common/components/InputContainer'
+import BaseForm from '@sauco/common/components/BaseForm'
+import validate from './validateUserSchema'
 
-const TaxpayerCreateForm: React.FC<any> = props => (
-    <FormWithRedirect
-        {...props}
-        render={ ({ handleSubmitWithRedirect, saving }) => (
-            <Card>
-                <Box maxWidth="90em" padding='2em'>
-                    <Grid container spacing={1}>
-                        <Typography variant="h6" gutterBottom>
-                            {'Datos generales'}
-                        </Typography>
-                    </Grid>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Cédula de identidad</InputLabel>
-                            <TextInput
-                                label={false}
-                                source="dni"
-                                placeholder="123456789"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Primer nombre</InputLabel>
-                            <TextInput
-                                label={false}
-                                source="first_name"
-                                placeholder="Ej. María"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Apellido</InputLabel>
-                            <TextInput
-                                label={false}
-                                source="surname"
-                                placeholder="Ej. Pérez"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Nombre de usuario</InputLabel>
-                            <TextInput
-                                label={false}
-                                source="login"
-                                placeholder="Ej. María"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Teléfono</InputLabel>
-                            <TextInput
-                                label={false}
-                                source="phone"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={4}>
-                            <InputLabel>Contraseña</InputLabel>
-                            <TextInput
-                                label={false}
-                                source="password"
-                                fullWidth
-                            />
-                        </Grid>
-                    </Grid>
-                    <SaveButton handleSubmitWithRedirect={handleSubmitWithRedirect} saving={saving} />
-                </Box>
-            </Card>
-        )}
-    />
-);
-
-const TaxpayerCreate: React.FC<any> = (props: CreateProps) => {
-    const createControllerProps = useCreateController(props);
-    const [mutate] = useMutation();
+const UserCreate: React.FC<any> = (props: CreateProps) => {
+    const [mutate, { loaded, data }] = useMutation();
+    const redirect = useRedirect()
+    const notify = useNotify();
 
     const save = React.useCallback(async (values) => {
         try {
@@ -100,11 +32,69 @@ const TaxpayerCreate: React.FC<any> = (props: CreateProps) => {
         }
     }, [mutate])
 
+    React.useEffect(() => {
+        if (loaded) {
+            redirect('/users')
+            notify(`¡Ha creado el usuario de ${data.login}`)
+        }
+    }, [loaded])
+
     return (
-        <CreateContextProvider value={createControllerProps}>
-            <TaxpayerCreateForm save={save} />
-        </CreateContextProvider>
+        <BaseForm
+            save={save}
+            validate={validate}
+            buttonName='Guardar'
+            title='Crear usuario'
+            defaultValue={{
+                isCreateForm: true
+            }}
+            {...props}
+        >
+            <InputContainer labelName='Cédula' xs={12} sm={12} md={4}>
+                <TextInput
+                    label={false}
+                    source="identity_card"
+                    placeholder="123456789"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Nombre completo' xs={12} sm={12} md={4}>
+                <TextInput
+                    label={false}
+                    source="full_name"
+                    placeholder="Ej. María López"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Nombre de usuario' xs={12} sm={12} md={4}>
+                <TextInput
+                    label={false}
+                    source="login"
+                    placeholder="Ej. María"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Contraseña' xs={12} sm={12} md={4}>
+                <PasswordInput
+                    label={false}
+                    source="password"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Rol(es)' xs={12} sm={12} md={4}>
+                <ReferenceInput
+                    source="roles_ids"
+                    reference="roles"
+                >
+                    <SelectInput
+                        label={false}
+                        source="name"
+                        fullWidth
+                    />
+                </ReferenceInput>
+            </InputContainer>
+        </BaseForm>
     )
 }
 
-export default TaxpayerCreate
+export default UserCreate

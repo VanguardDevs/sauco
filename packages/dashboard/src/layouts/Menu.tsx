@@ -32,7 +32,6 @@ import paymentMethods from '../payment-methods';
 import ordinances from '../ordinances';
 import economicActivities from '../economic-activities';
 import petroPrices from '../petro-prices';
-import items from '../items';
 import permissions from '../permissions';
 import states from '../states';
 import municipalities from '../municipalities';
@@ -293,14 +292,6 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
                             to={'/'+ordinances.name}
                             primaryText={ordinances.options.label}
                             leftIcon={<ordinances.icon />}
-                            onClick={onMenuClick}
-                            sidebarIsOpen={open}
-                            dense={dense}
-                        />
-                        <MenuItemLink
-                            to={'/'+items.name}
-                            primaryText={items.options.label}
-                            leftIcon={<items.icon />}
                             onClick={onMenuClick}
                             sidebarIsOpen={open}
                             dense={dense}

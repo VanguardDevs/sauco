@@ -26,7 +26,7 @@ class ConceptController extends Controller
     public function index(Request $request)
     {
         $query = Concept::latest()
-            ->with(['liquidationType']);
+            ->with(['liquidationType', 'chargingMethod']);
         $results = $request->perPage;
 
         if ($request->has('filter')) {

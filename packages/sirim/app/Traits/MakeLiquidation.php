@@ -9,12 +9,13 @@ trait MakeLiquidation
 {
     public function makeLiquidation()
     {
-        if (method_exists($this, 'concept')) {
-            $concept = $this->concept;
-        } else {
+        if (get_class($this) == 'App\Models\Affidavit') {
             $concept = Concept::whereCode(1)->first();
+        } else if (get_class($this) == 'App\Models\Withholding') {
+            $concept = Concept::whereCode('301.03.99.100')->first();
+        } else {
+            $concept = $this->concept;
         }
-
         $objectPayment = $this->getObject($concept);
 
         $liquidation = $this->liquidation()->create([
@@ -38,6 +39,10 @@ trait MakeLiquidation
                 .$this->month->name
                 .' - '.$this->month->year->year;
         }
+        if ($concept->code == '301.03.99.100') {
+            return $concept->name;
+        }
+
         return $this->concept->name;
     }
 }

@@ -5,11 +5,15 @@ namespace App\Services;
 use App\Models\Affidavit;
 use App\Models\EconomicActivityAffidavit;
 use App\Models\TaxUnit;
+use App\Models\PetroPrice;
+use Carbon\Carbon;
+use App\Models\Month;
 
 class AffidavitService
 {
     public function update(Affidavit $affidavit, array $amounts)
     {
+        $month = $affidavit->month;
         $affidavits = $affidavit->economicActivityAffidavits;
         $bruteAmounts = $amounts;
         $totalAmounts = Array();
@@ -18,9 +22,9 @@ class AffidavitService
             $amount = array_shift($bruteAmounts);
 
             if (($affidavits->count() > 2) && ($amount == 0.00)) {
-                $updateSettlement = $this->calculateTax($affidavit, $amount);
+                $updateSettlement = $this->calculateTax($month, $affidavit, $amount);
             } else {
-                $updateSettlement = $this->calculateTax($affidavit, $amount, true);
+                $updateSettlement = $this->calculateTax($month, $affidavit, $amount, true);
             }
 
             array_push($totalAmounts, $updateSettlement->amount);
@@ -31,6 +35,7 @@ class AffidavitService
 
     public function updateByGroup(Affidavit $affidavit, float $amount)
     {
+        $month = $affidavit->month;
         $affidavits = $affidavit->economicActivityAffidavits;
         $maxDeclaration = $affidavits->first();
 
@@ -48,10 +53,10 @@ class AffidavitService
             }
         }
 
-        return $this->calculateTax($maxDeclaration, $amount, true)->amount;
+        return $this->calculateTax($month, $maxDeclaration, $amount, true)->amount;
     }
 
-    public function calculateTax(EconomicActivityAffidavit $affidavit, $amount, $update = false)
+    public function calculateTax(Month $month, EconomicActivityAffidavit $affidavit, $amount, $update = false)
     {
         $total = 0.00;
         $activity = $affidavit->economicActivity;
@@ -60,9 +65,10 @@ class AffidavitService
             $total = $amount * $activity->aliquote / 100;
         } else {
             if ($update) {
-                $taxUnit = TaxUnit::latest()->first();
+                $unit = ($activity->charging_method_id == 1) 
+                    ? TaxUnit::latest()->first() : $this->getPetroPrice($month);
                 $total = $activity->aliquote * $amount / 100;
-                $minTax = $taxUnit->value * $activity->min_tax;
+                $minTax = $unit->value * $activity->min_tax;
 
                 if ($total < $minTax || $amount == 0.00) {
                     $total = $minTax;
@@ -74,6 +80,19 @@ class AffidavitService
             'amount' => $total,
             'brute_amount' => $amount
         ]);
+
         return $affidavit;
+    }
+
+    protected function getPetroPrice($month)
+    {
+        $date = Carbon::parse($month->start_period_at)->subDays(1)->format('Y-m');
+        $rate = PetroPrice::whereLike('created_at', $date)->latest()->first();
+
+        if (!$rate) {
+            $rate = PetroPrice::latest()->first();
+        }
+
+        return $rate;
     }
 }

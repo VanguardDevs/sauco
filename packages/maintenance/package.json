@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "taxpayers": "node ./scripts/taxpayers.js",
+    "setExpirationDates": "node ./scripts/setExpirationDates.js",
     "fineaffidavit": "node ./scripts/insertAffidavitFines.js",
     "liquidations": "node ./scripts/updateLiquidations.js",
     "cancellations": "node ./scripts/cancellations.js",
     "deductions": "node ./scripts/deductions.js",
     "rates": "node ./scripts/updateRatesTable.js",
-    "movements": "node ./scripts/createMovements.js"
+    "movements": "node ./scripts/createMovements.js",
+    "users": "node ./scripts/updateUsers.js",
+    "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",

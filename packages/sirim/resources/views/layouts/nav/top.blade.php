@@ -16,16 +16,6 @@
         <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
         <!--begin: Navigation -->
             <div class="kt-notification">
-                <a href="{{ route('change-password.show') }}" class="kt-notification__item">
-                    <div class="kt-notification__item-icon">
-                        <i class="flaticon2-calendar-3 kt-font-success"></i>
-                    </div>
-                    <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title kt-font-bold">
-                            Actualizar contraseña
-                        </div>
-                    </div>
-                </a>
                 <div class="kt-notification__custom kt-space-between">
                     <a class="btn btn-label btn-label-brand btn-sm btn-bold" href="{{ route('logout') }}"
                     onclick="event.preventDefault();

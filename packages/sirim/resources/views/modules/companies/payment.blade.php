@@ -69,7 +69,7 @@
                 </div>
                 @if ($typeForm == 'show' && $row->status_id == 2)
                 <div class="kt-heading kt-heading--md">
-                    Recaudador: {{ $row->user->fullName }}
+                    Recaudador: {{ $row->user->full_name }}
                 </div>
                 <div class="kt-heading kt-heading--md">
                     Método de pago: {{ $row->paymentMethod->name }}
@@ -81,7 +81,7 @@
            </div>
         @if ($typeForm == 'edit')
         <div class="row form-group">
-            <div class="col-md-12 form-group">
+            <div class="col-md-6 form-group">
                 <label class="control-label"> Método de pago <span class="text-danger">*</span></label>
 
                 {!! Form::select('method', $methods,
@@ -91,6 +91,19 @@
                     'id' => 'payment_methods',
                     'required'
                 ]) !!}
+            </div>
+            <div class="col-md-6 form-group">
+                <label class="control-label"> Fecha de pago <span class="text-danger">*</span></label>
+
+                {!!
+                    Form::text("processed_at", '', [
+                        'class' => 'form-control',
+                        'id' => 'datepicker',
+                        'placeholder' => 'Seleccione una fecha',
+                        'readonly',
+                        'required'
+                    ])
+                !!}
             </div>
             <div class="col-md-12 form-group" id="reference" style="display:none;">
                 <div class="col-md-12">

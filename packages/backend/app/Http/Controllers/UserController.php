@@ -30,8 +30,11 @@ class UserController extends Controller
         $filters = $request->has('filter') ? $request->filter : [];
 
         // Get fields
+        if (array_key_exists('full_name', $filters)) {
+            $query->whereLike('full_name', $filters['full_name']);
+        }
         if (array_key_exists('login', $filters)) {
-            $query->whereLogin($filters['login']);
+            $query->whereLike('login', $filters['login']);
         }
         if (array_key_exists('roles', $filters)) {
             $query->whereHas('roles', function ($query) use ($filters) {
@@ -130,20 +133,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        
+        $data = [
+            'identity_card' => $request->identity_card,
+            'full_name' => $request->full_name,
+            'surname' => $request->surname,
+            'login' => $request->login
+        ];
 
-        $edit             = User::find($user->id);
-        $edit->login = $request->input('login');
-        $edit->first_name = $request->input('first_name');
-        $edit->surname    = $request->input('surname');
-        $edit->phone    = $request->input('phone');
-        $edit->dni = $request->input('identity_card');
+        $user->roles()->sync($request->roles_ids);
 
-        if ($request->input('password') != NULL) {
-            $edit->password   = bcrypt($request->input('password'));
+        if ($request->password != NULL) {
+            $data->password = bcrypt($request->password);
         }
-        $edit->roles()->sync($request->get('roles'));
-        $edit->save();
+
+        $user->update($data);
+        $user->roles()->sync($request->roles_ids);
 
         return redirect()->route('users.index')
             ->withSuccess('¡Usuario actualizado!');

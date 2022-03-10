@@ -65,7 +65,7 @@ class ApplicationController extends Controller
     public function store(Request $request, Taxpayer $taxpayer)
     {
         $concept = Concept::find($request->input('concept'));
-        $amount = $concept->calculateAmount();
+        $amount = ($request->amount) ? $request->amount : $concept->calculateAmount();
 
         if ($request->total) {
             $amount = $amount * $request->total;

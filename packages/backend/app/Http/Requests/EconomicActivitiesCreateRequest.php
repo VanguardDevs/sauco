@@ -28,6 +28,7 @@ class EconomicActivitiesCreateRequest extends FormRequest
             'name' => 'required|min:20',
             'aliquote' => 'required',
             'min_tax' => 'required',
+            'charging_method_id' => 'required'
         ];
     }
 
@@ -49,7 +50,8 @@ class EconomicActivitiesCreateRequest extends FormRequest
             'name.required' => 'Ingrese un :attribute',
             'name.min' => 'El nombre debe tener 20 caracteres como mínimo',
             'aliquote.required' => 'Ingrese una :attribute',
-            'min_tax.required' => 'Ingrese un :attribute'
+            'min_tax.required' => 'Ingrese un :attribute',
+            'charging_method_id.required' => 'Seleccione una forma de cálculo'
         ];
     }
 }

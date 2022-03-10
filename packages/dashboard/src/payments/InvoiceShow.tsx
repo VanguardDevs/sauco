@@ -38,6 +38,7 @@ const InvoiceShow = (props: any) => {
     const classes = useStyles();
 
     if (!record) return null;
+
     return (
         <Card className={classes.root}>
             <CardContent>
