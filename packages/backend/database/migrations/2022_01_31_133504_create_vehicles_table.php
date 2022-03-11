@@ -33,7 +33,7 @@ class CreateVehiclesTable extends Migration
             $table->foreign('vehicle_use_id')->references('id')->on('vehicle_uses')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('vehicle_classification_id')->references('id')->on('vehicle_classifications')
-                ->onUpdate('cascade')->onDelete('cascade'); 
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

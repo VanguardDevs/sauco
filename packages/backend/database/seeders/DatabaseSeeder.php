@@ -24,6 +24,10 @@ class DatabaseSeeder extends Seeder
         $this->call(IntervalsSeeder::class);
         $this->call(AccountingAccountsSeeder::class);
         $this->call(CancellationTypesSeeder::class);
+        // $this->call(BrandTableSeeder::class);
+        // $this->call(ColorTableSeeder::class);
+        // $this->call(ModelTableSeeder::class);
+        // $this->call(VehicleClassificationSeeder::class);
 
         // Testing
         if (App::environment() == 'local') {

@@ -10,9 +10,12 @@ class Vehicle extends Model
 
     protected $fillable = [
         'plate',
+        'taxpayer_id',
         'brand_id',
         'model_id',
-        'color_id'
+        'color_id',
+        'vehicle_use_id',
+        'vehicle_classification_id'
     ];
 
     public function taxpayer()

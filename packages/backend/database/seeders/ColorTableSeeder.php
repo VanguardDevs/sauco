@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Model\Color;
+use App\Models\Color;
 use Illuminate\Database\Seeder;
 
 class ColorTableSeeder extends Seeder
@@ -68,8 +68,4 @@ class ColorTableSeeder extends Seeder
             ]);
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 93596b22969c13f5eeab9a57b96f71a9f658bf9b

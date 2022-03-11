@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Model\Brand;
+use App\Models\Brand;
 use Illuminate\Database\Seeder;
 
 class BrandTableSeeder extends Seeder
@@ -184,8 +184,4 @@ class BrandTableSeeder extends Seeder
             ]);
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 93596b22969c13f5eeab9a57b96f71a9f658bf9b

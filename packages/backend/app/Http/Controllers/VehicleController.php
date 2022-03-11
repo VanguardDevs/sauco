@@ -15,6 +15,7 @@ class VehicleController extends Controller
     public function index(Request $request)
     {
         $query = Vehicle::latest();
+        $results = $request->perPage;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
@@ -44,7 +45,9 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vehicle = Vehicle::create($request->all());
+
+        return response()->json($vehicle, 201);
     }
 
     /**

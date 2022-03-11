@@ -12,9 +12,20 @@ class VehicleModelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = VehicleModel::withCount('vehicles');
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     /**
@@ -25,7 +36,9 @@ class VehicleModelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vehicleModel = VehicleModel::create($request->all());
+
+        return response()->json($vehicleModel, 201);
     }
 
     /**
@@ -36,7 +49,8 @@ class VehicleModelController extends Controller
      */
     public function show(VehicleModel $vehicleModel)
     {
-        //
+        return response()->json($vehicleModel, 201);
+
     }
 
     /**
@@ -48,7 +62,9 @@ class VehicleModelController extends Controller
      */
     public function update(Request $request, VehicleModel $vehicleModel)
     {
-        //
+        $vehicleModel->update($request->all());
+
+        return response()->json($vehicleModel, 201);
     }
 
     /**
@@ -59,6 +75,8 @@ class VehicleModelController extends Controller
      */
     public function destroy(VehicleModel $vehicleModel)
     {
-        //
+        $vehicleModel->delete();
+
+        return response()->json($vehicleModel, 201);
     }
 }

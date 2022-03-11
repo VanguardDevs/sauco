@@ -29,8 +29,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('representation-types', 'RepresentationTypeController');
     Route::apiResource('tax-units', 'TaxUnitController');
     Route::apiResource('brands', 'BrandController');
+    Route::apiResource('models', 'VehicleModelController');
     Route::apiResource('colors', 'ColorController');
     Route::apiResource('users', 'UserController');
+    Route::apiResource('vehicle-classification', 'VehicleClassificationController');
+    Route::apiResource('vehicle-uses', 'VehicleUseController');
     Route::apiResource('ordinances', 'OrdinanceController');
     Route::apiResource('charging-methods', 'ChargingMethodController');
     Route::apiResource('economic-activities', 'EconomicActivityController');
