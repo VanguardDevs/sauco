@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\VehicleClassification;
+use App\Models\VehicleParameter;
 
-class VehicleClassificationSeeder extends Seeder
+class VehicleParameterSeeder extends Seeder
 {
-    public $classifications = Array(
+    public $parameters = Array(
         "Bicicletas de reparto, deportivas y de paseo",
         "Motocicletas, motonetas y similares de uso particular y deportivo",
         "Motocicletas, motonetas y similares de trabajo",
@@ -43,9 +43,9 @@ class VehicleClassificationSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->classifications as $key => $classification) {
-            VehicleClassification::create([
-                'name' => $classification
+        foreach ($this->parameters as $key => $parameter) {
+            VehicleParameter::create([
+                'name' => $parameter
             ]);
         }
     }

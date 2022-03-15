@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LiqueurParametre;
+use App\Models\LiqueurParameter;
 use Illuminate\Http\Request;
 
-class LiqueurParametreController extends Controller
+class LiqueurParameterController extends Controller
 {
         /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class LiqueurParametreController extends Controller
      */
     public function index(Request $request)
     {
-        $query = LiqueurParametre::query();
+        $query = LiqueurParameter::query();
         $results = $request->perPage;
         $sort = $request->sort;
         $order = $request->order;
@@ -40,9 +40,9 @@ class LiqueurParametreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(LiqueurParametre $LiqueurParametre)
+    public function show(LiqueurParameter $LiqueurParameter)
     {
-        return $LiqueurParametre;
+        return $LiqueurParameter;
     }
 
     /**
@@ -53,35 +53,35 @@ class LiqueurParametreController extends Controller
      */
     public function store(Request $request)
     {
-        $LiqueurParametre = LiqueurParametre::create($request->all());
+        $LiqueurParameter = LiqueurParameter::create($request->all());
 
-        return $LiqueurParametre;
+        return $LiqueurParameter;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\LiqueurParametre  $LiqueurParametre
+     * @param  \App\LiqueurParameter  $LiqueurParameter
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LiqueurParametre $LiqueurParametre)
+    public function update(Request $request, LiqueurParameter $LiqueurParameter)
     {
-        $LiqueurParametre->update($request->all());
+        $LiqueurParameter->update($request->all());
 
-        return $LiqueurParametre;
+        return $LiqueurParameter;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\LiqueurParametre  $LiqueurParametre
+     * @param  \App\LiqueurParameter  $LiqueurParameter
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LiqueurParametre $LiqueurParametre)
+    public function destroy(LiqueurParameter $LiqueurParameter)
     {
-        $LiqueurParametre->delete();
+        $LiqueurParameter->delete();
 
-        return $LiqueurParametre;
+        return $LiqueurParameter;
     }
 }

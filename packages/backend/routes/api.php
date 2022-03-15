@@ -32,11 +32,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('models', 'VehicleModelController');
     Route::apiResource('colors', 'ColorController');
     Route::apiResource('users', 'UserController');
-    Route::apiResource('vehicle-classification', 'VehicleClassificationController');
+    Route::apiResource('vehicle-classifications', 'VehicleClassificationController');
+    Route::apiResource('vehicle-parameters', 'VehicleParameterController');
     Route::apiResource('vehicle-uses', 'VehicleUseController');
     Route::apiResource('liqueur-zones', 'LiqueurZoneController');
     Route::apiResource('liqueur-classifications', 'LiqueurClassificationController');
-    Route::apiResource('liqueur-parametres', 'LiqueurParametreController');
+    Route::apiResource('liqueur-parameters', 'LiqueurParameterController');
     Route::apiResource('liqueurs', 'LiqueurController');
     Route::apiResource('ordinances', 'OrdinanceController');
     Route::apiResource('charging-methods', 'ChargingMethodController');

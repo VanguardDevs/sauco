@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(BrandTableSeeder::class);
         // $this->call(ColorTableSeeder::class);
         // $this->call(ModelTableSeeder::class);
-        // $this->call(VehicleClassificationSeeder::class);
+        // $this->call(VehicleParameterSeeder::class);
 
         // Testing
         if (App::environment() == 'local') {

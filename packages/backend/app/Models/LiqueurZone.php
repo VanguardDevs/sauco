@@ -15,8 +15,8 @@ class LiqueurZone extends Model
         'name'
     ];
 
-    public function liqueur_parametres()
+    public function liqueur_parameters()
     {
-        return $this->hasMany(LiqueurParametre::class, 'liqueur_zone_id');
+        return $this->hasMany(LiqueurParameter::class, 'liqueur_zone_id');
     }
 }

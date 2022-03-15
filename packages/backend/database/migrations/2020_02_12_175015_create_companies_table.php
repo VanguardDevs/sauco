@@ -71,6 +71,9 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('company_payment');
+        Schema::dropIfExists('company_liquidation');
         Schema::dropIfExists('companies');
+
     }
 }

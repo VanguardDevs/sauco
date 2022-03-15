@@ -18,6 +18,16 @@ class Vehicle extends Model
         'vehicle_classification_id'
     ];
 
+    public function vehicle_use()
+    {
+        return $this->belongsTo(VehicleUse::class);
+    }
+
+    public function vehicle_classification()
+    {
+        return $this->belongsTo(VehicleClassification::class);
+    }
+
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);

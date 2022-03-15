@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LiqueurParametre extends Model
+class LiqueurParameter extends Model
 {
     use HasFactory;
 
-    protected $table = 'liqueur_parametres';
+    protected $table = 'liqueur_parameters';
 
     protected $fillable = [
         'new_registry_amount',
@@ -18,6 +18,11 @@ class LiqueurParametre extends Model
         'liqueur_classification_id',
         'liqueur_zone_id'
     ];
+
+    public function liqueurs()
+    {
+        return $this->hasMany(Liqueur::class, 'liqueur_parameter_id');
+    }
 
     public function liqueur_classification()
     {

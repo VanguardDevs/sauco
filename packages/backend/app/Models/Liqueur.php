@@ -14,7 +14,7 @@ class Liqueur extends Model
     protected $fillable = [
         'work_hours',
         'company_id',
-        'liqueur_parametre_id',
+        'liqueur_parameter_id',
         'representation_id',
         'license_id'
     ];
@@ -24,9 +24,9 @@ class Liqueur extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function liqueur_parametre()
+    public function liqueur_parameter()
     {
-        return $this->belongsTo(LiqueurParametre::class);
+        return $this->belongsTo(LiqueurParameter::class);
     }
 
     public function representation()

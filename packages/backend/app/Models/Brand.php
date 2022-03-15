@@ -12,11 +12,11 @@ class Brand extends Model
 
     public function vehicles()
     {
-        return $this->hasMany(Vehicle::class);
+        return $this->hasMany(Vehicle::class, 'brand_id');
     }
 
     public function models()
     {
-        return $this->hasMany(VehicleModel::class);
+        return $this->hasMany(VehicleModel::class, 'brand_id');
     }
 }

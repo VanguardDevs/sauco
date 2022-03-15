@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLiqueurTable extends Migration
+class CreateLiqueursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,13 +17,13 @@ class CreateLiqueurTable extends Migration
             $table->id();
             $table->string('work_hours', 45);
             $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('liqueur_parametre_id');
+            $table->unsignedBigInteger('liqueur_parameter_id');
             $table->unsignedBigInteger('representation_id');
             $table->unsignedBigInteger('license_id');
 
             $table->foreign('company_id')->references('id')->on('companies')
             ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('liqueur_parametre_id')->references('id')->on('liqueur_parametres')
+            $table->foreign('liqueur_parameter_id')->references('id')->on('liqueur_parameters')
             ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('representation_id')->references('id')->on('representations')
             ->onUpdate('cascade')->onDelete('cascade');
@@ -41,6 +41,6 @@ class CreateLiqueurTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('liqueur');
+        Schema::dropIfExists('liqueurs');
     }
 }

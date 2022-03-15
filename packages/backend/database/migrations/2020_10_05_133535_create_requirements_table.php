@@ -51,8 +51,9 @@ class CreateRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requirements');
         Schema::dropIfExists('taxpayer_requirement');
         Schema::dropIfExists('concept_requirement');
+        Schema::dropIfExists('requirements');
+
     }
 }
