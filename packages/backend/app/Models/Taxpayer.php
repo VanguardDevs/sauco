@@ -21,6 +21,7 @@ class Taxpayer extends Model implements Auditable
         'phone',
         'email',
         'parish_id',
+        'community_id',
         'taxpayer_type_id',
         'taxpayer_classification_id'
     ];

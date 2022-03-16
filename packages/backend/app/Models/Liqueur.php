@@ -41,6 +41,16 @@ class Liqueur extends Model
 
     public function liqueur_vehicle()
     {
-        return $this->hasMany(LiqueurVehicle::class);
+        return $this->hasMany(LiqueurVehicle::class, 'liqueur_id');
+    }
+
+    public function leased_liqueur()
+    {
+        return $this->hasMany(LeasedLiqueur::class, 'liqueur_id');
+    }
+
+    public function liqueur_annex()
+    {
+        return $this->hasMany(LiqueurAnnex::class, 'liqueur_id');
     }
 }

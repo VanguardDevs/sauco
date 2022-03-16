@@ -11,7 +11,6 @@ class Vehicle extends Model
     protected $fillable = [
         'plate',
         'taxpayer_id',
-        'brand_id',
         'model_id',
         'color_id',
         'vehicle_use_id',
@@ -43,8 +42,4 @@ class Vehicle extends Model
         return $this->belongsTo(Color::class);
     }
 
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
 }

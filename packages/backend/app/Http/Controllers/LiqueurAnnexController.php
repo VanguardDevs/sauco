@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vehicle;
+use App\Models\AnnexedLiqueur;
 use Illuminate\Http\Request;
 
-class VehicleController extends Controller
+class LiqueurAnnexController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,23 +14,14 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Vehicle::latest();
+        $query = AnnexedLiqueur::query();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
 
-            if (array_key_exists('plate', $filters)) {
-                $query->whereLike('plate', $filters['plate']);
-            }
-            if (array_key_exists('color_id', $filters)) {
-                $query->whereLike('color_id', $filters['color_id']);
-            }
-            if (array_key_exists('model_id', $filters)) {
-                $query->whereLike('model_id', $filters['model_id']);
-            }
-            if (array_key_exists('taxpayer_id', $filters)) {
-                $query->whereLike('plate', $filters['plate']);
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
             }
         }
 
@@ -45,42 +36,46 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        $vehicle = Vehicle::create($request->all());
+        $annex = AnnexedLiqueur::create($request->all());
 
-        return response()->json($vehicle, 201);
+        return response()->json($annex, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Vehicle  $vehicle
+     * @param  \App\AnnexedLiqueur  $annex
      * @return \Illuminate\Http\Response
      */
-    public function show(Vehicle $vehicle)
+    public function show(AnnexedLiqueur $annex)
     {
-        //
+        return $response->json($annex, 201);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Vehicle  $vehicle
+     * @param  \App\AnnexedLiqueur  $annex
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vehicle $vehicle)
+    public function update(Request $request, AnnexedLiqueur $annex)
     {
-        //
+        $annex->update($request->all());
+
+        return response()->json($annex, 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Vehicle  $vehicle
+     * @param  \App\AnnexedLiqueur  $annex
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicle $vehicle)
+    public function destroy(AnnexedLiqueur $annex)
     {
-        //
+        $annex->delete();
+
+        return response()->json($annex, 201);
     }
 }

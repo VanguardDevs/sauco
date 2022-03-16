@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(BrandTableSeeder::class);
         // $this->call(ColorTableSeeder::class);
         // $this->call(ModelTableSeeder::class);
+        // $this->call(AnnexSeeder::class);
         // $this->call(VehicleParameterSeeder::class);
 
         // Testing
