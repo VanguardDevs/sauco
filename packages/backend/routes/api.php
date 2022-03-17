@@ -34,7 +34,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', 'UserController');
     Route::apiResource('vehicle-classifications', 'VehicleClassificationController');
     Route::apiResource('vehicle-parameters', 'VehicleParameterController');
-    Route::apiResource('vehicle-uses', 'VehicleUseController');
     Route::apiResource('liqueur-zones', 'LiqueurZoneController');
     Route::apiResource('liqueur-classifications', 'LiqueurClassificationController');
     Route::apiResource('liqueur-parameters', 'LiqueurParameterController');

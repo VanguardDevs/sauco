@@ -12,7 +12,6 @@ class LeasedLiqueur extends Model
     protected $table = 'leased_liqueurs';
 
     protected $fillable = [
-        'name',
         'lessor',
         'lessee',
         'date_from',
