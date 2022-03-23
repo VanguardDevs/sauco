@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
 import { Form } from 'react-final-form'
-import Button from '@../components/Button'
+import Button from '@sauco/lib/components/Button'
 import PropTypes from 'prop-types'
 import merge from 'lodash/merge';
 

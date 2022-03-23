@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Typography, Box } from '@material-ui/core';
-import Pagination from '@sauco/lib/components/Pagination';
+import Pagination from '@approbado/lib/components/Pagination';
 import PropTypes from 'prop-types'
 
-const ListContainer = ({ title, actions, list, nopagination }) => (
+const ListContainer = ({ title, actions, list }) => (
     <>
         {(title) && (
             <Typography variant='h5'>
@@ -23,7 +23,7 @@ const ListContainer = ({ title, actions, list, nopagination }) => (
             justifyContent="space-between"
         >
             {React.cloneElement(list)}
-            {(!nopagination) && <Pagination />}
+            <Pagination />
         </Box>
     </>
 );
@@ -31,12 +31,7 @@ const ListContainer = ({ title, actions, list, nopagination }) => (
 ListContainer.propTypes = {
     title: PropTypes.string,
     actions: PropTypes.node,
-    list: PropTypes.node.isRequired,
-    nopagination: PropTypes.bool
+    list: PropTypes.node.isRequired
 };
-
-ListContainer.defaultProps = {
-    nopagination: false
-}
 
 export default ListContainer;

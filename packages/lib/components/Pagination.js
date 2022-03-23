@@ -3,8 +3,8 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
 // Icons
-import { ReactComponent as LeftAngleIcon } from '@../icons/LeftAngle.svg'
-import { ReactComponent as RightAngleIcon } from '@../icons/RightAngle.svg'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const Pagination = () => {
     const { page, perPage, total, setPage } = useListContext();
@@ -30,7 +30,7 @@ const Pagination = () => {
                             onClick={() => setPage(page - 1)}
                             size='small'
                         >
-                            <LeftAngleIcon />
+                            <ArrowBackIosIcon />
                         </Button>
                     }
                     {(page != nbPages) &&
@@ -40,7 +40,7 @@ const Pagination = () => {
                             onClick={() => setPage(page + 1)}
                             size='small'
                         >
-                            <RightAngleIcon />
+                            <ArrowForwardIosIcon />
                         </Button>
                     }
                 </Box>
