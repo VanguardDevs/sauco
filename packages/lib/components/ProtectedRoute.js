@@ -9,7 +9,7 @@ function ProtectedRoute({ component: Component, layout: Layout, ...restOfProps }
         <Route
             {...restOfProps}
             render={(props) =>
-                isAuthenticated
+                !isAuthenticated
                 ? (
                     <Layout>
                         <Component {...props} />

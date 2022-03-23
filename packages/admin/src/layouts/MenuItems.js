@@ -1,7 +1,9 @@
 import * as React from 'react';
 import MenuItemLink from '@sauco/lib/components/MenuItemLink'
 import HomeIcon from '@material-ui/icons/Home';
-import InvertColorsRoundedIcon from '@material-ui/icons/InvertColorsRounded';
+import ColorLensIcon from '@material-ui/icons/ColorLens';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import StyleIcon from '@material-ui/icons/Style';
 
 const MenuItems = ({ open, onMenuClick, dense }) => (
     <React.Fragment>
@@ -17,7 +19,43 @@ const MenuItems = ({ open, onMenuClick, dense }) => (
         <MenuItemLink
             to="/colors"
             primaryText='Colores'
-            leftIcon={<InvertColorsRoundedIcon />}
+            leftIcon={<ColorLensIcon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+            exact
+        />
+        <MenuItemLink
+            to="/brands"
+            primaryText='Marcas'
+            leftIcon={<LocalOfferIcon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+            exact
+        />
+        <MenuItemLink
+            to="/models"
+            primaryText='Modelos'
+            leftIcon={<StyleIcon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+            exact
+        />
+        <MenuItemLink
+            to="/vehicle-classifications"
+            primaryText='Clasificaciones'
+            leftIcon={<StyleIcon />}
+            onClick={onMenuClick}
+            sidebarIsOpen={open}
+            dense={dense}
+            exact
+        />
+        <MenuItemLink
+            to="/vehicle-parameters"
+            primaryText='Parametros'
+            leftIcon={<StyleIcon />}
             onClick={onMenuClick}
             sidebarIsOpen={open}
             dense={dense}
