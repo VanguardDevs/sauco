@@ -23,6 +23,7 @@ const useStyles = makeStyles(
             marginTop: '0.15rem',
             display: 'flex',
             alignItems: 'center',
+            width: "100%",
             '&:hover': {
                 backgroundColor: fade(theme.palette.primary.light, 0.16),
             }
@@ -32,7 +33,8 @@ const useStyles = makeStyles(
             backgroundColor: fade(theme.palette.secondary.main, 0.16),
             color: theme.palette.secondary.main,
             fill: theme.palette.secondary.main,
-            stroke: theme.palette.secondary.main
+            stroke: theme.palette.secondary.main,
+            width: "100%"
         },
         linkIcon: {
             minWidth: theme.spacing(4),

@@ -15,6 +15,16 @@ import BrandList from './brands/BrandList'
 import BrandCreate from './brands/BrandCreate'
 import BrandEdit from './brands/BrandEdit'
 
+// Models
+import ModelList from './models/ModelList'
+import ModelCreate from './models/ModelCreate'
+import ModelEdit from './models/ModelEdit'
+
+// Vehicle Parameters
+import VehicleParameterList from './parameters/VehicleParameterList'
+import VehicleParameterCreate from './parameters/VehicleParameterCreate'
+import VehicleParameterEdit from './parameters/VehicleParameterEdit'
+
 const App = () => (
     <>
         <Route exact path='/login' render={() => <Login />} />
@@ -38,6 +48,30 @@ const App = () => (
             <ProtectedRoute layout={Layout} exact path="/brands/:id" component={(routeProps) =>
                 <BrandEdit
                     resource="brands"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/models" component={() => <ModelList />} />
+            <ProtectedRoute layout={Layout} exact path="/models/create" component={() => <ModelCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/models/:id" component={(routeProps) =>
+                <ModelEdit
+                    resource="models"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/vehicle-parameters" component={() => <VehicleParameterList />} />
+            <ProtectedRoute layout={Layout} exact path="/vehicle-parameters/create" component={() => <VehicleParameterCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/vehicle-parameters/:id" component={(routeProps) =>
+                <VehicleParameterEdit
+                    resource="vehicle-parameters"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}
