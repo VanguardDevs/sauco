@@ -6,24 +6,41 @@ import Login from './auth/Login'
 import Dashboard from './dashboard'
 
 // Colors
-import ColorList from './colors/ColorList'
-import ColorCreate from './colors/ColorCreate'
-import ColorEdit from './colors/ColorEdit'
+import ColorList from './settings/colors/ColorList'
+import ColorCreate from './settings/colors/ColorCreate'
+import ColorEdit from './settings/colors/ColorEdit'
 
 // Brands
-import BrandList from './brands/BrandList'
-import BrandCreate from './brands/BrandCreate'
-import BrandEdit from './brands/BrandEdit'
+import BrandList from './settings/brands/BrandList'
+import BrandCreate from './settings/brands/BrandCreate'
+import BrandEdit from './settings/brands/BrandEdit'
 
 // Models
-import ModelList from './models/ModelList'
-import ModelCreate from './models/ModelCreate'
-import ModelEdit from './models/ModelEdit'
+import ModelList from './settings/models/ModelList'
+import ModelCreate from './settings/models/ModelCreate'
+import ModelEdit from './settings/models/ModelEdit'
+
+// Vehicle Classifications
+import VehicleClassificationList from './settings/vehicle-classifications/VehicleClassificationList'
+import VehicleClassificationCreate from './settings/vehicle-classifications/VehicleClassificationCreate'
+import VehicleClassificationEdit from './settings/vehicle-classifications/VehicleClassificationEdit'
+
 
 // Vehicle Parameters
-import VehicleParameterList from './parameters/VehicleParameterList'
-import VehicleParameterCreate from './parameters/VehicleParameterCreate'
-import VehicleParameterEdit from './parameters/VehicleParameterEdit'
+import VehicleParameterList from './settings/vehicle-parameters/VehicleParameterList'
+import VehicleParameterCreate from './settings/vehicle-parameters/VehicleParameterCreate'
+import VehicleParameterEdit from './settings/vehicle-parameters/VehicleParameterEdit'
+
+// Zones
+import ZoneList from './settings/zones/ZoneList'
+import ZoneCreate from './settings/zones/ZoneCreate'
+import ZoneEdit from './settings/zones/ZoneEdit'
+
+// Annexes
+import AnnexList from './settings/annexes/AnnexList'
+import AnnexCreate from './settings/annexes/AnnexCreate'
+import AnnexEdit from './settings/annexes/AnnexEdit'
+
 
 const App = () => (
     <>
@@ -67,11 +84,47 @@ const App = () => (
             } />
         </Switch>
         <Switch>
+            <ProtectedRoute layout={Layout} exact path="/vehicle-classifications" component={() => <VehicleClassificationList />} />
+            <ProtectedRoute layout={Layout} exact path="/vehicle-classifications/create" component={() => <VehicleClassificationCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/vehicle-classifications/:id" component={(routeProps) =>
+                <VehicleClassificationEdit
+                    resource="vehicle-classifications"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
             <ProtectedRoute layout={Layout} exact path="/vehicle-parameters" component={() => <VehicleParameterList />} />
             <ProtectedRoute layout={Layout} exact path="/vehicle-parameters/create" component={() => <VehicleParameterCreate />} />
             <ProtectedRoute layout={Layout} exact path="/vehicle-parameters/:id" component={(routeProps) =>
                 <VehicleParameterEdit
                     resource="vehicle-parameters"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/liqueur-zones" component={() => <ZoneList />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-zones/create" component={() => <ZoneCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-zones/:id" component={(routeProps) =>
+                <ZoneEdit
+                    resource="liqueur-zones"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/liqueur-annexes" component={() => <AnnexList />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-annexes/create" component={() => <AnnexCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-annexes/:id" component={(routeProps) =>
+                <AnnexEdit
+                    resource="liqueur-annexes"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}

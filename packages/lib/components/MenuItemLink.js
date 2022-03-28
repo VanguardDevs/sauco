@@ -54,6 +54,7 @@ const MenuItemLink = React.forwardRef((props, ref) => {
         primaryText,
         leftIcon,
         onClick,
+        isOpen,
         sidebarIsOpen,
         tooltipProps,
         ...rest

@@ -42,15 +42,11 @@ const SubMenu = ({
         <MenuItem dense={dense} button onClick={handleToggle}>
             <ListItemIcon className={classes.icon}>
 
-                {isOpen ? <ExpandMore /> : icon }
-
+            {icon}
             {
-                (sidebarIsOpen) && (
-                    <Typography variant="subtitle1" color="textSecondary">
-                        {name}
-                    </Typography>
-                )
+                (sidebarIsOpen) && (isOpen ? <> {name} <ExpandLess /> </>: <> {name} <ExpandMore /> </>)
             }
+
             </ListItemIcon>
         </MenuItem>
     );

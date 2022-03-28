@@ -2,7 +2,7 @@ import * as React from 'react'
 import {
     useMutation,
     TextInput,
-    SelectInput,
+    NullableBooleanInput,
     useEditController,
     useRedirect,
     useNotify
@@ -12,10 +12,6 @@ import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 
-const options = [
-    { id: 0, name: "Activo" },
-    { id: 1, name: "Inactivo" }
-]
 
 const VehicleParameterEdit = props => {
     const { id } = useParams();
@@ -68,16 +64,43 @@ const VehicleParameterEdit = props => {
             </InputContainer>
 
             <InputContainer labelName='Años'>
-            <SelectInput source="years" choices={options} />
+
+                <NullableBooleanInput
+                    source="years"
+                    nullLabel=" "
+                    falseLabel="Inactivo"
+                    trueLabel="Activo"
+                />
             </InputContainer>
+
             <InputContainer labelName='Peso'>
-            <SelectInput  source="weight" choices={options} />
+
+                <NullableBooleanInput
+                    source="weight"
+                    nullLabel=" "
+                    falseLabel="Inactivo"
+                    trueLabel="Activo"
+                />
             </InputContainer>
+
             <InputContainer labelName='Capacidad'>
-            <SelectInput  source="capacity" choices={options} />
+
+                <NullableBooleanInput
+                    source="capacity"
+                    nullLabel=" "
+                    falseLabel="Inactivo"
+                    trueLabel="Activo"
+                />
             </InputContainer>
+
             <InputContainer labelName='Puestos'>
-            <SelectInput  source="stalls" choices={options} />
+
+                <NullableBooleanInput
+                    source="stalls"
+                    nullLabel=" "
+                    falseLabel="Inactivo"
+                    trueLabel="Activo"
+                />
             </InputContainer>
         </BaseForm>
     )

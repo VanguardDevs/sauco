@@ -8,19 +8,14 @@ import ColorLensIcon from '@material-ui/icons/ColorLens';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import SettingsIcon from '@material-ui/icons/Settings';
+import RoomIcon from '@material-ui/icons/Room';
+import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
+
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import StyleIcon from '@material-ui/icons/Style';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { fade, useMediaQuery } from '@material-ui/core';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 
 
 
@@ -87,14 +82,14 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                 dense={dense}
                 exact
             />
-                <SubMenu
-                    handleToggle={() => handleToggle('settings')}
-                    isOpen={state.settings}
-                    sidebarIsOpen={open}
-                    name="Configuraciones"
-                    icon={<SettingsIcon />}
-                    dense={dense}
-                >
+            <SubMenu
+                handleToggle={() => handleToggle('settings')}
+                isOpen={state.settings}
+                sidebarIsOpen={open}
+                name="Configuraciones"
+                icon={<SettingsIcon />}
+                dense={dense}
+            >
                 <MenuItemLink
                     className={classes.nested}
                     to="/colors"
@@ -129,7 +124,7 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                 <MenuItemLink
                     to="/vehicle-classifications"
                     primaryText='Clasificaciones'
-                    leftIcon={<ClearAllIcon />}
+                    leftIcon={<AirportShuttleIcon />}
                     onClick={onMenuClick}
                     sidebarIsOpen={open}
                     dense={dense}
@@ -138,6 +133,47 @@ export default function MenuItems({ open, onMenuClick, dense }) {
 
                 <MenuItemLink
                     to="/vehicle-parameters"
+                    primaryText='Parametros'
+                    leftIcon={<DriveEtaIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+
+
+                <MenuItemLink
+                    to="/liqueur-zones"
+                    primaryText='Zonas'
+                    leftIcon={<RoomIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+
+                <MenuItemLink
+                    to="/liqueur-annexes"
+                    primaryText='Anexos'
+                    leftIcon={<StyleIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+
+                <MenuItemLink
+                    to="/liqueur-classifications"
+                    primaryText='Clasificaciones'
+                    leftIcon={<ClearAllIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+
+                <MenuItemLink
+                    to="/liqueur-parameters"
                     primaryText='Parametros'
                     leftIcon={<SettingsIcon />}
                     onClick={onMenuClick}
