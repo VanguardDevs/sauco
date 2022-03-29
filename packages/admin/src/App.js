@@ -31,15 +31,26 @@ import VehicleParameterList from './settings/vehicle-parameters/VehicleParameter
 import VehicleParameterCreate from './settings/vehicle-parameters/VehicleParameterCreate'
 import VehicleParameterEdit from './settings/vehicle-parameters/VehicleParameterEdit'
 
-// Zones
+// Liqueur Zones
 import ZoneList from './settings/zones/ZoneList'
 import ZoneCreate from './settings/zones/ZoneCreate'
 import ZoneEdit from './settings/zones/ZoneEdit'
 
-// Annexes
+// Liqueur Annexes
 import AnnexList from './settings/annexes/AnnexList'
 import AnnexCreate from './settings/annexes/AnnexCreate'
 import AnnexEdit from './settings/annexes/AnnexEdit'
+
+// Liqueur Classifications
+import LiqueurClassificationList from './settings/liqueur-classifications/LiqueurClassificationList'
+import LiqueurClassificationCreate from './settings/liqueur-classifications/LiqueurClassificationCreate'
+import LiqueurClassificationEdit from './settings/liqueur-classifications/LiqueurClassificationEdit'
+
+
+// Liqueur Parameters
+import LiqueurParameterList from './settings/liqueur-parameters/LiqueurParameterList'
+import LiqueurParameterCreate from './settings/liqueur-parameters/LiqueurParameterCreate'
+import LiqueurParameterEdit from './settings/liqueur-parameters/LiqueurParameterEdit'
 
 
 const App = () => (
@@ -125,6 +136,30 @@ const App = () => (
             <ProtectedRoute layout={Layout} exact path="/liqueur-annexes/:id" component={(routeProps) =>
                 <AnnexEdit
                     resource="liqueur-annexes"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/liqueur-classifications" component={() => <LiqueurClassificationList />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-classifications/create" component={() => <LiqueurClassificationCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-classifications/:id" component={(routeProps) =>
+                <LiqueurClassificationEdit
+                    resource="liqueur-classifications"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/liqueur-parameters" component={() => <LiqueurParameterList />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-parameters/create" component={() => <LiqueurParameterCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/liqueur-parameters/:id" component={(routeProps) =>
+                <LiqueurParameterEdit
+                    resource="liqueur-parameters"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}
