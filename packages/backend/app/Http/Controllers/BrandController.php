@@ -14,7 +14,7 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Brand::withCount('vehicles');
+        $query = Brand::withCount('models');
         $results = $request->perPage;
 
         if ($request->has('filter')) {
