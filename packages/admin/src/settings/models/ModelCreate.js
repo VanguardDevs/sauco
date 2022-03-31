@@ -28,7 +28,7 @@ const ModelCreate = props => {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+    }, [])
 
     React.useEffect(() => {
         if (loaded) {
@@ -54,9 +54,9 @@ const ModelCreate = props => {
             </InputContainer>
 
             <InputContainer labelName='Marca'>
-            <ReferenceInput source="brand_id" reference="brands" >
-                <SelectInput optionText="name" optionValue="id" />
-            </ReferenceInput>
+                <ReferenceInput source="brand_id" reference="brands" >
+                    <SelectInput optionText="name" optionValue="id" />
+                </ReferenceInput>
             </InputContainer>
         </BaseForm>
     )

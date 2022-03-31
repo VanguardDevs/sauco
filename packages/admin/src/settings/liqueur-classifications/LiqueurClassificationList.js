@@ -23,7 +23,7 @@ const LiqueurClassificationsDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" label='' />
-        <CreateButton label="Crear" basePath="/liqueur-classifications" />
+        <CreateButton label="Crear" basePath="liqueur-classifications" />
     </TopToolbar>
 );
 
@@ -38,8 +38,8 @@ const LiqueurClassificationList = props => (
 );
 
 LiqueurClassificationList.defaultProps = {
-    basePath: '/liqueur-classifications',
-    resource: '/liqueur-classifications'
+    basePath: 'liqueur-classifications',
+    resource: 'liqueur-classifications'
 }
 
 export default LiqueurClassificationList

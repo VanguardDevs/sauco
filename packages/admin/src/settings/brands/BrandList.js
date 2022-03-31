@@ -23,7 +23,7 @@ const BrandsDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" label='' />
-        <CreateButton label="Crear" basePath="/brands" />
+        <CreateButton label="Crear" basePath="brands" />
     </TopToolbar>
 );
 

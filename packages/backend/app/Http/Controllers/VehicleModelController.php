@@ -14,7 +14,7 @@ class VehicleModelController extends Controller
      */
     public function index(Request $request)
     {
-        $query = VehicleModel::withCount('vehicles');
+        $query = VehicleModel::withCount('brand');
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -44,12 +44,12 @@ class VehicleModelController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\VehicleModel  $vehicleModel
+     * @param  \App\VehicleModel  $vehicleModel
      * @return \Illuminate\Http\Response
      */
     public function show(VehicleModel $vehicleModel)
     {
-        return response()->json($vehicleModel, 201);
+        return $vehicleModel;
 
     }
 

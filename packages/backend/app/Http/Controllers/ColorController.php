@@ -49,7 +49,7 @@ class ColorController extends Controller
      */
     public function show(Color $color)
     {
-        return $response->json($color, 201);
+        return $color;
     }
 
     /**

@@ -2,6 +2,8 @@ import * as React from 'react'
 import {
     useMutation,
     TextInput,
+    ReferenceInput,
+    SelectInput,
     useEditController,
     useRedirect,
     useNotify
@@ -60,12 +62,17 @@ const ModelEdit = props => {
                     fullWidth
                 />
             </InputContainer>
+            <InputContainer labelName='Marca'>
+            <ReferenceInput source="brand_id" reference="brands" >
+                <SelectInput optionText="name" optionValue="id" />
+            </ReferenceInput>
+            </InputContainer>
         </BaseForm>
     )
 }
 
 ModelEdit.defaultProps = {
-    basePath: '/models',
+    basePath: 'models',
     resource: 'models'
 }
 

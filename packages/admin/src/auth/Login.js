@@ -19,8 +19,8 @@ import { useUserDispatch } from '@sauco/lib/hooks/useUserState'
 const validate = (values) => {
     const errors = {};
 
-    if (!values.email) {
-        errors.email = 'Ingrese su correo electrónico';
+    if (!values.login) {
+        errors.login = 'Ingrese su nombre de usuario';
     }
 
     if (!values.password) {
@@ -50,9 +50,11 @@ const Login = () => {
     const handleSubmit = React.useCallback(async (values) => {
         setLoading(true)
 
-        return await axios.post(`${process.env.REACT_APP_API_DOMAIN}/api/login`, values)
+        await axios.get('/csrf-cookie')
+
+        await axios.post('/login', values)
             .then(async (res) => {
-                await axios.get('/api/csrf-cookie')
+                console.log(res.data)
                 await setUser({
                     user: res.data.user,
                     token: res.data.token
@@ -83,10 +85,10 @@ const Login = () => {
                     </Typography>
                 </Box>
 
-                <InputContainer labelName='Correo electrónico' md={12}>
+                <InputContainer labelName='Usuario' md={12}>
                     <TextInput
-                        source="email"
-                        placeholder="Ingrese su correo electrónico"
+                        source="login"
+                        placeholder="Ingrese su nombre de usuario"
                         disabled={loading}
                         fullWidth
                     />

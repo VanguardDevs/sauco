@@ -30,8 +30,8 @@ const ColorCreate = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha registrado la categoría "${data.name}!`, 'success');
-            redirect('/configurations?tab=categories')
+            notify(`¡Ha registrado el color "${data.name}!`, 'success');
+            redirect('/colors')
         }
     }, [loaded])
 
@@ -40,7 +40,7 @@ const ColorCreate = props => {
             save={save}
             validate={validateColor}
             loading={loading}
-            formName='Agregar categoría'
+            formName='Agregar color'
             unresponsive
         >
             <InputContainer labelName='Nombre'>
@@ -55,7 +55,7 @@ const ColorCreate = props => {
 }
 
 ColorCreate.defaultProps = {
-    basePath: '/colors',
+    basePath: 'colors',
     resource: 'colors'
 }
 

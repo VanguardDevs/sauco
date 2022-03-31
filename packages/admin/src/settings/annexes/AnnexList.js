@@ -23,7 +23,7 @@ const AnnexesDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" label='' />
-        <CreateButton label="Crear" basePath="/liqueur-annexes" />
+        <CreateButton label="Crear" basePath="liqueur-annexes" />
     </TopToolbar>
 );
 
@@ -38,8 +38,8 @@ const AnnexList = props => (
 );
 
 AnnexList.defaultProps = {
-    basePath: '/liqueur-annexes',
-    resource: '/liqueur-annexes'
+    basePath: 'liqueur-annexes',
+    resource: 'liqueur-annexes'
 }
 
 export default AnnexList

@@ -11,7 +11,8 @@ import DatagridListView from '@sauco/lib/components/DatagridListView'
 
 const LiqueurParametersDatagrid = () => (
     <Datagrid optimized>
-        <TextField label='Nombre' source="name" />
+        <TextField label='Nombre' source="new_registry_amount" />
+        <TextField label='Nombre' source="renew_registry_amount" />
         <DatagridOptions
             basePath='liqueur-parameters'
             confirmTitle='Eliminar clasificación'
@@ -23,7 +24,7 @@ const LiqueurParametersDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" label='' />
-        <CreateButton label="Crear" basePath="/liqueur-parameters" />
+        <CreateButton label="Crear" basePath="liqueur-parameters" />
     </TopToolbar>
 );
 
@@ -38,8 +39,8 @@ const LiqueurParameterList = props => (
 );
 
 LiqueurParameterList.defaultProps = {
-    basePath: '/liqueur-parameters',
-    resource: '/liqueur-parameters'
+    basePath: 'liqueur-parameters',
+    resource: 'liqueur-parameters'
 }
 
 export default LiqueurParameterList

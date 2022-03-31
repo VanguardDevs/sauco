@@ -16,9 +16,9 @@ use Illuminate\Http\Request;
 Route::post('login', 'ManageTokenController@login');
 
 // Route::middleware('auth:sanctum')->group(function () {
-    // /**
-    //  * Configurations
-    //  */
+    /**
+     * Configurations
+     */
     Route::get('years', 'YearController@index');
     Route::apiResource('concepts', 'ConceptController');
     Route::apiResource('items', 'ItemController');

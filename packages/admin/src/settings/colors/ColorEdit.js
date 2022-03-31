@@ -37,8 +37,8 @@ const ColorEdit = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado la categoría "${data.name}" exitosamente!`, 'success')
-            redirect('/configurations?tab=categories')
+            notify(`¡Ha editado el color "${data.name}" exitosamente!`, 'success')
+            redirect('/colors')
         }
     }, [loaded])
 
@@ -51,7 +51,7 @@ const ColorEdit = props => {
             record={record}
             saveButtonLabel='Actualizar'
             loading={loading}
-            formName="Editar categoría"
+            formName="Editar color"
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
@@ -65,8 +65,8 @@ const ColorEdit = props => {
 }
 
 ColorEdit.defaultProps = {
-    basePath: '/configurations/categories',
-    resource: 'configurations/categories'
+    basePath: 'colors',
+    resource: 'colors'
 }
 
 export default ColorEdit

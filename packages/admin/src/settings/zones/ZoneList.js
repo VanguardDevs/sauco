@@ -23,7 +23,7 @@ const ZonesDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" label='' />
-        <CreateButton label="Crear" basePath="/liqueur-zones" />
+        <CreateButton label="Crear" basePath="liqueur-zones" />
     </TopToolbar>
 );
 
@@ -38,8 +38,8 @@ const ZoneList = props => (
 );
 
 ZoneList.defaultProps = {
-    basePath: '/liqueur-zones',
-    resource: '/liqueur-zones'
+    basePath: 'liqueur-zones',
+    resource: 'liqueur-zones'
 }
 
 export default ZoneList

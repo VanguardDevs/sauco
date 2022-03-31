@@ -22,6 +22,15 @@ const Index = () => (
         <DataProviderContext.Provider value={dataProvider}>
             <Resource name='dashboard' intent="registration" />
             <Resource name='colors' intent="registration" />
+            <Resource name='brands' intent="registration" />
+            <Resource name='models' intent="registration" />
+            <Resource name='vehicle-classifications' intent="registration" />
+            <Resource name='vehicle-parameters' intent="registration" />
+            <Resource name='liqueur-zones' intent="registration" />
+            <Resource name='liqueur-classifications' intent="registration" />
+            <Resource name='liqueur-parameters' intent="registration" />
+            <Resource name='liqueur-annexes' intent="registration" />
+
 
             <ConnectedRouter history={history}>
                 <ThemeProvider theme={createTheme(theme)}>
