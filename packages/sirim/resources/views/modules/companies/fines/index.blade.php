@@ -4,7 +4,7 @@
 
 @section('content')
 
-@if(Auth()->user()->can('create.settlements'))
+@if(Auth()->user()->can('process.settlements'))
 <div class="col-md-12">
     <div class="kt-portlet kt-portlet--height-fluid">
         <div class="kt-portlet__head kt-portlet__head--lg">
