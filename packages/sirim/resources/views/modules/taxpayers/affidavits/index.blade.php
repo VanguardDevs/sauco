@@ -77,14 +77,15 @@
         <div class="kt-portlet__body">
             <table id="tTaxpayerAffidavits" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
-                  <tr>
-                    <th width="10%">Año</th>
-                    <th width="15%">Mes</th>
-                    <th width="25%">Declarado</th>
-                    <th width="25%">Calculado</th>
-                    <th width="10%">Estado</th>
-                    <th width="15%">Acciones</th>
-                  </tr>
+                    <tr>
+                        <th width="10%">Número</th>
+                        <th width="10%">Año</th>
+                        <th width="15%">Mes</th>
+                        <th width="20%">Declarado</th>
+                        <th width="20%">Calculado</th>
+                        <th width="10%">Estado</th>
+                        <th width="15%">Acciones</th>
+                    </tr>
                 </thead>
             </table>
         </div>
