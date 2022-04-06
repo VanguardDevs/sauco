@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'ManageTokenController@login');
 
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     /**
      * Configurations
      */
@@ -46,7 +46,7 @@ Route::post('login', 'ManageTokenController@login');
     Route::get('economic-activities/{activity}/download', 'EconomicActivityController@download');
 
     /**
-     * Consults
+    * Consults
     */
     Route::apiResource('petro-prices', 'PetroPriceController')
         ->except('show');
@@ -54,10 +54,11 @@ Route::post('login', 'ManageTokenController@login');
     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
     Route::get('status', 'StatusController@index');
     Route::get('intervals', 'IntervalController@index');
-    Route::get('movements', 'MovementController@index');
     Route::get('closures', 'ClosureController@index');
 
-    // Controlled level permissions
+    /**
+    * Processes
+    */
     Route::apiResource('liquidation-types', 'LiquidationTypeController');
     Route::apiResource('states', 'StateController');
     Route::apiResource('municipalities', 'MunicipalityController');
@@ -87,17 +88,8 @@ Route::post('login', 'ManageTokenController@login');
     Route::apiResource('roles', 'RoleController');
 
     /**
-     * Consults
+     * Account
     */
-    Route::apiResource('petro-prices', 'PetroPriceController')
-        ->except('show');
-    Route::get('taxpayer-types', 'TaxpayerTypeController@index');
-    Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
-    Route::get('status', 'StatusController@index');
-    Route::get('intervals', 'IntervalController@index');
-    Route::get('closures', 'ClosureController@index');
-
-     // Account
-     Route::post('update-password', 'UpdatePasswordController');
-     Route::get('logout', 'ManageTokenController@logout');
-// });
+    Route::post('update-password', 'UpdatePasswordController');
+    Route::get('logout', 'ManageTokenController@logout');
+});

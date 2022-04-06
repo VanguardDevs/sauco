@@ -1,7 +1,7 @@
 import apiClient from '@jodaz_/data-provider';
 import CONFIG_NAMES from '../configs'
 
-const providers = apiClient(`${process.env.REACT_APP_API_DOMAIN}/api`, {
+const providers = apiClient(`${CONFIG_NAMES.SOURCE}`, {
   offsetPageNum: -1,
   withCredentials: true
 }, `${CONFIG_NAMES.AUTH_TOKEN}`);

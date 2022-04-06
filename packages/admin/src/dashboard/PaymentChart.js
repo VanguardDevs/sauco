@@ -93,13 +93,13 @@ const PaymentChart = ({ payments }) => {
                             <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip
                                 cursor={{ strokeDasharray: '3 3' }}
-                                formatter={() =>
+                                formatter={value =>
                                     new Intl.NumberFormat(undefined, {
                                         style: 'currency',
                                         currency: 'VES',
                                     }).format(value)
                                 }
-                                labelFormatter={dateFormatter(label)}
+                                labelFormatter={dateFormatter}
                             />
                             <Area
                                 type="monotone"

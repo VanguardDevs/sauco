@@ -34,13 +34,13 @@ class ManageTokenController extends Controller
         }
 
         $token = $user->createToken(Str::random(20))->plainTextToken;
-        // $permissions = collect($user->roles()->pluck('name'))
-        //     ->merge($user->permissions()->pluck('name'));
+        $permissions = collect($user->roles()->pluck('name'))
+            ->merge($user->permissions()->pluck('name'));
 
         return response()->json([
             'user' => $user->toJson(),
             'token' => $token,
-            'permissions' => ''
+            'permissions' => $permissions->toJson()
         ], 201);
     }
 

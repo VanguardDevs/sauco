@@ -46,7 +46,6 @@ import LiqueurClassificationList from './settings/liqueur-classifications/Liqueu
 import LiqueurClassificationCreate from './settings/liqueur-classifications/LiqueurClassificationCreate'
 import LiqueurClassificationEdit from './settings/liqueur-classifications/LiqueurClassificationEdit'
 
-
 // Liqueur Parameters
 import LiqueurParameterList from './settings/liqueur-parameters/LiqueurParameterList'
 import LiqueurParameterCreate from './settings/liqueur-parameters/LiqueurParameterCreate'

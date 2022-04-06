@@ -54,7 +54,6 @@ const Login = () => {
 
         await axios.post('/login', values)
             .then(async (res) => {
-                console.log(res.data)
                 await setUser({
                     user: res.data.user,
                     token: res.data.token
