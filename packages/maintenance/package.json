@@ -12,7 +12,8 @@
     "rates": "node ./scripts/updateRatesTable.js",
     "movements": "node ./scripts/createMovements.js",
     "users": "node ./scripts/updateUsers.js",
-    "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js"
+    "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js",
+    "setNumbers": "node ./scripts/setNumbers.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",

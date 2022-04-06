@@ -81,7 +81,8 @@ class FineController extends Controller
             'active' => 1,
             'concept_id' => $concept->id,
             'user_id' => auth()->user()->id,
-            'amount' => $amount
+            'amount' => $amount,
+            'num' => Fine::getNewNum()
         ]);
 
         return redirect()->route('taxpayer.fines', $taxpayer)

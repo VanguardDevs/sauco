@@ -24,7 +24,7 @@ const apiURL = $("meta[name='api-base-url']").attr("content");
 const status = model => (
     (!model.liquidation) ? `
     <span class="kt-badge kt-badge--info kt-badge--inline">
-        Liquidar
+        Sin calcular
     </span>
     ` : (model.liquidation.status_id == 2) ? `
         <span class="kt-badge kt-badge--success kt-badge--inline">
@@ -745,6 +745,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
+            { data: 'num', name: 'num' },
             { data: 'pretty_amount', name: 'pretty_amount' },
             { data: 'concept.name', name: 'concept.name' },
             { data: 'created_at', name: 'created_at' },
@@ -782,6 +783,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}/list`,
         "columns": [
+            { data: 'num', name: 'num' },
             { data: 'amount', name: 'amount' },
             { data: 'concept.name' },
             { data: 'created_at' },
@@ -847,6 +849,7 @@ $(document).ready(function() {
         "serverSide": true,
         "ajax": `${window.location.href}`,
         "columns": [
+            { data: 'num' },
             { data: 'month.year.year' },
             { data: 'month.name' },
             { data: 'pretty_total_brute_amount', name: 'pretty_total_brute_amount' },
