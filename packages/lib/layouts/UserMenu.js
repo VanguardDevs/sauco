@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const UserMenu= props => {
+const UserMenu = props => {
     const [anchorEl, setAnchorEl] = React.useState(null)
     const classes = useStyles();
     const { children, logout } = props

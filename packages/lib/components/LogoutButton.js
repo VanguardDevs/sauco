@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import LogoutIcon from '@material-ui/icons/Lock';
 import { useUserDispatch } from '../hooks/useUserState'
 import { useHistory } from 'react-router-dom'
-import configs from '../configs'
+import { axios } from '@sauco/lib/providers'
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -22,8 +22,12 @@ const LogoutButton = ({ children }) => {
     const history = useHistory()
 
     const handleClick = async () => {
-        await unsetUser();
-        // await history.push('/login')
+        const res = await axios.get('/logout')
+
+        if (res.status >= 200 && res.status <= 400) {
+            await unsetUser();
+            await history.push('/login');
+        }
     }
 
     return (

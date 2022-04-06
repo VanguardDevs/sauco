@@ -38,6 +38,7 @@ const useStyles = makeStyles(
         },
         linkIcon: {
             minWidth: theme.spacing(4),
+            color: 'inherit'
         },
         icon: {
             fill: 'inherit',

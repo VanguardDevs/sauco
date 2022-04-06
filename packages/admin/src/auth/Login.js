@@ -54,9 +54,10 @@ const Login = () => {
 
         await axios.post('/login', values)
             .then(async (res) => {
+                const { data: { user, token } } = res
                 await setUser({
-                    user: res.data.user,
-                    token: res.data.token
+                    user: JSON.parse(user),
+                    token: token
                 });
                 await history.push('/');
 

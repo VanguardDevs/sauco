@@ -10,6 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import ArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import { useUserState } from '@sauco/lib/hooks/useUserState'
+import configs from '@sauco/lib/configs'
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -44,7 +45,7 @@ const UserMenu= props => {
     const handleClose = () => setAnchorEl(null)
     if (!logout && !children) return null
 
-    let { picture, names } = user;
+    let { avatar, full_name } = user;
 
     return (
         <>
@@ -56,11 +57,11 @@ const UserMenu= props => {
                 >
                     <Avatar
                         className={classes.avatar}
-                        src={`${process.env.REACT_APP_API_DOMAIN}/${picture}`}
-                        alt={names}
+                        src={`${configs.BASE}/${avatar}`}
+                        alt={full_name}
                     />
                     <Typography variant="subtitle1" fontWeight='900'>
-                        {names}
+                        {full_name}
                     </Typography>
                     <ArrowDown />
                 </IconButton>
