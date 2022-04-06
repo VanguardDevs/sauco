@@ -25,9 +25,9 @@ class UsersCreateFormRequest extends FormRequest
     {
         return [
             'identity_card' => 'required',
-            'first_name' => 'required',
+            'names' => 'required',
             'password' => 'required',
-            'surname' => 'required',
+            'surnames' => 'required',
             'login' => 'required|unique:users'
         ];
     }
@@ -36,9 +36,9 @@ class UsersCreateFormRequest extends FormRequest
     {
         return [
             'identity_card' => 'número de cédula',
-            'first_name' => 'primer nombre',
+            'names' => 'primer nombre',
             'password' => 'contraseña',
-            'surname' => 'apellido',
+            'surnames' => 'apellidos',
             'login' => 'login',
         ];
     }

@@ -23,9 +23,9 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'dni' => $this->faker->unique()->nationalId,
-            'first_name' => $this->faker->name,
-            'surname' => $this->faker->lastName,
+            'identity_card' => $this->faker->unique()->nationalId,
+            'names' => $this->faker->name,
+            'surnames' => $this->faker->lastName,
             'password' => bcrypt('qwerty123'),
             'login' => $this->faker->username,
             'remember_token' => Str::random(10),

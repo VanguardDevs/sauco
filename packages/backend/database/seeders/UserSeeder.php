@@ -26,9 +26,9 @@ class UserSeeder extends Seeder
 
         // Admin catastro
         $cadastreAdmin = User::create([
-            'dni' => '1234561',
-            'first_name' => 'Administrador',
-            'surname' => 'catastro',
+            'identity_card' => '1234561',
+            'names' => 'Administrador',
+            'surnames' => 'catastro',
             'login' => 'admincadastre',
             'password' => bcrypt('qwerty123'),
         ]);

@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
         $this->call(IntervalsSeeder::class);
         $this->call(AccountingAccountsSeeder::class);
         $this->call(CancellationTypesSeeder::class);
-        // $this->call(BrandTableSeeder::class);
-        // $this->call(ColorTableSeeder::class);
-        // $this->call(ModelTableSeeder::class);
-        // $this->call(AnnexSeeder::class);
-        // $this->call(TestSeeder::class);
+        $this->call(BrandTableSeeder::class);
+        $this->call(ColorTableSeeder::class);
+        $this->call(ModelTableSeeder::class);
+        $this->call(AnnexSeeder::class);
+        $this->call(TestSeeder::class);
         // $this->call(VehicleParameterSeeder::class);
 
         // Testing

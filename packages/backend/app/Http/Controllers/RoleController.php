@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-class PermissionController extends Controller
+
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Permission::latest();
+        $query = Role::latest();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -36,9 +37,9 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $permission = Permission::create($request->all());
+        $role = Role::create($request->all());
 
-        return response()->json($permission, 201);
+        return response()->json($role, 201);
     }
 
     /**
@@ -70,10 +71,10 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permission $permission)
+    public function destroy(Role $role)
     {
-        $permission->delete();
+        $role->delete();
 
-        return response()->json($permission, 201);
+        return response()->json($role, 201);
     }
 }
