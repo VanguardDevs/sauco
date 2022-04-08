@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
-            @font-face {
+            /* @font-face {
                 font-family: 'Roboto';
                 font-style: normal;
                 font-weight: 300;
@@ -137,11 +137,79 @@
             }
             .spacing {
                 margin-top: 45px;
+            } */
+
+
+
+            body {
+                font-family: 'Helvetica';
+                font-size: 15px;
             }
+            .header {
+                width: 100%;
+                font-size: 9px;
+                position: relative;
+                display: block;
+            }
+            .header div {
+                display: inline-block;
+            }
+            #mayorLOGO {
+                float: right;
+                margin-top: -10px;
+            }
+            table, td, th {
+                border: 1px #000 solid;
+            }
+            td {
+                font-size: 12px;
+                padding: 2px 1px;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 5px;
+            }
+            .details td {
+                text-align: center;
+            }
+            .details .object-payment {
+                text-align: left;
+                padding-left: 3px;
+            }
+            .tables {
+                display:block;
+            }
+            .bill-info {
+                width: 100%;
+                clear: both;
+                font-weight: bold;
+            }
+            .col-bill-info {
+                float: left;
+                width: 50%;
+                font-size: 16px;
+            }
+            .total-amount {
+                text-align: right;
+            }
+            .miscellaneus {
+                font-size: 12px;
+            }
+            caption {
+                font-weight: bold;
+            }
+            th {
+                font-size: 10px;
+                padding: 3px 1px;
+            }
+
+
+
         </style>
     </head>
     <body>
-        <div id="watermark">
+        <!-- <div id="watermark">
             <img src="{{ asset('/assets/images/licenses/fondo.jpeg') }}" height="100%" width="100%"/>
         </div>
         <div class="container">
@@ -232,6 +300,31 @@
                 <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                 <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
             </div>
+        </div> -->
+
+
+        <div class="header">
+            <div class="sumatLOGO">
+                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+            </div>
+            <div class="description">
+               <p>
+                REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
+                ESTADO SUCRE<br>
+                ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
+                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
+                RIF: G-20000222-1<br>
+                DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
+                </p>
+            </div>
+            <div id="mayorLOGO">
+                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+            </div>
         </div>
+
+
+
+
+
     </body>
 </html>
