@@ -88,6 +88,10 @@
                     </tr>
                 </tbody>
             </table>
+	    </br>
+	    <div class="form-group row">
+                <h5 class="col-md-12"> Fecha de ingreso: {{ $row->processed_at }}</h5>
+            </div>
 
             @endif
             @else
