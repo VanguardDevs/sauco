@@ -15,6 +15,7 @@ use App\Models\License;
 use App\Models\LiqueurClassification;
 use App\Models\LiqueurZone;
 use App\Models\LiqueurParameter;
+use App\Models\Liqueur;
 
 
 use Illuminate\Database\Seeder;

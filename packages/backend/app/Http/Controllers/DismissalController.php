@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PDF;
 
-
-Carbon::now();
-
 class DismissalController extends Controller
 {
     public function index(Request $request)
