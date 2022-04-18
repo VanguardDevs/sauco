@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'ManageTokenController@login');
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     /**
      * Configurations
      */
@@ -87,9 +87,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('signatures', 'SignatureController');
     Route::apiResource('roles', 'RoleController');
 
+
+         /*
+    * Dismissal's routes modules
+     */
+    Route::get('dismissals/{dismissal}/download', 'DismissalController@download')
+        ->name('dismissals.download');
+    Route::resource('dismissals', 'DismissalController');
+
     /**
      * Account
     */
     Route::post('update-password', 'UpdatePasswordController');
     Route::get('logout', 'ManageTokenController@logout');
-});
+// });

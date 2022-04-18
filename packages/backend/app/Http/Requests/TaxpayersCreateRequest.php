@@ -28,9 +28,10 @@ class TaxpayersCreateRequest extends FormRequest
             'name' => 'required',
             'taxpayer_type_id' => 'required',
             'taxpayer_classification_id' => 'required',
-            'municipality_id' => 'required',
+            // 'municipality_id' => 'required',
             'parish_id' => 'required',
-            'state_id' => 'required',
+            'community_id' => 'required',
+            // 'state_id' => 'required',
             'address' => 'required',
         ];
     }
