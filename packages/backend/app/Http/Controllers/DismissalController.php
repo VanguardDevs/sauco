@@ -81,8 +81,12 @@ class DismissalController extends Controller
 
         $vars = ['dismissal', 'taxpayer', 'license', 'user', 'signature'];
 
-        return PDF::setOptions(['isRemoteEnabled' => true])
-                ->loadView('pdf.reports.dismissals', compact($vars))
+        // return PDF::setOptions(['isRemoteEnabled' => true])
+        //         ->loadView('pdf.reports.dismissals', compact($vars))
+        //         ->stream('cese-'.$dismissal->id.'.pdf');
+
+
+        return PDF::loadView('pdf.reports.dismissals', compact($vars))
                 ->stream('cese-'.$dismissal->id.'.pdf');
    }
 }

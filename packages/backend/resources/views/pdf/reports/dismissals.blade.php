@@ -35,26 +35,19 @@
             .details td {
                 text-align: center;
             }
-            .details .object-payment {
-                text-align: left;
-                padding-left: 3px;
+            .titulo{
+                display: block;
+                align: center;
+                text-align: center;
             }
-            .tables {
-                display:block;
+
+            #fecha-pdf{
+                position: relative;
+                display: block;
+                align-items: right;
+                position: absolute;
             }
-            .bill-info {
-                width: 100%;
-                clear: both;
-                font-weight: bold;
-            }
-            .col-bill-info {
-                float: left;
-                width: 50%;
-                font-size: 16px;
-            }
-            .total-amount {
-                text-align: right;
-            }
+
             .miscellaneus {
                 font-size: 12px;
             }
@@ -90,7 +83,7 @@
         <div class="container">
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+                <!-- <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/> -->
             </div>
             <div class="description">
                <p>
@@ -103,54 +96,22 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+                <!-- <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" /> -->
             </div>
         </div>
-        <!-- <div class="tables">
-            <table class="table" style="text-align: center;margin-bottom:0;">
-
-                <tbody>
-                    <tr>
-                        <td>
-                            <dl style="text-align: left;">
-                                <dt><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</dt>
-                                <dt><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</dt>
-                                <dt><strong>FECHA DE EMISIÓN</strong> {{ $license->emission_date }}</dt>
-                                <dt><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</dt>
-                                <dt><strong>REPRESENTANTE:</strong> {{ $representation }}</dt>
-                            </dl>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <table class="table" style="text-align: center;">
-                <tr>
-
-                    <th colspan = "4">ACTIVIDADES ECONÓMICAS
-                    </th>
-                </tr>
-                <thead>
-                    <tr>
-                        <th width="10%">CÓDIGO</th>
-                        <th width="60%">NOMBRE</th>
-                        <th width="15%">ALICUOTA</th>
-                        <th width="15%">MÍNIMO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($license->economicActivities->take(3) as $activity)
-                    <tr>
-                        <td>{{ $activity->code }}</td>
-                        <td>{{ substr($activity->name, 0, 29)}}</td>
-                        <td>{{ $activity->aliquote }}</td>
-                        <td>{{ $activity->min_tax }}</td>
-
-                  </tr>
-                  @endforeach
-                </tbody>
-            </table> -->
+        <br>
+        <div class="row">
+            <p class="titulo">CONSTANCIA DE CESE DE ACTIVIDAD ECONÓMICA</p>
         </div>
+        <br>
+        <div class="row">
+            <p id="fecha-pdf" >{{\Carbon\Carbon::now()->format('d/m/Y')}}</p>
+        </div>
+        <br><br><br>
+        <div class="row">
+        Se hace constar que la Actividad Economica de la Licencia {{ $license->num }} cuya Denominacion {{$taxpayer->name}} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}. Ha Cesado sus actividades a la fecha {{ \Carbon\Carbon::parse($dismissal->dismissed_at)->format('d/m/Y') }}.
+        </div>
+        <br><br><br>
         <div class="bottom text-center">
             <span class="row">{{ $signature->title }}</span>
             <span class="row">superintendente de administración tributaria</span>
