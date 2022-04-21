@@ -169,4 +169,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('liquidations.index');
     Route::get('liquidations/{liquidation}/show', 'LiquidationController@show')
         ->name('liquidations.show');
+
+    /**
+     * Dismissal's routes modules
+     */
+    Route::get('dismissals/{dismissal}/download', 'DismissalController@download')
+        ->name('dismissals.download');
+    Route::resource('dismissals', 'DismissalController');
 });
