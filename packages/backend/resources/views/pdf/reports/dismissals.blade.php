@@ -39,13 +39,14 @@
                 display: block;
                 align: center;
                 text-align: center;
+                margin-top: 10%;
             }
 
             #fecha-pdf{
-                position: relative;
                 display: block;
-                align-items: right;
-                position: absolute;
+                align: right;
+                text-align: right;
+
             }
 
             .miscellaneus {
@@ -73,7 +74,7 @@
                 font-weight: 700;
                 font-size: 12px;
                 margin: auto;
-                margin-top: 10%;
+                margin-top: 50%;
                 position: absolute;
                 left: 10%;
             }
@@ -105,11 +106,11 @@
         </div>
         <br>
         <div class="row">
-            <p id="fecha-pdf" >{{\Carbon\Carbon::now()->format('d/m/Y')}}</p>
+            <p id="fecha-pdf" >{{\Carbon\Carbon::now()->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY');}}</p>
         </div>
         <br><br><br>
         <div class="row">
-        Se hace constar que la Actividad Economica de la Licencia {{ $license->num }} cuya Denominacion {{$taxpayer->name}} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}. Ha Cesado sus actividades a la fecha {{ \Carbon\Carbon::parse($dismissal->dismissed_at)->format('d/m/Y') }}.
+        Se hace constar que la Actividad Economica de la Licencia {{ $license->num }} cuya Denominacion {{$taxpayer->name}} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}. Ha Cesado sus actividades a la fecha {{ \Carbon\Carbon::parse($dismissal->dismissed_at)->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY'); }}.
         </div>
         <br><br><br>
         <div class="bottom text-center">

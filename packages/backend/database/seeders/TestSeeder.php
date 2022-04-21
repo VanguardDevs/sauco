@@ -31,9 +31,9 @@ class TestSeeder extends Seeder
     {
 
         // Taxpayer::create([
-        //     'rif' => '12345',
-        //     'name' => 'alguien',
-        //     'address' => 'direccion',
+        //     'rif' => 'J-00031531-0',
+        //     'name' => 'ALFONZO RIVAS & CIA',
+        //     'address' => 'PUERTO LA CRUZ',
         //     'phone' => '123456',
         //     'email' => 'example@gmail.com',
         //     'taxpayer_type_id' => '2',
@@ -43,17 +43,18 @@ class TestSeeder extends Seeder
         // ]);
 
 
-        // Liquidation::create([
-        //     'num' => '10123',
-        //     'amount' => '12',
-        //     'liquidable_id' => '1',
-        //     'liquidable_type' => 'algo',
-        //     'liquidation_type_id' => '1',
-        //     'taxpayer_id' => '1',
-        //     'status_id' => '1',
-        //     'concept_id' => '1',
-        //     'user_id' => '1'
-        // ]);
+        Liquidation::create([
+            'id' => '1',
+            'num' => '10123',
+            'amount' => '12',
+            'liquidable_id' => '1',
+            'liquidable_type' => 'algo',
+            'liquidation_type_id' => '1',
+            'taxpayer_id' => '1',
+            'status_id' => '1',
+            'concept_id' => '1',
+            'user_id' => '1'
+        ]);
 
 
         CorrelativeType::create([
@@ -120,33 +121,33 @@ class TestSeeder extends Seeder
         ]);
 
 
-        // LiqueurClassification::create([
-        //     'name' => 'algo',
-        //     'abbreviature' => 'AL'
+        LiqueurClassification::create([
+            'name' => 'algo',
+            'abbreviature' => 'AL'
 
-        // ]);
+        ]);
 
-        // LiqueurZone::create([
-        //     'name' => 'algo'
-        // ]);
+        LiqueurZone::create([
+            'name' => 'algo'
+        ]);
 
-        // LiqueurParameter::create([
-        //     'liqueur_classification_id' => '1',
-        //     'liqueur_zone_id' => '1',
-        //     'new_registry_amount' => '10',
-        //     'renew_registry_amount' => '11',
-        //     'movil' => '1'
-        // ]);
+        LiqueurParameter::create([
+            'liqueur_classification_id' => '1',
+            'liqueur_zone_id' => '1',
+            'new_registry_amount' => '10',
+            'renew_registry_amount' => '11',
+            'movil' => '1'
+        ]);
 
 
-        // Liqueur::create([
-        //     'work_hours' => '2',
-        //     'company_id' => '3',
-        //     'liqueur_parameter_id' => '1',
-        //     'representation_id' => '2',
-        //     'license_id' => '1'
+        Liqueur::create([
+            'work_hours' => '2',
+            'company_id' => '1',
+            'liqueur_parameter_id' => '1',
+            'representation_id' => '1',
+            'license_id' => '1'
 
-        // ]);
+        ]);
 
     }
 }
