@@ -88,11 +88,15 @@
                     </tr>
                 </tbody>
             </table>
-	    </br>
-	    <div class="form-group row">
-                <h5 class="col-md-12"> Fecha de ingreso: {{ $row->processed_at }}</h5>
+	        </br>
+           <div class="form-group col-lg-12">
+                <div class="kt-heading kt-heading--md">
+                    Fecha de ingreso: {{ $row->processed_at }}
+                </div>
+                <div class="kt-heading kt-heading--md">
+                    Usuario: {{ $row->user->full_name }}
+                </div>
             </div>
-
             @endif
             @else
             <div class="form-group row">
