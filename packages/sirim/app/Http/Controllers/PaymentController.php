@@ -220,4 +220,29 @@ class PaymentController extends Controller
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
     }
+
+
+
+    public function ticket(Payment $payment)
+    {
+        if ($payment->status->id == 1) {
+            return redirect()->back()
+                ->withError('¡La factura no ha sido procesada!');
+        }
+
+        $reference = (!!$payment->reference) ? $payment->reference->reference : 'S/N';
+        $taxpayer = $payment->taxpayer;
+
+        $denomination = (!!$taxpayer->commercialDenomination) ? $taxpayer->commercialDenomination->name : $taxpayer->name;
+        $liquidation = $payment->liquidations()->first();
+        $customPaper = array(0,0,228,400);
+
+            $vars = ['payment', 'reference', 'denomination', 'liquidation'];
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.payment-ticket', compact($vars))
+                ->setPaper($customPaper)
+                ->stream('factura-'.$payment->id.'.pdf');
+
+   }
 }

@@ -76,6 +76,8 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('payments/{payment}/download', 'PaymentController@download')
         ->name('payments.download');
+    Route::get('payments/{payment}/ticket', 'PaymentController@ticket')
+        ->name('payments.ticket');
     Route::resource('payments', 'PaymentController');
 
     /**
