@@ -247,6 +247,7 @@ class AffidavitController extends Controller
             'amount' => $totalAmount,
             'user_id' => auth()->user()->id,
             'processed_at' => $processedAt,
+            'num' => Affidavit::getNewNum()
         ]);
 
         return redirect('affidavits/'.$affidavit->id)

@@ -106,12 +106,13 @@
         <div class="kt-portlet__body">
             <table id="tApplications" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
-                  <tr>
-                    <th width="20%">Monto</th>
-                    <th width="40%">Concepto</th>
-                    <th width="20%">Realizada</th>
-                    <th width="20%">Acciones</th>
-                  </tr>
+                    <tr>
+                        <th width="10%">Número</th>
+                        <th width="15%">Monto</th>
+                        <th width="40%">Concepto</th>
+                        <th width="15%">Realizada</th>
+                        <th width="20%">Acciones</th>
+                    </tr>
                 </thead>
             </table>
         </div>

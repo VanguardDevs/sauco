@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 trait PrettyTimestamps
-{ 
+{
     public function getDownloadedAtAttribute($value)
     {
         return Date('d/m/Y h:i', strtotime($value));
@@ -21,7 +21,7 @@ trait PrettyTimestamps
 
     public function getProcessedAtAttribute($value)
     {
-        return Date('d/m/Y h:i', strtotime($value));
+        return Date('d/m/Y h:i A', strtotime($value));
     }
 
     public function getDeletedAtAttribute($value)
