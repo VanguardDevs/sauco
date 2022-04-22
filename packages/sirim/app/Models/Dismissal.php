@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dismissal extends Model
 {
-    use HasFactory;
-
     protected $table = 'dismissals';
 
     protected $fillable = [
@@ -33,5 +30,4 @@ class Dismissal extends Model
     {
         return $this->belongsTo(Taxpayer::class);
     }
-
 }
