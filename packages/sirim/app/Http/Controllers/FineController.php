@@ -70,12 +70,7 @@ class FineController extends Controller
     public function store(Request $request, Taxpayer $taxpayer)
     {
         $concept = Concept::find($request->get('concept'));
-
-        if (!$request->has('amount')) {
-            $amount = $concept->calculateAmount();
-        } else {
-            $amount = $request->get('amount');
-        }
+        $amount = ($request->amount) ? $request->amount : $concept->calculateAmount();
 
         $fine = $taxpayer->fines()->create([
             'active' => 1,
