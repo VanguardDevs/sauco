@@ -252,7 +252,7 @@ class LicenseController extends Controller
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
         $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString'];
-        $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
+        $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
             ->stream('Licencia '.$taxpayer->rif.'.pdf');
