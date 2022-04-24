@@ -169,4 +169,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('liquidations.index');
     Route::get('liquidations/{liquidation}/show', 'LiquidationController@show')
         ->name('liquidations.show');
+        
+   	Route::get('liquidations/{liquidation}/download', 'LiquidationController@download')
+        ->name('liquidations.download');
+    Route::get('liquidations/{liquidation}/ticket', 'LiquidationController@ticket')
+        ->name('liquidations.ticket');
 });
