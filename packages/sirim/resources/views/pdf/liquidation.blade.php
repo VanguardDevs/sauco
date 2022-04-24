@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Factura </title>
+        <title> Comprobante Liquidación</title>
         <style>
            body {
                 font-family: 'Helvetica';
