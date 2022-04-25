@@ -17,7 +17,6 @@
             }
             .header div {
                 display: inline-block;
-                text-align: center;
             }
             #mayorLOGO {
                 float: right;
@@ -81,7 +80,7 @@
             </div>
         </div>
         <div class="tables">
-   
+
            <table class="details">
                 <caption>COMPROBANTE DE LIQUIDACIÓN</caption>
                 <thead>
@@ -89,7 +88,7 @@
                     <th width="15%">Nº LIQUIDACIÓN</th>
                     <th width="60%">MONTO</th>
                     <th width="25%">FECHA</th>
-                    
+
                   </tr>
                 </thead>
                 <tbody>
