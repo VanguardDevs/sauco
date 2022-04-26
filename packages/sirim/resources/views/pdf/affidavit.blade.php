@@ -98,7 +98,7 @@
         </div>
 
         <p>
-            Declaración Nº{{ $affidavit->num }} para el período {{ $affidavit->month->name }} -  {{ $affidavit->month->year->year }}</h3>
+            Declaración{{ ' Nº ' .$affidavit->num }} para el período {{ $affidavit->month->name }} -  {{ $affidavit->month->year->year }}</h3>
 
         </p>
         <div class="tables">
