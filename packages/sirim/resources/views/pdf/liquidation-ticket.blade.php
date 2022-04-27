@@ -5,24 +5,30 @@
         <!-- CSRF Token -->
         <title> Comprobante Liquidación </title>
         <style>
+            @page {
+                margin-left: 12px;
+                margin-right: 12px;
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
            body {
                 font-family: 'Helvetica';
-                font-size: 15px;
+                font-size: 10px;
             }
             .header {
                 width: 100%;
-                font-size: 18px;
+                font-size: 10px;
                 position: relative;
                 display: block;
                 text-align: center;
             }
             .title {
-                font-size: 18px;
+                font-size: 10px;
                 text-align: center;
 
             }
             .information {
-                font-size: 18px;
+                font-size: 10px;
             }
         </style>
     </head>
