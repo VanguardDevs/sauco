@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Comprobante </title>
+        <title> Comprobante de actividad económica </title>
         <style>
            body {
                 font-family: 'Helvetica';

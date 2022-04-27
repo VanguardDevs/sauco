@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Factura </title>
+        <title>Comprobante de declaración de actividad económica</title>
         <style>
            body {
                 font-family: 'Helvetica';
@@ -44,7 +44,7 @@
             }
             span{
                 font-weight: bold;
-            }          
+            }
         </style>
     </head>
 
@@ -69,11 +69,11 @@
             DIRECCIÓN: {{ $affidavit->taxpayer->fiscal_address }}<br>
             </p>
         </div>
-        
+
 
 
         <div class="sections">
-            
+
             <span>DECLARACIONES POR ACTIVIDAD ECONÓMICA</span>
             @foreach($affidavit->economicActivityAffidavits as $EconomicActivity)
             CÓDIGO: {{ $EconomicActivity->economicActivity->code }}<br>
@@ -81,7 +81,7 @@
             DECLARADO: {{ $EconomicActivity->affidavit_amount }}<br>
             CALCULADO: {{ $EconomicActivity->calc }}<br><br>
             @endforeach
-            
+
         </div>
 
         <div class="sections">
