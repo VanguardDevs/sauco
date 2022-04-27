@@ -38,6 +38,14 @@ const status = model => (
         `
 );
 
+const createPaymentButton = (model, route) => (
+    (!model.liquidation) ? `
+    <a class="mr-2" href=${baseURL}/${route}/${model.id}/payment/new title='Facturar'>
+        <i class='btn-sm btn-success fas fa-money-check'></i>
+    </a>
+    ` : ``
+);
+
 function onSelectTaxpayerType() {
   let selected = $(this).children('option:selected').val();
   let commercialDenomination = $('#commercial_denomination');
@@ -759,15 +767,13 @@ $(document).ready(function() {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
-                    <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/fines/${oData.id}/payment/new title='Facturar'>
-                            <i class='btn-sm btn-success fas fa-money-check'></i>
-                        </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
-                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                        </a>
-                    </div>`
-                    );
+                        <div class="btn-group">
+                            ${createPaymentButton(oData, 'fines')}
+                            <a class="mr-2" onClick="nullRecord(${oData.id},'fines')" title='Anular'>
+                                <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                            </a>
+                        </div>
+                    `);
                 }
             }
         ]
@@ -791,14 +797,12 @@ $(document).ready(function() {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
-                    <div class="btn-group">
-                      <a class="mr-2" href=${baseURL}/applications/${oData.id}/payment/new title='Facturar'>
-                        <i class='btn-sm btn-success fas fa-money-check'></i>
-                      </a>
-                      <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
-                        <i class='btn-sm btn-danger fas fa-trash-alt'></i>
-                      </a>
-                    </div>`
+                        <div class="btn-group">
+                            ${createPaymentButton(oData, 'applications')}
+                            <a class="mr-2" onClick="nullRecord(${oData.id},'taxpayers/${oData.taxpayer_id}/applications')" title='Anular'>
+                                <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                            </a>
+                        </div>`
                     );
                 }
             }
@@ -865,9 +869,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/affidavits/${oData.id}/payment/new title='Facturar'>
-                            <i class='btn-sm btn-success fas fa-money-check'></i>
-                        </a>
+                        ${createPaymentButton(oData, 'affidavits')}
                         <a class="mr-2" href=${baseURL}/affidavits/${oData.id} title='Ver declaración jurada de ingresos'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>

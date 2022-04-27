@@ -101,3 +101,5 @@ Route::post('login', 'ManageTokenController@login');
     Route::post('update-password', 'UpdatePasswordController');
     Route::get('logout', 'ManageTokenController@logout');
 // });
+
+Route::get('economic-activities/{activity}/download', 'EconomicActivityController@download');

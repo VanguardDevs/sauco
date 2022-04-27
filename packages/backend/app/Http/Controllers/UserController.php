@@ -15,6 +15,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Auth;
 use Hash;
+use PDF;
 
 class UserController extends Controller
 {
@@ -28,6 +29,8 @@ class UserController extends Controller
         $query = User::latest();
         $results = $request->perPage;
         $filters = $request->has('filter') ? $request->filter : [];
+        $sort = $request->sort;
+        $order = $request->order;
 
         // Get fields
         if (array_key_exists('full_name', $filters)) {
@@ -47,6 +50,14 @@ class UserController extends Controller
         }
         if (array_key_exists('id', $filters)) {
             $query->find($filters['id']);
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
+        }
+
+        if ($request->type == 'pdf') {
+            return $this->report($query);
         }
 
         return $query->paginate($results);
@@ -94,6 +105,20 @@ class UserController extends Controller
         $user = $request->user();
 
         return response()->json($user);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $title = "Listado de Usuarios";
+
+        $pdf = PDF::LoadView('pdf.reports.users', compact([
+            'models',
+            'title'
+        ]));
+
+        return $pdf->download('usuarios.pdf');
     }
 
     public function showChangePassword()

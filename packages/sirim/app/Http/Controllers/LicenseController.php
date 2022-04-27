@@ -14,6 +14,7 @@ use App\Models\CorrelativeType;
 use App\Models\Year;
 use App\Models\Ordinance;
 use App\Models\Taxpayer;
+use App\Models\Dismissal;
 use App\Models\App\Modelslication;
 use Carbon\Carbon;
 use App\Models\Signature;
@@ -27,35 +28,13 @@ class LicenseController extends Controller
      */
     public function index(Request $request)
     {
-        $ordinance = $request->get('ordinance');
-        $type = $request->get('type');
-        $pdf = $request->get('pdf');
-        $from = $request->get('from');
-        $to = $request->get('to');
-
         $query = License::orderBy('active', 'ASC');
-
-        if ($ordinance) {
-            $query->whereOrdinanceId($ordinance);
-        }
-        if ($type) {
-            $query->whereHas('correlative', function (Builder $query) use ($type) {
-                $query->whereCorrelativeTypeId($type);
-            });
-        }
-        if ($from) {
-            $query->whereBetween('emission_date',  [$from, $to]);
-        }
 
         // Return responses
         if ($request->wantsJson()) {
             $query->with(['taxpayer', 'ordinance']);
 
             return DataTables::eloquent($query)->toJson();
-        }
-
-        if ($pdf) {
-            return $this->printReport($query);
         }
 
         return view('modules.licenses.index');
@@ -187,6 +166,23 @@ class LicenseController extends Controller
         return response()->json($newLicense);
     }
 
+    public function dismiss(License $license)
+    {
+        $dismissedAt = Carbon::now();
+
+        $dismissal = Dismissal::create([
+            'user_id' => Auth::user()->id,
+            'taxpayer_id' => $license->taxpayer_id,
+            'license_id' => $license->id,
+            'dismissed_at' => $dismissedAt
+        ]);
+
+        $license->taxpayer->delete();
+        $license->delete();
+
+        return response()->json($dismissal, 200);
+    }
+
     public function validateStore(Taxpayer $taxpayer, $correlativeType)
     {
         $isValid = [
@@ -252,7 +248,7 @@ class LicenseController extends Controller
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
         $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString'];
-        $license->update(['downloaded_at' => Carbon::now(), 'user_id' => Auth::user()->id]);
+        $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
             ->stream('Licencia '.$taxpayer->rif.'.pdf');
