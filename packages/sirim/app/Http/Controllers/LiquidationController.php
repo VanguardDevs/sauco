@@ -162,7 +162,7 @@ class LiquidationController extends Controller
         }
 
 
-        $customPaper = array(0,0,228,230);
+        $customPaper = array(0,0,456,460);
             return PDF::setOptions(['isRemoteEnabled' => true])
                 ->loadView('pdf.liquidation-ticket', compact('liquidation'))
                 ->setPaper($customPaper)

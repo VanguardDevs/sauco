@@ -11,18 +11,18 @@
             }
             .header {
                 width: 100%;
-                font-size: 9px;
+                font-size: 18px;
                 position: relative;
                 display: block;
                 text-align: center;
             }
             .title {
-                font-size: 9px;
+                font-size: 18px;
                 text-align: center;
 
             }
             .information {
-                font-size: 9px;
+                font-size: 18px;
             }
         </style>
     </head>
@@ -40,14 +40,14 @@
         <br>
         <p class="title">COMPROBANTE DE LA LIQUIDACIÓN</p>
         <div class="information">
-        <p> 
+        <p>
             Nº LIQUIDACIÓN: {{ $liquidation->num }}<br>
             FECHA: {{ $liquidation->created_at }}<br>
             MONTO: {{ $liquidation->pretty_amount }}<br>
             USUARIO: {{$liquidation->liquidable->user->full_name}}
         </p>
         </div>
- 
+
 
     </body>
 </html>
