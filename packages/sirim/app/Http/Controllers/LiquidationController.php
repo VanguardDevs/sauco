@@ -139,7 +139,7 @@ class LiquidationController extends Controller
         return redirect()->back()
             ->withSuccess('¡Liquidación anulada!');
     }
-    
+
         public function download(Liquidation $liquidation)
     {
         if ($liquidation->status->id == 1) {
@@ -162,7 +162,7 @@ class LiquidationController extends Controller
         }
 
 
-        $customPaper = array(0,0,228,400);
+        $customPaper = array(0,0,228,230);
             return PDF::setOptions(['isRemoteEnabled' => true])
                 ->loadView('pdf.liquidation-ticket', compact('liquidation'))
                 ->setPaper($customPaper)
