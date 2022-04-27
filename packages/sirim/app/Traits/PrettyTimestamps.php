@@ -28,4 +28,11 @@ trait PrettyTimestamps
     {
         return Date('d/m/Y h:i', strtotime($value));
     }
+
+    public function pretty($columnName, $format = 'd/m/Y h:i')
+    {
+        $column = $this[$columnName];
+
+        return Date($format, strtotime($column));
+    }
 }

@@ -66,6 +66,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('licenses/{license}/renovate', 'LicenseController@renovate');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
+        Route::post('licenses/{license}/dismiss', 'LicenseController@dismiss');
     });
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
@@ -169,4 +170,12 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('liquidations.index');
     Route::get('liquidations/{liquidation}/show', 'LiquidationController@show')
         ->name('liquidations.show');
+
+    /**
+     * Dismissal's routes modules
+     */
+    Route::get('dismissals/{dismissal}/download', 'DismissalController@download')
+        ->name('dismissals.download');
+    Route::resource('dismissals', 'DismissalController')
+        ->only(['index']);
 });
