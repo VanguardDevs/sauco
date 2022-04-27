@@ -39,7 +39,6 @@
                 display: block;
                 align: center;
                 text-align: center;
-                margin-top: 10%;
             }
 
             #fecha-pdf{
@@ -68,14 +67,14 @@
             }
             .bottom {
                 width: 80%;
-                height: 170px;
-                z-index: 1000;
+                /* height: 170px; */
+                /* z-index: 1000; */
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 12px;
                 margin: auto;
-                margin-top: 50%;
-                position: absolute;
+                margin-top: 20%;
+                /* position: absolute; */
                 left: 10%;
             }
         </style>
@@ -84,7 +83,7 @@
         <div class="container">
         <div class="header">
             <div class="sumatLOGO">
-                <!-- <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/> -->
+                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -97,7 +96,7 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <!-- <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" /> -->
+                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
             </div>
         </div>
         <br>
@@ -106,13 +105,13 @@
         </div>
         <br>
         <div class="row">
-            <p id="fecha-pdf" >{{\Carbon\Carbon::now()->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY');}}</p>
+            <p id="fecha-pdf" >{{\Carbon\Carbon::now()->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY')}}</p>
         </div>
         <br><br><br>
         <div class="row">
-        Se hace constar que la Actividad Economica de la Licencia {{ $license->num }} cuya Denominacion {{$taxpayer->name}} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}. Ha Cesado sus actividades a la fecha {{ \Carbon\Carbon::parse($dismissal->dismissed_at)->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY'); }}.
+         Se hace constar que la Actividad Economica de la Licencia {{ $license->num }} cuya Denominacion {{$taxpayer->name}} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}. Ha Cesado sus actividades a la fecha {{ \Carbon\Carbon::parse($dismissal->dismissed_at)->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY') }}.
         </div>
-        <br><br><br>
+
         <div class="bottom text-center">
             <span class="row">{{ $signature->title }}</span>
             <span class="row">superintendente de administración tributaria</span>
