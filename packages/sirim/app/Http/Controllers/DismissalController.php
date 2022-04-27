@@ -9,23 +9,22 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PDF;
 use Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class DismissalController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Dismissal::query();
-        $results = $request->perPage;
+        $query = Dismissal::latest();
 
-        if ($request->has('filter')) {
-            $filters = $request->filter;
+        // Return responses
+        if ($request->wantsJson()) {
+            $query->with(['taxpayer']);
 
-            if (array_key_exists('dismissed_at', $filters)) {
-                $query->whereLike('dismissed_at', $filters['dismissed_at']);
-            }
+            return DataTables::eloquent($query)->toJson();
         }
 
-        return $query->paginate($results);
+        return view('modules.dismissals.index');
     }
 
     /**

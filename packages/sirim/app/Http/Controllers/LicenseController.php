@@ -28,35 +28,13 @@ class LicenseController extends Controller
      */
     public function index(Request $request)
     {
-        $ordinance = $request->get('ordinance');
-        $type = $request->get('type');
-        $pdf = $request->get('pdf');
-        $from = $request->get('from');
-        $to = $request->get('to');
-
         $query = License::orderBy('active', 'ASC');
-
-        if ($ordinance) {
-            $query->whereOrdinanceId($ordinance);
-        }
-        if ($type) {
-            $query->whereHas('correlative', function (Builder $query) use ($type) {
-                $query->whereCorrelativeTypeId($type);
-            });
-        }
-        if ($from) {
-            $query->whereBetween('emission_date',  [$from, $to]);
-        }
 
         // Return responses
         if ($request->wantsJson()) {
             $query->with(['taxpayer', 'ordinance']);
 
             return DataTables::eloquent($query)->toJson();
-        }
-
-        if ($pdf) {
-            return $this->printReport($query);
         }
 
         return view('modules.licenses.index');

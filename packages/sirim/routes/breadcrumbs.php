@@ -60,6 +60,12 @@ Breadcrumbs::for('licenses.index', function ($trail) {
 });
 
 /*----------  Reports ----------*/
+Breadcrumbs::for('dismissals.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Ceses', route('dismissals.index'));
+});
+
+/*----------  Reports ----------*/
 Breadcrumbs::for('reports', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Reportes', url('reports'));
