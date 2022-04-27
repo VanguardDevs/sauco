@@ -84,7 +84,7 @@
         <div class="container">
         <div class="header">
             <div class="sumatLOGO">
-                <!-- <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/> -->
+                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -97,7 +97,7 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <!-- <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" /> -->
+                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
             </div>
         </div>
         <br>
@@ -106,11 +106,13 @@
         </div>
         <br>
         <div class="row">
-            <p id="fecha-pdf" >{{\Carbon\Carbon::now()->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY');}}</p>
+            <p id="fecha-pdf" >{{ date('d-m-Y') }}</p>
         </div>
-        <br><br><br>
+        <br>
         <div class="row">
-        Se hace constar que la Actividad Economica de la Licencia {{ $license->num }} cuya Denominacion {{$taxpayer->name}} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}. Ha Cesado sus actividades a la fecha {{ \Carbon\Carbon::parse($dismissal->dismissed_at)->locale('es')->isoFormat('D \d\e MMMM \d\e YYYY'); }}.
+        Se hace constar que la Actividad Economica de la Licencia {{ $license->num }}
+            cuya Denominacion {{ $taxpayer->name }} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}.
+            Ha Cesado sus actividades a la fecha {{ $dismissal->pretty('dismissed_at', 'd-m-Y') }}.
         </div>
         <br><br><br>
         <div class="bottom text-center">

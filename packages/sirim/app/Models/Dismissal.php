@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\PrettyTimestamps;
 
 class Dismissal extends Model
 {
+    use PrettyTimestamps;
+
     protected $table = 'dismissals';
 
     protected $fillable = [

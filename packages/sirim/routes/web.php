@@ -175,5 +175,7 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('dismissals/{dismissal}/download', 'DismissalController@download')
         ->name('dismissals.download');
-    Route::resource('dismissals', 'DismissalController');
+    Route::resource('dismissals', 'DismissalController')
+        ->only(['index']);
+    Route::post('licenses/{license}/dismiss', 'LicenseController@dismiss');
 });

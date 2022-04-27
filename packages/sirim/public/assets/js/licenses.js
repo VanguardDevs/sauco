@@ -42,6 +42,35 @@ const renovateLicense = (id) => {
     });
 }
 
+const dismissLicense = (id) => {
+    Swal.fire({
+        title: '¿Está seguro(a) que desea cesar la licencia?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Cesar'
+    }).then(result => {
+        if (result.value) {
+            $.ajax({
+                type: 'POST',
+                url: `${window.location.href}/${id}/dismiss`,
+                data: {
+                    '_method': 'POST',
+                    '_token': $("meta[name='csrf-token']").attr("content"),
+                },
+                success: response => location.reload(),
+                error: res => Swal.fire({
+                    title: 'Esta acción no puede ser procesada.',
+                    type: 'info',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                })
+            });
+        }
+    });
+}
+
 const renovateLicenseButton = id => (
     `<a class="mr-2" onClick="renovateLicense(${id})" title='Editar'>
         <i class='btn-sm btn-success fas fa-trash-alt'></i>
@@ -87,7 +116,7 @@ $(document).ready(function() {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     const renovateLicenseButton = id => (`
-                        <a class="mr-2" onClick="renovateLicense(${id})" title='Renovar'>
+                        <a class="mr-2" onClick="dismissLicense(${id})" title='Renovar'>
                             <i class='btn-sm btn-success fas fa-sync'></i>
                         </a>
                     `);
@@ -96,6 +125,9 @@ $(document).ready(function() {
                         <div class="btn-group">
                             <a class="mr-2" href=${window.location.href}/${oData.id} title='Ver licencia'>
                                 <i class='btn-sm btn-info fas fa-eye'></i>
+                            </a>
+                            <a class="mr-2" onClick="dismissLicense(${oData.id})" title='Cesar licencia'>
+                                <i class='btn-sm btn-warning fas fa-exclamation'></i>
                             </a>
                             ${!oData.active ? renovateLicenseButton(oData.id) : ''}
                         </div>`

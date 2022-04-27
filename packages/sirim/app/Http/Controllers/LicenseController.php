@@ -14,6 +14,7 @@ use App\Models\CorrelativeType;
 use App\Models\Year;
 use App\Models\Ordinance;
 use App\Models\Taxpayer;
+use App\Models\Dismissal;
 use App\Models\App\Modelslication;
 use Carbon\Carbon;
 use App\Models\Signature;
@@ -185,6 +186,20 @@ class LicenseController extends Controller
         $license->delete();
 
         return response()->json($newLicense);
+    }
+
+    public function dismiss(License $license)
+    {
+        $dismissedAt = Carbon::now();
+
+        $dismissal = Dismissal::create([
+            'user_id' => Auth::user()->id,
+            'taxpayer_id' => $license->taxpayer_id,
+            'license_id' => $license->id,
+            'dismissed_at' => $dismissedAt
+        ]);
+
+        return response()->json($dismissal, 200);
     }
 
     public function validateStore(Taxpayer $taxpayer, $correlativeType)
