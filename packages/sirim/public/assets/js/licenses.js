@@ -116,7 +116,7 @@ $(document).ready(function() {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     const renovateLicenseButton = id => (`
-                        <a class="mr-2" onClick="dismissLicense(${id})" title='Renovar'>
+                        <a class="mr-2" onClick="renovateLicense(${id})" title='Renovar'>
                             <i class='btn-sm btn-success fas fa-sync'></i>
                         </a>
                     `);

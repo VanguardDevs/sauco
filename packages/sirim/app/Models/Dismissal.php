@@ -25,11 +25,11 @@ class Dismissal extends Model
 
     public function license()
     {
-        return $this->belongsTo(License::class);
+        return $this->belongsTo(License::class)->withTrashed();
     }
 
     public function taxpayer()
     {
-        return $this->belongsTo(Taxpayer::class);
+        return $this->belongsTo(Taxpayer::class)->withTrashed();
     }
 }

@@ -21,7 +21,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                         <div class="btn-group">
-                            <a class="btn btn-info" href=${window.location.href}/${oData.id}/download title='Descargar factura'>
+                            <a class="btn btn-info" href=${window.location.href}/${oData.id}/download title='Descargar cese'>
                                 <i class='flaticon2-download'></i>
                             </a>
                         </div>`

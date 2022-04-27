@@ -177,6 +177,9 @@ class LicenseController extends Controller
             'dismissed_at' => $dismissedAt
         ]);
 
+        $license->taxpayer->delete();
+        $license->delete();
+
         return response()->json($dismissal, 200);
     }
 
