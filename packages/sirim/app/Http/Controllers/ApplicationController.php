@@ -76,6 +76,7 @@ class ApplicationController extends Controller
             'concept_id' => $request->input('concept'),
             'user_id' => auth()->user()->id,
             'amount' => $amount,
+            'num' => Application::getNewNum(),
             'total' => $request->total
         ]);
 

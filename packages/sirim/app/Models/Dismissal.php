@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dismissal extends Model
@@ -32,5 +31,4 @@ class Dismissal extends Model
     {
         return $this->belongsTo(Taxpayer::class);
     }
-
 }
