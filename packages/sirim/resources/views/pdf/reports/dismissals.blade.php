@@ -39,7 +39,6 @@
                 display: block;
                 align: center;
                 text-align: center;
-                margin-top: 10%;
             }
 
             #fecha-pdf{
@@ -68,61 +67,59 @@
             }
             .bottom {
                 width: 80%;
-                height: 170px;
-                z-index: 1000;
+                /* height: 170px; */
+                /* z-index: 1000; */
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 12px;
                 margin: auto;
-                margin-top: 50%;
-                position: absolute;
+                margin-top: 20%;
+                /* position: absolute; */
                 left: 10%;
             }
         </style>
     </head>
     <body>
         <div class="container">
-        <div class="header">
-            <div class="sumatLOGO">
-                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+            <div class="header">
+                <div class="sumatLOGO">
+                    <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+                </div>
+                <div class="description">
+                <p>
+                    REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
+                    ESTADO SUCRE<br>
+                    ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
+                    SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
+                    RIF: G-20000222-1<br>
+                    DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
+                    </p>
+                </div>
+                <div id="mayorLOGO">
+                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+                </div>
             </div>
-            <div class="description">
-               <p>
-                REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
-                ESTADO SUCRE<br>
-                ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
-                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
-                RIF: G-20000222-1<br>
-                DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
-                </p>
+            <br>
+            <div class="row">
+                <p class="titulo">CONSTANCIA DE CESE DE ACTIVIDAD ECONÓMICA</p>
             </div>
-            <div id="mayorLOGO">
-                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+            <br>
+            <div class="row">
+                <p id="fecha-pdf" >{{ date('d-m-Y') }}</p>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <p class="titulo">CONSTANCIA DE CESE DE ACTIVIDAD ECONÓMICA</p>
-        </div>
-        <br>
-        <div class="row">
-            <p id="fecha-pdf" >{{ date('d-m-Y') }}</p>
-        </div>
-        <br>
-        <div class="row">
-        Se hace constar que la Actividad Economica de la Licencia {{ $license->num }}
-            cuya Denominacion {{ $taxpayer->name }} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}.
-            Ha Cesado sus actividades a la fecha {{ $dismissal->pretty('dismissed_at', 'd-m-Y') }}.
-        </div>
-        <br><br><br>
-        <div class="bottom text-center">
-            <span class="row">{{ $signature->title }}</span>
-            <span class="row">superintendente de administración tributaria</span>
-            <span class="row">{{ $signature->decree }}</span>
-            <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-        </div>
-    </div>
+            <br>
+            <div class="row">
+            Se hace constar que la Actividad Economica de la Licencia {{ $license->num }}
+                cuya Denominacion {{ $taxpayer->name }} y que pertenece a la Razon Social {{$taxpayer->name}} de RIF {{$taxpayer->rif}}.
+                Ha Cesado sus actividades a la fecha {{ $dismissal->pretty('dismissed_at', 'd-m-Y') }}.
+            </div>
 
-
+            <div class="bottom text-center">
+                <span class="row">{{ $signature->title }}</span>
+                <span class="row">superintendente de administración tributaria</span>
+                <span class="row">{{ $signature->decree }}</span>
+                <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+            </div>
+        </div>
     </body>
 </html>
