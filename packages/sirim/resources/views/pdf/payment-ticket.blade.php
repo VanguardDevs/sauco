@@ -17,6 +17,7 @@
             }
             .header div {
                 display: inline-block;
+                text-align:center;
             }
             #mayorLOGO {
                 float: right;
@@ -66,6 +67,9 @@
             .sections {
                 font-size: 9px;
             }
+            span{
+                font-weight: bold;
+            }
         </style>
     </head>
 
@@ -83,56 +87,29 @@
 
         <div class="sections">
             <p>
-            DATOS GENERALES DEL CONTRIBUYENTE<br>
-            RIF: {{ $payment->taxpayer->rif }}<br>
-            NOMBRE: {{ $payment->taxpayer->name }}<br>
-            DIRECCIÓN: {{ $payment->taxpayer->fiscal_address }}<br>
+            <span>DATOS GENERALES DEL CONTRIBUYENTE</span><br>
+            <span>RIF:</span> {{ $payment->taxpayer->rif }}<br>
+            <span>NOMBRE: </span>{{ $payment->taxpayer->name }}<br>
+            <span>DIRECCIÓN: </span>{{ $payment->taxpayer->fiscal_address }}<br>
             </p>
         </div>
         <div class="sections">
-        <p>DETALLES DEL COBRO<br>
-            Nº LIQUIDACIÓN: {{ $liquidation->num }}<br>
-            CONCEPTO: {{ $liquidation->object_payment }}<br>
-            MONTO: {{ $liquidation->pretty_amount }}<br>
-        </p>
+            <p><span>DETALLES DEL COBRO</span><br>
+            <span>Nº LIQUIDACIÓN: </span>{{ $liquidation->num }}<br>
+            <span>CONCEPTO: </span>{{ $liquidation->object_payment }}<br>
+            <span>MONTO: </span>{{ $liquidation->pretty_amount }}<br>
+            </p>
         </div>
         <div class="sections">
-           MONTO TOTAL: {{ $payment->pretty_amount }} Bs<br>
-           RECAUDADOR: {{ $payment->user->full_name }}<br>
-           MÉTODO DE PAGO: {{ $payment->paymentMethod->name }}<br>
-           FECHA: {{ $payment->processed_at }}
+            <span>PAGO TOTAL: </span>{{ $payment->pretty_amount }} Bs<br><br>
+            <span>N° DE FACTURA: </span>{{ $payment->num }}<br>
+            <span>RECAUDADOR: </span>{{ $payment->user->full_name }}<br>
+            <span>MÉTODO DE PAGO: </span>{{ $payment->paymentMethod->name }}<br>
+            <span>FECHA: </span>{{ $payment->processed_at }}
 
-           <br>
-           N° DE FACTURA: {{ $payment->num }}
             <br>
-           OBSERVACIONES: {{ $payment->observations }}
+            <span>OBSERVACIONES: </span>{{ $payment->observations }}
 
         </div>
-
-
-        {{-- <br>
-        <div class="bill-info">
-            <div class="col-bill-info">
-                N° DE FACTURA: {{ $payment->num }}
-            </div>
-            <div class="col-bill-info">
-                <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->pretty_amount }} Bs
-                </div>
-            </div>
-        </div>
-        <br> --}}
-        {{-- <div class="miscellaneus">
-            <div class="liquidator-info">
-                Recaudador: {{ $payment->user->full_name }}
-            </div>
-            <div class="collector-firm">
-               <span style="width:50%;"></span>
-            </div>
-            <br>
-            <div class="observations">
-                OBSERVACIONES: {{ $payment->observations }}
-            </div>
-        </div> --}}
     </body>
 </html>
