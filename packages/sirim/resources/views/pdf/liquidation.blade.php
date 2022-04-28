@@ -17,6 +17,7 @@
             }
             .header div {
                 display: inline-block;
+                text-align: center;
             }
             #mayorLOGO {
                 float: right;
