@@ -84,20 +84,25 @@
 
            <table class="details">
                 <caption>COMPROBANTE DE LIQUIDACIÓN</caption>
-                <thead>
-                  <tr>
-                    <th width="15%">Nº LIQUIDACIÓN</th>
-                    <th width="60%">MONTO</th>
-                    <th width="25%">FECHA</th>
 
+                <thead>
+                    <tr>
+                        <td colspan="3" style="text-align: left; padding-left: 3px;">
+                            <strong>CONCEPTO:</strong> {{ $liquidation->object_payment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="15%">Nº LIQUIDACIÓN</th>
+                        <th width="60%">MONTO</th>
+                        <th width="25%">FECHA</th>
                   </tr>
                 </thead>
                 <tbody>
-                 <tr>
-                    <td>{{ $liquidation->num }}</td>
-                    <td style="word-spacing:1px;font-size:16px;">{{ $liquidation->pretty_amount }}</td>
-                    <td >{{ $liquidation->created_at }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ $liquidation->num }}</td>
+                        <td style="word-spacing:1px;font-size:16px;">{{ $liquidation->pretty_amount }}</td>
+                        <td >{{ $liquidation->created_at }}</td>
+                    </tr>
              </table>
         </div>
         <br>

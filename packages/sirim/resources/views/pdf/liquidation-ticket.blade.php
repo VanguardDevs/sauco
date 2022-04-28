@@ -25,10 +25,13 @@
             .title {
                 font-size: 10px;
                 text-align: center;
-
+                font-weight: bold;
             }
             .information {
                 font-size: 10px;
+            }
+            span{
+                font-weight: bold;
             }
         </style>
     </head>
@@ -44,16 +47,15 @@
 
         </div>
         <br>
-        <p class="title">COMPROBANTE DE LA LIQUIDACIÓN</p>
+        <p class="title">COMPROBANTE DE LIQUIDACIÓN</p>
         <div class="information">
         <p>
-            Nº LIQUIDACIÓN: {{ $liquidation->num }}<br>
-            FECHA: {{ $liquidation->created_at }}<br>
-            MONTO: {{ $liquidation->pretty_amount }}<br>
-            USUARIO: {{$liquidation->liquidable->user->full_name}}
+            <span>Nº LIQUIDACIÓN: </span>{{ $liquidation->num }}<br>
+            <span>CONCEPTO: </span>{{ $liquidation->object_payment }}<br>
+            <span>FECHA: </span>{{ $liquidation->created_at }}<br>
+            <span>MONTO: </span>{{ $liquidation->pretty_amount }}<br>
+            <span>USUARIO: </span>{{$liquidation->liquidable->user->full_name}}
         </p>
         </div>
-
-
     </body>
 </html>
