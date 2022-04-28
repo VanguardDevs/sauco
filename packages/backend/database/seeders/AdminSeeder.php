@@ -17,9 +17,9 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'dni' => env('ADMIN_DNI', '12345678'),
-            'first_name' => env('ADMIN_NAME', 'user'),
-            'surname' => env('ADMIN_SURNAME', 'admin'),
+            'identity_card' => env('ADMIN_DNI', '12345678'),
+            'names' => env('ADMIN_NAME', 'user'),
+            'surnames' => env('ADMIN_SURNAME', 'admin'),
             'login' => env('ADMIN_LOGIN', 'admin'),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'qwerty123')),
         ]);

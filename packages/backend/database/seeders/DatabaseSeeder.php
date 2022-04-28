@@ -28,8 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ColorTableSeeder::class);
         $this->call(ModelTableSeeder::class);
         $this->call(AnnexSeeder::class);
-        $this->call(TestSeeder::class);
-        // $this->call(VehicleParameterSeeder::class);
 
         // Testing
         if (App::environment() == 'local') {
@@ -40,7 +38,6 @@ class DatabaseSeeder extends Seeder
             $this->call(RepresentationTypeSeeder::class);
             $this->call(GeographicAreaSeeder::class);
             $this->call(SettingsSeeder::class);
-            // $this->call(DevEnvironmentSeeder::class);
         }
 
         $this->call(AdminSeeder::class);
