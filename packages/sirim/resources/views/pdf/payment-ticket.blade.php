@@ -5,13 +5,18 @@
         <!-- CSRF Token -->
         <title> Factura </title>
         <style>
+            @page {
+                margin-left: 12px;
+                margin-right: 12px;
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
            body {
                 font-family: 'Helvetica';
-                font-size: 15px;
+                font-size: 10px;
             }
             .header {
                 width: 100%;
-                font-size: 9px;
                 position: relative;
                 display: block;
             }
@@ -19,53 +24,10 @@
                 display: inline-block;
                 text-align:center;
             }
-            #mayorLOGO {
-                float: right;
-                margin-top: -10px;
-            }
-            table, td, th {
-                border: 1px #000 solid;
-            }
-            td {
-                font-size: 12px;
-                padding: 2px 1px;
-            }
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                margin-top: 5px;
-            }
-            .details td {
-                text-align: center;
-            }
-            .details .object-payment {
-                text-align: left;
-                padding-left: 3px;
-            }
-            .tables {
-                display:block;
-            }
-            .bill-info {
-                width: 100%;
-                clear: both;
-                font-weight: bold;
-            }
-            .col-bill-info {
-                float: left;
-                width: 50%;
-                font-size: 16px;
-            }
-            .total-amount {
-                text-align: right;
-            }
-            .miscellaneus {
-                font-size: 12px;
-            }
             caption {
                 font-weight: bold;
             }
             .sections {
-                font-size: 9px;
             }
             span{
                 font-weight: bold;
@@ -86,15 +48,15 @@
         </div>
 
         <div class="sections">
+            <p style="text-align: center; font-weight: bold;">DATOS GENERALES DEL CONTRIBUYENTE</p>
             <p>
-            <span>DATOS GENERALES DEL CONTRIBUYENTE</span><br>
             <span>RIF:</span> {{ $payment->taxpayer->rif }}<br>
             <span>NOMBRE: </span>{{ $payment->taxpayer->name }}<br>
             <span>DIRECCIÓN: </span>{{ $payment->taxpayer->fiscal_address }}<br>
             </p>
         </div>
         <div class="sections">
-            <p><span>DETALLES DEL COBRO</span><br>
+        <p style="text-align: center; font-weight: bold;">DETALLES DEL COBRO</p>
             <span>Nº LIQUIDACIÓN: </span>{{ $liquidation->num }}<br>
             <span>CONCEPTO: </span>{{ $liquidation->object_payment }}<br>
             <span>MONTO: </span>{{ $liquidation->pretty_amount }}<br>
