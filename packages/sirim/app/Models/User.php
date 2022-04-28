@@ -6,10 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Caffeinated\Shinobi\Concerns\HasRolesAndPermissions;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRolesAndPermissions, HasApiTokens;
+    use Notifiable, HasRolesAndPermissions, HasApiTokens, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

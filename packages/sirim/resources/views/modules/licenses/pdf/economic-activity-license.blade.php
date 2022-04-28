@@ -113,7 +113,8 @@
                 <tbody>
                     <tr>
                         <td>
-                            <dl style="text-align: left;">
+                            <dl style="text-align: left; padding-left: 8px;">
+                                <dt><strong>NÚMERO:</strong> {{ $license->num }}</dt>
                                 <dt><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</dt>
                                 <dt><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</dt>
                                 <dt><strong>FECHA DE EMISIÓN</strong> {{ $license->emission_date }}</dt>
