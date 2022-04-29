@@ -117,6 +117,10 @@
                                 <dt><strong>NÚMERO:</strong> {{ $license->num }}</dt>
                                 <dt><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</dt>
                                 <dt><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</dt>
+                                <dt><strong>REGISTRO:</strong> {{ $num }}</dt>
+                                @if($license->correlative->correlative_type_id == 1)
+                                <dt><strong>FECHA DE INSCRIPCIÓN</strong> {{ $license->emission_date }}</dt>
+                                @endif
                                 <dt><strong>FECHA DE EMISIÓN</strong> {{ $license->emission_date }}</dt>
                                 <dt><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</dt>
                                 <dt><strong>REPRESENTANTE:</strong> {{ $representation }}</dt>
