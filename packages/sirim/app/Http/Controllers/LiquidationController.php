@@ -10,7 +10,10 @@ use App\Http\Requests\MakeWithholdingRequest;
 use App\Models\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
+use Carbon\Carbon;
 use App\Models\Withholding;
+use App\Models\Credit;
+
 
 class LiquidationController extends Controller
 {
@@ -63,16 +66,27 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MakeWithholdingRequest $request, Liquidation $liquidation)
+    public function update(MakeWithholdingRequest $request, Liquidation $liquidation, Credit $credit)
     {
         // Substract amount
         $amount = $request->input('withholding_amount');
         $newLiquidationAmount = $liquidation->amount - $amount;
 
         if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
-            return redirect()->back()
-                ->withErrors([
-                    'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
+            // return redirect()->back()
+            //     ->withErrors([
+            //         'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
+            //     ]);
+
+                $generatedAt = Carbon::now();
+
+                Credit::create([
+                    'num' => Credit::getNewNum(),
+                    'amount' => $newLiquidationAmount * -1,
+                    'taxpayer_id' => $credit->taxpayer->id,
+                    'payment_id' => $credit->payment->id,
+                    'generated_at' => $generatedAt
+
                 ]);
         }
 
