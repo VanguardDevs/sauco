@@ -136,7 +136,6 @@ const Dashboard = () => {
         fetchLiquidations();
         fetchTaxpayers();
         fetchLicenses();
-        fetchPetroPrice();
     }, []);
 
     const {
@@ -158,7 +157,6 @@ const Dashboard = () => {
                 <VerticalSpacer />
                 <RegisteredTaxpayers value={registeredTaxpayers} />
                 <VerticalSpacer />
-                <CurrentPetroPrice {...currentPetroPrice} />
                 <VerticalSpacer />
                 <PaymentChart payments={payments} />
             </div>
@@ -171,7 +169,6 @@ const Dashboard = () => {
             <div style={styles.flex}>
                 <PendingLiquidations value={pendingLiquidations} />
                 <Spacer />
-                <CurrentPetroPrice {...currentPetroPrice} />
             </div>
             <VerticalSpacer />
             <div style={styles.flex}>
@@ -200,7 +197,6 @@ const Dashboard = () => {
                         <VerticalSpacer />
                         <PendingLiquidations value={pendingLiquidations} />
                         <VerticalSpacer />
-                        <CurrentPetroPrice {...currentPetroPrice} />
                         <VerticalSpacer />
                     </div>
                 </div>

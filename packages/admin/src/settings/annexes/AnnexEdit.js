@@ -37,7 +37,7 @@ const AnnexEdit = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado el anexo "${data.name}" exitosamente!`, 'success')
+            notify(`¡Ha editado el color "${data.name}" exitosamente!`, 'success')
             redirect('/liqueur-annexes')
         }
     }, [loaded])
@@ -65,8 +65,8 @@ const AnnexEdit = props => {
 }
 
 AnnexEdit.defaultProps = {
-    basePath: '/liqueur-annexes',
-    resource: '/liqueur-annexes'
+    basePath: 'liqueur-annexes',
+    resource: 'liqueur-annexes'
 }
 
 export default AnnexEdit
