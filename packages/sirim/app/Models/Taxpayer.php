@@ -101,7 +101,7 @@ class Taxpayer extends Model implements Auditable
 
     public function credits()
     {
-        return $this->hasMany(Credit::class)->withTrashed();;
+        return $this->hasMany(Credit::class);
     }
 
     public function withholdings()

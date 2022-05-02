@@ -178,4 +178,14 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('dismissals.download');
     Route::resource('dismissals', 'DismissalController')
         ->only(['index']);
+
+
+
+      /**
+     * Taxpayer's Credits
+     */
+    Route::get('taxpayers/{taxpayer}/credits', 'CreditController@index')
+        ->name('credits.index');
+    Route::get('taxpayers/{taxpayer}/credits/list', 'CreditController@list');
+
 });

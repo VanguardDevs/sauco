@@ -82,7 +82,53 @@
     </div>
 </div>
 
-<div id="profile"></div>
+<div class="row">
+
+    <div class="col-xl-6 col-sm-6">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__body">
+                <div class="kt-widget4" id="">
+
+                    <div className="kt-notification">
+                      <a className="kt-notification__item" href={url}>
+                        <div className="kt-notification__item-icon">
+                          <i className=""></i>
+                        </div>
+                        <div className="kt-notification__item-details">
+                          <div className="kt-notification__item-title">
+                            algo
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div className="kt-notification">
+                      <a className="kt-notification__item" href={url}>
+                        <div className="kt-notification__item-icon">
+                          <i className=""></i>
+                        </div>
+                        <div className="kt-notification__item-details">
+                          <div className="kt-notification__item-title">
+                            algo
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 col-sm-6">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__body">
+                <div class="kt-widget4" id=""></div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <div class="row">
     @if (($row->taxpayerType->description == 'JURÍDICO') || ($row->commercialDenomination))
