@@ -31,8 +31,7 @@ const useStyles = makeStyles(theme => ({
                     ? '100%'
                 : `calc(100% - 240px)`, // Large screen
             boxShadow: 'none',
-            borderBottom: 0,
-            transition: 'width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms'
+            borderBottom: 0
         },
         toolbar: {
             display: 'flex',

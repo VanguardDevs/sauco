@@ -6,8 +6,6 @@
     "doc": "docs"
   },
   "scripts": {
-    "start:dashboard": "yarn workspace @sauco/dashboard run start",
-    "build:dashboard": "yarn workspace @sauco/dashboard run build && cp docs/htaccess_build packages/dashboard/build/.htaccess",
     "start:admin": "yarn workspace @sauco/admin run start",
     "build:admin": "yarn workspace @sauco/admin run build && cp docs/htaccess_build packages/admin/build/.htaccess"
   },

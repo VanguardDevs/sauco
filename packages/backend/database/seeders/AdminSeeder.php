@@ -22,6 +22,7 @@ class AdminSeeder extends Seeder
             'surnames' => env('ADMIN_SURNAME', 'admin'),
             'login' => env('ADMIN_LOGIN', 'admin'),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'qwerty123')),
+            'avatar' => 'default/user.png'
         ]);
 
         $user->syncRoles([Role::whereName('Admin')->first()]);

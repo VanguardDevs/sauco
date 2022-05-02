@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     useMutation,
     useRedirect,
     useNotify,
@@ -8,6 +7,7 @@ import {
 import { validateAnnex } from './annexValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
+import TextInput from '@sauco/lib/components/TextInput'
 
 const AnnexCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -45,7 +45,7 @@ const AnnexCreate = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

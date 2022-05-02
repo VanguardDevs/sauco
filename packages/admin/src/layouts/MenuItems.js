@@ -2,7 +2,6 @@ import * as React from 'react';
 import MenuItemLink from '@sauco/lib/components/MenuItemLink';
 import SubMenu from './SubMenu';
 
-
 import HomeIcon from '@material-ui/icons/Home';
 import ColorLensIcon from '@material-ui/icons/ColorLens';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
@@ -16,8 +15,6 @@ import StyleIcon from '@material-ui/icons/Style';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { fade, useMediaQuery } from '@material-ui/core';
-
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,7 +97,16 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                     dense={dense}
                     exact
                 />
-
+                <MenuItemLink
+                    className={classes.nested}
+                    to="/signatures"
+                    primaryText='Firmas'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
                 <MenuItemLink
                     to="/brands"
                     primaryText='Marcas'

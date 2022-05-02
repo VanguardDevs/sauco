@@ -9,7 +9,7 @@ const DatagridListView = ({ datagrid, actions }) => {
         basePath: 'configurations/levels',
         resource: 'configurations/levels'
     });
-    console.log(loading)
+
     return (
         <ListContainer
             actions={

@@ -20,6 +20,11 @@ import ModelList from './settings/models/ModelList'
 import ModelCreate from './settings/models/ModelCreate'
 import ModelEdit from './settings/models/ModelEdit'
 
+// Signatures
+import SignatureList from './settings/signatures/SignatureList'
+import SignatureCreate from './settings/signatures/SignatureCreate'
+import SignatureEdit from './settings/signatures/SignatureEdit'
+
 // Vehicle Classifications
 import VehicleClassificationList from './settings/vehicle-classifications/VehicleClassificationList'
 import VehicleClassificationCreate from './settings/vehicle-classifications/VehicleClassificationCreate'
@@ -68,6 +73,42 @@ const App = () => (
                     {...routeProps}
                 />
             } />
+
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/signatures"
+                component={(routeProps) =>
+                    <SignatureList
+                        resource="signatures"
+                        basePath={routeProps.match.url}
+                    />
+                }
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/signatures/create"
+                component={(routeProps) =>
+                    <SignatureCreate
+                        resource="signatures"
+                        basePath={routeProps.match.url}
+                    />
+                }
+            />
+            <ProtectedRoute
+                layout={Layout}
+                exact
+                path="/signatures/:id"
+                component={(routeProps) =>
+                    <SignatureEdit
+                        resource="signatures"
+                        basePath={routeProps.match.url}
+                        id={decodeURIComponent((routeProps.match).params.id)}
+                        {...routeProps}
+                    />
+                }
+            />
         </Switch>
         <Switch>
             <ProtectedRoute layout={Layout} exact path="/brands" component={() => <BrandList />} />

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     NullableBooleanInput,
     useMutation,
     useRedirect,
@@ -9,6 +8,7 @@ import {
 import { validateVehicleParameter } from './vehicleparameterValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
+import TextInput from '@sauco/lib/components/TextInput'
 
 const VehicleParameterCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -46,7 +46,7 @@ const VehicleParameterCreate = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

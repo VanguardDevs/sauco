@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     ReferenceInput,
     SelectInput,
     useMutation,
@@ -10,6 +9,7 @@ import {
 import { validateModel } from './modelValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
+import TextInput from '@sauco/lib/components/TextInput'
 
 const ModelCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -47,7 +47,7 @@ const ModelCreate = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

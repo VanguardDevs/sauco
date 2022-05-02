@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     useMutation,
     useRedirect,
     useNotify,
@@ -8,6 +7,7 @@ import {
 import { validateLiqueurClassification } from './liqueurclassificationValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
+import TextInput from '@sauco/lib/components/TextInput'
 
 const LiqueurClassificationCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();

@@ -150,9 +150,6 @@ const theme = {
             }
         },
         MuiAppBar: {
-            root: {
-                boxShadow: `0px 1px 5px ${palette.primary.light} !important`,
-            },
             colorSecondary: {
                 color: '#808080',
                 backgroundColor: '#fff',

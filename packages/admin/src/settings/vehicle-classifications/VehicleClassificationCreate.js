@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-    TextInput,
     NumberInput,
     useMutation,
     useRedirect,
@@ -9,7 +8,7 @@ import {
 import { validateVehicleClassification } from './vehicleclassificationValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
-
+import TextInput from '@sauco/lib/components/TextInput'
 
 const VehicleClassificationCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
@@ -47,7 +46,7 @@ const VehicleClassificationCreate = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

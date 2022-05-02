@@ -38,7 +38,7 @@ const BrandEdit = props => {
     React.useEffect(() => {
         if (loaded) {
             notify(`¡Ha editado la categoría "${data.name}" exitosamente!`, 'success')
-            redirect('/configurations?tab=categories')
+            redirect('/brands')
         }
     }, [loaded])
 
