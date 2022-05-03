@@ -72,27 +72,13 @@ class LiquidationController extends Controller
         $amount = $request->input('withholding_amount');
         $newLiquidationAmount = $liquidation->amount - $amount;
 
-        if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
-             return redirect()->back()
-                ->withErrors([
-                    'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
-                ]);
+        // if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
+        //     //  return redirect()->back()
+        //     //     ->withErrors([
+        //     //         'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
+        //     //     ]);
 
-
-           /* $payment = $liquidation->payment()->first();
-
-
-                $generatedAt = Carbon::now();
-
-                Credit::create([
-                    'num' => Credit::getNewNum(),
-                    'amount' => $newLiquidationAmount * -1,
-                    'taxpayer_id' => $liquidation->taxpayer_id,
-                    'payment_id' => $payment->id,
-                    'generated_at' => $generatedAt
-
-                ]); */
-        }
+        // }
 
         // Save withholding
         $deduction = $liquidation->deduction()->create([

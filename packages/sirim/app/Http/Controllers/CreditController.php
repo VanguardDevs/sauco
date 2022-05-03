@@ -29,27 +29,9 @@ class CreditController extends Controller
     }
 
 
-    /*public function list(Taxpayer $taxpayer, Credit $credit)
+    public function list(Taxpayer $taxpayer)
     {
-        $query = $credit->taxpayer();
-
-        return DataTables::of($query->get())->toJson();
-    }*/
-
-
-    /*public function list(Taxpayer $taxpayer)
-    {
-        $query = Credit::whereTaxpayerId($taxpayer->id)
-            ->orderBy('credits.created_at', 'DESC');
-
-        return DataTables::of($query)
-            ->toJson();
-    }*/
-
-
-    public function list()
-    {
-        $query = Credit::query();
+        $query = $taxpayer->credits()->with(['payment']);
 
         return DataTables::eloquent($query)->toJson();
     }

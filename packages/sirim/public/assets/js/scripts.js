@@ -986,12 +986,7 @@ $(document).ready(function() {
         "columns": [
             { data: 'num', name: 'num' },
             { data: 'amount', name: 'amount' },
-            {
-                data: 'id',
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`${status(oData)}`);
-                }
-            },
+            {data: 'payment.num'},
             {
                 data: "payment_id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

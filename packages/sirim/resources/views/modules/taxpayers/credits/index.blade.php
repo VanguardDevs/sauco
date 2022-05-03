@@ -26,7 +26,7 @@
                   <tr>
                     <th width="30%">Número</th>
                     <th width="30%">Monto</th>
-                    <th width="20%">Estado (liquidación)</th>
+                    <th width="20%">Número de Factura</th>
                     <th width="20%">Acciones</th>
                   </tr>
                 </thead>

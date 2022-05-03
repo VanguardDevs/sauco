@@ -84,96 +84,82 @@
 
 <div class="row">
 
-    <div class="col-xl-6 col-sm-6">
+    <div class="col-xs-undefined col-sm-6 col-md-undefined col-lg-undefined col-xl-6">
         <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__body">
-                <div class="kt-widget4" id="">
-
-                    <div className="kt-notification">
-                      <a className="kt-notification__item" href="{{ route('taxpayer.fines', $row) }}">
-                        <div className="kt-notification__item-details">
-
-                          <div className="kt-notification__item-title">
-                            <i class="fas fa-stop-circle"></i>
-                            Multas y sanciones
-                          </div>
-                        </div>
-                      </a>
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('taxpayer.fines', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-stop-circle"></i>
                     </div>
-                    <div className="kt-notification">
-                      <a className="kt-notification__item" href="{{ route('applications.index', $row) }}">
-                        <div className="kt-notification__item-details">
-                          <div className="kt-notification__item-title">
-                            <i class="fas fa-paper-plane"></i>
-                            Solicitudes
-                          </div>
-                        </div>
-                      </a>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Multas y sanciones</div>
                     </div>
-                    <div className="kt-notification">
-                      <a className="kt-notification__item" href="{{ route('taxpayer.affidavits', $row) }}">
-
-                        <div className="kt-notification__item-details">
-                          <div className="kt-notification__item-title">
-                            <i class="fas fa-address-book"></i>
-                            Declaración jurada de ingresos
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                    <div className="kt-notification">
-                      <a className="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/withholdings') }}">
-
-                        <div className="kt-notification__item-details">
-                          <div className="kt-notification__item-title">
-                            <i class="fas fa-hand-holding-usd"></i>
-                            Retenciones
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                    <div className="kt-notification">
-                      <a className="kt-notification__item" href="{{ route('credits.index', $row) }}">
-
-                        <div className="kt-notification__item-details">
-                          <div className="kt-notification__item-title">
-                            <i class="fa-solid fa-money-check-dollar-pen"></i>
-
-                            <i class="fa-solid fa-badge-dollar"></i>
-                            Créditos
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-
-
-                </div>
+                </a>
             </div>
+
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('applications.index', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Solicitudes</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('taxpayer.affidavits', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-address-book"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Declaración jurada de ingresos</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/withholdings') }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Retenciones</div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('credits.index', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Créditos</div>
+                    </div>
+                </a>
+            </div>
+
         </div>
     </div>
 
-
-    <div class="col-xl-6 col-sm-6">
-        <div class="kt-portlet kt-portlet--height-fluid">
-            <div class="kt-portlet__body">
-                <div class="kt-widget4" id="">
-
-                    <div className="kt-notification">
-                      <a className="kt-notification__item" href="{{ route('taxpayer.economic-activity-licenses', $row) }}">
-                        <div className="kt-notification__item-details">
-                          <div className="kt-notification__item-title">
-                            <i class="fas fa-book-reader"></i>
-                            Licencias de actividad económica
-                          </div>
-                        </div>
-                      </a>
+    <div class="col-xs-undefined col-sm-6 col-md-undefined col-lg-undefined col-xl-6">
+        <div class="kt-portlet">
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('taxpayer.economic-activity-licenses', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-book-reader"></i>
                     </div>
-
-                </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Licencias de actividad económica</div>
+                    </div>
+                </a>
             </div>
+
         </div>
     </div>
-
 </div>
 
 <div class="row">
