@@ -25,6 +25,8 @@ class CreateCreditsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('generated_at');
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

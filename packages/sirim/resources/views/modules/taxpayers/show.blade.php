@@ -91,11 +91,10 @@
 
                     <div className="kt-notification">
                       <a className="kt-notification__item" href="{{ route('taxpayer.fines', $row) }}">
-                        <div className="kt-notification__item-icon">
-                          <i className=""></i>
-                        </div>
                         <div className="kt-notification__item-details">
+
                           <div className="kt-notification__item-title">
+                            <i class="fas fa-stop-circle"></i>
                             Multas y sanciones
                           </div>
                         </div>
@@ -103,11 +102,9 @@
                     </div>
                     <div className="kt-notification">
                       <a className="kt-notification__item" href="{{ route('applications.index', $row) }}">
-                        <div className="kt-notification__item-icon">
-                          <i className=""></i>
-                        </div>
                         <div className="kt-notification__item-details">
                           <div className="kt-notification__item-title">
+                            <i class="fas fa-paper-plane"></i>
                             Solicitudes
                           </div>
                         </div>
@@ -116,11 +113,9 @@
                     <div className="kt-notification">
                       <a className="kt-notification__item" href="{{ route('taxpayer.affidavits', $row) }}">
 
-                        <div className="kt-notification__item-icon">
-                          <i className=""></i>
-                        </div>
                         <div className="kt-notification__item-details">
                           <div className="kt-notification__item-title">
+                            <i class="fas fa-address-book"></i>
                             Declaración jurada de ingresos
                           </div>
                         </div>
@@ -129,11 +124,9 @@
                     <div className="kt-notification">
                       <a className="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/withholdings') }}">
 
-                        <div className="kt-notification__item-icon">
-                          <i className=""></i>
-                        </div>
                         <div className="kt-notification__item-details">
                           <div className="kt-notification__item-title">
+                            <i class="fas fa-hand-holding-usd"></i>
                             Retenciones
                           </div>
                         </div>
@@ -141,18 +134,19 @@
                     </div>
                     <div className="kt-notification">
                       <a className="kt-notification__item" href="{{ route('credits.index', $row) }}">
-                        <div className="kt-notification__item-icon">
-                          <i className=""></i>
-                        </div>
+
                         <div className="kt-notification__item-details">
                           <div className="kt-notification__item-title">
+                            <i class="fa-solid fa-money-check-dollar-pen"></i>
+
+                            <i class="fa-solid fa-badge-dollar"></i>
                             Créditos
                           </div>
                         </div>
                       </a>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
@@ -166,11 +160,9 @@
 
                     <div className="kt-notification">
                       <a className="kt-notification__item" href="{{ route('taxpayer.economic-activity-licenses', $row) }}">
-                        <div className="kt-notification__item-icon">
-                          <i className=""></i>
-                        </div>
                         <div className="kt-notification__item-details">
                           <div className="kt-notification__item-title">
+                            <i class="fas fa-book-reader"></i>
                             Licencias de actividad económica
                           </div>
                         </div>
