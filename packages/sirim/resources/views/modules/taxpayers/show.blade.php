@@ -90,25 +90,63 @@
                 <div class="kt-widget4" id="">
 
                     <div className="kt-notification">
-                      <a className="kt-notification__item" href={url}>
+                      <a className="kt-notification__item" href="{{ route('taxpayer.fines', $row) }}">
                         <div className="kt-notification__item-icon">
                           <i className=""></i>
                         </div>
                         <div className="kt-notification__item-details">
                           <div className="kt-notification__item-title">
-                            algo
+                            Multas y sanciones
                           </div>
                         </div>
                       </a>
                     </div>
                     <div className="kt-notification">
-                      <a className="kt-notification__item" href={url}>
+                      <a className="kt-notification__item" href="{{ route('applications.index', $row) }}">
                         <div className="kt-notification__item-icon">
                           <i className=""></i>
                         </div>
                         <div className="kt-notification__item-details">
                           <div className="kt-notification__item-title">
-                            algo
+                            Solicitudes
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div className="kt-notification">
+                      <a className="kt-notification__item" href="{{ route('taxpayer.affidavits', $row) }}">
+
+                        <div className="kt-notification__item-icon">
+                          <i className=""></i>
+                        </div>
+                        <div className="kt-notification__item-details">
+                          <div className="kt-notification__item-title">
+                            Declaración jurada de ingresos
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div className="kt-notification">
+                      <a className="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/withholdings') }}">
+
+                        <div className="kt-notification__item-icon">
+                          <i className=""></i>
+                        </div>
+                        <div className="kt-notification__item-details">
+                          <div className="kt-notification__item-title">
+                            Retenciones
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div className="kt-notification">
+                      <a className="kt-notification__item" href="{{ route('credits.index', $row) }}">
+                        <div className="kt-notification__item-icon">
+                          <i className=""></i>
+                        </div>
+                        <div className="kt-notification__item-details">
+                          <div className="kt-notification__item-title">
+                            Créditos
                           </div>
                         </div>
                       </a>
@@ -120,10 +158,26 @@
         </div>
     </div>
 
+
     <div class="col-xl-6 col-sm-6">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__body">
-                <div class="kt-widget4" id=""></div>
+                <div class="kt-widget4" id="">
+
+                    <div className="kt-notification">
+                      <a className="kt-notification__item" href="{{ route('taxpayer.economic-activity-licenses', $row) }}">
+                        <div className="kt-notification__item-icon">
+                          <i className=""></i>
+                        </div>
+                        <div className="kt-notification__item-details">
+                          <div className="kt-notification__item-title">
+                            Licencias de actividad económica
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
