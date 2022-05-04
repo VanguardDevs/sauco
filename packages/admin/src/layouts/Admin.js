@@ -46,10 +46,8 @@ const styles = makeStyles(theme => ({
         flexDirection: 'column',
         flexGrow: 1,
         flexBasis: 0,
-        padding: '0 1rem !important',
-        marginTop: '4em',
-        paddingTop: '8px',
-        paddingLeft: 0
+        padding: '0 2rem !important',
+        marginTop: '6em'
     },
 }));
 

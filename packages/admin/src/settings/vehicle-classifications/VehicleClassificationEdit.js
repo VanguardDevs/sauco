@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     NumberInput,
     useEditController,
     useRedirect,
@@ -11,7 +10,7 @@ import { validateVehicleClassification } from './vehicleclassificationValidation
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
-
+import TextInput from '@sauco/lib/components/TextInput'
 
 const VehicleClassificationEdit = props => {
     const { id } = useParams();
@@ -57,7 +56,7 @@ const VehicleClassificationEdit = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />

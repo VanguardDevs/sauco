@@ -14,7 +14,7 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 import StyleIcon from '@material-ui/icons/Style';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { fade, useMediaQuery } from '@material-ui/core';
+import { fade } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,33 +38,19 @@ const useStyles = makeStyles((theme) => ({
         fill: theme.palette.secondary.main,
         stroke: theme.palette.secondary.main
     },
-  }));
+}));
 
-
-
-
-// const MenuItems = ({ open, onMenuClick, dense }) => (
 export default function MenuItems({ open, onMenuClick, dense }) {
     const classes = useStyles();
-    const [openList, setOpen] = React.useState(true);
-    const handleClick = () => {
-        setOpen(!openList);
-    };
-
     const [state, setState] = React.useState({
-        people: true,
+        people: false,
         reports: false,
         settings: false,
         administration: false,
         cadastre: false,
-        rates: false,
-        env: process.env.REACT_APP_ENV
+        rates: false
     });
-    const isXSmall = useMediaQuery(theme =>
-        theme.breakpoints.down('xs')
-    );
-
-    const handleToggle = (menu) => {
+    const handleToggle = menu => {
         setState(state => ({ ...state, [menu]: !state[menu] }));
     };
 
@@ -79,6 +65,33 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                 dense={dense}
                 exact
             />
+            <SubMenu
+                handleToggle={() => handleToggle('rates')}
+                isOpen={state.rates}
+                sidebarIsOpen={open}
+                name="Tasas"
+                icon={<SettingsIcon />}
+                dense={dense}
+            >
+            </SubMenu>
+            <SubMenu
+                handleToggle={() => handleToggle('reports')}
+                isOpen={state.reports}
+                sidebarIsOpen={open}
+                name="Reportes"
+                icon={<SettingsIcon />}
+                dense={dense}
+            >
+            </SubMenu>
+            <SubMenu
+                handleToggle={() => handleToggle('cadastre')}
+                isOpen={state.cadastre}
+                sidebarIsOpen={open}
+                name="Áreas"
+                icon={<SettingsIcon />}
+                dense={dense}
+            >
+            </SubMenu>
             <SubMenu
                 handleToggle={() => handleToggle('settings')}
                 isOpen={state.settings}
@@ -187,6 +200,15 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                     dense={dense}
                     exact
                 />
+            </SubMenu>
+            <SubMenu
+                handleToggle={() => handleToggle('administration')}
+                isOpen={state.administration}
+                sidebarIsOpen={open}
+                name="Personal"
+                icon={<SettingsIcon />}
+                dense={dense}
+            >
             </SubMenu>
         </React.Fragment>
     )

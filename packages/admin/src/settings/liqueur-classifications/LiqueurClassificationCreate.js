@@ -45,14 +45,14 @@ const LiqueurClassificationCreate = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer labelName='Abreviación'>
                 <TextInput
-                    source="abbreviature"
+                    name="abbreviature"
                     placeholder="Abreviación"
                     fullWidth
                 />

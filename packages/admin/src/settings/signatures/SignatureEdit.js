@@ -1,18 +1,17 @@
 import * as React from 'react'
 import {
-    TextInput,
     FormWithRedirect,
     SaveButton,
     useEditController,
     useMutation,
     EditContextProvider,
-    EditProps,
     ReferenceInput,
     SelectInput,
     useRedirect,
     useNotify
 } from 'react-admin'
 import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
+import TextInput from '@sauco/lib/components/TextInput'
 
 const SignatureEditForm = props => {
     console.log(props)
@@ -31,8 +30,7 @@ const SignatureEditForm = props => {
                             <Grid item xs={12} sm={12} md={6}>
                                 <InputLabel>Título</InputLabel>
                                 <TextInput
-                                    label={false}
-                                    source="title"
+                                    name="title"
                                     placeholder="Ejemplo: Lic. Pérez Quijada"
                                     fullWidth
                                 />
@@ -40,8 +38,7 @@ const SignatureEditForm = props => {
                             <Grid item xs={12} sm={12} md={6}>
                                 <InputLabel>Decreto</InputLabel>
                                 <TextInput
-                                    label={false}
-                                    source="decree"
+                                    name="decree"
                                     placeholder="Ejemplo: Resolución Nº de fecha..."
                                     fullWidth
                                 />

@@ -51,36 +51,27 @@ const VehicleClassificationCreate = props => {
                     fullWidth
                 />
             </InputContainer>
-
             <InputContainer labelName='Cantidad'>
                 <NumberInput source="quantity" />
             </InputContainer>
-
-
             <InputContainer labelName='Peso desde'>
                 <NumberInput source="weight_from" />
             </InputContainer>
-
             <InputContainer labelName='Peso hasta'>
                 <NumberInput source="weight_until" />
             </InputContainer>
-
             <InputContainer labelName='Capacidad desde'>
                 <NumberInput source="capacity_from" />
             </InputContainer>
-
             <InputContainer labelName='Capacidad hasta'>
                 <NumberInput source="capacity_until" />
             </InputContainer>
-
             <InputContainer labelName='Puestos desde'>
                 <NumberInput source="stalls_from" />
             </InputContainer>
-
             <InputContainer labelName='Puestos hasta'>
                 <NumberInput source="stalls_until" />
             </InputContainer>
-
         </BaseForm>
     )
 }

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     useEditController,
     useRedirect,
     useNotify
@@ -10,6 +9,7 @@ import { validateLiqueurClassification } from './liqueurclassificationValidation
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
+import TextInput from '@sauco/lib/components/TextInput'
 
 const LiqueurClassificationEdit = props => {
     const { id } = useParams();
@@ -55,14 +55,14 @@ const LiqueurClassificationEdit = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />
             </InputContainer>
             <InputContainer labelName='Abreviación'>
                 <TextInput
-                    source="abbreviature"
+                    name="abbreviature"
                     placeholder="Abreviación"
                     fullWidth
                 />

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
     useMutation,
-    TextInput,
     ReferenceInput,
     SelectInput,
     useEditController,
@@ -12,6 +11,7 @@ import { validateModel } from './modelValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
+import TextInput from '@sauco/lib/components/TextInput'
 
 const ModelEdit = props => {
     const { id } = useParams();
@@ -57,7 +57,7 @@ const ModelEdit = props => {
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
-                    source="name"
+                    name="name"
                     placeholder="Nombre"
                     fullWidth
                 />
