@@ -3,6 +3,8 @@ import {
     useMutation,
     NumberInput,
     NullableBooleanInput,
+    ReferenceInput,
+    SelectInput,
     useEditController,
     useRedirect,
     useNotify
@@ -54,6 +56,20 @@ const LiqueurParameterEdit = props => {
             loading={loading}
             formName="Editar Parámetro"
         >
+
+            <InputContainer labelName='Clasificación'>
+                <ReferenceInput source="liqueur_classification_id" reference="liqueur-classifications" >
+                    <SelectInput optionText="name" optionValue="id" />
+                </ReferenceInput>
+            </InputContainer>
+
+
+            <InputContainer labelName='Zona'>
+                <ReferenceInput source="liqueur_zone_id" reference="liqueur-zones" >
+                    <SelectInput optionText="name" optionValue="id" />
+                </ReferenceInput>
+            </InputContainer>
+
             <InputContainer labelName='Cantidad'>
                 <NumberInput source="new_registry_amount" />
             </InputContainer>

@@ -2,6 +2,8 @@ import * as React from 'react'
 import {
     NumberInput,
     NullableBooleanInput,
+    ReferenceInput,
+    SelectInput,
     useMutation,
     useRedirect,
     useNotify,
@@ -44,6 +46,20 @@ const LiqueurParameterCreate = props => {
             formName='Agregar Parametro'
             unresponsive
         >
+
+
+            <InputContainer labelName='Clasificación'>
+                <ReferenceInput source="liqueur_classification_id" reference="liqueur-classifications" >
+                    <SelectInput optionText="name" optionValue="id" />
+                </ReferenceInput>
+            </InputContainer>
+
+
+            <InputContainer labelName='Zona'>
+                <ReferenceInput source="liqueur_zone_id" reference="liqueur-zones" >
+                    <SelectInput optionText="name" optionValue="id" />
+                </ReferenceInput>
+            </InputContainer>
 
             <InputContainer labelName='Cantidad'>
                 <NumberInput source="new_registry_amount" />

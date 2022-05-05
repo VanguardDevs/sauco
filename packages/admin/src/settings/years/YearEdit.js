@@ -1,19 +1,17 @@
 import * as React from 'react'
 import {
     useMutation,
-    ReferenceInput,
-    SelectInput,
     useEditController,
     useRedirect,
     useNotify
 } from 'react-admin'
-import { validateModel } from './modelValidations';
+import { validateYear } from './yearValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 import TextInput from '@sauco/lib/components/TextInput'
 
-const ModelEdit = props => {
+const YearEdit = props => {
     const { id } = useParams();
     const editControllerProps = useEditController({
         ...props,
@@ -39,8 +37,8 @@ const ModelEdit = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado el modelo "${data.name}" exitosamente!`, 'success')
-            redirect('/models')
+            notify(`¡Ha editado el año "${data.year}" exitosamente!`, 'success')
+            redirect('/years')
         }
     }, [loaded])
 
@@ -49,32 +47,26 @@ const ModelEdit = props => {
     return (
         <BaseForm
             save={save}
-            validate={validateModel}
+            validate={validateYear}
             record={record}
             saveButtonLabel='Actualizar'
             loading={loading}
-            formName="Editar Modelo"
+            formName="Editar año"
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer labelName='Año'>
                 <TextInput
-                    name="name"
-                    placeholder="Nombre"
+                    name="year"
+                    placeholder="Año"
                     fullWidth
                 />
-            </InputContainer>
-
-            <InputContainer labelName='Marca'>
-                <ReferenceInput source="brand_id" reference="brands" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
             </InputContainer>
         </BaseForm>
     )
 }
 
-ModelEdit.defaultProps = {
-    basePath: 'models',
-    resource: 'models'
+YearEdit.defaultProps = {
+    basePath: 'years',
+    resource: 'years'
 }
 
-export default ModelEdit
+export default YearEdit

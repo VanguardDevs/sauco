@@ -8,11 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class YearController extends Controller
-{   
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+{
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     protected $months = Array(
         'ENERO', 'FEBRERO', 'MARZO', 'ABRIL',
@@ -25,10 +25,28 @@ class YearController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+
+    // public function index()
+    // {
+    //     return view('modules.settings.years.index')
+    //         ->with('years', Year::get());
+    // }
+
+    public function index(Request $request)
     {
-        return view('modules.settings.years.index')
-            ->with('years', Year::get());
+        $query = Year::query();
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('year', $filters)) {
+                $query->whereLike('year', $filters['year']);
+            }
+        }
+
+        return $query->paginate($results);
     }
 
     public function listMonths(Year $year)
@@ -39,18 +57,21 @@ class YearController extends Controller
                 ->get();
         }
 
-        return $year->months()->orderBy('id', 'ASC')->get(); 
-    } 
+        return $year->months()->orderBy('id', 'ASC')->get();
+    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function create()
     {
         return view('modules.settings.years.register');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -74,13 +95,19 @@ class YearController extends Controller
                     'year_id' => $year->id
                 ]);
             }
-            
+
+            return response()->json($year, 201);
+
             return redirect('settings/years')
-               ->withSuccess('¡Año fiscal '.$year->year.' abierto!'); 
-        } 
-            
+               ->withSuccess('¡Año fiscal '.$year->year.' abierto!');
+
+
+        }
+
         return redirect()->back()
-           ->withError('¡El año '.$requestYear. ' se encuentra abierto!');
+            ->withError('¡El año '.$requestYear. ' se encuentra abierto!');
+
+
     }
 
     /**
@@ -89,9 +116,9 @@ class YearController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Year $year)
     {
-        //
+        return response()->json($year, 201);
     }
 
     /**
@@ -112,9 +139,11 @@ class YearController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Year $year)
     {
-        //
+        $year->update($request->all());
+
+        return response()->json($year, 201);
     }
 
     /**
@@ -123,8 +152,10 @@ class YearController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Year $year)
     {
-        //
+        $year->delete();
+
+        return response()->json($year, 201);
     }
 }

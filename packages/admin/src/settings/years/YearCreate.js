@@ -1,22 +1,15 @@
 import * as React from 'react'
 import {
     useMutation,
-    useEditController,
     useRedirect,
-    useNotify
+    useNotify,
 } from 'react-admin'
-import { validateAnnex } from './annexValidations';
+import { validateYear } from './yearValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
-import { useParams } from 'react-router-dom'
 import TextInput from '@sauco/lib/components/TextInput'
 
-const AnnexEdit = props => {
-    const { id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: id
-    });
+const YearCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
@@ -24,9 +17,9 @@ const AnnexEdit = props => {
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
-                type: 'update',
+                type: 'create',
                 resource: props.resource,
-                payload: { id: record.id, data: values }
+                payload: { data: values }
             }, { returnPromise: true })
         } catch (error) {
             if (error.response.data.errors) {
@@ -37,26 +30,23 @@ const AnnexEdit = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado el anexo "${data.name}" exitosamente!`, 'success')
-            redirect('/liqueur-annexes')
+            notify(`¡Ha registrado el año "${data.year}!`, 'success');
+            redirect('/years')
         }
     }, [loaded])
-
-    const { record } = editControllerProps
 
     return (
         <BaseForm
             save={save}
-            validate={validateAnnex}
-            record={record}
-            saveButtonLabel='Actualizar'
+            validate={validateYear}
             loading={loading}
-            formName="Editar anexo"
+            formName='Agregar Año'
+            unresponsive
         >
-            <InputContainer labelName='Nombre'>
+            <InputContainer labelName='Año'>
                 <TextInput
-                    name="name"
-                    placeholder="Nombre"
+                    name="year"
+                    placeholder="Año"
                     fullWidth
                 />
             </InputContainer>
@@ -64,9 +54,9 @@ const AnnexEdit = props => {
     )
 }
 
-AnnexEdit.defaultProps = {
-    basePath: 'liqueur-annexes',
-    resource: 'liqueur-annexes'
+YearCreate.defaultProps = {
+    basePath: '/years',
+    resource: 'years'
 }
 
-export default AnnexEdit
+export default YearCreate

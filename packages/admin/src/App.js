@@ -57,6 +57,16 @@ import LiqueurParameterCreate from './settings/liqueur-parameters/LiqueurParamet
 import LiqueurParameterEdit from './settings/liqueur-parameters/LiqueurParameterEdit'
 
 
+
+// Years
+import YearList from './settings/years/YearList'
+import YearCreate from './settings/years/YearCreate'
+import YearEdit from './settings/years/YearEdit'
+
+
+
+
+
 const App = () => (
     <>
         <Route exact path='/login' render={() => <Login />} />
@@ -206,6 +216,20 @@ const App = () => (
                 />
             } />
         </Switch>
+
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/years" component={() => <YearList />} />
+            <ProtectedRoute layout={Layout} exact path="/years/create" component={() => <YearCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/years/:id" component={(routeProps) =>
+                <YearEdit
+                    resource="years"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+
     </>
 )
 

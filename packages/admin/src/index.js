@@ -30,6 +30,7 @@ const Index = () => (
             <Resource name='liqueur-classifications' intent="registration" />
             <Resource name='liqueur-parameters' intent="registration" />
             <Resource name='liqueur-annexes' intent="registration" />
+            <Resource name='years' intent="registration" />
 
 
             <ConnectedRouter history={history}>

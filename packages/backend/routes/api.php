@@ -19,7 +19,8 @@ Route::post('login', 'ManageTokenController@login');
     /**
      * Configurations
      */
-    Route::get('years', 'YearController@index');
+    // Route::get('years', 'YearController@index');
+    Route::apiResource('years', 'YearController');
     Route::apiResource('concepts', 'ConceptController');
     Route::apiResource('items', 'ItemController');
     Route::apiResource('purposes', 'PurposeController');
