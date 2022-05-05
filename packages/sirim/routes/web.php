@@ -92,6 +92,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('affidavits.payment');
     Route::resource('affidavits', 'AffidavitController');
 
+    Route::get('affidavits/{affidavit}/download', 'AffidavitController@download')
+    ->name('affidavits.download');
+    Route::get('affidavits/{affidavit}/ticket', 'AffidavitController@ticket')
+    ->name('affidavits.ticket');
+
     /**
      * Taxpayer's Fines
      */

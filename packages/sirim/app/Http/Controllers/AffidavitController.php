@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Affidavits\AffidavitsCreateFormRequest;
 use Auth;
+use PDF;
 use App\Http\Requests\AnnullmentRequest;
 use App\Services\AffidavitService;
 
@@ -319,4 +320,51 @@ class AffidavitController extends Controller
         return redirect()->back()
             ->with('success', '¡Declaración anulada!');
     }
+
+    public function download(Affidavit $affidavit)
+    {
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.affidavit', compact('affidavit'))
+                ->stream('declaracion-'.$affidavit->id.'.pdf');
+   }
+
+
+
+    public function ticket(Affidavit $affidavit)
+    {
+        $count = count($affidavit->economicActivityAffidavits);
+
+            if ($count == 1){
+                $customPaper = array(0,0,228,350);
+            }
+            if ($count == 2){
+                $customPaper = array(0,0,228,400);
+            }
+            if ($count == 3){
+                $customPaper = array(0,0,228,430);
+            }
+ 
+            if ($count == 4){
+                $customPaper = array(0,0,228,480);
+            }
+            if ($count == 5){
+                $customPaper = array(0,0,228,530);
+            }
+            if ($count == 6){
+                $customPaper = array(0,0,228,560);
+            }
+            if ($count == 7){
+                $customPaper = array(0,0,228,650);
+            }
+            if ($count > 7){
+                $customPaper = array(0,0,228,800);
+            }
+    
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.affidavit-ticket', compact('affidavit'))
+                ->setPaper($customPaper)
+                ->stream('declaracion-ticket-'.$affidavit->id.'.pdf');
+
+   }
 }
