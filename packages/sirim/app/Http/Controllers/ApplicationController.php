@@ -42,18 +42,12 @@ class ApplicationController extends Controller
 
     public function makePayment(Application $application)
     {
-        $payment = $application->payment();
-
-        if ($payment) {
-            return redirect()->route('payments.show', $payment->first());
-        }
-
         $payment = $application->mountPayment();
 
         $liquidation = $application->makeLiquidation();
         $payment->liquidations()->sync($liquidation);
 
-        return redirect()->route('payments.show', $payment->id);
+        return redirect()->route('liquidations.show', $liquidation->id);
     }
 
     /**

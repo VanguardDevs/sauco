@@ -274,21 +274,13 @@ class AffidavitController extends Controller
     {
         $payment = $affidavit->payment();
 
-        if ($payment) {
-            if ($payment->count()) {
-                return redirect()->route('payments.show', $payment->first());
-            }
-        }
-
         $payment = $affidavit->mountPayment();
 
         $liquidation = $affidavit->makeLiquidation();
 
         $payment->liquidations()->sync($liquidation);
 
-        // $payment->checkForFine();
-
-        return redirect()->route('payments.show', $payment->id);
+        return redirect()->route('liquidations.show', $liquidation->id);
     }
 
     public function message(Month $month)
