@@ -58,6 +58,13 @@
             </a>
         </li>
 
+        <li class="kt-menu__item {{ active('dismissals*') }}" aria-haspopup="true" >
+            <a href="{{ route('dismissals.index') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon fas fa-exclamation"></i>
+                <span class="kt-menu__link-text">Ceses</span>
+            </a>
+        </li>
+
         @if (Config::get('app.sauco_url'))
         <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
             <a  href="{{ Config::get('app.sauco_url') }}" class="kt-menu__link">
