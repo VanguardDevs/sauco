@@ -10,6 +10,7 @@ use App\Http\Requests\MakeWithholdingRequest;
 use App\Models\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
+use PDF;
 use App\Models\Withholding;
 
 class LiquidationController extends Controller
@@ -138,4 +139,34 @@ class LiquidationController extends Controller
         return redirect()->back()
             ->withSuccess('¡Liquidación anulada!');
     }
+
+        public function download(Liquidation $liquidation)
+    {
+        if ($liquidation->status->id == 1) {
+            return redirect()->back()
+                ->withError('¡La liquidación no ha sido procesada!');
+        }
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.liquidation', compact('liquidation'))
+                ->stream('liquidacion-'.$liquidation->id.'.pdf');
+   }
+
+
+
+    public function ticket(Liquidation $liquidation)
+    {
+        if ($liquidation->status->id == 1) {
+            return redirect()->back()
+                ->withError('¡La liquidación no ha sido procesada!');
+        }
+
+
+        $customPaper = array(0,0,228,230);
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.liquidation-ticket', compact('liquidation'))
+                ->setPaper($customPaper)
+                ->stream('liquidacion-ticket-'.$liquidation->id.'.pdf');
+
+   }
 }

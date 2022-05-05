@@ -29,7 +29,7 @@ class ApplicationController extends Controller
     {
         $query = Application::whereTaxpayerId($taxpayer->id)
             ->orderBy('applications.created_at', 'DESC')
-            ->with(['concept:id,name']);
+            ->with(['concept:id,name', 'liquidation']);
 
         return DataTables::eloquent($query)
             ->toJson();
