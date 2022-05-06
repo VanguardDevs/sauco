@@ -25,7 +25,11 @@ class BrandController extends Controller
             }
         }
 
-        return $query->paginate($results);
+        if ($results) {
+            return $query->paginate($results);
+        }
+
+        return response()->json([ 'data' => $query->get() ]);
     }
 
     /**

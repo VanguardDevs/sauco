@@ -63,10 +63,6 @@ import YearList from './settings/years/YearList'
 import YearCreate from './settings/years/YearCreate'
 import YearEdit from './settings/years/YearEdit'
 
-
-
-
-
 const App = () => (
     <>
         <Route exact path='/login' render={() => <Login />} />
@@ -133,11 +129,11 @@ const App = () => (
             } />
         </Switch>
         <Switch>
-            <ProtectedRoute layout={Layout} exact path="/models" component={() => <ModelList />} />
-            <ProtectedRoute layout={Layout} exact path="/models/create" component={() => <ModelCreate />} />
-            <ProtectedRoute layout={Layout} exact path="/models/:id" component={(routeProps) =>
+            <ProtectedRoute layout={Layout} exact path="/vehicle-models" component={() => <ModelList />} />
+            <ProtectedRoute layout={Layout} exact path="/vehicle-models/create" component={() => <ModelCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/vehicle-models/:id" component={(routeProps) =>
                 <ModelEdit
-                    resource="models"
+                    resource="vehicle-models"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}
