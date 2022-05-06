@@ -13,7 +13,7 @@ const ModelsDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
         <DatagridOptions
-            basePath='models'
+            basePath='vehicle-models'
             confirmTitle='Eliminar modelo'
             confirmContent='¿Está seguro que desea eliminar este modelo?'
         />
@@ -23,7 +23,7 @@ const ModelsDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" label='' />
-        <CreateButton label="Crear" basePath="/models" />
+        <CreateButton label="Crear" basePath="/vehicle-models" />
     </TopToolbar>
 );
 
@@ -38,8 +38,8 @@ const ModelList = props => (
 );
 
 ModelList.defaultProps = {
-    basePath: 'models',
-    resource: 'models'
+    basePath: 'vehicle-models',
+    resource: 'vehicle-models'
 }
 
 export default ModelList
