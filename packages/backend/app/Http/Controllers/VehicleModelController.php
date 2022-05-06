@@ -25,7 +25,11 @@ class VehicleModelController extends Controller
             }
         }
 
-        return $query->paginate($results);
+        if ($results) {
+            return $query->paginate($results);
+        }
+
+        return response()->json([ 'data' => $query->get() ]);
     }
 
     /**
@@ -50,7 +54,6 @@ class VehicleModelController extends Controller
     public function show(VehicleModel $vehicleModel)
     {
         return $vehicleModel;
-
     }
 
     /**

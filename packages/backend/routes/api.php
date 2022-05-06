@@ -30,7 +30,7 @@ Route::post('login', 'ManageTokenController@login');
     Route::apiResource('representation-types', 'RepresentationTypeController');
     Route::apiResource('tax-units', 'TaxUnitController');
     Route::apiResource('brands', 'BrandController');
-    Route::apiResource('models', 'VehicleModelController');
+    Route::apiResource('vehicle-models', 'VehicleModelController');
     Route::apiResource('colors', 'ColorController');
     Route::apiResource('users', 'UserController');
     Route::apiResource('vehicle-classifications', 'VehicleClassificationController');

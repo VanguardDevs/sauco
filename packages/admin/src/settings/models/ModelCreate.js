@@ -1,41 +1,49 @@
 import * as React from 'react'
-import {
-    ReferenceInput,
-    SelectInput,
-    useMutation,
-    useRedirect,
-    useNotify,
-} from 'react-admin'
 import { validateModel } from './modelValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import TextInput from '@sauco/lib/components/TextInput'
+import { axios, history } from '@sauco/lib/providers'
+import SelectInput from '@sauco/lib/components/SelectInput'
 
-const ModelCreate = props => {
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
-    const notify = useNotify();
+const ModelCreate = () => {
+    const [loading, setLoading] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false)
+    const [brands, setBrands] = React.useState([])
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
+
         try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/vehicle-models', values)
+
+            if (data) {
+                setLoaded(true)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
+
+        setLoading(false)
     }, [])
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha registrado el modelo "${data.name}!`, 'success');
-            redirect('/models')
+            history.push('/vehicle-models')
         }
     }, [loaded])
+
+    const fetchBrands = React.useCallback(async () => {
+        const { data } = await axios.get('/brands');
+
+        setBrands(data.data);
+    }, []);
+
+    React.useEffect(() => {
+        fetchBrands();
+    }, [])
 
     return (
         <BaseForm
@@ -52,19 +60,16 @@ const ModelCreate = props => {
                     fullWidth
                 />
             </InputContainer>
-
             <InputContainer labelName='Marca'>
-                <ReferenceInput source="brand_id" reference="brands" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="brand_id" options={brands} />
             </InputContainer>
         </BaseForm>
     )
 }
 
 ModelCreate.defaultProps = {
-    basePath: '/models',
-    resource: 'models'
+    basePath: '/vehicle-models',
+    resource: 'vehicle-models'
 }
 
 export default ModelCreate
