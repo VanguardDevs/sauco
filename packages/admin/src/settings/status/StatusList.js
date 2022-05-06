@@ -9,13 +9,13 @@ import DatagridOptions from '@sauco/lib/components/DatagridOptions';
 import CreateButton from '@sauco/lib/components/CreateButton'
 import DatagridListView from '@sauco/lib/components/DatagridListView'
 
-const ColorsDatagrid = () => (
+const StatusDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Nombre' source="name" />
         <DatagridOptions
-            basePath='colors'
-            confirmTitle='Eliminar color'
-            confirmContent='¿Está seguro que desea eliminar este color?'
+            basePath='status'
+            confirmTitle='Eliminar estado'
+            confirmContent='¿Está seguro que desea eliminar este estado?'
         />
     </Datagrid>
 );
@@ -23,23 +23,23 @@ const ColorsDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="name" label='' />
-        <CreateButton label="Crear" basePath="colors" />
+        <CreateButton label="Crear" basePath="status" />
     </TopToolbar>
 );
 
-const ColorList = props => (
+const StatusList = props => (
     <ListBase
         perPage={10}
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
-        <DatagridListView actions={<ListActions />} datagrid={<ColorsDatagrid />} />
+        <DatagridListView actions={<ListActions />} datagrid={<StatusDatagrid />} />
     </ListBase>
 );
 
-ColorList.defaultProps = {
-    basePath: 'colors',
-    resource: 'colors'
+StatusList.defaultProps = {
+    basePath: 'status',
+    resource: 'status'
 }
 
-export default ColorList
+export default StatusList
