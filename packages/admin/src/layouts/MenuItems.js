@@ -131,7 +131,7 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                 />
 
                 <MenuItemLink
-                    to="/models"
+                    to="/vehicle-models"
                     primaryText='Modelos'
                     leftIcon={<StyleIcon />}
                     onClick={onMenuClick}

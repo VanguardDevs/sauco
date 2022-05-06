@@ -23,7 +23,7 @@ const Index = () => (
             <Resource name='dashboard' intent="registration" />
             <Resource name='colors' intent="registration" />
             <Resource name='brands' intent="registration" />
-            <Resource name='models' intent="registration" />
+            <Resource name='vehicle-models' intent="registration" />
             <Resource name='vehicle-classifications' intent="registration" />
             <Resource name='vehicle-parameters' intent="registration" />
             <Resource name='liqueur-zones' intent="registration" />

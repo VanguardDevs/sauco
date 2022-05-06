@@ -49,7 +49,7 @@ class LiqueurAnnexController extends Controller
      */
     public function show(AnnexedLiqueur $annex)
     {
-        return response()->json($annex, 201);
+        return $annex;
     }
 
     /**
