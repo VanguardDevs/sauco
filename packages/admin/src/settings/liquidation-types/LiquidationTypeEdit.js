@@ -5,13 +5,13 @@ import {
     useRedirect,
     useNotify
 } from 'react-admin'
-import { validateStatus } from './statusValidations';
+import { validateLiquidationType } from './liquidationTypeValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 import TextInput from '@sauco/lib/components/TextInput'
 
-const StatusEdit = props => {
+const LiquidationTypeEdit = props => {
     const { id } = useParams();
     const editControllerProps = useEditController({
         ...props,
@@ -37,8 +37,8 @@ const StatusEdit = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado el estado "${data.name}" exitosamente!`, 'success')
-            redirect('/status')
+            notify(`¡Ha editado el tipo de liquidación "${data.name}" exitosamente!`, 'success')
+            redirect('/liquidation-types')
         }
     }, [loaded])
 
@@ -47,11 +47,11 @@ const StatusEdit = props => {
     return (
         <BaseForm
             save={save}
-            validate={validateStatus}
+            validate={validateLiquidationType}
             record={record}
             saveButtonLabel='Actualizar'
             loading={loading}
-            formName="Editar Estado"
+            formName="Editar el Tipo de Liquidación"
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
@@ -64,9 +64,9 @@ const StatusEdit = props => {
     )
 }
 
-StatusEdit.defaultProps = {
-    basePath: 'status',
-    resource: 'status'
+LiquidationTypeEdit.defaultProps = {
+    basePath: 'liquidation-types',
+    resource: 'liquidation-types'
 }
 
-export default StatusEdit
+export default LiquidationTypeEdit

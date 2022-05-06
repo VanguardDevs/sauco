@@ -64,7 +64,21 @@ import YearCreate from './settings/years/YearCreate'
 import YearEdit from './settings/years/YearEdit'
 
 
+// Status
+import StatusList from './settings/status/StatusList'
+import StatusCreate from './settings/status/StatusCreate'
+import StatusEdit from './settings/status/StatusEdit'
 
+// Liquidation Types
+import LiquidationTypeList from './settings/liquidation-types/LiquidationTypeList'
+import LiquidationTypeCreate from './settings/liquidation-types/LiquidationTypeCreate'
+import LiquidationTypeEdit from './settings/liquidation-types/LiquidationTypeEdit'
+
+
+// Payment Types
+import PaymentTypeList from './settings/payment-types/PaymentTypeList'
+import PaymentTypeCreate from './settings/payment-types/PaymentTypeCreate'
+import PaymentTypeEdit from './settings/payment-types/PaymentTypeEdit'
 
 
 const App = () => (
@@ -223,6 +237,42 @@ const App = () => (
             <ProtectedRoute layout={Layout} exact path="/years/:id" component={(routeProps) =>
                 <YearEdit
                     resource="years"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/status" component={() => <StatusList />} />
+            <ProtectedRoute layout={Layout} exact path="/status/create" component={() => <StatusCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/status/:id" component={(routeProps) =>
+                <StatusEdit
+                    resource="status"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/liquidation-types" component={() => <LiquidationTypeList />} />
+            <ProtectedRoute layout={Layout} exact path="/liquidation-types/create" component={() => <LiquidationTypeCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/liquidation-types/:id" component={(routeProps) =>
+                <LiquidationTypeEdit
+                    resource="liquidation-types"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/payment-types" component={() => <PaymentTypeList />} />
+            <ProtectedRoute layout={Layout} exact path="/payment-types/create" component={() => <PaymentTypeCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/payment-types/:id" component={(routeProps) =>
+                <PaymentTypeEdit
+                    resource="payment-types"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}

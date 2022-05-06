@@ -209,6 +209,33 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                     dense={dense}
                     exact
                 />
+                <MenuItemLink
+                    to="/status"
+                    primaryText='Estado de movimientos'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/liquidation-types"
+                    primaryText='Tipos de liquidación'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/payment-types"
+                    primaryText='Tipos de pago'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
             </SubMenu>
             <SubMenu
                 handleToggle={() => handleToggle('administration')}

@@ -4,12 +4,12 @@ import {
     useRedirect,
     useNotify,
 } from 'react-admin'
-import { validateColor } from './colorValidations';
+import { validateStatus } from './statusValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import TextInput from '@sauco/lib/components/TextInput'
 
-const ColorCreate = props => {
+const StatusCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
@@ -30,17 +30,17 @@ const ColorCreate = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha registrado el color "${data.name}!`, 'success');
-            redirect('/colors')
+            notify(`¡Ha registrado el estado "${data.name}!`, 'success');
+            redirect('/status')
         }
     }, [loaded])
 
     return (
         <BaseForm
             save={save}
-            validate={validateColor}
+            validate={validateStatus}
             loading={loading}
-            formName='Agregar color'
+            formName='Agregar Estado'
             unresponsive
         >
             <InputContainer labelName='Nombre'>
@@ -54,9 +54,9 @@ const ColorCreate = props => {
     )
 }
 
-ColorCreate.defaultProps = {
-    basePath: 'colors',
-    resource: 'colors'
+StatusCreate.defaultProps = {
+    basePath: 'status',
+    resource: 'status'
 }
 
-export default ColorCreate
+export default StatusCreate

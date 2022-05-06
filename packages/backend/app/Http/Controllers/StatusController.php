@@ -27,4 +27,33 @@ class StatusController extends Controller
 
         return $query->paginate($results);
     }
+
+
+
+    public function store(Request $request)
+    {
+        $status = Status::create($request->all());
+
+        return response()->json($status, 201);
+    }
+
+    public function show(Status $status)
+    {
+        return $status;
+    }
+
+    public function update(Request $request, Status $status)
+    {
+        $status->update($request->all());
+
+        return response()->json($status, 201);
+    }
+
+
+    public function destroy(Status $status)
+    {
+        $status->delete();
+
+        return response()->json($status, 201);
+    }
 }

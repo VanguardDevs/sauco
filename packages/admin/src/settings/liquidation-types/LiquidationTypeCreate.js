@@ -1,22 +1,15 @@
 import * as React from 'react'
 import {
     useMutation,
-    useEditController,
     useRedirect,
-    useNotify
+    useNotify,
 } from 'react-admin'
-import { validateStatus } from './statusValidations';
+import { validateLiquidationType } from './liquidationTypeValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
-import { useParams } from 'react-router-dom'
 import TextInput from '@sauco/lib/components/TextInput'
 
-const StatusEdit = props => {
-    const { id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: id
-    });
+const LiquidationTypeCreate = props => {
     const [mutate, { data, loading, loaded }] = useMutation();
     const redirect = useRedirect()
     const notify = useNotify();
@@ -24,9 +17,9 @@ const StatusEdit = props => {
     const save = React.useCallback(async (values) => {
         try {
             await mutate({
-                type: 'update',
+                type: 'create',
                 resource: props.resource,
-                payload: { id: record.id, data: values }
+                payload: { data: values }
             }, { returnPromise: true })
         } catch (error) {
             if (error.response.data.errors) {
@@ -37,21 +30,18 @@ const StatusEdit = props => {
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado el estado "${data.name}" exitosamente!`, 'success')
-            redirect('/status')
+            notify(`¡Ha registrado el tipo de liquidación "${data.name}!`, 'success');
+            redirect('/liquidation-types')
         }
     }, [loaded])
-
-    const { record } = editControllerProps
 
     return (
         <BaseForm
             save={save}
-            validate={validateStatus}
-            record={record}
-            saveButtonLabel='Actualizar'
+            validate={validateLiquidationType}
             loading={loading}
-            formName="Editar Estado"
+            formName='Agregar Tipo de Liquidación'
+            unresponsive
         >
             <InputContainer labelName='Nombre'>
                 <TextInput
@@ -64,9 +54,9 @@ const StatusEdit = props => {
     )
 }
 
-StatusEdit.defaultProps = {
-    basePath: 'status',
-    resource: 'status'
+LiquidationTypeCreate.defaultProps = {
+    basePath: 'liquidation-types',
+    resource: 'liquidation-types'
 }
 
-export default StatusEdit
+export default LiquidationTypeCreate

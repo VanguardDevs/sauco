@@ -45,6 +45,8 @@ Route::post('login', 'ManageTokenController@login');
     Route::apiResource('economic-activities', 'EconomicActivityController');
     Route::post('economic-activities/upload', 'EconomicActivityController@upload');
     Route::get('economic-activities/{activity}/download', 'EconomicActivityController@download');
+    Route::apiResource('status', 'StatusController');
+
 
     /**
     * Consults
@@ -53,7 +55,7 @@ Route::post('login', 'ManageTokenController@login');
         ->except('show');
     Route::get('taxpayer-types', 'TaxpayerTypeController@index');
     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
-    Route::get('status', 'StatusController@index');
+    // Route::get('status', 'StatusController@index');
     Route::get('intervals', 'IntervalController@index');
     Route::get('closures', 'ClosureController@index');
 
