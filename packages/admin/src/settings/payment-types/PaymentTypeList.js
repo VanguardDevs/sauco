@@ -14,8 +14,8 @@ const PaymentTypeDatagrid = () => (
         <TextField label='Descripción' source="description" />
         <DatagridOptions
             basePath='payment-types'
-            confirmTitle='Eliminar tipo de liquidación'
-            confirmContent='¿Está seguro que desea eliminar este tipo de liquidación?'
+            confirmTitle='Eliminar tipo de pago'
+            confirmContent='¿Está seguro que desea eliminar este tipo de pago?'
         />
     </Datagrid>
 );

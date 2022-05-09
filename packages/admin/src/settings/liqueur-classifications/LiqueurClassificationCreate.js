@@ -1,37 +1,36 @@
 import * as React from 'react'
-import {
-    useMutation,
-    useRedirect,
-    useNotify,
-} from 'react-admin'
 import { validateLiqueurClassification } from './liqueurclassificationValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import TextInput from '@sauco/lib/components/TextInput'
+import { axios, history } from '@sauco/lib/providers'
+
 
 const LiqueurClassificationCreate = props => {
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
-    const notify = useNotify();
+    const [loading, setLoading] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false)
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
+
         try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/liqueur-classifications', values)
+
+            if (data) {
+                setLoaded(true)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+
+        setLoading(false)
+    }, [])
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha registrado la clasificación "${data.name}!`, 'success');
-            redirect('/liqueur-classifications')
+            history.push('/liqueur-classifications')
         }
     }, [loaded])
 

@@ -1,48 +1,49 @@
 import * as React from 'react'
-import {
-    useMutation,
-    useEditController,
-    useRedirect,
-    useNotify
-} from 'react-admin'
 import { validateStatus } from './statusValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
 import { useParams } from 'react-router-dom'
 import TextInput from '@sauco/lib/components/TextInput'
+import { axios, history } from '@sauco/lib/providers'
+
 
 const StatusEdit = props => {
     const { id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: id
-    });
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
-    const notify = useNotify();
+    const [loading, setLoading] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false)
+    const [record, setRecord] = React.useState(null)
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
         try {
-            await mutate({
-                type: 'update',
-                resource: props.resource,
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`/status/${id}`, values)
+
+            if (data) {
+                setLoaded(true)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+        setLoading(false)
+    }, [id])
+
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/status/${id}`);
+
+        setRecord(data);
+    }, []);
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado el estado "${data.name}" exitosamente!`, 'success')
-            redirect('/status')
+            history.push('/status')
         }
     }, [loaded])
 
-    const { record } = editControllerProps
+    React.useEffect(() => {
+        fetchRecord()
+    }, [])
 
     return (
         <BaseForm

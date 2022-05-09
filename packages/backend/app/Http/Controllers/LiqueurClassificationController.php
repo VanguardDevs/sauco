@@ -78,10 +78,10 @@ class LiqueurClassificationController extends Controller
      * @param  \App\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(LiqueurClassification $LiqueurClassification)
     {
-        $item->delete();
+        $LiqueurClassification->delete();
 
-        return $item;
+        return response()->json($LiqueurClassification, 201);
     }
 }
