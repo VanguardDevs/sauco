@@ -77,6 +77,8 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('payments/{payment}/download', 'PaymentController@download')
         ->name('payments.download');
+    Route::get('payments/{payment}/ticket', 'PaymentController@ticket')
+        ->name('payments.ticket');
     Route::resource('payments', 'PaymentController');
 
     /**
@@ -90,6 +92,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->middleware('can:process.payments')
         ->name('affidavits.payment');
     Route::resource('affidavits', 'AffidavitController');
+
+    Route::get('affidavits/{affidavit}/download', 'AffidavitController@download')
+    ->name('affidavits.download');
+    Route::get('affidavits/{affidavit}/ticket', 'AffidavitController@ticket')
+    ->name('affidavits.ticket');
 
     /**
      * Taxpayer's Fines
@@ -170,6 +177,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('liquidations.index');
     Route::get('liquidations/{liquidation}/show', 'LiquidationController@show')
         ->name('liquidations.show');
+
+   	Route::get('liquidations/{liquidation}/download', 'LiquidationController@download')
+        ->name('liquidations.download');
+    Route::get('liquidations/{liquidation}/ticket', 'LiquidationController@ticket')
+        ->name('liquidations.ticket');
 
     /**
      * Dismissal's routes modules

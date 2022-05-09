@@ -99,6 +99,16 @@
                 <a href="{{ route('payments.show', $row->payment()->first()) }}"}} class='btn btn-info' title='Ir al pago'>
                     <i class="fas fa-money-check"></i> Ver factura
                 </a>
+                @if($row->status_id == 2)
+                    <a href="{{ route('liquidations.download', $row->id ) }}"}} class='btn btn-info' title='Descargar liquidación' target='_blank'>
+                        <i class='flaticon2-download'></i>
+                        Imprimir comprobante
+                    </a>
+                    <a href="{{ route('liquidations.ticket', $row->id ) }}"}} class='btn btn-info' title='Descargar liquidación' target='_blank'>
+                        <i class='flaticon2-download'></i>
+                        Imprimir ticket
+                    </a>
+                @endif
             </div>
         {!! Form::close() !!}
     </div>
