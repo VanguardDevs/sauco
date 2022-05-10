@@ -47,9 +47,11 @@ class LiqueurAnnexController extends Controller
      * @param  \App\AnnexedLiqueur  $annex
      * @return \Illuminate\Http\Response
      */
-    public function show(AnnexedLiqueur $annex)
+    public function show($annex)
     {
-        return $annex;
+        $annex = AnnexedLiqueur::find($annex);
+
+        return response()->json($annex, 201);
     }
 
     /**
@@ -59,8 +61,10 @@ class LiqueurAnnexController extends Controller
      * @param  \App\AnnexedLiqueur  $annex
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AnnexedLiqueur $annex)
+    public function update(Request $request, $annex)
     {
+        $annex = AnnexedLiqueur::find($annex);
+
         $annex->update($request->all());
 
         return response()->json($annex, 201);
@@ -72,8 +76,11 @@ class LiqueurAnnexController extends Controller
      * @param  \App\AnnexedLiqueur  $annex
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnexedLiqueur $annex)
+    public function destroy($annex)
     {
+
+        $annex = AnnexedLiqueur::find($annex);
+
         $annex->delete();
 
         return response()->json($annex, 201);

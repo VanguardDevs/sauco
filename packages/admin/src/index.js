@@ -34,6 +34,7 @@ const Index = () => (
             <Resource name='status' intent="registration" />
             <Resource name='liquidation-types' intent="registration" />
             <Resource name='payment-types' intent="registration" />
+            <Resource name='ordinances' intent="registration" />
 
 
 

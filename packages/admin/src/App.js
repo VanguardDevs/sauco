@@ -80,6 +80,11 @@ import PaymentTypeList from './settings/payment-types/PaymentTypeList'
 import PaymentTypeCreate from './settings/payment-types/PaymentTypeCreate'
 import PaymentTypeEdit from './settings/payment-types/PaymentTypeEdit'
 
+// Ordinances
+import OrdinanceList from './settings/ordinances/OrdinanceList'
+import OrdinanceCreate from './settings/ordinances/OrdinanceCreate'
+import OrdinanceEdit from './settings/ordinances/OrdinanceEdit'
+
 
 const App = () => (
     <>
@@ -273,6 +278,18 @@ const App = () => (
             <ProtectedRoute layout={Layout} exact path="/payment-types/:id" component={(routeProps) =>
                 <PaymentTypeEdit
                     resource="payment-types"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/ordinances" component={() => <OrdinanceList />} />
+            <ProtectedRoute layout={Layout} exact path="/ordinances/create" component={() => <OrdinanceCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/ordinances/:id" component={(routeProps) =>
+                <OrdinanceEdit
+                    resource="ordinances"
                     basePath={routeProps.match.url}
                     id={decodeURIComponent((routeProps.match).params.id)}
                     {...routeProps}

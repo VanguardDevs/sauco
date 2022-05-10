@@ -55,7 +55,7 @@ Route::post('login', 'ManageTokenController@login');
         ->except('show');
     Route::get('taxpayer-types', 'TaxpayerTypeController@index');
     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
-    // Route::get('status', 'StatusController@index');
+    Route::get('status', 'StatusController@index');
     Route::get('intervals', 'IntervalController@index');
     Route::get('closures', 'ClosureController@index');
 

@@ -39,7 +39,7 @@ class OrdinanceController extends Controller
     {
         $model = Ordinance::create($request->all());
 
-        return $model;
+        return response()->json($model, 201);
     }
 
     /**
@@ -64,7 +64,7 @@ class OrdinanceController extends Controller
     {
         $ordinance->update($request->all());
 
-        return $ordinance;
+        return response()->json($ordinance, 201);
     }
 
     /**
@@ -77,6 +77,6 @@ class OrdinanceController extends Controller
     {
         $ordinance->delete();
 
-        return $ordinance;
+        return response()->json($ordinance, 201);
     }
 }

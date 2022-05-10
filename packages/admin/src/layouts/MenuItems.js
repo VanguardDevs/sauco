@@ -236,6 +236,15 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                     dense={dense}
                     exact
                 />
+                <MenuItemLink
+                    to="/ordinances"
+                    primaryText='Ordenanzas'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
             </SubMenu>
             <SubMenu
                 handleToggle={() => handleToggle('administration')}

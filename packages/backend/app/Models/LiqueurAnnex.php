@@ -9,7 +9,7 @@ class LiqueurAnnex extends Model
 {
     use HasFactory;
 
-    protected $table = 'leased_liqueurs';
+    protected $table = 'liqueur_annexes';
 
     protected $fillable = [
         'annex_id',
