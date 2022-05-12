@@ -35,7 +35,12 @@ const Index = () => (
             <Resource name='liquidation-types' intent="registration" />
             <Resource name='payment-types' intent="registration" />
             <Resource name='ordinances' intent="registration" />
-
+            <Resource name='petro-prices' intent="registration" />
+            <Resource name='representation-types' intent="registration" />
+            <Resource name='charging-methods' intent="registration" />
+            <Resource name='correlative-types' intent="registration" />
+            <Resource name='items' intent="registration" />
+            <Resource name='tax-units' intent="registration" />
 
 
             <ConnectedRouter history={history}>

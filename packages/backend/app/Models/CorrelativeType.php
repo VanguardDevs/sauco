@@ -12,8 +12,9 @@ class CorrelativeType extends Model
         'description'
     ];
 
-    public function correlativeStates()
+    public function correlatives()
     {
-        return $this->hasMany(CorrelativeState::class);
+        return $this->hasMany(Correlative::class, 'correlative_type_id');
     }
+
 }

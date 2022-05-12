@@ -9,13 +9,13 @@ import DatagridOptions from '@sauco/lib/components/DatagridOptions';
 import CreateButton from '@sauco/lib/components/CreateButton'
 import DatagridListView from '@sauco/lib/components/DatagridListView'
 
-const PaymentTypeDatagrid = () => (
+const CorrelativeTypeDatagrid = () => (
     <Datagrid optimized>
         <TextField label='Descripción' source="description" />
         <DatagridOptions
-            basePath='payment-types'
+            basePath='correlative-types'
             confirmTitle='Eliminar tipo de pago'
-            confirmContent='¿Está seguro que desea eliminar este tipo de pago?'
+            confirmContent='¿Está seguro que desea eliminar este tipo de correlativo?'
         />
     </Datagrid>
 );
@@ -23,23 +23,23 @@ const PaymentTypeDatagrid = () => (
 const ListActions = () => (
     <TopToolbar>
         <FilterLiveSearch source="description" label='' />
-        <CreateButton label="Crear" basePath="payment-types" />
+        <CreateButton label="Crear" basePath="correlative-types" />
     </TopToolbar>
 );
 
-const PaymentTypeList = props => (
+const CorrelativeTypeList = props => (
     <ListBase
         perPage={10}
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
-        <DatagridListView actions={<ListActions />} datagrid={<PaymentTypeDatagrid />} />
+        <DatagridListView actions={<ListActions />} datagrid={<CorrelativeTypeDatagrid />} />
     </ListBase>
 );
 
-PaymentTypeList.defaultProps = {
-    basePath: 'payment-types',
-    resource: 'payment-types'
+CorrelativeTypeList.defaultProps = {
+    basePath: 'correlative-types',
+    resource: 'correlative-types'
 }
 
-export default PaymentTypeList
+export default CorrelativeTypeList

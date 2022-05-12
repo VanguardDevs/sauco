@@ -86,6 +86,34 @@ import OrdinanceCreate from './settings/ordinances/OrdinanceCreate'
 import OrdinanceEdit from './settings/ordinances/OrdinanceEdit'
 
 
+// Petro Prices
+import PetroPriceList from './settings/petro-prices/PetroPriceList'
+import PetroPriceCreate from './settings/petro-prices/PetroPriceCreate'
+import PetroPriceEdit from './settings/petro-prices/PetroPriceEdit'
+
+// Representation Types
+import RepresentationTypeList from './settings/representation-types/RepresentationTypeList'
+import RepresentationTypeCreate from './settings/representation-types/RepresentationTypeCreate'
+import RepresentationTypeEdit from './settings/representation-types/RepresentationTypeEdit'
+
+// Charging Method
+import ChargingMethodList from './settings/charging-methods/ChargingMethodList'
+import ChargingMethodCreate from './settings/charging-methods/ChargingMethodCreate'
+import ChargingMethodEdit from './settings/charging-methods/ChargingMethodEdit'
+
+// Correlative Types
+import CorrelativeTypeList from './settings/correlative-types/CorrelativeTypeList'
+import CorrelativeTypeCreate from './settings/correlative-types/CorrelativeTypeCreate'
+import CorrelativeTypeEdit from './settings/correlative-types/CorrelativeTypeEdit'
+
+// Items
+import ItemList from './settings/items/ItemList'
+import ItemCreate from './settings/items/ItemCreate'
+import ItemEdit from './settings/items/ItemEdit'
+
+// Taxunits
+import TaxUnitList from './settings/tax-units/TaxUnitList'
+
 const App = () => (
     <>
         <Route exact path='/login' render={() => <Login />} />
@@ -295,6 +323,69 @@ const App = () => (
                     {...routeProps}
                 />
             } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/petro-prices" component={() => <PetroPriceList />} />
+            <ProtectedRoute layout={Layout} exact path="/petro-prices/create" component={() => <PetroPriceCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/petro-prices/:id" component={(routeProps) =>
+                <PetroPriceEdit
+                    resource="petro-prices"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/representation-types" component={() => <RepresentationTypeList />} />
+            <ProtectedRoute layout={Layout} exact path="/representation-types/create" component={() => <RepresentationTypeCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/representation-types/:id" component={(routeProps) =>
+                <RepresentationTypeEdit
+                    resource="representation-types"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/charging-methods" component={() => <ChargingMethodList />} />
+            <ProtectedRoute layout={Layout} exact path="/charging-methods/create" component={() => <ChargingMethodCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/charging-methods/:id" component={(routeProps) =>
+                <ChargingMethodEdit
+                    resource="charging-methods"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/correlative-types" component={() => <CorrelativeTypeList />} />
+            <ProtectedRoute layout={Layout} exact path="/correlative-types/create" component={() => <CorrelativeTypeCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/correlative-types/:id" component={(routeProps) =>
+                <CorrelativeTypeEdit
+                    resource="correlative-types"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/items" component={() => <ItemList />} />
+            <ProtectedRoute layout={Layout} exact path="/items/create" component={() => <ItemCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/items/:id" component={(routeProps) =>
+                <ItemEdit
+                    resource="items"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/tax-units" component={() => <TaxUnitList />} />
         </Switch>
 
     </>

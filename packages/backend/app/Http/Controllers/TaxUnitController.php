@@ -21,8 +21,11 @@ class TaxUnitController extends Controller
         if ($request->has('filter')) {
             $filters = $request->filter;
 
-            if (array_key_exists('name', $filters)) {
-                $query->whereLike('name', $filters['name']);
+            if (array_key_exists('law', $filters)) {
+                $query->whereLike('law', $filters['law']);
+            }
+            if (array_key_exists('value', $filters)) {
+                $query->whereLike('value', $filters['value']);
             }
         }
 

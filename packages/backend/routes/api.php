@@ -28,7 +28,7 @@ Route::post('login', 'ManageTokenController@login');
     Route::apiResource('payment-methods', 'PaymentMethodController');
     Route::apiResource('payment-types', 'PaymentTypeController');
     Route::apiResource('representation-types', 'RepresentationTypeController');
-    Route::apiResource('tax-units', 'TaxUnitController');
+    Route::get('tax-units', 'TaxUnitController@index');
     Route::apiResource('brands', 'BrandController');
     Route::apiResource('vehicle-models', 'VehicleModelController');
     Route::apiResource('colors', 'ColorController');
@@ -46,13 +46,13 @@ Route::post('login', 'ManageTokenController@login');
     Route::post('economic-activities/upload', 'EconomicActivityController@upload');
     Route::get('economic-activities/{activity}/download', 'EconomicActivityController@download');
     Route::apiResource('status', 'StatusController');
+    Route::apiResource('correlative-types', 'CorrelativeTypeController');
 
 
     /**
     * Consults
     */
-    Route::apiResource('petro-prices', 'PetroPriceController')
-        ->except('show');
+    Route::apiResource('petro-prices', 'PetroPriceController');
     Route::get('taxpayer-types', 'TaxpayerTypeController@index');
     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
     Route::get('status', 'StatusController@index');

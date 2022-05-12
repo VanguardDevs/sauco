@@ -2,32 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RepresentationType;
+use App\Models\CorrelativeType;
 use Illuminate\Http\Request;
 
-class RepresentationTypeController extends Controller
+class CorrelativeTypeController extends Controller
 {
-    /**
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $query = RepresentationType::query();
+        $query = CorrelativeType::query();
         $results = $request->perPage;
 
         if ($request->has('filter')) {
             $filters = $request->filter;
 
-            if (array_key_exists('name', $filters)) {
-                $query->whereLike('name', $filters['name']);
+            if (array_key_exists('description', $filters)) {
+                $query->whereLike('description', $filters['description']);
             }
         }
 
         return $query->paginate($results);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -37,47 +36,46 @@ class RepresentationTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $representationType = RepresentationType::create($request->all());
+        $correlativeType = CorrelativeType::create($request->all());
 
-        return response()->json($representationType, 201);
+        return response()->json($correlativeType, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\CorrelativeType  $correlativeType
      * @return \Illuminate\Http\Response
      */
-    public function show(RepresentationType $representationType)
+    public function show(CorrelativeType $correlativeType)
     {
-        return $representationType;
+        return $correlativeType;
     }
-
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\CorrelativeType  $correlativeType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RepresentationType $representationType)
+    public function update(Request $request, CorrelativeType $correlativeType)
     {
-        $representationType->update($request->all());
+        $correlativeType->update($request->all());
 
-        return response()->json($representationType, 201);
+        return response()->json($correlativeType, 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\CorrelativeType  $correlativeType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RepresentationType $representationType)
+    public function destroy(CorrelativeType $correlativeType)
     {
-        $representationType->delete();
+        $correlativeType->delete();
 
-        return response()->json($representationType, 201);
+        return response()->json($correlativeType, 201);
     }
 }

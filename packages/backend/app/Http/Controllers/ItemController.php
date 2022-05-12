@@ -54,9 +54,10 @@ class ItemController extends Controller
      */
     public function store(ItemCreateRequest $request)
     {
-        $model = Item::create($request->all());
+        $item = Item::create($request->all());
 
-        return $model;
+        return response()->json($item, 201);
+
     }
 
     /**
@@ -70,7 +71,8 @@ class ItemController extends Controller
     {
         $item->update($request->all());
 
-        return $item;
+        return response()->json($item, 201);
+
     }
 
     /**
@@ -83,6 +85,7 @@ class ItemController extends Controller
     {
         $item->delete();
 
-        return $item;
+        return response()->json($item, 201);
+
     }
 }

@@ -245,6 +245,60 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                     dense={dense}
                     exact
                 />
+                <MenuItemLink
+                    to="/petro-prices"
+                    primaryText='Precios del Petro'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/representation-types"
+                    primaryText='Tipos de Representantes'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/charging-methods"
+                    primaryText='Métodos de Pago'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/correlative-types"
+                    primaryText='Tipos de Correlativos'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/items"
+                    primaryText='Rubros'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/tax-units"
+                    primaryText='Unidades Tributarias'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
             </SubMenu>
             <SubMenu
                 handleToggle={() => handleToggle('administration')}

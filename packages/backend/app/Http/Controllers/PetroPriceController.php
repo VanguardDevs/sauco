@@ -48,7 +48,15 @@ class PetroPriceController extends Controller
      */
     public function store(Request $request)
     {
-        return PetroPrice::create($request->all());
+        $petroPrice = PetroPrice::create($request->all());
+
+        return response()->json($petroPrice, 201);
+    }
+
+
+    public function show(PetroPrice $petroPrice)
+    {
+        return $petroPrice;
     }
 
     /**
@@ -62,7 +70,8 @@ class PetroPriceController extends Controller
     {
         $petroPrice->update($request->all());
 
-        return $petroPrice;
+        return response()->json($petroPrice, 201);
+
     }
 
     /**
@@ -75,6 +84,6 @@ class PetroPriceController extends Controller
     {
         $petroPrice->delete();
 
-        return $petroPrice;
+        return response()->json($petroPrice, 201);
     }
 }

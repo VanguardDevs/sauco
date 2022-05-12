@@ -38,10 +38,25 @@ class ChargingMethodController extends Controller
      */
     public function store(ChargingMethodCreateRequest $request)
     {
-        $model = ChargingMethod::create($request->all());
+        $chargingMethod = ChargingMethod::create($request->all());
 
-        return $model;
+        return response()->json($chargingMethod, 201);
+
     }
+
+       /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($method)
+    {
+        $method = ChargingMethod::find($method);
+
+        return response()->json($method, 201);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -52,20 +67,13 @@ class ChargingMethodController extends Controller
      */
     public function update(ChargingMethodCreateRequest $request, $chargingMethod)
     {
+
+        $chargingMethod = ChargingMethod::find($chargingMethod);
+
         $chargingMethod->update($request->all());
 
-        return $chargingMethod;
-    }
+        return response()->json($chargingMethod, 201);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ChargingMethod $method)
-    {
-        return $method;
     }
 
     /**
@@ -74,8 +82,12 @@ class ChargingMethodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($method)
     {
-        //
+        $method = ChargingMethod::find($method);
+
+        $method->delete();
+
+        return response()->json($method, 201);
     }
 }
