@@ -246,6 +246,15 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                     exact
                 />
                 <MenuItemLink
+                    to="/signatures"
+                    primaryText='Firmas'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
                     to="/petro-prices"
                     primaryText='Precios del Petro'
                     leftIcon={<ColorLensIcon />}

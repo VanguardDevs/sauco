@@ -1,106 +1,100 @@
 import * as React from 'react'
-import {
-    FormWithRedirect,
-    SaveButton,
-    useEditController,
-    useMutation,
-    EditContextProvider,
-    ReferenceInput,
-    SelectInput,
-    useRedirect,
-    useNotify
-} from 'react-admin'
-import { Box, Grid, InputLabel, Card, Typography } from '@material-ui/core'
+import { NullableBooleanInput} from 'react-admin'
+import { validateSignature } from './signatureValidations';
+import BaseForm from '@sauco/lib/components/BaseForm'
+import InputContainer from '@sauco/lib/components/InputContainer'
+import { useParams } from 'react-router-dom'
 import TextInput from '@sauco/lib/components/TextInput'
-
-const SignatureEditForm = props => {
-    console.log(props)
-    return (
-        <FormWithRedirect
-            {...props}
-            render={ ({ handleSubmitWithRedirect, saving }) => (
-                <Card>
-                    <Box maxWidth="90em" padding='2em'>
-                        <Grid container spacing={1}>
-                            <Typography variant="h6" gutterBottom>
-                                {'Nueva firma'}
-                            </Typography>
-                        </Grid>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} sm={12} md={6}>
-                                <InputLabel>Título</InputLabel>
-                                <TextInput
-                                    name="title"
-                                    placeholder="Ejemplo: Lic. Pérez Quijada"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={6}>
-                                <InputLabel>Decreto</InputLabel>
-                                <TextInput
-                                    name="decree"
-                                    placeholder="Ejemplo: Resolución Nº de fecha..."
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={3}>
-                                <InputLabel>Usuario</InputLabel>
-                                <ReferenceInput
-                                    source="user_id"
-                                    reference="users"
-                                    sort={{ field: 'id', order: 'ASC' }}
-                                    label=''
-                                    fullWidth
-                                >
-                                    <SelectInput source="login" optionText="login" />
-                                </ReferenceInput>
-                            </Grid>
-                        </Grid>
-                        <SaveButton
-                            handleSubmitWithRedirect={
-                                handleSubmitWithRedirect
-                            }
-                            saving={saving}
-                        />
-                    </Box>
-                </Card>
-            )}
-        />
-    );
-}
+import { axios, history } from '@sauco/lib/providers'
+import SelectInput from '@sauco/lib/components/SelectInput'
 
 const SignatureEdit = props => {
-    const editControllerProps = useEditController(props);
-    const [mutate, { data, loaded }] = useMutation();
-    const redirect = useRedirect();
-    const notify = useNotify();
+    const { id } = useParams();
+    const [loading, setLoading] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false)
+    const [users, setUsers] = React.useState([])
+    const [record, setRecord] = React.useState(null)
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
         try {
-            await mutate({
-                type: 'update',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`/signatures/${id}`, values)
+
+            if (data) {
+                setLoaded(true)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+        setLoading(false)
+    }, [id])
+
+
+    const fetchUsers = React.useCallback(async () => {
+        const { data } = await axios.get('/users');
+
+        setUsers(data.data);
+    }, []);
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/signatures/${id}`);
+
+        setRecord(data);
+    }, []);
 
     React.useEffect(() => {
-        if (data && loaded) {
-            notify('¡Se ha actualizado la firma de manera exitosa!', 'success');
-            redirect(`signatures`)
+        if (loaded) {
+            history.push('/signatures')
         }
-    }, [data, loaded]);
+    }, [loaded])
+
+    React.useEffect(() => {
+        fetchRecord()
+        fetchUsers()
+    }, [])
 
     return (
-        <EditContextProvider value={editControllerProps}>
-            <SignatureEditForm {...editControllerProps} />
-        </EditContextProvider>
+        <BaseForm
+            save={save}
+            validate={validateSignature}
+            record={record}
+            saveButtonLabel='Actualizar'
+            loading={loading}
+            formName="Editar Firma"
+        >
+            <InputContainer labelName='Título'>
+                <TextInput
+                    name="title"
+                    placeholder="Título"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Decreto'>
+                <TextInput
+                    name="decree"
+                    placeholder="Decreto"
+                    fullWidth
+                />
+            </InputContainer>
+            <InputContainer labelName='Activo'>
+                <NullableBooleanInput
+                    source="active"
+                    nullLabel=" "
+                    falseLabel="Inactivo"
+                    trueLabel="Activo"
+                />
+            </InputContainer>
+            <InputContainer labelName='Usuario'>
+                <SelectInput name="user_id" options={users} property={"names"} record={record} />
+            </InputContainer>
+        </BaseForm>
     )
+}
+
+SignatureEdit.defaultProps = {
+    basePath: 'signatures',
+    resource: 'signatures'
 }
 
 export default SignatureEdit

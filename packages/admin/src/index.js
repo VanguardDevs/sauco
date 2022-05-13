@@ -41,6 +41,7 @@ const Index = () => (
             <Resource name='correlative-types' intent="registration" />
             <Resource name='items' intent="registration" />
             <Resource name='tax-units' intent="registration" />
+            <Resource name='signatures' intent="registration" />
 
 
             <ConnectedRouter history={history}>

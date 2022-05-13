@@ -130,42 +130,18 @@ const App = () => (
                     {...routeProps}
                 />
             } />
-
-            <ProtectedRoute
-                layout={Layout}
-                exact
-                path="/signatures"
-                component={(routeProps) =>
-                    <SignatureList
-                        resource="signatures"
-                        basePath={routeProps.match.url}
-                    />
-                }
-            />
-            <ProtectedRoute
-                layout={Layout}
-                exact
-                path="/signatures/create"
-                component={(routeProps) =>
-                    <SignatureCreate
-                        resource="signatures"
-                        basePath={routeProps.match.url}
-                    />
-                }
-            />
-            <ProtectedRoute
-                layout={Layout}
-                exact
-                path="/signatures/:id"
-                component={(routeProps) =>
-                    <SignatureEdit
-                        resource="signatures"
-                        basePath={routeProps.match.url}
-                        id={decodeURIComponent((routeProps.match).params.id)}
-                        {...routeProps}
-                    />
-                }
-            />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/signatures" component={() => <SignatureList />} />
+            <ProtectedRoute layout={Layout} exact path="/signatures/create" component={() => <SignatureCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/signatures/:id" component={(routeProps) =>
+                <SignatureEdit
+                    resource="signatures"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
         </Switch>
         <Switch>
             <ProtectedRoute layout={Layout} exact path="/brands" component={() => <BrandList />} />

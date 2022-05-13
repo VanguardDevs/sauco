@@ -1,52 +1,48 @@
-import * as React from "react";
 import {
-    Filter,
-    TextInput,
     Datagrid,
     TextField,
-    ListBase,
-    BooleanInput,
     BooleanField,
-    CreateButton,
-    EditButton,
+    ListBase,
     FilterLiveSearch,
     TopToolbar
-} from 'react-admin';
+} from 'react-admin'
+import DatagridOptions from '@sauco/lib/components/DatagridOptions';
+import CreateButton from '@sauco/lib/components/CreateButton'
 import DatagridListView from '@sauco/lib/components/DatagridListView'
 
-const CategoriesDatagrid = () => (
+const SignatureDatagrid = () => (
     <Datagrid optimized>
         <TextField source="title" label="Título"/>
         <TextField source="decree" label="Decreto"/>
         <BooleanField source="active" label="Estado"/>
-        <EditButton />
+        <DatagridOptions
+            basePath='signatures'
+            confirmTitle='Eliminar Firma'
+            confirmContent='¿Está seguro que desea eliminar esta firma?'
+        />
     </Datagrid>
-);
-
-const TaxpayersFilter = props => (
-    <Filter {...props}>
-        <TextInput label="Usuario" source='user' />
-        <TextInput label="Decreto" source='decree' />
-        <TextInput label="Título" source='title' />
-        <BooleanInput label='Estado' source='status' />
-    </Filter>
 );
 
 const ListActions = () => (
     <TopToolbar>
-        <FilterLiveSearch source="name" label='' />
+        <FilterLiveSearch source="title" label='' />
         <CreateButton label="Crear" basePath="signatures" />
     </TopToolbar>
 );
 
-const TaxpayersList = props => (
+const SignatureList = props => (
     <ListBase
         perPage={10}
         sort={{ field: 'created_at', order: 'ASC' }}
         {...props}
     >
-        <DatagridListView actions={<ListActions />} datagrid={<CategoriesDatagrid />} />
+        <DatagridListView actions={<ListActions />} datagrid={<SignatureDatagrid />} />
     </ListBase>
 );
 
-export default TaxpayersList;
+SignatureList.defaultProps = {
+    basePath: 'signatures',
+    resource: 'signatures'
+}
+
+export default SignatureList
