@@ -15,28 +15,83 @@ const ConceptCreate = () => {
 
     const [loading, setLoading] = React.useState(false)
     const [loaded, setLoaded] = React.useState(false)
-    const [brands, setBrands] = React.useState([])
+    const [intervals, setIntervals] = React.useState([])
+    const [chargingmethods, setChargingMethods] = React.useState([])
+    const [accountingaccounts, setAccountingAccounts] = React.useState([])
+    const [ordinances, setOrdinances] = React.useState([])    
+    const [liquidationtypes, setLiquidationTypes] = React.useState([])
+
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
+
         try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/concepts', values)
+
+            if (data) {
+                setLoaded(true)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+
+        setLoading(false)
+    }, [])
+
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha registrado el concepto "${data.name}!`, 'success');
-            redirect('/concepts')
+            history.push('/concepts')
         }
     }, [loaded])
+
+    
+    const fetchIntervals = React.useCallback(async () => {
+        const { data } = await axios.get('/intervals');
+
+        setIntervals(data.data);
+    }, []);
+
+
+    const fetchChargingMethods = React.useCallback(async () => {
+        const { data } = await axios.get('/charging-methods');
+
+        setChargingMethods(data.data);
+    }, []);
+
+
+    const fetchAccountingAccounts = React.useCallback(async () => {
+        const { data } = await axios.get('/accounting-accounts');
+
+        setAccountingAccounts(data.data);
+    }, []);
+
+
+    const fetchOrdinances = React.useCallback(async () => {
+        const { data } = await axios.get('/ordinances');
+
+        setOrdinances(data.data);
+    }, []);
+
+
+    const fetchLiquidationTypes = React.useCallback(async () => {
+        const { data } = await axios.get('/liquidation-types');
+
+        setLiquidationTypes(data.data);
+    }, []);
+
+
+
+    React.useEffect(() => {
+        fetchIntervals();
+        fetchChargingMethods();
+        fetchAccountingAccounts();
+        fetchOrdinances();
+        fetchLiquidationTypes();
+    }, [])
+
 
     return (
         <BaseForm
@@ -88,34 +143,23 @@ const ConceptCreate = () => {
             </InputContainer>
 
             <InputContainer labelName='Intervalos'>
-                <ReferenceInput source="interval_id" reference="intervals" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="interval_id" options={intervals} />
             </InputContainer>
 
             <InputContainer labelName='Método de Pago'>
-                <ReferenceInput source="charging_method_id" reference="charging-methods" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="charging_method_id" options={chargingmethods} />
             </InputContainer>
 
             <InputContainer labelName='Cuenta Contable'>
-                <ReferenceInput source="accounting_account_id" reference="accounting-accounts" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="accounting_account_id" options={accountingaccounts} />
             </InputContainer>
 
-
             <InputContainer labelName='Ordenanzas'>
-                <ReferenceInput source="ordinance_id" reference="ordinances" >
-                    <SelectInput optionText="description" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="ordinance_id" options={ordinances} />
             </InputContainer>
 
             <InputContainer labelName='Tipo de Liquidación'>
-                <ReferenceInput source="liquidation_type_id" reference="liquidation-types" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="liquidation_type_id" options={liquidationtypes} />
             </InputContainer>
 
 

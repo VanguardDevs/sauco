@@ -1,12 +1,7 @@
 import * as React from 'react'
 import {
-    useMutation,
     NumberInput,
-    NullableBooleanInput,
-    ReferenceInput,
-    useEditController,
-    useRedirect,
-    useNotify
+    NullableBooleanInput
 } from 'react-admin'
 import { validateConcept } from './conceptValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
@@ -18,36 +13,90 @@ import SelectInput from '@sauco/lib/components/SelectInput'
 
 const ConceptEdit = props => {
     const { id } = useParams();
-    const editControllerProps = useEditController({
-        ...props,
-        id: id
-    });
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
-    const notify = useNotify();
+    const [loading, setLoading] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false)
+
+    const [intervals, setIntervals] = React.useState([])
+    const [chargingmethods, setChargingMethods] = React.useState([])
+    const [accountingaccounts, setAccountingAccounts] = React.useState([])
+    const [ordinances, setOrdinances] = React.useState([])    
+    const [liquidationtypes, setLiquidationTypes] = React.useState([])
+
+    const [record, setRecord] = React.useState(null)
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
         try {
-            await mutate({
-                type: 'update',
-                resource: props.resource,
-                payload: { id: record.id, data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.put(`/concepts/${id}`, values)
+
+            if (data) {
+                setLoaded(true)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+        setLoading(false)
+    }, [id])
+
+
+    const fetchIntervals = React.useCallback(async () => {
+        const { data } = await axios.get('/intervals');
+
+        setIntervals(data.data);
+    }, []);
+
+
+    const fetchChargingMethods = React.useCallback(async () => {
+        const { data } = await axios.get('/charging-methods');
+
+        setChargingMethods(data.data);
+    }, []);
+
+
+    const fetchAccountingAccounts = React.useCallback(async () => {
+        const { data } = await axios.get('/accounting-accounts');
+
+        setAccountingAccounts(data.data);
+    }, []);
+
+
+    const fetchOrdinances = React.useCallback(async () => {
+        const { data } = await axios.get('/ordinances');
+
+        setOrdinances(data.data);
+    }, []);
+
+
+    const fetchLiquidationTypes = React.useCallback(async () => {
+        const { data } = await axios.get('/liquidation-types');
+
+        setLiquidationTypes(data.data);
+    }, []);
+
+    const fetchRecord = React.useCallback(async () => {
+        const { data } = await axios.get(`/concepts/${id}`);
+
+        setRecord(data);
+    }, []);
+
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha editado el parametro "${data.name}" exitosamente!`, 'success')
-            redirect('/concepts')
+            history.push('/concepts')
         }
     }, [loaded])
 
-    const { record } = editControllerProps
+
+    React.useEffect(() => {
+        fetchIntervals();
+        fetchChargingMethods();
+        fetchAccountingAccounts();
+        fetchOrdinances();
+        fetchLiquidationTypes();
+        fetchRecord()
+    }, [])
 
     return (
         <BaseForm
@@ -59,7 +108,7 @@ const ConceptEdit = props => {
             formName="Editar Parámetro"
         >
 
-<InputContainer labelName='Nombre'>
+            <InputContainer labelName='Nombre'>
                 <TextInput
                     name="name"
                     placeholder="Nombre"
@@ -99,36 +148,26 @@ const ConceptEdit = props => {
                 />
             </InputContainer>
 
-            <InputContainer labelName='Intervalos'>
-                <ReferenceInput source="interval_id" reference="intervals" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+           <InputContainer labelName='Intervalos'>
+                <SelectInput name="interval_id" options={intervals} />
             </InputContainer>
 
             <InputContainer labelName='Método de Pago'>
-                <ReferenceInput source="charging_method_id" reference="charging-methods" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="charging_method_id" options={chargingmethods} />
             </InputContainer>
 
             <InputContainer labelName='Cuenta Contable'>
-                <ReferenceInput source="accounting_account_id" reference="accounting-accounts" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="accounting_account_id" options={accountingaccounts} />
             </InputContainer>
 
-
             <InputContainer labelName='Ordenanzas'>
-                <ReferenceInput source="ordinance_id" reference="ordinances" >
-                    <SelectInput optionText="description" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="ordinance_id" options={ordinances} />
             </InputContainer>
 
             <InputContainer labelName='Tipo de Liquidación'>
-                <ReferenceInput source="liquidation_type_id" reference="liquidation-types" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="liquidation_type_id" options={liquidationtypes} />
             </InputContainer>
+
         </BaseForm>
     )
 }
