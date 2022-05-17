@@ -65,7 +65,7 @@ class ConceptController extends Controller
     {
         $concept = Concept::create($request->all());
 
-        return $concept;
+        return response()->json($concept, 201);
     }
 
     /**
@@ -90,7 +90,7 @@ class ConceptController extends Controller
     {
         $concept->update($request->input());
 
-        return $concept;
+        return response()->json($concept, 201);
     }
 
     /**
@@ -103,6 +103,6 @@ class ConceptController extends Controller
     {
         $concept->delete();
 
-        return $concept;
+        return response()->json($concept, 201);
     }
 }

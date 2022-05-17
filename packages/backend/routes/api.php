@@ -47,6 +47,9 @@ Route::post('login', 'ManageTokenController@login');
     Route::get('economic-activities/{activity}/download', 'EconomicActivityController@download');
     Route::apiResource('status', 'StatusController');
     Route::apiResource('correlative-types', 'CorrelativeTypeController');
+    Route::apiResource('intervals', 'IntervalController');
+    Route::apiResource('signatures', 'SignatureController');
+
 
 
     /**
@@ -56,7 +59,6 @@ Route::post('login', 'ManageTokenController@login');
     Route::get('taxpayer-types', 'TaxpayerTypeController@index');
     Route::get('taxpayer-classifications', 'TaxpayerClassificationController@index');
     Route::get('status', 'StatusController@index');
-    Route::get('intervals', 'IntervalController@index');
     Route::get('closures', 'ClosureController@index');
 
     /**
@@ -87,7 +89,6 @@ Route::post('login', 'ManageTokenController@login');
     Route::apiResource('permissions', 'PermissionController');
     Route::apiResource('properties', 'PropertyController');
     Route::apiResource('vehicles', 'VehicleController');
-    Route::apiResource('signatures', 'SignatureController');
     Route::apiResource('roles', 'RoleController');
 
 

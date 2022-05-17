@@ -47,13 +47,11 @@ const LiqueurParameterCreate = props => {
             unresponsive
         >
 
-
             <InputContainer labelName='Clasificación'>
                 <ReferenceInput source="liqueur_classification_id" reference="liqueur-classifications" >
                     <SelectInput optionText="name" optionValue="id" />
                 </ReferenceInput>
             </InputContainer>
-
 
             <InputContainer labelName='Zona'>
                 <ReferenceInput source="liqueur_zone_id" reference="liqueur-zones" >

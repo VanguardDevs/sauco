@@ -25,6 +25,36 @@ class IntervalController extends Controller
             }
         }
 
-        return $query->paginate($results);   //
+        return $query->paginate($results);
+    }
+
+
+    public function store(Request $request)
+    {
+        $interval = Interval::create($request->all());
+
+        return response()->json($interval, 201);
+    }
+
+
+    public function show(Interval $interval)
+    {
+        return $interval;
+    }
+
+
+    public function update(Request $request, Interval $interval)
+    {
+        $interval->update($request->all());
+
+        return response()->json($interval, 201);
+    }
+
+
+    public function destroy(Interval $interval)
+    {
+        $interval->delete();
+
+        return response()->json($interval, 201);
     }
 }

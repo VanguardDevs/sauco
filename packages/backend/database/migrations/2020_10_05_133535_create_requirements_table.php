@@ -18,6 +18,8 @@ class CreateRequirementsTable extends Migration
             $table->string('name');
             $table->string('num');
             $table->timestamps();
+            $table->foreign('period_id')->references('id')->on('intervals')
+            ->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::create('taxpayer_requirement', function (Blueprint $table) {

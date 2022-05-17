@@ -114,6 +114,17 @@ import ItemEdit from './settings/items/ItemEdit'
 // Taxunits
 import TaxUnitList from './settings/tax-units/TaxUnitList'
 
+// Intervals
+import IntervalList from './settings/intervals/IntervalList'
+import IntervalCreate from './settings/intervals/IntervalCreate'
+import IntervalEdit from './settings/intervals/IntervalEdit'
+
+
+// Concepts
+import ConceptList from './settings/concepts/ConceptList'
+import ConceptCreate from './settings/concepts/ConceptCreate'
+import ConceptEdit from './settings/concepts/ConceptEdit'
+
 const App = () => (
     <>
         <Route exact path='/login' render={() => <Login />} />
@@ -362,6 +373,30 @@ const App = () => (
         </Switch>
         <Switch>
             <ProtectedRoute layout={Layout} exact path="/tax-units" component={() => <TaxUnitList />} />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/intervals" component={() => <IntervalList />} />
+            <ProtectedRoute layout={Layout} exact path="/intervals/create" component={() => <IntervalCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/intervals/:id" component={(routeProps) =>
+                <IntervalEdit
+                    resource="intervals"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
+        </Switch>
+        <Switch>
+            <ProtectedRoute layout={Layout} exact path="/concepts" component={() => <ConceptList />} />
+            <ProtectedRoute layout={Layout} exact path="/concepts/create" component={() => <ConceptCreate />} />
+            <ProtectedRoute layout={Layout} exact path="/concepts/:id" component={(routeProps) =>
+                <ConceptEdit
+                    resource="concepts"
+                    basePath={routeProps.match.url}
+                    id={decodeURIComponent((routeProps.match).params.id)}
+                    {...routeProps}
+                />
+            } />
         </Switch>
 
     </>

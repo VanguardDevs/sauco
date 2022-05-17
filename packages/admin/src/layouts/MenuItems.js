@@ -308,6 +308,24 @@ export default function MenuItems({ open, onMenuClick, dense }) {
                     dense={dense}
                     exact
                 />
+                <MenuItemLink
+                    to="/intervals"
+                    primaryText='Intervalos'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
+                <MenuItemLink
+                    to="/concepts"
+                    primaryText='Conceptos'
+                    leftIcon={<ColorLensIcon />}
+                    onClick={onMenuClick}
+                    sidebarIsOpen={open}
+                    dense={dense}
+                    exact
+                />
             </SubMenu>
             <SubMenu
                 handleToggle={() => handleToggle('administration')}
