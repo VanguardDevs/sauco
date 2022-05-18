@@ -2,41 +2,66 @@ import * as React from 'react'
 import {
     NumberInput,
     NullableBooleanInput,
-    ReferenceInput,
-    SelectInput,
-    useMutation,
-    useRedirect,
-    useNotify,
 } from 'react-admin'
 import { validateLiqueurParameter } from './liqueurparameterValidations';
 import BaseForm from '@sauco/lib/components/BaseForm'
 import InputContainer from '@sauco/lib/components/InputContainer'
+import { axios, history } from '@sauco/lib/providers'
+import SelectInput from '@sauco/lib/components/SelectInput'
 
 const LiqueurParameterCreate = props => {
-    const [mutate, { data, loading, loaded }] = useMutation();
-    const redirect = useRedirect()
-    const notify = useNotify();
+
+    const [loading, setLoading] = React.useState(false)
+    const [loaded, setLoaded] = React.useState(false)
+    const [liqueurzones, setLiqueurZones] = React.useState([])
+    const [liqueurclassifications, setLiqueurClassifications] = React.useState([])
+
 
     const save = React.useCallback(async (values) => {
+        setLoading(true)
+
         try {
-            await mutate({
-                type: 'create',
-                resource: props.resource,
-                payload: { data: values }
-            }, { returnPromise: true })
+            const { data } = await axios.post('/liqueur-parameters', values)
+
+            if (data) {
+                setLoaded(true)
+            }
         } catch (error) {
             if (error.response.data.errors) {
                 return error.response.data.errors;
             }
         }
-    }, [mutate])
+
+        setLoading(false)
+    }, [])
+
+
 
     React.useEffect(() => {
         if (loaded) {
-            notify(`¡Ha registrado el parametro "${data.name}!`, 'success');
-            redirect('/liqueur-parameters')
+            history.push('/liqueur-parameters')
         }
     }, [loaded])
+
+
+    const fetchLiqueurClassifications = React.useCallback(async () => {
+        const { data } = await axios.get('/liqueur-classifications');
+
+        setLiqueurClassifications(data.data);
+    }, []);
+
+
+    const fetchLiqueurZones = React.useCallback(async () => {
+        const { data } = await axios.get('/liqueur-zones');
+
+        setLiqueurZones(data.data);
+    }, []);
+
+
+    React.useEffect(() => {
+        fetchLiqueurZones();
+        fetchLiqueurClassifications();
+    }, [])
 
     return (
         <BaseForm
@@ -48,15 +73,11 @@ const LiqueurParameterCreate = props => {
         >
 
             <InputContainer labelName='Clasificación'>
-                <ReferenceInput source="liqueur_classification_id" reference="liqueur-classifications" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="liqueur_classification_id" options={liqueurclassifications} />
             </InputContainer>
 
             <InputContainer labelName='Zona'>
-                <ReferenceInput source="liqueur_zone_id" reference="liqueur-zones" >
-                    <SelectInput optionText="name" optionValue="id" />
-                </ReferenceInput>
+                <SelectInput name="liqueur_zone_id" options={liqueurzones} />
             </InputContainer>
 
             <InputContainer labelName='Cantidad'>

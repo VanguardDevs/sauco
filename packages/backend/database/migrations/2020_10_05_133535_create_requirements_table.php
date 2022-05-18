@@ -18,6 +18,7 @@ class CreateRequirementsTable extends Migration
             $table->string('name');
             $table->string('num');
             $table->timestamps();
+            $table->unsignedBigInteger('period_id');
             $table->foreign('period_id')->references('id')->on('intervals')
             ->onUpdate('cascade')->onDelete('cascade');
         });

@@ -18,7 +18,7 @@ const ConceptCreate = () => {
     const [intervals, setIntervals] = React.useState([])
     const [chargingmethods, setChargingMethods] = React.useState([])
     const [accountingaccounts, setAccountingAccounts] = React.useState([])
-    const [ordinances, setOrdinances] = React.useState([])    
+    const [ordinances, setOrdinances] = React.useState([])
     const [liquidationtypes, setLiquidationTypes] = React.useState([])
 
 
@@ -47,7 +47,7 @@ const ConceptCreate = () => {
         }
     }, [loaded])
 
-    
+
     const fetchIntervals = React.useCallback(async () => {
         const { data } = await axios.get('/intervals');
 
@@ -155,7 +155,7 @@ const ConceptCreate = () => {
             </InputContainer>
 
             <InputContainer labelName='Ordenanzas'>
-                <SelectInput name="ordinance_id" options={ordinances} />
+                <SelectInput name="ordinance_id" options={ordinances} property={"description"}/>
             </InputContainer>
 
             <InputContainer labelName='Tipo de Liquidación'>

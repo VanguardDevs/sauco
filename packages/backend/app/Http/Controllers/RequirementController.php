@@ -15,12 +15,21 @@ class RequirementController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->wantsJson()) {
-            return DataTables::eloquent(Requirement::query())
-                ->toJson();
+        $query = Requirement::query();
+        $results = $request->perPage;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('name', $filters)) {
+                $query->whereLike('name', $filters['name']);
+            }
+            if (array_key_exists('num', $filters)) {
+                $query->whereLike('num', $filters['num']);
+            }
         }
 
-        return view('modules.settings.requirements.index');
+        return $query->paginate($results);
     }
 
     /**
@@ -28,10 +37,10 @@ class RequirementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('modules.settings.requirement.register');
-    }
+    // public function create()
+    // {
+    //     return view('modules.settings.requirement.register');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -41,7 +50,9 @@ class RequirementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $requirement = Requirement::create($request->all());
+
+        return response()->json($requirement, 201);
     }
 
     /**
@@ -52,7 +63,7 @@ class RequirementController extends Controller
      */
     public function show(Requirement $requirement)
     {
-        //
+        return $requirement;
     }
 
     /**
@@ -75,7 +86,9 @@ class RequirementController extends Controller
      */
     public function update(Request $request, Requirement $requirement)
     {
-        //
+        $requirement->update($request->all());
+
+        return response()->json($requirement, 201);
     }
 
     /**
@@ -86,6 +99,8 @@ class RequirementController extends Controller
      */
     public function destroy(Requirement $requirement)
     {
-        //
+        $requirement->delete();
+
+        return response()->json($requirement, 201);
     }
 }

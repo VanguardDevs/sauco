@@ -49,7 +49,7 @@ Route::post('login', 'ManageTokenController@login');
     Route::apiResource('correlative-types', 'CorrelativeTypeController');
     Route::apiResource('intervals', 'IntervalController');
     Route::apiResource('signatures', 'SignatureController');
-
+    Route::apiResource('requirements', 'RequirementController');
 
 
     /**

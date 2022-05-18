@@ -19,7 +19,7 @@ const ConceptEdit = props => {
     const [intervals, setIntervals] = React.useState([])
     const [chargingmethods, setChargingMethods] = React.useState([])
     const [accountingaccounts, setAccountingAccounts] = React.useState([])
-    const [ordinances, setOrdinances] = React.useState([])    
+    const [ordinances, setOrdinances] = React.useState([])
     const [liquidationtypes, setLiquidationTypes] = React.useState([])
 
     const [record, setRecord] = React.useState(null)
@@ -149,23 +149,23 @@ const ConceptEdit = props => {
             </InputContainer>
 
            <InputContainer labelName='Intervalos'>
-                <SelectInput name="interval_id" options={intervals} />
+                <SelectInput name="interval_id" options={intervals} record={record} />
             </InputContainer>
 
             <InputContainer labelName='Método de Pago'>
-                <SelectInput name="charging_method_id" options={chargingmethods} />
+                <SelectInput name="charging_method_id" options={chargingmethods} record={record} />
             </InputContainer>
 
             <InputContainer labelName='Cuenta Contable'>
-                <SelectInput name="accounting_account_id" options={accountingaccounts} />
+                <SelectInput name="accounting_account_id" options={accountingaccounts} record={record}/>
             </InputContainer>
 
             <InputContainer labelName='Ordenanzas'>
-                <SelectInput name="ordinance_id" options={ordinances} />
+                <SelectInput name="ordinance_id" options={ordinances} record={record} property={"description"}/>
             </InputContainer>
 
             <InputContainer labelName='Tipo de Liquidación'>
-                <SelectInput name="liquidation_type_id" options={liquidationtypes} />
+                <SelectInput name="liquidation_type_id" options={liquidationtypes} record={record}/>
             </InputContainer>
 
         </BaseForm>

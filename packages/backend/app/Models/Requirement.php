@@ -9,17 +9,23 @@ class Requirement extends Model
     protected $table = 'requirements';
 
     protected $fillable = [
-        'code',
-        'name'
+        'num',
+        'name',
+        'period_id'
     ];
+
+    public function interval()
+    {
+        return $this->belongsTo(Interval::class, 'period_id');
+    }
 
     public function concept()
     {
-        return $this->belongsToMany(Concept::class);
+        return $this->hasMany(Concept::class);
     }
 
     public function taxpayer()
     {
-        return $this->belongsToMany(Taxpayer::class);
+        return $this->hasMany(Taxpayer::class);
     }
 }
