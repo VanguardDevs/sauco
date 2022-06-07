@@ -15,6 +15,7 @@ class CreateLiqueurParametersTable extends Migration
     {
         Schema::create('liqueur_parameters', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
             $table->unsignedBigInteger('liqueur_classification_id');
             $table->unsignedBigInteger('liqueur_zone_id');
             $table->float('new_registry_amount');
