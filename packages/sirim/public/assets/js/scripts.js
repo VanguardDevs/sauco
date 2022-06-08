@@ -972,4 +972,37 @@ $(document).ready(function() {
             }
         ]
     });
+
+
+
+    $('#tParameters').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": baseURL + "/liqueur-parameters/list",
+        "columns": [
+            { data: 'description' },
+            { data: 'new_registry_amount'},
+            { data: 'renew_registry_amount'},
+            { data: 'authorization_registry_amount'},
+            { data: 'liqueur_classification.name'},
+            { data: 'liqueur_zone.name'},
+            { data: 'charging_method.name'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/liqueur-parameters/${oData.id}/edit title='Editar Parametro'>
+                            <i class='btn-sm btn-warning fas fa-edit'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
 });

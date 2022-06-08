@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class LiqueurClassification extends Model
 {
-    use HasFactory;
 
     protected $table = 'liqueur_classifications';
 

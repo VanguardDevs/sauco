@@ -626,3 +626,26 @@ Breadcrumbs::for('accounting-accounts.edit', function ($trail, $row) {
     $trail->parent('accounting-accounts.index');
     $trail->push('Editar cuenta contable', url('settings/accounting-accounts/edit'.$row->id));
 });
+
+
+
+
+
+/*------------- Liqueur Parameters -------------*/
+Breadcrumbs::for('liqueur-parameters.index', function ($trail) {
+    //$trail->parent('liqueur-parameters');
+    $trail->push('Parametros de Expendio', url('liqueur-parameters'));
+});
+
+
+/*------------- Liqueur Parameters > create -------------*/
+Breadcrumbs::for('liqueur-parameters.create', function ($trail) {
+    $trail->parent('liqueur-parameters.index');
+    $trail->push('Crear Parametro de Expendio', url('liqueur-parameters/create'));
+});
+
+/*------------- Liqueur Parameters > edit -------------*/
+Breadcrumbs::for('liqueur-parameters.edit', function ($trail) {
+    $trail->parent('liqueur-parameters.index');
+    $trail->push('Editar Parametro de Expendio', url('liqueur-parameters/edit'));
+});

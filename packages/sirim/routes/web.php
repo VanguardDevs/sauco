@@ -190,4 +190,15 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('dismissals.download');
     Route::resource('dismissals', 'DismissalController')
         ->only(['index']);
+
+
+
+     /**
+     * Liqueur Parameter's routes modules
+     */
+
+    Route::resource('liqueur-parameters', 'LiqueurParameterController')->except(['show']);;
+    //Route::get('liqueur-parameters', 'LiqueurParameterController@index')->name('liqueur-parameters.index');
+    Route::get('liqueur-parameters/list', 'LiqueurParameterController@list');
+
 });
