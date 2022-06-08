@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\LiqueurParameter;
+use App\Models\LiqueurClassification;
+use App\Models\LiqueurZone;
+use App\Models\ChargingMethod;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -31,9 +34,13 @@ class LiqueurParameterController extends Controller
     }
 
 
-    public function create()
+    public function create(LiqueurParameter $liqueurParameter)
     {
         return view('modules.liqueur-parameters.register')
+        ->with('liqueurClassification', LiqueurClassification::pluck('name', 'id'))
+        ->with('liqueurZone', LiqueurZone::pluck('name', 'id'))
+        ->with('chargingMethod', ChargingMethod::pluck('name', 'id'))
+        ->with('liqueurParameter', $liqueurParameter)
             ->with('typeForm', 'create');
     }
 
@@ -61,6 +68,10 @@ class LiqueurParameterController extends Controller
     public function edit(LiqueurParameter $liqueurParameter)
     {
         return view('modules.liqueur-parameters.register')
+            ->with('liqueurClassification', LiqueurClassification::pluck('name', 'id'))
+            ->with('liqueurZone', LiqueurZone::pluck('name', 'id'))
+            ->with('chargingMethod', ChargingMethod::pluck('name', 'id'))
+            ->with('liqueurParameter', $liqueurParameter)
             ->with('typeForm', 'update')
             ->with('row', $liqueurParameter);
     }
