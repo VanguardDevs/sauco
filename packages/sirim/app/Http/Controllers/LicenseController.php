@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
 use App\Models\License;
+use App\Models\Liqueur;
+use App\Models\LiqueurAnnex;
+use App\Models\LiqueurParameter;
+use App\Models\AnnexedLiqueur;
 use App\Models\Correlative;
 use App\Models\CorrelativeNumber;
 use App\Models\CorrelativeType;
@@ -308,9 +312,48 @@ class LicenseController extends Controller
             2 => 'RENOVAR LICENCIA'
         ];
 
+
+        $hours = [
+            '07:00 AM' => '07:00 AM', 
+            '08:00 AM' => '08:00 AM', 
+            '09:00 AM' => '09:00 AM', 
+            '10:00 AM' => '10:00 AM', 
+            '11:00 AM' => '11:00 AM', 
+            '12:00 M' => '12:00 M', 
+            '01:00 PM' => '01:00 PM', 
+            '02:00 PM' => '02:00 PM', 
+            '03:00 PM' => '03:00 PM',
+            '04:00 PM' => '04:00 PM', 
+            '05:00 PM' => '05:00 PM', 
+            '06:00 PM' => '06:00 PM', 
+            '07:00 PM' => '07:00 PM', 
+            '08:00 PM' => '08:00 PM', 
+            '09:00 PM' => '09:00 PM'
+        ];
+
+        $days = [
+            'Lunes' => 'Lunes', 
+            'Martes' => 'Martes', 
+            'Miércoles' => 'Miércoles', 
+            'Jueves' => 'Jueves', 
+            'Viernes' => 'Viernes', 
+            'Sábado' => 'Sábado', 
+            'Domingo' => 'Domingo'
+        ];
+
+        $boolean = [
+            true => 'Si',
+            false => 'No'
+        ];
+
         return view('modules.taxpayers.liqueur-licenses.index')
             ->with('taxpayer', $taxpayer)
-            ->with('correlatives', $correlatives);
+            ->with('correlatives', $correlatives)
+            ->with('hours', $hours)
+            ->with('days', $days)
+            ->with('boolean', $boolean)
+            ->with('liqueurParameters', LiqueurParameter::pluck('description', 'id'))
+            ->with('liqueurAnnexes', AnnexedLiqueur::pluck('name', 'id'));
     }
 
 
@@ -319,20 +362,26 @@ class LicenseController extends Controller
     {
         $correlative = CorrelativeType::find($request->input('correlative'));
 
-        $validator = $this->validateStoreLiqueurLicense($taxpayer, $correlative);
+        /*$validator = $this->validateStoreLiqueurLicense($taxpayer, $correlative);
 
         if ($validator['error']) {
             return redirect()->back()->withError($validator['msg']);
-        }
+        }*/
 
-        $this->makeLiqueurLicense($correlative, $taxpayer);
+        $this->makeLiqueurLicense($request, $correlative, $taxpayer);
 
         return redirect('taxpayers/'.$taxpayer->id.'/liqueur-licenses')
             ->withSuccess('¡Licencia de expendio creada!');
     }
 
 
-    public function validateStoreLiqueurLicense(Taxpayer $taxpayer, $correlativeType)
+
+
+
+
+
+
+    /*public function validateStoreLiqueurLicense(Taxpayer $taxpayer, $correlativeType)
     {
         $isValid = [
             'error' => false,
@@ -355,10 +404,10 @@ class LicenseController extends Controller
         }
 
         return $isValid;
-    }
+    }*/
 
 
-    public function makeLiqueurLicense(CorrelativeType $type, Taxpayer $taxpayer)
+    public function makeLiqueurLicense($request, CorrelativeType $type, Taxpayer $taxpayer)
     {
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $correlativeNum = CorrelativeNumber::getNum();
@@ -387,14 +436,42 @@ class LicenseController extends Controller
             'correlative_id' => $correlative->id,
             'taxpayer_id' => $taxpayer->id,
             'representation_id' => $taxpayer->president()->first()->id,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'active' => false
         ]);
+
+
+        $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' desde '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
+
+        $liqueur = Liqueur::create([
+            'work_hours' => $hourtring,
+            'is_mobile' => $request->input('is_mobile'),
+            'liqueur_parameter_id' =>  $request->input('liqueurParameter'),
+            'representation_id' => $taxpayer->president()->first()->id,
+            'license_id' => $license->id
+        ]);
+
+        $liqueurannex = LiqueurAnnex::create([
+            'annex_id' => $request->input('liqueurAnnex'),
+            'liqueur_id' => $liqueur->id
+        ]);
+
+
+        /*return view('modules.taxpayers.liqueur-licenses.register')
+            ->with('taxpayer', $taxpayer)
+            ->with('license', $license);*/
 
         // Sync economic activities
 
         /*$act = $taxpayer->economicActivities;
         $license->economicActivities()->sync($act);*/
     }
+
+
+
+
+
+
 
     public function renovateLiqueurLicense(License $license)
     {
