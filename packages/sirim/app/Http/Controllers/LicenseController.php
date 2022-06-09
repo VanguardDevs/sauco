@@ -70,6 +70,7 @@ class LicenseController extends Controller
             ->with('correlatives', $correlatives);
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -284,4 +285,151 @@ class LicenseController extends Controller
     {
         //
     }
+
+
+
+
+
+    /**
+     * Liqueur Licenses Functions.
+     */
+
+
+    public function createLicenceLiqueur(Taxpayer $taxpayer, Request $request)
+    {
+        if ($request->wantsJson()) {
+            $query = License::whereTaxpayerId($taxpayer->id);
+
+            return DataTables::eloquent($query)->toJson();
+        }
+
+        $correlatives = [
+            1 => 'INSTALAR LICENCIA',
+            2 => 'RENOVAR LICENCIA'
+        ];
+
+        return view('modules.taxpayers.liqueur-licenses.index')
+            ->with('taxpayer', $taxpayer)
+            ->with('correlatives', $correlatives);
+    }
+
+
+
+    public function storeLiqueurLicense(Request $request, Taxpayer $taxpayer)
+    {
+        $correlative = CorrelativeType::find($request->input('correlative'));
+
+        $validator = $this->validateStoreLiqueurLicense($taxpayer, $correlative);
+
+        if ($validator['error']) {
+            return redirect()->back()->withError($validator['msg']);
+        }
+
+        $this->makeLiqueurLicense($correlative, $taxpayer);
+
+        return redirect('taxpayers/'.$taxpayer->id.'/liqueur-licenses')
+            ->withSuccess('¡Licencia de expendio creada!');
+    }
+
+
+    public function validateStoreLiqueurLicense(Taxpayer $taxpayer, $correlativeType)
+    {
+        $isValid = [
+            'error' => false,
+            'msg' => ''
+        ];
+
+        if (!$taxpayer->economicActivities->count()) {
+           $isValid['error'] = true;
+           $isValid['msg'] = '¡El contribuyente no tiene actividades económicas!';
+        }
+
+        if (!$taxpayer->president()->count()) {
+            $isValid['error'] = true;
+            $isValid['msg'] = '¡El contribuyente no tiene un representante (PRESIDENTE) registrado!';
+        }
+
+        if ($taxpayer->licenses()->exists()) {
+            $isValid['error'] = true;
+            $isValid['msg'] = '¡El contribuyente tiene una licencia activa!';
+        }
+
+        return $isValid;
+    }
+
+
+    public function makeLiqueurLicense(CorrelativeType $type, Taxpayer $taxpayer)
+    {
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+        $correlativeNum = CorrelativeNumber::getNum();
+        // Maybe for other kind of licenses, I would inject
+        // Ordinances in this method and make licences without searching for
+        // a model
+        $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = $emissionDate->copy()->addYears(1);
+
+        $correlativeNumber = CorrelativeNumber::create([
+            'num' => $correlativeNum
+        ]);
+
+        $correlative = Correlative::create([
+            'year_id' => $currYear->id,
+            'correlative_type_id' => $type->id,
+            'correlative_number_id' => $correlativeNumber->id
+        ]);
+
+        $license = License::create([
+            'num' => $correlative->num,
+            'emission_date' => $emissionDate,
+            'expiration_date' => $expirationDate,
+            'ordinance_id' => $ordinance->id,
+            'correlative_id' => $correlative->id,
+            'taxpayer_id' => $taxpayer->id,
+            'representation_id' => $taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id
+        ]);
+
+        // Sync economic activities
+
+        /*$act = $taxpayer->economicActivities;
+        $license->economicActivities()->sync($act);*/
+    }
+
+    public function renovateLiqueurLicense(License $license)
+    {
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+        $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = Carbon::now()->endOfYear();
+
+        $correlative = $license->correlative;
+        $correlativeNumber = $correlative->correlativeNumber;
+        $newCorrelative = Correlative::create([
+            'correlative_type_id' => 2,
+            'correlative_number_id' => $correlativeNumber->id,
+            'year_id' => $currYear->id
+        ]);
+
+        $newLicense = License::create([
+            'num' => $newCorrelative->num,
+            'emission_date' => $emissionDate,
+            'expiration_date' => $expirationDate,
+            'ordinance_id' => $ordinance->id,
+            'correlative_id' => $newCorrelative->id,
+            'taxpayer_id' => $license->taxpayer->id,
+            'representation_id' => $license->taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id
+        ]);
+        // Sync economic activities
+        
+        /*$act = $newLicense->taxpayer->economicActivities;
+        $newLicense->economicActivities()->sync($act);*/
+
+        $license->delete();
+
+        return response()->json($newLicense);
+    }
+
+
 }

@@ -61,13 +61,13 @@
                             <div class="col-lg-4">
                                 <label>Clasificación <span class="text-danger">*</span></label>
 
-                                {!!
-                                    Form::select('liqueur_classification', $liqueurClassification,
-                                    (isset($classification) ? $type: null), [
-                                    'class'=>'col-md-12 form-control select2',
-                                    'placeholder' => ' SELECCIONE ',
+                                {!! Form::select('liqueur_classification[]', $liqueurClassification,
+                                    (isset($row->liqueur_classification_id) ? ($row->liqueur_classification_id) : null), [
+                                        'class'=> 'form-control select2',
+                                        'placeholder' => ' SELECCIONE ',
                                     ])
                                 !!}
+
 
                                 @error('liqueur_classification')
                                 <div class="text text-danger">{{ $message }}</div>
@@ -76,11 +76,10 @@
                             <div class="col-lg-4">
                                 <label>Zona <span class="text-danger">*</span></label>
 
-                                {!!
-                                    Form::select('liqueur_zone', $liqueurZone,
-                                    (isset($zone) ? $type: null), [
-                                    'class'=>'col-md-12 form-control select2',
-                                    'placeholder' => ' SELECCIONE ',
+                                 {!! Form::select('liqueur_zone[]', $liqueurZone,
+                                    (isset($row->liqueur_zone_id) ? ($row->liqueur_zone_id) : null), [
+                                        'class'=> 'form-control select2',
+                                        'placeholder' => ' SELECCIONE ',
                                     ])
                                 !!}
 
@@ -91,11 +90,10 @@
                             <div class="col-lg-4">
                                 <label>Método de Cobro <span class="text-danger">*</span></label>
 
-                                {!!
-                                    Form::select('charging_method', $chargingMethod,
-                                    (isset($method) ? $type: null), [
-                                    'class'=>'col-md-12 form-control select2',
-                                    'placeholder' => ' SELECCIONE ',
+                                 {!! Form::select('charging_method[]', $chargingMethod,
+                                    (isset($row->charging_method_id) ? ($row->charging_method_id) : null), [
+                                        'class'=> 'form-control select2',
+                                        'placeholder' => ' SELECCIONE ',
                                     ])
                                 !!}
 

@@ -649,3 +649,10 @@ Breadcrumbs::for('liqueur-parameters.edit', function ($trail) {
     $trail->parent('liqueur-parameters.index');
     $trail->push('Editar Parametro de Expendio', url('liqueur-parameters/edit'));
 });
+
+
+/*------------- Liqueur License -------------*/
+Breadcrumbs::for('taxpayer.liqueur-licenses', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Patentes de expendios', route('licenses.show', $row));
+});

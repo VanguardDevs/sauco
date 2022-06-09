@@ -1005,4 +1005,33 @@ $(document).ready(function() {
             }
         ]
     });
+
+
+
+
+    $('#tLiqueurLicensesTaxpayer').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'num' },
+            { data: 'emission_date' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/licenses/${oData.id}/download title='Imprimir licencia'>
+                            <i class='btn-sm btn-success fas fa-print'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
 });

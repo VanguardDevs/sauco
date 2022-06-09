@@ -66,11 +66,23 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('licenses/{license}/renovate', 'LicenseController@renovate');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
+
+        Route::post('taxpayers/{taxpayer}/liqueur-licenses/create', 'LicenseController@storeLiqueurLicense')
+        ->name('liqueur-license.create');
+
         Route::post('licenses/{license}/dismiss', 'LicenseController@dismiss');
     });
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
     Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
+
+
+
+    Route::get('taxpayers/{taxpayer}/liqueur-licenses', 'LicenseController@createLicenceLiqueur')
+        ->name('taxpayer.liqueur-licenses');
+
+
+
 
      /*
     * Payment's routes modules
