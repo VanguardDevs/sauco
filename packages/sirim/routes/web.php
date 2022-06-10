@@ -82,6 +82,11 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('taxpayer.liqueur-licenses');
 
 
+    Route::get('liqueur-licenses', 'LicenseController@listLicenseLiqueur')
+        ->name('liqueur-licenses.index');
+
+        Route::get('liqueur-licenses/{license}', 'LicenseController@showLicenseLiqueur')
+        ->name('liqueur-licenses.show');
 
 
      /*
@@ -212,5 +217,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('liqueur-parameters', 'LiqueurParameterController')->except(['show']);;
     //Route::get('liqueur-parameters', 'LiqueurParameterController@index')->name('liqueur-parameters.index');
     Route::get('liqueur-parameters/list', 'LiqueurParameterController@list');
+
 
 });

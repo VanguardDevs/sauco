@@ -299,6 +299,42 @@ class LicenseController extends Controller
      */
 
 
+    public function listLicenseLiqueur(Request $request)
+    {
+        $query = License::where('ordinance_id', '6');
+
+
+        // Return responses
+        if ($request->wantsJson()) {
+            $query->with(['taxpayer', 'ordinance']);
+
+            return DataTables::eloquent($query)->toJson();
+        }
+
+        return view('modules.liqueur-licenses.index');
+    }
+
+    public function showLicenseLiqueur(Request $request, License $license)
+    {
+        if ($request->wantsJson()) {
+            $data = $license->load(
+                'user',
+                'taxpayer',
+                'representation.person',
+                'ordinance',
+            );
+
+            if ($license->ordinance->description == 'ACTIVIDADES ECONÓMICAS') {
+                $data->load('economicActivities');
+            }
+
+            return response()->json($data);
+        }
+        return view('modules.liqueur-licenses.show')
+            ->with('row', $license);
+    }
+
+
     public function createLicenceLiqueur(Taxpayer $taxpayer, Request $request)
     {
         if ($request->wantsJson()) {
@@ -314,30 +350,30 @@ class LicenseController extends Controller
 
 
         $hours = [
-            '07:00 AM' => '07:00 AM', 
-            '08:00 AM' => '08:00 AM', 
-            '09:00 AM' => '09:00 AM', 
-            '10:00 AM' => '10:00 AM', 
-            '11:00 AM' => '11:00 AM', 
-            '12:00 M' => '12:00 M', 
-            '01:00 PM' => '01:00 PM', 
-            '02:00 PM' => '02:00 PM', 
+            '07:00 AM' => '07:00 AM',
+            '08:00 AM' => '08:00 AM',
+            '09:00 AM' => '09:00 AM',
+            '10:00 AM' => '10:00 AM',
+            '11:00 AM' => '11:00 AM',
+            '12:00 M' => '12:00 M',
+            '01:00 PM' => '01:00 PM',
+            '02:00 PM' => '02:00 PM',
             '03:00 PM' => '03:00 PM',
-            '04:00 PM' => '04:00 PM', 
-            '05:00 PM' => '05:00 PM', 
-            '06:00 PM' => '06:00 PM', 
-            '07:00 PM' => '07:00 PM', 
-            '08:00 PM' => '08:00 PM', 
+            '04:00 PM' => '04:00 PM',
+            '05:00 PM' => '05:00 PM',
+            '06:00 PM' => '06:00 PM',
+            '07:00 PM' => '07:00 PM',
+            '08:00 PM' => '08:00 PM',
             '09:00 PM' => '09:00 PM'
         ];
 
         $days = [
-            'Lunes' => 'Lunes', 
-            'Martes' => 'Martes', 
-            'Miércoles' => 'Miércoles', 
-            'Jueves' => 'Jueves', 
-            'Viernes' => 'Viernes', 
-            'Sábado' => 'Sábado', 
+            'Lunes' => 'Lunes',
+            'Martes' => 'Martes',
+            'Miércoles' => 'Miércoles',
+            'Jueves' => 'Jueves',
+            'Viernes' => 'Viernes',
+            'Sábado' => 'Sábado',
             'Domingo' => 'Domingo'
         ];
 
@@ -499,7 +535,7 @@ class LicenseController extends Controller
             'user_id' => Auth::user()->id
         ]);
         // Sync economic activities
-        
+
         /*$act = $newLicense->taxpayer->economicActivities;
         $newLicense->economicActivities()->sync($act);*/
 
