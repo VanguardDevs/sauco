@@ -70,6 +70,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('taxpayers/{taxpayer}/liqueur-licenses/create', 'LicenseController@storeLiqueurLicense')
         ->name('liqueur-license.create');
 
+        Route::get('liqueur-licenses/{license}/download', 'LicenseController@downloadLiqueurLicense')->name('liqueur-license.download');
+
+
         Route::post('licenses/{license}/dismiss', 'LicenseController@dismiss');
     });
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')

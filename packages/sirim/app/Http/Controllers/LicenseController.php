@@ -11,6 +11,7 @@ use App\Models\License;
 use App\Models\Liqueur;
 use App\Models\LiqueurAnnex;
 use App\Models\LiqueurParameter;
+use App\Models\LiqueurClassification;
 use App\Models\AnnexedLiqueur;
 use App\Models\Correlative;
 use App\Models\CorrelativeNumber;
@@ -316,22 +317,12 @@ class LicenseController extends Controller
 
     public function showLicenseLiqueur(Request $request, License $license)
     {
-        if ($request->wantsJson()) {
-            $data = $license->load(
-                'user',
-                'taxpayer',
-                'representation.person',
-                'ordinance',
-            );
 
-            if ($license->ordinance->description == 'ACTIVIDADES ECONÓMICAS') {
-                $data->load('economicActivities');
-            }
+        $liqueur = Liqueur::whereLicenseId($license->id)->first();
 
-            return response()->json($data);
-        }
         return view('modules.liqueur-licenses.show')
-            ->with('row', $license);
+            ->with('row', $license)
+            ->with('liqueur', $liqueur);
     }
 
 
@@ -454,6 +445,14 @@ class LicenseController extends Controller
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->addYears(1);
 
+        $idParameter = $request->input('liqueurParameter');
+
+        $liqueur_parameter = LiqueurParameter::whereId($idParameter)->first();
+
+        $liqueurClassification= LiqueurClassification::whereId($liqueur_parameter->liqueur_classification_id)->first();
+
+        $liqueurAbbreviature = $liqueurClassification->abbreviature;
+
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
         ]);
@@ -465,7 +464,7 @@ class LicenseController extends Controller
         ]);
 
         $license = License::create([
-            'num' => $correlative->num,
+            'num' => $liqueurAbbreviature.'-'.License::getNewNum().'-BERM',
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $ordinance->id,
@@ -507,8 +506,6 @@ class LicenseController extends Controller
 
 
 
-
-
     public function renovateLiqueurLicense(License $license)
     {
         $currYear = Year::where('year', Carbon::now()->year)->first();
@@ -542,6 +539,34 @@ class LicenseController extends Controller
         $license->delete();
 
         return response()->json($newLicense);
+    }
+
+
+    public function downloadLiqueurLicense(License $license)
+    {
+        $taxpayer = $license->taxpayer;
+        $num = preg_replace("/[^0-9]/", "", $taxpayer->rif);
+        $correlative = $license->correlative;
+        $licenseCorrelative = $correlative->correlativeType->description.
+                             $correlative->year->year.'-'
+                             .$correlative->correlativeNumber->num;
+
+        $representation = $license->representation->person->name;
+        $signature = Signature::latest()->first();
+
+        $liqueur = Liqueur::whereLicenseId($license->id)->first();
+
+        $liqueurAnnex = LiqueurAnnex::whereLiqueurId($liqueur->id)->first();
+
+        $annexLiqueur = AnnexedLiqueur::whereId($liqueurAnnex->annex_id)->first();
+
+        $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
+
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'liqueur', 'annexLiqueur'];
+        $license->update(['downloaded_at' => Carbon::now()]);
+
+        return PDF::loadView('modules.liqueur-licenses.pdf.liqueur-license', compact($vars))
+            ->stream('Licencia '.$license->num.'.pdf');
     }
 
 

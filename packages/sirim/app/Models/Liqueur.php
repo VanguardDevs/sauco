@@ -13,17 +13,16 @@ class Liqueur extends Model
 
     protected $fillable = [
         'work_hours',
-        //'company_id',
         'is_mobile',
         'liqueur_parameter_id',
         'representation_id',
         'license_id'
     ];
 
-    /*public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }*/
+
+    protected $appends = [
+        'license'
+    ];
 
     public function liqueur_parameter()
     {
@@ -53,5 +52,10 @@ class Liqueur extends Model
     public function liqueur_annex()
     {
         return $this->hasMany(LiqueurAnnex::class, 'liqueur_id');
+    }
+
+    public function getLicenseAttribute()
+    {
+        $this->load('license');
     }
 }

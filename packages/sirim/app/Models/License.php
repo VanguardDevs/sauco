@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\PrettyTimestamps;
+use App\Traits\NewValue;
+
 
 class License extends Model implements Auditable
 {
-    use Audit, SoftDeletes, PrettyTimestamps;
+    use Audit, SoftDeletes, PrettyTimestamps, NewValue;
 
     protected $table = 'licenses';
 
@@ -59,6 +61,11 @@ class License extends Model implements Auditable
     public function representation()
     {
         return $this->belongsTo(Representation::class);
+    }
+
+    public function liqueurs()
+    {
+        return $this->hasMany(Liqueur::class, 'license_id');
     }
 
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)
