@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Builder;
 use PDF;
 use Auth;
 use App\Models\License;
+use App\Models\Liquidation;
+use App\Models\Payment;
 use App\Models\Liqueur;
 use App\Models\LiqueurAnnex;
 use App\Models\LiqueurParameter;
@@ -17,6 +19,8 @@ use App\Models\Correlative;
 use App\Models\CorrelativeNumber;
 use App\Models\CorrelativeType;
 use App\Models\Year;
+use App\Models\Concept;
+use App\Models\PetroPrice;
 use App\Models\Ordinance;
 use App\Models\Taxpayer;
 use App\Models\Dismissal;
@@ -329,7 +333,7 @@ class LicenseController extends Controller
     public function createLicenceLiqueur(Taxpayer $taxpayer, Request $request)
     {
         if ($request->wantsJson()) {
-            $query = License::whereTaxpayerId($taxpayer->id);
+            $query = License::whereTaxpayerId($taxpayer->id)->where('active', true);
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -445,6 +449,10 @@ class LicenseController extends Controller
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->addYears(1);
 
+        $concept = Concept::whereCode('21')->first();
+
+        $petro = PetroPrice::latest()->first()->value;
+
         $idParameter = $request->input('liqueurParameter');
 
         $liqueur_parameter = LiqueurParameter::whereId($idParameter)->first();
@@ -452,6 +460,8 @@ class LicenseController extends Controller
         $liqueurClassification= LiqueurClassification::whereId($liqueur_parameter->liqueur_classification_id)->first();
 
         $liqueurAbbreviature = $liqueurClassification->abbreviature;
+
+        $amount = $petro*$liqueur_parameter->new_registry_amount;
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -462,6 +472,7 @@ class LicenseController extends Controller
             'correlative_type_id' => $type->id,
             'correlative_number_id' => $correlativeNumber->id
         ]);
+
 
         $license = License::create([
             'num' => $liqueurAbbreviature.'-'.License::getNewNum().'-BERM',
@@ -475,6 +486,29 @@ class LicenseController extends Controller
             'active' => false
         ]);
 
+        $liquidation = $this->liquidation()->create([
+            'num' => Liquidation::getNewNum(),
+            'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
+            'amount' => $amount,
+            'liquidable_type' => get_class(Liquidation::class),
+            'concept_id' => $concept->id,
+            'liquidation_type_id' => $concept->liquidation_type_id,
+            'status_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+        $payment = Payment::create([
+            'status_id' => 1,
+            'user_id' => Auth::user()->id,
+            'amount' => $amount,
+            'payment_method_id' => 1,
+            'payment_type_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+
+
+        $payment->liquidations()->sync($liquidation);
 
         $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' desde '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
 
@@ -501,8 +535,6 @@ class LicenseController extends Controller
         /*$act = $taxpayer->economicActivities;
         $license->economicActivities()->sync($act);*/
     }
-
-
 
 
 
@@ -540,7 +572,6 @@ class LicenseController extends Controller
 
         return response()->json($newLicense);
     }
-
 
     public function downloadLiqueurLicense(License $license)
     {

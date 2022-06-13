@@ -8,11 +8,13 @@ use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\PrettyTimestamps;
 use App\Traits\NewValue;
+use App\Traits\MakeLiquidation;
+use App\Traits\PaymentUtils;
 
 
 class License extends Model implements Auditable
 {
-    use Audit, SoftDeletes, PrettyTimestamps, NewValue;
+    use Audit, SoftDeletes, PrettyTimestamps, NewValue, MakeLiquidation, PaymentUtils;
 
     protected $table = 'licenses';
 
