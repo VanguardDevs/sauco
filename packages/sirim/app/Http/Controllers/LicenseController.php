@@ -486,11 +486,11 @@ class LicenseController extends Controller
             'active' => false
         ]);
 
-        $liquidation = $this->liquidation()->create([
+        $liquidation = Liquidation::create([
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
             'amount' => $amount,
-            'liquidable_type' => get_class(Liquidation::class),
+            'liquidable_type' => Liquidation::class,
             'concept_id' => $concept->id,
             'liquidation_type_id' => $concept->liquidation_type_id,
             'status_id' => 1,
@@ -510,6 +510,7 @@ class LicenseController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
+
         $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' desde '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
 
         $liqueur = Liqueur::create([
@@ -525,6 +526,7 @@ class LicenseController extends Controller
             'liqueur_id' => $liqueur->id
         ]);
 
+        $liqueur->liquidations()->sync($liquidation);
 
         /*return view('modules.taxpayers.liqueur-licenses.register')
             ->with('taxpayer', $taxpayer)

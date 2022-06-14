@@ -39,6 +39,12 @@ class Liqueur extends Model
         return $this->belongsTo(License::class);
     }
 
+
+    public function liquidations()
+    {
+        return $this->belongsToMany(Liquidation::class, 'liqueur_liquidation');
+    }
+
     /*public function liqueur_vehicle()
     {
         return $this->hasMany(LiqueurVehicle::class, 'liqueur_id');

@@ -11,6 +11,11 @@ use App\Models\Reference;
 use App\Models\Settlement;
 use App\Models\Taxpayer;
 use App\Models\PaymentNull;
+use App\Models\Liquidation;
+use App\Models\PetroPrice;
+use App\Models\Liqueur;
+use App\Models\LiqueurParameter;
+use App\Models\Year;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -128,6 +133,23 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
+
+        $liquidation = $payment->liquidations->first();
+
+        $petro = PetroPrice::latest()->first()->value;
+
+        $liqueur = $liquidation->liqueur->first();
+
+        $liqueur_parameter = LiqueurParameter::whereId($liqueur->liqueur_parameter_id)->first();
+
+        $amount = $petro*$liqueur_parameter->authorization_registry_amount;
+
+        $taxpayer = $payment->taxpayer_id;
+
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+
+        $concept = Concept::whereCode('21')->first();
+
         $validator = $request->validate([
             'processed_at'     => 'required',
             'method'  => 'required'
@@ -146,6 +168,37 @@ class PaymentController extends Controller
                 'account_id' => 1,
             ]);
         }
+
+
+        if($liquidation->concept_id == '21'){
+
+            $liquidation_authorization = Liquidation::create([
+                'num' => Liquidation::getNewNum(),
+                'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
+                'amount' => $amount,
+                'liquidable_type' => Liquidation::class,
+                'concept_id' => $concept->id,
+                'liquidation_type_id' => $concept->liquidation_type_id,
+                'status_id' => 1,
+                'taxpayer_id' => $taxpayer
+            ]);
+
+            $payment_authorization = Payment::create([
+                'status_id' => 1,
+                'user_id' => Auth::user()->id,
+                'amount' => $amount,
+                'payment_method_id' => 1,
+                'payment_type_id' => 1,
+                'taxpayer_id' => $taxpayer
+            ]);
+
+
+
+            $payment_authorization->liquidations()->sync($liquidation_authorization);
+        }
+
+
+
 
         $paymentNum = Payment::getNewNum(2);
         $processedAt = $request->processed_at.' '.Carbon::now()->toTimeString();
