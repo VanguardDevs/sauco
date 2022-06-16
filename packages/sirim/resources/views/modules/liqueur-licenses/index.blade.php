@@ -13,7 +13,7 @@
                         <i class="kt-font-brand fas fa-file-medical"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Listado de patentes emitidas
+                        Listado de licencias de expendio emitidas
                     </h3>
                 </div>
            </div>

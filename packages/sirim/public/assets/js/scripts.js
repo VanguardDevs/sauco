@@ -1025,7 +1025,7 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/licenses/${oData.id}/download title='Imprimir licencia'>
+                        <a class="mr-2" href=${baseURL}/liqueur-licenses/${oData.id}/download title='Imprimir licencia'>
                             <i class='btn-sm btn-success fas fa-print'></i>
                         </a>
                     </div>`

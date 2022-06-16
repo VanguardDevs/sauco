@@ -127,7 +127,7 @@
                                 <dt><strong>FECHA DE EMISIÓN</strong> {{ $license->emission_date }}</dt>
                                 <dt><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</dt>
                                 <dt><strong>REPRESENTANTE:</strong> {{ $representation }}</dt>
-                                
+
                                 <dt><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueur_parameter->liqueur_classification->name }}</dt>
                                 <dt><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</dt>
                                 <dt><strong>ANEXO A:</strong> {{ $annexLiqueur->name }}</dt>
@@ -139,7 +139,7 @@
                 </tbody>
             </table>
             <br>
-            <table class="table" style="text-align: center;">
+            <!--<table class="table" style="text-align: center;">
                 <tr>
 
                     <th colspan = "4">ACTIVIDADES ECONÓMICAS
@@ -164,7 +164,7 @@
                   </tr>
                   @endforeach
                 </tbody>
-            </table>
+            </table>-->
         </div>
         <div class="bottom text-center">
             <span class="row">{{ $signature->title }}</span>
