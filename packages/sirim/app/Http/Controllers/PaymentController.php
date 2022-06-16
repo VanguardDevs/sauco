@@ -14,6 +14,7 @@ use App\Models\PaymentNull;
 use App\Models\Liquidation;
 use App\Models\PetroPrice;
 use App\Models\Liqueur;
+use App\Models\License;
 use App\Models\LiqueurParameter;
 use App\Models\Year;
 use Illuminate\Http\Request;
@@ -136,19 +137,8 @@ class PaymentController extends Controller
 
         $liquidation = $payment->liquidations->first();
 
-        $petro = PetroPrice::latest()->first()->value;
+        $Oldconcept = Concept::whereId($liquidation->concept_id)->first();
 
-        $liqueur = $liquidation->liqueur->first();
-
-        $liqueur_parameter = LiqueurParameter::whereId($liqueur->liqueur_parameter_id)->first();
-
-        $amount = $petro*$liqueur_parameter->authorization_registry_amount;
-
-        $taxpayer = $payment->taxpayer_id;
-
-        $currYear = Year::where('year', Carbon::now()->year)->first();
-
-        $concept = Concept::whereCode('21')->first();
 
         $validator = $request->validate([
             'processed_at'     => 'required',
@@ -170,15 +160,67 @@ class PaymentController extends Controller
         }
 
 
-        if($liquidation->concept_id == '21'){
+        if($Oldconcept->code == '001.005.000'){
+
+            $petro = PetroPrice::latest()->first()->value;
+
+            $liqueur = $liquidation->liqueur->first();
+
+            $liqueur_parameter = LiqueurParameter::whereId($liqueur->liqueur_parameter_id)->first();
+
+            $amount = $petro*$liqueur_parameter->authorization_registry_amount;
+
+            $emissionDate = Carbon::now();
+            $expirationDate = $emissionDate->copy()->addYears(1);
+
+            $taxpayer = $payment->taxpayer_id;
+
+
+            // Creates a new license with the details of the old one
+
+            $oldLicense = License::whereId($liqueur->license_id)->first();
+
+            //dd($oldLicense);
+
+            $license = License::create([
+                'num' => $oldLicense->num,
+                'emission_date' => $emissionDate,
+                'expiration_date' => $expirationDate,
+                'ordinance_id' => $oldLicense->ordinance_id,
+                'correlative_id' => $oldLicense->correlative_id,
+                'taxpayer_id' => $taxpayer,
+                'representation_id' => $oldLicense->representation_id,
+                'user_id' => Auth::user()->id,
+                'active' => false
+            ]);
+
+
+            // Should the old license be deleted?
+
+            //$oldLicense->delete();
+
+
+            $liqueur->update([
+                'license_id' => $license->id
+            ]);
+
+            //Update liqueur 
+
+            $updatedLiqueur = Liqueur::whereLicenseId($license->id)->first();
+
+
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+
+            $newConcept = Concept::whereCode('21')->first();
+
 
             $liquidation_authorization = Liquidation::create([
                 'num' => Liquidation::getNewNum(),
-                'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
+                'object_payment' =>  $newConcept->name.' - AÑO '.$currYear->year,
                 'amount' => $amount,
                 'liquidable_type' => Liquidation::class,
-                'concept_id' => $concept->id,
-                'liquidation_type_id' => $concept->liquidation_type_id,
+                'concept_id' => $newConcept->id,
+                'liquidation_type_id' => $newConcept->liquidation_type_id,
                 'status_id' => 1,
                 'taxpayer_id' => $taxpayer
             ]);
@@ -192,6 +234,7 @@ class PaymentController extends Controller
                 'taxpayer_id' => $taxpayer
             ]);
 
+            $updatedLiqueur->liquidations()->sync($liquidation_authorization);
 
 
             $payment_authorization->liquidations()->sync($liquidation_authorization);

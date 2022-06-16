@@ -67,7 +67,7 @@ class License extends Model implements Auditable
 
     public function liqueurs()
     {
-        return $this->hasMany(Liqueur::class, 'license_id');
+        return $this->hasMany(Liqueur::class);
     }
 
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)

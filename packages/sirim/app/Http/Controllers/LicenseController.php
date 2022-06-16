@@ -64,7 +64,7 @@ class LicenseController extends Controller
     public function create(Taxpayer $taxpayer, Request $request)
     {
         if ($request->wantsJson()) {
-            $query = License::whereTaxpayerId($taxpayer->id);
+            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '1');;
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -333,7 +333,31 @@ class LicenseController extends Controller
     public function createLicenceLiqueur(Taxpayer $taxpayer, Request $request)
     {
         if ($request->wantsJson()) {
-            $query = License::whereTaxpayerId($taxpayer->id)->where('active', true);
+
+            $licenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->with("liqueurs")->get();
+
+            foreach($licenses as $license){
+
+               $liqueur = Liqueur::whereLicenseId($license->id)->first();
+
+                if($liqueur){
+
+                   $liquidation = $liqueur->liquidations->first();
+
+                   if ($license->active == false) {               
+
+                       if($liquidation->status_id == 2 && $liquidation->liquidation_type_id == 1 ){
+
+                            $license->update([
+                                'active' => true
+                            ]);
+                        }
+                    }
+                }
+
+            }
+
+            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->where('active', true);
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -449,7 +473,7 @@ class LicenseController extends Controller
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->addYears(1);
 
-        $concept = Concept::whereCode('21')->first();
+        $concept = Concept::whereCode('001.005.000')->first();
 
         $petro = PetroPrice::latest()->first()->value;
 
