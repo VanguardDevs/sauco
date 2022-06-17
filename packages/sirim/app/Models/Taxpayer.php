@@ -109,6 +109,11 @@ class Taxpayer extends Model implements Auditable
         return $this->hasMany(Affidavit::class);
     }
 
+    public function requirements()
+    {
+        return $this->belongsToMany(Requirement::class, 'requirement_taxpayer');
+    }
+
     public function community()
     {
         return $this->belongsTo(Community::class);
