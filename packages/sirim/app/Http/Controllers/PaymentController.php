@@ -17,6 +17,8 @@ use App\Models\Liqueur;
 use App\Models\License;
 use App\Models\LiqueurParameter;
 use App\Models\Year;
+use App\Models\Requirement;
+use App\Models\RequirementTaxpayer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -137,8 +139,9 @@ class PaymentController extends Controller
 
         $liquidation = $payment->liquidations->first();
 
-        $Oldconcept = Concept::whereId($liquidation->concept_id)->first();
+        $concept = Concept::whereId($liquidation->concept_id)->first();
 
+        $taxpayer = Taxpayer::whereId($payment->taxpayer_id)->first();
 
         $validator = $request->validate([
             'processed_at'     => 'required',
@@ -160,89 +163,6 @@ class PaymentController extends Controller
         }
 
 
-        if($Oldconcept->code == '001.005.000'){
-
-            $petro = PetroPrice::latest()->first()->value;
-
-            $liqueur = $liquidation->liqueur->first();
-
-            $liqueur_parameter = LiqueurParameter::whereId($liqueur->liqueur_parameter_id)->first();
-
-            $amount = $petro*$liqueur_parameter->authorization_registry_amount;
-
-            $emissionDate = Carbon::now();
-            $expirationDate = $emissionDate->copy()->addYears(1);
-
-            $taxpayer = $payment->taxpayer_id;
-
-
-            // Creates a new license with the details of the old one
-
-            $oldLicense = License::whereId($liqueur->license_id)->first();
-
-            //dd($oldLicense);
-
-            $license = License::create([
-                'num' => $oldLicense->num,
-                'emission_date' => $emissionDate,
-                'expiration_date' => $expirationDate,
-                'ordinance_id' => $oldLicense->ordinance_id,
-                'correlative_id' => $oldLicense->correlative_id,
-                'taxpayer_id' => $taxpayer,
-                'representation_id' => $oldLicense->representation_id,
-                'user_id' => Auth::user()->id,
-                'active' => false
-            ]);
-
-
-            // Should the old license be deleted?
-
-            //$oldLicense->delete();
-
-
-            $liqueur->update([
-                'license_id' => $license->id
-            ]);
-
-            //Update liqueur 
-
-            $updatedLiqueur = Liqueur::whereLicenseId($license->id)->first();
-
-
-            $currYear = Year::where('year', Carbon::now()->year)->first();
-
-            $newConcept = Concept::whereCode('21')->first();
-
-
-            $liquidation_authorization = Liquidation::create([
-                'num' => Liquidation::getNewNum(),
-                'object_payment' =>  $newConcept->name.' - AÑO '.$currYear->year,
-                'amount' => $amount,
-                'liquidable_type' => Liquidation::class,
-                'concept_id' => $newConcept->id,
-                'liquidation_type_id' => $newConcept->liquidation_type_id,
-                'status_id' => 1,
-                'taxpayer_id' => $taxpayer
-            ]);
-
-            $payment_authorization = Payment::create([
-                'status_id' => 1,
-                'user_id' => Auth::user()->id,
-                'amount' => $amount,
-                'payment_method_id' => 1,
-                'payment_type_id' => 1,
-                'taxpayer_id' => $taxpayer
-            ]);
-
-            $updatedLiqueur->liquidations()->sync($liquidation_authorization);
-
-
-            $payment_authorization->liquidations()->sync($liquidation_authorization);
-        }
-
-
-
-
         $paymentNum = Payment::getNewNum(2);
         $processedAt = $request->processed_at.' '.Carbon::now()->toTimeString();
 
@@ -261,9 +181,58 @@ class PaymentController extends Controller
 
         $payment->createMovements();
 
-        return redirect()->back()
-            ->withSuccess('¡Factura procesada!');
+        if($concept->code == '001.005.000'){
+            $requirement = Requirement::whereId('1')->first();
+
+            $requirementTaxpayer = RequirementTaxpayer::create([
+                'requirement_id' => $requirement->id,
+                'taxpayer_id' => $taxpayer->id,
+                'liquidation_id' => $liquidation->id,
+                'active' => true
+            ]);
+        }
+
+
+        /*if($concept->code == '21'){
+
+            $licenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->with("liqueurs")->get();
+
+            foreach($licenses as $license){
+
+                $liqueur = Liqueur::whereLicenseId($license->id)->first();
+
+                $liquidationLiqueur = $liqueur->liquidations->first();
+
+                if ($license->active == false && $liquidationLiqueur->status_id == 2 && $liqueur =! null ) {               
+
+                    $license->update([
+                        'active' => true
+                    ]);
+                }
+            }
+        }*/
+
+        if($concept->code == '21'){
+
+            $representation= $taxpayer->president()->first();
+
+            $liqueur = Liqueur::whereRepresentationId($representation->id)->first();
+
+            $license = License::whereId($liqueur->license_id)->first();
+
+            $status = $payment->liquidations()->first()->status_id;
+
+            if ($license->active == false && $status == 2 && $liqueur =! null ) {               
+                $license->update([
+                    'active' => true
+                ]);
+            }
+
+        }
+
+        return redirect()->back()->withSuccess('¡Factura procesada!');
     }
+
 
     public function download(Payment $payment)
     {

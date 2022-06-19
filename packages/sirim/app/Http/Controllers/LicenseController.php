@@ -25,6 +25,8 @@ use App\Models\Ordinance;
 use App\Models\Taxpayer;
 use App\Models\Dismissal;
 use App\Models\App\Modelslication;
+use App\Models\Requirement;
+use App\Models\RequirementTaxpayer;
 use Carbon\Carbon;
 use App\Models\Signature;
 
@@ -354,13 +356,17 @@ class LicenseController extends Controller
                         }
                     }
                 }
-
             }
 
             $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->where('active', true);
 
             return DataTables::eloquent($query)->toJson();
         }
+
+
+        $requirement = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('requirement_id', '1')->first();
+
+        //dd($requirement);
 
         $correlatives = [
             1 => 'INSTALAR LICENCIA',
@@ -404,6 +410,7 @@ class LicenseController extends Controller
         return view('modules.taxpayers.liqueur-licenses.index')
             ->with('taxpayer', $taxpayer)
             ->with('correlatives', $correlatives)
+            ->with('requirement', $requirement)
             ->with('hours', $hours)
             ->with('days', $days)
             ->with('boolean', $boolean)
@@ -473,7 +480,7 @@ class LicenseController extends Controller
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->addYears(1);
 
-        $concept = Concept::whereCode('001.005.000')->first();
+        $concept = Concept::whereCode('21')->first();
 
         $petro = PetroPrice::latest()->first()->value;
 
@@ -485,7 +492,7 @@ class LicenseController extends Controller
 
         $liqueurAbbreviature = $liqueurClassification->abbreviature;
 
-        $amount = $petro*$liqueur_parameter->new_registry_amount;
+        $amount = $petro*$liqueur_parameter->authorization_registry_amount;
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -530,10 +537,7 @@ class LicenseController extends Controller
             'taxpayer_id' => $taxpayer->id
         ]);
 
-
-
         $payment->liquidations()->sync($liquidation);
-
 
         $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' desde '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
 
@@ -551,15 +555,6 @@ class LicenseController extends Controller
         ]);
 
         $liqueur->liquidations()->sync($liquidation);
-
-        /*return view('modules.taxpayers.liqueur-licenses.register')
-            ->with('taxpayer', $taxpayer)
-            ->with('license', $license);*/
-
-        // Sync economic activities
-
-        /*$act = $taxpayer->economicActivities;
-        $license->economicActivities()->sync($act);*/
     }
 
 

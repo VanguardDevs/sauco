@@ -7,6 +7,14 @@ use App\Models\Ordinance;
 use App\Models\Concept;
 use App\Models\Taxpayer;
 use App\Models\Payment;
+use App\Models\CorrelativeNumber;
+use App\Models\Correlative;
+use App\Models\License;
+use App\Models\Year;
+use App\Models\Requirement;
+use App\Models\RequirementTaxpayer;
+use Carbon\Carbon;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\AnnullmentRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -42,12 +50,24 @@ class ApplicationController extends Controller
 
     public function makePayment(Application $application)
     {
-        $payment = $application->mountPayment();
 
-        $liquidation = $application->makeLiquidation();
-        $payment->liquidations()->sync($liquidation);
+        /*$concept = Concept::find($application->concept_id);
 
-        return redirect()->route('liquidations.show', $liquidation->id);
+        $taxpayer = Taxpayer::whereId($application->taxpayer_id)->first();
+
+        $representation = $taxpayer->representations()->first()->id;
+
+        $requirement = Requirement::whereId('1')->first();*/
+
+            $payment = $application->mountPayment();
+
+            $liquidation = $application->makeLiquidation();
+            $payment->liquidations()->sync($liquidation);
+
+            return redirect()->route('liquidations.show', $liquidation->id);
+
+        //}
+
     }
 
     /**
@@ -60,22 +80,37 @@ class ApplicationController extends Controller
     {
         $concept = Concept::find($request->input('concept'));
         $amount = ($request->amount) ? $request->amount : $concept->calculateAmount();
+        $representation = $taxpayer->representations()->first();
+
 
         if ($request->total) {
             $amount = $amount * $request->total;
         }
 
-        $application = $taxpayer->applications()->create([
-            'active' => 1,
-            'concept_id' => $request->input('concept'),
-            'user_id' => auth()->user()->id,
-            'amount' => $amount,
-            'num' => Application::getNewNum(),
-            'total' => $request->total
-        ]);
 
-        return redirect()->route('applications.index', $taxpayer)
-            ->withSuccess('¡Solicitud creada!');
+        if ($concept->code == '001.005.000' && $representation == null){
+
+            return redirect()->back()->withErrors(['concept' => '¡El contribuyente debe tener un representante para realizar esta solicitud!']);
+        }
+        else{
+
+            $application = $taxpayer->applications()->create([
+                'active' => 1,
+                'concept_id' => $request->input('concept'),
+                'user_id' => auth()->user()->id,
+                'amount' => $amount,
+                'num' => Application::getNewNum(),
+                'total' => $request->total
+            ]);
+
+            return redirect()->route('applications.index', $taxpayer)
+                ->withSuccess('¡Solicitud creada!');
+
+        }
+
+
+
+
     }
 
     /**

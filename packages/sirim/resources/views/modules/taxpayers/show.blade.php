@@ -158,6 +158,7 @@
                 </a>
             </div>
 
+            @if (count($row->economicActivities) > 0)
             <div class="kt-notification">
                 <a class="kt-notification__item" href="{{ route('taxpayer.liqueur-licenses', $row) }}">
                     <div class="kt-notification__item-icon">
@@ -168,6 +169,7 @@
                     </div>
                 </a>
             </div>
+            @endif
 
         </div>
     </div>
