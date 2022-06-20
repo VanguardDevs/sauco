@@ -86,7 +86,7 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <label class="col-lg-12"><span class="text-danger"></span></label>
 
                         <div class="col-lg-5">
