@@ -16,6 +16,8 @@ $(function () {
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#payment_methods').on('change', onSelectPaymentType);
     $('#years').on('change', onSelectYears);
+    $('#liqueur-correlative').on('change', onSelectLicenseCorrelativeType);
+
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
@@ -138,6 +140,23 @@ function onSelectBuildingOwner() {
       document.hide();
   }
 }
+
+
+function onSelectLicenseCorrelativeType() {
+    let selected = $(this).children('option:selected').html();
+    let reference = $('#existing_licenses');
+    let new_license = $('#new_license');
+
+    // Show commercial denomination input
+    if (selected == "RENOVAR LICENCIA") {
+        reference.show();
+        new_license.hide();
+    } else {
+        new_license.show();
+        reference.hide();
+    }
+  }
+
 
 /*----------  Uppercase  ----------*/
 function upperCase(e) {

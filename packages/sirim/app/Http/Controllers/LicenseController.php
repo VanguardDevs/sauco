@@ -346,7 +346,7 @@ class LicenseController extends Controller
 
                    $liquidation = $liqueur->liquidations->first();
 
-                   if ($license->active == false) {               
+                   if ($license->active == false) {
 
                        if($liquidation->status_id == 2 && $liquidation->liquidation_type_id == 1 ){
 
@@ -366,7 +366,9 @@ class LicenseController extends Controller
 
         $requirement = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('requirement_id', '1')->first();
 
-        //dd($requirement);
+        $existingLicenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->where('active', true)->pluck('num', 'id')->toArray();
+
+        //dd($existingLicenses);
 
         $correlatives = [
             1 => 'INSTALAR LICENCIA',
@@ -414,6 +416,7 @@ class LicenseController extends Controller
             ->with('hours', $hours)
             ->with('days', $days)
             ->with('boolean', $boolean)
+            ->with('existingLicenses', $existingLicenses)
             ->with('liqueurParameters', LiqueurParameter::pluck('description', 'id'))
             ->with('liqueurAnnexes', AnnexedLiqueur::pluck('name', 'id'));
     }
