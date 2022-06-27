@@ -358,15 +358,17 @@ class LicenseController extends Controller
                 }
             }
 
-            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->where('active', true);
+            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6');
+
+            //->where('active', true)
 
             return DataTables::eloquent($query)->toJson();
         }
 
 
-        $requirement = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('requirement_id', '1')->first();
+        $requirement = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
 
-        $existingLicenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->where('active', true)->pluck('num', 'id')->toArray();
+        $existingLicenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->pluck('num', 'id')->toArray();
 
         //dd($existingLicenses);
 
@@ -433,7 +435,15 @@ class LicenseController extends Controller
             return redirect()->back()->withError($validator['msg']);
         }*/
 
-        $this->makeLiqueurLicense($request, $correlative, $taxpayer);
+        //dd($correlative);
+
+        if($correlative->id == 1){
+            $this->makeLiqueurLicense($request, $correlative, $taxpayer);
+        }else{
+            $this->renovateLiqueurLicense($request, $correlative, $taxpayer);
+        }
+
+        
 
         return redirect('taxpayers/'.$taxpayer->id.'/liqueur-licenses')
             ->withSuccess('¡Licencia de expendio creada!');
@@ -562,40 +572,121 @@ class LicenseController extends Controller
 
 
 
-    public function renovateLiqueurLicense(License $license)
+    public function renovateLiqueurLicense($request, CorrelativeType $type, Taxpayer $taxpayer)
     {
+
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
         $emissionDate = Carbon::now();
         $expirationDate = Carbon::now()->endOfYear();
 
-        $correlative = $license->correlative;
-        $correlativeNumber = $correlative->correlativeNumber;
-        $newCorrelative = Correlative::create([
-            'correlative_type_id' => 2,
-            'correlative_number_id' => $correlativeNumber->id,
-            'year_id' => $currYear->id
+        $correlativeNum = CorrelativeNumber::getNum();
+
+        $concept = Concept::whereCode('22')->first();
+
+        $petro = PetroPrice::latest()->first()->value;
+
+        $oldLicense =  License::whereId($request->input('existingLicense'))->first();
+
+
+        $oldLiqueur = Liqueur::whereLicenseId($oldLicense->id)->first();
+
+        $liqueur_parameter = LiqueurParameter::whereId($oldLiqueur->liqueur_parameter_id)->first();
+
+
+
+        $liqueurClassification= LiqueurClassification::whereId($liqueur_parameter->liqueur_classification_id)->first();
+
+        $liqueurAbbreviature = $liqueurClassification->abbreviature;
+
+        $liqueurAnnex = LiqueurAnnex::whereLiqueurId($oldLiqueur->id)->first();
+
+        $annexLiqueur = AnnexedLiqueur::whereId($liqueurAnnex->annex_id)->first();
+
+
+        $amount = $petro*$liqueur_parameter->renew_registry_amount;
+
+
+
+        $correlativeNumber = CorrelativeNumber::create([
+            'num' => $correlativeNum
         ]);
 
+        $correlative = Correlative::create([
+            'year_id' => $currYear->id,
+            'correlative_type_id' => $type->id,
+            'correlative_number_id' => $correlativeNumber->id
+        ]);
+
+
         $newLicense = License::create([
-            'num' => $newCorrelative->num,
+            'num' => $liqueurAbbreviature.'-'.License::getNewNum().'-BERM',
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $ordinance->id,
-            'correlative_id' => $newCorrelative->id,
-            'taxpayer_id' => $license->taxpayer->id,
-            'representation_id' => $license->taxpayer->president()->first()->id,
-            'user_id' => Auth::user()->id
+            'correlative_id' => $correlative->id,
+            'taxpayer_id' => $taxpayer->id,
+            'representation_id' => $taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id,
+            'active' => false
         ]);
-        // Sync economic activities
 
-        /*$act = $newLicense->taxpayer->economicActivities;
-        $newLicense->economicActivities()->sync($act);*/
+        $liquidation = Liquidation::create([
+            'num' => Liquidation::getNewNum(),
+            'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
+            'amount' => $amount,
+            'liquidable_type' => Liquidation::class,
+            'concept_id' => $concept->id,
+            'liquidation_type_id' => $concept->liquidation_type_id,
+            'status_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
 
-        $license->delete();
+        $payment = Payment::create([
+            'status_id' => 1,
+            'user_id' => Auth::user()->id,
+            'amount' => $amount,
+            'payment_method_id' => 1,
+            'payment_type_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+        $payment->liquidations()->sync($liquidation);
+
+
+        $liqueur = Liqueur::create([
+            'work_hours' => $oldLiqueur->work_hours,
+            'is_mobile' => $oldLiqueur->is_mobile,
+            'liqueur_parameter_id' =>  $oldLiqueur->liqueur_parameter_id,
+            'representation_id' => $taxpayer->president()->first()->id,
+            'license_id' => $newLicense->id
+        ]);
+
+        $liqueurannex = LiqueurAnnex::create([
+            'annex_id' => $annexLiqueur->id,
+            'liqueur_id' => $liqueur->id
+        ]);
+
+        $liqueur->liquidations()->sync($liquidation);
+
+
+        $oldLicense->update([
+            'active' => false
+        ]);
 
         return response()->json($newLicense);
+    
+
+
+
+
+
+
     }
+
+
+
+
 
     public function downloadLiqueurLicense(License $license)
     {

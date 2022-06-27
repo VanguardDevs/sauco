@@ -9,7 +9,9 @@ class RequirementsTableSeeder extends Seeder
 
     protected $requirements = Array(
         ['1', 'Solicitud de Trámite para Instalación de Licencia de Expendio de Bebidas Alcohólicas.', '00000001', '105'],
-        ['2', 'REGISTRO Y AUTORIZACIÓN PARA INSTALACIÓN DE EXPENDIO DE BEBIDAS ALCOHÓLICAS', '00000002', '21']
+        ['2', 'REGISTRO Y AUTORIZACIÓN PARA INSTALACIÓN DE EXPENDIO DE BEBIDAS ALCOHÓLICAS', '00000002', '21'],
+        ['3', 'Solicitud de Trámite de Renovación de Licencia de Expendio de Bebidas Alcohólicas.', '00000003', '106'],
+        ['4', 'RENOVACIÓN ANUAL DEL REGISTRO Y AUTORIZACION DE EXPENDIO', '00000004', '22'],
     );
     /**
      * Run the database seeds.

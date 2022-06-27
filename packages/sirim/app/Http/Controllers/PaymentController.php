@@ -193,6 +193,18 @@ class PaymentController extends Controller
         }
 
 
+        if($concept->code == '001.005.001'){
+            $requirement = Requirement::whereId('3')->first();
+
+            $requirementTaxpayer = RequirementTaxpayer::create([
+                'requirement_id' => $requirement->id,
+                'taxpayer_id' => $taxpayer->id,
+                'liquidation_id' => $liquidation->id,
+                'active' => true
+            ]);
+        }
+
+
         /*if($concept->code == '21'){
 
             $licenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->with("liqueurs")->get();
@@ -212,7 +224,7 @@ class PaymentController extends Controller
             }
         }*/
 
-        if($concept->code == '21'){
+        if($concept->code == '21' || $concept->code == '22'){
 
             $representation= $taxpayer->president()->first();
 
@@ -227,6 +239,13 @@ class PaymentController extends Controller
                     'active' => true
                 ]);
             }
+
+            $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
+
+            $requirementTaxpayer->update([
+                'liquidation_id' => $liquidation->id,
+                'active' => false
+            ]);
 
         }
 

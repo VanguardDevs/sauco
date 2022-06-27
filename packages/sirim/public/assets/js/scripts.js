@@ -147,13 +147,19 @@ function onSelectLicenseCorrelativeType() {
     let reference = $('#existing_licenses');
     let new_license = $('#new_license');
 
-    // Show commercial denomination input
+    /*let installation = '<div>@include('modules.taxpayers.liqueur-licenses.forms.installation')</div>';
+    let renewal = '<div>'@include(´modules.taxpayers.liqueur-licenses.forms.renewal´)'</div>';*/
+
+
     if (selected == "RENOVAR LICENCIA") {
         reference.show();
         new_license.hide();
+
+        //$('#new_license').html(renewal);
     } else {
         new_license.show();
         reference.hide();
+        //$('#new_license').html(installation);
     }
   }
 
@@ -1039,6 +1045,21 @@ $(document).ready(function() {
         "columns": [
             { data: 'num' },
             { data: 'emission_date' },
+            { data: 'id',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `
+                        <span class="kt-badge kt-badge--success kt-badge--inline">
+                            Activo
+                        </span>
+                        `;
+                    const inactive = `
+                        <span class="kt-badge kt-badge--danger kt-badge--inline">
+                            Inactivo
+                        </span>
+                        `;
+                    $(nTd).html(`${oData.active ? active : inactive}`);
+                }
+            },
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

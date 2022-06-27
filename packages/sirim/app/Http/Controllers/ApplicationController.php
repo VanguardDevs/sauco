@@ -88,7 +88,7 @@ class ApplicationController extends Controller
         }
 
 
-        if ($concept->code == '001.005.000' && $representation == null){
+        if ($concept->code == '001.005.000' && $representation == null || $concept->code == '001.005.001' && $representation == null){
 
             return redirect()->back()->withErrors(['concept' => '¡El contribuyente debe tener un representante para realizar esta solicitud!']);
         }
