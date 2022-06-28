@@ -348,7 +348,7 @@ class LicenseController extends Controller
 
                    if ($license->active == false) {
 
-                       if($liquidation->status_id == 2 && $liquidation->liquidation_type_id == 1 ){
+                       if($liquidation->status_id == 2){
 
                             $license->update([
                                 'active' => true
@@ -443,7 +443,7 @@ class LicenseController extends Controller
             $this->renovateLiqueurLicense($request, $correlative, $taxpayer);
         }
 
-        
+
 
         return redirect('taxpayers/'.$taxpayer->id.'/liqueur-licenses')
             ->withSuccess('¡Licencia de expendio creada!');
@@ -568,17 +568,24 @@ class LicenseController extends Controller
         ]);
 
         $liqueur->liquidations()->sync($liquidation);
+
+        $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->where('requirement_id', '1')->first();
+
+        $requirementTaxpayer->update([
+            'active' => false
+        ]);
     }
 
 
 
     public function renovateLiqueurLicense($request, CorrelativeType $type, Taxpayer $taxpayer)
     {
+        //Las lineas comentadas corresponden a la renovación de licencias a través del select
 
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
         $emissionDate = Carbon::now();
-        $expirationDate = Carbon::now()->endOfYear();
+        $expirationDate = $emissionDate->copy()->addYears(1);
 
         $correlativeNum = CorrelativeNumber::getNum();
 
@@ -586,27 +593,27 @@ class LicenseController extends Controller
 
         $petro = PetroPrice::latest()->first()->value;
 
-        $oldLicense =  License::whereId($request->input('existingLicense'))->first();
+        // $oldLicense =  License::whereId($request->input('existingLicense'))->first();
 
+        // $oldLiqueur = Liqueur::whereLicenseId($oldLicense->id)->first();
 
-        $oldLiqueur = Liqueur::whereLicenseId($oldLicense->id)->first();
+        // $liqueur_parameter = LiqueurParameter::whereId($oldLiqueur->liqueur_parameter_id)->first();
 
-        $liqueur_parameter = LiqueurParameter::whereId($oldLiqueur->liqueur_parameter_id)->first();
+        $idParameter = $request->input('liqueurParameter');
 
+        $liqueur_parameter = LiqueurParameter::whereId($idParameter)->first();
 
 
         $liqueurClassification= LiqueurClassification::whereId($liqueur_parameter->liqueur_classification_id)->first();
 
         $liqueurAbbreviature = $liqueurClassification->abbreviature;
 
-        $liqueurAnnex = LiqueurAnnex::whereLiqueurId($oldLiqueur->id)->first();
+        //$liqueurAnnex = LiqueurAnnex::whereLiqueurId($oldLiqueur->id)->first();
 
-        $annexLiqueur = AnnexedLiqueur::whereId($liqueurAnnex->annex_id)->first();
+        //$annexLiqueur = AnnexedLiqueur::whereId($liqueurAnnex->annex_id)->first();
 
 
         $amount = $petro*$liqueur_parameter->renew_registry_amount;
-
-
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -654,33 +661,47 @@ class LicenseController extends Controller
         $payment->liquidations()->sync($liquidation);
 
 
+        // $liqueur = Liqueur::create([
+        //     'work_hours' => $oldLiqueur->work_hours,
+        //     'is_mobile' => $oldLiqueur->is_mobile,
+        //     'liqueur_parameter_id' =>  $oldLiqueur->liqueur_parameter_id,
+        //     'representation_id' => $taxpayer->president()->first()->id,
+        //     'license_id' => $newLicense->id
+        // ]);
+
+        // $liqueurannex = LiqueurAnnex::create([
+        //     'annex_id' => $annexLiqueur->id,
+        //     'liqueur_id' => $liqueur->id
+        // ]);
+
+        $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' desde '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
+
         $liqueur = Liqueur::create([
-            'work_hours' => $oldLiqueur->work_hours,
-            'is_mobile' => $oldLiqueur->is_mobile,
-            'liqueur_parameter_id' =>  $oldLiqueur->liqueur_parameter_id,
+            'work_hours' => $hourtring,
+            'is_mobile' => $request->input('is_mobile'),
+            'liqueur_parameter_id' =>  $request->input('liqueurParameter'),
             'representation_id' => $taxpayer->president()->first()->id,
-            'license_id' => $newLicense->id
+            'license_id' => $license->id
         ]);
 
         $liqueurannex = LiqueurAnnex::create([
-            'annex_id' => $annexLiqueur->id,
+            'annex_id' => $request->input('liqueurAnnex'),
             'liqueur_id' => $liqueur->id
         ]);
 
         $liqueur->liquidations()->sync($liquidation);
 
+        // $oldLicense->update([
+        //     'active' => false
+        // ]);
 
-        $oldLicense->update([
+        $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->where('requirement_id', '3')->first();
+
+        $requirementTaxpayer->update([
             'active' => false
         ]);
 
         return response()->json($newLicense);
-    
-
-
-
-
-
 
     }
 

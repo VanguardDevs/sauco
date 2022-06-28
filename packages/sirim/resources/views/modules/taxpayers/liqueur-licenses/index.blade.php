@@ -40,16 +40,16 @@
                         <div class="col-lg-12">
                             <br><br>
                         </div>
-                       
-                        <div class="col-lg-12" id= "new_license">
+
+                        <div class="col-lg-12" id= "new_license" style="display:none;">
                             @include('modules.taxpayers.liqueur-licenses.forms.installation')
                         </div>
-                        
-                        <div class="col-lg-12" id="existing_licenses" style="display:none;">
-                            @include('modules.taxpayers.liqueur-licenses.forms.renewal')
-                        </div>
-                        
-                        
+
+                        <!--<div class="col-lg-12" id="existing_licenses" style="display:none;">
+                            aqui va el include del blade de renovación
+                        </div>-->
+
+
 
 
                     </div>
@@ -61,7 +61,7 @@
             <button type="button" class="close" data-dismiss="alert">
                 <i class="fa fa-times"></i>
             </button>
-            <strong>Debe realizar y pagar la solicitud para poder emitir la licensia</strong> {{ session('error') }}
+            <strong>Debe realizar y pagar la solicitud para poder emitir la licencia</strong> {{ session('error') }}
         </div>
 
     @endif

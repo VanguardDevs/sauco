@@ -19,6 +19,8 @@ use App\Models\LiqueurParameter;
 use App\Models\Year;
 use App\Models\Requirement;
 use App\Models\RequirementTaxpayer;
+use App\Models\Correlative;
+use App\Models\LiqueurLiquidation;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -215,7 +217,7 @@ class PaymentController extends Controller
 
                 $liquidationLiqueur = $liqueur->liquidations->first();
 
-                if ($license->active == false && $liquidationLiqueur->status_id == 2 && $liqueur =! null ) {               
+                if ($license->active == false && $liquidationLiqueur->status_id == 2 && $liqueur =! null ) {
 
                     $license->update([
                         'active' => true
@@ -228,26 +230,60 @@ class PaymentController extends Controller
 
             $representation= $taxpayer->president()->first();
 
-            $liqueur = Liqueur::whereRepresentationId($representation->id)->first();
+            $currentLiquidation = $payment->liquidations->first();
 
-            $license = License::whereId($liqueur->license_id)->first();
+            $liquidationLiqueur = LiqueurLiquidation::whereLiquidationId($currentLiquidation->id);
+
+            $liqueur = Liqueur::whereId($liquidationLiqueur->liqueur_id)->first();
+
+            $license = License::whereId($liqueur->license_id)->where('active', 'false')->where('ordinance_id', '6')->first();
 
             $status = $payment->liquidations()->first()->status_id;
 
-            if ($license->active == false && $status == 2 && $liqueur =! null ) {               
+            if ($license->active == false && $status == 2 && $liqueur =! null ) {
                 $license->update([
                     'active' => true
                 ]);
             }
 
-            $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
+            // $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
 
-            $requirementTaxpayer->update([
-                'liquidation_id' => $liquidation->id,
-                'active' => false
-            ]);
+            // $requirementTaxpayer->update([
+            //     'liquidation_id' => $liquidation->id,
+            //     'active' => false
+            // ]);
 
         }
+
+
+        // if($concept->code == '21' || $concept->code == '22'){
+
+        //     $representation= $taxpayer->president()->first();
+
+        //     //$liqueur = Liqueur::whereRepresentationId($representation->id)->first();
+
+        //     $license = License::whereRepresentationId($representation)->where('active', 'false')->where('ordinance_id', '6')->first();
+
+        //     $correlative = Correlative::whereId($license->correlative_id)->first();
+
+        //     $status = $payment->liquidations()->first()->status_id;
+
+        //     if ($license->active == false && $status == 2 && $liqueur =! null ) {
+        //         $license->update([
+        //             'active' => true
+        //         ]);
+        //     }
+
+        //     $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
+
+        //     $requirementTaxpayer->update([
+        //         'liquidation_id' => $liquidation->id,
+        //         'active' => false
+        //     ]);
+
+        // }
+
+
 
         return redirect()->back()->withSuccess('¡Factura procesada!');
     }

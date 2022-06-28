@@ -1,5 +1,5 @@
 <div class="col-lg-10">
-<label class="col-lg-5">Licensias de expendios existentes <span class="text-danger">*</span></label>
+<label class="col-lg-5">Licencias de expendios existentes <span class="text-danger">*</span></label>
 
 {!!
     Form::select('existingLicense', $existingLicenses, null, [

@@ -144,22 +144,22 @@ function onSelectBuildingOwner() {
 
 function onSelectLicenseCorrelativeType() {
     let selected = $(this).children('option:selected').html();
-    let reference = $('#existing_licenses');
+    // let reference = $('#existing_licenses');
     let new_license = $('#new_license');
 
-    /*let installation = '<div>@include('modules.taxpayers.liqueur-licenses.forms.installation')</div>';
-    let renewal = '<div>'@include(´modules.taxpayers.liqueur-licenses.forms.renewal´)'</div>';*/
+    // if (selected == "RENOVAR LICENCIA") {
+    //     reference.show();
+    //     new_license.hide();
 
+    //     //$('#new_license').html(renewal);
+    // } else {
+    //     new_license.show();
+    //     reference.hide();
+    //     //$('#new_license').html(installation);
+    // }
 
-    if (selected == "RENOVAR LICENCIA") {
-        reference.show();
-        new_license.hide();
-
-        //$('#new_license').html(renewal);
-    } else {
+    if (selected == "INSTALAR LICENCIA" || selected == "RENOVAR LICENCIA") {
         new_license.show();
-        reference.hide();
-        //$('#new_license').html(installation);
     }
   }
 
