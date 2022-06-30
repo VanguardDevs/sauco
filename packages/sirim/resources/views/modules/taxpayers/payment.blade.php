@@ -142,6 +142,10 @@
                     <i class='flaticon2-download'></i>
                     Imprimir factura
                 </a>
+                <a href="{{ route('payments.ticket', $row->id ) }}"}} class='btn btn-info' title='Descargar factura' target='_blank'>
+                    <i class='flaticon2-download'></i>
+                    Imprimir ticket
+                </a>
                 @endif
             @endif
 

@@ -11,9 +11,9 @@ use App\Models\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
 use Carbon\Carbon;
+use PDF;
 use App\Models\Withholding;
 use App\Models\Credit;
-
 
 class LiquidationController extends Controller
 {
@@ -93,20 +93,20 @@ class LiquidationController extends Controller
         $affidavit = $liquidation->liquidable()->first();
 
         // Adjust fines
-        if ($affidavit->fines()->exists()) {
-            $concept = Concept::find(3);
+        // if ($affidavit->fines()->exists()) {
+        //     $concept = Concept::find(3);
 
-            foreach($affidavit->fines as $fine) {
-                $amount = $concept->calculateAmount($newLiquidationAmount);
+        //     foreach($affidavit->fines as $fine) {
+        //         $amount = $concept->calculateAmount($newLiquidationAmount);
 
-                $fine->update([
-                    'amount' => $amount
-                ]);
-                $fine->liquidation()->update([
-                    'amount' => $amount
-                ]);
-            }
-        }
+        //         $fine->update([
+        //             'amount' => $amount
+        //         ]);
+        //         $fine->liquidation()->update([
+        //             'amount' => $amount
+        //         ]);
+        //     }
+        // }
 
         $liquidation->payment->first()->updateAmount();
 
@@ -142,4 +142,34 @@ class LiquidationController extends Controller
         return redirect()->back()
             ->withSuccess('¡Liquidación anulada!');
     }
+
+        public function download(Liquidation $liquidation)
+    {
+        if ($liquidation->status->id == 1) {
+            return redirect()->back()
+                ->withError('¡La liquidación no ha sido procesada!');
+        }
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.liquidation', compact('liquidation'))
+                ->stream('liquidacion-'.$liquidation->id.'.pdf');
+   }
+
+
+
+    public function ticket(Liquidation $liquidation)
+    {
+        if ($liquidation->status->id == 1) {
+            return redirect()->back()
+                ->withError('¡La liquidación no ha sido procesada!');
+        }
+
+
+        $customPaper = array(0,0,228,230);
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('pdf.liquidation-ticket', compact('liquidation'))
+                ->setPaper($customPaper)
+                ->stream('liquidacion-ticket-'.$liquidation->id.'.pdf');
+
+   }
 }

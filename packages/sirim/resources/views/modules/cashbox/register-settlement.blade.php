@@ -120,6 +120,14 @@
                 <a href="{{ route('liquidations.show', $row->liquidation->first()) }}" class="btn btn-success">
                     <i class="fas fa-eye"></i> Ver liquidación
                 </a>
+                <a href="{{ route('affidavits.download', $row->id ) }}"}} class='btn btn-info' title='Descargar comprobante' target='_blank'>
+                    <i class='flaticon2-download'></i>
+                    Imprimir comprobante
+                </a>
+                <a href="{{ route('affidavits.ticket', $row->id ) }}"}} class='btn btn-info' title='Descargar comprobante' target='_blank'>
+                    <i class='flaticon2-download'></i>
+                    Imprimir ticket
+                </a>
                 @endif
             @endif
             @if($typeForm == 'edit-group' || $typeForm == 'edit-normal')

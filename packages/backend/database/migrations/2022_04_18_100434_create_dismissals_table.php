@@ -19,11 +19,11 @@ class CreateDismissalsTable extends Migration
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('license_id');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
-            ->onUpdate('cascade')->onDelete('cascade');
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('license_id')->references('id')->on('licenses')
-            ->onUpdate('cascade')->onDelete('cascade');
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')
-            ->onUpdate('cascade')->onDelete('cascade');
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('dismissed_at');
             $table->timestamps();
         });

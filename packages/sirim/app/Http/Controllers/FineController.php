@@ -92,7 +92,7 @@ class FineController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
-        return redirect()->route('payments.show', $payment);
+        return redirect()->route('liquidations.show', $liquidation->id);
     }
 
     /**
