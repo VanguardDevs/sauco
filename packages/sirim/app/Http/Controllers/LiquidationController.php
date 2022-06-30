@@ -10,8 +10,10 @@ use App\Http\Requests\MakeWithholdingRequest;
 use App\Models\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
+use Carbon\Carbon;
 use PDF;
 use App\Models\Withholding;
+use App\Models\Credit;
 
 class LiquidationController extends Controller
 {
@@ -64,18 +66,19 @@ class LiquidationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MakeWithholdingRequest $request, Liquidation $liquidation)
+    public function update(MakeWithholdingRequest $request, Liquidation $liquidation, Credit $credit)
     {
         // Substract amount
         $amount = $request->input('withholding_amount');
         $newLiquidationAmount = $liquidation->amount - $amount;
 
-        if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
-            return redirect()->back()
-                ->withErrors([
-                    'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
-                ]);
-        }
+        // if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
+        //     //  return redirect()->back()
+        //     //     ->withErrors([
+        //     //         'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
+        //     //     ]);
+
+        // }
 
         // Save withholding
         $deduction = $liquidation->deduction()->create([
@@ -90,20 +93,20 @@ class LiquidationController extends Controller
         $affidavit = $liquidation->liquidable()->first();
 
         // Adjust fines
-        if ($affidavit->fines()->exists()) {
-            $concept = Concept::find(3);
+        // if ($affidavit->fines()->exists()) {
+        //     $concept = Concept::find(3);
 
-            foreach($affidavit->fines as $fine) {
-                $amount = $concept->calculateAmount($newLiquidationAmount);
+        //     foreach($affidavit->fines as $fine) {
+        //         $amount = $concept->calculateAmount($newLiquidationAmount);
 
-                $fine->update([
-                    'amount' => $amount
-                ]);
-                $fine->liquidation()->update([
-                    'amount' => $amount
-                ]);
-            }
-        }
+        //         $fine->update([
+        //             'amount' => $amount
+        //         ]);
+        //         $fine->liquidation()->update([
+        //             'amount' => $amount
+        //         ]);
+        //     }
+        // }
 
         $liquidation->payment->first()->updateAmount();
 

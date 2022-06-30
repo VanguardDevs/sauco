@@ -626,3 +626,13 @@ Breadcrumbs::for('accounting-accounts.edit', function ($trail, $row) {
     $trail->parent('accounting-accounts.index');
     $trail->push('Editar cuenta contable', url('settings/accounting-accounts/edit'.$row->id));
 });
+
+
+
+
+/*------------- Applications -------------*/
+Breadcrumbs::for('credits.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Creditos', route('credits.index', $row));
+});
+

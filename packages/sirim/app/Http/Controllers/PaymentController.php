@@ -11,6 +11,7 @@ use App\Models\Reference;
 use App\Models\Settlement;
 use App\Models\Taxpayer;
 use App\Models\PaymentNull;
+use App\Models\Credit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -162,6 +163,21 @@ class PaymentController extends Controller
         $payment->liquidations()->update([
             'status_id' => 2
         ]);
+
+
+        $creditAmount = $payment->amount;
+
+        if ($creditAmount < 0){
+
+            $payment->credits()->create([
+                'num' => Credit::getNewNum(),
+                'amount' => $creditAmount * -1,
+                'taxpayer_id' => $payment->taxpayer_id,
+                'payment_id' => $payment->id,
+                'generated_at' => $processedAt
+
+            ]);
+        }
 
         $payment->createMovements();
 
