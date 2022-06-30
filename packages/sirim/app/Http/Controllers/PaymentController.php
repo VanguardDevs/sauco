@@ -232,7 +232,7 @@ class PaymentController extends Controller
 
             $currentLiquidation = $payment->liquidations->first();
 
-            $liquidationLiqueur = LiqueurLiquidation::whereLiquidationId($currentLiquidation->id);
+            $liquidationLiqueur = LiqueurLiquidation::whereLiquidationId($currentLiquidation->id)->first();
 
             $liqueur = Liqueur::whereId($liquidationLiqueur->liqueur_id)->first();
 

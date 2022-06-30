@@ -681,7 +681,7 @@ class LicenseController extends Controller
             'is_mobile' => $request->input('is_mobile'),
             'liqueur_parameter_id' =>  $request->input('liqueurParameter'),
             'representation_id' => $taxpayer->president()->first()->id,
-            'license_id' => $license->id
+            'license_id' => $newLicense->id
         ]);
 
         $liqueurannex = LiqueurAnnex::create([
