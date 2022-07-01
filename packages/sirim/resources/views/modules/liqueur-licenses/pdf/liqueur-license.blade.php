@@ -32,7 +32,7 @@
                 width: 100%;
                 margin-top: 5px;
             }
-            .details td {
+            .details td, h3 {
                 text-align: center;
             }
             .details .object-payment {
@@ -80,7 +80,7 @@
                 font-weight: 700;
                 font-size: 12px;
                 margin: auto;
-                margin-top: 10%;
+                margin-top: 8%;
                 position: absolute;
                 left: 10%;
             }
@@ -107,13 +107,16 @@
                 <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
             </div>
         </div>
+        <div>
+            <h3>REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h3>
+        </div>
         <div class="tables">
-            <table class="table" style="text-align: center;margin-bottom:0;">
+            <!--<table class="table" style="text-align: left;margin-bottom:0;">
 
                 <tbody>
                     <tr>
                         <td>
-                            <dl style="text-align: left; padding-left: 8px;">
+                            <dl style="text-align: left; padding-left: 6px;">
                                 <dt><strong>NÚMERO:</strong> {{ $license->num }}</dt>
                                 <dt><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</dt>
                                 <dt>
@@ -138,33 +141,44 @@
                     </tr>
                 </tbody>
             </table>
-            <br>
-            <!--<table class="table" style="text-align: center;">
-                <tr>
+            <br>-->
 
-                    <th colspan = "4">ACTIVIDADES ECONÓMICAS
-                    </th>
-                </tr>
+            <table class="table" style="text-align: center; width:100%;">
                 <thead>
                     <tr>
-                        <th width="10%">CÓDIGO</th>
-                        <th width="60%">NOMBRE</th>
-                        <th width="15%">ALICUOTA</th>
-                        <th width="15%">MÍNIMO</th>
+                        <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO:</strong> {{ $license->num }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($license->economicActivities->take(3) as $activity)
                     <tr>
-                        <td>{{ $activity->code }}</td>
-                        <td>{{ substr($activity->name, 0, 29)}}</td>
-                        <td>{{ $activity->aliquote }}</td>
-                        <td>{{ $activity->min_tax }}</td>
-
+                        @if($license->correlative->correlative_type_id == 1)
+                        <td><strong>FECHA DE INSCRIPCIÓN</strong> {{ $license->emission_date }}</td>
+                        @else
+                        <td><strong>FECHA DE EMISIÓN</strong> {{ $license->emission_date }}</td>
+                        @endif
+                        <td><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</td>
+                    </tr>
+                    <tr>
+                        <td width="60%"><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
+                        <td width="40%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
+                    </tr>
+                  <tr>
+                    <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
                   </tr>
-                  @endforeach
+                  <tr>
+                    <td width="40%"><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueur_parameter->liqueur_classification->name }}</td>
+                    <td width="60%"><strong>ANEXO A:</strong> {{ $annexLiqueur->name }}</td>
+                  </tr>
+                  <tr >
+                    <td colspan="2"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><strong>REPRESENTANTE:</strong> {{ $representation }}</td>
+                  </tr>
+              
                 </tbody>
-            </table>-->
+            </table>
+
         </div>
         <div class="bottom text-center">
             <span class="row">{{ $signature->title }}</span>
