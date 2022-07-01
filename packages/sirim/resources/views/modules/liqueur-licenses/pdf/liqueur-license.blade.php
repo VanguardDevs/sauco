@@ -29,10 +29,12 @@
             }
             table {
                 border-collapse: collapse;
-                width: 100%;
                 margin-top: 5px;
+                width:95%;
+                align: center;
+                text-align: center;
             }
-            .details td, h3 {
+            .details td, h4 {
                 text-align: center;
             }
             .details .object-payment {
@@ -41,6 +43,9 @@
             }
             .tables {
                 display:block;
+                border-color: red;
+                border-width: 1.5px;
+                border-style: solid;
             }
             .bill-info {
                 width: 100%;
@@ -81,36 +86,40 @@
                 font-size: 12px;
                 margin: auto;
                 margin-top: 8%;
-                position: absolute;
                 left: 10%;
+            }
+            .center {
+                margin-left: auto;
+                margin-right: auto;
             }
 
         </style>
     </head>
     <body>
         <div class="container">
-        <div class="header">
-            <div class="sumatLOGO">
-                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+            <div class="header">
+                <div class="sumatLOGO">
+                    <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+                </div>
+                <div class="description">
+                <p>
+                    REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
+                    ESTADO SUCRE<br>
+                    ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
+                    SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
+                    RIF: G-20000222-1<br>
+                    DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
+                    </p>
+                </div>
+                <div id="mayorLOGO">
+                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+                </div>
             </div>
-            <div class="description">
-               <p>
-                REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
-                ESTADO SUCRE<br>
-                ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
-                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
-                RIF: G-20000222-1<br>
-                DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
-                </p>
-            </div>
-            <div id="mayorLOGO">
-                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
-            </div>
-        </div>
-        <div>
-            <h3>REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h3>
-        </div>
+
         <div class="tables">
+            <div>
+                <h4>REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h4>
+            </div>
             <!--<table class="table" style="text-align: left;margin-bottom:0;">
 
                 <tbody>
@@ -143,7 +152,7 @@
             </table>
             <br>-->
 
-            <table class="table" style="text-align: center; width:100%;">
+            <table class="center">
                 <thead>
                     <tr>
                         <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO:</strong> {{ $license->num }}</th>
@@ -170,23 +179,35 @@
                     <td width="60%"><strong>ANEXO A:</strong> {{ $annexLiqueur->name }}</td>
                   </tr>
                   <tr >
-                    <td colspan="2"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
+                    <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
                   </tr>
                   <tr>
                     <td colspan="2"><strong>REPRESENTANTE:</strong> {{ $representation }}</td>
                   </tr>
-              
+
                 </tbody>
             </table>
 
+            <div class="bottom text-center">
+                <span class="row">{{ $signature->title }}</span>
+                <span class="row">superintendente de administración tributaria</span>
+                <span class="row">{{ $signature->decree }}</span>
+                <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
+                <br>
+                @if($license->correlative->correlative_type_id == 1)
+                <span class="row">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
+                @else
+                <span class="row">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
+                @endif
+                <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha 18/12/2020</span>
+                <span class="row">Tasa Administrativa pagada en fecha 06/04/2022 con Factura Nº {{ $liquidation->num }}</span>
+
+            </div>
+
+
         </div>
-        <div class="bottom text-center">
-            <span class="row">{{ $signature->title }}</span>
-            <span class="row">superintendente de administración tributaria</span>
-            <span class="row">{{ $signature->decree }}</span>
-            <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-            <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
-        </div>
+
         </div>
 
 

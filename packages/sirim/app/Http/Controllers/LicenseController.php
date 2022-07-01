@@ -15,6 +15,7 @@ use App\Models\LiqueurAnnex;
 use App\Models\LiqueurParameter;
 use App\Models\LiqueurClassification;
 use App\Models\AnnexedLiqueur;
+use App\Models\LiqueurLiquidation;
 use App\Models\Correlative;
 use App\Models\CorrelativeNumber;
 use App\Models\CorrelativeType;
@@ -723,13 +724,17 @@ class LicenseController extends Controller
 
         $liqueur = Liqueur::whereLicenseId($license->id)->first();
 
+        $liquidationLiqueur = LiqueurLiquidation::whereLiqueurId($liqueur->id)->first();
+
+        $liquidation = Liquidation::whereId($liquidationLiqueur->liquidation_id)->first();
+
         $liqueurAnnex = LiqueurAnnex::whereLiqueurId($liqueur->id)->first();
 
         $annexLiqueur = AnnexedLiqueur::whereId($liqueurAnnex->annex_id)->first();
 
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'liqueur', 'annexLiqueur'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'liqueur', 'annexLiqueur', 'liquidation'];
         $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::loadView('modules.liqueur-licenses.pdf.liqueur-license', compact($vars))
