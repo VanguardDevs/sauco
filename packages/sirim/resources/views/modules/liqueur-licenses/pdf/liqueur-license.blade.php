@@ -29,7 +29,7 @@
             }
             table {
                 border-collapse: collapse;
-                margin-top: 5px;
+                margin-top: -10px;
                 width:95%;
                 align: center;
                 text-align: center;
@@ -78,30 +78,30 @@
                 text-align: center;
             }
             .bottom {
-                width: 80%;
-                height: 170px;
+                width: 95%;
+                height: 130px;
                 z-index: 1000;
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 12px;
                 margin: auto;
-                margin-top: 8%;
+                margin-top: 6%;
                 left: 10%;
             }
             .center {
                 margin-left: auto;
                 margin-right: auto;
             }
-
         </style>
     </head>
     <body>
+        @for($i=1; $i<=2; ++$i)
         <div class="container">
             <div class="header">
                 <div class="sumatLOGO">
                     <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
                 </div>
-                <div class="description">
+                <div class="description text-center">
                 <p>
                     REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
                     ESTADO SUCRE<br>
@@ -116,42 +116,8 @@
                 </div>
             </div>
 
-        <div class="tables">
-            <div>
-                <h4>REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h4>
-            </div>
-            <!--<table class="table" style="text-align: left;margin-bottom:0;">
-
-                <tbody>
-                    <tr>
-                        <td>
-                            <dl style="text-align: left; padding-left: 6px;">
-                                <dt><strong>NÚMERO:</strong> {{ $license->num }}</dt>
-                                <dt><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</dt>
-                                <dt>
-                                    <strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}
-                                </dt>
-                                <dt><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</dt>
-                                <dt><strong>REGISTRO:</strong> {{ $num }}</dt>
-                                @if($license->correlative->correlative_type_id == 1)
-                                <dt><strong>FECHA DE INSCRIPCIÓN</strong> {{ $license->emission_date }}</dt>
-                                @endif
-                                <dt><strong>FECHA DE EMISIÓN</strong> {{ $license->emission_date }}</dt>
-                                <dt><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</dt>
-                                <dt><strong>REPRESENTANTE:</strong> {{ $representation }}</dt>
-
-                                <dt><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueur_parameter->liqueur_classification->name }}</dt>
-                                <dt><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</dt>
-                                <dt><strong>ANEXO A:</strong> {{ $annexLiqueur->name }}</dt>
-
-
-                            </dl>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>-->
-
+            <div class="tables">
+                <h4 style="margin-top: 1px;" >REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h4>
             <table class="center">
                 <thead>
                     <tr>
@@ -189,8 +155,7 @@
             </table>
 
             <div class="bottom text-center">
-                <span class="row">{{ $signature->title }}</span>
-                <span class="row">superintendente de administración tributaria</span>
+                <span class="row">{{ $signature->title }} superintendente de administración tributaria</span>
                 <span class="row">{{ $signature->decree }}</span>
                 <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                 <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
@@ -200,16 +165,18 @@
                 @else
                 <span class="row">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
                 @endif
-                <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha 18/12/2020</span>
-                <span class="row">Tasa Administrativa pagada en fecha 06/04/2022 con Factura Nº {{ $liquidation->num }}</span>
+                <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment->num }}</span>
 
             </div>
-
+			<div class="">
+                    <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
+             </div>
 
         </div>
 
         </div>
-
+        <br><br>
+        @endfor
 
     </body>
 </html>

@@ -20,6 +20,7 @@ class CreateLiqueursTable extends Migration
             $table->unsignedBigInteger('liqueur_parameter_id');
             $table->unsignedBigInteger('representation_id');
             $table->unsignedBigInteger('license_id');
+            $table->string('num')->unique();
             $table->foreign('liqueur_parameter_id')->references('id')->on('liqueur_parameters')
             ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('representation_id')->references('id')->on('representations')

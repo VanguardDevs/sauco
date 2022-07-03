@@ -27,7 +27,7 @@
                         <div class="col-lg-8">
                             {!!
                                 Form::select('correlative', $correlatives, null, [
-                                    'class' => 'col-md-12 select2', 'placeholder' => 'SELECCIONE', 'id' => 'liqueur-correlative'
+                                    'class' => 'col-md-12 select2', 'id' => 'liqueur-correlative'
                                 ])
                             !!}
                         </div>
@@ -41,14 +41,16 @@
                             <br><br>
                         </div>
 
-                        <div class="col-lg-12" id= "new_license" style="display:none;">
+                        <!--@ if($requirement->requirement_id == '3')-->
+                        <div class="col-lg-12" id= "new_license">
                             @include('modules.taxpayers.liqueur-licenses.forms.installation')
                         </div>
+                        <!--@ else
 
-                        <!--<div class="col-lg-12" id="existing_licenses" style="display:none;">
-                            aqui va el include del blade de renovación
-                        </div>-->
-
+                            <div class="col-lg-12" id="existing_licenses" style="display:none;">
+                                aqui va el include del blade de renovación
+                            </div>
+                        @ endif-->
 
 
 

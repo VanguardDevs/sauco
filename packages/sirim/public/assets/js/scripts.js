@@ -1063,13 +1063,18 @@ $(document).ready(function() {
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html(`
-                    <div class="btn-group">
+                    const print = `
+                        <div class="btn-group">
                         <a class="mr-2" href=${baseURL}/liqueur-licenses/${oData.id}/download title='Imprimir licencia'>
                             <i class='btn-sm btn-success fas fa-print'></i>
                         </a>
-                    </div>`
-                    );
+                    </div>`;
+                    if (oData.active == true){
+                        $(nTd).html(`${print}`)
+                    }
+                    else{
+                       $(nTd).html(`<div class="btn-group"></div>`) 
+                    };
                 }
             }
         ]

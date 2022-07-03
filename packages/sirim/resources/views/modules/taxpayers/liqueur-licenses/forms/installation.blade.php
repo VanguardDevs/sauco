@@ -2,7 +2,7 @@
     <label class="col-lg-12">Seleccione Horario de Trabajo<span class="text-danger"> *</span></label>
 
     <div class="col-lg-4">
-        <label class="col-lg-2">Desde<span class="text-danger"></span></label>
+        <label class="col-lg-2">Desde <span class="text-danger"></span></label>
         {!!
             Form::select('start-hour', $hours, null, [
                 'class' => 'col-md-12 select2', 'placeholder' => 'SELECCIONE', 'id' => 'start-hour'
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-lg-4">
-        <label class="col-lg-2">Hasta<span class="text-danger"></span></label>
+        <label class="col-lg-2">Hasta <span class="text-danger"></span></label>
         {!!
             Form::select('finish-hour', $hours, null, [
                 'class' => 'col-md-12 select2', 'placeholder' => 'SELECCIONE', 'id' => 'finish-hour'
@@ -64,7 +64,7 @@
         <div class="text text-danger">{{ $message }}</div>
         @enderror
     </div>
-    <div class="col-lg-5">
+    <div class="col-lg-6">
         <label class="col-lg-3">Anexo<span class="text-danger">*</span></label>
         {!!
             Form::select('liqueurAnnex', $liqueurAnnexes, null, [
