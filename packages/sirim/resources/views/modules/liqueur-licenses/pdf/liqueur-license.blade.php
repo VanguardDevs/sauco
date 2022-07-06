@@ -20,6 +20,13 @@
                 float: right;
                 margin-top: -10px;
             }
+            #sello {
+                float: right;
+                margin-top: -1px;
+                margin-bottom: -35px;
+                margin-left: 5px;
+            }
+         
             table, td, th {
                 border: 1px #000 solid;
             }
@@ -46,6 +53,7 @@
                 border-color: red;
                 border-width: 1.5px;
                 border-style: solid;
+                margin-top: -6px;
             }
             .bill-info {
                 width: 100%;
@@ -80,13 +88,14 @@
             .bottom {
                 width: 95%;
                 height: 130px;
-                z-index: 1000;
+                
                 text-transform: uppercase;
                 font-weight: 700;
-                font-size: 12px;
+                font-size: 11px;
                 margin: auto;
-                margin-top: 6%;
-                left: 10%;
+                margin-top: 10%;
+                margin-bottom: -4%;
+              
             }
             .center {
                 margin-left: auto;
@@ -100,6 +109,7 @@
             <div class="header">
                 <div class="sumatLOGO">
                     <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+
                 </div>
                 <div class="description text-center">
                 <p>
@@ -121,15 +131,15 @@
             <table class="center">
                 <thead>
                     <tr>
-                        <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO:</strong> {{ $license->num }}</th>
+                        <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO</strong> {{ $license->num }} DE FECHA {{ $license->emission_date }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         @if($license->correlative->correlative_type_id == 1)
-                        <td><strong>FECHA DE INSCRIPCIÓN</strong> {{ $license->emission_date }}</td>
+                        <td><strong>FECHA DE INSTALACIÓN</strong> {{ $license->emission_date }}</td>
                         @else
-                        <td><strong>FECHA DE EMISIÓN</strong> {{ $license->emission_date }}</td>
+                        <td><strong>FECHA DE RENOVACIÓN</strong> {{ $license->emission_date }}</td>
                         @endif
                         <td><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</td>
                     </tr>
@@ -153,29 +163,35 @@
 
                 </tbody>
             </table>
+            <div>
 
-            <div class="bottom text-center">
-                <span class="row">{{ $signature->title }} superintendente de administración tributaria</span>
-                <span class="row">{{ $signature->decree }}</span>
-                <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
-                <br>
-                @if($license->correlative->correlative_type_id == 1)
-                <span class="row">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
-                @else
-                <span class="row">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
-                @endif
-                <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment->num }}</span>
+                <div id="sello" style=" z-index: 2;">
+                    <img src="{{ asset('/assets/images/sello.png') }}" height="70px" width="170px"/>
+                </div>
 
+                <div class="bottom text-center" style="z-index: -1;">
+                    <span class="row">{{ $signature->title }} superintendente de administración tributaria</span>
+                    <span class="row">{{ $signature->decree }}</span>
+                    <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                    <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
+                    <span style="font-size: 6px"> </span>
+                    @if($license->correlative->correlative_type_id == 1)
+                    <span class="row">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
+                    @else
+                    <span class="row">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
+                    @endif
+                    <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment->num }}</span>
+
+                </div>
             </div>
-			<div class="">
+			<div class="bandera" >
                     <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
              </div>
 
         </div>
 
         </div>
-        <br><br>
+        <br>
         @endfor
 
     </body>

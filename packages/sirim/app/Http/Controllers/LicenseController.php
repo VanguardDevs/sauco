@@ -371,11 +371,7 @@ class LicenseController extends Controller
 
         $requirement = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
 
-        //dd($requirement);
-
         $existingLicenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->pluck('num', 'id')->toArray();
-
-        //dd($existingLicenses);
 
         if($requirement){
 
@@ -506,7 +502,6 @@ class LicenseController extends Controller
             'correlative_number_id' => $correlativeNumber->id
         ]);
 
-
         $license = License::create([
             'num' => $liqueurAbbreviature.'-'.$liqueurNum.'-BERM',
             'emission_date' => $emissionDate,
@@ -541,7 +536,7 @@ class LicenseController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
-        $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' desde '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
+        $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' de '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
 
         $liqueur = Liqueur::create([
             'work_hours' => $hourtring,

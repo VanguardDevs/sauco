@@ -175,9 +175,6 @@ $(document).ready(function() {
                             <a class="mr-2" href=${window.location.href}/${oData.id} title='Ver licencia'>
                                 <i class='btn-sm btn-info fas fa-eye'></i>
                             </a>
-                            <a class="mr-2" onClick="dismissLicense(${oData.id})" title='Cesar licencia'>
-                                <i class='btn-sm btn-warning fas fa-exclamation'></i>
-                            </a>
                         </div>`
                     );
                 }
