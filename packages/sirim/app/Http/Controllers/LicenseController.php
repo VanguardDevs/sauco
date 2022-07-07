@@ -389,7 +389,6 @@ class LicenseController extends Controller
         }
         else{
            $correlatives = [];
- 
         }
 
         /*$correlatives = [
@@ -661,7 +660,7 @@ class LicenseController extends Controller
         //     'liqueur_id' => $liqueur->id
         // ]);
 
-        $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' desde '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
+        $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' de '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
 
         $liqueur = Liqueur::create([
             'work_hours' => $hourtring,
