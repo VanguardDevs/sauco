@@ -26,7 +26,7 @@
                 margin-bottom: -35px;
                 margin-left: 5px;
             }
-         
+
             table, td, th {
                 border: 1px #000 solid;
             }
@@ -88,14 +88,14 @@
             .bottom {
                 width: 95%;
                 height: 130px;
-                
+
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 11px;
                 margin: auto;
-                margin-top: 10%;
-                margin-bottom: -4%;
-              
+                margin-top: 7%;
+                margin-bottom: -2%;
+
             }
             .center {
                 margin-left: auto;
@@ -170,7 +170,8 @@
                 </div>
 
                 <div class="bottom text-center" style="z-index: -1;">
-                    <span class="row">{{ $signature->title }} superintendente de administración tributaria</span>
+                    <span class="row">{{ $signature->title }}</span>
+                    <span class="row">superintendente de administración tributaria</span>
                     <span class="row">{{ $signature->decree }}</span>
                     <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                     <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
