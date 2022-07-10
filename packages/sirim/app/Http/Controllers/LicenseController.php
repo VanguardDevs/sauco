@@ -714,8 +714,6 @@ class LicenseController extends Controller
 
         $liquidation = Liquidation::whereId($liquidationLiqueur->liquidation_id)->first();
 
-        //$liquidationPayment = $liquidation->payment()->get();
-
         $period =Carbon::createFromDate($license->create_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->format('Y');
 
         $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
