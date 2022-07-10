@@ -705,7 +705,7 @@ class LicenseController extends Controller
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
-        $representation = $license->representation->person->name;
+        $representation = $license->representation->person;
         $signature = Signature::latest()->first();
 
         $liqueur = Liqueur::whereLicenseId($license->id)->first();
@@ -716,6 +716,7 @@ class LicenseController extends Controller
 
         //$liquidationPayment = $liquidation->payment()->get();
 
+        $period =Carbon::createFromDate($license->create_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->format('Y');
 
         $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
 
@@ -731,7 +732,7 @@ class LicenseController extends Controller
 
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'liqueur', 'annexLiqueur', 'payment', 'liquidation', 'processedAt'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'liqueur', 'annexLiqueur', 'payment', 'liquidation', 'processedAt', 'period'];
         $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::loadView('modules.liqueur-licenses.pdf.liqueur-license', compact($vars))

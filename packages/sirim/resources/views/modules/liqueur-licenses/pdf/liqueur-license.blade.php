@@ -137,9 +137,9 @@
                 <tbody>
                     <tr>
                         @if($license->correlative->correlative_type_id == 1)
-                        <td><strong>FECHA DE INSTALACIÓN</strong> {{ $license->emission_date }}</td>
+                        <td><strong>PERIODO DE INSTALACIÓN:</strong> {{ $period }}</td>
                         @else
-                        <td><strong>FECHA DE RENOVACIÓN</strong> {{ $license->emission_date }}</td>
+                        <td><strong>PERIODO DE RENOVACIÓN:</strong> {{ $period }}</td>
                         @endif
                         <td><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</td>
                     </tr>
@@ -158,13 +158,13 @@
                     <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
                   </tr>
                   <tr>
-                    <td colspan="2"><strong>REPRESENTANTE:</strong> {{ $representation }}</td>
+                    <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
+                    <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
                   </tr>
 
                 </tbody>
             </table>
             <div>
-
                 <div id="sello" style=" z-index: 2;">
                     <img src="{{ asset('/assets/images/sello.png') }}" height="70px" width="170px"/>
                 </div>
