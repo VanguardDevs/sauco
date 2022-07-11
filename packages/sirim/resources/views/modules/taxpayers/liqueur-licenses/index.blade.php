@@ -41,16 +41,16 @@
                             <br><br>
                         </div>
 
-                        <!--@ if($requirement->requirement_id == '3')-->
+                        @if($requirement->requirement_id == '3')
                         <div class="col-lg-12" id= "new_license">
                             @include('modules.taxpayers.liqueur-licenses.forms.installation')
                         </div>
-                        <!--@ else
+                        @else
 
                             <div class="col-lg-12" id="existing_licenses" style="display:none;">
-                                aqui va el include del blade de renovación
+                            @include('modules.taxpayers.liqueur-licenses.forms.renewal')
                             </div>
-                        @ endif-->
+                        @endif
 
 
 

@@ -585,6 +585,8 @@ class LicenseController extends Controller
 
         $idParameter = $request->input('liqueurParameter');
 
+        $installationDate = $request->input('installationDate');
+
         $liqueur_parameter = LiqueurParameter::whereId($idParameter)->first();
 
 
@@ -592,12 +594,13 @@ class LicenseController extends Controller
 
         $liqueurAbbreviature = $liqueurClassification->abbreviature;
 
-        $liqueurNum = Liqueur::getNum();
+        //$liqueurNum = Liqueur::getNum();
 
         //$liqueurAnnex = LiqueurAnnex::whereLiqueurId($oldLiqueur->id)->first();
 
         //$annexLiqueur = AnnexedLiqueur::whereId($liqueurAnnex->annex_id)->first();
 
+        $liqueurNum = $request->input('licenseNum');
 
         $amount = $petro*$liqueur_parameter->renew_registry_amount;
 
