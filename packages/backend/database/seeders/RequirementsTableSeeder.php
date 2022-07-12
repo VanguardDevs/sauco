@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Requirement;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +15,7 @@ class RequirementsTableSeeder extends Seeder
         ['3', 'Solicitud de Trámite de Renovación de Licencia de Expendio de Bebidas Alcohólicas.', '00000003', '106'],
         ['4', 'RENOVACIÓN ANUAL DEL REGISTRO Y AUTORIZACION DE EXPENDIO', '00000004', '22'],
     );
+
     /**
      * Run the database seeds.
      *

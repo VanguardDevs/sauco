@@ -9,5 +9,6 @@ php artisan migrate --path=database/migrations/2022_06_14_105831_create_liqueur_
 php artisan migrate --path=database/migrations/2022_06_16_202120_create_requirements_table.php
 php artisan db:seed --class=LiqueurAnnexSeeder
 php artisan db:seed --class=LiqueurClassificationSeeder
-php artisan db:seed --class=LiqueurParameterSeeder
 php artisan db:seed --class=LiqueurZoneSeeder
+php artisan db:seed --class=LiqueurParameterSeeder
+php artisan db:seed --class=RequirementsTableSeeder

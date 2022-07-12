@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -7,10 +9,8 @@ class LiqueurParameterSeeder extends Seeder
 {
 
     protected $rows = Array(
-        ["1", "Expendios de Bebidas Alchólicas en Zonas Urbanas (MY)", "0.1", "0.3", "1", false, "1", "1", "2"],
-        ["2", "Expendios de Bebidas Alchólicas en Zonas Sub Urbanas (MY)", "0.1", "0.3", "0.5", false, "1", "2", "2"],
-        ["3", "Expendios de Bebidas Alchólicas en Zonas Urbanas (MN)", "0.1", "0.3", "1", false, "2", "1", "2"],
-        ["4", "Expendios de Bebidas Alchólicas en Zonas Sub Urbanas (MN)", "0.1", "0.3", "0.5", false, "2", "2", "2"],
+        ["1", "Expendios de Bebidas Alchólicas en Zonas Urbanas", "0.1", "0.3", "1", false, null, "1", "2"],
+        ["2", "Expendios de Bebidas Alchólicas en Zonas Sub Urbanas", "0.1", "0.3", "0.5", false, null, "2", "2"],
         ["5", "Pequeños Expendios de Cervezas en Zonas Urbanas", "0.1", "0.3", "0.25", false, "5", "1", "2"],
         ["6", "Pequeños Expendios de Cervezas en Zonas Sub Urbanas", "0.1", "0.3", "0.5", false, "5", "2", "2"],
         ["7", "Franquicias Móviles", "0.1", "0.3", "0.5", true, "1", "1", "2"]

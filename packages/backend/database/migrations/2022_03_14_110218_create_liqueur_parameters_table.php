@@ -20,7 +20,7 @@ class CreateLiqueurParametersTable extends Migration
             $table->float('renew_registry_amount');
             $table->float('authorization_registry_amount');
             $table->boolean('is_mobile');
-            $table->unsignedBigInteger('liqueur_classification_id');
+            $table->unsignedBigInteger('liqueur_classification_id')->nullable();
             $table->unsignedBigInteger('liqueur_zone_id');
             $table->unsignedBigInteger('charging_method_id');
             $table->foreign('liqueur_classification_id')->references('id')->on('liqueur_classifications')
