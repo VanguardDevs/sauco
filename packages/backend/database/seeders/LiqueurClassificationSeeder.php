@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 class LiqueurClassificationSeeder extends Seeder
 {
     protected $rows = Array(
-
         ["Al por Mayor", "MY"],
         ["Al por Menor", "MN"],
         ["Cantinas", "C"],
@@ -14,6 +13,7 @@ class LiqueurClassificationSeeder extends Seeder
         ["Pequeños Expendios de Cervezas", "PEC"],
         ["Cerveza por Copas / Cerveza sola", "Cc"]
     );
+
     /**
      * Run the database seeds.
      *

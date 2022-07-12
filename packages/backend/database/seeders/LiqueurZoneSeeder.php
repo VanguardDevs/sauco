@@ -9,6 +9,7 @@ class LiqueurZoneSeeder extends Seeder
         "Urbana",
         "Sub Urbana"
     );
+
     /**
      * Run the database seeds.
      *
