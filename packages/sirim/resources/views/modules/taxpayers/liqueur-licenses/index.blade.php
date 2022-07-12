@@ -41,13 +41,13 @@
                             <br><br>
                         </div>
 
-                        @if($requirement->requirement_id == '3')
+                        @if($requirement->requirement_id == '1')
                         <div class="col-lg-12" id= "new_license">
                             @include('modules.taxpayers.liqueur-licenses.forms.installation')
                         </div>
                         @else
 
-                            <div class="col-lg-12" id="existing_licenses" style="display:none;">
+                            <div class="col-lg-12" id="existing_licenses">
                             @include('modules.taxpayers.liqueur-licenses.forms.renewal')
                             </div>
                         @endif

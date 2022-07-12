@@ -568,8 +568,13 @@ class LicenseController extends Controller
 
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
-        $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+
+        $emissionDate = Carbon::parse($request->installed_at);
+
+        $dt = Carbon::now();
+        $numberYear = $dt->diffInYears($emissionDate);
+
+        $expirationDate = $emissionDate->copy()->addYears($numberYear+1);
 
         $correlativeNum = CorrelativeNumber::getNum();
 

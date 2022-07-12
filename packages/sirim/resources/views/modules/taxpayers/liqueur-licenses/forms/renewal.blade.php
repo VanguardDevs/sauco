@@ -8,11 +8,11 @@
 ! !}-->
 
 <div class="col-lg-4">
-    <label class="control-label">Número de Licencia de Expendio</label>
+    <label class="control-label">Número de Licencia de Instalación</label>
     {!!
         Form::number("licenseNum", null, [
             "class" => "form-control",
-            "placeholder" => "Número"
+            "placeholder" => "Número de Licencia"
         ])
     !!}
 
@@ -22,7 +22,7 @@
 </div>
 
 <div class="col-md-6 form-group">
-    <label class="control-label"> Fecha de pago <span class="text-danger">*</span></label>
+    <label class="control-label"> Fecha de Instalación <span class="text-danger">*</span></label>
 
         {!!
             Form::text("installed_at", '', [
