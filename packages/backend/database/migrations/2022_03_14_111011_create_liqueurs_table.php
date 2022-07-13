@@ -15,10 +15,10 @@ class CreateLiqueursTable extends Migration
     {
         Schema::create('liqueurs', function (Blueprint $table) {
             $table->id();
-            $table->string('work_hours');
-            $table->boolean('is_mobile');
-            $table->unsignedBigInteger('liqueur_parameter_id');
-            $table->unsignedBigInteger('representation_id');
+            $table->string('work_hours')->nullable();
+            $table->boolean('is_mobile')->nullable();
+            $table->unsignedBigInteger('liqueur_parameter_id')->nullable();
+            $table->unsignedBigInteger('representation_id')->nullable();
             $table->unsignedBigInteger('license_id');
             $table->string('num')->unique();
             $table->foreign('liqueur_parameter_id')->references('id')->on('liqueur_parameters')

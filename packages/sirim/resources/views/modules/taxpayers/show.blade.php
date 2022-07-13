@@ -153,7 +153,7 @@
                         <i class="fas fa-book-reader"></i>
                     </div>
                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">Licencias de actividad económica</div>
+                        <div class="kt-notification__item-title">Licencias de Actividad Económica</div>
                     </div>
                 </a>
             </div>
@@ -165,7 +165,7 @@
                         <i class="fas fa-glass-martini-alt"></i>
                     </div>
                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">Licencias de  licores</div>
+                        <div class="kt-notification__item-title">Licencias de Expendios de Bebidas Alcohólicas</div>
                     </div>
                 </a>
             </div>
