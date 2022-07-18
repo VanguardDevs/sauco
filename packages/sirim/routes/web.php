@@ -200,4 +200,15 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('credits.index');
     Route::get('taxpayers/{taxpayer}/credits/list', 'CreditController@list');
 
+     /**
+    * Vehicle's Settings
+    */
+
+     Route::resource('brands', 'BrandController');
+     Route::resource('vehicle-models', 'VehicleModelController');
+     Route::resource('colors', 'ColorController');
+     Route::resource('vehicle-classifications', 'VehicleClassificationController');
+     Route::resource('vehicle-parameters', 'VehicleParameterController');
+     Route::resource('vehicles', 'VehicleController');
+
 });

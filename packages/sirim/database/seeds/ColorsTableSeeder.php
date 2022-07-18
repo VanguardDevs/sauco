@@ -6,6 +6,7 @@ use App\Color;
 class ColorsTableSeeder extends Seeder
 {
     protected $colors = Array(
+
         "Aguamarina",
         "Amarillo",
         "Anaranjado",
@@ -14,8 +15,10 @@ class ColorsTableSeeder extends Seeder
         "Azul Francia",
         "Azul marino",
         "Azul pizarra",
+        "Beige",
         "Blanco",
         "Castaño",
+        "Cobre",
         "Coral",
         "Dorado",
         "Dorado brillante",
@@ -28,6 +31,7 @@ class ColorsTableSeeder extends Seeder
         "Lila",
         "Madera",
         "Marron",
+        "Morado",
         "Negro",
         "Ocre",
         "Oliva",
@@ -45,10 +49,8 @@ class ColorsTableSeeder extends Seeder
         "Verde mar",
         "Verde oscuro",
         "Violeta",
-        "Morado",
-        "beize",
-        "Cobre",
         "Vinotinto"
+        
     );
 
     /**
