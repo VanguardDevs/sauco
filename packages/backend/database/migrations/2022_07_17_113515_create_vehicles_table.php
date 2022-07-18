@@ -23,17 +23,14 @@ class CreateVehiclesTable extends Migration
             $table->unsignedBigInteger('capacity');
             $table->unsignedBigInteger('stalls');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('model_id');
+            $table->unsignedBigInteger('vehicle_model_id');
             $table->unsignedBigInteger('color_id');
-            $table->unsignedBigInteger('vehicle_use_id');
             $table->unsignedBigInteger('vehicle_classification_id');
-            $table->foreign('model_id')->references('id')->on('vehicle_models')
+            $table->foreign('vehicle_model_id')->references('id')->on('vehicle_models')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('color_id')->references('id')->on('colors')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('vehicle_use_id')->references('id')->on('vehicle_uses')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('vehicle_classification_id')->references('id')->on('vehicle_classifications')
                 ->onUpdate('cascade')->onDelete('cascade');

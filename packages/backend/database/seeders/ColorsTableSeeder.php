@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Color;
+use App\Models\Color;
 
 class ColorsTableSeeder extends Seeder
 {
@@ -50,7 +50,7 @@ class ColorsTableSeeder extends Seeder
         "Verde oscuro",
         "Violeta",
         "Vinotinto"
-        
+
     );
 
     /**

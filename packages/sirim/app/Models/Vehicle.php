@@ -17,16 +17,10 @@ class Vehicle extends Model
         'capacity',
         'stalls',
         'taxpayer_id',
-        'model_id',
+        'vehicle_model_id',
         'color_id',
-        'vehicle_use_id',
         'vehicle_classification_id'
     ];
-
-    public function vehicle_use()
-    {
-        return $this->belongsTo(VehicleUse::class);
-    }
 
     public function vehicle_classification()
     {
@@ -38,7 +32,7 @@ class Vehicle extends Model
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function model()
+    public function vehicle_model()
     {
         return $this->belongsTo(VehicleModel::class, 'model_id');
     }
