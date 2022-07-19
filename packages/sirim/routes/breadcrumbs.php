@@ -655,3 +655,40 @@ Breadcrumbs::for('brands.edit', function ($trail) {
     $trail->parent('brands.index');
     $trail->push('Editar Marcas de Vehículo', url('brands/edit'));
 });
+
+
+/*----------  Colors  ----------*/
+Breadcrumbs::for('colors.index', function ($trail) {
+    $trail->push('Colores de Vehículo', url('colors'));
+});
+
+/*------------- Colors -> create -------------*/
+Breadcrumbs::for('colors.create', function ($trail) {
+    $trail->parent('colors.index');
+    $trail->push('Crear Colores de Vehículo', url('colors/create'));
+});
+
+/*------------- Colors -> edit -------------*/
+Breadcrumbs::for('colors.edit', function ($trail) {
+    $trail->parent('colors.index');
+    $trail->push('Editar Colores de Vehículo', url('colors/edit'));
+});
+
+
+
+/*----------  Vehicle Models  ----------*/
+Breadcrumbs::for('vehicle-models.index', function ($trail) {
+    $trail->push('Modelos de Vehículo', url('vehicle-models'));
+});
+
+/*------------- Vehicle Models -> create -------------*/
+Breadcrumbs::for('vehicle-models.create', function ($trail) {
+    $trail->parent('vehicle-models.index');
+    $trail->push('Crear Modelo de Vehículo', url('vehicle-models/create'));
+});
+
+/*------------- Vehicle Models -> edit -------------*/
+Breadcrumbs::for('vehicle-models.edit', function ($trail) {
+    $trail->parent('vehicle-models.index');
+    $trail->push('Editar Modelo de Vehículo', url('vehicle-models/edit'));
+});

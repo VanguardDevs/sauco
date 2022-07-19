@@ -1011,7 +1011,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/brands/list",
+        "ajax": `${window.location.href}/list`,
         "columns": [
             { data: 'name'},
             {
@@ -1022,8 +1022,61 @@ $(document).ready(function() {
                             <a class="mr-2" href=${baseURL}/brands/${oData.id}/edit title='Editar'>
                                 <i class='btn-sm btn-warning fas fa-edit'></i>
                             </a>
-                            <a class="mr-2" onClick="nullRecord(${oData.id},'brands')" title='Eliminar'>
-                                <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
+    /*----------  Datatables Vehicles Colors  ----------*/
+    $('#tColors').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'name'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/colors/${oData.id}/edit title='Editar'>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
+                            </a>
+                        </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
+    /*----------  Datatables Vehicles Models  ----------*/
+    $('#tModels').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'name'},
+            { data: 'brand.name'},
+
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicle-models/${oData.id}/edit title='Editar'>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
                             </a>
                         </div>`
                     );

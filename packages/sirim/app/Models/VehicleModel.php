@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class VehicleModel extends Model
 {
-    use HasFactory;
 
     protected $table = 'vehicle_models';
 
@@ -23,6 +22,6 @@ class VehicleModel extends Model
 
     public function vehicles()
     {
-        return $this->hasMany(Vehicle::class, 'model_id');
+        return $this->hasMany(Vehicle::class, 'vehicle_model_id');
     }
 }

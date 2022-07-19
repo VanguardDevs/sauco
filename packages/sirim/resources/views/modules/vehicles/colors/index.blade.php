@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'Marcas de Vehículos')
+@section('title', 'Colores de Vehículos')
 
 @section('content')
 
@@ -13,19 +13,19 @@
                         <i class="kt-font-brand fas fa-file-medical"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        Marcas de Vehiculos
+                        Colores de Vehiculos
                     </h3>
                 </div>
                <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-actions">
-                        <a href="{{ Route('brands.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nueva Marca">
+                        <a href="{{ Route('colors.create') }}" class="btn btn-clean btn-sm btn-icon btn-icon-md" title="Nuevo Color">
                             <i class="fas fa-plus"></i>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <table id="tBrands" class="table table-bordered table-striped datatables" style="text-align: center">
+                <table id="tColors" class="table table-bordered table-striped datatables" style="text-align: center">
                     <thead>
                     <tr>
                         <th width="40%">Nombre</th>

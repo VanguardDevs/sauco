@@ -4,78 +4,70 @@ namespace App\Http\Controllers;
 
 use App\Models\Color;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class ColorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+
+    public function index(Color $color)
     {
-        $query = Color::withCount('vehicles');
-        $results = $request->perPage;
-
-        if ($request->has('filter')) {
-            $filters = $request->filter;
-
-            if (array_key_exists('name', $filters)) {
-                $query->whereLike('name', $filters['name']);
-            }
-        }
-
-        return $query->paginate($results);
+        return view('modules.vehicles.colors.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+    public function list()
+    {
+        $query = Color::query();
+
+        return DataTables::eloquent($query)->toJson();
+    }
+
+
+    public function create(Color $color)
+    {
+        return view('modules.vehicles.colors.register')->with('color', $color)->with('typeForm', 'create');
+    }
+
+
     public function store(Request $request)
     {
         $color = Color::create($request->all());
 
-        return response()->json($color, 201);
+
+        return redirect('colors')
+            ->withSuccess('¡Color de vehículo registrado!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Color  $color
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Color $color)
+
+
+    public function edit(Color $color)
     {
-        return $color;
+        return view('modules.vehicles.colors.register')
+            ->with('typeForm', 'update')
+            ->with('row', $color);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Color  $color
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Color $color)
     {
-        $color->update($request->all());
+        $edit = Color::find($color->id);
+        $edit->fill($request->all())
+            ->save();
 
-        return response()->json($color, 201);
+        return redirect('colors')
+            ->withSuccess('¡Color de vehículo actualizado!');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Color  $color
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Color $color)
     {
         $color->delete();
 
-        return response()->json($color, 201);
+        return response()->json([
+            'success' => '¡Color de vehículo eliminado!'
+        ]);
     }
+
 }

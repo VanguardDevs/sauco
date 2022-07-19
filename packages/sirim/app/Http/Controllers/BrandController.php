@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class BrandController extends Controller
 {
@@ -19,7 +20,7 @@ class BrandController extends Controller
         return view('modules.vehicles.brands.index');
     }
 
-    
+
     public function list()
     {
         $query = Brand::query();
@@ -30,7 +31,7 @@ class BrandController extends Controller
 
     public function create(Brand $brand)
     {
-        return view('modules.vehicles.brands.register')->with('typeForm', 'create');
+        return view('modules.vehicles.brands.register')->with('brand', $brand)->with('typeForm', 'create');
     }
 
 

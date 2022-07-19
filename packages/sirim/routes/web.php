@@ -207,8 +207,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('brands', 'BrandController')->except(['show']);
     Route::get('brands/list', 'BrandController@list');
 
-    Route::resource('colors', 'ColorController');
-    Route::resource('vehicle-models', 'VehicleModelController');
+    Route::resource('colors', 'ColorController')->except(['show']);
+    Route::get('colors/list', 'ColorController@list');
+
+    Route::resource('vehicle-models', 'VehicleModelController')->except(['show']);
+    Route::get('vehicle-models/list', 'VehicleModelController@list');
+
     Route::resource('vehicle-classifications', 'VehicleClassificationController');
     Route::resource('vehicle-parameters', 'VehicleParameterController');
     Route::resource('vehicles', 'VehicleController');
