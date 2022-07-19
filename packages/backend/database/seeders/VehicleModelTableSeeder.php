@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\VehicleModel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;

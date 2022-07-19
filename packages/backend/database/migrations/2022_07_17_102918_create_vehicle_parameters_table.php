@@ -16,10 +16,10 @@ class CreateVehicleParametersTable extends Migration
         Schema::create('vehicle_parameters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('years');
-            $table->boolean('weight');
-            $table->boolean('capacity');
-            $table->boolean('stalls');
+            $table->boolean('years')->nullable();
+            $table->boolean('weight')->nullable();
+            $table->boolean('capacity')->nullable();
+            $table->boolean('stalls')->nullable();
             $table->timestamps();
         });
     }

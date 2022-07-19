@@ -12,74 +12,65 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+
+
+    public function index(Brand $brand)
     {
-        $query = Brand::withCount('models');
-        $results = $request->perPage;
-
-        if ($request->has('filter')) {
-            $filters = $request->filter;
-
-            if (array_key_exists('name', $filters)) {
-                $query->whereLike('name', $filters['name']);
-            }
-        }
-
-        if ($results) {
-            return $query->paginate($results);
-        }
-
-        return response()->json([ 'data' => $query->get() ]);
+        return view('modules.vehicles.brands.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function list()
+    {
+        $query = Brand::query();
+
+        return DataTables::eloquent($query)->toJson();
+    }
+
+
+    public function create(Brand $brand)
+    {
+        return view('modules.vehicles.brands.register')->with('typeForm', 'create');
+    }
+
+
     public function store(Request $request)
     {
         $brand = Brand::create($request->all());
 
-        return response()->json($brand, 201);
+
+        return redirect('brands')
+            ->withSuccess('¡Marca de vehículo registrada!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Brand $brand)
+
+
+    public function edit(Brand $brand)
     {
-        return $brand;
+        return view('modules.vehicles.brands.register')
+            ->with('typeForm', 'update')
+            ->with('row', $brand);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Brand $brand)
     {
-        $brand->update($request->all());
+        $edit = Brand::find($brand->id);
+        $edit->fill($request->all())
+            ->save();
 
-        return response()->json($brand, 201);
+        return redirect('brands')
+            ->withSuccess('¡Marca de vehículo actualizada!');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Brand $brand)
     {
         $brand->delete();
 
-        return response()->json($brand, 201);
+        return response()->json([
+            'success' => '¡Marca de vehículo eliminada!'
+        ]);
     }
 }

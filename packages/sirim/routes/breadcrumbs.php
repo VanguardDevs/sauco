@@ -636,3 +636,22 @@ Breadcrumbs::for('credits.index', function ($trail, $row) {
     $trail->push('Creditos', route('credits.index', $row));
 });
 
+
+
+
+/*----------  Brands  ----------*/
+Breadcrumbs::for('brands.index', function ($trail) {
+    $trail->push('Marcas de Vehículo', url('brands'));
+});
+
+/*------------- Brands -> create -------------*/
+Breadcrumbs::for('brands.create', function ($trail) {
+    $trail->parent('brands.index');
+    $trail->push('Crear Marcas de Vehículo', url('brands/create'));
+});
+
+/*------------- Brands -> edit -------------*/
+Breadcrumbs::for('brands.edit', function ($trail) {
+    $trail->parent('brands.index');
+    $trail->push('Editar Marcas de Vehículo', url('brands/edit'));
+});

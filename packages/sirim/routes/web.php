@@ -204,11 +204,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     * Vehicle's Settings
     */
 
-     Route::resource('brands', 'BrandController');
-     Route::resource('vehicle-models', 'VehicleModelController');
-     Route::resource('colors', 'ColorController');
-     Route::resource('vehicle-classifications', 'VehicleClassificationController');
-     Route::resource('vehicle-parameters', 'VehicleParameterController');
-     Route::resource('vehicles', 'VehicleController');
+    Route::resource('brands', 'BrandController')->except(['show']);
+    Route::get('brands/list', 'BrandController@list');
+
+    Route::resource('colors', 'ColorController');
+    Route::resource('vehicle-models', 'VehicleModelController');
+    Route::resource('vehicle-classifications', 'VehicleClassificationController');
+    Route::resource('vehicle-parameters', 'VehicleParameterController');
+    Route::resource('vehicles', 'VehicleController');
 
 });
