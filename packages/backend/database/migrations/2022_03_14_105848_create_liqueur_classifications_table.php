@@ -17,6 +17,7 @@ class CreateLiqueurClassificationsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('abbreviature');
+            $table->string('correlative');
             $table->timestamps();
         });
     }

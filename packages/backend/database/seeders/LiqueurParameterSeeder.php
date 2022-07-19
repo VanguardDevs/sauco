@@ -11,9 +11,9 @@ class LiqueurParameterSeeder extends Seeder
     protected $rows = Array(
         ["1", "Expendios de Bebidas Alchólicas en Zonas Urbanas", "0.1", "0.3", "1", false, null, "1", "2"],
         ["2", "Expendios de Bebidas Alchólicas en Zonas Sub Urbanas", "0.1", "0.3", "0.5", false, null, "2", "2"],
-        ["5", "Pequeños Expendios de Cervezas en Zonas Urbanas", "0.1", "0.3", "0.25", false, "5", "1", "2"],
-        ["6", "Pequeños Expendios de Cervezas en Zonas Sub Urbanas", "0.1", "0.3", "0.5", false, "5", "2", "2"],
-        ["7", "Franquicias Móviles", "0.1", "0.3", "0.5", true, "1", "1", "2"]
+        ["3", "Pequeños Expendios de Cervezas en Zonas Urbanas", "0.1", "0.3", "0.25", false, "5", "1", "2"],
+        ["4", "Pequeños Expendios de Cervezas en Zonas Sub Urbanas", "0.1", "0.3", "0.5", false, "5", "2", "2"],
+        ["5", "Franquicias Móviles", "0.1", "0.3", "0.5", true, "1", "1", "2"]
     );
 
     /**

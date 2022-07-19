@@ -20,6 +20,7 @@ class CreateLicensesTable extends Migration
             $table->date('expiration_date')->nullable();
             $table->boolean('active')->default(0);
             $table->unsignedBigInteger('correlative_id');
+            $table->unsignedBigInteger('liquidation_id')->nullable();
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('ordinance_id');
             $table->unsignedBigInteger('user_id');
@@ -33,6 +34,8 @@ class CreateLicensesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('representation_id')->references('id')->on('representations')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('liquidation_id')->references('id')->on('liquidations')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->timestamp('downloaded_at')->nullable();

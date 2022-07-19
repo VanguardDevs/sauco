@@ -8,7 +8,6 @@ use App\Models\AnnexedLiqueur;
 
 class LiqueurAnnexSeeder extends Seeder
 {
-
      public $liqueurannexes = Array(
         "Abasto",
         "Supermercado",

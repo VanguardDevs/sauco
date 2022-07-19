@@ -18,18 +18,16 @@ class CreateLiqueursTable extends Migration
             $table->string('work_hours')->nullable();
             $table->boolean('is_mobile')->nullable();
             $table->unsignedBigInteger('liqueur_parameter_id')->nullable();
-            $table->unsignedBigInteger('representation_id')->nullable();
+            $table->unsignedBigInteger('liqueur_classification_id')->nullable();
             $table->unsignedBigInteger('license_id');
-            $table->string('num')->unique();
+            $table->foreign('liqueur_classification_id')->references('id')->on('liqueur_classifications')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('liqueur_parameter_id')->references('id')->on('liqueur_parameters')
-            ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('representation_id')->references('id')->on('representations')
-            ->onUpdate('cascade')->onDelete('cascade');
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('license_id')->references('id')->on('licenses')
-            ->onUpdate('cascade')->onDelete('cascade');
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
