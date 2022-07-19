@@ -130,8 +130,8 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment)
     {
         $validator = $request->validate([
-            'processed_at'     => 'required',
-            'method'  => 'required'
+            'processed_at' => 'required',
+            'method' => 'required'
         ]);
 
         if ($request->input('method') != '3') {
@@ -164,18 +164,9 @@ class PaymentController extends Controller
             'status_id' => 2
         ]);
 
-
-        $creditAmount = $payment->amount;
-
-        if ($creditAmount < 0){
-
-            $payment->credits()->create([
-                'num' => Credit::getNewNum(),
-                'amount' => $creditAmount * -1,
-                'taxpayer_id' => $payment->taxpayer_id,
-                'payment_id' => $payment->id,
+        if ($payment->has('credits')){
+            $payment->credits()->update([
                 'generated_at' => $processedAt
-
             ]);
         }
 
@@ -211,7 +202,7 @@ class PaymentController extends Controller
                 ->loadView('pdf.payment', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         }
-   }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -236,8 +227,6 @@ class PaymentController extends Controller
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
     }
-
-
 
     public function ticket(Payment $payment)
     {

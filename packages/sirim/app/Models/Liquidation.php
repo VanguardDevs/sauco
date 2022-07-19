@@ -86,4 +86,9 @@ class Liquidation extends Model implements Auditable
     {
     	return $this->hasOne(Movement::class);
     }
+
+    public function credit()
+    {
+    	return $this->hasOne(Credit::class);
+    }
 }
