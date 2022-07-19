@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\NewValue;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Traits\PrettyAmount;
 
 class Credit extends Model
 {
-    use SoftDeletes, NewValue;
+    use SoftDeletes, NewValue, PrettyAmount;
 
     protected $table = 'credits';
 
@@ -18,9 +18,9 @@ class Credit extends Model
         'amount',
         'taxpayer_id',
         'payment_id',
+        'liquidation_id',
         'generated_at'
     ];
-
 
     public function taxpayer()
     {
@@ -32,4 +32,8 @@ class Credit extends Model
         return $this->belongsTo(Payment::class);
     }
 
+    public function liquidation()
+    {
+        return $this->belongsTo(Liquidation::class);
+    }
 }
