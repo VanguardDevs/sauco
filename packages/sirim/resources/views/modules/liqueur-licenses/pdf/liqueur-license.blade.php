@@ -186,9 +186,8 @@
                 </div>
             </div>
 			<div class="bandera" >
-                    <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
              </div>
-
         </div>
 
         </div>

@@ -12,3 +12,5 @@ php artisan db:seed --class=LiqueurClassificationSeeder
 php artisan db:seed --class=LiqueurZoneSeeder
 php artisan db:seed --class=LiqueurParameterSeeder
 php artisan db:seed --class=RequirementsTableSeeder
+cd packages/maintenance
+npm run migrateLiqueurs

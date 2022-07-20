@@ -36,9 +36,14 @@ class Liqueur extends Model
         return $payNum;
     }
 
-    public function liqueur_parameter()
+    public function liqueurParameter()
     {
         return $this->belongsTo(LiqueurParameter::class);
+    }
+
+    public function liqueurClassification()
+    {
+        return $this->belongsTo(LiqueurClassification::class);
     }
 
     public function representation()

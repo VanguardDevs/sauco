@@ -560,8 +560,6 @@ class LicenseController extends Controller
         ]);
     }
 
-
-
     public function renovateLiqueurLicense($request, CorrelativeType $type, Taxpayer $taxpayer)
     {
         //Las lineas comentadas corresponden a la renovación de licencias a través del select
@@ -699,9 +697,6 @@ class LicenseController extends Controller
         return response()->json($newLicense);
 
     }
-
-
-
 
 
     public function downloadLiqueurLicense(License $license)

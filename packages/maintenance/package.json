@@ -14,7 +14,7 @@
     "movements": "node ./scripts/createMovements.js",
     "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js",
     "setNumbers": "node ./scripts/setNumbers.js",
-    "migrateLiquers": "node ./scripts/migrateLiquers.js"
+    "migrateLiqueurs": "node ./scripts/migrateLiquers.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",
