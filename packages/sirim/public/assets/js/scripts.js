@@ -1107,9 +1107,9 @@ $(document).ready(function() {
                         return "<span>No</span>";
                     }
                     else{
-                       return "<span> </span>"; 
+                       return "<span> </span>";
                     }
-                }                 
+                }
             },
             { "data": 'weight',
 
@@ -1120,7 +1120,7 @@ $(document).ready(function() {
                         return "<span>No</span>";
                     }
                     else{
-                       return "<span> </span>"; 
+                       return "<span> </span>";
                     }
                 }
             },
@@ -1133,7 +1133,7 @@ $(document).ready(function() {
                         return "<span>No</span>";
                     }
                     else{
-                       return "<span> </span>"; 
+                       return "<span> </span>";
                     }
                 }
             },
@@ -1146,7 +1146,7 @@ $(document).ready(function() {
                         return "<span>No</span>";
                     }
                     else{
-                       return "<span> </span>"; 
+                       return "<span> </span>";
                     }
                 }
             },
@@ -1186,14 +1186,13 @@ $(document).ready(function() {
             { data: 'stalls_until'},
             { data: 'capacity_from'},
             { data: 'capacity_until'},
-            { data: 'vehicleParameter.name'},
-            { data: 'chargingMethod.name'},
-            {
-                data: "id",
+            { data: 'vehicle_parameter.name'},
+            { data: 'charging_method.name'},
+            {data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                         <div class="btn-group">
-                            <a class="mr-2" href=${baseURL}/vehicle-models/${oData.id}/edit title='Editar'>
+                            <a class="mr-2" href=${baseURL}/vehicle-classifications/${oData.id}/edit title='Editar'>
                                 <i class='btn-sm btn-warning fas fa-edit'></i>
                             </a>
                         </div>`
@@ -1203,11 +1202,40 @@ $(document).ready(function() {
         ]
     });
 
-
-
-
-
-
+        /*----------  Datatables Vehicles Models  ----------*/
+        $('#tVehicles').DataTable({
+            "order": [[0, "asc"]],
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+            "oLanguage": {
+                "sUrl": baseURL + "/assets/js/spanish.json"
+            },
+            "serverSide": true,
+            "ajax": `${window.location.href}/list`,
+            "columns": [
+                { data: 'plate'},
+                { data: 'body_serial'},
+                { data: 'engine_serial'},
+                { data: 'status'},
+                { data: 'weight'},
+                { data: 'capacity'},
+                { data: 'stalls'},
+                { data: 'taxpayer.name'},
+                { data: 'vehicle_model.name'},
+                { data: 'color_id.name'},
+                { data: 'vehicle_classification.name'},
+                {data: "id",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html(`
+                            <div class="btn-group">
+                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/edit title='Editar'>
+                                    <i class='btn-sm btn-warning fas fa-edit'></i>
+                                </a>
+                            </div>`
+                        );
+                    }
+                }
+            ]
+        });
 
 
 

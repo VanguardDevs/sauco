@@ -31,7 +31,7 @@
                             <div class="col-lg-6">
                                 <label>Cantidad <span class="text-danger">*</span></label>
 
-                                {!! Form::number('amount', old('amount', @$row->amount), ['class' => 'form-control', 'id' => 'amount']) !!}
+                                {!! Form::number('amount', old('amount', @$row->amount), ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'amount']) !!}
 
                                 @error('amount')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -41,7 +41,7 @@
                             <div class="col-lg-6">
                                 <label>Peso desde <span class="text-danger">*</span></label>
 
-                                {!! Form::number('weight_from', old('weight_from', @$row->weight_from), ['class' => 'form-control', 'id' => 'weight_from']) !!}
+                                {!! Form::number('weight_from', old('weight_from', @$row->weight_from), ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'weight_from']) !!}
 
                                 @error('weight_from')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -51,7 +51,7 @@
                             <div class="col-lg-6">
                                 <label>Peso hasta <span class="text-danger">*</span></label>
 
-                                {!! Form::number('weight_until', old('weight_until', @$row->weight_until), ['class' => 'form-control', 'id' => 'weight_until']) !!}
+                                {!! Form::number('weight_until', old('weight_until', @$row->weight_until), ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'weight_until']) !!}
 
                                 @error('weight_until')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -61,7 +61,7 @@
                             <div class="col-lg-6">
                                 <label>Puestos desde <span class="text-danger">*</span></label>
 
-                                {!! Form::number('stalls_from', old('stalls_from', @$row->stalls_from), ['class' => 'form-control', 'id' => 'stalls_from']) !!}
+                                {!! Form::number('stalls_from', old('stalls_from', @$row->stalls_from), ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'stalls_from']) !!}
 
                                 @error('stalls_from')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -71,17 +71,17 @@
                             <div class="col-lg-6">
                                 <label>Puestos hasta <span class="text-danger">*</span></label>
 
-                                {!! Form::number('stalls_until', old('stalls_until', @$row->stalls_until), ['class' => 'form-control', 'id' => 'stalls_until']) !!}
+                                {!! Form::number('stalls_until', old('stalls_until', @$row->stalls_until), ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'stalls_until']) !!}
 
                                 @error('stalls_until')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="col-lg-6">
                                 <label>Capacidad desde <span class="text-danger">*</span></label>
 
-                                {!! Form::number('capacity_from', old('capacity_from', @$row->capacity_from), ['class' => 'form-control', 'id' => 'capacity_from']) !!}
+                                {!! Form::number('capacity_from', old('capacity_from', @$row->capacity_from), ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'capacity_from']) !!}
 
                                 @error('capacity_from')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -91,7 +91,7 @@
                             <div class="col-lg-6">
                                 <label>Capacidad hasta <span class="text-danger">*</span></label>
 
-                                {!! Form::number('capacity_until', old('capacity_until', @$row->capacity_until), ['class' => 'form-control', 'id' => 'capacity_until']) !!}
+                                {!! Form::number('capacity_until', old('capacity_until', @$row->capacity_until), ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'capacity_until']) !!}
 
                                 @error('capacity_until')
                                     <div class="text text-danger">{{ $message }}</div>

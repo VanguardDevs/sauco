@@ -62,8 +62,8 @@ class VehicleClassificationController extends Controller
     public function edit(VehicleClassification $vehicleClassification)
     {
         return view('modules.vehicles.classifications.register')
-            ->with('vehicle_parameter_id', VehicleParameter::pluck('name', 'id'))
-            ->with('charging_method_id', ChargingMethod::pluck('name', 'id'))
+            ->with('vehicleParameter', VehicleParameter::pluck('name', 'id'))
+            ->with('chargingMethod', ChargingMethod::pluck('name', 'id'))
             ->with('typeForm', 'update')
             ->with('row', $vehicleClassification);
     }
@@ -72,7 +72,7 @@ class VehicleClassificationController extends Controller
     public function update(Request $request, VehicleClassification $vehicleClassification)
     {
         $classification = VehicleClassification::find($vehicleClassification->id);
-        
+
         $classification->update([
             'name' => $request->input('name'),
             'amount' => $request->input('amount'),
@@ -82,8 +82,8 @@ class VehicleClassificationController extends Controller
             'stalls_until' => $request->input('stalls_until'),
             'capacity_from' => $request->input('capacity_from'),
             'capacity_until' => $request->input('capacity_until'),
-            'vehicle_parameter_id' => $request->input('vehicle_parameter'),
-            'charging_method_id' => $request->input('charging_method')
+            'vehicle_parameter_id' => $request->input('vehicleParameter'),
+            'charging_method_id' => $request->input('chargingMethod')
         ]);
 
         return redirect('vehicle-classifications')

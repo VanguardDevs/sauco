@@ -65,6 +65,13 @@
             </a>
         </li>
 
+        <li class="kt-menu__item {{ active('vehicles*') }}" aria-haspopup="true" >
+            <a href="{{ route('vehicles.index') }}" class="kt-menu__link">
+                <i class="kt-menu__link-icon fas fa-car"></i>
+                <span class="kt-menu__link-text">Vehículos</span>
+            </a>
+        </li>
+
         @if (Config::get('app.sauco_url'))
         <li class="kt-menu__item {{ active('settings*') }}" aria-haspopup="true" >
             <a  href="{{ Config::get('app.sauco_url') }}" class="kt-menu__link">

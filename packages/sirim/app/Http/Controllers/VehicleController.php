@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
+use App\Models\License;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -14,27 +15,39 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Vehicle::latest();
-        $results = $request->perPage;
 
-        if ($request->has('filter')) {
-            $filters = $request->filter;
 
-            if (array_key_exists('plate', $filters)) {
-                $query->whereLike('plate', $filters['plate']);
-            }
-            if (array_key_exists('color_id', $filters)) {
-                $query->whereLike('color_id', $filters['color_id']);
-            }
-            if (array_key_exists('model_id', $filters)) {
-                $query->whereLike('model_id', $filters['model_id']);
-            }
-            if (array_key_exists('taxpayer_id', $filters)) {
-                $query->whereLike('plate', $filters['plate']);
-            }
+        $query = License::where('ordinance_id', '4');
+
+
+        // Return responses
+        if ($request->wantsJson()) {
+            $query->with(['taxpayer', 'ordinance']);
+
+            return DataTables::eloquent($query)->toJson();
         }
 
-        return $query->paginate($results);
+        return view('modules.vehicles.settings.index');
+
+
+        /*$query = Vehicle::orderBy('active', 'ASC');
+
+        // Return responses
+        if ($request->wantsJson()) {
+            $query->with(['taxpayer', 'vehicle_classification', 'vehicle_model', 'color']);
+
+            return DataTables::eloquent($query)->toJson();
+        }
+
+        return view('modules.vehicles.settings.index');*/
+    }
+
+
+    public function listBytaxpayer(Taxpayer $taxpayer)
+    {
+        $query = License::whereTaxpayerId($taxpayer->id);
+
+    	return DataTables::eloquent($query)->toJson();
     }
 
     /**

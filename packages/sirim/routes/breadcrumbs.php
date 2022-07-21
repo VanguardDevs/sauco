@@ -730,3 +730,22 @@ Breadcrumbs::for('vehicle-classifications.edit', function ($trail) {
     $trail->parent('vehicle-classifications.index');
     $trail->push('Editar Clasificación de Vehículo', url('vehicle-classifications/edit'));
 });
+
+
+
+/*----------  Vehicle  ----------*/
+Breadcrumbs::for('vehicles.index', function ($trail) {
+    $trail->push('Patente Vehículo', url('vehicles'));
+});
+
+/*------------- Vehicle -> create -------------*/
+Breadcrumbs::for('vehicles.create', function ($trail) {
+    $trail->parent('vehicles.index');
+    $trail->push('Crear Vehículo', url('vehicles/create'));
+});
+
+/*------------- Vehicle-> edit -------------*/
+Breadcrumbs::for('vehicles.edit', function ($trail) {
+    $trail->parent('vehicles.index');
+    $trail->push('Editar Vehículo', url('vehicles/edit'));
+});

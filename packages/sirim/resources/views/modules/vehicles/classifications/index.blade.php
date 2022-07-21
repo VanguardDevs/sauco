@@ -28,13 +28,17 @@
                 <table id="tVehicleClassifications" class="table table-bordered table-striped datatables" style="text-align: center">
                     <thead>
                     <tr>
-                        <th width="20%">Nombre</th>
-                        <th width="15%">Cantidad</th>
-                        <th width="10%">Peso</th>
-                        <th width="10%">Puestos</th>
-                        <th width="10%">Capacidad</th>
-                        <th width="20%">Parametro</th>
-                        <th width="15%">Método de Pago</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Peso desde</th>
+                        <th>Peso hasta</th>
+                        <th>Puestos desde</th>
+                        <th>Puestos hasta</th>
+                        <th>Capacidad desde</th>
+                        <th>Capacidad hasta</th>
+                        <th>Parametro</th>
+                        <th>Método de Pago</th>
+                        <th>Acciones</th>
                     </tr>
                 </table>
             </div>
