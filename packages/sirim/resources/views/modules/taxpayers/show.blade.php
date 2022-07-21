@@ -131,8 +131,8 @@
             </div>
 
 
-            <!--<div class="kt-notification">
-                <a class="kt-notification__item" href="">
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('credits.index', $row) }}">
                     <div class="kt-notification__item-icon">
                         <i class="fas fa-money-bill-wave"></i>
                     </div>
@@ -140,7 +140,7 @@
                         <div class="kt-notification__item-title">Créditos</div>
                     </div>
                 </a>
-            </div>-->
+            </div>
 
         </div>
     </div>

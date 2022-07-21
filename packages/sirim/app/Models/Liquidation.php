@@ -97,6 +97,8 @@ class Liquidation extends Model implements Auditable
     	return $this->hasOne(RequirementTaxpayer::class);
     }
 
-
-
+    public function credit()
+    {
+    	return $this->hasOne(Credit::class);
+    }
 }

@@ -998,31 +998,25 @@ $(document).ready(function() {
         ]
     });
 
-
-
-    $('#tParameters').DataTable({
+    $('#tCredits').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "oLanguage": {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": baseURL + "/liqueur-parameters/list",
+        "ajax": `${window.location.href}/list`,
         "columns": [
-            { data: 'description' },
-            { data: 'new_registry_amount'},
-            { data: 'renew_registry_amount'},
-            { data: 'authorization_registry_amount'},
-            { data: 'liqueur_classification.name'},
-            { data: 'liqueur_zone.name'},
-            { data: 'charging_method.name'},
+            { data: 'num', name: 'num' },
+            { data: 'amount', name: 'amount' },
+            {data: 'payment.num'},
             {
-                data: "id",
+                data: "payment_id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${baseURL}/liqueur-parameters/${oData.id}/edit title='Editar Parametro'>
-                            <i class='btn-sm btn-warning fas fa-edit'></i>
+                        <a class="mr-2" href=${baseURL}/payments/${oData.payment_id} title='Ver pago'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
                     </div>`
                     );
@@ -1030,9 +1024,6 @@ $(document).ready(function() {
             }
         ]
     });
-
-
-
 
     $('#tLiqueurLicensesTaxpayer').DataTable({
         "order": [[0, "asc"]],
@@ -1073,7 +1064,7 @@ $(document).ready(function() {
                         $(nTd).html(`${print}`)
                     }
                     else{
-                       $(nTd).html(`<div class="btn-group"></div>`) 
+                       $(nTd).html(`<div class="btn-group"></div>`)
                     };
                 }
             }

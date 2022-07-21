@@ -221,5 +221,11 @@ Route::prefix('/')->middleware('auth')->group(function()
     //Route::get('liqueur-parameters', 'LiqueurParameterController@index')->name('liqueur-parameters.index');
     Route::get('liqueur-parameters/list', 'LiqueurParameterController@list');
 
+      /**
+     * Taxpayer's Credits
+     */
+    Route::get('taxpayers/{taxpayer}/credits', 'CreditController@index')
+        ->name('credits.index');
+    Route::get('taxpayers/{taxpayer}/credits/list', 'CreditController@list');
 
 });

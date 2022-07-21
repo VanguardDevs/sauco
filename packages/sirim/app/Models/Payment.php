@@ -103,4 +103,9 @@ class Payment extends Model implements Auditable
     {
         return $this->hasMany(Movement::class);
     }
+
+    public function credits()
+    {
+        return $this->hasMany(Credit::class)->withTrashed();;
+    }
 }

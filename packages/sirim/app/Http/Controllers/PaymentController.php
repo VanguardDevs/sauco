@@ -21,6 +21,7 @@ use App\Models\Requirement;
 use App\Models\RequirementTaxpayer;
 use App\Models\Correlative;
 use App\Models\LiqueurLiquidation;
+use App\Models\Credit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -146,8 +147,8 @@ class PaymentController extends Controller
         $taxpayer = Taxpayer::whereId($payment->taxpayer_id)->first();
 
         $validator = $request->validate([
-            'processed_at'     => 'required',
-            'method'  => 'required'
+            'processed_at' => 'required',
+            'method' => 'required'
         ]);
 
         if ($request->input('method') != '3') {
@@ -180,6 +181,12 @@ class PaymentController extends Controller
         $payment->liquidations()->update([
             'status_id' => 2
         ]);
+
+        if ($payment->has('credits')){
+            $payment->credits()->update([
+                'generated_at' => $processedAt
+            ]);
+        }
 
         $payment->createMovements();
 
@@ -315,7 +322,7 @@ class PaymentController extends Controller
                 ->loadView('pdf.payment', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         }
-   }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -340,8 +347,6 @@ class PaymentController extends Controller
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
     }
-
-
 
     public function ticket(Payment $payment)
     {
