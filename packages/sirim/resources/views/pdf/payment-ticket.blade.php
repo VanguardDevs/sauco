@@ -73,6 +73,9 @@
             @if($payment->credits()->exists())
                 <span>CRÉDITO: </span>{{ number_format($payment->credits()->sum('amount'), 2, ',', '.') }} Bs</span><br>
             @endif
+            @if($payment->deductions()->exists())
+                <span>RETENCIONES: </span>{{ number_format($payment->deductions()->sum('amount'), 2, ',', '.') }} Bs</span><br>
+            @endif
             <span>N° DE FACTURA: </span>{{ $payment->num }}<br>
             <span>RECAUDADOR: </span>{{ $payment->user->full_name }}<br>
             <span>MÉTODO DE PAGO: </span>{{ $payment->paymentMethod->name }}<br>
