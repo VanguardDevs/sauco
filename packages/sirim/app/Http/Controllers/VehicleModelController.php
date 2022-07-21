@@ -58,9 +58,12 @@ class VehicleModelController extends Controller
 
     public function update(Request $request, VehicleModel $vehicleModel)
     {
-        $edit = VehicleModel::find($vehicleModel->id);
-        $edit->fill($request->all())
-            ->save();
+        $model = VehicleModel::find($vehicleModel->id);
+        
+        $model->update([
+            'name' => $request->input('name'),
+            'brand_id' => $request->input('brand')
+        ]);
 
         return redirect('vehicle-models')
             ->withSuccess('¡Modelo de vehículo actualizado!');

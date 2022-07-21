@@ -4,78 +4,100 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VehicleClassification;
+use Yajra\DataTables\Facades\DataTables;
+use App\Models\VehicleParameter;
+use App\Models\ChargingMethod;
+
 
 class VehicleClassificationController extends Controller
 {
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+
+
+    public function index(VehicleClassification $vehicleClassification)
     {
-        $query = VehicleClassification::withCount('vehicles');
-        $results = $request->perPage;
-
-        if ($request->has('filter')) {
-            $filters = $request->filter;
-
-            if (array_key_exists('name', $filters)) {
-                $query->whereLike('name', $filters['name']);
-            }
-        }
-
-        return $query->paginate($results);
+        return view('modules.vehicles.classifications.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+    public function list()
+    {
+        $query = VehicleClassification::query()->with('vehicle_parameter', 'charging_method');
+
+        return DataTables::eloquent($query)->toJson();
+    }
+
+
+    public function create(VehicleClassification $vehicleClassification)
+    {
+        return view('modules.vehicles.classifications.register')
+        ->with('vehicleParameter', VehicleParameter::pluck('name', 'id'))
+        ->with('chargingMethod', ChargingMethod::pluck('name', 'id'))
+        ->with('vehicleClassification', $vehicleClassification)
+        ->with('typeForm', 'create');
+    }
+
+
     public function store(Request $request)
     {
-        $model = VehicleClassification::create($request->all());
+        $vehicleClassification = VehicleClassification::create([
+            'name' => $request->input('name'),
+            'amount' => $request->input('amount'),
+            'weight_from' => $request->input('weight_from'),
+            'weight_until' => $request->input('weight_until'),
+            'stalls_from' => $request->input('stalls_from'),
+            'stalls_until' => $request->input('stalls_until'),
+            'capacity_from' => $request->input('capacity_from'),
+            'capacity_until' => $request->input('capacity_until'),
+            'vehicle_parameter_id' => $request->input('vehicleParameter'),
+            'charging_method_id' => $request->input('chargingMethod')
 
-        return response()->json($model, 201);
+        ]);
+
+        return redirect('vehicle-classifications')
+            ->withSuccess('¡Clasificación de vehículo registrada!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\VehicleClassification  $VehicleClassification
-     * @return \Illuminate\Http\Response
-     */
-    public function show(VehicleClassification $VehicleClassification)
+
+
+    public function edit(VehicleClassification $vehicleClassification)
     {
-        return response()->json($VehicleClassification, 201);
+        return view('modules.vehicles.classifications.register')
+            ->with('vehicle_parameter_id', VehicleParameter::pluck('name', 'id'))
+            ->with('charging_method_id', ChargingMethod::pluck('name', 'id'))
+            ->with('typeForm', 'update')
+            ->with('row', $vehicleClassification);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\VehicleClassification  $VehicleClassification
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, VehicleClassification $VehicleClassification)
+
+    public function update(Request $request, VehicleClassification $vehicleClassification)
     {
-        $VehicleClassification->update($request->all());
+        $classification = VehicleClassification::find($vehicleClassification->id);
+        
+        $classification->update([
+            'name' => $request->input('name'),
+            'amount' => $request->input('amount'),
+            'weight_from' => $request->input('weight_from'),
+            'weight_until' => $request->input('weight_until'),
+            'stalls_from' => $request->input('stalls_from'),
+            'stalls_until' => $request->input('stalls_until'),
+            'capacity_from' => $request->input('capacity_from'),
+            'capacity_until' => $request->input('capacity_until'),
+            'vehicle_parameter_id' => $request->input('vehicle_parameter'),
+            'charging_method_id' => $request->input('charging_method')
+        ]);
 
-        return response()->json($VehicleClassification, 201);
+        return redirect('vehicle-classifications')
+            ->withSuccess('¡Clasificación de vehículo actualizada!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\VehicleClassification  $VehicleClassification
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(VehicleClassification $VehicleClassification)
+
+    public function destroy(VehicleClassification $vehicleClassification)
     {
-        $VehicleClassification->delete();
+        $vehicleClassification->delete();
 
-        return response()->json($VehicleClassification, 201);
+        return response()->json([
+            'success' => '¡Clasificación de vehículo eliminada!'
+        ]);
     }
+
 }

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class VehicleClassification extends Model
 {
-    use HasFactory;
 
     protected $table = 'vehicle_classifications';
 

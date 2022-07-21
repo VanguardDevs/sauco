@@ -692,3 +692,41 @@ Breadcrumbs::for('vehicle-models.edit', function ($trail) {
     $trail->parent('vehicle-models.index');
     $trail->push('Editar Modelo de Vehículo', url('vehicle-models/edit'));
 });
+
+
+
+/*----------  Vehicle Parameters  ----------*/
+Breadcrumbs::for('vehicle-parameters.index', function ($trail) {
+    $trail->push('Parámetros de Vehículo', url('vehicle-parameters'));
+});
+
+/*------------- Vehicle Parameters -> create -------------*/
+Breadcrumbs::for('vehicle-parameters.create', function ($trail) {
+    $trail->parent('vehicle-parameters.index');
+    $trail->push('Crear Parámetro de Vehículo', url('vehicle-parameters/create'));
+});
+
+/*------------- Vehicle Parameters -> edit -------------*/
+Breadcrumbs::for('vehicle-parameters.edit', function ($trail) {
+    $trail->parent('vehicle-parameters.index');
+    $trail->push('Editar Parámetro de Vehículo', url('vehicle-parameters/edit'));
+});
+
+
+
+/*----------  Vehicle Classifications  ----------*/
+Breadcrumbs::for('vehicle-classifications.index', function ($trail) {
+    $trail->push('Clasificacións de Vehículo', url('vehicle-classifications'));
+});
+
+/*------------- Vehicle Classifications -> create -------------*/
+Breadcrumbs::for('vehicle-classifications.create', function ($trail) {
+    $trail->parent('vehicle-classifications.index');
+    $trail->push('Crear Clasificación de Vehículo', url('vehicle-classifications/create'));
+});
+
+/*------------- Vehicle Classifications -> edit -------------*/
+Breadcrumbs::for('vehicle-classifications.edit', function ($trail) {
+    $trail->parent('vehicle-classifications.index');
+    $trail->push('Editar Clasificación de Vehículo', url('vehicle-classifications/edit'));
+});

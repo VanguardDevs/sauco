@@ -4,79 +4,95 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VehicleParameter;
+use Yajra\DataTables\Facades\DataTables;
 
 
 class VehicleParameterController extends Controller
 {
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $query = VehicleParameter::query();
-        $results = $request->perPage;
+     public function index(VehicleParameter $vehicleParameter)
+     {
+         return view('modules.vehicles.parameters.index');
+     }
 
-        if ($request->has('filter')) {
-            $filters = $request->filter;
 
-            if (array_key_exists('name', $filters)) {
-                $query->whereLike('name', $filters['name']);
-            }
-        }
+     public function list()
+     {
+         $query = VehicleParameter::query();
 
-        return $query->paginate($results);
-    }
+         return DataTables::eloquent($query)->toJson();
+     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $parameter = VehicleParameter::create($request->all());
 
-        return response()->json($parameter, 201);
-    }
+     public function create(VehicleParameter $vehicleParameter)
+     {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\VehicleParameter  $VehicleParameter
-     * @return \Illuminate\Http\Response
-     */
-    public function show(VehicleParameter $VehicleParameter)
-    {
-        return response()->json($VehicleParameter, 201);
-    }
+        $boolean = [
+            1 => 'Si',
+            0 => 'No'
+        ];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\VehicleParameter  $VehicleParameter
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, VehicleParameter $VehicleParameter)
-    {
-        $VehicleParameter->update($request->all());
 
-        return response()->json($VehicleParameter, 201);
-    }
+         return view('modules.vehicles.parameters.register')
+         ->with('boolean', $boolean)
+         ->with('vehicleParameter', $vehicleParameter)
+         ->with('typeForm', 'create');
+     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\VehicleParameter  $VehicleParameter
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(VehicleParameter $VehicleParameter)
-    {
-        $VehicleParameter->delete();
 
-        return response()->json($VehicleParameter, 201);
-    }
+     public function store(Request $request)
+     {
+         $vehicleParameter = VehicleParameter::create([
+            'name' => $request->input('name'),
+            'years' => $request->input('years'),
+            'weight' => $request->input('weight'),
+            'capacity' => $request->input('capacity'),
+            'stalls' => $request->input('stalls')
+         ]);
+
+         return redirect('vehicle-parameters')
+             ->withSuccess('¡Parámetro de vehículo registrado!');
+     }
+
+
+
+     public function edit(VehicleParameter $vehicleParameter)
+     {
+
+        $boolean = [
+            1 => 'Si',
+            0 => 'No'
+        ];
+
+         return view('modules.vehicles.parameters.register')
+            ->with('boolean', $boolean)
+            ->with('typeForm', 'update')
+            ->with('row', $vehicleParameter);
+     }
+
+
+     public function update(Request $request, VehicleParameter $vehicleParameter)
+     {
+         $model = VehicleParameter::find($vehicleParameter->id);
+         
+         $model->update([
+            'name' => $request->input('name'),
+            'years' => $request->input('years'),
+            'weight' => $request->input('weight'),
+            'capacity' => $request->input('capacity'),
+            'stalls' => $request->input('stalls')
+         ]);
+
+         return redirect('vehicle-parameters')
+             ->withSuccess('¡Parámetro de vehículo actualizado!');
+     }
+
+
+     public function destroy(VehicleParameter $vehicleParameter)
+     {
+         $vehicleParameter->delete();
+
+         return response()->json([
+             'success' => '¡Parámetro de vehículo eliminado!'
+         ]);
+     }
 }

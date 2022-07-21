@@ -213,8 +213,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('vehicle-models', 'VehicleModelController')->except(['show']);
     Route::get('vehicle-models/list', 'VehicleModelController@list');
 
-    Route::resource('vehicle-classifications', 'VehicleClassificationController');
-    Route::resource('vehicle-parameters', 'VehicleParameterController');
+    Route::resource('vehicle-parameters', 'VehicleParameterController')->except(['show']);
+    Route::get('vehicle-parameters/list', 'VehicleParameterController@list');
+
+    Route::resource('vehicle-classifications', 'VehicleClassificationController')->except(['show']);
+    Route::get('vehicle-classifications/list', 'VehicleClassificationController@list');
+    
     Route::resource('vehicles', 'VehicleController');
 
 });

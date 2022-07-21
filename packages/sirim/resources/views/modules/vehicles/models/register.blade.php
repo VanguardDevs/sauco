@@ -32,13 +32,12 @@
                                 <label>Marca <span class="text-danger">*</span></label>
 
                                 {!!
-                                    Form::select('brand', $brand, null, [
+                                    Form::select('brand', $brand, old('brand', @$row->brand_id), [
                                         'class' => 'col-md-12 select2',
                                         'placeholder' => 'SELECCIONE',
                                         'id' => 'brand_id'
                                     ])
                                 !!}
-
 
                                 @error('brand')
                                 <div class="text text-danger">{{ $message }}</div>
