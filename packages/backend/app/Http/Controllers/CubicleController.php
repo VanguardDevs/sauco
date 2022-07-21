@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cubicle;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Auth;
+use PDF;
 
 class CubicleController extends Controller
 {
@@ -12,9 +15,54 @@ class CubicleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Cubicle::query()->with('taxpayer', 'item')
+            ->orderBy('active', 'DESC');
+        $results = $request->perPage;
+        $sort = $request->sort;
+        $order = $request->order;
+
+        if ($request->has('filter')) {
+            $filters = $request->filter;
+
+            if (array_key_exists('taxpayer_id', $filters)) {
+                $query->where('taxpayer_id', '=', $filters['taxpayer_id']);
+            }
+            if (array_key_exists('item_id', $filters)) {
+                $query->where('item_id', '=', $filters['item_id']);
+            }
+            if (array_key_exists('address', $filters)) {
+                $query->whereLike('address', $filters['address']);
+            }
+            if (array_key_exists('active', $filters)) {
+                $query->where('active', '=', $filters['active']);
+            }
+        }
+
+        if ($sort && $order) {
+            $query->orderBy($sort, $order);
+        }
+
+        if ($request->type == 'pdf') {
+            return $this->report($query, $request);
+        }
+
+        return $query->paginate($results);
+    }
+
+    public function report($query, $request)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $title = $request->has('title') ? $request->title : 'Padrón de cubículos';
+
+        $pdf = PDF::LoadView('pdf.reports.cubicles', compact([
+            'models',
+            'title'
+        ]));
+
+        return $pdf->download();
     }
 
     /**
@@ -25,7 +73,19 @@ class CubicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        foreach($request->cubicles as $cubicle) {
+            Cubicle::create([
+                'item_id' => $request->item_id,
+                'address' => $cubicle['address'],
+                'created_by' => Auth::user()->id,
+                'taxpayer_id' => $request->taxpayer_id
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'cubiclesCount' => count($request->cubicles)
+        ], 200);
     }
 
     /**
@@ -36,7 +96,7 @@ class CubicleController extends Controller
      */
     public function show(Cubicle $cubicle)
     {
-        //
+        return $cubicle->load('taxpayer', 'item');
     }
 
     /**
@@ -48,7 +108,17 @@ class CubicleController extends Controller
      */
     public function update(Request $request, Cubicle $cubicle)
     {
-        //
+        $newCubicle = $cubicle->replicate();
+
+        $newCubicle->item_id = $request->item_id;
+        $newCubicle->address = $request->address;
+        $newCubicle->active = true;
+        $newCubicle->save();
+
+        $cubicle->active = false;
+        $cubicle->save();
+
+        return $newCubicle;
     }
 
     /**
@@ -59,6 +129,11 @@ class CubicleController extends Controller
      */
     public function destroy(Cubicle $cubicle)
     {
-        //
+        $cubicle->update([
+            'active' => false,
+            'disincorporated_at' => Carbon::now()
+        ]);
+
+        return $cubicle->load('taxpayer', 'item');
     }
 }

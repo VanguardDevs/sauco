@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemCreateRequest;
+use PDF;
 
 class ItemController extends Controller
 {
@@ -15,7 +16,7 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Item::query();
+        $query = Item::query()->withCount('cubicles');
         $results = $request->perPage;
         $sort = $request->sort;
         $order = $request->order;
@@ -32,8 +33,27 @@ class ItemController extends Controller
             $query->orderBy($sort, $order);
         }
 
+        if ($request->type == 'pdf') {
+            return $this->report($query);
+        }
+
         return $query->paginate($results);
     }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $models = $query->get();
+        $title = "Padrón de rubros";
+
+        $pdf = PDF::LoadView('pdf.reports.items', compact([
+            'models',
+            'title'
+        ]));
+
+        return $pdf->download();
+    }
+
 
     /**
      * Display the specified resource.
@@ -43,7 +63,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return $item;
+        return $item->loadCount('cubicles');
     }
 
     /**
@@ -54,9 +74,9 @@ class ItemController extends Controller
      */
     public function store(ItemCreateRequest $request)
     {
-        $model = Item::create($request->all());
+        $item = Item::create($request->all());
 
-        return $model;
+        return response()->json($item, 201);
     }
 
     /**
@@ -70,7 +90,7 @@ class ItemController extends Controller
     {
         $item->update($request->all());
 
-        return $item;
+        return response()->json($item, 201);
     }
 
     /**
@@ -83,6 +103,6 @@ class ItemController extends Controller
     {
         $item->delete();
 
-        return $item;
+        return response()->json($item, 201);
     }
 }
