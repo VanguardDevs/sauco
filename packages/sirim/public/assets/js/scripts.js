@@ -1203,7 +1203,7 @@ $(document).ready(function() {
     });
 
         /*----------  Datatables Vehicles Models  ----------*/
-        $('#tVehicles').DataTable({
+        /*$('#tVehicles').DataTable({
             "order": [[0, "asc"]],
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
             "oLanguage": {
@@ -1235,7 +1235,7 @@ $(document).ready(function() {
                     }
                 }
             ]
-        });
+        });*/
 
 
 

@@ -19,10 +19,11 @@ class Vehicle extends Model
         'taxpayer_id',
         'vehicle_model_id',
         'color_id',
-        'vehicle_classification_id'
+        'vehicle_classification_id',
+        'license_id'
     ];
 
-    public function vehicle_classification()
+    public function vehicleClassification()
     {
         return $this->belongsTo(VehicleClassification::class);
     }
@@ -32,7 +33,7 @@ class Vehicle extends Model
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function vehicle_model()
+    public function vehicleModel()
     {
         return $this->belongsTo(VehicleModel::class, 'model_id');
     }
@@ -40,6 +41,16 @@ class Vehicle extends Model
     public function color()
     {
         return $this->belongsTo(Color::class);
+    }
+
+    public function license()
+    {
+        return $this->belongsTo(License::class);
+    }
+
+    public function liquidations()
+    {
+        return $this->hasManyThrough(Liquidation::class, License::class);
     }
 
 }

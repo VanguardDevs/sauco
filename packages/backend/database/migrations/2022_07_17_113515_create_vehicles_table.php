@@ -26,6 +26,7 @@ class CreateVehiclesTable extends Migration
             $table->unsignedBigInteger('vehicle_model_id');
             $table->unsignedBigInteger('color_id');
             $table->unsignedBigInteger('vehicle_classification_id');
+            $table->unsignedBigInteger('license_id');
             $table->foreign('vehicle_model_id')->references('id')->on('vehicle_models')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
@@ -33,6 +34,8 @@ class CreateVehiclesTable extends Migration
             $table->foreign('color_id')->references('id')->on('colors')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('vehicle_classification_id')->references('id')->on('vehicle_classifications')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('license_id')->references('id')->on('licenses')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

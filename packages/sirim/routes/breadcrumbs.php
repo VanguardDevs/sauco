@@ -744,8 +744,9 @@ Breadcrumbs::for('vehicles.create', function ($trail) {
     $trail->push('Crear Vehículo', url('vehicles/create'));
 });
 
-/*------------- Vehicle-> edit -------------*/
-Breadcrumbs::for('vehicles.edit', function ($trail) {
-    $trail->parent('vehicles.index');
-    $trail->push('Editar Vehículo', url('vehicles/edit'));
+
+Breadcrumbs::for('taxpayer.vehicles', function ($trail) {
+
+    $trail->push('Patentes de Vehículo', url('taxpayer.vehicles'));
 });
+

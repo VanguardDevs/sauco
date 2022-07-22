@@ -159,12 +159,12 @@
             </div>
 
             <div class="kt-notification">
-                <a class="kt-notification__item" href="{{ route('taxpayer.economic-activity-licenses', $row) }}">
+                <a class="kt-notification__item" href="{{ route('taxpayer.vehicles', $row) }}">
                     <div class="kt-notification__item-icon">
                         <i class="fas fa-car"></i>
                     </div>
                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">Vehículos</div>
+                        <div class="kt-notification__item-title">Patentes de Vehículos</div>
                     </div>
                 </a>
             </div>

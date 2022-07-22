@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
+use App\Models\Color;
+use App\Models\VehicleModel;
+use App\Models\VehicleClassification;
+use App\Models\Taxpayer;
 use App\Models\License;
+use App\Models\CorrelativeType;
+//use App\Models\RequirementTaxpayer
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class VehicleController extends Controller
 {
@@ -15,83 +22,112 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
-
-
         $query = License::where('ordinance_id', '4');
 
-
-        // Return responses
         if ($request->wantsJson()) {
             $query->with(['taxpayer', 'ordinance']);
 
             return DataTables::eloquent($query)->toJson();
         }
 
-        return view('modules.vehicles.settings.index');
+        return view('modules.vehicles.index');
+
+    }
 
 
-        /*$query = Vehicle::orderBy('active', 'ASC');
 
-        // Return responses
+
+    public function create(Taxpayer $taxpayer, Request $request)
+    {
         if ($request->wantsJson()) {
-            $query->with(['taxpayer', 'vehicle_classification', 'vehicle_model', 'color']);
+
+            $licenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '4')->with("vehicles")->get();
+
+            foreach($licenses as $license){
+
+               $vehicle = Vehicle::whereLicenseId($license->id)->first();
+
+                if($vehicle){
+
+                   $liquidation = $vehicle->liquidations->first();
+
+                   if ($license->active == false) {
+
+                       if($liquidation->status_id == 2){
+
+                            $license->update([
+                                'active' => true
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '4');
+
+            //->where('active', true)
 
             return DataTables::eloquent($query)->toJson();
         }
 
-        return view('modules.vehicles.settings.index');*/
+        $correlatives = [
+            1 => 'INSTALAR PATENTE',
+            2 => 'RENOVAR PATENTE'
+        ];
+
+
+        $existingLicenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->pluck('num', 'id')->toArray();
+
+
+        $boolean = [
+            true => 'Si',
+            false => 'No'
+        ];
+
+
+        return view('modules.taxpayers.vehicles.index')
+            ->with('taxpayer', $taxpayer)
+            ->with('correlatives', $correlatives)
+            ->with('boolean', $boolean)
+            ->with('existingLicenses', $existingLicenses)
+            ->with('color', Color::pluck('name', 'id'))
+            ->with('vehicleClassification', VehicleClassification::pluck('name', 'id'))
+            ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
     }
 
 
-    public function listBytaxpayer(Taxpayer $taxpayer)
+
+
+    public function store(Request $request, Taxpayer $taxpayer)
     {
-        $query = License::whereTaxpayerId($taxpayer->id);
+       $correlative = CorrelativeType::find($request->input('correlative'));
 
-    	return DataTables::eloquent($query)->toJson();
+       if($correlative->id == 1){
+           $this->make($request, $correlative, $taxpayer);
+       }else{
+           $this->renovate($request, $correlative, $taxpayer);
+       }
+
+
+       return redirect('taxpayers/'.$taxpayer->id.'/vehicles')
+           ->withSuccess('¡Patente de Vehículo creada!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $vehicle = Vehicle::create($request->all());
 
-        return response()->json($vehicle, 201);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Vehicle $vehicle)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Vehicle $vehicle)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Vehicle $vehicle)
     {
         //

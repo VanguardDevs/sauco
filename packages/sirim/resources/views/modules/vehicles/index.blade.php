@@ -18,7 +18,7 @@
                 </div>
            </div>
            <div class="kt-portlet__body">
-              <table id="tVehicles" class="table table-bordered table-striped datatables" style="text-align: center">
+              <table id="tVehicleLicenses" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                     <tr>
                         <th width="15%">Número</th>
@@ -38,4 +38,8 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script type="text/javascript" src="{{ URL::asset('assets/js/licenses.js') }}"></script>
+@endpush
 

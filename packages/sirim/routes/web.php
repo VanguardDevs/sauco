@@ -72,6 +72,10 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('taxpayer.economic-activity-licenses');
     Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
 
+
+    Route::get('taxpayers/{taxpayer}/vehicles', 'VehicleController@create')
+        ->name('taxpayer.vehicles');
+
      /*
     * Payment's routes modules
      */
