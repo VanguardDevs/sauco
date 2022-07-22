@@ -157,6 +157,7 @@ async function main() {
             const isMobile = await mobileLiqueurs.find(mobileLiqueur => mobileLiqueur.liqueur_id == liqueurs[i].id)
 
             await saucoDB('liqueurs').insert({
+                num: liqueurs[i].numlicencia,
                 work_hours: liqueurs[i].horarioexp,
                 liqueur_parameter_id: liqueurs[i].expendiosparametros_id,
                 liqueur_classification_id: liqueurs[i].expendiosclasificacion_id,
@@ -176,9 +177,8 @@ async function main() {
         const { rows: leasedLiqueursResults } = oldLeasedLiqueurs;
 
         for (let i = 0; i < leasedLiqueursResults.length; i++) {
-            const mLiqueurLicense = await saucoDB('licenses')
-                .select('licenses.num', 'liqueurs.id')
-                .join('liqueurs', 'licenses.id', 'liqueurs.license_id')
+            const mLiqueurLicense = await saucoDB('liqueurs')
+                .select('num', 'id')
                 .where('num', leasedLiqueursResults[i].numlicencia)
                 .returning('*');
 
@@ -213,9 +213,8 @@ async function main() {
         const { rows: liqueurAnnexesResults } = oldLiqueurAnnexes;
 
         for (let i = 0; i < liqueurAnnexesResults.length; i++) {
-            const newLicense = await saucoDB('licenses')
-                .select('licenses.num', 'liqueurs.id')
-                .join('liqueurs', 'licenses.id', 'liqueurs.license_id')
+            const newLicense = await saucoDB('liqueurs')
+                .select('num', 'id')
                 .where('num', liqueurAnnexesResults[i].numlicencia)
                 .returning('*');
 

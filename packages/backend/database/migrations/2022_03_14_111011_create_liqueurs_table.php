@@ -15,6 +15,7 @@ class CreateLiqueursTable extends Migration
     {
         Schema::create('liqueurs', function (Blueprint $table) {
             $table->id();
+            $table->string('num')->nullable();
             $table->string('work_hours')->nullable();
             $table->boolean('is_mobile')->nullable();
             $table->unsignedBigInteger('liqueur_parameter_id')->nullable();

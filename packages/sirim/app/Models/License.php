@@ -28,7 +28,8 @@ class License extends Model implements Auditable
         'representation_id',
         'correlative_id',
         'ordinance_id',
-        'downloaded_at'
+        'downloaded_at',
+        'liquidation_id'
     ];
 
     protected $casts = [
@@ -63,6 +64,11 @@ class License extends Model implements Auditable
     public function representation()
     {
         return $this->belongsTo(Representation::class);
+    }
+
+    public function liquidation()
+    {
+        return $this->belongsTo(Liquidation::class);
     }
 
     public function liqueurs()

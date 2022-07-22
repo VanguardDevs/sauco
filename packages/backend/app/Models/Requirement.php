@@ -18,7 +18,6 @@ class Requirement extends Model
         'concept_id',
     ];
 
-
     public function concept()
     {
         return $this->belongsTo(Concept::class);
