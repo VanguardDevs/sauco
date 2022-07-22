@@ -8,10 +8,20 @@ use App\Models\VehicleModel;
 use App\Models\VehicleClassification;
 use App\Models\Taxpayer;
 use App\Models\License;
+use App\Models\Liquidation;
+use App\Models\Payment;
 use App\Models\CorrelativeType;
-//use App\Models\RequirementTaxpayer
+use App\Models\CorrelativeNumber;
+use App\Models\Year;
+use App\Models\Ordinance;
+use App\Models\Concept;
+use App\Models\PetroPrice;
+
+//use App\Models\Requirement;
+//use App\Models\RequirementTaxpayer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class VehicleController extends Controller
 {
@@ -23,6 +33,8 @@ class VehicleController extends Controller
     public function index(Request $request)
     {
         $query = License::where('ordinance_id', '4');
+
+        //Cambiar a los datos del vehiculo, no los de la licencia
 
         if ($request->wantsJson()) {
             $query->with(['taxpayer', 'ordinance']);
@@ -70,25 +82,12 @@ class VehicleController extends Controller
             return DataTables::eloquent($query)->toJson();
         }
 
-        $correlatives = [
-            1 => 'INSTALAR PATENTE',
-            2 => 'RENOVAR PATENTE'
-        ];
-
 
         $existingLicenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->pluck('num', 'id')->toArray();
 
 
-        $boolean = [
-            true => 'Si',
-            false => 'No'
-        ];
-
-
         return view('modules.taxpayers.vehicles.index')
             ->with('taxpayer', $taxpayer)
-            ->with('correlatives', $correlatives)
-            ->with('boolean', $boolean)
             ->with('existingLicenses', $existingLicenses)
             ->with('color', Color::pluck('name', 'id'))
             ->with('vehicleClassification', VehicleClassification::pluck('name', 'id'))
@@ -100,36 +99,94 @@ class VehicleController extends Controller
 
     public function store(Request $request, Taxpayer $taxpayer)
     {
-       $correlative = CorrelativeType::find($request->input('correlative'));
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+        $correlativeNum = CorrelativeNumber::getNum();
 
-       if($correlative->id == 1){
-           $this->make($request, $correlative, $taxpayer);
-       }else{
-           $this->renovate($request, $correlative, $taxpayer);
-       }
+        $ordinance = Ordinance::whereDescription('VEHÍCULOS')->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = $emissionDate->copy()->addYears(1);
 
+        $concept = Concept::whereCode('15')->first();
+
+        $petro = PetroPrice::latest()->first()->value;
+
+        $idClassification = $request->input('vehicleClassification');
+
+        $vehicleClassification = VehicleClassification::whereId($idClassification)->first();
+
+        $amount = $petro*$vehicleClassification->amount;
+
+        $correlativeNumber = CorrelativeNumber::create([
+            'num' => $correlativeNum
+        ]);
+
+        $correlative = Correlative::create([
+            'year_id' => $currYear->id,
+            'correlative_type_id' => 1,
+            'correlative_number_id' => $correlativeNumber->id
+        ]);
+
+        $liquidation = Liquidation::create([
+            'num' => Liquidation::getNewNum(),
+            'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
+            'amount' => $amount,
+            'liquidable_type' => Liquidation::class,
+            'concept_id' => $concept->id,
+            'liquidation_type_id' => $concept->liquidation_type_id,
+            'status_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+        $payment = Payment::create([
+            'status_id' => 1,
+            'user_id' => Auth::user()->id,
+            'amount' => $amount,
+            'payment_method_id' => 1,
+            'payment_type_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+        $payment->liquidations()->sync($liquidation);
+
+
+        /** TU DIJISTE QUE EL correlative_id SE QUEDABA ASÍ */
+        $license = License::create([
+            'num' => $request->input('plate'),
+            'emission_date' => $emissionDate,
+            'expiration_date' => $expirationDate,
+            'ordinance_id' => $ordinance->id,
+            'correlative_id' => $correlative->id,
+            'taxpayer_id' => $taxpayer->id,
+            'representation_id' => $taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id,
+            'active' => false,
+            'liquidation_id' => $liquidation->id
+        ]);
+
+        $liqueur = Vehicle::create([
+            'plate' => $request->input('plate'),
+            'body_serial' => $request->input('body_serial'),
+            'engine_serial' => $request->input('engine_serial'),
+            'status'  => $request->input('status'),
+            'weight' => $request->input('weight'),
+            'capacity' => $request->input('capacity'),
+            'stalls' => $request->input('stalls'),
+            'taxpayer_id' => $taxpayer->id,
+            'vehicle_model_id' =>  $request->input('vehicleModel'),
+            'color_id' =>  $request->input('color'),
+            'vehicle_classification_id' =>  $request->input('vehicleClassification'),
+            'license_id' => $license->id
+        ]);
 
        return redirect('taxpayers/'.$taxpayer->id.'/vehicles')
            ->withSuccess('¡Patente de Vehículo creada!');
     }
 
 
-
-
-    public function show(Vehicle $vehicle)
+    public function makeLicense($request, CorrelativeType $type, Taxpayer $taxpayer)
     {
-        //
+
+
     }
 
-
-    public function update(Request $request, Vehicle $vehicle)
-    {
-        //
-    }
-
-
-    public function destroy(Vehicle $vehicle)
-    {
-        //
-    }
 }

@@ -25,22 +25,6 @@
             <div class="kt-portlet__body">
                 {!! Form::open(['route' => ['vehicles.create', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
                     <div class="form-group row">
-                        <div class="col-lg-8">
-                            {!!
-                                Form::select('correlative', $correlatives, null, [
-                                    'class' => 'col-md-12 select2', 'id' => 'liqueur-correlative'
-                                ])
-                            !!}
-                        </div>
-                        <div class="col-lg-4">
-                            <button class="btn btn-success" type="submit">
-                                Enviar
-                            </button>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <br><br>
-                        </div>
 
                         <div class="row" id= "new_license">
 
@@ -55,7 +39,7 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <label>Serial <span class="text-danger">*</span></label>
+                                <label>Serial de la Carroceria<span class="text-danger">*</span></label>
 
                                 {!! Form::text('body_serial', null, ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
@@ -93,7 +77,7 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                           
+
                             <div class="col-lg-6">
                                 <label>Puestos<span class="text-danger">*</span></label>
 
@@ -147,19 +131,17 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <label class="col-lg-3">Estado<span class="text-danger"> *</span></label>
-                                {!!
-                                    Form::select('status', $boolean, null, [
-                                        'class' => 'col-md-12 select2', 'placeholder' => 'SELECCIONE', 'id' => 'status'
-                                    ])
-                                !!}
-                                @error('boolean')
-                                <div class="text text-danger">{{ $message }}</div>
-                                @enderror
+                                <br><br>
+                                <label class="col-lg-6"><span class="text-danger"></span></label>
+
+                                <button class="btn btn-success" type="submit">
+                                    Enviar
+                                </button>
                             </div>
 
+
                         </div>
-                       
+
 
                     </div>
                 {!! Form::close() !!}
