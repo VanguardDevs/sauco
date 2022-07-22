@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Liqueur extends Model
 {
-
     protected $table = 'liqueurs';
 
     protected $fillable = [
@@ -63,10 +62,5 @@ class Liqueur extends Model
     public function liqueurAnnex()
     {
         return $this->hasMany(LiqueurAnnex::class, 'liqueur_id');
-    }
-
-    public function getLicenseAttribute()
-    {
-        $this->load('license');
     }
 }

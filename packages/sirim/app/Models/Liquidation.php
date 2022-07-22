@@ -92,11 +92,6 @@ class Liquidation extends Model implements Auditable
     	return $this->hasOne(License::class);
     }
 
-    public function liqueur()
-    {
-        return $this->belongsToMany(Liqueur::class, 'liqueur_liquidation');
-    }
-
     public function requirementTaxpayer()
     {
     	return $this->hasOne(RequirementTaxpayer::class);
