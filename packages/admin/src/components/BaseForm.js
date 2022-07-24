@@ -23,7 +23,9 @@ const BaseForm = ({
     ...rest
 }) => {
     const { dispatch } = useAdmin()
-    const { handleSubmit, control, formState: { isSubmitting } } = useForm()
+    const { handleSubmit, control, formState: { isSubmitting } } = useForm({
+        defaultValues: record
+    })
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     React.useEffect(() => {

@@ -61,7 +61,7 @@ const TaxpayerShow = () => {
                         }
                     }}>
                         <TextField
-                            source={record.address}
+                            source={record.fiscal_address}
                             icon={<LocationOnIcon />}
                         />
                         {record.phone && (

@@ -22,7 +22,7 @@ const TaxpayerEdit = () => {
             if (data) {
                 navigate(-1)
                 enqueueSnackbar(
-                    `¡Ha actualizado el contribuyente "${data.name}"`,  
+                    `¡Ha actualizado el contribuyente "${data.name}"`,
                     { variant: 'success' }
                 );
             }
@@ -70,7 +70,7 @@ const TaxpayerEdit = () => {
             </InputContainer>
             <InputContainer label='Dirección'>
                 <TextInput
-                    name="address"
+                    name="fiscal_address"
                     placeholder="Dirección"
                     fullWidth
                 />

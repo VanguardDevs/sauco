@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box'
-import dtiLogo from '../../images/DTI2.png'
 import mayorLogo from '../../images/mayorLogo.png'
 import sumatLogo from '../../images/sumat.png'
 
@@ -35,7 +34,6 @@ const Welcome = () => {
             }}>
                 <img height='75rem' src={mayorLogo} />
                 <img height='75rem' src={sumatLogo} />
-                <img height='50rem' src={dtiLogo} />
             </Box>
         </Box>
     )

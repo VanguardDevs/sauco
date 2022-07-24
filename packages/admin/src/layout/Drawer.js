@@ -9,7 +9,14 @@ import List from '@mui/material/List';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { routes, adminRoutes, geographicArea, settings, reports } from '../routes'
+import {
+    routes,
+    adminRoutes,
+    geographicArea,
+    settings,
+    reports,
+    rates
+} from './drawerRoutes'
 import ListItemLink from '../components/ListItemLink';
 import Submenu from '../components/Submenu';
 import { useAdmin } from '../context/AdminContext'
@@ -20,11 +27,12 @@ import GoBackButton from './GoBackButton'
 import PrivateRoute from '../components/PrivateRoute';
 import { useNavigate } from 'react-router-dom'
 import { alpha } from '@mui/material';
-// Reports
+// Icons
 import ArticleIcon from '@mui/icons-material/Article';
 import PublicIcon from '@mui/icons-material/Public';
 import BuildIcon from '@mui/icons-material/Build';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import CalculateIcon from '@mui/icons-material/Calculate';
 
 const drawerWidth = 240;
 
@@ -34,6 +42,7 @@ function ResponsiveDrawer() {
         areas: false,
         rates: false,
         reports: false,
+        rates: false,
         settings: false
     });
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -74,6 +83,24 @@ function ResponsiveDrawer() {
                         key={index}
                     />
                 ))}
+                <PrivateRoute authorize='admin' unauthorized={null}>
+                    <Submenu
+                        handleToggle={() => handleToggle('rates')}
+                        isOpen={state.rates}
+                        sidebarIsOpen={true}
+                        name='Tasas'
+                        icon={<CalculateIcon />}
+                    >
+                        {rates.map((route, index) => (
+                            <ListItemLink
+                                primary={route.name}
+                                to={route.route}
+                                icon={route.icon}
+                                key={index}
+                            />
+                        ))}
+                    </Submenu>
+                </PrivateRoute>
                 <PrivateRoute authorize='admin' unauthorized={null}>
                     <Submenu
                         handleToggle={() => handleToggle('reports')}

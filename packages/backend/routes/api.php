@@ -79,6 +79,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Account
     Route::post('update-password', 'UpdatePasswordController');
     Route::get('logout', 'AuthController@logout');
+    Route::get('statistics', 'StatisticsController');
 });
 
 Route::get('economic-activities/{activity}/download', 'EconomicActivityController@download');
