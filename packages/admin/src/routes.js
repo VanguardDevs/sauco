@@ -1,7 +1,9 @@
 import HomeIcon from '@mui/icons-material/Home';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import LiquorIcon from '@mui/icons-material/Liquor';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 
 const AdminIcon = () => (
     <FiberManualRecordIcon sx={{
@@ -26,17 +28,17 @@ export const routes = [
     {
         name: 'Expendios',
         route: '/liqueurs',
-        icon: <BusinessCenterIcon />
+        icon: <LiquorIcon />
     },
     {
         name: 'Vehículos',
         route: '/vehicles',
-        icon: <BusinessCenterIcon />
+        icon: <DirectionsCarIcon />
     },
     {
         name: 'Cubículos',
         route: '/cubicles',
-        icon: <AddBusinessIcon />
+        icon: <StorefrontIcon />
     }
 ]
 

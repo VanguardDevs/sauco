@@ -10,7 +10,10 @@ const PrivateRoute = ({ children, authorize = null, unauthorized: Unauthorized }
         if (authorize) {
             const authorizedRoles = authorize.split(',');
             const { roles } = user;
-            const isAuthorized = roles.filter(role => authorizedRoles.includes(role));
+            const isAuthorized = roles.filter(
+                role => authorizedRoles
+                    .includes(role.toLowerCase())
+            );
 
             setAuthorized(isAuthorized.length ? true : false)
         } else {

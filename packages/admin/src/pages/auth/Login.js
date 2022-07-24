@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form } from 'react-final-form';
+import { useForm } from 'react-hook-form'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextInput from '../../components/TextInput'
@@ -27,8 +27,16 @@ const validate = (values) => {
 const Login = () => {
     const navigate = useNavigate();
     const { dispatch } = useAuth();
+    const {
+        handleSubmit,
+        control,
+        formState: {
+            isSubmitting
+        },
+        setError
+    } = useForm();
 
-    const handleSubmit = React.useCallback(async (values) => {
+    const onSubmit = async (values) => {
         return await axios.post('/login', values)
             .then(async (res) => {
                 const { data } = res
@@ -42,10 +50,14 @@ const Login = () => {
                 }
 
                 if (err.response.data.errors) {
-                    return err.response.data.errors;
+                    const { errors } = err.response.data;
+
+                    Object.keys(errors).forEach(key => {
+                        setError(key, errors[key])
+                    });
                 }
             });
-    }, [])
+    }
 
     return (
         <Box sx={{
@@ -67,68 +79,46 @@ const Login = () => {
                     borderRadius: '6px',
                 }}
             >
-                <Form
-                    onSubmit={handleSubmit}
-                    validate={validate}
-                    render={ ({ handleSubmit, submitting }) => (
-                        <form onSubmit={handleSubmit}>
-                            <Box
-                                height='18rem'
-                                display='flex'
-                                flexDirection='column'
-                                justifyContent='space-between'
+                <Box
+                    height='18rem'
+                    display='flex'
+                    flexDirection='column'
+                    justifyContent='space-between'
+                >
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Box sx={{
+                            fontSize: '2rem',
+                            fontWeight: 600,
+                            color: theme => theme.palette.primary.main,
+                            textAlign: 'center',
+                            padding: '0.25rem 0'
+                        }}>
+                            {process.env.REACT_APP_NAME}
+                        </Box>
+                        <Box>
+                            <InputContainer label='Usuario' md={12}>
+                                <TextInput control={control} name='login' />
+                            </InputContainer>
+                            <InputContainer label='Contraseña' md={12}>
+                                <PasswordInput control={control} name="password" />
+                            </InputContainer>
+                        </Box>
+                        <Box paddingTop='1rem'>
+                            <Button
+                                disabled={isSubmitting}
+                                type="submit"
+                                color='primary'
+                                variant="contained"
+                                sx={{
+                                    textTransform: 'uppercase'
+                                }}
+                                fullWidth
                             >
-                                <Box sx={{
-                                    fontSize: '2rem',
-                                    fontWeight: 600,
-                                    color: theme => theme.palette.primary.main,
-                                    textAlign: 'center',
-                                    padding: '0.25rem 0'
-                                }}>
-                                    {process.env.REACT_APP_NAME}
-                                </Box>
-                                <Box>
-                                    <InputContainer label='Usuario' md={12}>
-                                        <TextInput
-                                            name="login"
-                                            placeholder="Ingrese su nombre de usuario"
-                                            disabled={submitting}
-                                            fullWidth
-                                        />
-                                    </InputContainer>
-                                    <InputContainer label='Contraseña' md={12}>
-                                        <PasswordInput
-                                            name="password"
-                                            placeholder="Ingrese su contraseña"
-                                            disabled={submitting}
-                                            fullWidth
-                                        />
-                                    </InputContainer>
-                                </Box>
-                                <Box paddingTop='1rem'>
-                                    <Button
-                                        disabled={submitting}
-                                        onClick={event => {
-                                            if (event) {
-                                                event.preventDefault();
-                                                handleSubmit();
-                                            }
-                                        }}
-                                        type="submit"
-                                        color='primary'
-                                        variant="contained"
-                                        sx={{
-                                            textTransform: 'uppercase'
-                                        }}
-                                        fullWidth
-                                    >
-                                        Acceder
-                                    </Button>
-                                </Box>
-                            </Box>
-                        </form>
-                    )}
-                />
+                                Acceder
+                            </Button>
+                        </Box>
+                    </form>
+                </Box>
             </Box>
         </Box>
     );

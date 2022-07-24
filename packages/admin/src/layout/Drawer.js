@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { routes, adminRoutes } from '../routes'
+import { routes, adminRoutes, geographicArea, settings, reports } from '../routes'
 import ListItemLink from '../components/ListItemLink';
 import Submenu from '../components/Submenu';
 import { useAdmin } from '../context/AdminContext'
@@ -20,13 +20,21 @@ import GoBackButton from './GoBackButton'
 import PrivateRoute from '../components/PrivateRoute';
 import { useNavigate } from 'react-router-dom'
 import { alpha } from '@mui/material';
+// Reports
 import ArticleIcon from '@mui/icons-material/Article';
+import PublicIcon from '@mui/icons-material/Public';
+import BuildIcon from '@mui/icons-material/Build';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer() {
     const [state, setState] = React.useState({
-        administration: false
+        administration: false,
+        areas: false,
+        rates: false,
+        reports: false,
+        settings: false
     });
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const { state: AdminState } = useAdmin()
@@ -66,6 +74,60 @@ function ResponsiveDrawer() {
                         key={index}
                     />
                 ))}
+                <PrivateRoute authorize='admin' unauthorized={null}>
+                    <Submenu
+                        handleToggle={() => handleToggle('reports')}
+                        isOpen={state.reports}
+                        sidebarIsOpen={true}
+                        name='Reportes'
+                        icon={<AssessmentIcon />}
+                    >
+                        {reports.map((route, index) => (
+                            <ListItemLink
+                                primary={route.name}
+                                to={route.route}
+                                icon={route.icon}
+                                key={index}
+                            />
+                        ))}
+                    </Submenu>
+                </PrivateRoute>
+                <PrivateRoute authorize='admin' unauthorized={null}>
+                    <Submenu
+                        handleToggle={() => handleToggle('areas')}
+                        isOpen={state.areas}
+                        sidebarIsOpen={true}
+                        name='Áreas'
+                        icon={<PublicIcon />}
+                    >
+                        {geographicArea.map((route, index) => (
+                            <ListItemLink
+                                primary={route.name}
+                                to={route.route}
+                                icon={route.icon}
+                                key={index}
+                            />
+                        ))}
+                    </Submenu>
+                </PrivateRoute>
+                <PrivateRoute authorize='admin' unauthorized={null}>
+                    <Submenu
+                        handleToggle={() => handleToggle('settings')}
+                        isOpen={state.settings}
+                        sidebarIsOpen={true}
+                        name='Configuraciones'
+                        icon={<BuildIcon />}
+                    >
+                        {settings.map((route, index) => (
+                            <ListItemLink
+                                primary={route.name}
+                                to={route.route}
+                                icon={route.icon}
+                                key={index}
+                            />
+                        ))}
+                    </Submenu>
+                </PrivateRoute>
                 <PrivateRoute authorize='admin' unauthorized={null}>
                     <Submenu
                         handleToggle={() => handleToggle('administration')}

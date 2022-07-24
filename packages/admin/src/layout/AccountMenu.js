@@ -8,6 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import LockIcon from '@mui/icons-material/Lock';
 import LogoutButton from '../components/LogoutButton'
 import { useAuth } from '../context/AuthContext'
+import CONFIGS from '../configs';
 
 export default function AccountMenu() {
     const { state: { user } } = useAuth();
@@ -32,14 +33,12 @@ export default function AccountMenu() {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                 >
-                    <Avatar sx={{
+                    <Avatar src={`${CONFIGS.BASE}/${user.avatar}`} sx={{
                         width: 32,
                         height: 32,
                         color: theme => theme.palette.primary.main,
                         backgroundColor: '#fff'
-                    }}>
-                        {user.names[0]}
-                    </Avatar>
+                    }} />
                     <Box sx={{
                         color: '#fff',
                         fontWeight: '900',
@@ -47,10 +46,10 @@ export default function AccountMenu() {
                         fontSize: '1rem',
                         textTransform: 'capitalize'
                     }}>
-                        {user.names}
+                        {user.full_name}
                     </Box>
                 </Button>
-                
+
             </Tooltip>
         </Box>
         <Menu
@@ -66,22 +65,22 @@ export default function AccountMenu() {
                     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                     mt: 1.5,
                     '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                    },
-                    '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0,
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                        },
+                        '&:before': {
+                        content: '""',
+                        display: 'block',
+                        position: 'absolute',
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: 'background.paper',
+                        transform: 'translateY(-50%) rotate(45deg)',
+                        zIndex: 0,
                     },
                 },
             }}

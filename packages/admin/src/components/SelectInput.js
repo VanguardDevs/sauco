@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import FormHelperText from '@mui/material/FormHelperText'
 import FormControl from '@mui/material/FormControl'
-import { Field } from 'react-final-form'
+// import { Field } from 'react-final-form'
 
 const ControllableSelectInput = props => {
     const {
@@ -54,11 +54,11 @@ const ControllableSelectInput = props => {
 }
 
 const SelectInput = props => (
-    <Field {...props}>
-        {props => (
+    // <Field {...props}>
+    //     {props => (
             <ControllableSelectInput {...props} />
-        )}
-    </Field>
+    //     )}
+    // </Field>
 );
 
 ControllableSelectInput.defaultProps = {
