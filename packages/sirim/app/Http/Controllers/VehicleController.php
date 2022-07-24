@@ -10,12 +10,16 @@ use App\Models\Taxpayer;
 use App\Models\License;
 use App\Models\Liquidation;
 use App\Models\Payment;
+use App\Models\Correlative;
 use App\Models\CorrelativeType;
 use App\Models\CorrelativeNumber;
 use App\Models\Year;
 use App\Models\Ordinance;
 use App\Models\Concept;
 use App\Models\PetroPrice;
+
+use PDF;
+use Auth;
 
 //use App\Models\Requirement;
 //use App\Models\RequirementTaxpayer;
@@ -32,12 +36,12 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
-        $query = License::where('ordinance_id', '4');
+        $query = Vehicle::get();
 
         //Cambiar a los datos del vehiculo, no los de la licencia
 
         if ($request->wantsJson()) {
-            $query->with(['taxpayer', 'ordinance']);
+            $query->with(['color', 'vehicleModel', 'vehicleClassification']);
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -53,42 +57,14 @@ class VehicleController extends Controller
     {
         if ($request->wantsJson()) {
 
-            $licenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '4')->with("vehicles")->get();
-
-            foreach($licenses as $license){
-
-               $vehicle = Vehicle::whereLicenseId($license->id)->first();
-
-                if($vehicle){
-
-                   $liquidation = $vehicle->liquidations->first();
-
-                   if ($license->active == false) {
-
-                       if($liquidation->status_id == 2){
-
-                            $license->update([
-                                'active' => true
-                            ]);
-                        }
-                    }
-                }
-            }
-
-            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '4');
-
-            //->where('active', true)
+            $query = Vehicle::whereTaxpayerId($taxpayer->id)->with(['color', 'vehicleModel', 'vehicleClassification','license', 'taxpayer']);
 
             return DataTables::eloquent($query)->toJson();
         }
 
 
-        $existingLicenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->pluck('num', 'id')->toArray();
-
-
         return view('modules.taxpayers.vehicles.index')
             ->with('taxpayer', $taxpayer)
-            ->with('existingLicenses', $existingLicenses)
             ->with('color', Color::pluck('name', 'id'))
             ->with('vehicleClassification', VehicleClassification::pluck('name', 'id'))
             ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
@@ -99,6 +75,7 @@ class VehicleController extends Controller
 
     public function store(Request $request, Taxpayer $taxpayer)
     {
+
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $correlativeNum = CorrelativeNumber::getNum();
 
@@ -116,6 +93,9 @@ class VehicleController extends Controller
 
         $amount = $petro*$vehicleClassification->amount;
 
+
+        
+
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
         ]);
@@ -132,7 +112,8 @@ class VehicleController extends Controller
             'amount' => $amount,
             'liquidable_type' => Liquidation::class,
             'concept_id' => $concept->id,
-            'liquidation_type_id' => $concept->liquidation_type_id,
+            //'liquidation_type_id' => $concept->liquidation_type_id,
+            'liquidation_type_id' => 1,
             'status_id' => 1,
             'taxpayer_id' => $taxpayer->id
         ]);
@@ -163,11 +144,10 @@ class VehicleController extends Controller
             'liquidation_id' => $liquidation->id
         ]);
 
-        $liqueur = Vehicle::create([
+        $vehicle = Vehicle::create([
             'plate' => $request->input('plate'),
             'body_serial' => $request->input('body_serial'),
             'engine_serial' => $request->input('engine_serial'),
-            'status'  => $request->input('status'),
             'weight' => $request->input('weight'),
             'capacity' => $request->input('capacity'),
             'stalls' => $request->input('stalls'),
@@ -183,10 +163,23 @@ class VehicleController extends Controller
     }
 
 
-    public function makeLicense($request, CorrelativeType $type, Taxpayer $taxpayer)
+    public function download(License $license)
     {
+        $taxpayer = $license->taxpayer;
+        $num = preg_replace("/[^0-9]/", "", $taxpayer->rif);
+        $correlative = $license->correlative;
+        $licenseCorrelative = $correlative->correlativeType->description.
+                             $correlative->year->year.'-'
+                             .$correlative->correlativeNumber->num;
 
+        $representation = $license->representation->person->name;
+        $signature = Signature::latest()->first();
+        $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString'];
+        $license->update(['downloaded_at' => Carbon::now()]);
+
+        return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
+            ->stream('Licencia '.$taxpayer->rif.'.pdf');
     }
-
 }

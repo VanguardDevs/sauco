@@ -76,6 +76,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/vehicles', 'VehicleController@create')
         ->name('taxpayer.vehicles');
 
+    Route::post('taxpayers/{taxpayer}/vehicles/create', 'VehicleController@store')
+        ->name('vehicles.create');
+
      /*
     * Payment's routes modules
      */
@@ -223,6 +226,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('vehicle-classifications', 'VehicleClassificationController')->except(['show']);
     Route::get('vehicle-classifications/list', 'VehicleClassificationController@list');
 
-    Route::resource('vehicles', 'VehicleController')->except(['show']);
+    Route::resource('vehicles', 'VehicleController')->except(['create', 'store']);
+
+    Route::get('vehicles/{license}/download', 'VehicleController@download');
+    Route::post('vehicles/{license}/renovate', 'VehicleController@renovate');
 
 });

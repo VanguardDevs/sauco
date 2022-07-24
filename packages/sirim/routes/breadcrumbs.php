@@ -745,8 +745,8 @@ Breadcrumbs::for('vehicles.create', function ($trail) {
 });
 
 
-Breadcrumbs::for('taxpayer.vehicles', function ($trail) {
-
+Breadcrumbs::for('taxpayer.vehicles', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
     $trail->push('Patentes de Vehículo', url('taxpayer.vehicles'));
 });
 

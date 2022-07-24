@@ -18,7 +18,6 @@ class CreateVehiclesTable extends Migration
             $table->string('plate')->unique();
             $table->string('body_serial');
             $table->string('engine_serial');
-            $table->boolean('status');
             $table->float('weight');
             $table->unsignedBigInteger('capacity');
             $table->unsignedBigInteger('stalls');

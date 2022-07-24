@@ -86,4 +86,9 @@ class Liquidation extends Model implements Auditable
     {
     	return $this->hasOne(Movement::class);
     }
+
+    public function license()
+    {
+        return $this->hasOne(License::class);
+    }
 }

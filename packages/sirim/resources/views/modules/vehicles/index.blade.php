@@ -18,13 +18,17 @@
                 </div>
            </div>
            <div class="kt-portlet__body">
-              <table id="tVehicleLicenses" class="table table-bordered table-striped datatables" style="text-align: center">
+              <table id="tVehicle" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                     <tr>
                         <th width="15%">Número</th>
                         <th width="15%">RIF</th>
                         <th width="20%">Razón social</th>
                         <th width="15%">Ordenanza</th>
+                        <th width="10%">Estado</th>
+                        <th width="10%">Emisión</th>
+                        <th width="10%">Vencimiento</th>
+                        <th width="5%">Acciones</th>
                         <th width="10%">Estado</th>
                         <th width="10%">Emisión</th>
                         <th width="10%">Vencimiento</th>
@@ -39,7 +43,4 @@
 
 @endsection
 
-@push('scripts')
-<script type="text/javascript" src="{{ URL::asset('assets/js/licenses.js') }}"></script>
-@endpush
 

@@ -24,7 +24,8 @@ class License extends Model implements Auditable
         'representation_id',
         'correlative_id',
         'ordinance_id',
-        'downloaded_at'
+        'downloaded_at',
+        'liquidation_id'
     ];
 
     protected $casts = [
@@ -49,6 +50,16 @@ class License extends Model implements Auditable
     public function ordinance()
     {
         return $this->belongsTo(Ordinance::class);
+    }
+
+    public function liquidation()
+    {
+        return $this->belongsTo(Liquidation::class);
+    }
+
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
     }
 
     public function economicActivities()

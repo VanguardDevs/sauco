@@ -12,7 +12,6 @@ class Vehicle extends Model
         'plate',
         'body_serial',
         'engine_serial',
-        'status',
         'weight',
         'capacity',
         'stalls',
@@ -35,7 +34,7 @@ class Vehicle extends Model
 
     public function vehicleModel()
     {
-        return $this->belongsTo(VehicleModel::class, 'model_id');
+        return $this->belongsTo(VehicleModel::class);
     }
 
     public function color()

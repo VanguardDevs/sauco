@@ -4,8 +4,6 @@
 
 @section('content')
 
-
-
 @if(Auth()->user()->can('create.licenses'))
     <div class="col-md-12">
 
@@ -23,7 +21,7 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-                {!! Form::open(['route' => ['vehicles.create', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+                {!! Form::open(['url' => route('vehicles.create', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                     <div class="form-group row">
 
                         <div class="row" id= "new_license">
@@ -152,19 +150,6 @@
 @endif
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="row">
     <div class="col-lg-12">
         <div class="kt-portlet">
@@ -179,17 +164,22 @@
                 </div>
            </div>
            <div class="kt-portlet__body">
-              <table id="tVehicleLicenses" class="table table-bordered table-striped datatables" style="text-align: center">
+              <table id="tVehicles" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                     <tr>
-                        <th width="15%">Número</th>
-                        <th width="15%">RIF</th>
-                        <th width="20%">Razón social</th>
-                        <th width="15%">Ordenanza</th>
+                        <th width="15%">Placa</th>
+                        <th width="15%">Serial de Carrocería</th>
+                        <th width="20%">Serial del Motor</th>
+                        <th width="15%">Peso</th>
+                        <th width="10%">Capacidad</th>
+                        <th width="10%">Puestos</th>
+                        <th width="10%">Contribuyente</th>
+                        <th width="5%">Modelo</th>
+                        <th width="10%">Color</th>
+                        <th width="10%">Clasificación</th>
                         <th width="10%">Estado</th>
-                        <th width="10%">Emisión</th>
-                        <th width="10%">Vencimiento</th>
                         <th width="5%">Acciones</th>
+
                     </tr>
                 </thead>
             </table>
@@ -199,8 +189,4 @@
 </div>
 
 @endsection
-
-@push('scripts')
-<script type="text/javascript" src="{{ URL::asset('assets/js/licenses.js') }}"></script>
-@endpush
 
