@@ -23,7 +23,6 @@ use App\Models\Correlative;
 use App\Models\LiqueurLiquidation;
 use App\Models\Credit;
 use App\Models\Vehicle;
-use App\Models\License;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
