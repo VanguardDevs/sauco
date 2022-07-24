@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Collapse from '@mui/material/Collapse';
 import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
 
 const SubMenu = ({
     handleToggle,
@@ -17,12 +18,12 @@ const SubMenu = ({
     dense
 }) => {
     const header = (
-        <ListItem button onClick={handleToggle}>
+        <ListItem button onClick={handleToggle} sx={{ width: '100%'}}>
             <ListItemIcon sx={{ color: theme => theme.palette.primary.main }}>
             {icon}
             </ListItemIcon>
             {name}
-            <ListItemIcon>
+            <ListItemIcon sx={{ alignSelf: 'end' }}>
             {
                 (isOpen) ? <ExpandLess /> : <ExpandMore />
             }

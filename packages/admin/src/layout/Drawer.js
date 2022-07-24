@@ -68,6 +68,7 @@ function ResponsiveDrawer() {
                 color: theme => theme.palette.primary.main,
                 cursor: 'pointer',
                 transition: '0.3s',
+                overflowX: 'hidden',
                 '&:hover': {
                     backgroundColor: theme => alpha(theme.palette.text.primary, 0.05)
                 }
@@ -215,7 +216,7 @@ function ResponsiveDrawer() {
             </AppBar>
             <Box
                 component="nav"
-                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, overflowX: 'hidden' }}
                 aria-label="mailbox folders"
             >
                 {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -228,7 +229,8 @@ function ResponsiveDrawer() {
                     }}
                     sx={{
                         display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, overflowX: 'hidden' },
+                        overflowX: 'hidden'
                     }}
                 >
                     {drawer}
@@ -237,7 +239,24 @@ function ResponsiveDrawer() {
                     variant="permanent"
                     sx={{
                         display: { xs: 'none', sm: 'block' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        '& .MuiDrawer-paper': {
+                            boxSizing: 'border-box',
+                            width: drawerWidth,
+                            overflowX: 'hidden',
+                            scrollbarColor: '#6D6D6D',
+                            "&::-webkit-scrollbar": {
+                                width: 10
+                            },
+                            "&::-webkit-scrollbar-track": {
+                                backgroundColor: "#D9D9D9",
+                                borderRadius: 5
+                            },
+                            "&::-webkit-scrollbar-thumb": {
+                                backgroundColor: "#6D6D6D",
+                                borderRadius: 5
+                            }
+                        },
+                        overflowX: 'hidden'
                     }}
                     open
                 >

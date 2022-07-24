@@ -75,11 +75,6 @@ class License extends Model implements Auditable
         return $this->belongsTo(Representation::class);
     }
 
-    public function liquidation()
-    {
-        return $this->belongsTo(Liquidation::class);
-    }
-
     public function liqueur()
     {
         return $this->hasOne(Liqueur::class);

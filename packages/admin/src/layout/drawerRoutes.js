@@ -98,7 +98,17 @@ export const rates = [
         name: 'Petro',
         route: '/petro-prices',
         icon: <AdminIcon />
-    }
+    },
+    {
+        name: 'Parámetros de expendios',
+        route: '/liqueur-parameters',
+        icon: <AdminIcon />
+    },
+    {
+        name: 'Parámetros de vehículos',
+        route: '/vehicle-parameters',
+        icon: <AdminIcon />
+    },
 ]
 
 export const reports = [
@@ -168,6 +178,26 @@ export const settings = [
     {
         name: 'Ordenanzas',
         route: '/ordinances',
+        icon: <AdminIcon />
+    },
+    {
+        name: 'Marcas de vehículos',
+        route: '/vehicle-models',
+        icon: <AdminIcon />
+    },
+    {
+        name: 'Modelos de vehículos',
+        route: '/vehicle-models',
+        icon: <AdminIcon />
+    },
+    {
+        name: 'Colores',
+        route: '/colors',
+        icon: <AdminIcon />
+    },
+    {
+        name: 'Anexos de expendios',
+        route: '/annexes',
         icon: <AdminIcon />
     },
     {
