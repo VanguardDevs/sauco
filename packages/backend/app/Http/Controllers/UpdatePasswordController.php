@@ -21,21 +21,25 @@ class UpdatePasswordController extends Controller
         $user = $request->user();
 
         if (!Hash::check($currentPass, $user->password)) {
-            return $request->json([
-                'current_password' => 'Contraseña incorrecta'
+            return response()->json([
+                'errors' => [
+                    'current_password' => 'Contraseña incorrecta'
+                ]
             ], 422);
         }
 
         if ($currentPass == $newPassword) {
-            return $request->json([
-                'new_password' => 'La nueva contraseña no debe ser igual a la anterior.'
+            return response()->json([
+                'errors' => [
+                    'new_password' => 'La nueva contraseña no debe ser igual a la anterior.'
+                ]
             ], 422);
         }
 
         $user->password = bcrypt($newPassword);
         $user->save();
 
-        return $request->json([
+        return response()->json([
             'success' => true
         ], 200);
     }

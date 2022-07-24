@@ -32,11 +32,11 @@ const Security = () => {
 
     const save = React.useCallback(async (values) => {
         try {
-            const { data } = await axios.post('/security', values)
+            const { data } = await axios.post('/update-password', values)
 
             if (data) {
                 enqueueSnackbar(
-                    `¡Ha actualizado su contraseña!"`, 
+                    `¡Ha actualizado su contraseña!"`,
                     { variant: 'success' }
                 );
             }

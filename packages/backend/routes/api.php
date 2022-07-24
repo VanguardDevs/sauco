@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('brands', 'BrandController');
     Route::apiResource('colors', 'ColorController');
     Route::apiResource('users', 'UserController');
+    Route::apiResource('items', 'ItemController');
     Route::apiResource('ordinances', 'OrdinanceController');
     Route::apiResource('charging-methods', 'ChargingMethodController');
     Route::apiResource('economic-activities', 'EconomicActivityController');
@@ -63,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('vehicles', 'VehicleController');
     Route::apiResource('signatures', 'SignatureController');
     Route::apiResource('roles', 'RoleController');
+    Route::apiResource('cubicles', 'CubicleController');
 
     /**
      * Consults

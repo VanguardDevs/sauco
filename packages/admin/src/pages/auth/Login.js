@@ -9,6 +9,7 @@ import axios from '../../api'
 import { useNavigate } from 'react-router-dom'
 import { useAuth, loginUser } from '../../context/AuthContext'
 import fondo from '../../images/Fondo.jpg'
+import formatServerSideErrors from '../../utils/formatServerSideErrors';
 
 const validate = (values) => {
     const errors = {};
@@ -52,9 +53,7 @@ const Login = () => {
                 if (err.response.data.errors) {
                     const { errors } = err.response.data;
 
-                    Object.keys(errors).forEach(key => {
-                        setError(key, errors[key])
-                    });
+                    formatServerSideErrors(errors, setError);
                 }
             });
     }
