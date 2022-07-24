@@ -16,6 +16,8 @@ $(function () {
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#payment_methods').on('change', onSelectPaymentType);
     $('#years').on('change', onSelectYears);
+    $('#liqueur-correlative').on('change', onSelectLicenseCorrelativeType);
+
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
@@ -138,6 +140,29 @@ function onSelectBuildingOwner() {
       document.hide();
   }
 }
+
+
+function onSelectLicenseCorrelativeType() {
+    let selected = $(this).children('option:selected').html();
+    // let reference = $('#existing_licenses');
+    let new_license = $('#new_license');
+
+    // if (selected == "RENOVAR LICENCIA") {
+    //     reference.show();
+    //     new_license.hide();
+
+    //     //$('#new_license').html(renewal);
+    // } else {
+    //     new_license.show();
+    //     reference.hide();
+    //     //$('#new_license').html(installation);
+    // }
+
+    if (selected == "INSTALAR LICENCIA" || selected == "RENOVAR LICENCIA") {
+        new_license.show();
+    }
+  }
+
 
 /*----------  Uppercase  ----------*/
 function upperCase(e) {
@@ -973,8 +998,6 @@ $(document).ready(function() {
         ]
     });
 
-
-
     $('#tCredits').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -1002,13 +1025,49 @@ $(document).ready(function() {
         ]
     });
 
-
-
-
-
-
-
-
-
-
+    $('#tLiqueurLicensesTaxpayer').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'num' },
+            { data: 'emission_date' },
+            { data: 'id',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `
+                        <span class="kt-badge kt-badge--success kt-badge--inline">
+                            Activo
+                        </span>
+                        `;
+                    const inactive = `
+                        <span class="kt-badge kt-badge--danger kt-badge--inline">
+                            Inactivo
+                        </span>
+                        `;
+                    $(nTd).html(`${oData.active ? active : inactive}`);
+                }
+            },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const print = `
+                        <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/liqueur-licenses/${oData.id}/download title='Imprimir licencia'>
+                            <i class='btn-sm btn-success fas fa-print'></i>
+                        </a>
+                    </div>`;
+                    if (oData.active == true){
+                        $(nTd).html(`${print}`)
+                    }
+                    else{
+                       $(nTd).html(`<div class="btn-group"></div>`)
+                    };
+                }
+            }
+        ]
+    });
 });

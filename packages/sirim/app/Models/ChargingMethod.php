@@ -27,6 +27,11 @@ class ChargingMethod extends Model
         return $this->hasMany(Ordinance::class);
     }
 
+    public function liqueur_parameters()
+    {
+        return $this->hasMany(LiqueurParameter::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return date('d/m/Y', strtotime($value));

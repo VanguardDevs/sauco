@@ -20,11 +20,16 @@ class DatabaseSeeder extends Seeder
         $this->call(ListsTableSeeder::class);
         $this->call(ActivityClassificationsTableSeeder::class);
         $this->call(EconomicActivitiesTableSeeder::class);
-        $this->call(CommunitiesTableSeeder::class); 
-        $this->call(ParishesTableSeeder::class); 
+        $this->call(CommunitiesTableSeeder::class);
+        $this->call(ParishesTableSeeder::class);
         $this->call(CommunityParishTableSeeder::class);
         $this->call(PaymentMethodsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(TaxpayerClassificationsSeeder::class);
+        $this->call(LiqueurAnnexSeeder::class);
+        $this->call(LiqueurClassificationSeeder::class);
+        $this->call(LiqueurZoneSeeder::class);
+
+
     }
 }

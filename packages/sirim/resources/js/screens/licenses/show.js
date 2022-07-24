@@ -12,7 +12,7 @@ import  {
   Col,
   Loading,
 } from '../../components';
-import { isEmpty } from '../../utils'; 
+import { isEmpty } from '../../utils';
 
 const ShowLicense = (props) => {
   const [data, setData] = useState({});
@@ -72,6 +72,6 @@ const ShowLicense = (props) => {
 const element = document.getElementById('license-show');
 
 if (element) {
-  let data = element.getAttribute('data-id'); 
+  let data = element.getAttribute('data-id');
   ReactDOM.render(<ShowLicense data={data}/>, element);
 }

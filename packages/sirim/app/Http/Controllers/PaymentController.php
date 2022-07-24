@@ -11,6 +11,16 @@ use App\Models\Reference;
 use App\Models\Settlement;
 use App\Models\Taxpayer;
 use App\Models\PaymentNull;
+use App\Models\Liquidation;
+use App\Models\PetroPrice;
+use App\Models\Liqueur;
+use App\Models\License;
+use App\Models\LiqueurParameter;
+use App\Models\Year;
+use App\Models\Requirement;
+use App\Models\RequirementTaxpayer;
+use App\Models\Correlative;
+use App\Models\LiqueurLiquidation;
 use App\Models\Credit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -129,6 +139,12 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
+        $liquidation = $payment->liquidations->first();
+
+        $concept = Concept::whereId($liquidation->concept_id)->first();
+
+        $taxpayer = Taxpayer::whereId($payment->taxpayer_id)->first();
+
         $validator = $request->validate([
             'processed_at' => 'required',
             'method' => 'required'
@@ -172,8 +188,46 @@ class PaymentController extends Controller
 
         $payment->createMovements();
 
-        return redirect()->back()
-            ->withSuccess('¡Factura procesada!');
+        if($concept->code == '001.005.000'){
+            $requirement = Requirement::whereId('1')->first();
+
+            $requirementTaxpayer = RequirementTaxpayer::create([
+                'requirement_id' => $requirement->id,
+                'taxpayer_id' => $taxpayer->id,
+                'liquidation_id' => $liquidation->id,
+                'active' => true
+            ]);
+        }
+
+        if($concept->code == '001.005.001') {
+            $requirement = Requirement::whereId('3')->first();
+
+            $requirementTaxpayer = RequirementTaxpayer::create([
+                'requirement_id' => $requirement->id,
+                'taxpayer_id' => $taxpayer->id,
+                'liquidation_id' => $liquidation->id,
+                'active' => true
+            ]);
+        }
+
+        if($concept->code == '21' || $concept->code == '22'){
+            $representation= $taxpayer->president()->first();
+            $currentLiquidation = $payment->liquidations->first();
+            $liqueur = Liqueur::whereLicenseId($currentLiquidation->license->id)->first();
+
+            $license = License::whereId($liqueur->license_id)
+                ->first();
+
+            $status = $currentLiquidation->status_id;
+
+            if ($license->active == false && $status == 2 && $liqueur =! null ) {
+                $license->update([
+                    'active' => true
+                ]);
+            }
+        }
+
+        return redirect()->back()->withSuccess('¡Factura procesada!');
     }
 
     public function download(Payment $payment)

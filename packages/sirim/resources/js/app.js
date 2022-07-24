@@ -23,6 +23,8 @@ require('./screens/payments/show');
 
 require('./screens/licenses/show');
 
+require('./screens/liqueur-licenses/show');
+
 require('./screens/Settings/InvoiceModels/Index');
 
 require('./screens/taxpayers/profile');
