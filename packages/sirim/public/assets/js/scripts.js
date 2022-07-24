@@ -210,6 +210,42 @@ const nullRecord = (id, url) => {
     });
 }
 
+
+/** Vehicle Renewal*/
+
+
+const renovateVehicle = (id) => {
+    Swal.fire({
+        title: '¿Está seguro(a) que desea renovar la licencia?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Renovar'
+    }).then(result => {
+        if (result.value) {
+            $.ajax({
+                type: 'POST',
+                url: `${window.location.href}/${id}/renovate`,
+                data: {
+                    '_method': 'POST',
+                    '_token': $("meta[name='csrf-token']").attr("content"),
+                },
+                success: response => location.reload(),
+                error: res => Swal.fire({
+                    title: 'Esta acción no puede ser procesada.',
+                    type: 'info',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                })
+            });
+        }
+    });
+}
+
+
+
+
 $(document).ready(function() {
 
     $('[data-mask]').inputmask()
@@ -1066,6 +1102,256 @@ $(document).ready(function() {
                     else{
                        $(nTd).html(`<div class="btn-group"></div>`)
                     };
+
+                }
+            }
+        ]
+    });
+
+    /*----------  Datatables Vehicles Brands  ----------*/
+    $('#tBrands').DataTable({
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'name'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/brands/${oData.id}/edit title='Editar'>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
+                            </a>
+                        </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
+    /*----------  Datatables Vehicles Colors  ----------*/
+    $('#tColors').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'name'},
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/colors/${oData.id}/edit title='Editar'>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
+                            </a>
+                        </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
+    /*----------  Datatables Vehicles Models  ----------*/
+    $('#tModels').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'name'},
+            { data: 'brand.name'},
+
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicle-models/${oData.id}/edit title='Editar'>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
+                            </a>
+                        </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
+
+    /*----------  Datatables Vehicles Parameters  ----------*/
+    $('#tVehicleParameters').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'name'},
+            { "data": 'years',
+
+                "render": function(data){
+                    if (data == 1) {
+                          return "<span>Si</span>";
+                    } else if (data == 0) {
+                        return "<span>No</span>";
+                    }
+                    else{
+                       return "<span> </span>";
+                    }
+                }
+            },
+            { "data": 'weight',
+
+                "render": function(data){
+                    if (data == 1) {
+                          return "<span>Si</span>";
+                    } else if (data == 0) {
+                        return "<span>No</span>";
+                    }
+                    else{
+                       return "<span> </span>";
+                    }
+                }
+            },
+            { "data": 'capacity',
+
+                "render": function(data){
+                    if (data == 1) {
+                          return "<span>Si</span>";
+                    } else if (data == 0) {
+                        return "<span>No</span>";
+                    }
+                    else{
+                       return "<span> </span>";
+                    }
+                }
+            },
+            { "data": 'stalls',
+
+                "render": function(data){
+                    if (data == 1) {
+                          return "<span>Si</span>";
+                    } else if (data == 0) {
+                        return "<span>No</span>";
+                    }
+                    else{
+                       return "<span> </span>";
+                    }
+                }
+            },
+
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicle-parameters/${oData.id}/edit title='Editar'>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
+                            </a>
+                        </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
+
+    /*----------  Datatables Vehicles Models  ----------*/
+    $('#tVehicleClassifications').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/list`,
+        "columns": [
+            { data: 'name'},
+            { data: 'amount'},
+            { data: 'weight_from'},
+            { data: 'weight_until'},
+            { data: 'stalls_from'},
+            { data: 'stalls_until'},
+            { data: 'capacity_from'},
+            { data: 'capacity_until'},
+            { data: 'vehicle_parameter.name'},
+            { data: 'charging_method.name'},
+            {data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicle-classifications/${oData.id}/edit title='Editar'>
+                                <i class='btn-sm btn-warning fas fa-edit'></i>
+                            </a>
+                        </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    /*----------  Datatables Vehicles ----------*/
+    $('#tVehicles').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'plate'},
+            { data: 'body_serial'},
+            { data: 'engine_serial'},
+            { data: 'weight'},
+            { data: 'capacity'},
+            { data: 'stalls'},
+            { data: 'taxpayer.name'},
+            { data: 'vehicle_model.name'},
+            { data: 'color.name'},
+            { data: 'vehicle_classification.name'},
+            { data: 'license',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `<span class="kt-badge kt-badge--success kt-badge--inline">
+                                    Activo
+                                </span>`;
+                    const inactive = `<span class="kt-badge kt-badge--danger kt-badge--inline">
+                                    Inactivo
+                                </span>`;
+                    $(nTd).html(`${sData.active ? active : inactive}`);
+                }
+            },
+
+            {data: 'license',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
+                                <i class='btn-sm btn-info fas fa-print'></i>
+                            </a>
+                        </div>`;
+                    const inactive = `
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
+                                <i class='btn-sm btn-info fas fa-print'></i>
+                            </a>
+                            <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
+                                <i class='btn-sm btn-success fas fa-sync'></i>
+                            </a>
+                        </div>`;
+                    $(nTd).html(`${sData.active ? active : inactive}`);
+
                 }
             }
         ]

@@ -92,6 +92,7 @@ class LicenseController extends Controller
      */
     public function store(Request $request, Taxpayer $taxpayer)
     {
+
         $correlative = CorrelativeType::find($request->input('correlative'));
 
         $validator = $this->validateStore($taxpayer, $correlative);
@@ -108,6 +109,8 @@ class LicenseController extends Controller
 
     public function makeLicense(CorrelativeType $type, Taxpayer $taxpayer)
     {
+
+
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $correlativeNum = CorrelativeNumber::getNum();
         // Maybe for other kind of licenses, I would inject

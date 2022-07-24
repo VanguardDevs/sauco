@@ -55,6 +55,16 @@ class License extends Model implements Auditable
         return $this->belongsTo(Ordinance::class);
     }
 
+    public function liquidation()
+    {
+        return $this->belongsTo(Liquidation::class);
+    }
+
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
     public function economicActivities()
     {
         return $this->belongsToMany(EconomicActivity::class);

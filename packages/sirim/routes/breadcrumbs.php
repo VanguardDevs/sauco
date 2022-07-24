@@ -669,3 +669,115 @@ Breadcrumbs::for('credits.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Creditos', route('credits.index', $row));
 });
+
+/*----------  Brands  ----------*/
+Breadcrumbs::for('brands.index', function ($trail) {
+    $trail->push('Marcas de Vehículo', url('brands'));
+});
+
+/*------------- Brands -> create -------------*/
+Breadcrumbs::for('brands.create', function ($trail) {
+    $trail->parent('brands.index');
+    $trail->push('Crear Marcas de Vehículo', url('brands/create'));
+});
+
+/*------------- Brands -> edit -------------*/
+Breadcrumbs::for('brands.edit', function ($trail) {
+    $trail->parent('brands.index');
+    $trail->push('Editar Marcas de Vehículo', url('brands/edit'));
+});
+
+
+/*----------  Colors  ----------*/
+Breadcrumbs::for('colors.index', function ($trail) {
+    $trail->push('Colores de Vehículo', url('colors'));
+});
+
+/*------------- Colors -> create -------------*/
+Breadcrumbs::for('colors.create', function ($trail) {
+    $trail->parent('colors.index');
+    $trail->push('Crear Colores de Vehículo', url('colors/create'));
+});
+
+/*------------- Colors -> edit -------------*/
+Breadcrumbs::for('colors.edit', function ($trail) {
+    $trail->parent('colors.index');
+    $trail->push('Editar Colores de Vehículo', url('colors/edit'));
+});
+
+
+
+/*----------  Vehicle Models  ----------*/
+Breadcrumbs::for('vehicle-models.index', function ($trail) {
+    $trail->push('Modelos de Vehículo', url('vehicle-models'));
+});
+
+/*------------- Vehicle Models -> create -------------*/
+Breadcrumbs::for('vehicle-models.create', function ($trail) {
+    $trail->parent('vehicle-models.index');
+    $trail->push('Crear Modelo de Vehículo', url('vehicle-models/create'));
+});
+
+/*------------- Vehicle Models -> edit -------------*/
+Breadcrumbs::for('vehicle-models.edit', function ($trail) {
+    $trail->parent('vehicle-models.index');
+    $trail->push('Editar Modelo de Vehículo', url('vehicle-models/edit'));
+});
+
+
+
+/*----------  Vehicle Parameters  ----------*/
+Breadcrumbs::for('vehicle-parameters.index', function ($trail) {
+    $trail->push('Parámetros de Vehículo', url('vehicle-parameters'));
+});
+
+/*------------- Vehicle Parameters -> create -------------*/
+Breadcrumbs::for('vehicle-parameters.create', function ($trail) {
+    $trail->parent('vehicle-parameters.index');
+    $trail->push('Crear Parámetro de Vehículo', url('vehicle-parameters/create'));
+});
+
+/*------------- Vehicle Parameters -> edit -------------*/
+Breadcrumbs::for('vehicle-parameters.edit', function ($trail) {
+    $trail->parent('vehicle-parameters.index');
+    $trail->push('Editar Parámetro de Vehículo', url('vehicle-parameters/edit'));
+});
+
+
+
+/*----------  Vehicle Classifications  ----------*/
+Breadcrumbs::for('vehicle-classifications.index', function ($trail) {
+    $trail->push('Clasificacións de Vehículo', url('vehicle-classifications'));
+});
+
+/*------------- Vehicle Classifications -> create -------------*/
+Breadcrumbs::for('vehicle-classifications.create', function ($trail) {
+    $trail->parent('vehicle-classifications.index');
+    $trail->push('Crear Clasificación de Vehículo', url('vehicle-classifications/create'));
+});
+
+/*------------- Vehicle Classifications -> edit -------------*/
+Breadcrumbs::for('vehicle-classifications.edit', function ($trail) {
+    $trail->parent('vehicle-classifications.index');
+    $trail->push('Editar Clasificación de Vehículo', url('vehicle-classifications/edit'));
+});
+
+
+
+/*----------  Vehicle  ----------*/
+Breadcrumbs::for('vehicles.index', function ($trail) {
+    $trail->push('Patente Vehículo', url('vehicles'));
+});
+
+/*------------- Vehicle -> create -------------*/
+Breadcrumbs::for('vehicles.create', function ($trail) {
+    $trail->parent('vehicles.index');
+    $trail->push('Crear Vehículo', url('vehicles/create'));
+});
+
+
+Breadcrumbs::for('taxpayer.vehicles', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Patentes de Vehículo', url('taxpayer.vehicles'));
+});
+

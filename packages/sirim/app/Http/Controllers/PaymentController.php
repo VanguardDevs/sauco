@@ -22,6 +22,8 @@ use App\Models\RequirementTaxpayer;
 use App\Models\Correlative;
 use App\Models\LiqueurLiquidation;
 use App\Models\Credit;
+use App\Models\Vehicle;
+use App\Models\License;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -221,6 +223,21 @@ class PaymentController extends Controller
             $status = $currentLiquidation->status_id;
 
             if ($license->active == false && $status == 2 && $liqueur =! null ) {
+
+            }
+        }
+
+        if($concept->code == '15'){
+            $representation= $taxpayer->president()->first();
+            $currentLiquidation = $payment->liquidations->first();
+            $vehicle = Vehicle::whereLicenseId($currentLiquidation->license->id)->first();
+
+            $license = License::whereId($vehicle->license_id)
+                  ->first();
+
+            $status = $currentLiquidation->status_id;
+
+            if ($license->active == false && $status == 2 && $vehicle =! null ) {
                 $license->update([
                     'active' => true
                 ]);

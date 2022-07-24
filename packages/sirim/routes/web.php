@@ -87,6 +87,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('liqueur-licenses/{license}', 'LicenseController@showLicenseLiqueur')
         ->name('liqueur-licenses.show');
 
+    Route::get('taxpayers/{taxpayer}/vehicles', 'VehicleController@create')
+        ->name('taxpayer.vehicles');
+
+    Route::post('taxpayers/{taxpayer}/vehicles/create', 'VehicleController@store')
+        ->name('vehicles.create');
+
      /*
     * Payment's routes modules
      */
@@ -220,4 +226,29 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('taxpayers/{taxpayer}/credits', 'CreditController@index')
         ->name('credits.index');
     Route::get('taxpayers/{taxpayer}/credits/list', 'CreditController@list');
+
+     /**
+    * Vehicle's Settings
+    */
+
+    Route::resource('brands', 'BrandController')->except(['show']);
+    Route::get('brands/list', 'BrandController@list');
+
+    Route::resource('colors', 'ColorController')->except(['show']);
+    Route::get('colors/list', 'ColorController@list');
+
+    Route::resource('vehicle-models', 'VehicleModelController')->except(['show']);
+    Route::get('vehicle-models/list', 'VehicleModelController@list');
+
+    Route::resource('vehicle-parameters', 'VehicleParameterController')->except(['show']);
+    Route::get('vehicle-parameters/list', 'VehicleParameterController@list');
+
+    Route::resource('vehicle-classifications', 'VehicleClassificationController')->except(['show']);
+    Route::get('vehicle-classifications/list', 'VehicleClassificationController@list');
+
+    Route::resource('vehicles', 'VehicleController')->except(['create', 'store']);
+
+    Route::get('vehicles/{license}/download', 'VehicleController@download');
+    Route::post('vehicles/{license}/renovate', 'VehicleController@renovate');
+
 });
