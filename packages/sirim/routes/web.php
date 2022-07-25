@@ -228,7 +228,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::resource('vehicles', 'VehicleController')->except(['create', 'store']);
 
-    Route::get('vehicles/{license}/download', 'VehicleController@download');
+    Route::get('vehicles/{vehicle}/download', 'VehicleController@download');
     Route::post('vehicles/{license}/renovate', 'VehicleController@renovate');
 
 });

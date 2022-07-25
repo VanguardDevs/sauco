@@ -17,7 +17,8 @@ use App\Models\Year;
 use App\Models\Ordinance;
 use App\Models\Concept;
 use App\Models\PetroPrice;
-
+use App\Models\Signature;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use Auth;
 
@@ -36,17 +37,20 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Vehicle::get();
 
         //Cambiar a los datos del vehiculo, no los de la licencia
 
         if ($request->wantsJson()) {
-            $query->with(['color', 'vehicleModel', 'vehicleClassification']);
+            $query = Vehicle::query()->with(['color', 'vehicleModel', 'vehicleClassification','license', 'taxpayer']);
 
             return DataTables::eloquent($query)->toJson();
         }
 
-        return view('modules.vehicles.index');
+        return view('modules.vehicles.index')
+            ->with('taxpayer', Taxpayer::pluck('name', 'id'))
+            ->with('color', Color::pluck('name', 'id'))
+            ->with('vehicleClassification', VehicleClassification::pluck('name', 'id'))
+            ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
 
     }
 
@@ -163,23 +167,42 @@ class VehicleController extends Controller
     }
 
 
-    public function download(License $license)
+    public function download(Vehicle $vehicle)
     {
-        $taxpayer = $license->taxpayer;
+        $taxpayer = $vehicle->taxpayer;
+
         $num = preg_replace("/[^0-9]/", "", $taxpayer->rif);
+
+        $license= License::whereId($vehicle->license_id)->first();
+
         $correlative = $license->correlative;
         $licenseCorrelative = $correlative->correlativeType->description.
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
-        $representation = $license->representation->person->name;
+        $representation = $license->representation->person;
         $signature = Signature::latest()->first();
+
+
+        $liquidation = Liquidation::whereId($license->liquidation_id)->first();
+
+        $period =Carbon::createFromDate($license->create_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->format('Y');
+
+        $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
+
+        $payment = Payment::whereId($liquidationPayment->payment_id)->first();
+
+        $paymentDate = str_replace('/', '-', $payment->processed_at);
+
+        $processedAt =Carbon::createFromDate($paymentDate)->format('d-m-Y');
+
+
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'vehicle', 'payment', 'liquidation', 'processedAt', 'period'];
         $license->update(['downloaded_at' => Carbon::now()]);
 
-        return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
-            ->stream('Licencia '.$taxpayer->rif.'.pdf');
+        return PDF::loadView('modules.vehicles.pdf.vehicle-license', compact($vars))
+            ->stream('Licencia '.$license->num.'.pdf');
     }
 }

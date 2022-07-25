@@ -1238,7 +1238,66 @@ $(document).ready(function() {
         ]
     });
 
-        /*----------  Datatables Vehicles ----------*/
+        /*----------  Datatables Taxpayer Vehicles ----------*/
+        $('#tVehicle').DataTable({
+            "order": [[0, "asc"]],
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+            "oLanguage": {
+                "sUrl": baseURL + "/assets/js/spanish.json"
+            },
+            "serverSide": true,
+            "ajax": `${window.location.href}`,
+            "columns": [
+                { data: 'plate'},
+                { data: 'body_serial'},
+                { data: 'engine_serial'},
+                { data: 'weight'},
+                { data: 'capacity'},
+                { data: 'stalls'},
+                { data: 'taxpayer.name'},
+                { data: 'vehicle_model.name'},
+                { data: 'color.name'},
+                { data: 'vehicle_classification.name'},
+                { data: 'license',
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        const active = `<span class="kt-badge kt-badge--success kt-badge--inline">
+                                        Activo
+                                    </span>`;
+                        const inactive = `<span class="kt-badge kt-badge--danger kt-badge--inline">
+                                        Inactivo
+                                    </span>`;
+                        $(nTd).html(`${sData.active ? active : inactive}`);
+                    }
+                },
+
+                {data: 'license',
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        const active = `
+                            <div class="btn-group">
+                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
+                                    <i class='btn-sm btn-info fas fa-print'></i>
+                                </a>
+                            </div>`;
+                        const inactive = `
+                            <div class="btn-group">
+                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
+                                    <i class='btn-sm btn-info fas fa-print'></i>
+                                </a>
+                                <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
+                                    <i class='btn-sm btn-success fas fa-sync'></i>
+                                </a>
+                            </div>`;
+                        $(nTd).html(`${sData.active ? active : inactive}`);
+
+                    }
+                }
+            ]
+        });
+
+
+
+
+        /*----------  Datatables All Vehicles ----------*/
         $('#tVehicles').DataTable({
             "order": [[0, "asc"]],
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],

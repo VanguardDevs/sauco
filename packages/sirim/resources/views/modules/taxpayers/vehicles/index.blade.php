@@ -164,7 +164,7 @@
                 </div>
            </div>
            <div class="kt-portlet__body">
-              <table id="tVehicles" class="table table-bordered table-striped datatables" style="text-align: center">
+              <table id="tVehicle" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
                     <tr>
                         <th width="15%">Placa</th>

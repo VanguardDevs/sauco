@@ -18,21 +18,22 @@
                 </div>
            </div>
            <div class="kt-portlet__body">
-              <table id="tVehicle" class="table table-bordered table-striped datatables" style="text-align: center">
+              <table id="tVehicles" class="table table-bordered table-striped datatables" style="text-align: center">
                 <thead>
-                    <tr>
-                        <th width="15%">Número</th>
-                        <th width="15%">RIF</th>
-                        <th width="20%">Razón social</th>
-                        <th width="15%">Ordenanza</th>
+                     <tr>
+                        <th width="15%">Placa</th>
+                        <th width="15%">Serial de Carrocería</th>
+                        <th width="20%">Serial del Motor</th>
+                        <th width="15%">Peso</th>
+                        <th width="10%">Capacidad</th>
+                        <th width="10%">Puestos</th>
+                        <th width="10%">Contribuyente</th>
+                        <th width="5%">Modelo</th>
+                        <th width="10%">Color</th>
+                        <th width="10%">Clasificación</th>
                         <th width="10%">Estado</th>
-                        <th width="10%">Emisión</th>
-                        <th width="10%">Vencimiento</th>
                         <th width="5%">Acciones</th>
-                        <th width="10%">Estado</th>
-                        <th width="10%">Emisión</th>
-                        <th width="10%">Vencimiento</th>
-                        <th width="5%">Acciones</th>
+
                     </tr>
                 </thead>
             </table>
