@@ -176,7 +176,6 @@ class PaymentController extends Controller
         $creditAmount = $payment->amount;
 
         if ($creditAmount < 0){
-
             $payment->credits()->create([
                 'num' => Credit::getNewNum(),
                 'amount' => $creditAmount * -1,
@@ -189,23 +188,19 @@ class PaymentController extends Controller
 
         $payment->createMovements();
 
-
-        if($concept->code == '15'){
-            $representation= $taxpayer->president()->first();
-            $currentLiquidation = $payment->liquidations->first();
-            $vehicle = Vehicle::whereLicenseId($currentLiquidation->license->id)->first();
+        if($concept->code == '15') {
+            $status = $payment->liquidations()->first()->status_id;
+            $vehicle = Vehicle::whereLicenseId($liquidation->license->id)->first();
 
             $license = License::whereId($vehicle->license_id)
-                  ->first();
-
-            $status = $currentLiquidation->status_id;
+                ->first();
 
             if ($license->active == false && $status == 2 && $vehicle =! null ) {
                 $license->update([
                     'active' => true
                 ]);
             }
-          }
+        }
 
         return redirect()->back()
             ->withSuccess('¡Factura procesada!');

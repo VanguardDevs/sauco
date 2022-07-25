@@ -19,7 +19,7 @@ class CreateVehiclesTable extends Migration
             $table->string('body_serial');
             $table->string('engine_serial');
             $table->float('weight');
-            $table->unsignedBigInteger('capacity');
+            $table->float('capacity');
             $table->unsignedBigInteger('stalls');
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('vehicle_model_id');

@@ -59,7 +59,7 @@
                             <div class="col-lg-6">
                                 <label>Peso<span class="text-danger">*</span></label>
 
-                                {!! Form::number('weight', null, ['class' => 'form-control', 'id' => 'weight']) !!}
+                                {!! Form::number('weight', null, ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'weight']) !!}
 
                                 @error('weight')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -69,7 +69,7 @@
                             <div class="col-lg-6">
                                 <label>Capacidad<span class="text-danger">*</span></label>
 
-                                {!! Form::number('capacity', null, ['class' => 'form-control', 'id' => 'capacity']) !!}
+                                {!! Form::number('capacity', null, ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'capacity']) !!}
 
                                 @error('capacity')
                                     <div class="text text-danger">{{ $message }}</div>

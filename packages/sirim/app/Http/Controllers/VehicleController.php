@@ -98,7 +98,7 @@ class VehicleController extends Controller
         $amount = $petro*$vehicleClassification->amount;
 
 
-        
+
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -114,10 +114,9 @@ class VehicleController extends Controller
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
             'amount' => $amount,
-            'liquidable_type' => Liquidation::class,
+            'liquidable_type' => Vehicle::class,
             'concept_id' => $concept->id,
-            //'liquidation_type_id' => $concept->liquidation_type_id,
-            'liquidation_type_id' => 1,
+            'liquidation_type_id' => $concept->liquidation_type_id,
             'status_id' => 1,
             'taxpayer_id' => $taxpayer->id
         ]);
@@ -160,6 +159,10 @@ class VehicleController extends Controller
             'color_id' =>  $request->input('color'),
             'vehicle_classification_id' =>  $request->input('vehicleClassification'),
             'license_id' => $license->id
+        ]);
+
+        $liquidation->update([
+            'liquidable_id' => $vehicle->id
         ]);
 
        return redirect('taxpayers/'.$taxpayer->id.'/vehicles')

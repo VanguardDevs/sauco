@@ -29,11 +29,10 @@ class Liquidation extends Model implements Auditable
     */
     public function year()
     {
-        $type = $this->liquidation_type_id;
-
-        if ($type == 3) {
+        if ($this->liquidable_type == 'App\Models\Affidavit') {
             return $this->liquidable->month->year()->first();
         }
+
         return Year::where('year', '=', Carbon::now()->year)->first();
     }
 
