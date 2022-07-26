@@ -27,67 +27,6 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <div class="col-lg-6">
-                                <label>Años </label>
-
-                                {!!
-                                    Form::select('years', $boolean, old('years', @$row->years), [
-                                        'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
-                                    ])
-                                !!}
-
-                                @error('years')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label>Peso </label>
-
-                                {!!
-                                    Form::select('weight', $boolean, old('weight', @$row->weight), [
-                                        'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
-                                    ])
-                                !!}
-
-                                @error('weight')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-
-                            <div class="col-lg-6">
-                                <label>Capacidad</label>
-
-                                {!!
-                                    Form::select('capacity', $boolean, old('capacity', @$row->capacity), [
-                                        'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
-                                    ])
-                                !!}
-
-                                @error('capacity')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-6">
-                                <label>Puestos</label>
-
-                                {!!
-                                    Form::select('stalls', $boolean, old('stalls', @$row->stalls), [
-                                        'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
-                                    ])
-                                !!}
-
-                                @error('stalls')
-                                    <div class="text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
                     </div>
 
                     <div class="kt-portlet__foot">

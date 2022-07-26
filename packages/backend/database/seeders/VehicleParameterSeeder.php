@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class VehicleParameterSeeder extends Seeder
 {
-    public $parameters = Array(
+    /*public $parameters = Array(
 
         ["Bicicletas de reparto, deportivas y de paseo", 1, 0, 0, 0],
         ["Motocicletas, motonetas y similares de uso particular y deportivo", 1, 0, 0, 0],
@@ -38,7 +38,19 @@ class VehicleParameterSeeder extends Seeder
         ["Transporte publico, taxis, libres y por puestos Urbanos, Interurbanos y perifericos Desde 1501kg  en adelante", null, 1, null, null],
         ["Maquinaria Pesada de uso en la construccion Desde 4001kg Hasta 10000kg.", null, 1, null, null],
         ["Maquinaria Pesada de uso en la construccion Desde 10001kg en adelante.", null, 1, null, null]
+    );*/
+
+
+    protected $parameters = Array(
+        [1, "Vehículos de Uso Particular"],
+        [2, "Rancheras, Utilitarios, VAN o Similares (2  Ejes)"],
+        [3, "Camionetas de Carga, Cerradas o Abiertas (2 Ejes)"],
+        [4, "Camiones, Gandolas, Remolques y Similares (2 y 3 Ejes)"],
+        [5, "Transporte Público, Taxis, Libres y por Puestos Urbanos, Interurbanos y Periféricos"],
+        [6, "Maquinarias Pesadas de Uso en la Construcción"]
     );
+
+
     /**
      * Run the database seeds.
      *
@@ -46,14 +58,10 @@ class VehicleParameterSeeder extends Seeder
      */
     public function run()
     {
-
         foreach ($this->parameters as $parameter) {
             DB::table('vehicle_parameters')->insert([
-                'name' => $parameter[0],
-                'years' => $parameter[1],
-                'weight' => $parameter[2],
-                'capacity' => $parameter[3],
-                'stalls' => $parameter[4]
+                'id' => $parameter[0],
+                'name' => $parameter[1]
             ]);
         }
     }

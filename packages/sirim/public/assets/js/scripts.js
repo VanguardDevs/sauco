@@ -1134,59 +1134,6 @@ $(document).ready(function() {
         "ajax": `${window.location.href}/list`,
         "columns": [
             { data: 'name'},
-            { "data": 'years',
-
-                "render": function(data){
-                    if (data == 1) {
-                          return "<span>Si</span>";
-                    } else if (data == 0) {
-                        return "<span>No</span>";
-                    }
-                    else{
-                       return "<span> </span>";
-                    }
-                }
-            },
-            { "data": 'weight',
-
-                "render": function(data){
-                    if (data == 1) {
-                          return "<span>Si</span>";
-                    } else if (data == 0) {
-                        return "<span>No</span>";
-                    }
-                    else{
-                       return "<span> </span>";
-                    }
-                }
-            },
-            { "data": 'capacity',
-
-                "render": function(data){
-                    if (data == 1) {
-                          return "<span>Si</span>";
-                    } else if (data == 0) {
-                        return "<span>No</span>";
-                    }
-                    else{
-                       return "<span> </span>";
-                    }
-                }
-            },
-            { "data": 'stalls',
-
-                "render": function(data){
-                    if (data == 1) {
-                          return "<span>Si</span>";
-                    } else if (data == 0) {
-                        return "<span>No</span>";
-                    }
-                    else{
-                       return "<span> </span>";
-                    }
-                }
-            },
-
             {
                 data: "id",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -1216,12 +1163,6 @@ $(document).ready(function() {
         "columns": [
             { data: 'name'},
             { data: 'amount'},
-            { data: 'weight_from'},
-            { data: 'weight_until'},
-            { data: 'stalls_from'},
-            { data: 'stalls_until'},
-            { data: 'capacity_from'},
-            { data: 'capacity_until'},
             { data: 'vehicle_parameter.name'},
             { data: 'charging_method.name'},
             {data: "id",

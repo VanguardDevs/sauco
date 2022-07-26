@@ -29,10 +29,6 @@
                     <thead>
                     <tr>
                         <th width="40%">Nombre</th>
-                        <th width="10%">Años</th>
-                        <th width="10%">Peso</th>
-                        <th width="10%">Capacidad</th>
-                        <th width="10%">Puestos</th>
                         <th width="20%">Acciones</th>
 
                     </tr>

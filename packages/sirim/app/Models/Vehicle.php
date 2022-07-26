@@ -12,9 +12,9 @@ class Vehicle extends Model
         'plate',
         'body_serial',
         'engine_serial',
-        /*'weight',
+        'weight',
         'capacity',
-        'stalls',*/
+        'stalls',
         'taxpayer_id',
         'vehicle_model_id',
         'color_id',

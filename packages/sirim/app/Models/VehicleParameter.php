@@ -11,10 +11,6 @@ class VehicleParameter extends Model
 
     protected $fillable = [
         'name'
-        /*'years',
-        'weight',
-        'capacity',
-        'stalls'*/
     ];
 
     public function vehicle_classifications()

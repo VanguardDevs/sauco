@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use App\Models\Color;
 use App\Models\VehicleModel;
+use App\Models\VehicleParameter;
 use App\Models\VehicleClassification;
 use App\Models\Taxpayer;
 use App\Models\License;
@@ -70,6 +71,7 @@ class VehicleController extends Controller
         return view('modules.taxpayers.vehicles.index')
             ->with('taxpayer', $taxpayer)
             ->with('color', Color::pluck('name', 'id'))
+            ->with('vehicleParameter', VehicleParameter::pluck('name', 'id'))
             ->with('vehicleClassification', VehicleClassification::pluck('name', 'id'))
             ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
     }
@@ -151,9 +153,9 @@ class VehicleController extends Controller
             'plate' => $request->input('plate'),
             'body_serial' => $request->input('body_serial'),
             'engine_serial' => $request->input('engine_serial'),
-            /*'weight' => $request->input('weight'),
+            'weight' => $request->input('weight'),
             'capacity' => $request->input('capacity'),
-            'stalls' => $request->input('stalls'),*/
+            'stalls' => $request->input('stalls'),
             'taxpayer_id' => $taxpayer->id,
             'vehicle_model_id' =>  $request->input('vehicleModel'),
             'color_id' =>  $request->input('color'),
