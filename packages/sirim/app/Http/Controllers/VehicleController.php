@@ -151,9 +151,9 @@ class VehicleController extends Controller
             'plate' => $request->input('plate'),
             'body_serial' => $request->input('body_serial'),
             'engine_serial' => $request->input('engine_serial'),
-            'weight' => $request->input('weight'),
+            /*'weight' => $request->input('weight'),
             'capacity' => $request->input('capacity'),
-            'stalls' => $request->input('stalls'),
+            'stalls' => $request->input('stalls'),*/
             'taxpayer_id' => $taxpayer->id,
             'vehicle_model_id' =>  $request->input('vehicleModel'),
             'color_id' =>  $request->input('color'),

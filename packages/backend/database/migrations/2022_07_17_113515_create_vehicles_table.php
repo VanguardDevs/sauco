@@ -18,9 +18,9 @@ class CreateVehiclesTable extends Migration
             $table->string('plate')->unique();
             $table->string('body_serial');
             $table->string('engine_serial');
-            $table->float('weight');
+            /*$table->float('weight');
             $table->float('capacity');
-            $table->unsignedBigInteger('stalls');
+            $table->unsignedBigInteger('stalls');*/
             $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('vehicle_model_id');
             $table->unsignedBigInteger('color_id');

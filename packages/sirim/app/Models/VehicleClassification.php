@@ -13,12 +13,12 @@ class VehicleClassification extends Model
     protected $fillable = [
         'name',
         'amount',
-        'weight_from',
+        /*'weight_from',
         'weight_until',
         'stalls_from',
         'stalls_until',
         'capacity_from',
-        'capacity_until',
+        'capacity_until',*/
         'vehicle_parameter_id',
         'charging_method_id'
     ];

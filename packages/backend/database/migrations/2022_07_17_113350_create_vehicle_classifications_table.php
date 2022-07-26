@@ -17,12 +17,6 @@ class CreateVehicleClassificationsTable extends Migration
             $table->id();
             $table->string('name');
             $table->float('amount');
-            $table->float('weight_from')->nullable();
-            $table->float('weight_until')->nullable();
-            $table->float('stalls_from')->nullable();
-            $table->float('stalls_until')->nullable();
-            $table->float('capacity_from')->nullable();
-            $table->float('capacity_until')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('vehicle_parameter_id');
             $table->unsignedBigInteger('charging_method_id');

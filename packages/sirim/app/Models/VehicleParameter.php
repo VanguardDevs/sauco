@@ -10,11 +10,11 @@ class VehicleParameter extends Model
     protected $table = 'vehicle_parameters';
 
     protected $fillable = [
-        'name',
-        'years',
+        'name'
+        /*'years',
         'weight',
         'capacity',
-        'stalls'
+        'stalls'*/
     ];
 
     public function vehicle_classifications()
