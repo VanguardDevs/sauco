@@ -16,6 +16,7 @@ $(function () {
     $('#ownership_status').change(onSelectBuildingOwner);
     $('#payment_methods').on('change', onSelectPaymentType);
     $('#years').on('change', onSelectYears);
+    $('#vparameters').on('change', onSelectVehicleParameters);
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
@@ -118,6 +119,21 @@ function onSelectYears() {
     }
 
     $('#months').html(html_select);
+  });
+}
+
+function onSelectVehicleParameters() {
+  let parameter_id = $(this).val();
+
+  let html_select = '<option value=""> SELECCIONE </option>';
+
+  $.get('/vehicles/'+parameter_id+'/classifications/', data => {
+
+    for (let i = 0; i < data.length; i++) {
+      html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+    }
+
+    $('#vehicleClassifications').html(html_select);
   });
 }
 
@@ -1221,9 +1237,6 @@ $(document).ready(function() {
                             </div>`;
                         const inactive = `
                             <div class="btn-group">
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
-                                    <i class='btn-sm btn-info fas fa-print'></i>
-                                </a>
                                 <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
                                     <i class='btn-sm btn-success fas fa-sync'></i>
                                 </a>
@@ -1280,9 +1293,6 @@ $(document).ready(function() {
                             </div>`;
                         const inactive = `
                             <div class="btn-group">
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
-                                    <i class='btn-sm btn-info fas fa-print'></i>
-                                </a>
                                 <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
                                     <i class='btn-sm btn-success fas fa-sync'></i>
                                 </a>

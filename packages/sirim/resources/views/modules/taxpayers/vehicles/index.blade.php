@@ -91,7 +91,8 @@
                                 {!!
                                     Form::select('vehicleParameter', $vehicleParameter, null, [
                                         'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
+                                        'placeholder' => 'SELECCIONE',
+                                        'id' => 'vparameters'        
                                     ])
                                 !!}
 
@@ -103,9 +104,11 @@
                             <div class="col-lg-6">
                                 <label class="col-lg-3">Clasificación<span class="text-danger">*</span></label>
                                 {!!
-                                    Form::select('vehicleClassification', $vehicleClassification, null, [
+                                    Form::select('vehicleClassification', [], null, [
                                         'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
+                                        'placeholder' => 'SELECCIONE',
+                                        'id' => 'vehicleClassifications',
+                                        'required'
                                     ])
                                 !!}
 
@@ -119,7 +122,8 @@
                                 {!!
                                     Form::select('vehicleModel', $vehicleModel, null, [
                                         'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
+                                        'placeholder' => 'SELECCIONE',
+                                       
                                     ])
                                 !!}
 

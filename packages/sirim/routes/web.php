@@ -167,6 +167,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
+    Route::get('vehicles/{vehicleParameter}/classifications', 'VehicleController@listClassifications');
 
     /**
      * Update passwords

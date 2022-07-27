@@ -72,7 +72,6 @@ class VehicleController extends Controller
             ->with('taxpayer', $taxpayer)
             ->with('color', Color::pluck('name', 'id'))
             ->with('vehicleParameter', VehicleParameter::pluck('name', 'id'))
-            ->with('vehicleClassification', VehicleClassification::pluck('name', 'id'))
             ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
     }
 
@@ -209,5 +208,16 @@ class VehicleController extends Controller
 
         return PDF::loadView('modules.vehicles.pdf.vehicle-license', compact($vars))
             ->stream('Licencia '.$license->num.'.pdf');
+    }
+
+
+    public function listClassifications(VehicleParameter $vehicleParameter)
+    {
+
+        $query= VehicleClassification::where('vehicle_parameter_id', $vehicleParameter->id)->get();
+
+        return $query;
+
+        //return $vehicleParameter->classificationsByList($vehicleParameter->id);
     }
 }
