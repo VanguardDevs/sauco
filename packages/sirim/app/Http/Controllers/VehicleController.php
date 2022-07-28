@@ -99,8 +99,6 @@ class VehicleController extends Controller
         $amount = $petro*$vehicleClassification->amount;
 
 
-
-
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
         ]);
@@ -214,10 +212,6 @@ class VehicleController extends Controller
     public function listClassifications(VehicleParameter $vehicleParameter)
     {
 
-        $query= VehicleClassification::where('vehicle_parameter_id', $vehicleParameter->id)->get();
-
-        return $query;
-
-        //return $vehicleParameter->classificationsByList($vehicleParameter->id);
+        return $vehicleParameter->classificationsByList($vehicleParameter->id);
     }
 }

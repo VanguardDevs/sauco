@@ -149,7 +149,10 @@
                   </tr>
                   <tr>
                     <td width="40%"><strong>CLASIFICACIÓN DEL VEHÍCULO:</strong> {{ $vehicle->vehicleClassification->name }}</td>
-                    <td width="60%"><strong>MODELO:</strong> {{ $vehicle->vehicleModel->name }}</td>
+                    <td width="60%"><strong>MODELO:</strong> {{ $vehicle->vehicleModel->name }}
+                        <strong>PARÁMETRO:</strong> {{ $vehicle->vehicleClassification->vehicle_parameter->name  }}
+
+                    </td>
                   </tr>
                   <tr >
                     <td colspan="2" style="font-size: 16px;"><strong>COLOR:</strong> {{ $vehicle->color->name }}</td>

@@ -47,9 +47,4 @@ class Vehicle extends Model
         return $this->belongsTo(License::class);
     }
 
-    public function liquidations()
-    {
-        return $this->hasManyThrough(Liquidation::class, License::class);
-    }
-
 }
