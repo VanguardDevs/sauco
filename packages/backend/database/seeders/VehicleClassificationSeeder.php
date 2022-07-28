@@ -46,7 +46,7 @@ class VehicleClassificationSeeder extends Seeder
         ["Hasta 4,000Kg", "0.50", 6, 2],
         ["Desde 4,001Kg hasta 10,000Kg", "0.60", 6, 2],
         ["Desde 10,001Kg en adelante", "0.70", 6, 2],
-        ["Más en cualquier capacidad de arrastre", "0.50", 6, 2]
+        ["Grúas en cualquier capacidad de arrastre", "0.50", 6, 2]
 
     );
     /**

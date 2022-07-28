@@ -230,6 +230,7 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('vehicles', 'VehicleController')->except(['create', 'store']);
 
     Route::get('vehicles/{vehicle}/download', 'VehicleController@download');
+    Route::get('vehicles/{vehicle}/ticket', 'VehicleController@ticket');
     Route::post('vehicles/{license}/renovate', 'VehicleController@renovate');
 
 });

@@ -209,6 +209,80 @@ class VehicleController extends Controller
     }
 
 
+
+
+
+    public function ticket(Vehicle $vehicle)
+    {
+        /*$count = count($affidavit->economicActivityAffidavits);
+
+            if ($count == 1){
+                $customPaper = array(0,0,228,350);
+            }
+            if ($count == 2){
+                $customPaper = array(0,0,228,400);
+            }
+            if ($count == 3){
+                $customPaper = array(0,0,228,430);
+            }
+
+            if ($count == 4){
+                $customPaper = array(0,0,228,480);
+            }
+            if ($count == 5){
+                $customPaper = array(0,0,228,530);
+            }
+            if ($count == 6){
+                $customPaper = array(0,0,228,560);
+            }
+            if ($count == 7){
+                $customPaper = array(0,0,228,650);
+            }
+            if ($count > 7){
+                $customPaper = array(0,0,228,800);
+            }*/
+
+
+            $taxpayer = $vehicle->taxpayer;
+
+            $num = preg_replace("/[^0-9]/", "", $taxpayer->rif);
+
+            $license= License::whereId($vehicle->license_id)->first();
+
+            $correlative = $license->correlative;
+            $licenseCorrelative = $correlative->correlativeType->description.
+                                 $correlative->year->year.'-'
+                                 .$correlative->correlativeNumber->num;
+
+            $representation = $license->representation->person;
+            $signature = Signature::latest()->first();
+
+
+            $liquidation = Liquidation::whereId($license->liquidation_id)->first();
+
+            $period =Carbon::createFromDate($license->create_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->format('Y');
+
+            $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
+
+            $payment = Payment::whereId($liquidationPayment->payment_id)->first();
+
+            $paymentDate = str_replace('/', '-', $payment->processed_at);
+
+            $processedAt =Carbon::createFromDate($paymentDate)->format('d-m-Y');
+
+            $customPaper = array(0,0,228,800);
+            $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'vehicle', 'payment', 'liquidation', 'processedAt', 'period'];
+
+            return PDF::setOptions(['isRemoteEnabled' => true])
+                ->loadView('modules.vehicles.pdf.vehicle-ticket', compact($vars))
+                ->setPaper($customPaper)
+                ->stream('vehiculo-ticket-'.$vehicle->plate.'.pdf');
+
+   }
+
+
+
+
     public function listClassifications(VehicleParameter $vehicleParameter)
     {
 

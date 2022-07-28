@@ -45,6 +45,7 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <label class="col-lg-12"></label>
 
                             <div class="col-lg-6">
                                 <label>Serial del Motor<span class="text-danger">*</span></label>
@@ -65,6 +66,7 @@
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <label class="col-lg-12"></label>
 
                             <div class="col-lg-6">
                                 <label>Capacidad<span class="text-danger">*</span></label>
@@ -79,20 +81,21 @@
                             <div class="col-lg-6">
                                 <label>Puestos<span class="text-danger">*</span></label>
 
-                                {!! Form::number('stalls', null, ['class' => 'form-control', 'id' => 'stalls']) !!}
+                                {!! Form::number('stalls', null, ['class' => 'form-control', 'id' => 'stalls', 'placeholder' => '0']) !!}
 
                                 @error('stalls')
                                     <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <label class="col-lg-12"></label>
 
                             <div class="col-lg-6">
-                                <label class="col-lg-3">Parámetro<span class="text-danger">*</span></label>
+                                <label>Parámetro<span class="text-danger">*</span></label>
                                 {!!
                                     Form::select('vehicleParameter', $vehicleParameter, null, [
                                         'class' => 'col-md-12 select2',
                                         'placeholder' => 'SELECCIONE',
-                                        'id' => 'vparameters'        
+                                        'id' => 'vparameters'
                                     ])
                                 !!}
 
@@ -102,7 +105,7 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <label class="col-lg-3">Clasificación<span class="text-danger">*</span></label>
+                                <label>Clasificación<span class="text-danger">*</span></label>
                                 {!!
                                     Form::select('vehicleClassification', [], null, [
                                         'class' => 'col-md-12 select2',
@@ -116,14 +119,15 @@
                                 <div class="text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <label class="col-lg-12"></label>
 
                             <div class="col-lg-6">
-                                <label class="col-lg-3">Modelo<span class="text-danger">*</span></label>
+                                <label>Modelo<span class="text-danger">*</span></label>
                                 {!!
                                     Form::select('vehicleModel', $vehicleModel, null, [
                                         'class' => 'col-md-12 select2',
                                         'placeholder' => 'SELECCIONE',
-                                       
+
                                     ])
                                 !!}
 
@@ -133,7 +137,7 @@
                             </div>
 
                             <div class="col-lg-6">
-                                <label class="col-lg-3">Color<span class="text-danger">*</span></label>
+                                <label>Color<span class="text-danger">*</span></label>
                                 {!!
                                     Form::select('color', $color, null, [
                                         'class' => 'col-md-12 select2',
@@ -146,11 +150,11 @@
                                 @enderror
                             </div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <br><br>
                                 <label class="col-lg-6"><span class="text-danger"></span></label>
 
-                                <button class="btn btn-success" type="submit">
+                                <button style="align:center" class="btn btn-success" type="submit">
                                     Enviar
                                 </button>
                             </div>
