@@ -169,6 +169,85 @@ class VehicleController extends Controller
     }
 
 
+
+
+
+    public function renovate(Vehicle $vehicle)
+    {
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = $emissionDate->copy()->addYears(1);
+
+        $license = $vehicle->license;
+
+        $taxpayer = $vehicle->taxpayer;
+
+        $concept = Concept::whereCode('15')->first();
+
+        $petro = PetroPrice::latest()->first()->value;
+
+        $vehicleClassification = $vehicle->vehicleClassification;
+
+        $amount = $petro*$vehicleClassification->amount;
+
+
+        $correlative = $license->correlative;
+        $correlativeNumber = $correlative->correlativeNumber;
+
+
+        $liquidation = Liquidation::create([
+            'num' => Liquidation::getNewNum(),
+            'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
+            'amount' => $amount,
+            'liquidable_type' => Vehicle::class,
+            'concept_id' => $concept->id,
+            'liquidation_type_id' => $concept->liquidation_type_id,
+            'liquidable_id' => $vehicle->id,
+            'status_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+        $payment = Payment::create([
+            'status_id' => 1,
+            'user_id' => Auth::user()->id,
+            'amount' => $amount,
+            'payment_method_id' => 1,
+            'payment_type_id' => 1,
+            'taxpayer_id' => $taxpayer->id
+        ]);
+
+        $payment->liquidations()->sync($liquidation);
+
+
+        $newCorrelative = Correlative::create([
+            'correlative_type_id' => 2,
+            'correlative_number_id' => $correlativeNumber->id,
+            'year_id' => $currYear->id
+        ]);
+
+        $license->update([
+            'expiration_date' => $expirationDate,
+            'correlative_id' => $newCorrelative->id,
+            'user_id' => Auth::user()->id
+        ]);
+
+
+        return redirect('taxpayers/'.$taxpayer->id.'/vehicles')
+           ->withSuccess('¡Patente de Vehículo renovada!');    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function download(Vehicle $vehicle)
     {
         $taxpayer = $vehicle->taxpayer;

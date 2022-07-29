@@ -207,7 +207,7 @@ const nullRecord = (id, url) => {
 
 const renovateVehicle = (id) => {
     Swal.fire({
-        title: '¿Está seguro(a) que desea renovar la licencia?',
+        title: '¿Está seguro(a) que desea renovar la patente de vehículo?',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -217,7 +217,7 @@ const renovateVehicle = (id) => {
         if (result.value) {
             $.ajax({
                 type: 'POST',
-                url: `${window.location.href}/${id}/renovate`,
+                url: `vehicles/${id}/renovate`,
                 data: {
                     '_method': 'POST',
                     '_token': $("meta[name='csrf-token']").attr("content"),
