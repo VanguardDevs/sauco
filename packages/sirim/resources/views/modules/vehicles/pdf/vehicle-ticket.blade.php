@@ -101,11 +101,12 @@
         </div>
         <br>
         <div>
-            @if($license->correlative->correlative_type_id == 1)
+            <!--@ if($license->correlative->correlative_type_id == 1)
                 <span>PERIODO DE VIGENCIA:</span> {{ $period }}<br>
-            @else
+            @ else
                 <span>PERIODO DE RENOVACIÓN:</span> {{ $period }}<br>
-            @endif
+            @ endif-->
+                <span>PERIODO DE VIGENCIA:</span> {{ $period }}<br>
                 <span>FECHA DE VENCIMIENTO:</span> {{ $license->expiration_date }}
         </div>
     </body>
