@@ -60,7 +60,7 @@
                             <div class="col-lg-6">
                                 <label>Peso<span class="text-danger">*</span></label>
 
-                                {!! Form::number('weight', null, ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'weight']) !!}
+                                {!! Form::number('weight', 0, ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'placeholder' => '0,00']) !!}
 
                                 @error('weight')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -71,7 +71,7 @@
                             <div class="col-lg-6">
                                 <label>Capacidad<span class="text-danger">*</span></label>
 
-                                {!! Form::number('capacity', null, ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'id' => 'capacity']) !!}
+                                {!! Form::number('capacity', 0, ['class' => 'form-control', 'pattern' => '[0-9]+([\.,][0-9]+)?', 'step' => '0.01', 'placeholder' => '0,00']) !!}
 
                                 @error('capacity')
                                     <div class="text text-danger">{{ $message }}</div>
@@ -81,7 +81,7 @@
                             <div class="col-lg-6">
                                 <label>Puestos<span class="text-danger">*</span></label>
 
-                                {!! Form::number('stalls', null, ['class' => 'form-control', 'id' => 'stalls', 'placeholder' => '0']) !!}
+                                {!! Form::number('stalls', 0, ['class' => 'form-control', 'id' => 'stalls', 'placeholder' => '0']) !!}
 
                                 @error('stalls')
                                     <div class="text text-danger">{{ $message }}</div>

@@ -93,13 +93,11 @@
         <p style="text-align: center; font-weight: bold;">DETALLES DEL VEHÍCULO</p>
         <div class="sections">
             <span>PLACA: </span>{{ $vehicle->plate}}<br>
-            <span>SERIAL DE CARROCERÍA: </span>{{ $vehicle->body_serial}}<br>
-            <span>SERIAL DE MOTOR: </span>{{ $vehicle->engine_serial}}<br>
             <span>PARÁMETRO DEL VEHÍCULO: </span>{{ $vehicle->vehicleClassification->vehicle_parameter->name}}<br>
             <span>CLASIFICACIÓN DEL VEHÍCULO: </span>{{ $vehicle->vehicleClassification->name }}<br>
             <span>MODELO DEL VEHÍCULO: </span>{{ $vehicle->vehicleModel->name }}<br>
             <span>COLOR: </span>{{ $vehicle->color->name }}
-            
+
         </div>
         <br>
         <div>

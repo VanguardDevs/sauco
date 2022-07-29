@@ -1224,9 +1224,9 @@ $(document).ready(function() {
                                         Inactivo
                                     </span>`;
                         $(nTd).html(`${sData.active ? active : inactive}`);
+
                     }
                 },
-
                 {data: 'license',
                     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                         const active = `
@@ -1244,8 +1244,9 @@ $(document).ready(function() {
                                     <i class='btn-sm btn-success fas fa-sync'></i>
                                 </a>
                             </div>`;
-                        $(nTd).html(`${sData.active ? active : inactive}`);
 
+                        $(nTd).html(`${sData.liquidation.status_id=='2' && sData.active ? active :
+                        sData.liquidation.status_id=='2' && sData.active==false ? inactive: ''}`);
                     }
                 }
             ]
@@ -1304,7 +1305,8 @@ $(document).ready(function() {
                                     <i class='btn-sm btn-success fas fa-sync'></i>
                                 </a>
                             </div>`;
-                        $(nTd).html(`${sData.active ? active : inactive}`);
+                        $(nTd).html(`${sData.liquidation.status_id=='2' && sData.active ? active :
+                        sData.liquidation.status_id=='2' && sData.active==false ? inactive: ''}`);
 
                     }
                 }

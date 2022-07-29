@@ -62,7 +62,7 @@ class VehicleController extends Controller
     {
         if ($request->wantsJson()) {
 
-            $query = Vehicle::whereTaxpayerId($taxpayer->id)->with(['color', 'vehicleModel', 'vehicleClassification','license', 'taxpayer']);
+            $query = Vehicle::whereTaxpayerId($taxpayer->id)->with(['color', 'vehicleModel', 'vehicleClassification','license', 'taxpayer', 'license.liquidation']);
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -86,7 +86,7 @@ class VehicleController extends Controller
 
         $ordinance = Ordinance::whereDescription('VEHÍCULOS')->first();
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+        $expirationDate = Carbon::now()->endOfYear();
 
         $concept = Concept::whereCode('15')->first();
 
@@ -176,9 +176,9 @@ class VehicleController extends Controller
     {
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+        $expirationDate = Carbon::now()->endOfYear();
 
-        $license = $vehicle->license;
+        $oldLicense = $vehicle->license;
 
         $taxpayer = $vehicle->taxpayer;
 
@@ -191,7 +191,7 @@ class VehicleController extends Controller
         $amount = $petro*$vehicleClassification->amount;
 
 
-        $correlative = $license->correlative;
+        $correlative = $oldLicense->correlative;
         $correlativeNumber = $correlative->correlativeNumber;
 
 
@@ -225,10 +225,25 @@ class VehicleController extends Controller
             'year_id' => $currYear->id
         ]);
 
-        $license->update([
+        $newLicense = License::create([
+            'num' => $oldLicense->num,
+            'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
+            'ordinance_id' => $oldLicense->ordinance_id,
             'correlative_id' => $newCorrelative->id,
-            'user_id' => Auth::user()->id
+            'taxpayer_id' => $taxpayer->id,
+            'representation_id' => $taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id,
+            'active' => false,
+            'liquidation_id' => $liquidation->id
+        ]);
+
+        $oldLicense->update([
+            'active' => false
+        ]);
+
+        $vehicle->update([
+            'license_id' => $newLicense->id
         ]);
 
 
