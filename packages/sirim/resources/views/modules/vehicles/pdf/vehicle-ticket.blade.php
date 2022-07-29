@@ -27,17 +27,21 @@
                 font-weight: bold;
             }
             .sections {
-                margin-top: 15px;
+                margin-top: -5px;
+                border-color: red;
+                border-width: 1.5px;
+                border-style: solid;
             }
             span{
                 font-weight: bold;
             }
             .description {
                 font-size: 6.3px;
-                margin-left: 19px;
+                margin-left: 36px;
                 margin-bottom: 10px;
-                margin-right: -10px;
-                margin-top: 2px;
+                margin-right: -19px;
+                margin-left: 55.3px;
+                margin-top: -3px;
                 float:center;
                 top: -30px;
             }
@@ -45,13 +49,13 @@
                 float: right;
                 margin-top: -5px;
                 margin-right: -10px;
-                margin-left: -20px;
+                margin-left: -40px;
             }
             #sumatLOGO {
                 float:left;
                 margin-top: 30px;
                 margin-left: -40px;
-                margin-right: 0px;
+                margin-right: -30px;
             }
         </style>
     </head>
@@ -66,7 +70,8 @@
                 REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
                 ESTADO SUCRE<br>
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
-                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
+                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN<br>
+                TRIBUTARIA<br>
                 RIF: G-20000222-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
@@ -75,37 +80,35 @@
                 <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="50px" width="65px" alt="logo" />
             </div>
         </div>
-        <br><br><br>
+        <br>
+        <p style="text-align: center; font-weight: bold;">DATOS GENERALES DEL CONTRIBUYENTE</p>
         <div class="sections">
-            <p style="text-align: center; font-weight: bold;">DATOS GENERALES DEL CONTRIBUYENTE</p>
-            <p>
-            <span>RIF:</span> {{ $license->taxpayer->rif }}<br>
-            <span>NOMBRE: </span>{{ $license->taxpayer->name }}<br>
-            <span>DIRECCIÓN: </span>{{ $license->taxpayer->fiscal_address }}<br>
-            </p>
+                <span>RIF:</span> {{ $license->taxpayer->rif }}<br>
+                <span>NOMBRE: </span>{{ $license->taxpayer->name }}<br>
+                <span>DIRECCIÓN: </span>{{ $license->taxpayer->fiscal_address }}<br>
+                <span>REPRESENTANTE: </span>{{ $representation->name }}<br>
+                <span>C.I: </span>{{ $representation->document }}<br>
         </div>
-        <div class="sections">
+        <br>
         <p style="text-align: center; font-weight: bold;">DETALLES DEL VEHÍCULO</p>
+        <div class="sections">
             <span>PLACA: </span>{{ $vehicle->plate}}<br>
             <span>SERIAL DE CARROCERÍA: </span>{{ $vehicle->body_serial}}<br>
             <span>SERIAL DE MOTOR: </span>{{ $vehicle->engine_serial}}<br>
             <span>PARÁMETRO DEL VEHÍCULO: </span>{{ $vehicle->vehicleClassification->vehicle_parameter->name}}<br>
             <span>CLASIFICACIÓN DEL VEHÍCULO: </span>{{ $vehicle->vehicleClassification->name }}<br>
             <span>MODELO DEL VEHÍCULO: </span>{{ $vehicle->vehicleModel->name }}<br>
-
-            </p>
+            <span>COLOR: </span>{{ $vehicle->color->name }}
+            
         </div>
-        <div class="sections">
-            <span>COLOR: </span>{{ $vehicle->color->name }}<br><br>
-
+        <br>
+        <div>
             @if($license->correlative->correlative_type_id == 1)
                 <span>PERIODO DE VIGENCIA:</span> {{ $period }}<br>
             @else
                 <span>PERIODO DE RENOVACIÓN:</span> {{ $period }}<br>
             @endif
                 <span>FECHA DE VENCIMIENTO:</span> {{ $license->expiration_date }}
-
-
         </div>
     </body>
 </html>

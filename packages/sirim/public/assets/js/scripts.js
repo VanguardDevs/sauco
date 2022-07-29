@@ -1291,8 +1291,12 @@ $(document).ready(function() {
                         const active = `
                             <div class="btn-group">
                                 <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
+                                    <i class='btn-sm btn-info fas fa-download'></i>
+                                </a>
+                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/ticket title='Imprimir Ticket'>
                                     <i class='btn-sm btn-info fas fa-print'></i>
                                 </a>
+
                             </div>`;
                         const inactive = `
                             <div class="btn-group">
