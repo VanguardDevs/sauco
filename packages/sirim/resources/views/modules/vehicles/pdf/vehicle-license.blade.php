@@ -20,7 +20,7 @@
                 float: right;
                 margin-top: -10px;
             }
-            #sello {
+            #selloVehiculo {
                 float: right;
                 margin-top: -1px;
                 margin-bottom: -35px;
@@ -132,58 +132,75 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <tr>
-                        @if($license->correlative->correlative_type_id == 1)
-                        <td><strong>PERIODO DE INSTALACIÓN:</strong> {{ $period }}</td>
-                        @else
-                        <td><strong>PERIODO DE RENOVACIÓN:</strong> {{ $period }}</td>
-                        @endif
-                        <td><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</td>
+                        <td width="80%"><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
+                        <td width="20%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
                     </tr>
                     <tr>
-                        <td width="60%"><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
-                        <td width="40%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
-                    </tr>
+                        <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
+                        <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
+                  </tr>
                   <tr>
                     <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
                   </tr>
                   <tr>
-                    <td width="40%"><strong>CLASIFICACIÓN DEL VEHÍCULO:</strong> {{ $vehicle->vehicleClassification->name }}</td>
-                    <td width="60%"><strong>MODELO:</strong> {{ $vehicle->vehicleModel->name }}
-                        <strong>PARÁMETRO:</strong> {{ $vehicle->vehicleClassification->vehicle_parameter->name  }}
-
+                    <td width="40%">
+                    <strong>PARÁMETRO:</strong> {{ $vehicle->vehicleClassification->vehicleParameter->name  }}
+                    </td>
+                    <td width="60%">
+                        <strong>CLASIFICACIÓN DEL VEHÍCULO:</strong> {{ $vehicle->vehicleClassification->name }}
                     </td>
                   </tr>
-                  <tr >
-                    <td colspan="2" style="font-size: 16px;"><strong>COLOR:</strong> {{ $vehicle->color->name }}</td>
-                  </tr>
-                  <tr>
-                    <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
-                    <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
-                  </tr>
+
+                    <tr width="100%">
+                        <td colspan="1" width="50%">
+                            <strong>MARCA:</strong> {{ $vehicle->vehicleModel->brand->name }}
+                        </td>
+                        <td colspan="1" width="50%">
+
+                            <strong>MODELO:</strong> {{ $vehicle->vehicleModel->name }}
+                        </td>
+                    </tr>
+                    <tr width="100%">
+                        <td colspan="1" width="50%">
+                            <strong>COLOR:</strong> {{ $vehicle->color->name }}
+                        </td>
+                        <td colspan="1" width="50%">
+                            <strong>PLACA:</strong> {{ $vehicle->plate }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><strong>PERIODO DE VIGENCIA:</strong> {{ $period }}</td>
+                    </tr>
+
 
                 </tbody>
             </table>
             <div>
+
+                <div id="selloVehiculo" style=" z-index: 2;">
+                    <img src="{{ asset('/assets/images/selloVehiculo.png') }}" height="70px" width="170px"/>
+                </div>
 
                 <div class="bottom text-center" style="z-index: -1;">
                     <span class="row">{{ $signature->title }}</span>
                     <span class="row">superintendente de administración tributaria</span>
                     <span class="row">{{ $signature->decree }}</span>
                     <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                    <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
                     <span style="font-size: 6px"> </span>
                     @if($license->correlative->correlative_type_id == 1)
-                    <span class="row">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
+                    <span class="row">REFERENCIA: Registro de Patente de Vehículo</span>
                     @else
-                    <span class="row">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
+                    <span class="row">REFERENCIA: Renovación de Patente de Vehículo</span>
                     @endif
                     <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment->num }}</span>
 
                 </div>
             </div>
 			<div class="bandera" >
-                    <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
+                    <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="bandera"/>
              </div>
 
         </div>

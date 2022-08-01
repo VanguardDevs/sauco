@@ -12,7 +12,7 @@ class VehicleParameter extends Model
         'name'
     ];
 
-    public function vehicle_classifications()
+    public function vehicleClassifications()
     {
         return $this->hasMany(VehicleClassification::class, 'vehicle_parameter_id');
     }

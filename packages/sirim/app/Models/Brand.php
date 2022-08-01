@@ -10,7 +10,7 @@ class Brand extends Model
 
     protected $fillable = [ 'name' ];
 
-    public function vehicle_models()
+    public function vehicleModels()
     {
         return $this->hasMany(VehicleModel::class, 'brand_id');
     }

@@ -93,20 +93,16 @@
         <p style="text-align: center; font-weight: bold;">DETALLES DEL VEHÍCULO</p>
         <div class="sections">
             <span>PLACA: </span>{{ $vehicle->plate}}<br>
-            <span>PARÁMETRO DEL VEHÍCULO: </span>{{ $vehicle->vehicleClassification->vehicle_parameter->name}}<br>
+            <span>PARÁMETRO DEL VEHÍCULO: </span>{{ $vehicle->vehicleClassification->vehicleParameter->name}}<br>
             <span>CLASIFICACIÓN DEL VEHÍCULO: </span>{{ $vehicle->vehicleClassification->name }}<br>
             <span>MODELO DEL VEHÍCULO: </span>{{ $vehicle->vehicleModel->name }}<br>
+            <span>MARCA DEL VEHÍCULO: </span>{{ $vehicle->vehicleModel->brand->name }}<br>
             <span>COLOR: </span>{{ $vehicle->color->name }}
 
         </div>
         <br>
         <div>
-            @if($license->correlative->correlative_type_id == 1)
-                <span>PERIODO DE VIGENCIA:</span> {{ $period }}<br>
-            @else
-                <span>PERIODO DE RENOVACIÓN:</span> {{ $period }}<br>
-            @endif
-                <span>FECHA DE VENCIMIENTO:</span> {{ $license->expiration_date }}
+            <span>PERIODO DE VIGENCIA:</span> {{ $period }}<br>
         </div>
     </body>
 </html>

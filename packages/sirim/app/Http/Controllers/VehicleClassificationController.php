@@ -21,7 +21,7 @@ class VehicleClassificationController extends Controller
 
     public function list()
     {
-        $query = VehicleClassification::query()->with('vehicle_parameter', 'charging_method');
+        $query = VehicleClassification::query()->with('vehicleParameter', 'chargingMethod');
 
         return DataTables::eloquent($query)->toJson();
     }

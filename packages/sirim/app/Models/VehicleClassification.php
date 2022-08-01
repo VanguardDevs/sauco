@@ -22,12 +22,12 @@ class VehicleClassification extends Model
         return $this->hasMany(Vehicle::class, 'vehicle_classification_id');
     }
 
-    public function vehicle_parameter()
+    public function vehicleParameter()
     {
         return $this->belongsTo(VehicleParameter::class);
     }
 
-    public function charging_method()
+    public function chargingMethod()
     {
         return $this->belongsTo(ChargingMethod::class);
     }
