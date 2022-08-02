@@ -3,23 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\NewValue;
+
 
 class Requirement extends Model
 {
+    use NewValue;
+
     protected $table = 'requirements';
 
     protected $fillable = [
-        'code',
-        'name'
+        'name',
+        'num',
+        'concept_id',
     ];
 
     public function concept()
     {
-        return $this->belongsToMany(Concept::class);
+        return $this->belongsTo(Concept::class);
     }
 
-    public function taxpayer()
+    public function taxpayers()
     {
-        return $this->belongsToMany(Taxpayer::class);
+        return $this->belongsToMany(Taxpayer::class, 'requirement_taxpayer');
     }
 }

@@ -21,6 +21,7 @@ use App\Models\Requirement;
 use App\Models\RequirementTaxpayer;
 use App\Models\Correlative;
 use App\Models\LiqueurLiquidation;
+use App\Models\Credit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -138,7 +139,6 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
-
         $liquidation = $payment->liquidations->first();
 
         $concept = Concept::whereId($liquidation->concept_id)->first();
@@ -146,8 +146,8 @@ class PaymentController extends Controller
         $taxpayer = Taxpayer::whereId($payment->taxpayer_id)->first();
 
         $validator = $request->validate([
-            'processed_at'     => 'required',
-            'method'  => 'required'
+            'processed_at' => 'required',
+            'method' => 'required'
         ]);
 
         if ($request->input('method') != '3') {
@@ -163,7 +163,6 @@ class PaymentController extends Controller
                 'account_id' => 1,
             ]);
         }
-
 
         $paymentNum = Payment::getNewNum(2);
         $processedAt = $request->processed_at.' '.Carbon::now()->toTimeString();
@@ -181,6 +180,12 @@ class PaymentController extends Controller
             'status_id' => 2
         ]);
 
+        if ($payment->has('credits')){
+            $payment->credits()->update([
+                'generated_at' => $processedAt
+            ]);
+        }
+
         $payment->createMovements();
 
         if($concept->code == '001.005.000'){
@@ -194,8 +199,7 @@ class PaymentController extends Controller
             ]);
         }
 
-
-        if($concept->code == '001.005.001'){
+        if($concept->code == '001.005.001') {
             $requirement = Requirement::whereId('3')->first();
 
             $requirementTaxpayer = RequirementTaxpayer::create([
@@ -206,88 +210,25 @@ class PaymentController extends Controller
             ]);
         }
 
-
-        /*if($concept->code == '21'){
-
-            $licenses = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6')->with("liqueurs")->get();
-
-            foreach($licenses as $license){
-
-                $liqueur = Liqueur::whereLicenseId($license->id)->first();
-
-                $liquidationLiqueur = $liqueur->liquidations->first();
-
-                if ($license->active == false && $liquidationLiqueur->status_id == 2 && $liqueur =! null ) {
-
-                    $license->update([
-                        'active' => true
-                    ]);
-                }
-            }
-        }*/
-
         if($concept->code == '21' || $concept->code == '22'){
-
             $representation= $taxpayer->president()->first();
-
             $currentLiquidation = $payment->liquidations->first();
+            $liqueur = Liqueur::whereLicenseId($currentLiquidation->license->id)->first();
 
-            $liquidationLiqueur = LiqueurLiquidation::whereLiquidationId($currentLiquidation->id)->first();
+            $license = License::whereId($liqueur->license_id)
+                ->first();
 
-            $liqueur = Liqueur::whereId($liquidationLiqueur->liqueur_id)->first();
-
-            $license = License::whereId($liqueur->license_id)->where('active', 'false')->where('ordinance_id', '6')->first();
-
-            $status = $payment->liquidations()->first()->status_id;
+            $status = $currentLiquidation->status_id;
 
             if ($license->active == false && $status == 2 && $liqueur =! null ) {
                 $license->update([
                     'active' => true
                 ]);
             }
-
-            // $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
-
-            // $requirementTaxpayer->update([
-            //     'liquidation_id' => $liquidation->id,
-            //     'active' => false
-            // ]);
-
         }
-
-
-        // if($concept->code == '21' || $concept->code == '22'){
-
-        //     $representation= $taxpayer->president()->first();
-
-        //     //$liqueur = Liqueur::whereRepresentationId($representation->id)->first();
-
-        //     $license = License::whereRepresentationId($representation)->where('active', 'false')->where('ordinance_id', '6')->first();
-
-        //     $correlative = Correlative::whereId($license->correlative_id)->first();
-
-        //     $status = $payment->liquidations()->first()->status_id;
-
-        //     if ($license->active == false && $status == 2 && $liqueur =! null ) {
-        //         $license->update([
-        //             'active' => true
-        //         ]);
-        //     }
-
-        //     $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)->where('active', true)->first();
-
-        //     $requirementTaxpayer->update([
-        //         'liquidation_id' => $liquidation->id,
-        //         'active' => false
-        //     ]);
-
-        // }
-
-
 
         return redirect()->back()->withSuccess('¡Factura procesada!');
     }
-
 
     public function download(Payment $payment)
     {
@@ -315,7 +256,7 @@ class PaymentController extends Controller
                 ->loadView('pdf.payment', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         }
-   }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -340,8 +281,6 @@ class PaymentController extends Controller
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
     }
-
-
 
     public function ticket(Payment $payment)
     {

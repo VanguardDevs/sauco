@@ -1,12 +1,13 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 use App\Models\AnnexedLiqueur;
 
 class LiqueurAnnexSeeder extends Seeder
 {
-
      public $liqueurannexes = Array(
         "Abasto",
         "Supermercado",

@@ -87,9 +87,9 @@ class Liquidation extends Model implements Auditable
     	return $this->hasOne(Movement::class);
     }
 
-    public function liqueur()
+    public function license()
     {
-        return $this->belongsToMany(Liqueur::class, 'liqueur_liquidation');
+    	return $this->hasOne(License::class);
     }
 
     public function requirementTaxpayer()
@@ -97,6 +97,8 @@ class Liquidation extends Model implements Auditable
     	return $this->hasOne(RequirementTaxpayer::class);
     }
 
-
-
+    public function credit()
+    {
+    	return $this->hasOne(Credit::class);
+    }
 }

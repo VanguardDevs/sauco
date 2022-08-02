@@ -11,7 +11,6 @@ use App\Traits\NewValue;
 use App\Traits\MakeLiquidation;
 use App\Traits\PaymentUtils;
 
-
 class License extends Model implements Auditable
 {
     use Audit, SoftDeletes, PrettyTimestamps, NewValue, MakeLiquidation, PaymentUtils;
@@ -28,7 +27,8 @@ class License extends Model implements Auditable
         'representation_id',
         'correlative_id',
         'ordinance_id',
-        'downloaded_at'
+        'downloaded_at',
+        'liquidation_id'
     ];
 
     protected $casts = [
@@ -65,9 +65,14 @@ class License extends Model implements Auditable
         return $this->belongsTo(Representation::class);
     }
 
-    public function liqueurs()
+    public function liquidation()
     {
-        return $this->hasMany(Liqueur::class);
+        return $this->belongsTo(Liquidation::class);
+    }
+
+    public function liqueur()
+    {
+        return $this->hasOne(Liqueur::class);
     }
 
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)

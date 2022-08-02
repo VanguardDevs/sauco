@@ -131,8 +131,8 @@
             </div>
 
 
-            <!--<div class="kt-notification">
-                <a class="kt-notification__item" href="">
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('credits.index', $row) }}">
                     <div class="kt-notification__item-icon">
                         <i class="fas fa-money-bill-wave"></i>
                     </div>
@@ -140,7 +140,7 @@
                         <div class="kt-notification__item-title">Créditos</div>
                     </div>
                 </a>
-            </div>-->
+            </div>
 
         </div>
     </div>
@@ -153,7 +153,7 @@
                         <i class="fas fa-book-reader"></i>
                     </div>
                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">Licencias de actividad económica</div>
+                        <div class="kt-notification__item-title">Licencias de Actividad Económica</div>
                     </div>
                 </a>
             </div>
@@ -165,7 +165,7 @@
                         <i class="fas fa-glass-martini-alt"></i>
                     </div>
                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">Licencias de  licores</div>
+                        <div class="kt-notification__item-title">Licencias de Expendios de Bebidas Alcohólicas</div>
                     </div>
                 </a>
             </div>

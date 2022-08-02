@@ -10,8 +10,10 @@ use App\Http\Requests\MakeWithholdingRequest;
 use App\Models\Liquidation;
 use App\Http\Requests\AnnullmentRequest;
 use Auth;
+use Carbon\Carbon;
 use PDF;
 use App\Models\Withholding;
+use App\Models\Credit;
 
 class LiquidationController extends Controller
 {
@@ -68,14 +70,7 @@ class LiquidationController extends Controller
     {
         // Substract amount
         $amount = $request->input('withholding_amount');
-        $newLiquidationAmount = $liquidation->amount - $amount;
-
-        if ($amount == 0 || $newLiquidationAmount == 0 || $newLiquidationAmount < 0) {
-            return redirect()->back()
-                ->withErrors([
-                    'withholding_amount' => 'El monto especificado excede el total de la liquidación.'
-                ]);
-        }
+        $realAmount = $liquidation->amount - $amount;
 
         // Save withholding
         $deduction = $liquidation->deduction()->create([
@@ -83,26 +78,17 @@ class LiquidationController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-	    $liquidation->update([
-            'amount' => $newLiquidationAmount,
-        ]);
-
-        $affidavit = $liquidation->liquidable()->first();
-
-        // Adjust fines
-        if ($affidavit->fines()->exists()) {
-            $concept = Concept::find(3);
-
-            foreach($affidavit->fines as $fine) {
-                $amount = $concept->calculateAmount($newLiquidationAmount);
-
-                $fine->update([
-                    'amount' => $amount
-                ]);
-                $fine->liquidation()->update([
-                    'amount' => $amount
-                ]);
-            }
+        if ($realAmount >= 0) {
+            $liquidation->update([
+                'amount' => $realAmount,
+            ]);
+        } else {
+            $liquidation->credit()->create([
+                'num' => Credit::getNewNum(),
+                'amount' => $realAmount * -1,
+                'taxpayer_id' => $liquidation->taxpayer_id,
+                'payment_id' => $liquidation->payment->first()->id
+            ]);
         }
 
         $liquidation->payment->first()->updateAmount();
@@ -136,11 +122,15 @@ class LiquidationController extends Controller
             $liquidation->movement()->delete();
         }
 
+        if ($liquidation->credit()->exists()) {
+            $liquidation->credit()->delete();
+        }
+
         return redirect()->back()
             ->withSuccess('¡Liquidación anulada!');
     }
 
-        public function download(Liquidation $liquidation)
+    public function download(Liquidation $liquidation)
     {
         if ($liquidation->status->id == 1) {
             return redirect()->back()

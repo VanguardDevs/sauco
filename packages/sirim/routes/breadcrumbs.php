@@ -627,10 +627,6 @@ Breadcrumbs::for('accounting-accounts.edit', function ($trail, $row) {
     $trail->push('Editar cuenta contable', url('settings/accounting-accounts/edit'.$row->id));
 });
 
-
-
-
-
 /*------------- Liqueur Parameters -------------*/
 Breadcrumbs::for('liqueur-parameters.index', function ($trail) {
     //$trail->parent('liqueur-parameters');
@@ -668,3 +664,8 @@ Breadcrumbs::for('liqueur-licenses.show', function ($trail, $row) {
     $trail->push('Licencia '.$row->num, route('liqueur-licenses.show', $row));
 });
 
+/*------------- Applications -------------*/
+Breadcrumbs::for('credits.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Creditos', route('credits.index', $row));
+});

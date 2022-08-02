@@ -7,36 +7,38 @@ use Illuminate\Database\Eloquent\Model;
 
 class Liqueur extends Model
 {
+
     protected $table = 'liqueurs';
 
     protected $fillable = [
         'work_hours',
-        'num',
         'is_mobile',
         'liqueur_parameter_id',
         'representation_id',
-        'liqueur_classification_id',
-        'license_id'
+        'license_id',
+        'num'
+    ];
+
+
+    protected $appends = [
+        'license'
     ];
 
     public static function getNum()
     {
-        $lastNum = self::get()->last()->num;
-        $lastNum = explode('-', $lastNum)[1];
-        $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
-        $numFormmated = str_pad($newNum,5,"0",STR_PAD_LEFT);
-
-        return $numFormmated;
+        if (self::get()->count()) {
+            $lastNum = self::get()->last()->num;
+            $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
+            $payNum = str_pad($newNum,5,"0",STR_PAD_LEFT);
+        } else {
+            $payNum = "00001";
+        }
+        return $payNum;
     }
 
-    public function liqueurParameter()
+    public function liqueur_parameter()
     {
         return $this->belongsTo(LiqueurParameter::class);
-    }
-
-    public function liqueurClassification()
-    {
-        return $this->belongsTo(LiqueurClassification::class);
     }
 
     public function representation()
@@ -49,18 +51,29 @@ class Liqueur extends Model
         return $this->belongsTo(License::class);
     }
 
+
     public function liquidations()
     {
         return $this->belongsToMany(Liquidation::class, 'liqueur_liquidation');
     }
 
-    public function leasedLiqueur()
+    /*public function liqueur_vehicle()
+    {
+        return $this->hasMany(LiqueurVehicle::class, 'liqueur_id');
+    }*/
+
+    /*public function leased_liqueur()
     {
         return $this->hasMany(LeasedLiqueur::class, 'liqueur_id');
-    }
+    }*/
 
-    public function liqueurAnnex()
+    public function liqueur_annex()
     {
         return $this->hasMany(LiqueurAnnex::class, 'liqueur_id');
+    }
+
+    public function getLicenseAttribute()
+    {
+        $this->load('license');
     }
 }

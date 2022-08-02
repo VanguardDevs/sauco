@@ -50,23 +50,12 @@ class ApplicationController extends Controller
 
     public function makePayment(Application $application)
     {
+        $payment = $application->mountPayment();
 
-        /*$concept = Concept::find($application->concept_id);
+        $liquidation = $application->makeLiquidation();
+        $payment->liquidations()->sync($liquidation);
 
-        $taxpayer = Taxpayer::whereId($application->taxpayer_id)->first();
-
-        $representation = $taxpayer->representations()->first()->id;
-
-        $requirement = Requirement::whereId('1')->first();*/
-
-            $payment = $application->mountPayment();
-
-            $liquidation = $application->makeLiquidation();
-            $payment->liquidations()->sync($liquidation);
-
-            return redirect()->route('liquidations.show', $liquidation->id);
-
-        //}
+        return redirect()->route('liquidations.show', $liquidation->id);
 
     }
 
@@ -82,18 +71,13 @@ class ApplicationController extends Controller
         $amount = ($request->amount) ? $request->amount : $concept->calculateAmount();
         $representation = $taxpayer->representations()->first();
 
-
         if ($request->total) {
             $amount = $amount * $request->total;
         }
 
-
         if ($concept->code == '001.005.000' && $representation == null || $concept->code == '001.005.001' && $representation == null){
-
             return redirect()->back()->withErrors(['concept' => '¡El contribuyente debe tener un representante para realizar esta solicitud!']);
-        }
-        else{
-
+        } else {
             $application = $taxpayer->applications()->create([
                 'active' => 1,
                 'concept_id' => $request->input('concept'),
@@ -107,10 +91,6 @@ class ApplicationController extends Controller
                 ->withSuccess('¡Solicitud creada!');
 
         }
-
-
-
-
     }
 
     /**

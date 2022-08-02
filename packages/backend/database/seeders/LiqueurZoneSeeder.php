@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\LiqueurZone;
 
@@ -9,6 +11,7 @@ class LiqueurZoneSeeder extends Seeder
         "Urbana",
         "Sub Urbana"
     );
+
     /**
      * Run the database seeds.
      *

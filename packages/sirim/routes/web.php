@@ -72,25 +72,20 @@ Route::prefix('/')->middleware('auth')->group(function()
 
         Route::get('liqueur-licenses/{license}/download', 'LicenseController@downloadLiqueurLicense')->name('liqueur-license.download');
 
-
         Route::post('licenses/{license}/dismiss', 'LicenseController@dismiss');
     });
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
     Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
 
-
-
     Route::get('taxpayers/{taxpayer}/liqueur-licenses', 'LicenseController@createLicenceLiqueur')
         ->name('taxpayer.liqueur-licenses');
-
 
     Route::get('liqueur-licenses', 'LicenseController@listLicenseLiqueur')
         ->name('liqueur-licenses.index');
 
-        Route::get('liqueur-licenses/{license}', 'LicenseController@showLicenseLiqueur')
+    Route::get('liqueur-licenses/{license}', 'LicenseController@showLicenseLiqueur')
         ->name('liqueur-licenses.show');
-
 
      /*
     * Payment's routes modules
@@ -211,8 +206,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('dismissals', 'DismissalController')
         ->only(['index']);
 
-
-
      /**
      * Liqueur Parameter's routes modules
      */
@@ -221,5 +214,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     //Route::get('liqueur-parameters', 'LiqueurParameterController@index')->name('liqueur-parameters.index');
     Route::get('liqueur-parameters/list', 'LiqueurParameterController@list');
 
-
+      /**
+     * Taxpayer's Credits
+     */
+    Route::get('taxpayers/{taxpayer}/credits', 'CreditController@index')
+        ->name('credits.index');
+    Route::get('taxpayers/{taxpayer}/credits/list', 'CreditController@list');
 });

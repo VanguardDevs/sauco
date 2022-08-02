@@ -13,7 +13,9 @@
     "users": "node ./scripts/updateUsers.js",
     "movements": "node ./scripts/createMovements.js",
     "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js",
-    "setNumbers": "node ./scripts/setNumbers.js"
+    "setNumbers": "node ./scripts/setNumbers.js",
+    "migrateLiqueurs": "node ./scripts/migrateLiquers.js",
+    "fixCredits": "node ./scripts/fixCreditsLicensesTablejs"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",

@@ -15,13 +15,8 @@ class LiqueurClassification extends Model
         'abbreviature'
     ];
 
-    public function liqueurParameters()
+    public function liqueur_parameters()
     {
         return $this->hasMany(LiqueurParameter::class, 'liqueur_classification_id');
-    }
-
-    public function liqueurs()
-    {
-        return $this->hasMany(Liqueur::class);
     }
 }
