@@ -128,7 +128,7 @@
             <table class="center">
                 <thead>
                     <tr>
-                        <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO</strong> {{ $license->num }} DE FECHA {{ $license->emission_date }}</th>
+                        <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>REGISTRO</strong> {{ $license->num }} DE FECHA {{ $license->emission_date }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,10 +146,10 @@
                   </tr>
                   <tr>
                     <td width="40%">
-                    <strong>PARÁMETRO:</strong> {{ $vehicle->vehicleClassification->vehicleParameter->name  }}
+                    <strong>TIPO:</strong> {{ $vehicle->vehicleClassification->vehicleParameter->name  }}
                     </td>
                     <td width="60%">
-                        <strong>CLASIFICACIÓN DEL VEHÍCULO:</strong> {{ $vehicle->vehicleClassification->name }}
+                        <strong>CLASIFICACIÓN:</strong> {{ $vehicle->vehicleClassification->name }}
                     </td>
                   </tr>
 

@@ -1238,6 +1238,9 @@ $(document).ready(function() {
                                 <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/ticket title='Imprimir Ticket'>
                                     <i class='btn-sm btn-info fas fa-print'></i>
                                 </a>
+                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/certificate title='Imprimir Certificado'>
+                                    <i class='btn-sm btn-info fas fa-address-card'></i>
+                                </a>
                             </div>`;
                         const inactive = `
                             <div class="btn-group">
@@ -1298,7 +1301,9 @@ $(document).ready(function() {
                                 <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/ticket title='Imprimir Ticket'>
                                     <i class='btn-sm btn-info fas fa-print'></i>
                                 </a>
-
+                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/certificate title='Imprimir Certificado'>
+                                    <i class='btn-sm btn-info fas fa-address-card'></i>
+                                </a>
                             </div>`;
                         const inactive = `
                             <div class="btn-group">

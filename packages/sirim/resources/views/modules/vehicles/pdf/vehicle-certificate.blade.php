@@ -3,17 +3,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Comprobante de Vehículo </title>
+        <title> Certificado de Vehículo </title>
         <style>
             @page {
-                margin-left: 12px;
-                margin-right: 12px;
-                margin-top: 12px;
-                margin-bottom: 12px;
+                margin-left: 6.5cm;
+                margin-top: 2cm;
+                margin-bottom: 20.4cm;
             }
+
            body {
                 font-family: 'Helvetica';
-                font-size: 10px;
+                font-size: 7px;
+                float:center;
+                border-color: red;
+                border-width: 1.5px;
+                border-style: solid;
+                width: 8.5cm;
+                height: 5.5cm;
             }
             .header {
                 position: relative;
@@ -22,40 +28,41 @@
             .header div {
                 display: inline-block;
                 text-align:center;
+                margin-top: 1px;
             }
             caption {
                 font-weight: bold;
             }
             .sections {
                 margin-top: -5px;
-                border-color: red;
-                border-width: 1.5px;
-                border-style: solid;
+                margin-left: 2px;
             }
             span{
                 font-weight: bold;
             }
             .description {
-                font-size: 6.3px;
-                margin-left: 36px;
+                font-size: 5.4px;
                 margin-bottom: 10px;
-                margin-right: -19px;
-                margin-left: 55.3px;
-                margin-top: -3px;
+                margin-right: -20px;
+                margin-left: 44px;
+                margin-top: -33px;
                 float:center;
                 top: -30px;
             }
             #mayorLOGO {
                 float: right;
-                margin-top: -5px;
-                margin-right: -10px;
-                margin-left: -40px;
+                margin-top: 1px;
+                margin-right: -1.5px;
+                margin-left: -75px;
             }
             #sumatLOGO {
                 float:left;
-                margin-top: 30px;
-                margin-left: -40px;
-                margin-right: -30px;
+                margin-left: -47px;
+                margin-right: -28px;
+            }
+            #titulo{
+                margin-top: 6px;
+                margin-bottom: 7px;
             }
         </style>
     </head>
@@ -63,46 +70,34 @@
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="50px" width="55px" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="50px" width="44px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
                 REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
                 ESTADO SUCRE<br>
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
-                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN<br>
-                TRIBUTARIA<br>
+                SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
                 RIF: G-20000222-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="50px" width="65px" alt="logo" />
+                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="45px" width="50px" alt="logo" />
             </div>
         </div>
-        <br>
-        <p style="text-align: center; font-weight: bold;">DATOS GENERALES DEL CONTRIBUYENTE</p>
+        <p id="titulo" style="text-align: center; font-weight: bold;">CERTIFICADO DE PATENTE DE VEHÍCULO</p>
         <div class="sections">
-                <span>RIF:</span> {{ $license->taxpayer->rif }}<br>
-                <span>NOMBRE: </span>{{ $license->taxpayer->name }}<br>
-                <span>DIRECCIÓN: </span>{{ $license->taxpayer->fiscal_address }}<br>
-                <span>REPRESENTANTE: </span>{{ $representation->name }}<br>
-                <span>C.I: </span>{{ $representation->document }}<br>
-        </div>
-        <br>
-        <p style="text-align: center; font-weight: bold;">DETALLES DEL VEHÍCULO</p>
-        <div class="sections">
+            <span>REPRESENTANTE: </span>{{ $representation->name }}<br>
+            <span>C.I: </span>{{ $representation->document }}<br>
             <span>PLACA: </span>{{ $vehicle->plate}}<br>
             <span>TIPO: </span>{{ $vehicle->vehicleClassification->vehicleParameter->name}}<br>
             <span>CLASIFICACIÓN: </span>{{ $vehicle->vehicleClassification->name }}<br>
             <span>MARCA: </span>{{ $vehicle->vehicleModel->brand->name }}<br>
             <span>MODELO: </span>{{ $vehicle->vehicleModel->name }}<br>
             <span>COLOR: </span>{{ $vehicle->color->name }}
-
-        </div>
-        <br>
-        <div>
-            <span>PERIODO DE VIGENCIA:</span> {{ $period }}<br>
+            <br><br>
+            <span>PERIODO DE VIGENCIA:</span> {{ $period }}
         </div>
     </body>
 </html>

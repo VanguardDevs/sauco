@@ -231,7 +231,8 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::get('vehicles/{vehicle}/download', 'VehicleController@download');
     Route::get('vehicles/{vehicle}/ticket', 'VehicleController@ticket');
-    
+    Route::get('vehicles/{vehicle}/certificate', 'VehicleController@certificate');
+
     Route::get('vehicles/{vehicle}/renovate', 'VehicleController@renovate');
 
 });

@@ -192,9 +192,9 @@
                         <th width="15%">Placa</th>
                         <th width="15%">Serial de Carrocería</th>
                         <th width="20%">Serial del Motor</th>
-                        <th width="15%">Peso</th>
-                        <th width="10%">Capacidad</th>
-                        <th width="10%">Puestos</th>
+                        <th width="5%">Peso</th>
+                        <th width="4%">Capacidad</th>
+                        <th width="3%">Puestos</th>
                         <th width="10%">Contribuyente</th>
                         <th width="5%">Modelo</th>
                         <th width="10%">Color</th>

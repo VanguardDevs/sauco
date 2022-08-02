@@ -347,6 +347,46 @@ class VehicleController extends Controller
    }
 
 
+   public function certificate(Vehicle $vehicle)
+   {
+
+           $taxpayer = $vehicle->taxpayer;
+
+           $num = preg_replace("/[^0-9]/", "", $taxpayer->rif);
+
+           $license= License::whereId($vehicle->license_id)->first();
+
+           $correlative = $license->correlative;
+           $licenseCorrelative = $correlative->correlativeType->description.
+                                $correlative->year->year.'-'
+                                .$correlative->correlativeNumber->num;
+
+           $representation = $license->representation->person;
+           $signature = Signature::latest()->first();
+
+
+           $liquidation = Liquidation::whereId($license->liquidation_id)->first();
+
+           $period =Carbon::createFromDate($license->create_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->format('Y');
+
+           $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
+
+           $payment = Payment::whereId($liquidationPayment->payment_id)->first();
+
+           $paymentDate = str_replace('/', '-', $payment->processed_at);
+
+           $processedAt =Carbon::createFromDate($paymentDate)->format('d-m-Y');
+
+           $customPaper = array(0,0,243,155);
+           $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'vehicle', 'payment', 'liquidation', 'processedAt', 'period'];
+
+           return PDF::setOptions(['isRemoteEnabled' => true])
+               ->loadView('modules.vehicles.pdf.vehicle-certificate', compact($vars))
+               ->stream('vehiculo-certificado-'.$vehicle->plate.'.pdf');
+
+    }
+
+
 
 
     public function listClassifications(VehicleParameter $vehicleParameter)
