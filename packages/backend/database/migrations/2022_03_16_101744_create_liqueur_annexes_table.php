@@ -22,7 +22,6 @@ class CreateLiqueurAnnexesTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('liqueur_id')->references('id')->on('liqueurs')
                     ->onUpdate('cascade')->onDelete('cascade');
-
         });
     }
 

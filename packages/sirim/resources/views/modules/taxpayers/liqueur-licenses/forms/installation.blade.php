@@ -1,6 +1,6 @@
 <div class="row">
     <label class="col-lg-12">Seleccione Horario de Trabajo<span class="text-danger"> *</span></label>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <label class="col-lg-12">Hora desde <span class="text-danger"></span></label>
         {!!
             Form::select('start-hour', $hours, null, [
@@ -13,14 +13,32 @@
         @enderror
     </div>
 
-    <div class="col-lg-6">
-        <label class="col-lg-12">Hora hasta <span class="text-danger"></span></label>
+    <div class="col-lg-4">
+        <label class="col-lg-12">Hora hasta<span class="text-danger"></span></label>
         {!!
             Form::select('finish-hour', $hours, null, [
                 'class' => 'col-md-12 select2', 'placeholder' => 'SELECCIONE', 'id' => 'finish-hour'
             ])
         !!}
         @error('hour')
+        <div class="text text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-lg-4">
+        <label class="col-lg-12">Fecha de registro<span class="text-danger"></span></label>
+
+        {!!
+            Form::text("registry_date", '', [
+                'class' => 'form-control',
+                'id' => 'datepicker',
+                'placeholder' => 'Seleccione una fecha',
+                'readonly',
+                'required'
+            ])
+        !!}
+
+        @error('registry_date')
         <div class="text text-danger">{{ $message }}</div>
         @enderror
     </div>
@@ -67,14 +85,14 @@
     <div class="col-lg-6">
         <label class="col-lg-12">Anexo<span class="text-danger">*</span></label>
         {!!
-            Form::select('liqueurAnnex', $liqueurAnnexes, null, [
-                'class' => 'col-md-12 select2',
-                'placeholder' => 'SELECCIONE',
-                'id' => 'liqueur_annex'
+            Form::select('annexes[]', $liqueurAnnexes, null, [
+                'class' => 'form-control multiselect',
+                'id' => 'liqueur_annex',
+                'multiple', 'required'
             ])
         !!}
 
-        @error('liqueurAnnex')
+        @error('annexes')
         <div class="text text-danger">{{ $message }}</div>
         @enderror
     </div>
@@ -84,14 +102,14 @@
         <label class="col-lg-12">Clasificación de Expendio<span class="text-danger">*</span></label>
 
         {!!
-            Form::select('liqueurClassification', $liqueurClassifications, null, [
+            Form::select('liqueur_classification_id', $liqueurClassifications, null, [
                 'class' => 'col-md-12 select2',
                 'placeholder' => 'SELECCIONE',
                 'id' => 'liqueur_classification'
             ])
         !!}
 
-        @error('liqueurClassification')
+        @error('liqueur_classification_id')
         <div class="text text-danger">{{ $message }}</div>
         @enderror
     </div>
@@ -99,14 +117,14 @@
         <label class="col-lg-12">Parámetro de Expendio<span class="text-danger">*</span></label>
 
         {!!
-            Form::select('liqueurParameter', $liqueurParameters, null, [
+            Form::select('liqueur_parameter_id', $liqueurParameters, null, [
                 'class' => 'col-md-12 select2',
                 'placeholder' => 'SELECCIONE',
                 'id' => 'liqueur_parameter'
             ])
         !!}
 
-        @error('liqueurParameter')
+        @error('liqueur_parameter_id')
         <div class="text text-danger">{{ $message }}</div>
         @enderror
     </div>

@@ -41,11 +41,12 @@ class LicenseController extends Controller
      */
     public function index(Request $request)
     {
-        $query = License::orderBy('active', 'ASC');
+        $query = License::orderBy('active', 'ASC')
+            ->whereOrdinanceId(1);
 
         // Return responses
         if ($request->wantsJson()) {
-            $query->with(['taxpayer', 'ordinance']);
+            $query->with(['taxpayer']);
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -310,7 +311,8 @@ class LicenseController extends Controller
 
     public function listLicenseLiqueur(Request $request)
     {
-        $query = License::where('ordinance_id', '6');
+        $query = License::orderBy('active', 'ASC')
+            ->whereOrdinanceId(6);
 
         // Return responses
         if ($request->wantsJson()) {
@@ -399,9 +401,6 @@ class LicenseController extends Controller
     {
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $correlativeNum = CorrelativeNumber::getNum();
-        // Maybe for other kind of licenses, I would inject
-        // Ordinances in this method and make licences without searching for
-        // a model
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->addYears(1);
@@ -409,18 +408,14 @@ class LicenseController extends Controller
         $concept = Concept::whereCode('21')->first();
 
         $petro = PetroPrice::latest()->first()->value;
+        $parameter = LiqueurParameter::find($request->liqueur_parameter_id);
+        $liqueurClassification = LiqueurClassification::find($request->liqueur_classification_id);
 
-        $idParameter = $request->input('liqueurParameter');
+        $amount = $petro * $parameter->authorization_registry_amount;
 
-        $liqueur_parameter = LiqueurParameter::whereId($idParameter)->first();
-
-        $liqueurClassification = LiqueurClassification::find($request->liqueurClassification);
-
+        // Generate num
         $liqueurAbbreviature = $liqueurClassification->abbreviature;
-
-        $liqueurNum = Liqueur::getNum();
-
-        $amount = $petro*$liqueur_parameter->authorization_registry_amount;
+        $liqueurNum = '12345';
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -436,7 +431,7 @@ class LicenseController extends Controller
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
             'amount' => $amount,
-            'liquidable_type' => Liquidation::class,
+            'liquidable_type' => License::class,
             'concept_id' => $concept->id,
             'liquidation_type_id' => $concept->liquidation_type_id,
             'status_id' => 1,
@@ -467,20 +462,28 @@ class LicenseController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
-        $hourtring = 'De '.$request->input('start-day').' a '.$request->input('finish-day').' de '.$request->input('start-hour').' hasta '.$request->input('finish-hour');
+        $hourtring = 'De '
+            .$request->input('start-day')
+            .' a '
+            .$request->input('finish-day')
+            .' de '.$request->input('start-hour')
+            .' hasta '.$request->input('finish-hour');
 
         $liqueur = Liqueur::create([
             'work_hours' => $hourtring,
             'is_mobile' => $request->input('is_mobile'),
-            'liqueur_parameter_id' =>  $request->input('liqueurParameter'),
+            'registry_date' => $request->registry_date,
+            'liqueur_parameter_id' =>  $request->liqueur_parameter_id,
+            'liqueur_classification_id' =>  $request->liqueur_classification_id,
             'license_id' => $license->id,
             'num' => $liqueurNum
         ]);
 
-        $liqueurannex = LiqueurAnnex::create([
-            'annex_id' => $request->input('liqueurAnnex'),
-            'liqueur_id' => $liqueur->id
+        $liquidation->update([
+            'liquidable_id' => $license->id
         ]);
+
+        $liqueur->annexes()->sync($request->annexes);
 
         $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)
             ->where('active', true)
@@ -564,7 +567,6 @@ class LicenseController extends Controller
 
         $representation = $license->representation->person;
         $signature = Signature::latest()->first();
-        // dd($license);
         $liqueur = Liqueur::whereLicenseId($license->id)->first();
 
         $liquidation = $license->liquidation;
@@ -600,6 +602,4 @@ class LicenseController extends Controller
         return PDF::loadView('modules.liqueur-licenses.pdf.liqueur-license', compact($vars))
             ->stream('Licencia '.$license->num.'.pdf');
     }
-
-
 }

@@ -7,21 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Liqueur extends Model
 {
-
     protected $table = 'liqueurs';
 
     protected $fillable = [
         'work_hours',
+        'num',
         'is_mobile',
         'liqueur_parameter_id',
         'representation_id',
+        'liqueur_classification_id',
         'license_id',
-        'num'
-    ];
-
-
-    protected $appends = [
-        'license'
+        'registry_date'
     ];
 
     public static function getNum()
@@ -33,10 +29,11 @@ class Liqueur extends Model
         } else {
             $payNum = "00001";
         }
+
         return $payNum;
     }
 
-    public function liqueur_parameter()
+    public function liqueurParameter()
     {
         return $this->belongsTo(LiqueurParameter::class);
     }
@@ -51,7 +48,6 @@ class Liqueur extends Model
         return $this->belongsTo(License::class);
     }
 
-
     public function liquidations()
     {
         return $this->belongsToMany(Liquidation::class, 'liqueur_liquidation');
@@ -62,18 +58,13 @@ class Liqueur extends Model
         return $this->hasMany(LiqueurVehicle::class, 'liqueur_id');
     }*/
 
-    /*public function leased_liqueur()
+    public function leasedLiqueur()
     {
         return $this->hasMany(LeasedLiqueur::class, 'liqueur_id');
-    }*/
-
-    public function liqueur_annex()
-    {
-        return $this->hasMany(LiqueurAnnex::class, 'liqueur_id');
     }
 
-    public function getLicenseAttribute()
+    public function annexes()
     {
-        $this->load('license');
+        return $this->belongsToMany(AnnexedLiqueur::class, 'liqueur_annexes', 'liqueur_id', 'annex_id');
     }
 }

@@ -17,6 +17,7 @@ class CreateLiqueursTable extends Migration
             $table->id();
             $table->string('num')->nullable();
             $table->string('work_hours')->nullable();
+            $table->date('registry_date');
             $table->boolean('is_mobile')->nullable();
             $table->unsignedBigInteger('liqueur_parameter_id')->nullable();
             $table->unsignedBigInteger('liqueur_classification_id')->nullable();

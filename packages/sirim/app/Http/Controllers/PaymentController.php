@@ -211,16 +211,10 @@ class PaymentController extends Controller
         }
 
         if($concept->code == '21' || $concept->code == '22'){
-            $representation= $taxpayer->president()->first();
             $currentLiquidation = $payment->liquidations->first();
-            $liqueur = Liqueur::whereLicenseId($currentLiquidation->license->id)->first();
+            $license = $currentLiquidation->license;
 
-            $license = License::whereId($liqueur->license_id)
-                ->first();
-
-            $status = $currentLiquidation->status_id;
-
-            if ($license->active == false && $status == 2 && $liqueur =! null ) {
+            if ($license->active == false && $license->liqueur != null ) {
                 $license->update([
                     'active' => true
                 ]);

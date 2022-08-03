@@ -94,7 +94,6 @@ $(document).ready(function() {
             { data: 'num' },
             { data: 'taxpayer.rif' },
             { data: 'taxpayer.name' },
-            { data: 'ordinance.description' },
             { data: 'id',
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     const active = `
@@ -148,7 +147,6 @@ $(document).ready(function() {
             { data: 'num' },
             { data: 'taxpayer.rif' },
             { data: 'taxpayer.name' },
-            { data: 'ordinance.description' },
             { data: 'id',
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     const active = `

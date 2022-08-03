@@ -58,10 +58,10 @@
             </a>
         </li>
 
-        <li class="kt-menu__item {{ active('licenses*') }}" aria-haspopup="true" >
+        <li class="kt-menu__item {{ active('liqueur-licenses*') }}" aria-haspopup="true" >
             <a href="{{ route('liqueur-licenses.index') }}" class="kt-menu__link">
-                <i class="kt-menu__link-icon fas fa-file-invoice"></i>
-                <span class="kt-menu__link-text">Licencias de Expendios</span>
+                <i class="kt-menu__link-icon fas fa-glass-martini-alt"></i>
+                <span class="kt-menu__link-text">Expendios</span>
             </a>
         </li>
 

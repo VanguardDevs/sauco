@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class LiqueurAnnex extends Model
 {
-
     protected $table = 'liqueur_annexes';
 
     protected $fillable = [

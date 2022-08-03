@@ -84,6 +84,7 @@ async function main() {
         let inactiveLiqueuersList = [];
 
         for (let i = 0; i < liqueurs.length; i++) {
+            const registryDate = datefns.format(new Date(liqueurs[i].fecharegistro), 'dd-MM-Y');
             const expirationDate = datefns.format(new Date(liqueurs[i].fechavencimiento), 'dd-MM-Y');
             const emissionDate = datefns.format(new Date(liqueurs[i].fechasolicitud), 'dd-MM-Y');
 
@@ -116,7 +117,7 @@ async function main() {
                 continue;
             }
 
-            const isActive = datefns.isAfter(new Date(expirationDate), todayDate)
+            const isActive = datefns.isAfter(new Date(liqueurs[i].fechavencimiento), todayDate)
 
             if (isActive) {
                 activeLiqueuers += 1
@@ -158,6 +159,7 @@ async function main() {
 
             await saucoDB('liqueurs').insert({
                 num: liqueurs[i].numlicencia,
+                registry_date: registryDate,
                 work_hours: liqueurs[i].horarioexp,
                 liqueur_parameter_id: liqueurs[i].expendiosparametros_id,
                 liqueur_classification_id: liqueurs[i].expendiosclasificacion_id,

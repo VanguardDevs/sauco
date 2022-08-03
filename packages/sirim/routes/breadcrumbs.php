@@ -655,13 +655,13 @@ Breadcrumbs::for('taxpayer.liqueur-licenses', function ($trail, $row) {
 
 Breadcrumbs::for('liqueur-licenses.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Licencias de expendios', route('liqueur-licenses.index'));
+    $trail->push('Expendios', route('liqueur-licenses.index'));
 });
 
 
 Breadcrumbs::for('liqueur-licenses.show', function ($trail, $row) {
     $trail->parent('liqueur-licenses.index', $row);
-    $trail->push('Licencia '.$row->num, route('liqueur-licenses.show', $row));
+    $trail->push('Expendio '.$row->num, route('liqueur-licenses.show', $row));
 });
 
 /*------------- Applications -------------*/

@@ -16,7 +16,8 @@ class Liqueur extends Model
         'liqueur_parameter_id',
         'representation_id',
         'liqueur_classification_id',
-        'license_id'
+        'license_id',
+        'registry_date'
     ];
 
     public static function getNum()
@@ -27,6 +28,11 @@ class Liqueur extends Model
         $numFormmated = str_pad($newNum,5,"0",STR_PAD_LEFT);
 
         return $numFormmated;
+    }
+
+    public function license()
+    {
+        return $this->belongsTo(License::class);
     }
 
     public function liqueurParameter()
@@ -44,11 +50,6 @@ class Liqueur extends Model
         return $this->belongsTo(Representation::class);
     }
 
-    public function license()
-    {
-        return $this->belongsTo(License::class);
-    }
-
     public function liquidations()
     {
         return $this->belongsToMany(Liquidation::class, 'liqueur_liquidation');
@@ -59,8 +60,8 @@ class Liqueur extends Model
         return $this->hasMany(LeasedLiqueur::class, 'liqueur_id');
     }
 
-    public function liqueurAnnex()
+    public function annexes()
     {
-        return $this->hasMany(LiqueurAnnex::class, 'liqueur_id');
+        return $this->belongsToMany(AnnexedLiqueur::class, 'liqueur_annexes', 'liqueur_id', 'annex_id');
     }
 }

@@ -86,22 +86,24 @@
                 text-align: center;
             }
             .bottom {
-                width: 95%;
-                height: 130px;
-
+                width: 100%;
+                height: 100px;
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 11px;
                 margin: auto;
-                margin-top: 7%;
+                margin-top: 15%;
                 margin-bottom: -2%;
-
             }
             .center {
                 margin-left: auto;
                 margin-right: auto;
             }
+            .small {
+                font-size: 8.5px;
+            }
         </style>
+        <title>{{ $license->num }}</title>
     </head>
     <body>
         <div class="container">
@@ -130,7 +132,7 @@
                 <table class="center">
                     <thead>
                         <tr>
-                            <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO</strong> {{ $license->num }} DE FECHA {{ $license->emission_date }}</th>
+                            <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO</strong> {{ $liqueur->num }} DE FECHA {{ $liqueur->registry_date }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,7 +153,13 @@
                     </tr>
                     <tr>
                         <td width="40%"><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueurClassification->name }}</td>
-                        <td width="60%"><strong>ANEXO A:</strong> {{ $annexLiqueur->name }}</td>
+                        <td width="60%">
+                            <strong>ANEXO(S):</strong>
+                            <br />
+                            @foreach($liqueur->annexes as $annex)
+                                <span>{{ $annex->name.', ' }}</span>
+                            @endforeach
+                        </td>
                     </tr>
                     <tr >
                         <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
@@ -173,15 +181,13 @@
                         <span class="row">superintendente de administración tributaria</span>
                         <span class="row">{{ $signature->decree }}</span>
                         <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                        <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
-                        <span style="font-size: 6px"> </span>
+                        <span class="row small">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
                         @if($license->correlative->correlative_type_id == 1)
-                        <span class="row">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
+                        <span class="row small">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
                         @else
-                        <span class="row">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
+                        <span class="row small">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
                         @endif
-                        <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
-
+                        <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
                     </div>
                 </div>
                 <div class="bandera" >
@@ -261,15 +267,13 @@
                         <span class="row">superintendente de administración tributaria</span>
                         <span class="row">{{ $signature->decree }}</span>
                         <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                        <span class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
-                        <span style="font-size: 6px"> </span>
+                        <span class="row small">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
                         @if($license->correlative->correlative_type_id == 1)
-                        <span class="row">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
+                        <span class="row small">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
                         @else
-                        <span class="row">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
+                        <span class="row small">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
                         @endif
-                        <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
-
+                        <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
                     </div>
                 </div>
                 <div class="bandera" >

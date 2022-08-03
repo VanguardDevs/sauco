@@ -12,8 +12,13 @@ class AnnexedLiqueur extends Model
         'name'
     ];
 
-    public function liqueur_annexes()
+    public function liqueurAnnexes()
     {
         return $this->hasMany(LiqueurAnnex::class, 'annex_id');
+    }
+
+    public function liqueurs()
+    {
+        return $this->belongsToMany(Liqueur::class, 'liqueur_annexes');
     }
 }

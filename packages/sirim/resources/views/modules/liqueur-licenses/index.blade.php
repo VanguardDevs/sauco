@@ -23,8 +23,7 @@
                     <tr>
                         <th width="15%">Número</th>
                         <th width="15%">RIF</th>
-                        <th width="20%">Razón social</th>
-                        <th width="15%">Ordenanza</th>
+                        <th width="35%">Razón social</th>
                         <th width="10%">Estado</th>
                         <th width="10%">Emisión</th>
                         <th width="10%">Vencimiento</th>

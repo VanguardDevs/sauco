@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class LiqueurParameter extends Model
 {
-
     protected $table = 'liqueur_parameters';
 
     protected $fillable = [
@@ -25,17 +24,17 @@ class LiqueurParameter extends Model
         return $this->hasMany(Liqueur::class, 'liqueur_parameter_id');
     }
 
-    public function liqueur_classification()
+    public function liqueurClassification()
     {
         return $this->belongsTo(LiqueurClassification::class);
     }
 
-    public function liqueur_zone()
+    public function liqueurZone()
     {
         return $this->belongsTo(LiqueurZone::class);
     }
 
-    public function charging_method()
+    public function chargingMethod()
     {
         return $this->belongsTo(ChargingMethod::class);
     }
