@@ -240,7 +240,7 @@ class LicenseController extends Controller
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
-        $representation = $license->representation->person->name;
+        $representation = $license->representation->person;
         $signature = Signature::latest()->first();
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
