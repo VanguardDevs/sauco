@@ -8,13 +8,14 @@ use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
+use App\Traits\CheckLicense;
 use App\Traits\PrettyTimestamps;
 use Carbon\Carbon;
 use App\Models\Year;
 
 class Liquidation extends Model implements Auditable
 {
-    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps;
+    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps, CheckLicense;
 
     protected $table = 'liquidations';
 

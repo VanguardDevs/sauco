@@ -188,38 +188,8 @@ class PaymentController extends Controller
 
         $payment->createMovements();
 
-        if($concept->code == '001.005.000'){
-            $requirement = Requirement::whereId('1')->first();
-
-            $requirementTaxpayer = RequirementTaxpayer::create([
-                'requirement_id' => $requirement->id,
-                'taxpayer_id' => $taxpayer->id,
-                'liquidation_id' => $liquidation->id,
-                'active' => true
-            ]);
-        }
-
-        if($concept->code == '001.005.001') {
-            $requirement = Requirement::whereId('3')->first();
-
-            $requirementTaxpayer = RequirementTaxpayer::create([
-                'requirement_id' => $requirement->id,
-                'taxpayer_id' => $taxpayer->id,
-                'liquidation_id' => $liquidation->id,
-                'active' => true
-            ]);
-        }
-
-        if($concept->code == '21' || $concept->code == '22'){
-            $currentLiquidation = $payment->liquidations->first();
-            $license = $currentLiquidation->license;
-
-            if ($license->active == false && $license->liqueur != null ) {
-                $license->update([
-                    'active' => true
-                ]);
-            }
-        }
+        // Revisit liquidations and licenses status
+        $payment->checkLiquidations();
 
         return redirect()->back()->withSuccess('¡Factura procesada!');
     }

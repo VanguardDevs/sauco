@@ -92,7 +92,7 @@
                 font-weight: 700;
                 font-size: 11px;
                 margin: auto;
-                margin-top: 15%;
+                margin-top: 11%;
                 margin-bottom: -2%;
             }
             .center {
@@ -240,21 +240,26 @@
                             <td width="60%"><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
                             <td width="40%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
                         </tr>
-                    <tr>
-                        <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
-                    </tr>
-                    <tr>
-                        <td width="40%"><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueurClassification->name }}</td>
-                        <td width="60%"><strong>ANEXO A:</strong> {{ $annexLiqueur->name }}</td>
-                    </tr>
-                    <tr >
-                        <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
-                    </tr>
-                    <tr>
-                        <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
-                        <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
-                    </tr>
-
+                        <tr>
+                            <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
+                        </tr>
+                        <tr>
+                            <td width="40%"><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueurClassification->name }}</td>
+                            <td width="60%">
+                                <strong>ANEXO(S):</strong>
+                                <br />
+                                @foreach($liqueur->annexes as $annex)
+                                    <span>{{ $annex->name.', ' }}</span>
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr >
+                            <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
+                        </tr>
+                        <tr>
+                            <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
+                            <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <div>

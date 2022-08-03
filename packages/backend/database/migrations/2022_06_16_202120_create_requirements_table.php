@@ -26,13 +26,16 @@ class CreateRequirementsTable extends Migration
         Schema::create('requirement_taxpayer', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('requirement_id');
-            $table->unsignedBigInteger('taxpayer_id');            
+            $table->unsignedBigInteger('taxpayer_id');
             $table->unsignedBigInteger('liquidation_id');
             $table->boolean('active');
             $table->timestamps();
-            $table->foreign('requirement_id')->references('id')->on('requirements')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('liquidation_id')->references('id')->on('liquidations')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('requirement_id')->references('id')->on('requirements')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('liquidation_id')->references('id')->on('liquidations')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
 
     }

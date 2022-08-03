@@ -67,8 +67,8 @@ class Concept extends Model
         return $this->belongsTo(AccountingAccount::class);
     }
 
-    public function requirements()
+    public function requirement()
     {
-        return $this->hasMany(Requirement::class);
+        return $this->hasOne(Requirement::class);
     }
 }
