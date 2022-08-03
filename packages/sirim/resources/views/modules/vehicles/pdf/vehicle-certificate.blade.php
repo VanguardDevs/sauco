@@ -6,19 +6,19 @@
         <title> Certificado de Vehículo </title>
         <style>
             @page {
-                margin-left: 6.5cm;
-                margin-top: 2cm;
-                margin-bottom: 20.4cm;
+                margin-left: 6.4cm;
+                
+                margin-bottom: 22.75cm;
             }
 
            body {
                 font-family: 'Helvetica';
-                font-size: 7px;
+                font-size: 8.5px;
                 float:center;
                 border-color: red;
                 border-width: 1.5px;
                 border-style: solid;
-                width: 8.5cm;
+                width: 8.6cm;
                 height: 5.5cm;
             }
             .header {
@@ -41,10 +41,10 @@
                 font-weight: bold;
             }
             .description {
-                font-size: 5.4px;
+                font-size: 6px;
                 margin-bottom: 10px;
                 margin-right: -20px;
-                margin-left: 44px;
+                margin-left: 61px;
                 margin-top: -33px;
                 float:center;
                 top: -30px;
@@ -61,8 +61,8 @@
                 margin-right: -28px;
             }
             #titulo{
-                margin-top: 6px;
-                margin-bottom: 7px;
+                margin-top: 8px;
+                margin-bottom: 13px;
             }
         </style>
     </head>
@@ -70,7 +70,7 @@
     <body>
         <div class="header">
             <div class="sumatLOGO">
-                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="50px" width="44px" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="55px" width="55px" alt="sumatlogo"/>
             </div>
             <div class="description">
                <p>
@@ -83,7 +83,7 @@
                 </p>
             </div>
             <div id="mayorLOGO">
-                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="45px" width="50px" alt="logo" />
+                <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="50px" width="65px" alt="logo" />
             </div>
         </div>
         <p id="titulo" style="text-align: center; font-weight: bold;">CERTIFICADO DE PATENTE DE VEHÍCULO</p>
