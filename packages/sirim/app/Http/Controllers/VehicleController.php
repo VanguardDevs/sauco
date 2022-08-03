@@ -42,7 +42,7 @@ class VehicleController extends Controller
         //Cambiar a los datos del vehiculo, no los de la licencia
 
         if ($request->wantsJson()) {
-            $query = Vehicle::query()->with(['color', 'vehicleModel', 'vehicleClassification','license', 'taxpayer']);
+            $query = Vehicle::query()->with(['color', 'vehicleModel', 'vehicleClassification','license', 'license.liquidation','taxpayer']);
 
             return DataTables::eloquent($query)->toJson();
         }

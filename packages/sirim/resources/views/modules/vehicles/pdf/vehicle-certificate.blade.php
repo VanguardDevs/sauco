@@ -6,20 +6,20 @@
         <title> Certificado de Vehículo </title>
         <style>
             @page {
-                margin-left: 6.4cm;
+                margin-left: 6.5cm;
                 
-                margin-bottom: 22.75cm;
+                margin-bottom: 23.3cm;
             }
 
            body {
                 font-family: 'Helvetica';
-                font-size: 8.5px;
+                font-size: 7.5px;
                 float:center;
                 border-color: red;
                 border-width: 1.5px;
                 border-style: solid;
-                width: 8.6cm;
-                height: 5.5cm;
+                width: 8.1cm;
+                height: 5cm;
             }
             .header {
                 position: relative;
@@ -41,10 +41,10 @@
                 font-weight: bold;
             }
             .description {
-                font-size: 6px;
+                font-size: 5.5px;
                 margin-bottom: 10px;
                 margin-right: -20px;
-                margin-left: 61px;
+                margin-left: 60px;
                 margin-top: -33px;
                 float:center;
                 top: -30px;
@@ -58,7 +58,7 @@
             #sumatLOGO {
                 float:left;
                 margin-left: -47px;
-                margin-right: -28px;
+                margin-right: -36px;
             }
             #titulo{
                 margin-top: 8px;
