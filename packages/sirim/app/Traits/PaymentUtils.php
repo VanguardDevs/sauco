@@ -59,7 +59,7 @@ trait PaymentUtils
             if ($liq->liquidable_type == 'App\Models\License') {
                 $liq->updateLicenseStatus();
             } else {
-                $liq->checkRequirements();
+                $liq->addTaxpayerRequirement();
             }
         }
     }

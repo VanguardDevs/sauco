@@ -347,8 +347,12 @@ class LicenseController extends Controller
             ->where('active', true)
             ->first();
 
-        $existingLicenses = License::whereTaxpayerId($taxpayer->id)
-            ->where('ordinance_id', '6')
+        $existingLicenses = DB::table('licenses')
+            ->where('active', false)
+            ->where('taxpayer_id', $taxpayer->id)
+            ->where('ordinance_id', 6)
+            ->groupBy('num', 'id')
+            ->having('num', '>', 1)
             ->pluck('num', 'id')
             ->toArray();
 
@@ -498,31 +502,28 @@ class LicenseController extends Controller
             ->withSuccess('¡Licencia de expendio creada!');
     }
 
-    public function renovateLiqueurLicense(License $license)
+    public function renovateLiqueurLicense(Request $request, Taxpayer $taxpayer)
     {
+        $license = License::find($request->license_id);
         $newLicense = $license->replicate();
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
 
-        // Dates
-        $dt = Carbon::now();
-        $numberYear = $dt->diffInYears($emissionDate);
-        $expirationDate = $emissionDate->copy()->addYears($numberYear+1);
-
         // Make amount
         $concept = Concept::whereCode('22')->first();
         $petro = PetroPrice::latest()->first()->value;
-        $amount = $petro * $liqueur->liqueurParameter->renew_registry_amount;
+        $amount = $petro * $license->liqueur->liqueurParameter->renew_registry_amount;
 
         $liquidation = Liquidation::create([
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
             'amount' => $amount,
-            'liquidable_type' => Liquidation::class,
+            'liquidable_type' => License::class,
             'concept_id' => $concept->id,
             'liquidation_type_id' => $concept->liquidation_type_id,
             'status_id' => 1,
-            'taxpayer_id' => $taxpayer->id
+            'taxpayer_id' => $taxpayer->id,
+            'liquidable_id' => $newLicense->id
         ]);
 
         $payment = Payment::create([
@@ -536,13 +537,20 @@ class LicenseController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
+
+        // Create new license and update dates
+        $emissionDate = Carbon::now();
+        $expirationDate = $emissionDate->copy()->addYears(1);
+
         $newLicense->user_id = Auth::user()->id;
+        $newLicense->emission_date = $emissionDate;
         $newLicense->expiration_date = $expirationDate;
+        $newLicense->liquidation_id = $liquidation->id;
         $newLicense->save();
 
-        $license->liqueur->update([
-            'license_id' => $newLicense->id
-        ]);
+        $newLicense->liquidation_id = $liquidation->id;
+        $newLicense->update();
+        $liquidation->update(['liquidable_id' => $newLicense->id]);
 
         $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)
             ->where('active', true)
@@ -553,7 +561,8 @@ class LicenseController extends Controller
             'active' => false
         ]);
 
-        return response()->json($newLicense);
+        return redirect('taxpayers/'.$taxpayer->id.'/liqueur-licenses')
+            ->withSuccess('¡Expendio '.$newLicense->num.' renovado!. Debe realizar su pago.');
     }
 
     public function downloadLiqueurLicense(License $license)

@@ -68,7 +68,9 @@ Route::prefix('/')->middleware('auth')->group(function()
             ->name('economic-activity-license.create');
 
         Route::post('taxpayers/{taxpayer}/liqueur-licenses/create', 'LicenseController@storeLiqueurLicense')
-        ->name('liqueur-license.create');
+            ->name('liqueur-license.create');
+        Route::post('taxpayers/{taxpayer}/liqueur-licenses/renovate', 'LicenseController@renovateLiqueurLicense')
+            ->name('liqueur-license.renovate');
 
         Route::get('liqueur-licenses/{license}/download', 'LicenseController@downloadLiqueurLicense')->name('liqueur-license.download');
 

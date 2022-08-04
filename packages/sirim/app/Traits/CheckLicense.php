@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\RequirementTaxpayer;
+use App\Models\Liqueur;
 
 trait CheckLicense
 {
@@ -15,10 +16,14 @@ trait CheckLicense
 
         // Liqueurs
         if ($license) {
-            switch($this->concept->code) {
+            $code = $this->concept->code;
+
+            // Check for renovation
+            $this->associateModelToLicense($license, $code);
+            switch($code) {
                 case '21':
                 case '22':
-                    if ($license->active == false && $license->liqueur != null ) {
+                    if ($license->active == false && $license->liqueur != null) {
                         $license->update([
                             'active' => true
                         ]);
@@ -32,7 +37,7 @@ trait CheckLicense
         return;
     }
 
-    public function checkRequirements()
+    public function addTaxpayerRequirement()
     {
         $data = Array();
 
@@ -47,6 +52,25 @@ trait CheckLicense
                 break;
         }
 
-        $this->taxpayer->requirementTaxpayer()->create($data);
+        if ($data != null) {
+            $this->taxpayer->requirementTaxpayer()->create($data);
+        }
+    }
+
+    private function associateModelToLicense($license, $code)
+    {
+        switch($code) {
+            case '22':
+                $liqueur = Liqueur::whereNum($license->num)->first();
+
+                if ($liqueur) {
+                    $liqueur->update([
+                        'license_id' => $license->id
+                    ]);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

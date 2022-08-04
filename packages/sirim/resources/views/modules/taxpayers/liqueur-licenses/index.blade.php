@@ -20,13 +20,21 @@
             </div>
         </div>
         <div class="kt-portlet__body">
+            @if($requirement->requirement->num == '00000001')
             {!! Form::open(['route' => ['liqueur-license.create', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+            @elseif ($requirement->requirement->num == '00000003')
+            {!! Form::open(['route' => ['liqueur-license.renovate', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
+            @endif
                 <div class="form-group row">
                     <div class="col-lg-12">
                         <br><br>
                     </div>
                     <div class="col-lg-12" id= "new_license">
-                        @include('modules.taxpayers.liqueur-licenses.forms.installation')
+                        @if($requirement->requirement->num == '00000001')
+                            @include('modules.taxpayers.liqueur-licenses.forms.installation')
+                        @elseif ($requirement->requirement->num == '00000003')
+                            @include('modules.taxpayers.liqueur-licenses.forms.renewal')
+                        @endif
                     </div>
                 </div>
                 <div class="form-group row">
