@@ -24,7 +24,7 @@
                 border: 1px #000 solid;
             }
             td {
-                font-size: 12px;
+                font-size: 10px;
                 padding: 2px 1px;
             }
             table {
@@ -88,7 +88,7 @@
                 height: 130px;
                 text-transform: uppercase;
                 font-weight: 700;
-                font-size: 10.5px;
+                font-size: 9px;
                 margin: auto;
                 margin-top: 4.1%;
                 margin-bottom: -5%;
@@ -122,22 +122,25 @@
                 </div>
             </div>
             <div class="tables">
-                <span style="font-size: 11px; text-align: center;" class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
+            <strong><span style="font-size: 11px; text-align: center;" class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización. Según la Ordenanza sobre Actividades Económicas de Industria y Comercio, Servicios o de Índole Similar del Municipio Bermúdez de Estado Sucre.</span></strong>
                 <table class="table" style="margin-bottom:0;">
                     <tbody>
 
                         <tr>
-                           <td colspan="2">
-                                <dt style="text-align: center;"><strong>NÚMERO:</strong> {{ $license->num }}</dt> 
+                           <td width="80%">
+                                <dt style="text-align: center;"><strong>NÚMERO:</strong> {{ $license->num }}</dt>
+                            </td>
+                            <td width="20%">
+                                <dt><strong>PROPIO:  </strong> </dt>
                             </td>
 
                         </tr>
 
                         <tr>
-                           <td width="60%">
+                           <td width="65%">
                                 <dt><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</dt>
                             </td>
-                            <td width="40%">
+                            <td width="35%">
                                 <dt><strong>RIF:</strong> {{ $license->taxpayer->rif }}</dt>
                             </td>
                         </tr>
@@ -158,7 +161,7 @@
                                     @endif
                                 -->
                                 <dt><strong>FECHA DE EMISIÓN: </strong> {{ $license->emission_date }}</dt>
-                                    
+
                             </td>
                             <td>
                                 <dt><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</dt>
@@ -168,7 +171,7 @@
                         <tr>
                            <td>
                                 <dt><strong>REPRESENTANTE LEGAL:</strong> {{ $representation->name }}</dt>
-                                    
+
                             </td>
                             <td>
                                 <dt><strong>C.I:</strong> {{ $representation->document }}</dt>
@@ -191,10 +194,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($license->economicActivities->take(3) as $activity)
+                        @foreach($license->economicActivities->take(5) as $activity)
                         <tr>
                             <td>{{ $activity->code }}</td>
-                            <td>{{ substr($activity->name, 0, 29)}}</td>
+                            <td>{{ substr($activity->name, 0, 80)}}</td>
                             <td>{{ $activity->aliquote }}</td>
                             <td>{{ $activity->min_tax }}</td>
                         </tr>
@@ -212,9 +215,8 @@
                 <span class="row">La retención de este documento solo es competencia de la superintendencia municipal de administración tributaria (SUMAT)</span>
             </div>
         </div>
-        <br>
         @endfor
 
-        
+
     </body>
 </html>
