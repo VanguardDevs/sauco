@@ -7,18 +7,7 @@
         <style>
             @page {
                 margin-left: 1.5cm;
-                margin-bottom: 20cm;
-            }
-
-            .float-container {
-                padding: 20px;
-            }
-
-            .float-child {
-                float: left;
-                padding: 20px;
-
-                border: 1.5px solid red;
+                margin-bottom: 19cm;
             }
 
            body {
@@ -26,65 +15,61 @@
                 font-size: 7.5px;
             }
             .header {
-                position: relative;
-                display: block;
-            }
-            .header div {
                 display: inline-block;
-                text-align:center;
-                margin-top: -10px;
-                margin-left: -10px;
+                margin-top: 2px;
+                margin-left: 2px;
             }
             caption {
                 font-weight: bold;
-            }
-            .sections {
-                margin-top: -5px;
-                margin-left: 2px;
             }
             span{
                 font-weight: bold;
             }
             .description {
                 font-size: 5.5px;
-                margin-bottom: 10px;
-                margin-right: -20px;
-                margin-left: 90px;
-                margin-top: -73px;
-                float:left;
-                top: -30px;
+                float:center;
+                margin-right: -24px;
+                margin-left: 59px;
+                margin-top: -45px;
+                
             }
             #mayorLOGO {
                 float: right;
-                margin-top: 1px;
-                margin-right: -1.5px;
-                margin-left: -75px;
+                margin-top: -45px;
+                margin-right: -95px;
+                margin-left: 47px;
             }
             #sumatLOGO {
                 float:left;
-                margin-left: -97px;
-                margin-right: 36px;
+                margin-right: -23px;
+                margin-left: 3px;
             }
-            #titulo{
-                margin-top: 8px;
-                margin-bottom: 13px;
+            .sections {
+                margin-top: 15px;
+                margin-left: 5px;
             }
             .float-container{
-                margin-bottom: 0px;
-                margin-right: 0px;
-                margin-left: 0px;
-                margin-top: 0px;
+                padding: 20px;  
+            }
+
+            .float-child {
+                float: left;
                 border: 1.5px solid red;
             }
+
             #back{
-                width: 7cm;
-                height:4.6cm
+                width: 8.1cm;
+                height:5.1cm;
+                margin-left: 5px;
+                margin-top: 44%;
+                margin-bottom: -44%;
             }
             #front{
-                width: 7cm;
-                margin-bottom: 0px;
+                width: 8.2cm;
+                height:5.1cm;
+                margin-bottom: -20%;
                 margin-right: 0px;
-                margin-left: -10px;
+                margin-left: 0px;
                 margin-top: 0px;
             }
         </style>
@@ -97,7 +82,7 @@
                     <div class="sumatLOGO">
                         <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="55px" width="55px" alt="sumatlogo"/>
                     </div>
-                    <div class="description">
+                    <div class="description" style="text-align:center;">
                     <p>
                         REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
                         ESTADO SUCRE<br>
@@ -121,8 +106,7 @@
                     <span>MARCA: </span>{{ $vehicle->vehicleModel->brand->name }}<br>
                     <span>MODELO: </span>{{ $vehicle->vehicleModel->name }}<br>
                     <span>COLOR: </span>{{ $vehicle->color->name }}
-                    <br><br>
-                    <span>PERIODO DE VIGENCIA:</span> {{ $period }}
+                    
                 </div>
             </div>
             <div  class="float-child">
