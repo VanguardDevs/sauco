@@ -186,8 +186,29 @@
                                     {{ number_format($payment->credits()->sum('amount'), 2, ',', '.') }}
                                 </span> Bs
                             </td>
+                        @elseif ($payment->deductions()->exists() && !$payment->credits()->exists())
+                            <td class="column column--right">
+                                <span class="strong">
+                                    RETENCIONES:
+                                </span>
+                                <span class="strong">
+                                    {{ number_format($payment->deductions()->sum('amount'), 2, ',', '.') }}
+                                </span> Bs
+                            </td>
                         @endif
                     </tr>
+                    @if($payment->deductions()->exists() && $payment->credits()->exists())
+                    <tr>
+                        <td colspan="2" class="column column--right">
+                            <span class="strong">
+                                RETENCIONES:
+                            </span>
+                            <span class="strong">
+                                {{ number_format($payment->deductions()->sum('amount'), 2, ',', '.') }}
+                            </span> Bs
+                        </td>
+                    </tr>
+                    @endif
                     @if($payment->observations)
                         <tr>
                             <td colspan="2" class="column">

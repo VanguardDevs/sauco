@@ -75,7 +75,8 @@ class LiquidationController extends Controller
         // Save withholding
         $deduction = $liquidation->deduction()->create([
             'amount' => $amount,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'payment_id' => $liquidation->payment->first()->id
         ]);
 
         if ($realAmount >= 0) {
