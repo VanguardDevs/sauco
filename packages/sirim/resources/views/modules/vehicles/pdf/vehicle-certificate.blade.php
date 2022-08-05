@@ -31,7 +31,7 @@
                 margin-right: -24px;
                 margin-left: 59px;
                 margin-top: -45px;
-                
+
             }
             #mayorLOGO {
                 float: right;
@@ -50,7 +50,7 @@
                 z-index: 1;
             }
             .float-container{
-                padding: 20px;  
+                padding: 20px;
             }
 
             .float-child {
@@ -115,10 +115,10 @@
                     <span>MARCA: </span>{{ $vehicle->vehicleModel->brand->name }}<br>
                     <span>MODELO: </span>{{ $vehicle->vehicleModel->name }}<br>
                     <span>COLOR: </span>{{ $vehicle->color->name }}
-                    
+
                 </div>
                     <div id="background">
-                        <!--<img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="190px"  style="position: absolute; z-index: -1;"/>-->
+                        <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="190px"  style="position: absolute; z-index: -1; opacity: 0.2;"/>
                     </div>
             </div>
             <div  class="float-child">
