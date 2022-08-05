@@ -47,6 +47,7 @@
             .sections {
                 margin-top: 15px;
                 margin-left: 5px;
+                z-index: 1;
             }
             .float-container{
                 padding: 20px;  
@@ -72,6 +73,14 @@
                 margin-left: 0px;
                 margin-top: 0px;
             }
+
+            #background {
+                float: left;
+                margin-top: -35%;
+                margin-bottom: -35px;
+                margin-left: 18%;
+                margin-right: -74%;
+            }
         </style>
     </head>
 
@@ -96,7 +105,7 @@
                         <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="50px" width="65px" alt="logo" />
                     </div>
                 </div>
-                <p id="titulo" style="text-align: center; font-weight: bold;">CERTIFICADO DE PATENTE DE VEHÍCULO</p>
+                <p id="titulo" style="text-align: center; font-weight: bold; z-index: 1;">CERTIFICADO DE PATENTE DE VEHÍCULO</p>
                 <div class="sections">
                     <span>REPRESENTANTE: </span>{{ $representation->name }}<br>
                     <span>C.I: </span>{{ $representation->document }}<br>
@@ -108,6 +117,9 @@
                     <span>COLOR: </span>{{ $vehicle->color->name }}
                     
                 </div>
+                    <div id="background">
+                        <!--<img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="190px"  style="position: absolute; z-index: -1;"/>-->
+                    </div>
             </div>
             <div  class="float-child">
                 <div id="back">
