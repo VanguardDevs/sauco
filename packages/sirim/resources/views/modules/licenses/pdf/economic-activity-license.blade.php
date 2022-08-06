@@ -98,6 +98,11 @@
                 padding-left: 5px;
             }
 
+            input{
+               margin-top: 3%;
+               margin-bottom: -6%; 
+            }
+
         </style>
     </head>
     <body>
@@ -131,7 +136,9 @@
                                 <dt style="text-align: center;"><strong>NÚMERO:</strong> {{ $license->num }}</dt>
                             </td>
                             <td width="20%">
-                                <dt><strong>PROPIO:  </strong> </dt>
+                                <dt><strong>INMUEBLE PROPIO:  </strong> SI <input type="checkbox" /> NO <input type="checkbox" />
+
+                                </dt>
                             </td>
 
                         </tr>
@@ -209,9 +216,8 @@
             <br>
             <div class="bottom text-center" style="z-index: -1;">
                 <span class="row">{{ $signature->title }}</span>
-                <span class="row">superintendente de administración tributaria</span>
-                <span class="row">{{ $signature->decree }}</span>
-                <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                <span class="row">superintendente de administración tributaria.</span>
+                <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021. GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                 <span class="row">La retención de este documento solo es competencia de la superintendencia municipal de administración tributaria (SUMAT)</span>
             </div>
         </div>
