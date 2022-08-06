@@ -59,11 +59,12 @@
             }
 
             #back{
+                font-size: 10px;
                 width: 8.1cm;
                 height:5.1cm;
                 margin-left: 5px;
-                margin-top: 44%;
-                margin-bottom: -44%;
+                margin-top: 42%;
+                margin-bottom: -42%;
             }
             #front{
                 width: 8.2cm;
@@ -76,10 +77,10 @@
 
             #background {
                 float: left;
-                margin-top: -35%;
+                margin-top: -38%;
                 margin-bottom: -35px;
-                margin-left: 18%;
-                margin-right: -74%;
+                margin-left: 19%;
+                margin-right: -75%;
             }
         </style>
     </head>
@@ -107,6 +108,8 @@
                 </div>
                 <p id="titulo" style="text-align: center; font-weight: bold; z-index: 1;">CERTIFICADO DE PATENTE DE VEHÍCULO</p>
                 <div class="sections">
+                    <span>CONTRIBUYENTE: </span>{{ $license->taxpayer->name }}<br>
+                    <span>RIF: </span>{{ $license->taxpayer->rif }}<br>
                     <span>REPRESENTANTE: </span>{{ $representation->name }}<br>
                     <span>C.I: </span>{{ $representation->document }}<br>
                     <span>PLACA: </span>{{ $vehicle->plate}}<br>
@@ -118,13 +121,13 @@
 
                 </div>
                     <div id="background">
-                        <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="190px"  style="position: absolute; z-index: -1; opacity: 0.2;"/>
+                        <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="92px" width="190px"  style="position: absolute; z-index: -1; opacity: 0.3;"/>
                     </div>
             </div>
             <div  class="float-child">
                 <div id="back">
                     <br><br><br>
-                    <span>PERIODO DE VIGENCIA:</span> {{ $period }}
+                    <span>PERIODO DE VIGENCIA:</span> <span style="font-weight: normal; font-size: 11px;">{{ $period }}</span>
                 </div>
             </div>
         </div>

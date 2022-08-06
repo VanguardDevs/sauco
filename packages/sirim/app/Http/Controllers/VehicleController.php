@@ -358,7 +358,7 @@ class VehicleController extends Controller
 
            $liquidation = Liquidation::whereId($license->liquidation_id)->first();
 
-           $period =Carbon::createFromDate($license->create_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->addYears(1)->format('Y');
+           $period =Carbon::createFromDate($license->create_at)->format('Y');
 
            $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
 
