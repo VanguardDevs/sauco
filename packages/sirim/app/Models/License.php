@@ -13,7 +13,7 @@ use App\Traits\PaymentUtils;
 
 class License extends Model implements Auditable
 {
-    use Audit, SoftDeletes, PrettyTimestamps, NewValue, MakeLiquidation, PaymentUtils;
+    use Audit, SoftDeletes, PrettyTimestamps, MakeLiquidation, PaymentUtils;
 
     protected $table = 'licenses';
 
@@ -92,5 +92,24 @@ class License extends Model implements Auditable
     public function getExpirationDateAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
+    }
+
+    public static function getNewNum($status = null)
+    {
+        $query = self::withTrashed()
+            ->whereOrdinanceId(1);
+
+        if ($status != null) {
+            $query->whereStatusId($status);
+        }
+
+        $lastNum = '00000000';
+
+        if ($query->count()) {
+            $lastNum = $query->orderBy('num', 'DESC')->first()->num;
+        }
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
     }
 }

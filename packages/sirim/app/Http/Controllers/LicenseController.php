@@ -404,7 +404,7 @@ class LicenseController extends Controller
     public function storeLiqueurLicense(Request $request, Taxpayer $taxpayer)
     {
         $currYear = Year::where('year', Carbon::now()->year)->first();
-        $correlativeNum = CorrelativeNumber::getNum();
+        $liqueurNum = Liqueur::getNum($request->liqueur_classification_id);
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
         $emissionDate = Carbon::now();
         $expirationDate = $emissionDate->copy()->addYears(1);
@@ -419,10 +419,9 @@ class LicenseController extends Controller
 
         // Generate num
         $liqueurAbbreviature = $liqueurClassification->abbreviature;
-        $liqueurNum = '12345';
 
         $correlativeNumber = CorrelativeNumber::create([
-            'num' => $correlativeNum
+            'num' => $liqueurNum
         ]);
 
         $correlative = Correlative::create([
@@ -433,7 +432,7 @@ class LicenseController extends Controller
 
         $liquidation = Liquidation::create([
             'num' => Liquidation::getNewNum(),
-            'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
+            'object_payment' => $concept->name.' - AÑO '.$currYear->year,
             'amount' => $amount,
             'liquidable_type' => License::class,
             'concept_id' => $concept->id,
