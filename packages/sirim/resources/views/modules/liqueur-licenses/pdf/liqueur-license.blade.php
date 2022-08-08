@@ -87,7 +87,7 @@
             }
             .bottom {
                 width: 100%;
-                height: 100px;
+                height: 90px;
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 11px;
@@ -182,15 +182,10 @@
                         <span class="row">{{ $signature->decree }}</span>
                         <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                         <span class="row small">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
-                        @if($license->correlative->correlative_type_id == 1)
-                        <span class="row small">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
-                        @else
-                        <span class="row small">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
-                        @endif
                         <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
                     </div>
                 </div>
-                <div class="bandera" >
+                <div class="bandera">
                     <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
                 </div>
             </div>

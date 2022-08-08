@@ -19,10 +19,10 @@ async function main() {
     const db = knex(require("../knexfile"));
 
     try {
-        // await db.schema.table('deductions', table => {
-        //     table.integer('payment_id').unsigned().nullable();
-        //     table.foreign('payment_id').references('payments.id');
-        // });
+        await db.schema.table('deductions', table => {
+            table.integer('payment_id').unsigned().nullable();
+            table.foreign('payment_id').references('payments.id');
+        });
 
         await db.schema.raw(setDeductionsQuery);
     } finally {
