@@ -20,9 +20,13 @@ class Liqueur extends Model
         'registry_date'
     ];
 
-    public static function getNum()
+    public static function getNum($classificationID)
     {
-        $lastNum = self::get()->last()->num;
+        $lastNum = self::whereLiqueurClassificationId($classificationID)
+            ->orderBy('registry_date', 'DESC')
+            ->limit(1)
+            ->first();
+
         $lastNum = explode('-', $lastNum)[1];
         $newNum = ltrim($lastNum, "0") + 1; // Lastnum + 1
         $numFormmated = str_pad($newNum,5,"0",STR_PAD_LEFT);

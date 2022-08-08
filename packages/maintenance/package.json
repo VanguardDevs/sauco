@@ -15,7 +15,7 @@
     "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js",
     "setNumbers": "node ./scripts/setNumbers.js",
     "migrateLiqueurs": "node ./scripts/migrateLiquers.js",
-    "fixCredits": "node ./scripts/fixCreditsLicensesTablejs"
+    "fixCredits": "node ./scripts/fixCreditsLicensesTablejs",
     "deductionPayment": "node ./scripts/deductionPayment.js"
   },
   "author": "Jesus Ordosgoitty",
