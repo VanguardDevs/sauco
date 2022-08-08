@@ -228,7 +228,7 @@
                             <td>{{ $activity->aliquote }}</td>
                             <td>{{ $activity->min_tax }}</td>
                         </tr>
-                    @endforeach
+                        @endforeach
                     </tbody>
                 </table>
             </div>

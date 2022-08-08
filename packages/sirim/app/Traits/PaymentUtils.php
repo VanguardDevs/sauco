@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Payment;
+use Carbon\Carbon;
 
 trait PaymentUtils
 {
@@ -26,5 +27,40 @@ trait PaymentUtils
         ]);
 
         return $payment;
+    }
+
+    public function createMovements()
+    {
+        $liquidations = $this->liquidations;
+
+        $currYear = Carbon::today()->year;
+        foreach($liquidations as $liq) {
+            $concurrent = ($liq->year()->year == $currYear) ? true : false;
+
+            $this->movements()->create([
+                'amount' => $liq->amount,
+                'concurrent' => $concurrent,
+                'concept_id' => $liq->concept_id,
+                'liquidation_id' => $liq->id,
+                'year_id' => $liq->year()->id
+            ]);
+        }
+    }
+
+    /**
+     * Check for each liquidation type, status or whatever it needs
+     * And apply custom methods
+     */
+    public function checkLiquidations()
+    {
+        $liquidations = $this->liquidations;
+
+        foreach($liquidations as $liq) {
+            if ($liq->liquidable_type == 'App\Models\License') {
+                $liq->updateLicenseStatus();
+            } else {
+                $liq->addTaxpayerRequirement();
+            }
+        }
     }
 }

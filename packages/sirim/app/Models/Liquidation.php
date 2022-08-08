@@ -8,13 +8,14 @@ use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
+use App\Traits\CheckLicense;
 use App\Traits\PrettyTimestamps;
 use Carbon\Carbon;
 use App\Models\Year;
 
 class Liquidation extends Model implements Auditable
 {
-    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps;
+    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps, CheckLicense;
 
     protected $table = 'liquidations';
 
@@ -85,6 +86,16 @@ class Liquidation extends Model implements Auditable
     public function movement()
     {
     	return $this->hasOne(Movement::class);
+    }
+
+    public function license()
+    {
+    	return $this->hasOne(License::class);
+    }
+
+    public function requirementTaxpayer()
+    {
+    	return $this->hasOne(RequirementTaxpayer::class);
     }
 
     public function credit()

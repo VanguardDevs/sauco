@@ -6,6 +6,8 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ApplyFine;
 use App\Console\Commands\MigrateLicenseMetadata;
+use App\Console\Commands\ExpireLicense;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +18,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ApplyFine::class,
-        MigrateLicenseMetadata::class
+        MigrateLicenseMetadata::class,
+        ExpireLicense::class
+
     ];
 
     /**
@@ -31,6 +35,10 @@ class Kernel extends ConsoleKernel
             ->monthlyOn(16, '01:42')
             ->lastDayOfMonth('01:42')
             ->evenInMaintenanceMode();
+
+        $schedule->command('expire:licenses')
+            ->dailyAt('01:00');
+
     }
 
     /**
