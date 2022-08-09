@@ -9,7 +9,7 @@
             }
             .header {
                 width: 100%;
-                font-size: 9px;
+                font-size: 8.2px;
                 position: relative;
                 display: block;
             }
@@ -24,7 +24,7 @@
                 border: 1px #000 solid;
             }
             td {
-                font-size: 10px;
+                font-size: 9px;
                 padding: 2px 1px;
             }
             table {
@@ -90,8 +90,8 @@
                 font-weight: 700;
                 font-size: 9px;
                 margin: auto;
-                margin-top: 4.1%;
-                margin-bottom: -5%;
+                margin-top: 2.5%;
+                margin-bottom: -8%;
             }
             .description {
                 text-align: center;
@@ -99,8 +99,8 @@
             }
 
             input{
-               margin-top: 3%;
-               margin-bottom: -6%; 
+               margin-top: 3.5%;
+               margin-bottom: -9%; 
             }
 
         </style>
@@ -110,7 +110,7 @@
         <div class="container">
             <div class="header">
                 <div class="sumatLOGO">
-                    <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="210px" alt="sumatlogo"/>
+                    <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="89px" width="210px" alt="sumatlogo"/>
                 </div>
                 <div class="description">
                 <p>
@@ -123,11 +123,11 @@
                     </p>
                 </div>
                 <div id="mayorLOGO">
-                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="79px" width="130px" alt="logo" />
                 </div>
             </div>
             <div class="tables">
-            <strong><span style="font-size: 11px; text-align: center;" class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización. Según la Ordenanza sobre Actividades Económicas de Industria y Comercio, Servicios o de Índole Similar del Municipio Bermúdez de Estado Sucre.</span></strong>
+            <strong><span style="font-size: 10.5px; text-align: center; margin-top: -1%;" class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización. Según la Ordenanza sobre Actividades Económicas de Industria y Comercio, Servicios o de Índole Similar del Municipio Bermúdez de Estado Sucre (Art. 5).</span></strong>
                 <table class="table" style="margin-bottom:0;">
                     <tbody>
 
@@ -145,7 +145,7 @@
 
                         <tr>
                            <td width="65%">
-                                <dt><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</dt>
+                                <dt><strong>CONTRIBUYENTE:</strong> {{ $license->taxpayer->name }}</dt>
                             </td>
                             <td width="35%">
                                 <dt><strong>RIF:</strong> {{ $license->taxpayer->rif }}</dt>
@@ -155,6 +155,7 @@
                         <tr>
                            <td>
                                 <dt><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</dt>
+
                             </td>
                             <td>
                                 <dt><strong>REGISTRO:</strong> {{ $num }}</dt>
@@ -201,7 +202,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($license->economicActivities->take(5) as $activity)
+                        @foreach($license->economicActivities->take(9) as $activity)
                         <tr>
                             <td>{{ $activity->code }}</td>
                             <td>{{ substr($activity->name, 0, 80)}}</td>
