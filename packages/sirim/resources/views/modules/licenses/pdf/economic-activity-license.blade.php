@@ -202,7 +202,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($license->economicActivities->take(9) as $activity)
+                        @foreach($license->economicActivities->take(8) as $activity)
                         <tr>
                             <td>{{ $activity->code }}</td>
                             <td>{{ substr($activity->name, 0, 80)}}</td>
@@ -222,6 +222,7 @@
                 <span class="row">La retención de este documento solo es competencia de la superintendencia municipal de administración tributaria (SUMAT)</span>
             </div>
         </div>
+        <br>
         @endfor
 
 
