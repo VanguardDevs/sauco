@@ -340,7 +340,7 @@ class LicenseController extends Controller
         if ($request->wantsJson()) {
             $query = License::whereTaxpayerId($taxpayer->id)
                 ->where('ordinance_id', '6')
-                ->orderBy('active', 'DESC')
+                ->orderBy('id', 'desc')
                 ->withTrashed();
 
             return DataTables::eloquent($query)->toJson();
@@ -351,9 +351,9 @@ class LicenseController extends Controller
             ->first();
 
         $existingLicenses = DB::table('licenses')
-            ->where('active', false)
             ->where('taxpayer_id', $taxpayer->id)
             ->where('ordinance_id', 6)
+            ->where('expiration_date', '<=', Carbon::now()->addDays(30))
             ->groupBy('num', 'id')
             ->having('num', '>', 1)
             ->pluck('num', 'id')
@@ -549,6 +549,7 @@ class LicenseController extends Controller
 
         $newLicense->user_id = Auth::user()->id;
         $newLicense->emission_date = $emissionDate;
+        $newLicense->active = false;
         $newLicense->expiration_date = $expirationDate;
         $newLicense->liquidation_id = $liquidation->id;
         $newLicense->save();
