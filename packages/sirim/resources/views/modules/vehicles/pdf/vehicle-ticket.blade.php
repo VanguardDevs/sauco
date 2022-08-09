@@ -83,10 +83,10 @@
         <br>
         <p style="text-align: center; font-weight: bold;">DATOS GENERALES DEL CONTRIBUYENTE</p>
         <div class="sections">
+                <span>CONTRIBUYENTE: </span>{{ $license->taxpayer->name }}<br>
                 <span>RIF:</span> {{ $license->taxpayer->rif }}<br>
-                <span>NOMBRE: </span>{{ $license->taxpayer->name }}<br>
                 <span>DIRECCIÓN: </span>{{ $license->taxpayer->fiscal_address }}<br>
-                <span>REPRESENTANTE: </span>{{ $representation->name }}<br>
+                <span>REPRESENTANTE LEGAL: </span>{{ $representation->name }}<br>
                 <span>C.I: </span>{{ $representation->document }}<br>
         </div>
         <br>

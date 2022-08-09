@@ -127,7 +127,7 @@
             <div  class="float-child">
                 <div id="back">
                     <br><br><br>
-                    <span>PERIODO DE VIGENCIA:</span> <span style="font-weight: normal; font-size: 11px;">{{ $period }}</span>
+                    <span>PERIODO DE VIGENCIA:</span> <span style="font-weight: normal; font-size: 16px;">{{ $period }}</span>
                 </div>
             </div>
         </div>

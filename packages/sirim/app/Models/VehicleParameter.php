@@ -19,7 +19,7 @@ class VehicleParameter extends Model
 
     public function scopeClassificationsByList($query, $type)
     {
-        return self::vehicle_classifications()
+        return self::vehicleClassifications()
             ->where('vehicle_parameter_id', $type)
             ->get();
     }

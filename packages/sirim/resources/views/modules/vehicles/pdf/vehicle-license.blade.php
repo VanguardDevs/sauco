@@ -9,7 +9,7 @@
             }
             .header {
                 width: 100%;
-                font-size: 9px;
+                font-size: 8.5px;
                 position: relative;
                 display: block;
             }
@@ -20,17 +20,11 @@
                 float: right;
                 margin-top: -10px;
             }
-            #selloVehiculo {
-                float: right;
-                margin-top: -1px;
-                margin-bottom: -35px;
-                margin-left: 5px;
-            }
             table, td, th {
                 border: 1px #000 solid;
             }
             td {
-                font-size: 12px;
+                font-size: 11.5px;
                 padding: 2px 1px;
             }
             table {
@@ -92,20 +86,19 @@
                 font-size: 11px;
                 margin: auto;
                 margin-top: 7%;
-                margin-bottom: -2%;
+                margin-bottom: -8%;
             }
             .center {
                 margin-left: auto;
                 margin-right: auto;
-            }
-        </style>
+            }        </style>
     </head>
     <body>
         @for($i=1; $i<=2; ++$i)
         <div class="container">
             <div class="header">
                 <div class="sumatLOGO">
-                    <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
+                    <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="89px" width="230px" alt="sumatlogo"/>
 
                 </div>
                 <div class="description text-center">
@@ -119,7 +112,7 @@
                     </p>
                 </div>
                 <div id="mayorLOGO">
-                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="79px" width="130px" alt="logo" />
                 </div>
             </div>
 
@@ -134,21 +127,21 @@
                 <tbody>
 
                     <tr>
-                        <td width="80%"><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
-                        <td width="20%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
+                        <td width="85%"><strong>CONTRIBUYENTE:</strong> {{ $license->taxpayer->name }}</td>
+                        <td width="15%"><strong>RIF: </strong>{{ $license->taxpayer->rif }}</td>
                     </tr>
                     <tr>
-                        <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
-                        <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
+                        <td><strong>REPRESENTANTE LEGAL:</strong> {{ $representation->name }}</td>
+                        <td><strong>C.I:</strong> {{ $representation->document }}</td>
                   </tr>
                   <tr>
                     <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
                   </tr>
                   <tr>
-                    <td width="40%">
+                    <td >
                     <strong>TIPO:</strong> {{ $vehicle->vehicleClassification->vehicleParameter->name  }}
                     </td>
-                    <td width="60%">
+                    <td >
                         <strong>CLASIFICACIÓN:</strong> {{ $vehicle->vehicleClassification->name }}
                     </td>
                   </tr>
@@ -163,10 +156,10 @@
                         </td>
                     </tr>
                     <tr width="100%">
-                        <td colspan="1" width="50%">
+                        <td colspan="1" >
                             <strong>COLOR:</strong> {{ $vehicle->color->name }}
                         </td>
-                        <td colspan="1" width="50%">
+                        <td colspan="1" >
                             <strong>PLACA:</strong> {{ $vehicle->plate }}
                         </td>
                     </tr>
@@ -175,28 +168,21 @@
                         <td colspan="2"><strong>PERIODO DE VIGENCIA:</strong> {{ $period }}</td>
                     </tr>
 
-
                 </tbody>
             </table>
             <div>
 
-                <div id="selloVehiculo" style=" z-index: 2;">
-                    <img src="{{ asset('/assets/images/selloVehiculo.png') }}" height="70px" width="170px"/>
-                </div>
-
                 <div class="bottom text-center" style="z-index: -1;">
                     <span class="row">{{ $signature->title }}</span>
                     <span class="row">superintendente de administración tributaria</span>
-                    <span class="row">{{ $signature->decree }}</span>
-                    <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                    <span style="font-size: 6px"> </span>
-                    @if($license->correlative->correlative_type_id == 1)
-                    <span class="row">REFERENCIA: Registro de Patente de Vehículo</span>
-                    @else
-                    <span class="row">REFERENCIA: Renovación de Patente de Vehículo</span>
-                    @endif
+                    <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021. GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                     <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment->num }}</span>
-
+                    @if($license->correlative->correlative_type_id == 1)
+                    <span class="row" style="font-size: 8px">REFERENCIA: Registro de Patente de Vehículo</span>
+                    @else
+                    <span class="row" style="font-size: 8px">REFERENCIA: Renovación de Patente de Vehículo</span>
+                    @endif
+                    
                 </div>
             </div>
 			<div class="bandera" >
