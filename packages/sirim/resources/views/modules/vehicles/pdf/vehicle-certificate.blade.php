@@ -106,7 +106,7 @@
                         <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="50px" width="65px" alt="logo" />
                     </div>
                 </div>
-                <p id="titulo" style="text-align: center; font-weight: bold; z-index: 1;">CERTIFICADO DE PATENTE DE VEHÍCULO</p>
+                <p id="titulo" style="text-align: center; font-weight: bold; z-index: 1;">CERTIFICADO DE SOLVENCIA DE PATENTE DE VEHÍCULO</p>
                 <div class="sections">
                     <span>CONTRIBUYENTE: </span>{{ $license->taxpayer->name }}<br>
                     <span>RIF: </span>{{ $license->taxpayer->rif }}<br>
@@ -126,7 +126,10 @@
             </div>
             <div  class="float-child">
                 <div id="back">
-                    <br><br><br>
+
+                     <span style="font-size: 8px; margin-left: 26%;">_______________________________</span>
+                     <span style="font-size: 8px; margin-left: 27%;">SUPERINTENDENTE TRIBUTARIO</span>
+                    <br><br>
                     <span>PERIODO DE VIGENCIA:</span> <span style="font-weight: normal; font-size: 16px;">{{ $period }}</span>
                 </div>
             </div>
