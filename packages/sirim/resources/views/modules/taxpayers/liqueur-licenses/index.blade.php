@@ -25,25 +25,23 @@
             @elseif ($requirement->requirement->num == '00000003')
             {!! Form::open(['route' => ['liqueur-license.renovate', $taxpayer->id], 'autocomplete' => 'off', 'enctype' => 'multipart/form-data',]) !!}
             @endif
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        <br><br>
-                    </div>
-                    <div class="col-lg-12" id= "new_license">
-                        @if($requirement->requirement->num == '00000001')
-                            @include('modules.taxpayers.liqueur-licenses.forms.installation')
-                        @elseif ($requirement->requirement->num == '00000003')
-                            @include('modules.taxpayers.liqueur-licenses.forms.renewal')
-                        @endif
-                    </div>
+            <div class="form-group row">
+                <div class="col-lg-12" id= "new_license">
+                    @if($requirement->requirement->num == '00000001')
+                        @include('modules.taxpayers.liqueur-licenses.forms.installation')
+                    @elseif ($requirement->requirement->num == '00000003')
+                        @include('modules.taxpayers.liqueur-licenses.forms.renewal')
+                    @endif
                 </div>
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        <button class="btn btn-success" type="submit">
-                            Enviar
-                        </button>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-8"></div>
+                <div class="col-lg-4">
+                    <button class="btn btn-success" type="submit">
+                        Enviar
+                    </button>
                 </div>
+            </div>
             {!! Form::close() !!}
         </div>
     </div>
@@ -62,8 +60,9 @@
                 <thead>
                   <tr>
                     <th width="40%">Número</th>
-                    <th width="20%">Fecha de emisión</th>
-                    <th width="20%">Estado</th>
+                    <th width="15%">F. de emisión</th>
+                    <th width="15%">F. de vencimiento</th>
+                    <th width="10%">Estado</th>
                     <th width="20%">Acciones</th>
                   </tr>
                 </thead>

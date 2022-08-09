@@ -338,7 +338,10 @@ class LicenseController extends Controller
     public function createLicenceLiqueur(Taxpayer $taxpayer, Request $request)
     {
         if ($request->wantsJson()) {
-            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '6');
+            $query = License::whereTaxpayerId($taxpayer->id)
+                ->where('ordinance_id', '6')
+                ->orderBy('active', 'DESC')
+                ->withTrashed();
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -504,6 +507,7 @@ class LicenseController extends Controller
     public function renovateLiqueurLicense(Request $request, Taxpayer $taxpayer)
     {
         $license = License::find($request->license_id);
+        $liqueur = Liqueur::whereLicenseId($request->license_id)->first();
         $newLicense = $license->replicate();
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
@@ -539,7 +543,9 @@ class LicenseController extends Controller
 
         // Create new license and update dates
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+        $expirationDate = Carbon::parse($liqueur->registry_date)
+            ->year(now()->addYears(1)->format('Y'))
+            ->format('Y-m-d');
 
         $newLicense->user_id = Auth::user()->id;
         $newLicense->emission_date = $emissionDate;
@@ -559,6 +565,8 @@ class LicenseController extends Controller
         $requirementTaxpayer->update([
             'active' => false
         ]);
+
+        $license->delete();
 
         return redirect('taxpayers/'.$taxpayer->id.'/liqueur-licenses')
             ->withSuccess('¡Expendio '.$newLicense->num.' renovado!. Debe realizar su pago.');
