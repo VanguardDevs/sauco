@@ -123,7 +123,7 @@
             <div class="kt-notification">
                 <a class="kt-notification__item" href="{{ route('historics.index', $row) }}">
                     <div class="kt-notification__item-icon">
-                        <i class="fas fa-address-book"></i>
+                        <i class="fas fa-file-invoice-dollar"></i>
                     </div>
                     <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title">Histórico de Operaciones</div>

@@ -10,7 +10,7 @@
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
                 <span class="kt-portlet__head-icon">
-                    <i class="kt-font-brand fas fa-file-medical"></i>
+                    <i class="kt-font-brand fas fa-cash-register"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
                     Realizar Liquidación
@@ -53,7 +53,9 @@
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-12"></div>
+                    <br>
+                    <div class="col-lg-5">
                         <label class="control-label">Monto</label>
                         {!!
                             Form::text("amount", null, [
@@ -68,7 +70,7 @@
                     </div>
 
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <label class="control-label">Detalles</label>
                         {!!
                             Form::text("observations", null, [

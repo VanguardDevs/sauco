@@ -84,18 +84,6 @@ class HistoricController extends Controller
                 ->withSuccess('¡Liquidación creada!');
     }
 
-    public function makePayment(Application $application)
-    {
-        $payment = $application->mountPayment();
-
-        $liquidation = $application->makeLiquidation();
-        $payment->liquidations()->sync($liquidation);
-
-        return redirect()->route('liquidations.show', $liquidation->id);
-
-    }
-
-
     public function listByTaxpayer(Taxpayer $taxpayer)
     {
         $query = $taxpayer->payments()
