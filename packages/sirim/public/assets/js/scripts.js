@@ -11,6 +11,7 @@ $("#form").closest('form').on('submit', function(e) {
 /*--------- Select Dinamicos ---------*/
 $(function () {
     $('#applications').on('change', onSelectApplications);
+    $('#historics').on('change', onSelectHistorics);
     $('#fines').on('change', onSelectFines);
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
@@ -161,6 +162,23 @@ function onSelectLicenseCorrelativeType() {
     if (selected == "INSTALAR LICENCIA" || selected == "RENOVAR LICENCIA") {
         new_license.show();
     }
+  }
+
+
+
+  function onSelectHistorics() {
+    let ordinance_id = $(this).val();
+
+    let html_select = '<option value=""> SELECCIONE </option>';
+
+    $.get('/historics/'+ordinance_id+'/concepts/', data => {
+
+      for (let i = 0; i < data.length; i++) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+      }
+
+      $('#concepts').html(html_select);
+    });
   }
 
 
@@ -1071,4 +1089,39 @@ $(document).ready(function() {
             }
         ]
     });
+
+
+
+
+    $('#tHistoric').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/payments`,
+        "columns": [
+            { data: 'num' },
+            { data: 'status.name' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Editar'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+
 });
