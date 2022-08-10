@@ -94,7 +94,6 @@
             }        </style>
     </head>
     <body>
-        @for($i=1; $i<=2; ++$i)
         <div class="container">
             <div class="header">
                 <div class="sumatLOGO">
@@ -192,8 +191,5 @@
         </div>
 
         </div>
-        <br>
-        @endfor
-
     </body>
 </html>
