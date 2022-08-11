@@ -102,15 +102,25 @@
             .small {
                 font-size: 8.5px;
             }
+            #watermark {
+                position: absolute;
+                top: 175px;
+                right: 250px;
+                width: 200px;
+                height: 200px;
+                opacity: .3;
+            }
         </style>
         <title>{{ $license->num }}</title>
     </head>
     <body>
+        <div id="watermark">
+            <img src="{{ asset('/assets/images/escudo.jpg') }}" height="100%" width="100%" alt="sumatlogo"/>
+        </div>
         <div class="container">
             <div class="header">
                 <div class="sumatLOGO">
                     <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
-
                 </div>
                 <div class="description text-center">
                 <p>
@@ -179,7 +189,7 @@
                     <div class="bottom text-center" style="z-index: -1;">
                         <span class="row">{{ $signature->title }}</span>
                         <span class="row">superintendente de administración tributaria</span>
-                        <span class="row">POR {{ $signature->decree }}</span>
+                        <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021</span>
                         <span class="row small">FIRMA AUTORIZADA DE ACUERDO CON EL ARTÍCULO 7 DE LA ORDENANZA QUE REGULA EL FUNCIONAMIENTO DEL EXPENDIO DE BEBIDAS ALCOHÓLICAS</span>
                         <span class="row small">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                         <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
