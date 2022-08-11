@@ -24,7 +24,7 @@
                 border: 1px #000 solid;
             }
             td {
-                font-size: 9px;
+                font-size: 10px;
                 padding: 2px 1px;
             }
             table {
@@ -106,7 +106,6 @@
         </style>
     </head>
     <body>
-        @for($i=1; $i<=2; ++$i)
         <div class="container">
             <div class="header">
                 <div class="sumatLOGO">
@@ -126,6 +125,9 @@
                     <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="79px" width="130px" alt="logo" />
                 </div>
             </div>
+
+             <h4 style="margin-top: 1px; text-align: center;" >LICENCIA DE ACTIVIDAD ECONÓMICA</h4>
+
             <div class="tables">
             <strong><span style="font-size: 10.5px; text-align: center; margin-top: -1%;" class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización. Según la Ordenanza sobre Actividades Económicas de Industria y Comercio, Servicios o de Índole Similar del Municipio Bermúdez de Estado Sucre (Art. 5).</span></strong>
                 <table class="table" style="margin-bottom:0;">
@@ -202,7 +204,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($license->economicActivities->take(8) as $activity)
+                        @foreach($license->economicActivities as $activity)
                         <tr>
                             <td>{{ $activity->code }}</td>
                             <td>{{ substr($activity->name, 0, 80)}}</td>
@@ -222,9 +224,5 @@
                 <span class="row">La retención de este documento solo es competencia de la superintendencia municipal de administración tributaria (SUMAT)</span>
             </div>
         </div>
-        <br>
-        @endfor
-
-
     </body>
 </html>
