@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>LICENCIA {{ $license->num }}</title>
         <style>
             body {
                 font-family: 'Helvetica';
@@ -41,6 +42,10 @@
             }
             .tables {
                 display:block;
+                border-color: blue;
+                border-width: 1.5px;
+                border-style: solid;
+                margin-top: -6px;
             }
             .bill-info {
                 width: 100%;
@@ -85,7 +90,7 @@
 
             .bottom {
                 width: 95%;
-                height: 130px;
+                height: 110px;
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 9px;
@@ -97,10 +102,13 @@
                 text-align: center;
                 padding-left: 5px;
             }
-
             input{
                margin-top: 3.5%;
-               margin-bottom: -9%; 
+               margin-bottom: -9%;
+            }
+            .tables--container {
+                width: 95%;
+                margin: auto;
             }
 
         </style>
@@ -126,102 +134,115 @@
                 </div>
             </div>
 
-             <h4 style="margin-top: 1px; text-align: center;" >LICENCIA DE ACTIVIDAD ECONÓMICA</h4>
-
             <div class="tables">
-            <strong><span style="font-size: 10.5px; text-align: center; margin-top: -1%;" class="row">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización. Según la Ordenanza sobre Actividades Económicas de Industria y Comercio, Servicios o de Índole Similar del Municipio Bermúdez de Estado Sucre (Art. 5).</span></strong>
-                <table class="table" style="margin-bottom:0;">
-                    <tbody>
+                <h4 style="margin-top: 1px; text-align: center;" >LICENCIA DE ACTIVIDAD ECONÓMICA</h4>
+                <strong>
+                    <span
+                        style="font-size: 10.5px; text-align: center; margin-top: -1%; margin-right: 5px;"
+                        class="row"
+                    >
+                        Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización.
+                        Según la Ordenanza sobre Actividades Económicas de Industria y Comercio, Servicios o de
+                        Índole Similar del Municipio Bermúdez de Estado Sucre (Art. 5).
+                    </span>
+                </strong>
+                <div class="tables--container">
+                    <table class="table" style="margin-bottom:0;">
+                        <tbody>
 
-                        <tr>
-                           <td width="80%">
-                                <dt style="text-align: center;"><strong>NÚMERO:</strong> {{ $license->num }}</dt>
-                            </td>
-                            <td width="20%">
-                                <dt><strong>INMUEBLE PROPIO:  </strong> SI <input type="checkbox" /> NO <input type="checkbox" />
+                            <tr>
+                            <td width="80%">
+                                    <dt style="text-align: center;"><strong>NÚMERO:</strong> {{ $license->num }}</dt>
+                                </td>
+                                <td width="20%">
+                                    <dt><strong>INMUEBLE PROPIO:  </strong> SI <input type="checkbox" /> NO <input type="checkbox" />
 
-                                </dt>
-                            </td>
+                                    </dt>
+                                </td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
-                           <td width="65%">
-                                <dt><strong>CONTRIBUYENTE:</strong> {{ $license->taxpayer->name }}</dt>
-                            </td>
-                            <td width="35%">
-                                <dt><strong>RIF:</strong> {{ $license->taxpayer->rif }}</dt>
-                            </td>
-                        </tr>
+                            <tr>
+                            <td width="65%">
+                                    <dt><strong>CONTRIBUYENTE:</strong> {{ $license->taxpayer->name }}</dt>
+                                </td>
+                                <td width="35%">
+                                    <dt><strong>RIF:</strong> {{ $license->taxpayer->rif }}</dt>
+                                </td>
+                            </tr>
 
-                        <tr>
-                           <td>
-                                <dt><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</dt>
-
-                            </td>
+                            <tr>
                             <td>
-                                <dt><strong>REGISTRO:</strong> {{ $num }}</dt>
-                            </td>
-                        </tr>
+                                    <dt><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</dt>
 
-                        <tr>
-                           <td>
-                                <!-- @if($license->correlative->correlative_type_id == 1)
-                                    <dt><strong>FECHA DE INSCRIPCIÓN</strong> {{ $license->emission_date }}</dt>
-                                    @endif
-                                -->
-                                <dt><strong>FECHA DE EMISIÓN: </strong> {{ $license->emission_date }}</dt>
+                                </td>
+                                <td>
+                                    <dt><strong>REGISTRO:</strong> {{ $num }}</dt>
+                                </td>
+                            </tr>
 
-                            </td>
+                            <tr>
                             <td>
-                                <dt><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</dt>
-                            </td>
-                        </tr>
+                                    <!-- @if($license->correlative->correlative_type_id == 1)
+                                        <dt><strong>FECHA DE INSCRIPCIÓN</strong> {{ $license->emission_date }}</dt>
+                                        @endif
+                                    -->
+                                    <dt><strong>FECHA DE EMISIÓN: </strong> {{ $license->emission_date }}</dt>
 
-                        <tr>
-                           <td>
-                                <dt><strong>REPRESENTANTE LEGAL:</strong> {{ $representation->name }}</dt>
+                                </td>
+                                <td>
+                                    <dt><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</dt>
+                                </td>
+                            </tr>
 
-                            </td>
+                            <tr>
                             <td>
-                                <dt><strong>C.I:</strong> {{ $representation->document }}</dt>
-                            </td>
-                        </tr>
+                                    <dt><strong>REPRESENTANTE LEGAL:</strong> {{ $representation->name }}</dt>
 
-                    </tbody>
-                </table>
-                <table class="table" style="text-align: center;">
-                    <tr>
-                        <th colspan = "4">ACTIVIDADES ECONÓMICAS
-                        </th>
-                    </tr>
-                    <thead>
+                                </td>
+                                <td>
+                                    <dt><strong>C.I:</strong> {{ $representation->document }}</dt>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table" style="text-align: center;">
                         <tr>
-                            <th width="10%">CÓDIGO</th>
-                            <th width="60%">NOMBRE</th>
-                            <th width="15%">ALICUOTA</th>
-                            <th width="15%">MÍNIMO</th>
+                            <th colspan = "4">ACTIVIDADES ECONÓMICAS
+                            </th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($license->economicActivities as $activity)
-                        <tr>
-                            <td>{{ $activity->code }}</td>
-                            <td>{{ substr($activity->name, 0, 80)}}</td>
-                            <td>{{ $activity->aliquote }}</td>
-                            <td>{{ $activity->min_tax }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <br>
-            <br>
-            <div class="bottom text-center" style="z-index: -1;">
-                <span class="row">{{ $signature->title }}</span>
-                <span class="row">superintendente de administración tributaria.</span>
-                <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021. GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                <span class="row">La retención de este documento solo es competencia de la superintendencia municipal de administración tributaria (SUMAT)</span>
+                        <thead>
+                            <tr>
+                                <th width="10%">CÓDIGO</th>
+                                <th width="60%">NOMBRE</th>
+                                <th width="15%">ALICUOTA</th>
+                                <th width="15%">MÍNIMO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($license->economicActivities as $activity)
+                            <tr>
+                                <td>{{ $activity->code }}</td>
+                                <td>{{ substr($activity->name, 0, 80)}}</td>
+                                <td>{{ $activity->aliquote }}</td>
+                                <td>{{ $activity->min_tax }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <br>
+                <div class="bottom text-center" style="z-index: -1;">
+                    <span class="row">{{ $signature->title }}</span>
+                    <span class="row">superintendente de administración tributaria.</span>
+                    <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021. GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                    <span class="row">La retención de este documento solo es competencia de la superintendencia municipal de administración tributaria (SUMAT)</span>
+                </div>
+                <div class="bandera">
+                    <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
+                </div>
             </div>
         </div>
     </body>
