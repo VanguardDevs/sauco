@@ -37,7 +37,7 @@
             table {
                 border-collapse: collapse;
                 margin-top: -10px;
-                width:95%;
+                width: 95%;
                 align: center;
                 text-align: center;
             }
@@ -87,13 +87,13 @@
             }
             .bottom {
                 width: 100%;
-                height: 90px;
+                height: 80px;
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 11px;
                 margin: auto;
-                margin-top: 11%;
-                margin-bottom: -2%;
+                margin-top: 14%;
+                margin-bottom: -1%;
             }
             .center {
                 margin-left: auto;
@@ -132,7 +132,7 @@
                 <table class="center">
                     <thead>
                         <tr>
-                            <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO</strong> {{ $liqueur->num }} DE FECHA {{ $liqueur->registry_date }}</th>
+                            <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO</strong> {{ $liqueur->num }} DE FECHA {{ $registeredAt }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -145,15 +145,20 @@
                             <td><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</td>
                         </tr>
                         <tr>
-                            <td width="60%"><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
-                            <td width="40%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
+                            <td width="65%"><strong>NOMBRE O RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
+                            <td width="35%"><strong>RIF: </strong>{{ $license->taxpayer->rif }}</td>
                         </tr>
                     <tr>
-                        <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
+                        <td><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
+                        <td><strong>DENOMINACIÓN:</strong> {{ $license->taxpayer->commercialDenomination->name }}</td>
                     </tr>
                     <tr>
-                        <td width="40%"><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueurClassification->name }}</td>
-                        <td width="60%">
+                        <td><strong>REPRESENTANTE LEGAL:</strong> {{ $representation->name }}</td>
+                        <td><strong>C.I:</strong> {{ $representation->document }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueurClassification->name }}</td>
+                        <td>
                             <strong>ANEXO(S):</strong>
                             <br />
                             @foreach($liqueur->annexes as $annex)
@@ -161,14 +166,9 @@
                             @endforeach
                         </td>
                     </tr>
-                    <tr >
-                        <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
-                    </tr>
                     <tr>
-                        <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
-                        <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
+                        <td colspan="2" style="font-size: 12px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
                     </tr>
-
                     </tbody>
                 </table>
                 <div>
@@ -179,103 +179,13 @@
                     <div class="bottom text-center" style="z-index: -1;">
                         <span class="row">{{ $signature->title }}</span>
                         <span class="row">superintendente de administración tributaria</span>
-                        <span class="row">{{ $signature->decree }}</span>
-                        <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                        <span class="row">POR {{ $signature->decree }}</span>
+                        <span class="row small">FIRMA AUTORIZADA DE ACUERDO CON EL ARTÍCULO 7 DE LA ORDENANZA QUE REGULA EL FUNCIONAMIENTO DEL EXPENDIO DE BEBIDAS ALCOHÓLICAS</span>
+                        <span class="row small">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                         <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
                     </div>
                 </div>
                 <div class="bandera">
-                    <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
-                </div>
-            </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="container">
-            <div class="header">
-                <div class="sumatLOGO">
-                    <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
-
-                </div>
-                <div class="description text-center">
-                <p>
-                    REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
-                    ESTADO SUCRE<br>
-                    ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
-                    SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
-                    RIF: G-20000222-1<br>
-                    DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
-                    </p>
-                </div>
-                <div id="mayorLOGO">
-                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
-                </div>
-            </div>
-
-            <div class="tables">
-                <h4 style="margin-top: 1px;" >REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h4>
-                <table class="center">
-                    <thead>
-                        <tr>
-                            <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>Nº DE REGISTRO</strong> {{ $license->num }} DE FECHA {{ $license->emission_date }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            @if($license->correlative->correlative_type_id == 1)
-                            <td><strong>PERIODO DE INSTALACIÓN:</strong> {{ $period }}</td>
-                            @else
-                            <td><strong>PERIODO DE RENOVACIÓN:</strong> {{ $period }}</td>
-                            @endif
-                            <td><strong>FECHA DE VENCIMIENTO:</strong> {{ $license->expiration_date }}</td>
-                        </tr>
-                        <tr>
-                            <td width="60%"><strong>RAZÓN SOCIAL:</strong> {{ $license->taxpayer->name }}</td>
-                            <td width="40%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
-                        </tr>
-                        <tr>
-                            <td width="40%"><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueurClassification->name }}</td>
-                            <td width="60%">
-                                <strong>ANEXO(S):</strong>
-                                <br />
-                                @foreach($liqueur->annexes as $annex)
-                                    <span>{{ $annex->name.', ' }}</span>
-                                @endforeach
-                            </td>
-                        </tr>
-                        <tr >
-                            <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
-                        </tr>
-                        <tr>
-                            <td width="60%"><strong>REPRESENTANTE:</strong> {{ $representation->name }}</td>
-                            <td width="40%"><strong>C.I:</strong> {{ $representation->document }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <div id="sello" style=" z-index: 2;">
-                        <img src="{{ asset('/assets/images/sello.png') }}" height="70px" width="170px"/>
-                    </div>
-
-                    <div class="bottom text-center" style="z-index: -1;">
-                        <span class="row">{{ $signature->title }}</span>
-                        <span class="row">superintendente de administración tributaria</span>
-                        <span class="row">{{ $signature->decree }}</span>
-                        <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                        <span class="row small">Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización</span>
-                        @if($license->correlative->correlative_type_id == 1)
-                        <span class="row small">REFERENCIA: Instalación de Expendio de Bebidas Alcohólicas</span>
-                        @else
-                        <span class="row small">REFERENCIA: Renovación de Expendio de Bebidas Alcohólicas</span>
-                        @endif
-                        <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
-                    </div>
-                </div>
-                <div class="bandera" >
                     <img src="{{ asset('/assets/images/bandera.png') }}" height="35px" width="99.9%" alt="sumatlogo"/>
                 </div>
             </div>
