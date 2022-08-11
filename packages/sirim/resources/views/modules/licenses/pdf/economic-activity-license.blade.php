@@ -110,10 +110,20 @@
                 width: 95%;
                 margin: auto;
             }
-
+            #watermark {
+                position: absolute;
+                top: 175px;
+                right: 250px;
+                width: 200px;
+                height: 200px;
+                opacity: .3;
+            }
         </style>
     </head>
     <body>
+        <div id="watermark">
+            <img src="{{ asset('/assets/images/escudo.jpg') }}" height="100%" width="100%" alt="sumatlogo"/>
+        </div>
         <div class="container">
             <div class="header">
                 <div class="sumatLOGO">
