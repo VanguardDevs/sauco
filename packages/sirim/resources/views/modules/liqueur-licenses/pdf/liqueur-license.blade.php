@@ -37,7 +37,7 @@
             table {
                 border-collapse: collapse;
                 margin-top: -10px;
-                width:95%;
+                width: 95%;
                 align: center;
                 text-align: center;
             }
@@ -87,12 +87,12 @@
             }
             .bottom {
                 width: 100%;
-                height: 90px;
+                height: 80px;
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 11px;
                 margin: auto;
-                margin-top: 11%;
+                margin-top: 14%;
                 margin-bottom: -1%;
             }
             .center {
@@ -150,7 +150,7 @@
                         </tr>
                     <tr>
                         <td><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
-                        <td><strong>CONTRIBUYENTE:</strong> {{ $license->taxpayer->name }}</td>
+                        <td><strong>DENOMINACIÓN:</strong> {{ $license->taxpayer->commercialDenomination->name }}</td>
                     </tr>
                     <tr>
                         <td><strong>REPRESENTANTE LEGAL:</strong> {{ $representation->name }}</td>
@@ -166,11 +166,9 @@
                             @endforeach
                         </td>
                     </tr>
-                    <tr >
-                        <td colspan="2" style="font-size: 16px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
+                    <tr>
+                        <td colspan="2" style="font-size: 12px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
                     </tr>
-                    
-
                     </tbody>
                 </table>
                 <div>
@@ -181,9 +179,9 @@
                     <div class="bottom text-center" style="z-index: -1;">
                         <span class="row">{{ $signature->title }}</span>
                         <span class="row">superintendente de administración tributaria</span>
-                        <span class="row">{{ $signature->decree }}</span>
+                        <span class="row">POR {{ $signature->decree }}</span>
                         <span class="row small">FIRMA AUTORIZADA DE ACUERDO CON EL ARTÍCULO 7 DE LA ORDENANZA QUE REGULA EL FUNCIONAMIENTO DEL EXPENDIO DE BEBIDAS ALCOHÓLICAS</span>
-                        <span class="row">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                        <span class="row small">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
                         <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
                     </div>
                 </div>
