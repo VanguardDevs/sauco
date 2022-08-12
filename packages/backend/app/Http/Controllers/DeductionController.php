@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Auth;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
+use App\Traits\ReportUtils;
+use PDF;
 
 class DeductionController extends Controller
 {
@@ -17,7 +19,12 @@ class DeductionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Deduction::latest();
+        $query = Deduction::latest()
+            ->whereDate('created_at', '>=', '2022-08-10')
+            ->whereDate('created_at', '<', '2022-08-11')
+            ->whereHas('payment', function ($q) {
+                $q->whereStatusId(2);
+            });
         $results = $request->perPage;
 
         if ($request->has('filter')) {
@@ -37,7 +44,29 @@ class DeductionController extends Controller
             }
         }
 
+        // if ($request->type == 'pdf') {
+            return $this->report($query);
+        // }
+
         return $query->paginate($results);
+    }
+
+    public function report($query)
+    {
+        // Prepare pdf
+        $total = ReportUtils::getTotalFormattedAmount($query, 'amount');
+        $deductions = $query->get();
+        $dates = ReportUtils::getDatesFormatted($deductions, 'processed_at');
+        $title = "Reporte de retenciones";
+
+        $pdf = PDF::LoadView('pdf.reports.deductions', compact([
+            'deductions',
+            'total',
+            'title',
+            'dates'
+        ]));
+
+        return $pdf->download();
     }
 
     /**
