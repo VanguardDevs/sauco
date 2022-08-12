@@ -19,9 +19,12 @@ class DeductionController extends Controller
      */
     public function index(Request $request)
     {
+        $firstDate = '10-08-2022';
+        $secondDate = '11-08-2022';
+
         $query = Deduction::latest()
-            ->whereDate('created_at', '>=', '2022-08-10')
-            ->whereDate('created_at', '<', '2022-08-11')
+            ->whereDate('created_at', '>=', $firstDate)
+            ->whereDate('created_at', '<', $secondDate)
             ->whereHas('payment', function ($q) {
                 $q->whereStatusId(2);
             });
@@ -45,18 +48,18 @@ class DeductionController extends Controller
         }
 
         // if ($request->type == 'pdf') {
-            return $this->report($query);
+            return $this->report($query, $firstDate, $secondDate);
         // }
 
         return $query->paginate($results);
     }
 
-    public function report($query)
+    public function report($query, $date1, $date2)
     {
         // Prepare pdf
         $total = ReportUtils::getTotalFormattedAmount($query, 'amount');
         $deductions = $query->get();
-        $dates = ReportUtils::getDatesFormatted($deductions, 'processed_at');
+        $dates = $date1.' - '.$date2;
         $title = "Reporte de retenciones";
 
         $pdf = PDF::LoadView('pdf.reports.deductions', compact([
