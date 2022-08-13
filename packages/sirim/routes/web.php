@@ -52,6 +52,9 @@ Route::prefix('/')->middleware('auth')->group(function()
         /*----------  Routes users  ----------*/
         Route::get('users/list', 'Settings\UserController@list');
         Route::resource('settings/administration/users', 'Settings\UserController');
+
+
+
     });
 
     /**
@@ -234,5 +237,12 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('vehicles/{vehicle}/certificate', 'VehicleController@certificate');
 
     Route::get('vehicles/{vehicle}/renovate', 'VehicleController@renovate');
+
+
+    Route::get('taxpayers/{taxpayer}/vehicles/only-add', 'VehicleController@add')
+        ->name('vehicles.add');
+
+    Route::post('taxpayers/{taxpayer}/vehicles/save', 'VehicleController@save')
+        ->name('vehicles.save');
 
 });

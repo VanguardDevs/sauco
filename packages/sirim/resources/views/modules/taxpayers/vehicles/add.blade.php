@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
-                {!! Form::open(['url' => route('vehicles.create', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
+                {!! Form::open(['url' => route('vehicles.save', [$taxpayer->id]), 'class' => 'kt-form kt-form--label-right', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'id' => 'form']) !!}
                     <div class="form-group row">
 
                         <div class="row" id= "new_license">

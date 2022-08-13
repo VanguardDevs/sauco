@@ -1212,7 +1212,6 @@ $(document).ready(function() {
                 { data: 'weight'},
                 { data: 'capacity'},
                 { data: 'stalls'},
-                { data: 'taxpayer.name'},
                 { data: 'vehicle_model.name'},
                 { data: 'color.name'},
                 { data: 'vehicle_classification.name'},
@@ -1249,8 +1248,8 @@ $(document).ready(function() {
                                 </a>
                             </div>`;
 
-                        $(nTd).html(`${sData.liquidation.status_id=='2' && sData.active ? active :
-                        sData.liquidation.status_id=='2' && sData.active==false ? inactive: ''}`);
+                        $(nTd).html(`${oData.status==true && sData.active ? active :
+                        oData.status==true && sData.active==false ? inactive: ''}`);
                     }
                 }
             ]
@@ -1276,9 +1275,9 @@ $(document).ready(function() {
                 { data: 'capacity'},
                 { data: 'stalls'},
                 { data: 'taxpayer.name'},
-                { data: 'vehicle_model.name'},
+                { data: 'vehicle_models.name'},
                 { data: 'color.name'},
-                { data: 'vehicle_classification.name'},
+                { data: 'vehicle_classifications.name'},
                 { data: 'license',
                     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                         const active = `<span class="kt-badge kt-badge--success kt-badge--inline">
@@ -1311,8 +1310,8 @@ $(document).ready(function() {
                                     <i class='btn-sm btn-success fas fa-sync'></i>
                                 </a>
                             </div>`;
-                        $(nTd).html(`${sData.liquidation.status_id=='2' && sData.active ? active :
-                        sData.liquidation.status_id=='2' && sData.active==false ? inactive: ''}`);
+                        $(nTd).html(`${oData.status==true && sData.active ? active :
+                        oData.status==true && sData.active==false ? inactive: ''}`);
 
                     }
                 }

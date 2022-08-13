@@ -19,12 +19,13 @@ class Vehicle extends Model
         'vehicle_model_id',
         'color_id',
         'vehicle_classification_id',
-        'license_id'
+        'license_id',
+        'status'
     ];
 
-    public function vehicleClassification()
+    public function vehicleClassifications()
     {
-        return $this->belongsTo(VehicleClassification::class);
+        return $this->belongsTo(VehicleClassification::class, 'vehicle_classification_id');
     }
 
     public function taxpayer()
@@ -32,9 +33,9 @@ class Vehicle extends Model
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function vehicleModel()
+    public function vehicleModels()
     {
-        return $this->belongsTo(VehicleModel::class);
+        return $this->belongsTo(VehicleModel::class, 'vehicle_model_id');
     }
 
     public function color()

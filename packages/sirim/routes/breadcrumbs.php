@@ -735,7 +735,7 @@ Breadcrumbs::for('vehicle-classifications.edit', function ($trail) {
 
 /*----------  Vehicle  ----------*/
 Breadcrumbs::for('vehicles.index', function ($trail) {
-    $trail->push('Patente Vehículo', url('vehicles'));
+    $trail->push('Patentes Vehículo', url('vehicles'));
 });
 
 /*------------- Vehicle -> create -------------*/
@@ -748,5 +748,19 @@ Breadcrumbs::for('vehicles.create', function ($trail) {
 Breadcrumbs::for('taxpayer.vehicles', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Patentes de Vehículo', url('taxpayer.vehicles'));
+});
+
+
+/*------------- Vehicle -> add -------------*/
+Breadcrumbs::for('vehicles.add', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Crear Patente de Vehículo', url('vehicles.add'));
+});
+
+
+/*------------- Vehicle -> save -------------*/
+Breadcrumbs::for('vehicles.save', function ($trail) {
+    $trail->parent('vehicles.index');
+    $trail->push('Crear Vehículo', url('taxpayers/{id}/vehicles/save'));
 });
 

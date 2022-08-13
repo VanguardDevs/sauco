@@ -195,9 +195,13 @@ class PaymentController extends Controller
             $license = License::whereId($vehicle->license_id)
                 ->first();
 
-            if ($license->active == false && $status == 2 && $vehicle =! null ) {
+            if ($license->active == false && $status == 2) {
                 $license->update([
                     'active' => true
+                ]);
+
+                $vehicle->update([
+                    'status' => true
                 ]);
             }
         }

@@ -42,7 +42,7 @@ class VehicleController extends Controller
         //Cambiar a los datos del vehiculo, no los de la licencia
 
         if ($request->wantsJson()) {
-            $query = Vehicle::query()->with(['color', 'vehicleModel', 'vehicleClassification','license', 'license.liquidation','taxpayer']);
+            $query = Vehicle::query()->with(['color', 'vehicleModels', 'vehicleClassifications','license', 'license.liquidation','taxpayer']);
 
             return DataTables::eloquent($query)->toJson();
         }
@@ -157,7 +157,8 @@ class VehicleController extends Controller
             'vehicle_model_id' =>  $request->input('vehicleModel'),
             'color_id' =>  $request->input('color'),
             'vehicle_classification_id' =>  $request->input('vehicleClassification'),
-            'license_id' => $license->id
+            'license_id' => $license->id,
+            'status' => false
         ]);
 
         $liquidation->update([
@@ -378,11 +379,83 @@ class VehicleController extends Controller
     }
 
 
-
-
     public function listClassifications(VehicleParameter $vehicleParameter)
     {
-
         return $vehicleParameter->classificationsByList($vehicleParameter->id);
+    }
+
+
+
+    /** Create Vehicle without liquidation */
+    public function add(Taxpayer $taxpayer, Request $request)
+    {
+        if ($request->wantsJson()) {
+
+            $query = Vehicle::whereTaxpayerId($taxpayer->id)->with(['color', 'vehicleModel', 'vehicleClassification','license', 'taxpayer', 'license.liquidation']);
+
+            return DataTables::eloquent($query)->toJson();
+        }
+
+        return view('modules.taxpayers.vehicles.add')
+            ->with('taxpayer', $taxpayer)
+            ->with('color', Color::pluck('name', 'id'))
+            ->with('vehicleParameter', VehicleParameter::pluck('name', 'id'))
+            ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
+    }
+
+
+    public function save(Request $request, Taxpayer $taxpayer)
+    {
+
+        $currYear = Year::where('year', Carbon::now()->year)->first();
+        $correlativeNum = CorrelativeNumber::getNum();
+
+        $ordinance = Ordinance::whereDescription('VEHÍCULOS')->first();
+        $emissionDate = Carbon::now();
+        $expirationDate = Carbon::now()->endOfYear();
+
+
+        $correlativeNumber = CorrelativeNumber::create([
+            'num' => $correlativeNum
+        ]);
+
+        $correlative = Correlative::create([
+            'year_id' => $currYear->id,
+            'correlative_type_id' => 1,
+            'correlative_number_id' => $correlativeNumber->id
+        ]);
+
+
+        /** TU DIJISTE QUE EL correlative_id SE QUEDABA ASÍ */
+        $license = License::create([
+            'num' => $request->input('plate'),
+            'emission_date' => $emissionDate,
+            'expiration_date' => $expirationDate,
+            'ordinance_id' => $ordinance->id,
+            'correlative_id' => $correlative->id,
+            'taxpayer_id' => $taxpayer->id,
+            'representation_id' => $taxpayer->president()->first()->id,
+            'user_id' => Auth::user()->id,
+            'active' => true
+        ]);
+
+        $vehicle = Vehicle::create([
+            'plate' => $request->input('plate'),
+            'body_serial' => $request->input('body_serial'),
+            'engine_serial' => $request->input('engine_serial'),
+            'weight' => $request->input('weight'),
+            'capacity' => $request->input('capacity'),
+            'stalls' => $request->input('stalls'),
+            'taxpayer_id' => $taxpayer->id,
+            'vehicle_model_id' =>  $request->input('vehicleModel'),
+            'color_id' =>  $request->input('color'),
+            'vehicle_classification_id' =>  $request->input('vehicleClassification'),
+            'license_id' => $license->id,
+            'status' => true
+        ]);
+
+
+       return redirect('taxpayers/'.$taxpayer->id.'/vehicles/only-add')
+           ->withSuccess('¡Patente de Vehículo creada!');
     }
 }
