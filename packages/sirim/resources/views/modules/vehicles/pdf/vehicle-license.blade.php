@@ -175,11 +175,16 @@
                     <span class="row">{{ $signature->title }}</span>
                     <span class="row">superintendente de administración tributaria</span>
                     <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021. GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
-                    <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment->num }}</span>
-                    @if($license->correlative->correlative_type_id == 1)
-                    <span class="row" style="font-size: 8px">REFERENCIA: Registro de Patente de Vehículo</span>
+
+                    @if($paymentNum)
+                        <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $paymentNum }}</span>
                     @else
-                    <span class="row" style="font-size: 8px">REFERENCIA: Renovación de Patente de Vehículo</span>
+                        <span class="row">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }}</span>
+                    @endif
+                    @if($license->correlative->correlative_type_id == 1)
+                        <span class="row" style="font-size: 8px">REFERENCIA: Registro de Patente de Vehículo</span>
+                    @else
+                        <span class="row" style="font-size: 8px">REFERENCIA: Renovación de Patente de Vehículo</span>
                     @endif
                     
                 </div>

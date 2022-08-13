@@ -23,7 +23,7 @@ class Vehicle extends Model
         'status'
     ];
 
-    public function vehicleClassifications()
+    public function vehicleClassification()
     {
         return $this->belongsTo(VehicleClassification::class, 'vehicle_classification_id');
     }
@@ -33,7 +33,7 @@ class Vehicle extends Model
         return $this->belongsTo(Taxpayer::class);
     }
 
-    public function vehicleModels()
+    public function vehicleModel()
     {
         return $this->belongsTo(VehicleModel::class, 'vehicle_model_id');
     }
@@ -45,7 +45,7 @@ class Vehicle extends Model
 
     public function license()
     {
-        return $this->belongsTo(License::class);
+        return $this->belongsTo(License::class, 'license_id');
     }
 
 }

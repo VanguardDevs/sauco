@@ -1275,9 +1275,9 @@ $(document).ready(function() {
                 { data: 'capacity'},
                 { data: 'stalls'},
                 { data: 'taxpayer.name'},
-                { data: 'vehicle_models.name'},
+                { data: 'vehicle_model.name'},
                 { data: 'color.name'},
-                { data: 'vehicle_classifications.name'},
+                { data: 'vehicle_classification.name'},
                 { data: 'license',
                     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                         const active = `<span class="kt-badge kt-badge--success kt-badge--inline">

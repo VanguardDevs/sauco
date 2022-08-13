@@ -54,6 +54,29 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::resource('settings/administration/users', 'Settings\UserController');
 
 
+         /*------ Vehicle's Settings ------*/
+
+        Route::resource('brands', 'BrandController')->except(['show']);
+        Route::get('brands/list', 'BrandController@list');
+
+        Route::resource('colors', 'ColorController')->except(['show']);
+        Route::get('colors/list', 'ColorController@list');
+
+        Route::resource('vehicle-models', 'VehicleModelController')->except(['show']);
+        Route::get('vehicle-models/list', 'VehicleModelController@list');
+
+        Route::resource('vehicle-parameters', 'VehicleParameterController')->except(['show']);
+        Route::get('vehicle-parameters/list', 'VehicleParameterController@list');
+
+        Route::resource('vehicle-classifications', 'VehicleClassificationController')->except(['show']);
+        Route::get('vehicle-classifications/list', 'VehicleClassificationController@list');
+
+
+        Route::get('taxpayers/{taxpayer}/vehicles/only-add', 'VehicleController@add')
+            ->name('vehicles.add');
+
+        Route::post('taxpayers/{taxpayer}/vehicles/save', 'VehicleController@save')
+            ->name('vehicles.save');
 
     });
 
@@ -215,20 +238,6 @@ Route::prefix('/')->middleware('auth')->group(function()
     * Vehicle's Settings
     */
 
-    Route::resource('brands', 'BrandController')->except(['show']);
-    Route::get('brands/list', 'BrandController@list');
-
-    Route::resource('colors', 'ColorController')->except(['show']);
-    Route::get('colors/list', 'ColorController@list');
-
-    Route::resource('vehicle-models', 'VehicleModelController')->except(['show']);
-    Route::get('vehicle-models/list', 'VehicleModelController@list');
-
-    Route::resource('vehicle-parameters', 'VehicleParameterController')->except(['show']);
-    Route::get('vehicle-parameters/list', 'VehicleParameterController@list');
-
-    Route::resource('vehicle-classifications', 'VehicleClassificationController')->except(['show']);
-    Route::get('vehicle-classifications/list', 'VehicleClassificationController@list');
 
     Route::resource('vehicles', 'VehicleController')->except(['create', 'store']);
 
@@ -239,10 +248,5 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('vehicles/{vehicle}/renovate', 'VehicleController@renovate');
 
 
-    Route::get('taxpayers/{taxpayer}/vehicles/only-add', 'VehicleController@add')
-        ->name('vehicles.add');
-
-    Route::post('taxpayers/{taxpayer}/vehicles/save', 'VehicleController@save')
-        ->name('vehicles.save');
 
 });

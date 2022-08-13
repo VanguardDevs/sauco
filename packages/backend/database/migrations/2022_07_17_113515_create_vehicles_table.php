@@ -36,6 +36,7 @@ class CreateVehiclesTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('license_id')->references('id')->on('licenses')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('status');
             $table->timestamps();
             $table->softDeletes();
         });
