@@ -61,7 +61,7 @@ class HistoricController extends Controller
             'num' => Liquidation::getNewNum(),
             'object_payment' => $concept->name.'  (Histórico / Período:'.$currYear->year . ')' ,
             'amount' => $request->input('amount'),
-            'liquidable_type' => Liquidation::class,
+            'liquidable_type' => null,
             'concept_id' => $concept->id,
             'liquidation_type_id' => $concept->liquidation_type_id,
             'status_id' => 1,
@@ -95,6 +95,7 @@ class HistoricController extends Controller
                 return $payment->pretty_amount;
             })
             ->make(true);
+
     }
 
 

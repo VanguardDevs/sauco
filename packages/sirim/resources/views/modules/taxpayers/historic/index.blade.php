@@ -56,7 +56,7 @@
                     <div class="col-lg-12"></div>
                     <br>
                     <div class="col-lg-5">
-                        <label class="control-label">Monto</label>
+                        <label class="control-label">Monto<span class="text-danger"> *</span></label>
                         {!!
                             Form::text("amount", null, [
                                 "class" => "form-control decimal-input-mask",
