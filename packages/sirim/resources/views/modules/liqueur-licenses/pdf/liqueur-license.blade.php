@@ -149,7 +149,7 @@
                             <td width="40%"><strong>RIF DEL CONTRIBUYENTE: </strong>{{ $license->taxpayer->rif }}</td>
                         </tr>
                     <tr>
-                        <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
+                        <td colspan="2"><strong>DIRECCIÓN:</strong> {{ $license->liqueur->address }}</td>
                     </tr>
                     <tr>
                         <td width="40%"><strong>CLASIFICACIÓN DEL EXPENDIO:</strong> {{ $liqueur->liqueurClassification->name }}</td>
