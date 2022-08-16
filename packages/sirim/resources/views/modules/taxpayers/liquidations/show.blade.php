@@ -43,7 +43,13 @@
                         Tipo: <strong>{{ $row->liquidationType->name }}</strong>
                         </br>Monto: <strong>{{ $row->pretty_amount }} Bs</strong>
                         </br>Fecha: <strong>{{ $row->created_at }}</strong>
+
+                        @if($row->liquidable != null)
                         </br>Usuario: <strong>{{ $row->liquidable->user->full_name }}</strong>
+                        @else
+                        </br>Usuario: <strong>{{ $row->user->full_name }}</strong>
+                        @endif
+
                         @if($row->deduction()->exists())
                         </br>Retención: <strong>{{ $row->deduction->pretty_amount }} Bs</strong>
                         @endif

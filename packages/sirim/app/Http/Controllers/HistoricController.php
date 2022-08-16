@@ -17,7 +17,7 @@ use App\Models\RequirementTaxpayer;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests\AnnullmentRequest;
+use App\Http\Requests\HistoricFormRequest;
 use Yajra\DataTables\Facades\DataTables;
 
 class HistoricController extends Controller
@@ -31,7 +31,8 @@ class HistoricController extends Controller
     {
         return view('modules.taxpayers.historic.index')
             ->with('taxpayer', $taxpayer)
-            ->with('ordinances', Ordinance::pluck('description', 'id'));
+            ->with('ordinances', Ordinance::pluck('description', 'id'))
+            ->with('years', Year::pluck('year', 'id'));
     }
 
     public function list(Taxpayer $taxpayer)
@@ -51,16 +52,17 @@ class HistoricController extends Controller
 
 
 
-    public function store(Request $request, Taxpayer $taxpayer)
+    public function store(HistoricFormRequest $request, Taxpayer $taxpayer)
     {
 
         $concept = Concept::find($request->input('concept'));
-        $currYear = Year::where('year', Carbon::now()->year)->first();
+        $year = Year::find($request->input('year'));
 
         $liquidation = Liquidation::create([
             'num' => Liquidation::getNewNum(),
-            'object_payment' => $concept->name.'  (Histórico / Período:'.$currYear->year . ')' ,
+            'object_payment' => $concept->name.' (Histórico / Período:'.$year->year .')' ,
             'amount' => $request->input('amount'),
+            'user_id' => Auth::user()->id,
             'liquidable_type' => null,
             'concept_id' => $concept->id,
             'liquidation_type_id' => $concept->liquidation_type_id,
@@ -74,7 +76,6 @@ class HistoricController extends Controller
             'amount' => $request->input('amount'),
             'payment_method_id' => 1,
             'payment_type_id' => 1,
-            'observations' => $request->input('observations'),
             'taxpayer_id' => $taxpayer->id
         ]);
 
@@ -86,9 +87,9 @@ class HistoricController extends Controller
 
     public function listByTaxpayer(Taxpayer $taxpayer)
     {
-        $query = $taxpayer->payments()
-            ->with('status')
-            ->orderBy('processed_at', 'DESC');
+        $query = $taxpayer->liquidations()
+            ->with('status', 'payment')
+            ->orderBy('updated_at', 'DESC');
 
         return DataTables::of($query)
             ->addColumn('pretty_amount', function ($payment) {

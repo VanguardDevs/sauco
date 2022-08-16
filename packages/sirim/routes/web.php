@@ -141,7 +141,7 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::resource('taxpayers/{taxpayer}/historics', 'HistoricController')->except(['show']);;
 
-     Route::get('taxpayers/{taxpayer}/historics/payments', 'HistoricController@listByTaxpayer');
+     Route::get('taxpayers/{taxpayer}/historics/liquidations', 'HistoricController@listByTaxpayer');
 
 
 

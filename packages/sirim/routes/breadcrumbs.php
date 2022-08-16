@@ -671,7 +671,7 @@ Breadcrumbs::for('credits.index', function ($trail, $row) {
 });
 
 
-/*------------- Applications -------------*/
+/*------------- Historics Movements -------------*/
 Breadcrumbs::for('historics.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Movimientos Historicos', route('historics.index', $row));

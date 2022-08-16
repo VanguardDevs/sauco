@@ -14,9 +14,6 @@
                 </span>
                 <h3 class="kt-portlet__head-title">
                     Realizar Liquidación
-                    <small>
-                        Seleccione un concepto de recaudación
-                    </small>
                 </h3>
             </div>
         </div>
@@ -61,25 +58,27 @@
                             Form::text("amount", null, [
                                 "class" => "form-control decimal-input-mask",
                                 "placeholder" => "Monto",
+                                'required'
                             ])
                         !!}
 
-                        @error('rif')
+                        @error('amount')
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
 
-                    <div class="col-lg-5">
-                        <label class="control-label">Detalles</label>
+                   <div class="col-lg-5">
+                        <label class="col-lg-12">Seleccione Periodo<span class="text-danger"> *</span></label>
                         {!!
-                            Form::text("observations", null, [
-                                "class" => "form-control",
-                                "placeholder" => "Detalles"
+                            Form::select('year', $years, null, [
+                                'class' => 'col-md-12 select2',
+                                'placeholder' => 'SELECCIONE',
+                                'required'
                             ])
                         !!}
 
-                        @error('rif')
+                        @error('year')
                         <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>

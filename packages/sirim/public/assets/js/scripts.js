@@ -1100,7 +1100,7 @@ $(document).ready(function() {
             "sUrl": baseURL + "/assets/js/spanish.json"
         },
         "serverSide": true,
-        "ajax": `${window.location.href}/payments`,
+        "ajax": `${window.location.href}/liquidations`,
         "columns": [
             { data: 'num' },
             { data: 'status.name' },
@@ -1110,10 +1110,10 @@ $(document).ready(function() {
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html(`
                     <div class="btn-group">
-                        <a class="mr-2" href=${window.location.origin}/payments/${oData.id} title='Ver factura'>
+                        <a class="mr-2" href=${window.location.origin}/liquidations/${oData.id}/show title='Ver factura'>
                             <i class='btn-sm btn-info fas fa-eye'></i>
                         </a>
-                        <a class="mr-2" onClick="nullRecord(${oData.id},'payments')" title='Editar'>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'liquidations')" title='Editar'>
                             <i class='btn-sm btn-danger fas fa-trash-alt'></i>
                         </a>
                     </div>`
