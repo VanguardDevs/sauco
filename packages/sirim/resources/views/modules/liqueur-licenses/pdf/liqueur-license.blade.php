@@ -159,7 +159,7 @@
                             <td width="35%"><strong>RIF: </strong>{{ $license->taxpayer->rif }}</td>
                         </tr>
                     <tr>
-                        <td><strong>DIRECCIÓN:</strong> {{ $license->taxpayer->fiscal_address }}</td>
+                        <td><strong>DIRECCIÓN:</strong> {{ $license->liqueur->address }}</td>
                         <td><strong>DENOMINACIÓN:</strong> {{ $license->taxpayer->commercialDenomination->name }}</td>
                     </tr>
                     <tr>

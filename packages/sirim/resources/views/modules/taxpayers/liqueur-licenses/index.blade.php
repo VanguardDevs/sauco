@@ -35,8 +35,8 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-lg-8"></div>
-                <div class="col-lg-4">
+                <div class="col-lg-11"></div>
+                <div class="col-lg-1">
                     <button class="btn btn-success" type="submit">
                         Enviar
                     </button>

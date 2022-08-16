@@ -134,6 +134,19 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('applications/{application}/payment/new', 'ApplicationController@makePayment');
     Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
 
+
+
+    /**
+     * Taxpayer's historic
+     */
+    Route::resource('taxpayers/{taxpayer}/historics', 'HistoricController')->except(['show']);;
+
+     Route::get('taxpayers/{taxpayer}/historics/liquidations', 'HistoricController@listByTaxpayer');
+
+
+
+
+
     /**
      * Taxpayer's Withholdings
      */
@@ -177,6 +190,8 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
+        Route::get('historics/{ordinance}/concepts', 'HistoricController@listConcepts');
+
 
     /**
      * Update passwords

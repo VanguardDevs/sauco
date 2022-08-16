@@ -477,6 +477,7 @@ class LicenseController extends Controller
 
         $liqueur = Liqueur::create([
             'work_hours' => $hourtring,
+            'address' => $taxpayer->fiscal_address,
             'is_mobile' => $request->input('is_mobile'),
             'registry_date' => $request->registry_date,
             'liqueur_parameter_id' =>  $request->liqueur_parameter_id,

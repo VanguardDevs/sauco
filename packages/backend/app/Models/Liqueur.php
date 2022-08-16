@@ -12,6 +12,7 @@ class Liqueur extends Model
     protected $fillable = [
         'work_hours',
         'num',
+        'address',
         'is_mobile',
         'liqueur_parameter_id',
         'representation_id',

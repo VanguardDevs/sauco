@@ -10,6 +10,7 @@
     "cancellations": "node ./scripts/cancellations.js",
     "deductions": "node ./scripts/deductions.js",
     "rates": "node ./scripts/updateRatesTable.js",
+    "liquidationsLiqueur": "node ./scripts/addUserId.js",
     "users": "node ./scripts/updateUsers.js",
     "movements": "node ./scripts/createMovements.js",
     "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js",
