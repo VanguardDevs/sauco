@@ -255,7 +255,7 @@ class LicenseController extends Controller
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
-        $representation = $license->representation->person->name;
+        $representation = $license->representation->person;
         $signature = Signature::latest()->first();
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
@@ -594,6 +594,9 @@ class LicenseController extends Controller
         $payment = ($liquidation) ? $liquidation->payment->first() : null;
 
         $processedAt = ($payment) ? Carbon::createFromDate($payment->processed_at)->format('m-d-Y') : null;
+
+        $registeredAt = ($liqueur) ? Carbon::createFromDate($liqueur->registry_date)->format('m-d-Y') : null;
+
         $liqueurAnnex = LiqueurAnnex::whereLiqueurId($liqueur->id)->first();
 
         $annexLiqueur = AnnexedLiqueur::whereId($liqueurAnnex->annex_id)->first();
@@ -613,6 +616,7 @@ class LicenseController extends Controller
             'payment',
             'liquidation',
             'processedAt',
+            'registeredAt',
             'period'
         ];
         $license->update(['downloaded_at' => Carbon::now()]);

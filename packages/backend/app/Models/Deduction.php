@@ -29,12 +29,12 @@ class Deduction extends Model implements Auditable
 
     public function liquidation()
     {
-        return $this->belongsTo(Liquidation::class);
+        return $this->belongsTo(Liquidation::class)->withTrashed();
     }
 
     public function payment()
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsTo(Payment::class)->withTrashed();
     }
 
     public function company()
