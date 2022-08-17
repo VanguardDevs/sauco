@@ -190,8 +190,8 @@
                         <span class="row">{{ $signature->title }}</span>
                         <span class="row">superintendente de administración tributaria</span>
                         <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021</span>
-                        <span class="row small">FIRMA AUTORIZADA DE ACUERDO CON EL ARTÍCULO 7 DE LA ORDENANZA QUE REGULA EL FUNCIONAMIENTO DEL EXPENDIO DE BEBIDAS ALCOHÓLICAS</span>
                         <span class="row small">GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>
+                        <span class="row small">FIRMA AUTORIZADA DE ACUERDO CON EL ARTÍCULO 7 DE LA ORDENANZA QUE REGULA EL FUNCIONAMIENTO DEL EXPENDIO DE BEBIDAS ALCOHÓLICAS</span>
                         <span class="row small">Correspondiente al Registro {{ $license->num }} de Fecha {{$license->emission_date }} Tasa Administrativa pagada en fecha {{ $processedAt }} con Factura Nº {{ $payment ? $payment->num : null }}</span>
                     </div>
                 </div>
