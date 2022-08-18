@@ -95,7 +95,8 @@
                                     Form::select('vehicleParameter', $vehicleParameter, null, [
                                         'class' => 'col-md-12 select2',
                                         'placeholder' => 'SELECCIONE',
-                                        'id' => 'vparameters'
+                                        'id' => 'vparameters',
+                                        'required'
                                     ])
                                 !!}
 
@@ -127,6 +128,7 @@
                                     Form::select('vehicleModel', $vehicleModel, null, [
                                         'class' => 'col-md-12 select2',
                                         'placeholder' => 'SELECCIONE',
+                                        'required'
 
                                     ])
                                 !!}
@@ -141,7 +143,8 @@
                                 {!!
                                     Form::select('color', $color, null, [
                                         'class' => 'col-md-12 select2',
-                                        'placeholder' => 'SELECCIONE'
+                                        'placeholder' => 'SELECCIONE',
+                                        'required'
                                     ])
                                 !!}
 

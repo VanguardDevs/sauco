@@ -23,8 +23,7 @@ use Illuminate\Support\Facades\DB;
 use PDF;
 use Auth;
 
-//use App\Models\Requirement;
-//use App\Models\RequirementTaxpayer;
+use App\Http\Requests\Vehicles\VehicleCreateFormRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -81,7 +80,7 @@ class VehicleController extends Controller
 
 
 
-    public function store(Request $request, Taxpayer $taxpayer)
+    public function store(VehicleCreateFormRequest $request, Taxpayer $taxpayer)
     {
 
         $currYear = Year::where('year', Carbon::now()->year)->first();
@@ -392,7 +391,7 @@ class VehicleController extends Controller
     }
 
 
-    public function save(Request $request, Taxpayer $taxpayer)
+    public function save(VehicleCreateFormRequest $request, Taxpayer $taxpayer)
     {
 
         $currYear = Year::where('year', Carbon::now()->year)->first();
