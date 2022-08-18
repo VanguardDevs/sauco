@@ -593,9 +593,9 @@ class LicenseController extends Controller
 
         $payment = ($liquidation) ? $liquidation->payment->first() : null;
 
-        $processedAt = ($payment) ? Carbon::createFromDate($payment->processed_at)->format('m-d-Y') : null;
+       	$processedAt = ($payment) ? Carbon::createFromDate($payment->getRawOriginal('processed_at'))->format('d-m-Y') : null;
 
-        $registeredAt = ($liqueur) ? Carbon::createFromDate($liqueur->registry_date)->format('m-d-Y') : null;
+        $registeredAt = ($liqueur) ? Carbon::createFromDate($liqueur->registry_date)->format('d-m-Y') : null;
 
         $liqueurAnnex = LiqueurAnnex::whereLiqueurId($liqueur->id)->first();
 
