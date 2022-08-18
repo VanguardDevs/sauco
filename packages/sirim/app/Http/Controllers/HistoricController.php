@@ -35,21 +35,11 @@ class HistoricController extends Controller
             ->with('years', Year::pluck('year', 'id'));
     }
 
-    public function list(Taxpayer $taxpayer)
-    {
-        $query = Application::whereTaxpayerId($taxpayer->id)
-            ->orderBy('applications.created_at', 'DESC')
-            ->with(['concept:id,name', 'liquidation']);
-
-        return DataTables::eloquent($query)
-            ->toJson();
-    }
 
     public function listConcepts(Ordinance $ordinance)
     {
-        return $ordinance->conceptsByList(1);
+        return $ordinance->conceptsByOrdinance($ordinance->id);
     }
-
 
 
     public function store(HistoricFormRequest $request, Taxpayer $taxpayer)
