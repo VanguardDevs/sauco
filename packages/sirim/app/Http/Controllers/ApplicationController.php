@@ -111,8 +111,9 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnnullmentRequest $request, Application $application)
+    public function destroy(AnnullmentRequest $request, Taxpayer $taxpayer, Application $application)
     {
+
         if (!$application->liquidation()->exists()) {
             return response()->json([
                 'success' => false,
@@ -129,6 +130,6 @@ class ApplicationController extends Controller
         $application->delete();
 
         return redirect()->back()
-            ->with('success', '¡Solicitud anulada!');
+            ->withSuccess('¡Solicitud anulada!');
     }
 }
