@@ -53,7 +53,8 @@
                 margin: auto;
                 margin-top: 4%;
                 /* position: absolute; */
-                left: 10%;
+                margin-left: 18%;
+                
             }
             #watermark {
                 position: absolute;
@@ -110,7 +111,7 @@
                 
                 <p style="text-align:center;"><u>RESUELVE</u></p>
                 <div class="row" style="text-align: justify;">
-                    <u>Primero:</u> Se otorga  Cese de Ejercicio de Actividades Económicas,  al contribuyente {{ $license->taxpayer->commercialDenomination->name }}, RIF {{ $license->taxpayer->rif }}, Registro Municipal N.º {{ $license->num }}, por tanto, desde la presente fecha se desincorpora la misma de los registros que al efecto mantiene esta dependencia de Administración Tributaria - -- - -
+                    <u>Primero:</u> Se otorga  Cese de Ejercicio de Actividades Económicas,  al contribuyente {{ $license->taxpayer->commercialDenomination->name }}, RIF {{ $license->taxpayer->rif }}, Registro Municipal N.º {{ $license->num }}, por tanto, desde la presente fecha se desincorpora la misma de los registros que al efecto mantiene esta dependencia de Administración Tributaria.
                 </div>
                 <br>
                 <div class="row" style="text-align: justify;">
