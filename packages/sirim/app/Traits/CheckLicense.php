@@ -48,6 +48,9 @@ trait CheckLicense
                     $data['liquidation_id'] = $this->id;
                     $data['active'] = true;
                 break;
+            case '00.00.00':
+                   $this->taxpayer->requirementTaxpayer()->update(['active' => false]);
+                break;
             default:
                 break;
         }

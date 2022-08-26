@@ -69,10 +69,15 @@ class LicenseController extends Controller
     public function create(Taxpayer $taxpayer, Request $request)
     {
         if ($request->wantsJson()) {
-            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '1');;
+            $query = License::whereTaxpayerId($taxpayer->id)->where('ordinance_id', '1');
 
             return DataTables::eloquent($query)->toJson();
         }
+
+        $requirement = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)
+        ->where('requirement_id', '5')->where('active', true)->first();
+
+
 
         $correlatives = [
             1 => 'INSTALAR LICENCIA',
@@ -81,6 +86,7 @@ class LicenseController extends Controller
 
         return view('modules.taxpayers.economic-activity-licenses.index')
             ->with('taxpayer', $taxpayer)
+            ->with('requirement', $requirement)
             ->with('correlatives', $correlatives);
     }
 
