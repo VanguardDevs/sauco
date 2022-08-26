@@ -132,14 +132,14 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
     Route::get('applications/{application}/payment/new', 'ApplicationController@makePayment');
-    Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
+    Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController')->except(['show']);
 
 
 
     /**
      * Taxpayer's historic
      */
-    Route::resource('taxpayers/{taxpayer}/historics', 'HistoricController')->except(['show']);;
+    Route::resource('taxpayers/{taxpayer}/historics', 'HistoricController')->except(['show']);
 
      Route::get('taxpayers/{taxpayer}/historics/liquidations', 'HistoricController@listByTaxpayer');
 
