@@ -53,7 +53,7 @@
                 margin: auto;
                 margin-top: 4%;
                 /* position: absolute; */
-                margin-left: 18%;
+                
                 
             }
             #watermark {
@@ -71,6 +71,9 @@
                 border-width: 1.5px;
                 border-style: solid;
                 margin-top: -6px;
+            }
+            .firma{
+                text-align: right;
             }
             h4{
                 text-align: center;
@@ -118,13 +121,13 @@
                     <u>Segundo:</u> Notifiquese del presente acto al ciudadano(a) {{ $license->representation->person->name }}, C.I {{ $license->representation->person->document }} en su carácter de representante legal de la Sociedad Mercantil {{ $license->taxpayer->commercialDenomination->name }}.
                 </div>
                 <br>
-                <div class="row">
+                <div class="row firma">
                     <strong>Carúpano</strong>, {{ date('d-m-Y') }}
                 </div>
-
-                <div class="row">
+                <div class="row firma">
                     <strong>El Suscrito</strong>
                 </div>
+                <br>
                 <div class="bottom text-center">
                     <span class="row">{{ $signature->title }}</span>
                     <span class="row">superintendente de administración tributaria</span>
