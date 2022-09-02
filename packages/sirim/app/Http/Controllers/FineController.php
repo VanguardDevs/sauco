@@ -96,7 +96,7 @@ class FineController extends Controller
 
         $requirement = Requirement::whereNum('00000005')->first();
 
-        if($fine->concept->code== '00.00.00'){
+        if($fine->concept->code== '00.00.00.00'){
             RequirementTaxpayer::create([
                 'active' => true,
                 'requirement_id' => $requirement->id,

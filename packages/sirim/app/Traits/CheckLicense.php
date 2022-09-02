@@ -48,8 +48,8 @@ trait CheckLicense
                     $data['liquidation_id'] = $this->id;
                     $data['active'] = true;
                 break;
-            case '00.00.00':
-                   $this->taxpayer->requirementTaxpayer()->update(['active' => false]);
+            case '00.00.00.00':
+                   $this->taxpayer->requirementTaxpayer()->where('liquidation_id', $this->id)->update(['active' => false]);
                 break;
             default:
                 break;
