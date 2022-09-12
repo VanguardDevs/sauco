@@ -44,7 +44,6 @@ class HistoricController extends Controller
 
     public function store(HistoricFormRequest $request, Taxpayer $taxpayer)
     {
-
         $concept = Concept::find($request->input('concept'));
         $year = Year::find($request->input('year'));
 
@@ -55,7 +54,7 @@ class HistoricController extends Controller
             'user_id' => Auth::user()->id,
             'liquidable_type' => null,
             'concept_id' => $concept->id,
-            'liquidation_type_id' => $concept->liquidation_type_id,
+            'liquidation_type_id' => 4, // Historico
             'status_id' => 1,
             'taxpayer_id' => $taxpayer->id
         ]);
@@ -88,6 +87,4 @@ class HistoricController extends Controller
             ->make(true);
 
     }
-
-
 }
