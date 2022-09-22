@@ -12,13 +12,21 @@
                 font-size: 9px;
                 position: relative;
                 display: block;
+                background-color: #20B027;
             }
             .header div {
                 display: inline-block;
             }
             #mayorLOGO {
                 float: right;
-                margin-top: -10px;
+                margin-top: 2px;
+            }
+            .sumatLOGO {
+                margin-top: 2px;
+            }
+            .description {
+                margin-top: 2px;
+
             }
             #sello {
                 float: right;
@@ -50,10 +58,10 @@
             }
             .tables {
                 display:block;
-                border-color: red;
+                border-color: green;
                 border-width: 1.5px;
                 border-style: solid;
-                margin-top: -6px;
+                margin-top: -4px;
             }
             .bill-info {
                 width: 100%;
@@ -109,6 +117,7 @@
                 width: 200px;
                 height: 200px;
                 opacity: .3;
+                z-index: -1;
             }
         </style>
         <title>{{ $license->num }}</title>
@@ -133,7 +142,7 @@
                     </p>
                 </div>
                 <div id="mayorLOGO">
-                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+                    <img src="{{ asset('/assets/images/logo_alcaldia.png') }}" height="80px" width="130px" alt="logo" />
                 </div>
             </div>
 
