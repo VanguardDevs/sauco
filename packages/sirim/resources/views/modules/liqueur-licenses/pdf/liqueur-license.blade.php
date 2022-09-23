@@ -12,7 +12,7 @@
                 font-size: 9px;
                 position: relative;
                 display: block;
-                background-color: #20B027;
+                /*background-color: #20B027;*/
             }
             .header div {
                 display: inline-block;
@@ -22,12 +22,20 @@
                 margin-top: 2px;
             }
             .sumatLOGO {
-                margin-top: 2px;
+                margin-top: 3px;
             }
             .description {
                 margin-top: 2px;
 
             }
+
+             #degrade {
+                position: absolute;
+                margin-top: 2px;
+                z-index: -1;
+            }
+
+
             #sello {
                 float: right;
                 margin-top: -1px;
@@ -127,6 +135,9 @@
             <img src="{{ asset('/assets/images/escudo.jpg') }}" height="100%" width="100%" alt="sumatlogo"/>
         </div>
         <div class="container">
+            <div id="degrade">
+                <img src="{{ asset('/assets/images/mosaico-2.jpg') }}" height="85px" width="100%" alt="sumatlogo"/>
+            </div>
             <div class="header">
                 <div class="sumatLOGO">
                     <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
