@@ -136,7 +136,7 @@
         </div>
         <div class="container">
             <div id="degrade">
-                <img src="{{ asset('/assets/images/mosaico-2.jpg') }}" height="85px" width="100%" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/degrade-2.png') }}" height="85px" width="100%" alt="sumatlogo"/>
             </div>
             <div class="header">
                 <div class="sumatLOGO">
