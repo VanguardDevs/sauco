@@ -66,7 +66,6 @@
             }
             .tables {
                 display:block;
-                border-color: green;
                 border-width: 1.5px;
                 border-style: solid;
                 margin-top: -4px;
@@ -137,7 +136,7 @@
         <div class="container">
             <div id="degrade">
                 @if($license->correlative->correlative_type_id == 1)
-                <img src="{{ asset('/assets/images/degrade-3.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
+                <img src="{{ asset('/assets/images/degrade-1.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
                 @else
                 <img src="{{ asset('/assets/images/degrade-2.png') }}" height="85px" width="100%" alt="sumatlogo"/>
                 @endif
@@ -161,7 +160,11 @@
                 </div>
             </div>
 
-            <div class="tables">
+            @if($license->correlative->correlative_type_id == 1)
+            <div class="tables" style="border-color: maroon;">
+            @else
+             <div class="tables" style="border-color: green;">
+            @endif
                 <h4 style="margin-top: 1px;" >REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h4>
                 <table class="center">
                     <thead>
