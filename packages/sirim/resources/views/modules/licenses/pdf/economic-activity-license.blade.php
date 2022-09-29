@@ -117,6 +117,7 @@
                 width: 200px;
                 height: 200px;
                 opacity: .3;
+                z-index: -1;
             }
         </style>
     </head>

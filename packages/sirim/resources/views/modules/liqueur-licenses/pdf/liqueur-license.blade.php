@@ -12,14 +12,30 @@
                 font-size: 9px;
                 position: relative;
                 display: block;
+                /*background-color: #20B027;*/
             }
             .header div {
                 display: inline-block;
             }
             #mayorLOGO {
                 float: right;
-                margin-top: -10px;
+                margin-top: 2px;
             }
+            .sumatLOGO {
+                margin-top: 3px;
+            }
+            .description {
+                margin-top: 2px;
+
+            }
+
+             #degrade {
+                position: absolute;
+                margin-top: 2px;
+                z-index: -1;
+            }
+
+
             #sello {
                 float: right;
                 margin-top: -1px;
@@ -50,10 +66,9 @@
             }
             .tables {
                 display:block;
-                border-color: red;
                 border-width: 1.5px;
                 border-style: solid;
-                margin-top: -6px;
+                margin-top: -4px;
             }
             .bill-info {
                 width: 100%;
@@ -109,6 +124,7 @@
                 width: 200px;
                 height: 200px;
                 opacity: .3;
+                z-index: -1;
             }
         </style>
         <title>{{ $license->num }}</title>
@@ -118,6 +134,13 @@
             <img src="{{ asset('/assets/images/escudo.jpg') }}" height="100%" width="100%" alt="sumatlogo"/>
         </div>
         <div class="container">
+            <div id="degrade">
+                @if($license->correlative->correlative_type_id == 1)
+                <img src="{{ asset('/assets/images/degrade-1.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
+                @else
+                <img src="{{ asset('/assets/images/degrade-2.png') }}" height="85px" width="100%" alt="sumatlogo"/>
+                @endif
+            </div>
             <div class="header">
                 <div class="sumatLOGO">
                     <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="90px" width="230px" alt="sumatlogo"/>
@@ -133,11 +156,15 @@
                     </p>
                 </div>
                 <div id="mayorLOGO">
-                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="80px" width="130px" alt="logo" />
+                    <img src="{{ asset('/assets/images/logo_alcaldia.png') }}" height="80px" width="130px" alt="logo" />
                 </div>
             </div>
 
-            <div class="tables">
+            @if($license->correlative->correlative_type_id == 1)
+            <div class="tables" style="border-color: maroon;">
+            @else
+             <div class="tables" style="border-color: green;">
+            @endif
                 <h4 style="margin-top: 1px;" >REGISTRO DE EXPENDIO DE BEBIDAS ALCOHÓLICAS</h4>
                 <table class="center">
                     <thead>
