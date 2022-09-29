@@ -8,6 +8,8 @@ use App\Models\Ordinance;
 use App\Models\Concept;
 use App\Models\Payment;
 use App\Models\Settlement;
+use App\Models\Requirement;
+use App\Models\RequirementTaxpayer;
 use App\Http\Requests\AnnullmentRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -91,6 +93,17 @@ class FineController extends Controller
         $liquidation = $fine->makeLiquidation();
 
         $payment->liquidations()->sync($liquidation);
+
+        $requirement = Requirement::whereNum('00000005')->first();
+
+        if($fine->concept->code== '00.00.00.00'){
+            RequirementTaxpayer::create([
+                'active' => true,
+                'requirement_id' => $requirement->id,
+                'taxpayer_id' => $fine->taxpayer->id,
+                'liquidation_id' => $liquidation->id
+            ]);
+        }
 
         return redirect()->route('liquidations.show', $liquidation->id);
     }

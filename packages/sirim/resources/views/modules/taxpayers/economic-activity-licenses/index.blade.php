@@ -6,6 +6,7 @@
 
 @if(Auth()->user()->can('create.licenses'))
 <div class="col-md-12">
+    @if($requirement==null)
     <div class="kt-portlet kt-portlet--height-fluid">
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
@@ -36,6 +37,12 @@
             {!! Form::close() !!}
         </div>
     </div>
+    @else
+    <div class="alert alert-warning alert-dismissible" role="alert">
+            <strong>¡Debe pagar la sanción para generar una nueva licencia!</strong> {{ session('error') }}
+        </div>
+
+    @endif
 </div>
 @endif
 <div class="col-xl-12">
