@@ -127,6 +127,10 @@ class LiquidationController extends Controller
             $liquidation->credit()->delete();
         }
 
+        if ($liquidation->requirementTaxpayer()->exists()) {
+            $liquidation->requirementTaxpayer()->delete();
+        }
+
         return redirect()->back()
             ->withSuccess('¡Liquidación anulada!');
     }
@@ -151,7 +155,6 @@ class LiquidationController extends Controller
             return redirect()->back()
                 ->withError('¡La liquidación no ha sido procesada!');
         }
-
 
         $customPaper = array(0,0,228,230);
             return PDF::setOptions(['isRemoteEnabled' => true])
