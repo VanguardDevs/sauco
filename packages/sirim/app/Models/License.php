@@ -28,6 +28,7 @@ class License extends Model implements Auditable
         'correlative_id',
         'ordinance_id',
         'downloaded_at',
+        'created_at',
         'liquidation_id'
     ];
 
@@ -90,6 +91,11 @@ class License extends Model implements Auditable
     }
 
     public function getExpirationDateAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public function getCreatedAtAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
     }
