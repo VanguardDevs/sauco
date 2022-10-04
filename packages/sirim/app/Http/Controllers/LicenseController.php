@@ -595,7 +595,7 @@ class LicenseController extends Controller
 
         $liquidation = $license->liquidation;
 
-        $period = Carbon::createFromDate($license->create_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->format('Y');
+        $period = Carbon::createFromDate($license->created_at)->format('Y').'-'.Carbon::createFromDate($license->expiration_date)->format('Y');
 
         $payment = ($liquidation) ? $liquidation->payment->first() : null;
 
