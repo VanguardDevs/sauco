@@ -17,9 +17,14 @@
             .header div {
                 display: inline-block;
             }
+            
+
             #mayorLOGO {
                 float: right;
-                margin-top: -10px;
+                margin-top: 2px;
+            }
+            .sumatLOGO {
+                margin-top: 3px;
             }
             table, td, th {
                 border: 1px #000 solid;
@@ -101,6 +106,7 @@
             .description {
                 text-align: center;
                 padding-left: 5px;
+                margin-top: 2px;
             }
             input{
                margin-top: 3.5%;
@@ -119,6 +125,12 @@
                 opacity: .3;
                 z-index: -1;
             }
+
+              #degrade {
+                position: absolute;
+                margin-top: 2px;
+                z-index: -1;
+            }
         </style>
     </head>
     <body>
@@ -126,6 +138,13 @@
             <img src="{{ asset('/assets/images/escudo.jpg') }}" height="100%" width="100%" alt="sumatlogo"/>
         </div>
         <div class="container">
+            <div id="degrade">
+                @if($license->correlative->correlative_type_id == 1)
+                <img src="{{ asset('/assets/images/degrade-4.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
+                @else
+                <img src="{{ asset('/assets/images/degrade-3.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
+                @endif
+            </div>
             <div class="header">
                 <div class="sumatLOGO">
                     <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="89px" width="210px" alt="sumatlogo"/>
@@ -141,7 +160,7 @@
                     </p>
                 </div>
                 <div id="mayorLOGO">
-                    <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="79px" width="130px" alt="logo" />
+                    <img src="{{ asset('/assets/images/logo_alcaldia.png') }}" height="80px" width="130px" alt="logo" />
                 </div>
             </div>
 
