@@ -140,9 +140,9 @@
         <div class="container">
             <div id="degrade">
                 @if($license->correlative->correlative_type_id == 1)
-                <img src="{{ asset('/assets/images/degrade-4.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
-                @else
                 <img src="{{ asset('/assets/images/degrade-3.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
+                @else
+                <img src="{{ asset('/assets/images/degrade-4.jpeg') }}" height="85px" width="100%" alt="sumatlogo"/>
                 @endif
             </div>
             <div class="header">
