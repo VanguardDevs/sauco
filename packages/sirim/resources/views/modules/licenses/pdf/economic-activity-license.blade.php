@@ -115,10 +115,11 @@
             .tables--container {
                 width: 95%;
                 margin: auto;
+
             }
             #watermark {
                 position: absolute;
-                top: 175px;
+                top: 165px;
                 right: 250px;
                 width: 200px;
                 height: 200px;
@@ -131,6 +132,14 @@
                 margin-top: 2px;
                 z-index: -1;
             }
+
+            #sello {
+                float: right;
+                margin-top: -1px;
+                margin-bottom: -35px;
+                margin-right: 5px;
+            }
+
         </style>
     </head>
     <body>
@@ -165,17 +174,8 @@
             </div>
 
             <div class="tables">
-                <h4 style="margin-top: 1px; text-align: center;" >LICENCIA DE ACTIVIDAD ECONÓMICA</h4>
-                <strong>
-                    <span
-                        style="font-size: 10.5px; text-align: center; margin-top: -1%; margin-right: 5px;"
-                        class="row"
-                    >
-                        Este documento debe permanecer en un sitio visible dentro del establecimiento a los fines de su fiscalización.
-                        Según la Ordenanza sobre Actividades Económicas de Industria y Comercio, Servicios o de
-                        Índole Similar del Municipio Bermúdez de Estado Sucre (Art. 5).
-                    </span>
-                </strong>
+                <h4 style="margin-top: 1px; margin-bottom: 9px; text-align: center;" >LICENCIA DE ACTIVIDADES ECONÓMICAS</h4>
+
                 <div class="tables--container">
                     <table class="table" style="margin-bottom:0;">
                         <tbody>
@@ -246,8 +246,8 @@
                             <tr>
                                 <th width="10%">CÓDIGO</th>
                                 <th width="60%">NOMBRE</th>
-                                <th width="15%">ALICUOTA</th>
-                                <th width="15%">MÍNIMO</th>
+                                <th width="13%">ALICUOTA (%)</th>
+                                <th width="17%">MÍNIMO TRIBUTABLE (PETRO)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -262,6 +262,10 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div id="sello" style=" z-index: 2;">
+                        <img src="{{ asset('/assets/images/selloAE.png') }}" height="65px" width="163px"/>
+                    </div>
                 <br>
                 <br>
                 <div class="bottom text-center" style="z-index: -1;">
