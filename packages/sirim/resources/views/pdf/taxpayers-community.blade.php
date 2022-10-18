@@ -71,7 +71,7 @@ ini_set('max_execution_time', "800");
                 ESTADO SUCRE<br>
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
                 SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
-                RIF: G-20000222-1<br>
+                RIF: G-20000292-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>
