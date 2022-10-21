@@ -76,6 +76,11 @@ class License extends Model implements Auditable
         return $this->hasOne(Liqueur::class);
     }
 
+     public function revenueStamp()
+    {
+        return $this->hasOne(RevenueStamp::class);
+    }
+
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)
     {
         if (self::whereTaxpayerId($taxpayer->id)->exists()) {
