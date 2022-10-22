@@ -76,7 +76,7 @@ class License extends Model implements Auditable
         return $this->hasOne(Liqueur::class);
     }
 
-     public function revenueStamp()
+    public function revenueStamp()
     {
         return $this->hasOne(RevenueStamp::class);
     }

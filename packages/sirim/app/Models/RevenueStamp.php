@@ -13,11 +13,17 @@ class RevenueStamp extends Model
         'payment_num',
         'amount',
         'observations',
-        'license_id'
+        'license_id',
+        'user_id'
     ];
 
     public function license()
     {
         return $this->belongsTo(License::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

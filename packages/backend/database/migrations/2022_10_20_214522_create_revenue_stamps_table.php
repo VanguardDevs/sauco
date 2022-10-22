@@ -19,9 +19,12 @@ class CreateRevenueStampsTable extends Migration
             $table->string('payment_num');
             $table->decimal('amount', 15, 2);
             $table->string('observations');
-            $table->unsignedBigInteger('license_id')->nullable();
+            $table->unsignedBigInteger('license_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->foreign('license_id')->references('id')->on('licenses')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

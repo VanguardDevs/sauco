@@ -676,3 +676,10 @@ Breadcrumbs::for('historics.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Movimientos Historicos', route('historics.index', $row));
 });
+
+
+/*------------- Historics Movements -------------*/
+Breadcrumbs::for('revenue-stamps.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Timbres Fiscales', route('revenue-stamps.index', $row));
+});
