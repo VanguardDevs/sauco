@@ -26,4 +26,14 @@ class RevenueStamp extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function taxpayer()
+    {
+        return $this->hasOneThrough(License::class, Taxpayer::class);
+    }
+
+    public function getDateAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
 }

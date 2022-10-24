@@ -10,7 +10,7 @@
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
                 <span class="kt-portlet__head-icon">
-                    <i class="kt-font-brand fas fa-cash-register"></i>
+                    <i class="kt-font-brand fas fa-stamp"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
                     Registrar Timbre Fiscal
@@ -37,15 +37,13 @@
                     <div class="col-lg-6">
                         <label>Número de Recibo <span class="text-danger">*</span></label>
 
-                        {!! Form::text('payment_num', null, ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+                        {!! Form::number('payment_num', null, ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
 
                         @error('payment_num')
                             <div class="text text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                     
-
                     <div class="col-lg-12"></div>
                     <br>
 
@@ -90,7 +88,7 @@
                    <div class="col-lg-6">
                        <label>Concepto <span class="text-danger">*</span></label>
 
-                       {!! Form::text('observations', null, ['class' => 'form-control', "onkeyup" => "upperCase(this);", "required"]) !!}
+                       {!! Form::text('observations', null, ['class' => 'form-control', "required"]) !!}
 
                        @error('observations')
                            <div class="text text-danger">{{ $message }}</div>
@@ -110,30 +108,20 @@
     </div>
 </div>
 @endif
+
 <div class="col-xl-12">
     <div class="kt-portlet kt-portlet--height-fluid">
-        <div class="kt-portlet__head kt-portlet__head--lg">
-            <div class="kt-portlet__head-label">
-                <span class="kt-portlet__head-icon">
-                    <i class="kt-font-brand fas fa-folder-open"></i>
-                </span>
-                <h3 class="kt-portlet__head-title">
-                    Timbres Fiscales
-                </h3>
-            </div>
-        </div>
-
         <div class="kt-portlet__body">
-          <table id="tRevenueStamp" class="table table-bordered table-striped datatables" style="text-align: center">
-            <thead>
-              <tr>
-                <th width="20%">Nro.</th>
-                <th width="30%">Estado</th>
-                <th width="30%">Monto</th>
-                <th width="20%">Acciones</th>
-              </tr>
-            </thead>
-          </table>
+            <table id="tRevenueStamps" class="table table-bordered table-striped datatables" style="text-align: center">
+                <thead>
+                  <tr>
+                    <th width="15%">Nro. Recibo</th>
+                    <th width="20%">Fecha</th>
+                    <th width="20%">Monto</th>
+                    <th width="35%">Concepto</th>
+                  </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>

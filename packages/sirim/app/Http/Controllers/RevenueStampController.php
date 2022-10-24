@@ -10,18 +10,34 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\RevenueStampFormRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 class RevenueStampController extends Controller
 {
     
 
-    public function index(Taxpayer $taxpayer)
+    public function index(Taxpayer $taxpayer, Request $request)
     {
+
+        if ($request->wantsJson()) {
+
+            $query = RevenueStamp::query()
+            ->join('licenses', 'licenses.id', '=', 'revenue_stamps.license_id')
+            ->join('taxpayers', 'taxpayers.id', '=', 'licenses.taxpayer_id')
+            ->where('taxpayers.id', $taxpayer->id)
+            ->where('licenses.active', 'true')
+            ->select('revenue_stamps.*')
+            ->orderBy('id', 'desc');
+
+            return DataTables::eloquent($query)->toJson();
+        }
 
         $existingLicenses = DB::table('licenses')
             ->where('taxpayer_id', $taxpayer->id)
             ->where('ordinance_id', 6)
-            ->where('expiration_date', '>=', Carbon::now())
+            ->where('expiration_date', '>', Carbon::now())
+            ->where('active', 'true')
             ->groupBy('num', 'id')
             ->having('num', '>', 1)
             ->pluck('num', 'id')
@@ -39,7 +55,6 @@ class RevenueStampController extends Controller
     {
         $license = License::find($request->input('license'));
 
-
         $revenueStamp = RevenueStamp::create([
             'date' => $request->date,
             'payment_num' => $request->payment_num,
@@ -49,7 +64,6 @@ class RevenueStampController extends Controller
             'user_id' => Auth::user()->id
             
         ]);
-
 
         return redirect()->route('revenue-stamps.index', $taxpayer)
                 ->withSuccess('¡Comprobante de Pago de Timbre Fiscal Agregado!');
