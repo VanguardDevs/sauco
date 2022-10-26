@@ -28,6 +28,7 @@ use App\Models\Dismissal;
 use App\Models\App\Modelslication;
 use App\Models\Requirement;
 use App\Models\RequirementTaxpayer;
+use App\Models\RevenueStamp;
 use Carbon\Carbon;
 use App\Models\Signature;
 use Illuminate\Support\Facades\DB;
@@ -609,6 +610,8 @@ class LicenseController extends Controller
 
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
+        $revenueStamp = RevenueStamp::whereLicenseId($license->id)->first();
+
         $vars = [
             'license',
             'taxpayer',
@@ -623,7 +626,8 @@ class LicenseController extends Controller
             'liquidation',
             'processedAt',
             'registeredAt',
-            'period'
+            'period',
+            'revenueStamp'
         ];
         $license->update(['downloaded_at' => Carbon::now()]);
 

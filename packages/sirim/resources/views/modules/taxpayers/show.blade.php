@@ -181,6 +181,17 @@
                     </div>
                 </a>
             </div>
+
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('revenue-stamps.index', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-stamp"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Certificación de Licencias</div>
+                    </div>
+                </a>
+            </div>
             @endif
 
         </div>

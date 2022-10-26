@@ -89,6 +89,15 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('liqueur-licenses/{license}', 'LicenseController@showLicenseLiqueur')
         ->name('liqueur-licenses.show');
 
+
+     /*
+    * License Stamp routes
+     */
+
+    Route::resource('taxpayers/{taxpayer}/revenue-stamps', 'RevenueStampController')->except(['show']);
+
+
+
      /*
     * Payment's routes modules
      */
