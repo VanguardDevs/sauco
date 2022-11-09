@@ -3,6 +3,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
+            @page {
+                margin-top: 0.5cm;
+            }
             body {
                 font-family: 'Helvetica';
                 font-size: 15px;
