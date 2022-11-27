@@ -122,11 +122,28 @@
                             <label class="col-lg-12"></label>
 
                             <div class="col-lg-6">
-                                <label>Modelo<span class="text-danger">*</span></label>
+                                <label>Marca<span class="text-danger">*</span></label>
                                 {!!
-                                    Form::select('vehicleModel', $vehicleModel, null, [
+                                    Form::select('vehicleBrand', $vehicleBrand, null, [
                                         'class' => 'col-md-12 select2',
                                         'placeholder' => 'SELECCIONE',
+                                        'id' => 'vbrands',
+                                        'required'
+                                    ])
+                                !!}
+
+                                @error('vehicleBrand')
+                                <div class="text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label>Modelo<span class="text-danger">*</span></label>
+                                {!!
+                                    Form::select('vehicleModel', [], null, [
+                                        'class' => 'col-md-12 select2',
+                                        'placeholder' => 'SELECCIONE',
+                                        'id' => 'vehicleModels',
                                         'required'
 
                                     ])

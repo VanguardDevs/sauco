@@ -14,4 +14,11 @@ class Brand extends Model
     {
         return $this->hasMany(VehicleModel::class, 'brand_id');
     }
+
+    public function scopeModelsByList($query, $type)
+    {
+        return self::vehicleModels()
+            ->where('brand_id', $type)
+            ->get();
+    }
 }

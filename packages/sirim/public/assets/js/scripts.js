@@ -17,6 +17,8 @@ $(function () {
     $('#payment_methods').on('change', onSelectPaymentType);
     $('#years').on('change', onSelectYears);
     $('#vparameters').on('change', onSelectVehicleParameters);
+    $('#vbrands').on('change', onSelectVehicleBrands);
+    
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
@@ -136,6 +138,22 @@ function onSelectVehicleParameters() {
     $('#vehicleClassifications').html(html_select);
   });
 }
+
+function onSelectVehicleBrands() {
+  let brand_id = $(this).val();
+
+  let html_select = '<option value=""> SELECCIONE </option>';
+
+  $.get('/vehicles/'+brand_id+'/models/', data => {
+
+    for (let i = 0; i < data.length; i++) {
+      html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+    }
+
+    $('#vehicleModels').html(html_select);
+  });
+}
+
 
 function onSelectBuildingOwner() {
   let selected = $(this).children('option:selected').html();

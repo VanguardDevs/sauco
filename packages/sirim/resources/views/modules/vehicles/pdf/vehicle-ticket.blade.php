@@ -72,7 +72,7 @@
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
                 SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN<br>
                 TRIBUTARIA<br>
-                RIF: G-20000222-1<br>
+                RIF: G-20000292-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>

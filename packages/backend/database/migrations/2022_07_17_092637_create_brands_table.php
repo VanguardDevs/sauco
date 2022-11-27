@@ -18,6 +18,11 @@ class CreateBrandsTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        Artisan::call('db:seed', [
+        '--class' => 'BrandTableSeeder',
+        '--force' => true
+        ]);
     }
 
     /**

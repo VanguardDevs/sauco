@@ -21,6 +21,11 @@ class CreateVehicleModelsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
+
+        Artisan::call('db:seed', [
+        '--class' => 'VehicleModelTableSeeder',
+        '--force' => true
+        ]);
     }
 
     /**

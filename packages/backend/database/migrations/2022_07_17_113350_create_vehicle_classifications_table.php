@@ -25,6 +25,11 @@ class CreateVehicleClassificationsTable extends Migration
             $table->foreign('charging_method_id')->references('id')->on('charging_methods')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
+
+        Artisan::call('db:seed', [
+        '--class' => 'VehicleClassificationSeeder',
+        '--force' => true
+        ]);
     }
 
     /**

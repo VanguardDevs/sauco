@@ -195,6 +195,9 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('years/{year}/months', 'YearController@listMonths');
     Route::get('vehicles/{vehicleParameter}/classifications', 'VehicleController@listClassifications');
 
+    Route::get('vehicles/{vehicleBrand}/models', 'VehicleController@listModels');
+
+
     /**
      * Update passwords
      */

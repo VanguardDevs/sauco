@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Brand;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class BrandTableSeeder extends Seeder
 {
@@ -94,6 +95,7 @@ class BrandTableSeeder extends Seeder
         [97, "MANAURE"],
         [98, "HATCH BACK"],
         [99, "GWM"],
+        [100, "HUMMER"],
         [101, "DODGE"],
         [102, "MASTRO"],
         [103, "INBUS"],
@@ -104,6 +106,7 @@ class BrandTableSeeder extends Seeder
         [108, "WANGYE"],
         [109, "HAOJIANG"],
         [110, "SUBARU"],
+        [111, "IVECO CAVALLINO"],
         [112, "BATEAS"],
         [113, "INPRODI"],
         [114, "RODO LINEA"],

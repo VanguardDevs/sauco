@@ -18,6 +18,11 @@ class CreateVehicleParametersTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        Artisan::call('db:seed', [
+        '--class' => 'VehicleParameterSeeder',
+        '--force' => true
+        ]);
     }
 
     /**

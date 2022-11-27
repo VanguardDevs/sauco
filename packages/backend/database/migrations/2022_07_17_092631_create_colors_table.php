@@ -18,6 +18,12 @@ class CreateColorsTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+
+        Artisan::call('db:seed', [
+        '--class' => 'ColorsTableSeeder',
+        '--force' => true
+        ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use App\Models\Color;
+use App\Models\Brand;
 use App\Models\VehicleModel;
 use App\Models\VehicleParameter;
 use App\Models\VehicleClassification;
@@ -74,7 +75,7 @@ class VehicleController extends Controller
             ->with('taxpayer', $taxpayer)
             ->with('color', Color::pluck('name', 'id'))
             ->with('vehicleParameter', VehicleParameter::pluck('name', 'id'))
-            ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
+            ->with('vehicleBrand', Brand::pluck('name', 'id'));
     }
 
 
@@ -371,6 +372,11 @@ class VehicleController extends Controller
         return $vehicleParameter->classificationsByList($vehicleParameter->id);
     }
 
+    public function listModels(Brand $vehicleBrand)
+    {
+        return $vehicleBrand->modelsByList($vehicleBrand->id);
+    }
+
 
 
     /** Create Vehicle without liquidation */
@@ -387,7 +393,7 @@ class VehicleController extends Controller
             ->with('taxpayer', $taxpayer)
             ->with('color', Color::pluck('name', 'id'))
             ->with('vehicleParameter', VehicleParameter::pluck('name', 'id'))
-            ->with('vehicleModel', VehicleModel::pluck('name', 'id'));
+            ->with('vehicleBrand', Brand::pluck('name', 'id'));
     }
 
 
