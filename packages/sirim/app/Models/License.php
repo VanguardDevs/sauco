@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\PrettyTimestamps;
+use App\Traits\NewValue;
+use App\Traits\MakeLiquidation;
+use App\Traits\PaymentUtils;
 
 class License extends Model implements Auditable
 {
-    use Audit, SoftDeletes, PrettyTimestamps;
+    use Audit, SoftDeletes, PrettyTimestamps, MakeLiquidation, PaymentUtils;
 
     protected $table = 'licenses';
 
@@ -25,6 +28,7 @@ class License extends Model implements Auditable
         'correlative_id',
         'ordinance_id',
         'downloaded_at',
+        'created_at',
         'liquidation_id'
     ];
 
@@ -52,11 +56,6 @@ class License extends Model implements Auditable
         return $this->belongsTo(Ordinance::class);
     }
 
-    public function liquidation()
-    {
-        return $this->belongsTo(Liquidation::class);
-    }
-
     public function vehicles()
     {
         return $this->hasMany(Vehicle::class);
@@ -70,6 +69,21 @@ class License extends Model implements Auditable
     public function representation()
     {
         return $this->belongsTo(Representation::class);
+    }
+
+    public function liquidation()
+    {
+        return $this->belongsTo(Liquidation::class);
+    }
+
+    public function liqueur()
+    {
+        return $this->hasOne(Liqueur::class);
+    }
+
+    public function revenueStamp()
+    {
+        return $this->hasOne(RevenueStamp::class);
     }
 
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)
@@ -89,5 +103,29 @@ class License extends Model implements Auditable
     public function getExpirationDateAttribute($value)
     {
         return date('d-m-Y', strtotime($value));
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
+
+    public static function getNewNum($status = null)
+    {
+        $query = self::withTrashed()
+            ->whereOrdinanceId(1);
+
+        if ($status != null) {
+            $query->whereStatusId($status);
+        }
+
+        $lastNum = '00000000';
+
+        if ($query->count()) {
+            $lastNum = $query->orderBy('num', 'DESC')->first()->num;
+        }
+
+        $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
+        return $newNum;
     }
 }

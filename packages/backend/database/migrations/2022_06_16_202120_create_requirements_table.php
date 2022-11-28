@@ -15,33 +15,29 @@ class CreateRequirementsTable extends Migration
     {
         Schema::create('requirements', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 8);
             $table->string('name');
-            $table->timestamps();
-        });
-
-        Schema::create('taxpayer_requirement', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('active')->default(1);
-            $table->timestamps();
-            $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('requirement_id');
-            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('requirement_id')->references('id')->on('requirements')
-                ->onUpdate('cascade')->onDelete('cascade');
-        });
-
-        Schema::create('concept_requirement', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->unsignedBigInteger('requirement_id');
+            $table->string('num');
             $table->unsignedBigInteger('concept_id');
+            $table->timestamps();
             $table->foreign('concept_id')->references('id')->on('concepts')
                 ->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        Schema::create('requirement_taxpayer', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('requirement_id');
+            $table->unsignedBigInteger('taxpayer_id');
+            $table->unsignedBigInteger('liquidation_id');
+            $table->boolean('active');
+            $table->timestamps();
             $table->foreign('requirement_id')->references('id')->on('requirements')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('liquidation_id')->references('id')->on('liquidations')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -51,8 +47,7 @@ class CreateRequirementsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('requirement_taxpayer');
         Schema::dropIfExists('requirements');
-        Schema::dropIfExists('taxpayer_requirement');
-        Schema::dropIfExists('concept_requirement');
     }
 }

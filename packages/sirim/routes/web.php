@@ -92,18 +92,50 @@ Route::prefix('/')->middleware('auth')->group(function()
         Route::post('licenses/{license}/renovate', 'LicenseController@renovate');
         Route::post('taxpayers/{taxpayer}/economic-activity-licenses/create', 'LicenseController@store')
             ->name('economic-activity-license.create');
+
+        Route::post('taxpayers/{taxpayer}/liqueur-licenses/create', 'LicenseController@storeLiqueurLicense')
+            ->name('liqueur-license.create');
+        Route::post('taxpayers/{taxpayer}/liqueur-licenses/renovate', 'LicenseController@renovateLiqueurLicense')
+            ->name('liqueur-license.renovate');
+
+        Route::get('liqueur-licenses/{license}/download', 'LicenseController@downloadLiqueurLicense')->name('liqueur-license.download');
+
         Route::post('licenses/{license}/dismiss', 'LicenseController@dismiss');
     });
+
+
     Route::get('taxpayers/{taxpayer}/economic-activity-licenses', 'LicenseController@create')
         ->name('taxpayer.economic-activity-licenses');
     Route::resource('licenses', 'LicenseController')->except(['create', 'store']);
 
+
+    Route::get('taxpayers/{taxpayer}/liqueur-licenses', 'LicenseController@createLicenceLiqueur')
+        ->name('taxpayer.liqueur-licenses');
+
+    Route::get('liqueur-licenses', 'LicenseController@listLicenseLiqueur')
+        ->name('liqueur-licenses.index');
+
+    Route::get('liqueur-licenses/{license}', 'LicenseController@showLicenseLiqueur')
+        ->name('liqueur-licenses.show');
+
+     /*
+    * License Stamp routes
+     */
+
+    Route::resource('taxpayers/{taxpayer}/revenue-stamps', 'RevenueStampController')->except(['show']);
+
+
+    /**
+     * Taxpayer's vehicles
+     */
 
     Route::get('taxpayers/{taxpayer}/vehicles', 'VehicleController@create')
         ->name('taxpayer.vehicles');
 
     Route::post('taxpayers/{taxpayer}/vehicles/create', 'VehicleController@store')
         ->name('vehicles.create');
+
+
 
      /*
     * Payment's routes modules
@@ -148,7 +180,19 @@ Route::prefix('/')->middleware('auth')->group(function()
      */
     Route::get('taxpayers/{taxpayer}/applications/list', 'ApplicationController@list');
     Route::get('applications/{application}/payment/new', 'ApplicationController@makePayment');
-    Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController');
+    Route::resource('taxpayers/{taxpayer}/applications', 'ApplicationController')->except(['show']);
+
+
+
+    /**
+     * Taxpayer's historic
+     */
+    Route::resource('taxpayers/{taxpayer}/historics', 'HistoricController')->except(['show']);
+
+     Route::get('taxpayers/{taxpayer}/historics/liquidations', 'HistoricController@listByTaxpayer');
+
+
+
 
     /**
      * Taxpayer's Withholdings
@@ -193,9 +237,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('applications/{ordinance}/concepts', 'ApplicationController@listConcepts');
     Route::get('fines/{ordinance}/concepts', 'FineController@listConcepts');
     Route::get('years/{year}/months', 'YearController@listMonths');
+
+    Route::get('historics/{ordinance}/concepts', 'HistoricController@listConcepts');
+
     Route::get('vehicles/{vehicleParameter}/classifications', 'VehicleController@listClassifications');
 
     Route::get('vehicles/{vehicleBrand}/models', 'VehicleController@listModels');
+
 
 
     /**
@@ -228,7 +276,13 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('dismissals', 'DismissalController')
         ->only(['index']);
 
+     /**
+     * Liqueur Parameter's routes modules
+     */
 
+    Route::resource('liqueur-parameters', 'LiqueurParameterController')->except(['show']);;
+    //Route::get('liqueur-parameters', 'LiqueurParameterController@index')->name('liqueur-parameters.index');
+    Route::get('liqueur-parameters/list', 'LiqueurParameterController@list');
 
       /**
      * Taxpayer's Credits
@@ -237,7 +291,7 @@ Route::prefix('/')->middleware('auth')->group(function()
         ->name('credits.index');
     Route::get('taxpayers/{taxpayer}/credits/list', 'CreditController@list');
 
-     /**
+    /**
     * Vehicle's Settings
     */
 
@@ -249,7 +303,4 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::get('vehicles/{vehicle}/certificate', 'VehicleController@certificate');
 
     Route::get('vehicles/{vehicle}/renovate', 'VehicleController@renovate');
-
-
-
 });

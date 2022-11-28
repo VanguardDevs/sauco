@@ -11,35 +11,18 @@ use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
 use App\Traits\PrettyTimestamps;
 use App\Traits\CheckDelinquencyStatus;
+use App\Traits\PaymentUtils;
 use App\Fine;
 
 class Payment extends Model implements Auditable
 {
-    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps, CheckDelinquencyStatus;
+    use Audit, SoftDeletes, NewValue, PrettyAmount, PrettyTimestamps, CheckDelinquencyStatus, PaymentUtils;
 
     protected $table = 'payments';
 
     protected $guarded = [];
 
     protected $casts = [ 'amount' => 'float' ];
-
-    public function createMovements()
-    {
-        $liquidations = $this->liquidations;
-
-        $currYear = Carbon::today()->year;
-        foreach($liquidations as $liq) {
-            $concurrent = ($liq->year()->year == $currYear) ? true : false;
-
-            $this->movements()->create([
-                'amount' => $liq->amount,
-                'concurrent' => $concurrent,
-                'concept_id' => $liq->concept_id,
-                'liquidation_id' => $liq->id,
-                'year_id' => $liq->year()->id
-            ]);
-        }
-    }
 
     public function updateAmount()
     {
@@ -107,5 +90,10 @@ class Payment extends Model implements Auditable
     public function credits()
     {
         return $this->hasMany(Credit::class)->withTrashed();;
+    }
+
+    public function deductions()
+    {
+        return $this->hasMany(Deduction::class)->withTrashed();;
     }
 }

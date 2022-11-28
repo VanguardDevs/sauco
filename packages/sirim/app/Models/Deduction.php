@@ -21,6 +21,7 @@ class Deduction extends Model implements Auditable
         'num',
         'user_id',
         'liquidation_id',
+        'payment_id',
         'amount'
     ];
 
@@ -29,6 +30,11 @@ class Deduction extends Model implements Auditable
     public function liquidation()
     {
         return $this->belongsTo(Liquidation::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
     }
 
     public function company()

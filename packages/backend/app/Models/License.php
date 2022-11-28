@@ -31,6 +31,11 @@ class License extends Model implements Auditable
         'active' => 'boolean'
     ];
 
+    public function liqueur()
+    {
+        return $this->hasOne(Liqueur::class);
+    }
+
     public function taxpayer()
     {
         return $this->belongsTo(Taxpayer::class);

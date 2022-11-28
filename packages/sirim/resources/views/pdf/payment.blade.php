@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- CSRF Token -->
-        <title> Factura </title>
+        <title> Factura {{ $payment->num }} </title>
         <style>
            body {
                 font-family: 'Helvetica';
@@ -44,21 +44,9 @@
             .tables {
                 display:block;
             }
-            .bill-info {
-                width: 100%;
-                clear: both;
-                font-weight: bold;
-            }
-            .col-bill-info {
-                float: left;
-                width: 50%;
-                font-size: 16px;
-            }
-            .total-amount {
-                text-align: right;
-            }
             .miscellaneus {
                 font-size: 12px;
+                background: black;
             }
             caption {
                 font-weight: bold;
@@ -66,6 +54,28 @@
             th {
                 font-size: 10px;
                 padding: 3px 1px;
+            }
+            .column {
+                text-align: left !important;
+                border: none;
+            }
+            .column--left {
+                width: 60% !important;
+            }
+            .column--right {
+                text-align: right !important;
+            }
+            .strong {
+                font-weight: bold !important;
+                text-transform: uppercase !important;
+            }
+            .larger {
+                font-size: 15px !important;
+            }
+            hr {
+                margin-top: 50px;
+                width: 40%;
+                background: black;
             }
         </style>
     </head>
@@ -81,7 +91,7 @@
                 ESTADO SUCRE<br>
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
                 SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
-                RIF: G-20000222-1<br>
+                RIF: G-20000292-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>
@@ -98,8 +108,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                     <tr>
-                        <td>{{ $denomination }}</td>
+                    <tr>
+                        <td >{{ $denomination }}</td>
                         <td>{{ $payment->taxpayer->rif }}</td>
                     </tr>
                     <tr>
@@ -146,27 +156,71 @@
              </table>
         </div>
         <br>
-        <div class="bill-info">
-            <div class="col-bill-info">
-                N° DE FACTURA: {{ $payment->num }}
-            </div>
-            <div class="col-bill-info">
-                <div class="total-amount">
-                    PAGO TOTAL: {{ $payment->pretty_amount }} Bs
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="miscellaneus">
-            <div class="liquidator-info">
-                Recaudador: {{ $payment->user->full_name }}
-            </div>
-            <div class="collector-firm">
-               <span style="width:50%;"></span>
-            </div>
-            <br>
-            <div class="observations">
-                OBSERVACIONES: {{ $payment->observations }}
+        <div class="tables">
+            <table class="details" style="border: none;">
+                <tbody class="larger">
+                    <tr>
+                        <td class="column column--left strong">Nº DE FACTURA: {{ $payment->num }}</td>
+                        <td class="column column--right">
+                            <span class="strong">
+                                TOTAL:
+                            </span>
+                            <span class="strong">
+                                {{ $payment->pretty_amount }}
+                            </span> Bs
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="column column--left">
+                            <span class="strong">
+                                Recaudador:
+                            </span>
+                            {{ $payment->user->full_name }}
+                        </td>
+                        @if($payment->credits()->exists())
+                            <td class="column column--right">
+                                <span class="strong">
+                                    CRÉDITO:
+                                </span>
+                                <span class="strong">
+                                    {{ number_format($payment->credits()->sum('amount'), 2, ',', '.') }}
+                                </span> Bs
+                            </td>
+                        @elseif ($payment->deductions()->exists() && !$payment->credits()->exists())
+                            <td class="column column--right">
+                                <span class="strong">
+                                    RETENCIONES:
+                                </span>
+                                <span class="strong">
+                                    {{ number_format($payment->deductions()->sum('amount'), 2, ',', '.') }}
+                                </span> Bs
+                            </td>
+                        @endif
+                    </tr>
+                    @if($payment->deductions()->exists() && $payment->credits()->exists())
+                    <tr>
+                        <td colspan="2" class="column column--right">
+                            <span class="strong">
+                                RETENCIONES:
+                            </span>
+                            <span class="strong">
+                                {{ number_format($payment->deductions()->sum('amount'), 2, ',', '.') }}
+                            </span> Bs
+                        </td>
+                    </tr>
+                    @endif
+                    @if($payment->observations)
+                        <tr>
+                            <td colspan="2" class="column">
+                                <span class="strong">OBSERVACIONES:</span> {{ $payment->observations }}
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+            <div style="width: 100%; text-align: center;">
+                <hr>
+                <span class="strong">FIRMA</span>
             </div>
         </div>
     </body>

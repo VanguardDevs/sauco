@@ -58,6 +58,28 @@
                 font-size: 10px;
                 padding: 3px 1px;
             }
+            .column {
+                text-align: left !important;
+                border: none;
+            }
+            .column--left {
+                width: 60% !important;
+            }
+            .column--right {
+                text-align: right !important;
+            }
+            .strong {
+                font-weight: bold !important;
+                text-transform: uppercase !important;
+            }
+            .larger {
+                font-size: 15px !important;
+            }
+            hr {
+                margin-top: 50px;
+                width: 40%;
+                background: black;
+            }
         </style>
     </head>
 
@@ -72,7 +94,7 @@
                 ESTADO SUCRE<br>
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
                 SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
-                RIF: G-20000222-1<br>
+                RIF: G-20000292-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>
@@ -106,11 +128,48 @@
              </table>
         </div>
         <br>
-        <div class="miscellaneus">
-            <div class="user-info">
-                <span id="user">Usuario:</span> {{ $liquidation->liquidable->user->full_name }}
-            </div>
+        <div class="tables">
+            <table class="details" style="border: none;">
+                <tbody class="larger">
+                    <tr>
+                        <td class="column column--left">
+                            <span class="strong">
+                                Recaudador:
+                            </span>
+                            {{ $liquidation->liquidable->user->full_name }}
+                        </td>
+                    </tr>
+                    @if($liquidation->deduction()->exists())
+                        <tr>
+                            <td class="column column--left">
+                                <span class="strong">
+                                    Retención:
+                                </span>
+                                <span class="strong">
+                                    {{ $liquidation->deduction->pretty_amount }}
+                                </span> Bs
+                            </td>
+                        </tr>
+                    @endif
 
+                    @if($liquidation->credit()->exists())
+                        <tr>
+                            <td class="column column--left">
+                                <span class="strong">
+                                    CRÉDITO:
+                                </span>
+                                <span class="strong">
+                                    {{ $liquidation->credit->pretty_amount }}
+                                </span> Bs
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+            <div style="width: 100%; text-align: center;">
+                <hr>
+                <span class="strong">FIRMA</span>
+            </div>
         </div>
     </body>
 </html>

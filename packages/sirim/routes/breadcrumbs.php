@@ -627,15 +627,48 @@ Breadcrumbs::for('accounting-accounts.edit', function ($trail, $row) {
     $trail->push('Editar cuenta contable', url('settings/accounting-accounts/edit'.$row->id));
 });
 
+/*------------- Liqueur Parameters -------------*/
+Breadcrumbs::for('liqueur-parameters.index', function ($trail) {
+    //$trail->parent('liqueur-parameters');
+    $trail->push('Parametros de Expendio', url('liqueur-parameters'));
+});
 
 
+/*------------- Liqueur Parameters > create -------------*/
+Breadcrumbs::for('liqueur-parameters.create', function ($trail) {
+    $trail->parent('liqueur-parameters.index');
+    $trail->push('Crear Parametro de Expendio', url('liqueur-parameters/create'));
+});
+
+/*------------- Liqueur Parameters > edit -------------*/
+Breadcrumbs::for('liqueur-parameters.edit', function ($trail) {
+    $trail->parent('liqueur-parameters.index');
+    $trail->push('Editar Parametro de Expendio', url('liqueur-parameters/edit'));
+});
+
+
+/*------------- Liqueur License -------------*/
+Breadcrumbs::for('taxpayer.liqueur-licenses', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Patentes de expendios', route('licenses.show', $row));
+});
+
+Breadcrumbs::for('liqueur-licenses.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Expendios', route('liqueur-licenses.index'));
+});
+
+
+Breadcrumbs::for('liqueur-licenses.show', function ($trail, $row) {
+    $trail->parent('liqueur-licenses.index', $row);
+    $trail->push('Expendio '.$row->num, route('liqueur-licenses.show', $row));
+});
 
 /*------------- Applications -------------*/
 Breadcrumbs::for('credits.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Creditos', route('credits.index', $row));
 });
-
 
 
 
@@ -764,3 +797,16 @@ Breadcrumbs::for('vehicles.save', function ($trail) {
     $trail->push('Crear Vehículo', url('taxpayers/{id}/vehicles/save'));
 });
 
+
+/*------------- Historics Movements -------------*/
+Breadcrumbs::for('historics.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Movimientos Historicos', route('historics.index', $row));
+});
+
+
+/*------------- Revenue Stamps -------------*/
+Breadcrumbs::for('revenue-stamps.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Timbres Fiscales', route('revenue-stamps.index', $row));
+});

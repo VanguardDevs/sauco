@@ -32,6 +32,11 @@
             span{
                 font-weight: bold;
             }
+            hr {
+                margin-top: 50px;
+                width: 40%;
+                background: black;
+            }
         </style>
     </head>
 
@@ -41,7 +46,7 @@
                <p>
                 ALCALDÍA DEL MUNICIPIO BERMÚDEZ<br>
                 SUPERINTENDENCIA MUNICIPAL DE ADMINISTRACIÓN TRIBUTARIA<br>
-                RIF: G-20000222-1<br>
+                RIF: G-20000292-1<br>
                 DIRECCIÓN: AV. CARABOBO, EDIFICIO MUNICIPAL
                 </p>
             </div>
@@ -56,22 +61,35 @@
             </p>
         </div>
         <div class="sections">
-        <p style="text-align: center; font-weight: bold;">DETALLES DEL COBRO</p>
-            <span>Nº LIQUIDACIÓN: </span>{{ $liquidation->num }}<br>
-            <span>CONCEPTO: </span>{{ $liquidation->object_payment }}<br>
-            <span>MONTO: </span>{{ $liquidation->pretty_amount }}<br>
+            <p style="text-align: center; font-weight: bold;">DETALLES DEL COBRO</p>
+                <span>Nº LIQUIDACIÓN: </span>{{ $liquidation->num }}<br>
+                <span>CONCEPTO: </span>{{ $liquidation->object_payment }}<br>
+                <span>MONTO: </span>{{ $liquidation->pretty_amount }}<br>
             </p>
         </div>
+        <br>
         <div class="sections">
-            <span>PAGO TOTAL: </span>{{ $payment->pretty_amount }} Bs<br><br>
+            <span>PAGO TOTAL: </span>{{ $payment->pretty_amount }} Bs<br>
+            @if($payment->credits()->exists())
+                <span>CRÉDITO: </span>{{ number_format($payment->credits()->sum('amount'), 2, ',', '.') }} Bs</span><br>
+            @endif
+            @if($payment->deductions()->exists())
+                <span>RETENCIONES: </span>{{ number_format($payment->deductions()->sum('amount'), 2, ',', '.') }} Bs</span><br>
+            @endif
             <span>N° DE FACTURA: </span>{{ $payment->num }}<br>
             <span>RECAUDADOR: </span>{{ $payment->user->full_name }}<br>
             <span>MÉTODO DE PAGO: </span>{{ $payment->paymentMethod->name }}<br>
             <span>FECHA: </span>{{ $payment->processed_at }}
 
-            <br>
-            <span>OBSERVACIONES: </span>{{ $payment->observations }}
+            @if($payment->observations)
+                <span>OBSERVACIONES: </span>{{ $payment->observations }}
+            @endif
 
+        </div>
+
+        <div style="width: 100%; text-align: center;">
+            <hr>
+            <span class="strong">FIRMA</span>
         </div>
     </body>
 </html>

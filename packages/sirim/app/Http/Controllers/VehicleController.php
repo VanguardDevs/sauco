@@ -118,7 +118,7 @@ class VehicleController extends Controller
             'amount' => $amount,
             'liquidable_type' => Vehicle::class,
             'concept_id' => $concept->id,
-            'liquidation_type_id' => $concept->liquidation_type_id,
+            'liquidation_type_id' => 1,
             'status_id' => 1,
             'taxpayer_id' => $taxpayer->id
         ]);
@@ -205,7 +205,7 @@ class VehicleController extends Controller
             'amount' => $amount,
             'liquidable_type' => Vehicle::class,
             'concept_id' => $concept->id,
-            'liquidation_type_id' => $concept->liquidation_type_id,
+            'liquidation_type_id' => 1,
             'liquidable_id' => $vehicle->id,
             'status_id' => 1,
             'taxpayer_id' => $taxpayer->id

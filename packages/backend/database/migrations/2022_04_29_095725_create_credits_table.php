@@ -18,10 +18,13 @@ class CreateCreditsTable extends Migration
             $table->string('num');
             $table->float('amount');
             $table->unsignedBigInteger('taxpayer_id');
-            $table->unsignedBigInteger('payment_id');
+            $table->unsignedBigInteger('payment_id')->nullable();
+            $table->unsignedBigInteger('liquidation_id')->nullable();
             $table->foreign('taxpayer_id')->references('id')->on('taxpayers')
             ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('payment_id')->references('id')->on('payments')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('liquidation_id')->references('id')->on('liquidations')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('generated_at');
             $table->timestamps();

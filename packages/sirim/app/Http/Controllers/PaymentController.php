@@ -11,9 +11,18 @@ use App\Models\Reference;
 use App\Models\Settlement;
 use App\Models\Taxpayer;
 use App\Models\PaymentNull;
+use App\Models\Liquidation;
+use App\Models\PetroPrice;
+use App\Models\Liqueur;
+use App\Models\License;
+use App\Models\LiqueurParameter;
+use App\Models\Year;
+use App\Models\Requirement;
+use App\Models\RequirementTaxpayer;
+use App\Models\Correlative;
+use App\Models\LiqueurLiquidation;
 use App\Models\Credit;
 use App\Models\Vehicle;
-use App\Models\License;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
@@ -138,8 +147,8 @@ class PaymentController extends Controller
         $taxpayer = Taxpayer::whereId($payment->taxpayer_id)->first();
 
         $validator = $request->validate([
-            'processed_at'     => 'required',
-            'method'  => 'required'
+            'processed_at' => 'required',
+            'method' => 'required'
         ]);
 
         if ($request->input('method') != '3') {
@@ -173,41 +182,19 @@ class PaymentController extends Controller
         ]);
 
 
-        $creditAmount = $payment->amount;
-
-        if ($creditAmount < 0){
-            $payment->credits()->create([
-                'num' => Credit::getNewNum(),
-                'amount' => $creditAmount * -1,
-                'taxpayer_id' => $payment->taxpayer_id,
-                'payment_id' => $payment->id,
+        if ($payment->has('credits')){
+            $payment->credits()->update([
                 'generated_at' => $processedAt
-
             ]);
         }
 
         $payment->createMovements();
 
-        if($concept->code == '15') {
-            $status = $payment->liquidations()->first()->status_id;
-            $vehicle = Vehicle::whereLicenseId($liquidation->license->id)->first();
 
-            $license = License::whereId($vehicle->license_id)
-                ->first();
+        // Revisit liquidations and licenses status
+        $payment->checkLiquidations();
 
-            if ($license->active == false && $status == 2) {
-                $license->update([
-                    'active' => true
-                ]);
-
-                $vehicle->update([
-                    'status' => true
-                ]);
-            }
-        }
-
-        return redirect()->back()
-            ->withSuccess('¡Factura procesada!');
+        return redirect()->back()->withSuccess('¡Factura procesada!');
     }
 
     public function download(Payment $payment)
@@ -236,7 +223,7 @@ class PaymentController extends Controller
                 ->loadView('pdf.payment', compact($vars))
                 ->stream('factura-'.$payment->id.'.pdf');
         }
-   }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -261,8 +248,6 @@ class PaymentController extends Controller
         return redirect()->back()
             ->withSuccess('¡Pago anulado!');
     }
-
-
 
     public function ticket(Payment $payment)
     {

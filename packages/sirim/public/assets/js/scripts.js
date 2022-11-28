@@ -11,6 +11,7 @@ $("#form").closest('form').on('submit', function(e) {
 /*--------- Select Dinamicos ---------*/
 $(function () {
     $('#applications').on('change', onSelectApplications);
+    $('#historics').on('change', onSelectHistorics);
     $('#fines').on('change', onSelectFines);
     $('#taxpayer_type').on('change', onSelectTaxpayerType);
     $('#ownership_status').change(onSelectBuildingOwner);
@@ -18,7 +19,8 @@ $(function () {
     $('#years').on('change', onSelectYears);
     $('#vparameters').on('change', onSelectVehicleParameters);
     $('#vbrands').on('change', onSelectVehicleBrands);
-    
+    $('#liqueur-correlative').on('change', onSelectLicenseCorrelativeType);
+
 });
 
 const token = $("meta[name='csrf-token']").attr("content");
@@ -172,6 +174,46 @@ function onSelectBuildingOwner() {
       document.hide();
   }
 }
+
+
+function onSelectLicenseCorrelativeType() {
+    let selected = $(this).children('option:selected').html();
+    // let reference = $('#existing_licenses');
+    let new_license = $('#new_license');
+
+    // if (selected == "RENOVAR LICENCIA") {
+    //     reference.show();
+    //     new_license.hide();
+
+    //     //$('#new_license').html(renewal);
+    // } else {
+    //     new_license.show();
+    //     reference.hide();
+    //     //$('#new_license').html(installation);
+    // }
+
+    if (selected == "INSTALAR LICENCIA" || selected == "RENOVAR LICENCIA") {
+        new_license.show();
+    }
+  }
+
+
+
+  function onSelectHistorics() {
+    let ordinance_id = $(this).val();
+
+    let html_select = '<option value=""> SELECCIONE </option>';
+
+    $.get('/historics/'+ordinance_id+'/concepts/', data => {
+
+      for (let i = 0; i < data.length; i++) {
+        html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+      }
+
+      $('#concepts').html(html_select);
+    });
+  }
+
 
 /*----------  Uppercase  ----------*/
 function upperCase(e) {
@@ -1044,8 +1086,6 @@ $(document).ready(function() {
         ]
     });
 
-
-
     $('#tCredits').DataTable({
         "order": [[0, "asc"]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
@@ -1073,6 +1113,52 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tLiqueurLicensesTaxpayer').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'num' },
+            { data: 'emission_date' },
+            { data: 'expiration_date' },
+            { data: 'id',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `
+                        <span class="kt-badge kt-badge--success kt-badge--inline">
+                            Activo
+                        </span>
+                        `;
+                    const inactive = `
+                        <span class="kt-badge kt-badge--danger kt-badge--inline">
+                            Inactivo
+                        </span>
+                        `;
+                    $(nTd).html(`${oData.active ? active : inactive}`);
+                }
+            },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const print = `
+                        <div class="btn-group">
+                        <a class="mr-2" href=${baseURL}/liqueur-licenses/${oData.id}/download title='Imprimir licencia'>
+                            <i class='btn-sm btn-success fas fa-print'></i>
+                        </a>
+                    </div>`;
+                    if (oData.active == true){
+                        $(nTd).html(`${print}`)
+                    }
+                    else{
+                       $(nTd).html(`<div class="btn-group"></div>`)
+                    };
+                }
+            }
+        ]
+    });
 
     /*----------  Datatables Vehicles Brands  ----------*/
     $('#tBrands').DataTable({
@@ -1214,128 +1300,172 @@ $(document).ready(function() {
         ]
     });
 
-        /*----------  Datatables Taxpayer Vehicles ----------*/
-        $('#tVehicle').DataTable({
-            "order": [[0, "asc"]],
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-            "oLanguage": {
-                "sUrl": baseURL + "/assets/js/spanish.json"
-            },
-            "serverSide": true,
-            "ajax": `${window.location.href}`,
-            "columns": [
-                { data: 'plate'},
-                { data: 'body_serial'},
-                { data: 'engine_serial'},
-                { data: 'weight'},
-                { data: 'capacity'},
-                { data: 'stalls'},
-                { data: 'vehicle_model.name'},
-                { data: 'color.name'},
-                { data: 'vehicle_classification.name'},
-                { data: 'license',
-                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                        const active = `<span class="kt-badge kt-badge--success kt-badge--inline">
-                                        Activo
-                                    </span>`;
-                        const inactive = `<span class="kt-badge kt-badge--danger kt-badge--inline">
-                                        Inactivo
-                                    </span>`;
-                        $(nTd).html(`${sData.active ? active : inactive}`);
+    /*----------  Datatables Taxpayer Vehicles ----------*/
+    $('#tVehicle').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'plate'},
+            { data: 'body_serial'},
+            { data: 'engine_serial'},
+            { data: 'weight'},
+            { data: 'capacity'},
+            { data: 'stalls'},
+            { data: 'vehicle_model.name'},
+            { data: 'color.name'},
+            { data: 'vehicle_classification.name'},
+            { data: 'license',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `<span class="kt-badge kt-badge--success kt-badge--inline">
+                                    Activo
+                                </span>`;
+                    const inactive = `<span class="kt-badge kt-badge--danger kt-badge--inline">
+                                    Inactivo
+                                </span>`;
+                    $(nTd).html(`${sData.active ? active : inactive}`);
 
-                    }
-                },
-                {data: 'license',
-                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                        const active = `
-                            <div class="btn-group">
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
-                                    <i class='btn-sm btn-info fas fa-download'></i>
-                                </a>
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/ticket title='Imprimir Ticket'>
-                                    <i class='btn-sm btn-info fas fa-print'></i>
-                                </a>
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/certificate title='Imprimir Certificado'>
-                                    <i class='btn-sm btn-info fas fa-address-card'></i>
-                                </a>
-                            </div>`;
-                        const inactive = `
-                            <div class="btn-group">
-                                <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
-                                    <i class='btn-sm btn-success fas fa-sync'></i>
-                                </a>
-                            </div>`;
-
-                        $(nTd).html(`${oData.status==true && sData.active ? active :
-                        oData.status==true && sData.active==false ? inactive: ''}`);
-                    }
                 }
-            ]
-        });
-
-
-
-
-        /*----------  Datatables All Vehicles ----------*/
-        $('#tVehicles').DataTable({
-            "order": [[0, "asc"]],
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-            "oLanguage": {
-                "sUrl": baseURL + "/assets/js/spanish.json"
             },
-            "serverSide": true,
-            "ajax": `${window.location.href}`,
-            "columns": [
-                { data: 'plate'},
-                { data: 'body_serial'},
-                { data: 'engine_serial'},
-                { data: 'weight'},
-                { data: 'capacity'},
-                { data: 'stalls'},
-                { data: 'taxpayer.name'},
-                { data: 'vehicle_model.name'},
-                { data: 'color.name'},
-                { data: 'vehicle_classification.name'},
-                { data: 'license',
-                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                        const active = `<span class="kt-badge kt-badge--success kt-badge--inline">
-                                        Activo
-                                    </span>`;
-                        const inactive = `<span class="kt-badge kt-badge--danger kt-badge--inline">
-                                        Inactivo
-                                    </span>`;
-                        $(nTd).html(`${sData.active ? active : inactive}`);
-                    }
-                },
+            {data: 'license',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
+                                <i class='btn-sm btn-info fas fa-download'></i>
+                            </a>
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/ticket title='Imprimir Ticket'>
+                                <i class='btn-sm btn-info fas fa-print'></i>
+                            </a>
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/certificate title='Imprimir Certificado'>
+                                <i class='btn-sm btn-info fas fa-address-card'></i>
+                            </a>
+                        </div>`;
+                    const inactive = `
+                        <div class="btn-group">
+                            <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
+                                <i class='btn-sm btn-success fas fa-sync'></i>
+                            </a>
+                        </div>`;
 
-                {data: 'license',
-                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                        const active = `
-                            <div class="btn-group">
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
-                                    <i class='btn-sm btn-info fas fa-download'></i>
-                                </a>
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/ticket title='Imprimir Ticket'>
-                                    <i class='btn-sm btn-info fas fa-print'></i>
-                                </a>
-                                <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/certificate title='Imprimir Certificado'>
-                                    <i class='btn-sm btn-info fas fa-address-card'></i>
-                                </a>
-                            </div>`;
-                        const inactive = `
-                            <div class="btn-group">
-                                <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
-                                    <i class='btn-sm btn-success fas fa-sync'></i>
-                                </a>
-                            </div>`;
-                        $(nTd).html(`${oData.status==true && sData.active ? active :
-                        oData.status==true && sData.active==false ? inactive: ''}`);
-
-                    }
+                    $(nTd).html(`${oData.status==true && sData.active ? active :
+                    oData.status==true && sData.active==false ? inactive: ''}`);
                 }
-            ]
-        });
+            }
+        ]
+    });
 
 
+    /*----------  Datatables All Vehicles ----------*/
+    $('#tVehicles').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'plate'},
+            { data: 'body_serial'},
+            { data: 'engine_serial'},
+            { data: 'weight'},
+            { data: 'capacity'},
+            { data: 'stalls'},
+            { data: 'taxpayer.name'},
+            { data: 'vehicle_model.name'},
+            { data: 'color.name'},
+            { data: 'vehicle_classification.name'},
+            { data: 'license',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `<span class="kt-badge kt-badge--success kt-badge--inline">
+                                    Activo
+                                </span>`;
+                    const inactive = `<span class="kt-badge kt-badge--danger kt-badge--inline">
+                                    Inactivo
+                                </span>`;
+                    $(nTd).html(`${sData.active ? active : inactive}`);
+                }
+            },
+
+            {data: 'license',
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    const active = `
+                        <div class="btn-group">
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/download title='Imprimir Patente'>
+                                <i class='btn-sm btn-info fas fa-download'></i>
+                            </a>
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/ticket title='Imprimir Ticket'>
+                                <i class='btn-sm btn-info fas fa-print'></i>
+                            </a>
+                            <a class="mr-2" href=${baseURL}/vehicles/${oData.id}/certificate title='Imprimir Certificado'>
+                                <i class='btn-sm btn-info fas fa-address-card'></i>
+                            </a>
+                        </div>`;
+                    const inactive = `
+                        <div class="btn-group">
+                            <a class="mr-2" onClick="renovateVehicle(${oData.id})" title='Renovar'>
+                                <i class='btn-sm btn-success fas fa-sync'></i>
+                            </a>
+                        </div>`;
+                    $(nTd).html(`${oData.status==true && sData.active ? active :
+                    oData.status==true && sData.active==false ? inactive: ''}`);
+
+                }
+            }
+        ]
+    });
+
+
+    $('#tHistoric').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}/liquidations`,
+        "columns": [
+            { data: 'num' },
+            { data: 'status.name' },
+            { data: 'pretty_amount', name: 'pretty_amount' },
+            {
+                data: "id",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html(`
+                    <div class="btn-group">
+                        <a class="mr-2" href=${window.location.origin}/liquidations/${oData.id}/show title='Ver factura'>
+                            <i class='btn-sm btn-info fas fa-eye'></i>
+                        </a>
+                        <a class="mr-2" onClick="nullRecord(${oData.id},'liquidations')" title='Editar'>
+                            <i class='btn-sm btn-danger fas fa-trash-alt'></i>
+                        </a>
+                    </div>`
+                    );
+                }
+            }
+        ]
+    });
+
+    $('#tRevenueStamps').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'payment_num' },
+            { data: 'date' },
+            { data: 'amount'},
+            { data: 'observations'}
+            
+        ]
+    });
 
 });

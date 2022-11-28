@@ -10,10 +10,14 @@
     "cancellations": "node ./scripts/cancellations.js",
     "deductions": "node ./scripts/deductions.js",
     "rates": "node ./scripts/updateRatesTable.js",
+    "liquidationsLiqueur": "node ./scripts/addUserId.js",
     "users": "node ./scripts/updateUsers.js",
     "movements": "node ./scripts/createMovements.js",
     "addChargingMethod": "node ./scripts/addChargingMethodToActivities.js",
-    "setNumbers": "node ./scripts/setNumbers.js"
+    "setNumbers": "node ./scripts/setNumbers.js",
+    "migrateLiqueurs": "node ./scripts/migrateLiquers.js",
+    "fixCredits": "node ./scripts/fixCreditsLicensesTablejs",
+    "deductionPayment": "node ./scripts/deductionPayment.js"
   },
   "author": "Jesus Ordosgoitty",
   "license": "MIT",

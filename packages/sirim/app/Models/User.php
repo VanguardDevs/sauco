@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Fine::class);
     }
+
+        public function revenueStamps()
+    {
+        return $this->hasMany(RevenueStamp::class);
+    }
 }

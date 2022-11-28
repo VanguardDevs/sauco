@@ -119,6 +119,18 @@
                 </a>
             </div>
 
+
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('historics.index', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Histórico de Operaciones</div>
+                    </div>
+                </a>
+            </div>
+
             <div class="kt-notification">
                 <a class="kt-notification__item" href="{{ url('taxpayers/'.$row->id.'/withholdings') }}">
                     <div class="kt-notification__item-icon">
@@ -153,10 +165,34 @@
                         <i class="fas fa-book-reader"></i>
                     </div>
                     <div class="kt-notification__item-details">
-                        <div class="kt-notification__item-title">Licencias de actividad económica</div>
+                        <div class="kt-notification__item-title">Licencias de Actividad Económica</div>
                     </div>
                 </a>
             </div>
+
+            @if (count($row->economicActivities) > 0)
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('taxpayer.liqueur-licenses', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-glass-martini-alt"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Licencias de Expendios de Bebidas Alcohólicas</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('revenue-stamps.index', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-stamp"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Certificación de Licencias</div>
+                    </div>
+                </a>
+            </div>
+            @endif
 
             @if (count($row->representations) > 0)
             <div class="kt-notification">

@@ -8,13 +8,14 @@ use OwenIt\Auditing\Contracts\Auditable as Auditable;
 use OwenIt\Auditing\Auditable as Audit;
 use App\Traits\NewValue;
 use App\Traits\PrettyAmount;
+use App\Traits\CheckLicense;
 use App\Traits\PrettyTimestamps;
 use Carbon\Carbon;
 use App\Models\Year;
 
 class Liquidation extends Model implements Auditable
 {
-    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps;
+    use SoftDeletes, Audit, NewValue, PrettyAmount, PrettyTimestamps, CheckLicense;
 
     protected $table = 'liquidations';
 
@@ -29,10 +30,11 @@ class Liquidation extends Model implements Auditable
     */
     public function year()
     {
-        if ($this->liquidable_type == 'App\Models\Affidavit') {
+        $type = $this->liquidation_type_id;
+
+        if ($type == 3) {
             return $this->liquidable->month->year()->first();
         }
-
         return Year::where('year', '=', Carbon::now()->year)->first();
     }
 
@@ -89,5 +91,15 @@ class Liquidation extends Model implements Auditable
     public function license()
     {
         return $this->hasOne(License::class);
+    }
+    
+    public function requirementTaxpayer()
+    {
+        return $this->hasOne(RequirementTaxpayer::class);
+    }
+
+    public function credit()
+    {
+        return $this->hasOne(Credit::class);
     }
 }
