@@ -17,6 +17,12 @@ class Year extends Model
         return $this->hasMany(Month::class);
     }
 
+    public function vehicleCorrelatives()
+    {
+        return $this->hasMany(Correlative::class);
+    }
+
+
     public function correlatives()
     {
         return $this->hasMany(Correlative::class);

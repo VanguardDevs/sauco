@@ -12,12 +12,13 @@
 
            body {
                 font-family: 'Helvetica';
-                font-size: 7.5px;
+                font-size: 9px;
             }
             .header {
                 display: inline-block;
-                margin-top: 2px;
+                margin-top: 14px;
                 margin-left: 2px;
+                margin-bottom: -25px;
             }
             caption {
                 font-weight: bold;
@@ -26,26 +27,29 @@
                 font-weight: bold;
             }
             .description {
-                font-size: 5.5px;
+                font-size: 5px;
                 float:center;
-                margin-right: -24px;
-                margin-left: 59px;
+                margin-right: -28px;
+                margin-left: 63px;
                 margin-top: -45px;
+                margin-bottom: -50px;
 
             }
             #mayorLOGO {
                 float: right;
-                margin-top: -45px;
-                margin-right: -95px;
-                margin-left: 47px;
+                margin-top: -41px;
+                margin-right: -105px;
+                margin-left: -60px;
+                margin-bottom: -50px;
             }
             #sumatLOGO {
                 float:left;
                 margin-right: -23px;
                 margin-left: 3px;
+                margin-bottom: -50px;
             }
             .sections {
-                margin-top: 15px;
+                margin-top: 13px;
                 margin-left: 5px;
                 z-index: 1;
             }
@@ -82,6 +86,33 @@
                 margin-left: 19%;
                 margin-right: -75%;
             }
+
+            #selloVehiculo {
+                float: left;
+                margin-top: -38%;
+                margin-bottom: -35px;
+                margin-left: 4%;
+                margin-right: -55%;
+            }
+
+            #firma {
+                float: right;
+                margin-top: 1%;
+                margin-bottom: -25px;
+                margin-left: -2%;
+                margin-right: 0%;
+                font-size: 8px;
+                text-align: center;
+            }
+
+            #titulo{
+                font-size: 8px;
+                font-weight: bold;
+                margin-left: 35%;
+                margin-right: -50px;
+                margin-top: -7px;
+                margin-bottom: -5px;
+            }
         </style>
     </head>
 
@@ -90,7 +121,7 @@
             <div class="float-child" id="front">
                 <div class="header">
                     <div class="sumatLOGO">
-                        <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="55px" width="55px" alt="sumatlogo"/>
+                        <img src="{{ asset('/assets/images/logo_sumat.png') }}" height="48px" width="50px" alt="sumatlogo"/>
                     </div>
                     <div class="description" style="text-align:center;">
                     <p>
@@ -103,11 +134,14 @@
                         </p>
                     </div>
                     <div id="mayorLOGO">
-                        <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="50px" width="65px" alt="logo" />
+                        <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="45px" width="65px" alt="logo" />
                     </div>
+                    <br>
+                     <p id="titulo">CERTIFICADO DE PATENTE DE VEHÍCULO</p>
                 </div>
-                <p id="titulo" style="text-align: center; font-weight: bold; z-index: 1;">CERTIFICADO DE SOLVENCIA DE PATENTE DE VEHÍCULO</p>
+               
                 <div class="sections">
+                    <span>REGISTRO Nº: </span>{{ $numVehicleCorrelative }}<br>
                     <span>CONTRIBUYENTE: </span>{{ $license->taxpayer->name }}<br>
                     <span>RIF: </span>{{ $license->taxpayer->rif }}<br>
                     <span>REPRESENTANTE: </span>{{ $representation->name }}<br>
@@ -127,10 +161,20 @@
             <div  class="float-child">
                 <div id="back">
 
-                     <span style="font-size: 8px; margin-left: 26%;">_______________________________</span>
-                     <span style="font-size: 8px; margin-left: 27%;">SUPERINTENDENTE TRIBUTARIO</span>
+                    <div id="selloVehiculo">
+                        <img src="{{ asset('/assets/images/selloVehiculo.png') }}" height="100px" width="165px" alt="logo" />
+                    </div>
+
+                     
                     <br><br>
-                    <span>PERIODO DE VIGENCIA:</span> <span style="font-weight: normal; font-size: 16px;">{{ $period }}</span>
+                    <span>FACTURA Nº:</span> {{ $paymentNum }}<br>
+                    <span>PERIODO DE VIGENCIA:</span> <span style="font-weight: normal; font-size: 16px; margin-right: -25%;">{{ $period }}</span>
+
+                    <div id="firma">
+                        <span style="">____________________________</span>
+                        <br>
+                         <span style="align-content: center;">FIRMA</span>
+                    </div>
                 </div>
             </div>
         </div>

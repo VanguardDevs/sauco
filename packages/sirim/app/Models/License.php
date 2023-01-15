@@ -86,6 +86,11 @@ class License extends Model implements Auditable
         return $this->hasOne(RevenueStamp::class);
     }
 
+    public function vehicleCorrelative()
+    {
+        return $this->hasOne(VehicleCorrelative::class);
+    }
+
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)
     {
         if (self::whereTaxpayerId($taxpayer->id)->exists()) {
@@ -128,4 +133,7 @@ class License extends Model implements Auditable
         $newNum = str_pad($lastNum + 1, 8, '0', STR_PAD_LEFT);
         return $newNum;
     }
+
+
+
 }

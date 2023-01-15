@@ -9,7 +9,7 @@
                 margin-left: 12px;
                 margin-right: 12px;
                 margin-top: 12px;
-                margin-bottom: 12px;
+                margin-bottom: 14px;
             }
            body {
                 font-family: 'Helvetica';
@@ -80,7 +80,11 @@
                 <img src="{{ asset('/assets/images/logo_alcaldia.jpg') }}" height="50px" width="65px" alt="logo" />
             </div>
         </div>
+
         <br>
+
+        <p style="text-align: center; font-weight: bold;">REGISTRO Nº {{ $numVehicleCorrelative }}</p>
+
         <p style="text-align: center; font-weight: bold;">DATOS GENERALES DEL CONTRIBUYENTE</p>
         <div class="sections">
                 <span>CONTRIBUYENTE: </span>{{ $license->taxpayer->name }}<br>
@@ -102,6 +106,7 @@
         </div>
         <br>
         <div>
+            <span>FACTURA Nº:</span> {{ $paymentNum }}<br>
             <span>PERIODO DE VIGENCIA:</span> {{ $period }}<br>
         </div>
     </body>

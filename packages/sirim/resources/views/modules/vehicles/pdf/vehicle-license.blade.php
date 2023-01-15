@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title> Patente de Vehículo </title>
         <style>
             body {
                 font-family: 'Helvetica';
@@ -120,7 +121,7 @@
             <table class="center">
                 <thead>
                     <tr>
-                        <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>REGISTRO</strong> {{ $license->num }} DE FECHA {{ $license->emission_date }}</th>
+                        <th colspan="2" style="font-size: 12px; padding: 2px 1px;"><strong>REGISTRO</strong> {{ $numVehicleCorrelative }} DE FECHA {{ $license->emission_date }}</th>
                     </tr>
                 </thead>
                 <tbody>

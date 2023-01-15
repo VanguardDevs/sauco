@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\VehicleModel;
 use App\Models\VehicleParameter;
 use App\Models\VehicleClassification;
+use App\Models\VehicleCorrelative;
 use App\Models\Taxpayer;
 use App\Models\License;
 use App\Models\Liquidation;
@@ -85,6 +86,7 @@ class VehicleController extends Controller
     {
 
         $currYear = Year::where('year', Carbon::now()->year)->first();
+
         $correlativeNum = CorrelativeNumber::getNum();
 
         $ordinance = Ordinance::whereDescription('VEHÍCULOS')->first();
@@ -112,6 +114,17 @@ class VehicleController extends Controller
             'correlative_number_id' => $correlativeNumber->id
         ]);
 
+
+
+        $vehicleCorrelativeNum = VehicleCorrelative::getNewNum();
+
+        $vehicleCorrelative = VehicleCorrelative::create([
+            'num' => $vehicleCorrelativeNum,
+            'year_id' => $currYear->id
+        ]);
+
+
+
         $liquidation = Liquidation::create([
             'num' => Liquidation::getNewNum(),
             'object_payment' =>  $concept->name.' - AÑO '.$currYear->year,
@@ -137,7 +150,9 @@ class VehicleController extends Controller
 
         /** TU DIJISTE QUE EL correlative_id SE QUEDABA ASÍ */
         $license = License::create([
-            'num' => $request->input('plate'),
+            //'num' => $request->input('plate'),
+
+            'num' => $vehicleCorrelative->number,
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $ordinance->id,
@@ -162,6 +177,10 @@ class VehicleController extends Controller
             'vehicle_classification_id' =>  $request->input('vehicleClassification'),
             'license_id' => $license->id,
             'status' => false
+        ]);
+
+        $vehicleCorrelative->update([
+            'license_id' => $license->id
         ]);
 
         $liquidation->update([
@@ -229,8 +248,13 @@ class VehicleController extends Controller
             'year_id' => $currYear->id
         ]);
 
+
+
+        $vehicleCorrelative = VehicleCorrelative::whereLicenseId($oldLicense->id)->first();
+
+
         $newLicense = License::create([
-            'num' => $oldLicense->num,
+            'num' => 'MBES'.$currYear->year.'IV-'.$vehicleCorrelative->num,
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $oldLicense->ordinance_id,
@@ -242,8 +266,14 @@ class VehicleController extends Controller
             'liquidation_id' => $liquidation->id
         ]);
 
+
+
         $oldLicense->update([
             'active' => false
+        ]);
+
+        $vehicleCorrelative->update([
+            'license_id' => $newLicense->id
         ]);
 
         $vehicle->update([
@@ -266,14 +296,13 @@ class VehicleController extends Controller
 
         $license= License::whereId($vehicle->license_id)->first();
 
-        $correlative = $license->correlative;
-        $licenseCorrelative = $correlative->correlativeType->description.
-                             $correlative->year->year.'-'
-                             .$correlative->correlativeNumber->num;
+        $vehicleCorrelative = VehicleCorrelative::whereLicenseId($license->id)->first();
+
+        $numVehicleCorrelative = $vehicleCorrelative->number;
 
         $representation = $license->representation->person;
         $signature = Signature::latest()->first();
-        $period =Carbon::createFromDate($license->create_at)->format('Y');
+        $period =Carbon::createFromDate($license->created_at)->format('Y');
 
         if($license->liquidation_id){
             $liquidation = Liquidation::whereId($license->liquidation_id)->first();
@@ -297,11 +326,11 @@ class VehicleController extends Controller
 
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'vehicle', 'paymentNum', 'processedAt', 'period'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'signature', 'qrLicenseString', 'vehicle', 'paymentNum', 'processedAt', 'period', 'numVehicleCorrelative'];
         $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::loadView('modules.vehicles.pdf.vehicle-license', compact($vars))
-            ->stream('Licencia '.$license->num.'.pdf');
+            ->stream('Patente '.$license->num.'.pdf');
     }
 
 
@@ -317,23 +346,42 @@ class VehicleController extends Controller
 
             $license= License::whereId($vehicle->license_id)->first();
 
-            $correlative = $license->correlative;
-            $licenseCorrelative = $correlative->correlativeType->description.
-                                 $correlative->year->year.'-'
-                                 .$correlative->correlativeNumber->num;
+            $vehicleCorrelative = VehicleCorrelative::whereLicenseId($license->id)->first();
+
+            $numVehicleCorrelative = $vehicleCorrelative->number;
+
+            if($license->liquidation_id){
+                $liquidation = Liquidation::whereId($license->liquidation_id)->first();
+
+                $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
+
+                $payment = Payment::whereId($liquidationPayment->payment_id)->first();
+
+                $paymentDate = str_replace('/', '-', $payment->processed_at);
+
+                $processedAt =Carbon::createFromDate($paymentDate)->format('d-m-Y');
+
+                $paymentNum = $payment->num;
+
+            }
+            else{
+                $paymentNum = null;
+
+                $processedAt =Carbon::createFromDate($license->create_at)->format('d-m-Y');
+            }
 
             $representation = $license->representation->person;
             $signature = Signature::latest()->first();
 
-            $period =Carbon::createFromDate($license->create_at)->format('Y');
+            $period =Carbon::createFromDate($license->created_at)->format('Y');
 
             $customPaper = array(0,0,228,300);
-            $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'vehicle', 'period'];
+            $vars = ['license', 'taxpayer', 'num', 'representation', 'signature', 'vehicle', 'period', 'numVehicleCorrelative', 'paymentNum', 'processedAt'];
 
             return PDF::setOptions(['isRemoteEnabled' => true])
                 ->loadView('modules.vehicles.pdf.vehicle-ticket', compact($vars))
                 ->setPaper($customPaper)
-                ->stream('vehiculo-ticket-'.$vehicle->plate.'.pdf');
+                ->stream('vehiculo-ticket-'.$license->num.'.pdf');
 
    }
 
@@ -347,22 +395,41 @@ class VehicleController extends Controller
 
            $license= License::whereId($vehicle->license_id)->first();
 
-           $correlative = $license->correlative;
-           $licenseCorrelative = $correlative->correlativeType->description.
-                                $correlative->year->year.'-'
-                                .$correlative->correlativeNumber->num;
+           $vehicleCorrelative = VehicleCorrelative::whereLicenseId($license->id)->first();
+
+           $numVehicleCorrelative = $vehicleCorrelative->number;
+
+           if($license->liquidation_id){
+               $liquidation = Liquidation::whereId($license->liquidation_id)->first();
+
+               $liquidationPayment = DB::table('payment_liquidation')->where('liquidation_id', $liquidation->id)->first();
+
+               $payment = Payment::whereId($liquidationPayment->payment_id)->first();
+
+               $paymentDate = str_replace('/', '-', $payment->processed_at);
+
+               $processedAt =Carbon::createFromDate($paymentDate)->format('d-m-Y');
+
+               $paymentNum = $payment->num;
+
+           }
+           else{
+               $paymentNum = null;
+
+               $processedAt =Carbon::createFromDate($license->create_at)->format('d-m-Y');
+           }
 
            $representation = $license->representation->person;
            $signature = Signature::latest()->first();
 
-           $period =Carbon::createFromDate($license->create_at)->format('Y');
+           $period =Carbon::createFromDate($license->created_at)->format('Y');
 
            $customPaper = array(0,0,243,155);
-           $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'vehicle', 'period'];
+           $vars = ['license', 'taxpayer', 'num', 'representation', 'signature', 'vehicle', 'period', 'numVehicleCorrelative', 'paymentNum', 'processedAt'];
 
            return PDF::setOptions(['isRemoteEnabled' => true])
                ->loadView('modules.vehicles.pdf.vehicle-certificate', compact($vars))
-               ->stream('vehiculo-certificado-'.$vehicle->plate.'.pdf');
+               ->stream('vehiculo-certificado-'.$license->num.'.pdf');
 
     }
 
