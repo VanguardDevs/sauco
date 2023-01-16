@@ -84,12 +84,11 @@ class VehicleController extends Controller
 
     public function store(VehicleCreateFormRequest $request, Taxpayer $taxpayer)
     {
-
         $currYear = Year::where('year', Carbon::now()->year)->first();
 
         $correlativeNum = CorrelativeNumber::getNum();
 
-        $ordinance = Ordinance::whereDescription('VEHÍCULOS')->first();
+        $ordinance = Ordinance::whereId('4')->first();
         $emissionDate = Carbon::now();
         $expirationDate = Carbon::now()->endOfYear();
 
@@ -115,14 +114,12 @@ class VehicleController extends Controller
         ]);
 
 
-
         $vehicleCorrelativeNum = VehicleCorrelative::getNewNum();
 
         $vehicleCorrelative = VehicleCorrelative::create([
             'num' => $vehicleCorrelativeNum,
             'year_id' => $currYear->id
         ]);
-
 
 
         $liquidation = Liquidation::create([
@@ -248,10 +245,7 @@ class VehicleController extends Controller
             'year_id' => $currYear->id
         ]);
 
-
-
         $vehicleCorrelative = VehicleCorrelative::whereLicenseId($oldLicense->id)->first();
-
 
         $newLicense = License::create([
             'num' => 'MBES'.$currYear->year.'IV-'.$vehicleCorrelative->num,
@@ -265,7 +259,6 @@ class VehicleController extends Controller
             'active' => false,
             'liquidation_id' => $liquidation->id
         ]);
-
 
 
         $oldLicense->update([
@@ -470,7 +463,7 @@ class VehicleController extends Controller
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $correlativeNum = CorrelativeNumber::getNum();
 
-        $ordinance = Ordinance::whereDescription('VEHÍCULOS')->first();
+        $ordinance = Ordinance::whereId('4')->first();
         $emissionDate = Carbon::now();
         $expirationDate = Carbon::now()->endOfYear();
 
@@ -486,9 +479,18 @@ class VehicleController extends Controller
         ]);
 
 
+
+        $vehicleCorrelativeNum = VehicleCorrelative::getNewNum();
+
+        $vehicleCorrelative = VehicleCorrelative::create([
+            'num' => $vehicleCorrelativeNum,
+            'year_id' => $currYear->id
+        ]);
+
+
         /** TU DIJISTE QUE EL correlative_id SE QUEDABA ASÍ */
         $license = License::create([
-            'num' => $request->input('plate'),
+            'num' => $vehicleCorrelative->number,
             'emission_date' => $emissionDate,
             'expiration_date' => $expirationDate,
             'ordinance_id' => $ordinance->id,
@@ -512,6 +514,10 @@ class VehicleController extends Controller
             'vehicle_classification_id' =>  $request->input('vehicleClassification'),
             'license_id' => $license->id,
             'status' => true
+        ]);
+
+        $vehicleCorrelative->update([
+            'license_id' => $license->id
         ]);
 
 
