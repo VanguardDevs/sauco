@@ -213,7 +213,10 @@ Route::prefix('/')->middleware('auth')->group(function()
     Route::resource('affidavits', 'AffidavitController');
 
     Route::resource('liquidations', 'LiquidationController')
-        ->except(['index', 'show']);
+            ->except(['index', 'show', 'destroy']);
+
+    Route::resource('liquidations', 'LiquidationController')->only('destroy')->middleware('can:null.settlements');
+
     Route::get('taxpayer/{taxpayer}/liquidations', 'LiquidationController@index')
         ->name('liquidations.index');
     Route::get('liquidations/{liquidation}/show', 'LiquidationController@show')
