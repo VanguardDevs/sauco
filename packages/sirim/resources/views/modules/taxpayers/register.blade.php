@@ -197,6 +197,24 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Ficha Catastral</label>
+
+                            {!!
+                            Form::text("cadastre_num", old('cadastre_num', @$row->cadastre_num), [
+                                "Placeholder" => "Ficha Catastral",
+                                "class" => "form-control",
+                                "onkeyup" => "upperCase(this);"
+                            ])
+                            !!}
+
+                            @error('cadastre_num')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
                     </div>
                 </div>
                 <!-- /.card-body -->

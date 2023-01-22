@@ -44,6 +44,10 @@
                             <i class="flaticon2-phone"></i>
                              {{ $row->phone ?? 'NO REGISTRADO' }}
                         </a>
+                        <a>
+                            <i class="flaticon2-map"></i>
+                             {{ $row->cadastre_num ?? 'NO REGISTRADO' }}
+                        </a>
                     </div>
                 </div>
             </div>
