@@ -214,6 +214,22 @@
                             @enderror
                         </div>
 
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Área del Inmueble</label>
+
+                            {!!
+                            Form::text("property_area", old('property_area', @$row->property_area), [
+                                "Placeholder" => "Ficha Catastral",
+                                "class" => "form-control",
+                                "onkeyup" => "upperCase(this);"
+                            ])
+                            !!}
+
+                            @error('property_area')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
 
                     </div>
                 </div>

@@ -25,7 +25,8 @@ class Taxpayer extends Model implements Auditable
         'community_id',
         'taxpayer_type_id',
         'taxpayer_classification_id',
-        'cadastre_num'
+        'cadastre_num',
+        'property_area'
     ];
 
     public static function replaceActivities($oldCode, $newCode)

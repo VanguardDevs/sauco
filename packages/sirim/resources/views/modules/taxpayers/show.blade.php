@@ -48,6 +48,12 @@
                             <i class="flaticon2-map"></i>
                              {{ $row->cadastre_num ?? 'NO REGISTRADO' }}
                         </a>
+
+                        <a>
+                            <i class="flaticon2-maps"></i>
+                             {{ $row->property_area ?? 'NO REGISTRADO' }}
+                        </a>
+                        
                     </div>
                 </div>
             </div>
