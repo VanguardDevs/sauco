@@ -81,6 +81,11 @@ class License extends Model implements Auditable
         return $this->hasOne(RevenueStamp::class);
     }
 
+    public function capacityStamp()
+    {
+        return $this->hasOne(CapacityStamp::class);
+    }
+
     public function scopeGetLastLicense($query, Taxpayer $taxpayer)
     {
         if (self::whereTaxpayerId($taxpayer->id)->exists()) {
