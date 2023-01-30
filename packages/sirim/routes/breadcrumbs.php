@@ -678,8 +678,15 @@ Breadcrumbs::for('historics.index', function ($trail, $row) {
 });
 
 
-/*------------- Historics Movements -------------*/
+/*------------- Revenue Stamps -------------*/
 Breadcrumbs::for('revenue-stamps.index', function ($trail, $row) {
     $trail->parent('taxpayers.show', $row);
     $trail->push('Timbres Fiscales', route('revenue-stamps.index', $row));
 });
+
+/*------------- Capacity Stamps -------------*/
+Breadcrumbs::for('capacity-stamps.index', function ($trail, $row) {
+    $trail->parent('taxpayers.show', $row);
+    $trail->push('Timbres de Capacidad', route('capacity-stamps.index', $row));
+});
+

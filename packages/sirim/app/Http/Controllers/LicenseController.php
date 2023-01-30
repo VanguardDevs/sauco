@@ -29,6 +29,7 @@ use App\Models\App\Modelslication;
 use App\Models\Requirement;
 use App\Models\RequirementTaxpayer;
 use App\Models\RevenueStamp;
+use App\Models\CapacityStamp;
 use Carbon\Carbon;
 use App\Models\Signature;
 use Illuminate\Support\Facades\DB;
@@ -612,6 +613,9 @@ class LicenseController extends Controller
 
         $revenueStamp = RevenueStamp::whereLicenseId($license->id)->first();
 
+        $capacityStamp = CapacityStamp::whereLicenseId($license->id)->first();
+
+
         $vars = [
             'license',
             'taxpayer',
@@ -627,7 +631,8 @@ class LicenseController extends Controller
             'processedAt',
             'registeredAt',
             'period',
-            'revenueStamp'
+            'revenueStamp',
+            'capacityStamp'
         ];
         $license->update(['downloaded_at' => Carbon::now()]);
 

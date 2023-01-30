@@ -132,13 +132,16 @@
             }
             #stamp {
                 font-size: 9px;
-                border-style: dotted;
                 position: absolute;
                 margin-top: 0%;
                 left: 20px;
                 width: 170px;
                 margin-left: -2px;
                 text-align: left;
+            }
+            #stamps {
+                border-style: dotted;
+                margin-top: 1%;
             }
 
             #stamp-info{
@@ -226,19 +229,26 @@
                     </tr>
                     </tbody>
                 </table>
-                <div>
-                    @if($revenueStamp)
-                        <div id="stamp" style=" z-index: 2;">
-                            <span class="row" id="stamp-info">Comprobante de Pago de Timbre Fiscal </span>
-                            <span class="row" id="stamp-info">SABATES</span>
-                            <span class="row" id="stamp-info">Fecha: {{$revenueStamp->date}}</span>  
-                            <span class="row" id="stamp-info">Recibo Nº: {{$revenueStamp->payment_num}}</span>
-                            <span class="row" id="stamp-info">Monto Bs: {{$revenueStamp->amount}}</span>
-                            <span class="row" id="stamp-info">Concepto: {{$revenueStamp->observations}}</span>
-                        </div>
-                        
-                    @endif
-
+                <div >
+                    <div id="stamp" style=" z-index: 2;">
+                        @if($revenueStamp)
+                            <div id="stamps" style=" z-index: 2;">
+                                <span class="row" id="stamp-info">Comprobante de Pago de Timbre Fiscal </span>
+                                <span class="row" id="stamp-info">SABATES</span>
+                                <span class="row" id="stamp-info">Fecha: {{$revenueStamp->date}}</span>  
+                                <span class="row" id="stamp-info">Recibo Nº: {{$revenueStamp->payment_num}}</span>
+                                <span class="row" id="stamp-info">Monto Bs: {{$revenueStamp->amount}}</span>
+                                <span class="row" id="stamp-info">Concepto: {{$revenueStamp->observations}}</span>
+                            </div>
+                            
+                        @endif
+                        @if($capacityStamp)
+                            <div id="stamps" style=" z-index: 2;">
+                                <span class="row" id="stamp-info">Timbre de Capacidad </span>
+                                <span class="row" id="stamp-info">Capacidad: {{$capacityStamp->capacity}}</span> 
+                            </div>
+                        @endif
+                    </div>
                     <div id="sello" style=" z-index: 2;">
                         <img src="{{ asset('/assets/images/sello.png') }}" height="70px" width="170px"/>
                     </div>

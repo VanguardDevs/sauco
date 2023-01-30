@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,9 +10,9 @@ class CapacityStamp extends Model
 
     protected $fillable = [
         'capacity',
-        'observations',
         'license_id',
-        'user_id'
+        'user_id',
+        'created_at'
     ];
 
     public function license()
@@ -28,6 +28,11 @@ class CapacityStamp extends Model
     public function taxpayer()
     {
         return $this->hasOneThrough(License::class, Taxpayer::class);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
     }
 
 }

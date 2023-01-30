@@ -28,6 +28,7 @@ class CapacityStampController extends Controller
             ->where('taxpayers.id', $taxpayer->id)
             ->where('licenses.active', 'true')
             ->select('capacity_stamps.*')
+            ->with('license')
             ->orderBy('id', 'desc');
 
             return DataTables::eloquent($query)->toJson();
@@ -72,8 +73,7 @@ class CapacityStampController extends Controller
         $license = License::find($request->input('license'));
 
         $capacityStamp = CapacityStamp::create([
-            'capacity' => $request->capacity
-            'observations' => $request->observations,
+            'capacity' => $request->capacity,
             'license_id' => $license->id,
             'user_id' => Auth::user()->id
             

@@ -16,7 +16,6 @@ class CreateCapacityStampsTable extends Migration
         Schema::create('capacity_stamps', function (Blueprint $table) {
             $table->id();
             $table->string('capacity');
-            $table->string('observations');
             $table->unsignedBigInteger('license_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

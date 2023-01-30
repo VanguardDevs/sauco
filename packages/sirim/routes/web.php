@@ -96,6 +96,7 @@ Route::prefix('/')->middleware('auth')->group(function()
 
     Route::resource('taxpayers/{taxpayer}/revenue-stamps', 'RevenueStampController')->except(['show']);
 
+    Route::resource('taxpayers/{taxpayer}/capacity-stamps', 'CapacityStampController')->except(['show']);
 
 
      /*

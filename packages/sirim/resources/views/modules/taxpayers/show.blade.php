@@ -192,6 +192,16 @@
                     </div>
                 </a>
             </div>
+            <div class="kt-notification">
+                <a class="kt-notification__item" href="{{ route('capacity-stamps.index', $row) }}">
+                    <div class="kt-notification__item-icon">
+                        <i class="fas fa-stamp"></i>
+                    </div>
+                    <div class="kt-notification__item-details">
+                        <div class="kt-notification__item-title">Timbre de Capacidad</div>
+                    </div>
+                </a>
+            </div>
             @endif
 
         </div>

@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(RevenueStamp::class);
     }
+
+    public function capacityStamps()
+    {
+        return $this->hasMany(CapacityStamp::class);
+    }
 }

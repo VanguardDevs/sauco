@@ -1141,5 +1141,21 @@ $(document).ready(function() {
         ]
     });
 
+    $('#tCapacityStamps').DataTable({
+        "order": [[0, "asc"]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+        "oLanguage": {
+            "sUrl": baseURL + "/assets/js/spanish.json"
+        },
+        "serverSide": true,
+        "ajax": `${window.location.href}`,
+        "columns": [
+            { data: 'license.num'  },
+            { data: 'capacity' },
+            { data: 'created_at'}
+            
+        ]
+    });
+
 
 });
