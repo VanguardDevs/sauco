@@ -118,7 +118,7 @@
                 </div>
                 <br>
                 <div class="row" style="text-align: justify;">
-                    <u>Segundo:</u> Notifiquese del presente acto al ciudadano(a) {{ $license->representation->person->name }}, C.I {{ $license->representation->person->document }} en su carácter de representante legal de la Sociedad Mercantil {{ $license->taxpayer->commercialDenomination->name }}.
+                    <u>Segundo:</u> Notifiquese del presente acto al ciudadano(a) {{ $license->representation->person->name }}, C.I {{ $license->representation->person->document }} en su carácter de propietario del Fondo de Comercio {{ $license->taxpayer->commercialDenomination->name }}.
                 </div>
                 <br>
                 <div class="row firma">
