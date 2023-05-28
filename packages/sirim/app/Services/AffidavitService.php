@@ -109,8 +109,9 @@ class AffidavitService
     protected function getPetroPrice($month)
     {
         $fromDate = Carbon::parse($month->start_period_at)->startOfMonth()->toDateString();
-        $tillDate = Carbon::parse($month->start_period_at)->endOfMonth()->toDateString();
+        $tillDate = Carbon::parse($month->start_period_at)->endOfMonth()->add(1, 'day')->toDateString();
 
+        
 
         $rate = PetroPrice::whereBetween('created_at', [$fromDate,$tillDate])->latest()->first();
 
@@ -127,7 +128,7 @@ class AffidavitService
 
         $lastDayofMonth = Carbon::parse($month->start_period_at)->endOfMonth()->toDateString();
 
-        $rate = PetroPrice::whereDate('created_at', $lastDayofMonth)->first();
+        $rate = PetroPrice::whereDate('created_at', $lastDayofMonth)->latest()->first();
 
         if (!$rate) {
             $rate = PetroPrice::latest()->first();
