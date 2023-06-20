@@ -8,6 +8,7 @@ use App\Models\TaxUnit;
 use App\Models\PetroPrice;
 use Carbon\Carbon;
 use App\Models\Month;
+use App\Models\Year;
 
 class AffidavitService
 {
@@ -58,6 +59,9 @@ class AffidavitService
 
     public function calculateTax(Month $month, EconomicActivityAffidavit $affidavit, $amount, $update = false)
     {
+
+        $currentYear = Carbon::now()->year;
+
         $total = 0.00;
         $activity = $affidavit->economicActivity;
 
@@ -65,10 +69,28 @@ class AffidavitService
             $total = $amount * $activity->aliquote / 100;
         } else {
             if ($update) {
-                $unit = ($activity->charging_method_id == 1) 
-                    ? TaxUnit::latest()->first() : $this->getPetroPrice($month);
+
+                if($activity->charging_method_id == 1) {
+                    $unit = TaxUnit::latest()->first();
+                }
+                else{
+
+                    if($month->year->year  == $currentYear){
+                        $unit = $this->getPetroPrice($month);
+
+                        $minTax = $unit->value * $activity->min_tax;
+                       
+                    }
+                    else{
+                        $unit = $this->getOldPetroPrice($month);
+
+                        $minTax = $unit->value * $activity->old_min_tax;
+                    }
+                    
+                }
+
                 $total = $activity->aliquote * $amount / 100;
-                $minTax = $unit->value * $activity->min_tax;
+
 
                 if ($total < $minTax || $amount == 0.00) {
                     $total = $minTax;
@@ -86,8 +108,12 @@ class AffidavitService
 
     protected function getPetroPrice($month)
     {
-        $date = Carbon::parse($month->start_period_at)->subDays(1)->format('Y-m');
-        $rate = PetroPrice::whereLike('created_at', $date)->latest()->first();
+        $fromDate = Carbon::parse($month->start_period_at)->startOfMonth()->toDateString();
+        $tillDate = Carbon::parse($month->start_period_at)->endOfMonth()->add(1, 'day')->toDateString();
+
+        
+
+        $rate = PetroPrice::whereBetween('created_at', [$fromDate,$tillDate])->latest()->first();
 
         if (!$rate) {
             $rate = PetroPrice::latest()->first();
@@ -95,4 +121,21 @@ class AffidavitService
 
         return $rate;
     }
+
+
+     protected function getOldPetroPrice($month)
+    {
+
+        $lastDayofMonth = Carbon::parse($month->start_period_at)->endOfMonth()->toDateString();
+
+        $rate = PetroPrice::whereDate('created_at', $lastDayofMonth)->latest()->first();
+
+        if (!$rate) {
+            $rate = PetroPrice::latest()->first();
+        }
+
+        return $rate;
+    }
+
+
 }

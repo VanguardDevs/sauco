@@ -17,7 +17,8 @@ class EconomicActivity extends Model
         'aliquote',
         'active',
         'min_tax',
-        'activity_classification_id'
+        'activity_classification_id',
+        'old_min_tax'
     ];
 
     protected $appends = ['fullName'];
