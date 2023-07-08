@@ -197,6 +197,25 @@
                             <div class="text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Nº de Resolución de Cese</label>
+
+                            {!!
+                            Form::text("dismissal_num", old('dismissal_num', @$row->dismissal_num), [
+                                "Placeholder" => "Nº de Resolución",
+                                "class" => "form-control",
+                                "onkeyup" => "upperCase(this);"
+                            ])
+                            !!}
+
+                            @error('dismissal_num')
+                            <div class="text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
                     </div>
                 </div>
                 <!-- /.card-body -->

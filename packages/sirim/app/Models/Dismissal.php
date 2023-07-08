@@ -32,4 +32,9 @@ class Dismissal extends Model
     {
         return $this->belongsTo(Taxpayer::class)->withTrashed();
     }
+
+    public function getDismissedAtAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
 }
