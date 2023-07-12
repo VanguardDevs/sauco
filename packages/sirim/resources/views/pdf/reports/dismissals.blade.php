@@ -106,10 +106,10 @@
             </div>
             <div class="tables">
                 
-                    <h4>RESOLUCIÓN @if($license->taxpayer->dismissal_num) Nº {{  $license->taxpayer->dismissal_num }} @endif DE CESE DE ACTIVIDADES</h4>
+                    <h4>RESOLUCIÓN DE CESE DE ACTIVIDADES</h4>
                 
                 <div class="row" style="text-align: justify;">
-                El suscrito, VENANCIO MEZA DÍAZ, actuando en este acto en su carácter de Superintendente Municipal Tributario adscrito a la función ejecutiva de la municipalidad de Bermúdez del estado Sucre, visto la solicitud presentada por el ciudadano(a) {{ $license->representation->person->name }}, titular de la cédula de identidad {{ $license->representation->person->document }}, en su carácter de Presidente de la Sociedad Mercantil {{ $license->taxpayer->commercialDenomination->name }}, identificada con el RIF {{ $license->taxpayer->rif }}, Poseedor de la Licencia de Ejercicio de Actividades Económicas, Registro N.º {{ $license->num }}, y cumplido los requisitos establecidos.
+                El suscrito, VENANCIO MEZA DÍAZ, actuando en este acto en su carácter de Superintendente Municipal Tributario adscrito a la función ejecutiva de la municipalidad de Bermúdez del estado Sucre, visto la solicitud presentada por el ciudadano(a) {{ $license->representation->person->name }}, titular de la cédula de identidad {{ $license->representation->person->document }}, en su carácter de Presidente de la Sociedad Mercantil {{ $license->taxpayer->commercialDenomination->name }}, identificada con el RIF {{ $license->taxpayer->rif }}, Poseedor de la Licencia de Ejercicio de Actividades Económicas, Registro N.º {{ $license->num }}, y cumplido como han sido los requisitos establecidos.
                 </div>
                 
                 <p style="text-align:center;"><u>RESUELVE</u></p>
@@ -118,7 +118,7 @@
                 </div>
                 <br>
                 <div class="row" style="text-align: justify;">
-                    <u>Segundo:</u> Notifiquese del presente acto al ciudadano(a) {{ $license->representation->person->name }}, C.I {{ $license->representation->person->document }} en su carácter de propietario del Fondo de Comercio {{ $license->taxpayer->commercialDenomination->name }}.
+                    <u>Segundo:</u> Notifiquese del presente acto al ciudadano(a) {{ $license->representation->person->name }}, C.I {{ $license->representation->person->document }} en su carácter de Representante Legal del Fondo de Comercio {{ $license->taxpayer->commercialDenomination->name }}.
                 </div>
                 <br>
                 <div class="row firma">
@@ -127,7 +127,13 @@
                 <div class="row firma">
                     <strong>El Suscrito</strong>
                 </div>
-                <br>
+
+                <div class="text-center" style="font-weight: bold;">
+                    <span>RESOLUCIÓN @if($license->taxpayer->dismissal_num) Nº {{  $license->taxpayer->dismissal_num }} @endif</span>
+                    <br>
+                    <span>SUMARIO: CESE DE ACTIVIDADES</span>
+                </div>
+
                 <div class="bottom text-center">
                     <span class="row">{{ $signature->title }}</span>
                     <span class="row">superintendente de administración tributaria</span>
