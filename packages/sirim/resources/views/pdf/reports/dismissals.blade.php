@@ -106,8 +106,13 @@
             </div>
             <div class="tables">
                 
-                    <h4>RESOLUCIÓN DE CESE DE ACTIVIDADES</h4>
-                
+                <div class="text-center" style="font-weight: bold;">
+                    <span>RESOLUCIÓN @if($license->taxpayer->dismissal_num) Nº {{  $license->taxpayer->dismissal_num }} @endif</span>
+                    <br>
+                    <span>SUMARIO: CESE DE ACTIVIDADES</span>
+                </div>
+
+                <br>
                 <div class="row" style="text-align: justify;">
                 El suscrito, VENANCIO MEZA DÍAZ, actuando en este acto en su carácter de Superintendente Municipal Tributario adscrito a la función ejecutiva de la municipalidad de Bermúdez del estado Sucre, visto la solicitud presentada por el ciudadano(a) {{ $license->representation->person->name }}, titular de la cédula de identidad {{ $license->representation->person->document }}, en su carácter de Presidente de la Sociedad Mercantil {{ $license->taxpayer->commercialDenomination->name }}, identificada con el RIF {{ $license->taxpayer->rif }}, Poseedor de la Licencia de Ejercicio de Actividades Económicas, Registro N.º {{ $license->num }}, y cumplido como han sido los requisitos establecidos.
                 </div>
@@ -122,17 +127,12 @@
                 </div>
                 <br>
                 <div class="row firma">
-                    <strong>Carúpano</strong>, {{ $dismissal->dismissed_at }}
+                    <strong>Carúpano</strong>, {{ date('d-m-Y') }}
                 </div>
                 <div class="row firma">
                     <strong>El Suscrito</strong>
                 </div>
 
-                <div class="text-center" style="font-weight: bold;">
-                    <span>RESOLUCIÓN @if($license->taxpayer->dismissal_num) Nº {{  $license->taxpayer->dismissal_num }} @endif</span>
-                    <br>
-                    <span>SUMARIO: CESE DE ACTIVIDADES</span>
-                </div>
 
                 <div class="bottom text-center">
                     <span class="row">{{ $signature->title }}</span>
