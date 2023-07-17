@@ -361,7 +361,7 @@ class LicenseController extends Controller
             ->join('liqueurs', 'licenses.id', '=', 'liqueurs.license_id')
             ->where('licenses.taxpayer_id', $taxpayer->id)
             ->where('ordinance_id', 6)
-            ->where('licenses.expiration_date', '<=', Carbon::now()->addDays(30))
+            ->where('licenses.expiration_date', '<=', Carbon::now()->addDays(45))
             ->groupBy('licenses.num', 'licenses.id')
             ->having('licenses.num', '>', 1)
             ->pluck('licenses.num', 'licenses.id')
