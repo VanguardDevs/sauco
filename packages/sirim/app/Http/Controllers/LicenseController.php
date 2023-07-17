@@ -358,12 +358,13 @@ class LicenseController extends Controller
             ->first();
 
         $existingLicenses = DB::table('licenses')
-            ->where('taxpayer_id', $taxpayer->id)
+            ->join('liqueurs', 'licenses.id', '=', 'liqueurs.license_id')
+            ->where('licenses.taxpayer_id', $taxpayer->id)
             ->where('ordinance_id', 6)
-            ->where('expiration_date', '<=', Carbon::now()->addDays(30))
-            ->groupBy('num', 'id')
-            ->having('num', '>', 1)
-            ->pluck('num', 'id')
+            ->where('licenses.expiration_date', '<=', Carbon::now()->addDays(30))
+            ->groupBy('licenses.num', 'licenses.id')
+            ->having('licenses.num', '>', 1)
+            ->pluck('licenses.num', 'licenses.id')
             ->toArray();
 
         $hours = [
