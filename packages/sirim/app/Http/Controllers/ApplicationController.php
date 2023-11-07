@@ -75,7 +75,7 @@ class ApplicationController extends Controller
             $amount = $amount * $request->total;
         }
 
-        if ($concept->code == '001.005.000' && $representation == null || $concept->code == '001.005.001' && $representation == null){
+       if ($concept->code == 'OTA.2023.056' && $representation == null || $concept->code == 'OTA.2023.058' && $representation == null){
             return redirect()->back()->withErrors(['concept' => '¡El contribuyente debe tener un representante para realizar esta solicitud!']);
         } else {
             $application = $taxpayer->applications()->create([

@@ -31,6 +31,7 @@ class Ordinance extends Model
     {
         return self::concepts()
             ->where('liquidation_type_id', '=', $type)
+            ->where('deleted_at', '=', null)
             ->get();
     }
 

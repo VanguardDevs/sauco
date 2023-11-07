@@ -368,12 +368,18 @@ class LicenseController extends Controller
             ->toArray();
 
         $hours = [
+            '01:00 AM' => '01:00 AM',
+            '02:00 AM' => '02:00 AM',
+            '03:00 AM' => '03:00 AM',
+            '04:00 AM' => '04:00 AM',
+            '05:00 AM' => '05:00 AM',
+            '06:00 AM' => '06:00 AM',
             '07:00 AM' => '07:00 AM',
             '08:00 AM' => '08:00 AM',
             '09:00 AM' => '09:00 AM',
             '10:00 AM' => '10:00 AM',
             '11:00 AM' => '11:00 AM',
-            '12:00 M' => '12:00 M',
+            '12:00 PM' => '12:00 PM',
             '01:00 PM' => '01:00 PM',
             '02:00 PM' => '02:00 PM',
             '03:00 PM' => '03:00 PM',
@@ -382,7 +388,10 @@ class LicenseController extends Controller
             '06:00 PM' => '06:00 PM',
             '07:00 PM' => '07:00 PM',
             '08:00 PM' => '08:00 PM',
-            '09:00 PM' => '09:00 PM'
+            '09:00 PM' => '09:00 PM',
+            '10:00 PM' => '10:00 PM',
+            '11:00 PM' => '11:00 PM',
+            '12:00 AM' => '12:00 AM'
         ];
 
         $days = [
@@ -418,9 +427,10 @@ class LicenseController extends Controller
         $liqueurNum = Liqueur::getNum($request->liqueur_classification_id);
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+        $expirationDate = $emissionDate->copy()->addYears(3);
 
-        $concept = Concept::whereCode('21')->first();
+ 
+        $concept = Concept::whereCode('OTA.2023.057')->first();
 
         $petro = PetroPrice::latest()->first()->value;
         $parameter = LiqueurParameter::find($request->liqueur_parameter_id);
@@ -522,7 +532,7 @@ class LicenseController extends Controller
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
 
         // Make amount
-        $concept = Concept::whereCode('22')->first();
+        $concept = Concept::whereCode('OTA.2023.059')->first();
         $petro = PetroPrice::latest()->first()->value;
         $amount = $petro * $license->liqueur->liqueurParameter->renew_registry_amount;
 
@@ -553,7 +563,7 @@ class LicenseController extends Controller
         // Create new license and update dates
         $emissionDate = Carbon::now();
         $expirationDate = Carbon::parse($liqueur->registry_date)
-            ->year(now()->addYears(1)->format('Y'))
+            ->year(now()->addYears(3)->format('Y'))
             ->format('Y-m-d');
 
         $newLicense->user_id = Auth::user()->id;
