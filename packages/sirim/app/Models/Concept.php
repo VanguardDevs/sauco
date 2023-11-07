@@ -10,7 +10,7 @@ use App\Models\PetroPrice;
 
 class Concept extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $table = 'concepts';
 

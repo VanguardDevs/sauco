@@ -21,8 +21,6 @@ trait CheckLicense
             // Check for renovation
             $this->associateModelToLicense($license, $code);
             switch($code) {
-                //case '21':
-                //case '22':
                 case 'OTA.2023.057':
                 case 'OTA.2023.059':
                     if ($license->active == false && $license->liqueur != null) {
@@ -45,11 +43,9 @@ trait CheckLicense
 
         switch($this->concept->code) {
             // Solicitud Instalacion
-            //case '001.005.000':
             case 'OTA.2023.056':
 
             // Solicitud Renovacion
-            //case '001.005.001':
             case 'OTA.2023.058':
                     $data['requirement_id'] = $this->concept->requirement->id;
                     $data['liquidation_id'] = $this->id;
@@ -58,7 +54,7 @@ trait CheckLicense
 
 
             // Codigo Multa    
-            case '00.00.00.00':
+            case '009.009.009':
                    $this->taxpayer->requirementTaxpayer()->where('liquidation_id', $this->id)->update(['active' => false]);
                 break;
             default:
@@ -73,7 +69,6 @@ trait CheckLicense
     private function associateModelToLicense($license, $code)
     {
         switch($code) {
-            //case '22':
             case 'OTA.2023.059':    
                 $liqueur = Liqueur::whereNum($license->num)->first();
 

@@ -427,9 +427,9 @@ class LicenseController extends Controller
         $liqueurNum = Liqueur::getNum($request->liqueur_classification_id);
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+        $expirationDate = $emissionDate->copy()->addYears(3);
 
-        //$concept = Concept::whereCode('21')->first();
+ 
         $concept = Concept::whereCode('OTA.2023.057')->first();
 
         $petro = PetroPrice::latest()->first()->value;
@@ -532,7 +532,6 @@ class LicenseController extends Controller
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
 
         // Make amount
-        //$concept = Concept::whereCode('22')->first();
         $concept = Concept::whereCode('OTA.2023.059')->first();
         $petro = PetroPrice::latest()->first()->value;
         $amount = $petro * $license->liqueur->liqueurParameter->renew_registry_amount;
@@ -564,7 +563,7 @@ class LicenseController extends Controller
         // Create new license and update dates
         $emissionDate = Carbon::now();
         $expirationDate = Carbon::parse($liqueur->registry_date)
-            ->year(now()->addYears(1)->format('Y'))
+            ->year(now()->addYears(3)->format('Y'))
             ->format('Y-m-d');
 
         $newLicense->user_id = Auth::user()->id;
