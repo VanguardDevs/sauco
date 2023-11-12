@@ -247,7 +247,7 @@
                                 <th width="10%">CÓDIGO</th>
                                 <th width="60%">NOMBRE</th>
                                 <th width="13%">ALICUOTA (%)</th>
-                                <th width="17%">MÍNIMO TRIBUTABLE (PETRO)</th>
+                                <th width="17%">MÍNIMO TRIBUTABLE (MMV)</th>
                             </tr>
                         </thead>
                         <tbody>
