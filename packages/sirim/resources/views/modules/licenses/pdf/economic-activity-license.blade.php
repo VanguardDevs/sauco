@@ -17,7 +17,6 @@
             .header div {
                 display: inline-block;
             }
-            
 
             #mayorLOGO {
                 float: right;
@@ -82,17 +81,6 @@
             .text-center {
                 text-align: center;
             }
-            /*.bottom {
-                width: 100%;
-                height: 150px;
-                text-transform: uppercase;
-                font-weight: 700;
-                font-size: 12px;
-                margin-top: 5%;
-                position: absolute;
-                left: 0%;
-            }*/
-
             .bottom {
                 width: 95%;
                 height: 110px;
@@ -100,7 +88,7 @@
                 font-weight: 700;
                 font-size: 9px;
                 margin: auto;
-                margin-top: 2.5%;
+                margin-top: 3%;
                 margin-bottom: -8%;
             }
             .description {
@@ -115,7 +103,6 @@
             .tables--container {
                 width: 95%;
                 margin: auto;
-
             }
             #watermark {
                 position: absolute;
@@ -126,13 +113,11 @@
                 opacity: .3;
                 z-index: -1;
             }
-
-              #degrade {
+            #degrade {
                 position: absolute;
                 margin-top: 2px;
                 z-index: -1;
             }
-
             #sello {
                 float: right;
                 margin-top: -1px;
@@ -143,17 +128,16 @@
                 font-size: 8.5px;
                 border-style: dotted;
                 position: absolute;
-                margin-top: 0.3%;
+                margin-top: 0.15%;
                 right: 20px;
                 width: 162px;
                 margin-right: -2px;
                 margin-left: -20px;
                 text-align: center;
             }
-
             #stamp-info{
                margin-right: -1%;
-               margin-left: -5%; 
+               margin-left: -7%; 
             }
 
         </style>
@@ -276,16 +260,17 @@
                 </div>
 
                 <div id="stamp" style=" z-index: 2;">
-                    <span class="row" id="stamp-info">Art. 5. Ordenanza ISAE, El Presente </span>
-                    <span class="row" id="stamp-info">documento deberá</span>
-                    <span class="row" id="stamp-info">ser exhibido en un lugar visible dentro del</span>  
-                    <span class="row" id="stamp-info">establecimiento a los fines de su</span>
-                    <span class="row" id="stamp-info">fiscalización.</span>
-                    <span class="row" id="stamp-info">Aqui va fecha de mantenimiento.</span>
+                    <span class="row" id="stamp-info">Art. 5. Ordenanza ISAE, El Presente</span>
+                    <span class="row" id="stamp-info">documento deberá ser exhibido en un</span>
+                    <span class="row" id="stamp-info">lugar visible dentro del establecimiento</span>  
+                    <span class="row" id="stamp-info">a los fines de su fiscalización.</span>
+                    <span class="row" id="stamp-info">Esta licencia está sujeta a una cuota anual</span>
+                    <span class="row" id="stamp-info">de mantenimiento pagadera durante los</span>
+                    <span class="row" id="stamp-info">treinta (30) previos a los 2 años sucesivos.</span>  
                 </div>
                 <br>
                 <br>
-                <div class="bottom text-center" style="z-index: -1;">
+                <div class="bottom text-center" style="z-index: 1;">
                     <span class="row">{{ $signature->title }}</span>
                     <span class="row">superintendente de administración tributaria.</span>
                     <span class="row">RESOLUCIÓN Nº 357 DE FECHA 30-11-2021. GACETA MUNICIPAL EXTRAORDINARIA Nº 378 DE FECHA 30-11-2021</span>

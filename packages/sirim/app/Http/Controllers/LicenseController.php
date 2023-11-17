@@ -123,10 +123,16 @@ class LicenseController extends Controller
         // a model
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         
-        
-        $emissionDate = Carbon::now();
-        //$expirationDate = $emissionDate->copy()->addYears(3);
-        $expirationDate = Carbon::now()->endOfYear()->addYears(3);
+
+        if($currYear->year == '2023'){
+            $emissionDate = Carbon::now()->addYears(1)->startOfYear();
+            $expirationDate = Carbon::now()->addYears(3)->endOfYear();
+        }
+        else{
+            $emissionDate = Carbon::now()->startOfYear();
+            $expirationDate = Carbon::now()->addYears(2)->endOfYear();  
+        }
+
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -159,13 +165,13 @@ class LicenseController extends Controller
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
 
-        if($currYear == '2023'){
-            $emissionDate = Carbon::now();
-            $expirationDate = Carbon::now()->endOfYear();
+        if($currYear->year == '2023'){
+            $emissionDate = Carbon::now()->addYears(1)->startOfYear();
+            $expirationDate = Carbon::now()->addYears(3)->endOfYear();
         }
         else{
             $emissionDate = Carbon::now()->startOfYear();
-            $expirationDate = Carbon::now()->endOfYear()->addYears(3);  
+            $expirationDate = Carbon::now()->addYears(2)->endOfYear();  
         }
         
         $correlative = $license->correlative;
