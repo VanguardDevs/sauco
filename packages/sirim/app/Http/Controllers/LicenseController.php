@@ -122,8 +122,11 @@ class LicenseController extends Controller
         // Ordinances in this method and make licences without searching for
         // a model
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
+        
+        
         $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+        //$expirationDate = $emissionDate->copy()->addYears(3);
+        $expirationDate = Carbon::now()->endOfYear()->addYears(3);
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -155,9 +158,16 @@ class LicenseController extends Controller
     {
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
-        $emissionDate = Carbon::now();
-        $expirationDate = Carbon::now()->endOfYear();
 
+        if($currYear == '2023'){
+            $emissionDate = Carbon::now();
+            $expirationDate = Carbon::now()->endOfYear();
+        }
+        else{
+            $emissionDate = Carbon::now()->startOfYear();
+            $expirationDate = Carbon::now()->endOfYear()->addYears(3);  
+        }
+        
         $correlative = $license->correlative;
         $correlativeNumber = $correlative->correlativeNumber;
         $newCorrelative = Correlative::create([

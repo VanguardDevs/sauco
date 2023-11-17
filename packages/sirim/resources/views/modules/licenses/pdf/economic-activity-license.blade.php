@@ -139,6 +139,22 @@
                 margin-bottom: -35px;
                 margin-right: 5px;
             }
+            #stamp {
+                font-size: 8.5px;
+                border-style: dotted;
+                position: absolute;
+                margin-top: 0.3%;
+                right: 20px;
+                width: 162px;
+                margin-right: -2px;
+                margin-left: -20px;
+                text-align: center;
+            }
+
+            #stamp-info{
+               margin-right: -1%;
+               margin-left: -5%; 
+            }
 
         </style>
     </head>
@@ -213,11 +229,7 @@
 
                             <tr>
                             <td>
-                                    <!-- @if($license->correlative->correlative_type_id == 1)
-                                        <dt><strong>FECHA DE INSCRIPCIÓN</strong> {{ $license->emission_date }}</dt>
-                                        @endif
-                                    -->
-                                    <dt><strong>FECHA DE EMISIÓN: </strong> {{ $license->emission_date }}</dt>
+                                <dt><strong>PERÍODO FISCAL:</strong> {{ $license->emission_date }}</dt>
 
                                 </td>
                                 <td>
@@ -263,9 +275,14 @@
                     </table>
                 </div>
 
-                <div id="sello" style=" z-index: 2;">
-                        <img src="{{ asset('/assets/images/selloAE.png') }}" height="65px" width="163px"/>
-                    </div>
+                <div id="stamp" style=" z-index: 2;">
+                    <span class="row" id="stamp-info">Art. 5. Ordenanza ISAE, El Presente </span>
+                    <span class="row" id="stamp-info">documento deberá</span>
+                    <span class="row" id="stamp-info">ser exhibido en un lugar visible dentro del</span>  
+                    <span class="row" id="stamp-info">establecimiento a los fines de su</span>
+                    <span class="row" id="stamp-info">fiscalización.</span>
+                    <span class="row" id="stamp-info">Aqui va fecha de mantenimiento.</span>
+                </div>
                 <br>
                 <br>
                 <div class="bottom text-center" style="z-index: -1;">
