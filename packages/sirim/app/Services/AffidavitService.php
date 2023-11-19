@@ -21,34 +21,34 @@ class AffidavitService
 
         /*$firstAffidavit=$affidavits[0]->economicActivity;
         $secondAffidavit=$affidavits[1];*/
+        /* $secondAffidavit = $affidavits->skip(1)->first();
+        $secondAffidavit = $affidavits->skip(1)->take(1)->first();*/
 
-        $firstAffidavit = $affidavits->first();
-        $secondAffidavit = $affidavits->get(1);
+       
+        if($affidavits->count() == 2){
 
-        /*
-        $secondAffidavit = $affidavits->skip(1)->first();
-        $secondAffidavit = $affidavits->skip(1)->take(1)->first();
-         */
+            $firstAmount = $amounts[0];
+            $secondAmount = $amounts[1];
 
-        
-        foreach($affidavits as $affidavit) {
-            $amount = array_shift($bruteAmounts);
-
-            if (($affidavits->count() > 2) && ($amount == 0.00)) {
-                $updateSettlement = $this->calculateTax($month, $affidavit, $amount, false, $affidavits);
-            }
-           /* elseif($affidavits->count() == 2){
+            $firstAffidavit = $affidavits[0];
+            $secondAffidavit = $affidavits[1];
             
-                if ($firstAffidavit->economicActivity->min_tax > $secondAffidavit->economicActivity->min_tax) {
-                    //$maxDeclaration = $affidavit;
-                    $updateSettlement = $this->calculateTax($month, $affidavit, $amount, true, $affidavits);
-                }
-            }*/
-            else {
-                $updateSettlement = $this->calculateTax($month, $affidavit, $amount, true, $affidavits);
-            }
+            $updateSettlement = $this->calculateNewTax($month, $firstAffidavit, $secondAffidavit, $firstAmount, $secondAmount, true);
 
-            array_push($totalAmounts, $updateSettlement->amount);
+            array_push($totalAmounts, $updateSettlement[0]->amount, $updateSettlement[1]->amount);
+        }
+        else{      
+            foreach($affidavits as $affidavit) {
+                $amount = array_shift($bruteAmounts);
+
+                if (($affidavits->count() > 2) && ($amount == 0.00)) {
+                    $updateSettlement = $this->calculateTax($month, $affidavit, $amount, false);
+                }
+                else {
+                    $updateSettlement = $this->calculateTax($month, $affidavit, $amount, true);
+                }
+                array_push($totalAmounts, $updateSettlement->amount);
+            }
         }
 
         return array_sum($totalAmounts);
@@ -73,13 +73,11 @@ class AffidavitService
                 }
             }
         }
-
-        return $this->calculateTax($month, $maxDeclaration, $amount, true, $affidavits)->amount;
+        return $this->calculateTax($month, $maxDeclaration, $amount, true)->amount;
     }
 
-    public function calculateTax(Month $month, EconomicActivityAffidavit $affidavit, $amount, $update = false, $arrayAffidavits)
+    public function calculateTax(Month $month, EconomicActivityAffidavit $affidavit, $amount, $update = false)
     {
-
         $currentYear = Carbon::now()->year;
 
         $total = 0.00;
@@ -97,54 +95,18 @@ class AffidavitService
 
                     if($month->year->year  == $currentYear){
                         $unit = $this->getPetroPrice($month);
-
-                        $minTax = $unit->value * $activity->min_tax;
-                       
+                        $minTax = $unit->value * $activity->min_tax;                       
                     }
                     else{
                         $unit = $this->getOldPetroPrice($month);
-
                         $minTax = $unit->value * $activity->old_min_tax;
-                    }
-                    
+                    } 
                 }
-
                 $total = $activity->aliquote * $amount / 100;
-
 
                 if ($total < $minTax || $amount == 0.00) {
                     $total = $minTax;
                 }
-
-                    /////////////////////
-                if($arrayAffidavits->count() == 2){
-                    $firstAffidavit = $affidavits->first();
-                    $secondAffidavit = $affidavits->get(1);
-
-                    if($firstAffidavit->economicActivity->min_tax = $secondAffidavit->economicActivity->min_tax){
-
-                    }
-
-                }
-////////////////////////////////////////////////////////
-
-                /*Cuando las 2 actividades poseen min_tax y alicuota iguales, y ambas califican para minimo tributable se aplica el 
-                MINIMO a la actividad de MENOR INGRESO y la otra actividad por ALICUOTA*/
-
-                /*Cuando el min_tax es diferente pero la Alicuota es igual para las 2 actividades, y ambas Califican para MINIMO
-                se aplica el MINIMO a la actividad con MAYOR min_tax y a la otra actividad se le cobra la alicuota*/
-
-                /*Cuando tanto el min_tax como la alicuota de ambas actividades es diferente y ambas califican para 
-                MINIMO TRIBUTABLE se aplica el MINIMO a la actividad con Mayor min_tax y a la otra actividad se le cobra la alicuota*/
-
-                /// Mas de 2 actividades ///
-
-                /*Cuando las actividades poseen min_tax y alicuota iguales, y todas califican para minimo tributable se aplica el 
-                MINIMO a la actividad de MENOR INGRESO y las otras actividades por ALICUOTA*/
-
-                /*Cuando el min_tax es diferente en al menos una actividad pero la Alicuota es igual para todas 
-                las actividades, se liquida por MINIMO la actividad con MAYOR min_tax y la actividad que DECLARA MENOS
-                el resto se cobra por alicuota */
 
             }
         }
@@ -156,6 +118,87 @@ class AffidavitService
 
         return $affidavit;
     }
+
+
+
+    public function calculateNewTax(Month $month, EconomicActivityAffidavit $firstAffidavit, EconomicActivityAffidavit $secondAffidavit, $firstAmount, $secondAmount, $update = false)
+    {
+        $currentYear = Carbon::now()->year;
+
+        $total1 = 0.00;
+        $total2 = 0.00;
+        $firstActivity = $firstAffidavit->economicActivity;
+        $secondActivity = $secondAffidavit->economicActivity;
+
+        if ($update) {
+
+            if($month->year->year  >= '2023'){
+                $unit = $this->getPetroPrice($month);
+                $minTax1 = $unit->value * $firstActivity->min_tax;
+                $minTax2 = $unit->value * $secondActivity->min_tax;                       
+            }
+            else{
+                $unit = $this->getOldPetroPrice($month);
+                $minTax1 = $unit->value * $firstActivity->old_min_tax;
+                $minTax2 = $unit->value * $secondActivity->old_min_tax;
+            } 
+
+            $total1 = $firstActivity->aliquote * $firstAmount / 100;
+            $total2 = $secondActivity->aliquote * $secondAmount / 100;
+
+            
+
+            if ($minTax1==$minTax2 && $firstActivity->aliquote==$secondActivity->aliquote && $total1 < $minTax1 && $total2 < $minTax2) {
+                if($firstAmount >= $secondAmount){
+                    $total2 = $minTax2;
+                }else{
+                    $total1 = $minTax1;
+                }
+            }
+            elseif($minTax1=!$minTax2 && ($firstActivity->aliquote==$secondActivity->aliquote || $firstActivity->aliquote=!$secondActivity->aliquote) && $total1 < $minTax1 && $total2 < $minTax2){
+                if($minTax1 >= $minTax2){
+                    $total1 = $minTax1;
+                }else{
+                    $total2 = $minTax2;
+                }
+
+            }
+        }
+
+        $firstAffidavit->update([
+            'amount' => $total1,
+            'brute_amount' => $firstAmount
+        ]);
+
+        $secondAffidavit->update([
+            'amount' => $total2,
+            'brute_amount' => $secondAmount
+        ]);
+
+        return [$firstAffidavit, $secondAffidavit];
+    }
+
+
+
+
+/*Cuando las 2 actividades poseen min_tax y alicuota iguales, y ambas califican para minimo tributable se aplica el 
+MINIMO a la actividad de MENOR INGRESO y la otra actividad por ALICUOTA*/
+
+/*Cuando el min_tax es diferente pero la Alicuota es igual para las 2 actividades, y ambas Califican para MINIMO
+se aplica el MINIMO a la actividad con MAYOR min_tax y a la otra actividad se le cobra la alicuota*/
+
+/*Cuando tanto el min_tax como la alicuota de ambas actividades es diferente y ambas califican para 
+MINIMO TRIBUTABLE se aplica el MINIMO a la actividad con Mayor min_tax y a la otra actividad se le cobra la alicuota*/
+
+/// Mas de 2 actividades ///
+
+/*Cuando las actividades poseen min_tax y alicuota iguales, y todas califican para minimo tributable se aplica el 
+MINIMO a la actividad de MENOR INGRESO y las otras actividades por ALICUOTA*/
+
+/*Cuando el min_tax es diferente en al menos una actividad pero la Alicuota es igual para todas 
+las actividades, se liquida por MINIMO la actividad con MAYOR min_tax y la actividad que DECLARA MENOS
+el resto se cobra por alicuota */
+
 
     protected function getPetroPrice($month)
     {
