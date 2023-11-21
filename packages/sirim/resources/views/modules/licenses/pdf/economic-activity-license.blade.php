@@ -88,7 +88,7 @@
                 font-weight: 700;
                 font-size: 9px;
                 margin: auto;
-                margin-top: 3%;
+                margin-top: 3.5%;
                 margin-bottom: -8%;
             }
             .description {
@@ -118,28 +118,26 @@
                 margin-top: 2px;
                 z-index: -1;
             }
-            #sello {
-                float: right;
-                margin-top: -1px;
-                margin-bottom: -35px;
-                margin-right: 5px;
-            }
             #stamp {
                 font-size: 8.5px;
                 border-style: dotted;
                 position: absolute;
                 margin-top: 0.15%;
                 right: 20px;
-                width: 162px;
-                margin-right: -2px;
-                margin-left: -20px;
+                width: 190px;
+                margin-right: -1px;
+                margin-left: -19px;
                 text-align: center;
             }
             #stamp-info{
                margin-right: -1%;
                margin-left: -7%; 
             }
-
+            #additional-stamp-info{
+               margin-right: -1%;
+               margin-left: -7%;
+               font-weight: bold;
+            }
         </style>
     </head>
     <body>
@@ -264,9 +262,9 @@
                     <span class="row" id="stamp-info">documento deberá ser exhibido en un</span>
                     <span class="row" id="stamp-info">lugar visible dentro del establecimiento</span>  
                     <span class="row" id="stamp-info">a los fines de su fiscalización.</span>
-                    <span class="row" id="stamp-info">Esta licencia está sujeta a una cuota anual</span>
-                    <span class="row" id="stamp-info">de mantenimiento pagadera durante los</span>
-                    <span class="row" id="stamp-info">treinta (30) previos a los 2 años sucesivos.</span>  
+                    <span class="row" id="additional-stamp-info">Esta licencia está sujeta a una cuota anual de</span>
+                    <span class="row" id="additional-stamp-info">mantenimiento pagadera durante los treinta</span>
+                    <span class="row" id="additional-stamp-info">(30) días previos a los 2 años sucesivos.</span>  
                 </div>
                 <br>
                 <br>
