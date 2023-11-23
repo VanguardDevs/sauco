@@ -20,15 +20,9 @@ class AffidavitService
         $totalAmounts = Array();
         $minTax= Array();
         $aliquote= Array();
-
-        /*$firstAffidavit=$affidavits[0]->economicActivity;
-        $secondAffidavit=$affidavits[1];*/
-        /* $secondAffidavit = $affidavits->skip(1)->first();
-        $secondAffidavit = $affidavits->skip(1)->take(1)->first();*/
-
+        $minAmountBrute=$bruteAmounts[0];
         $countAffidavit= $affidavits->count();
-
-       
+      
         if($countAffidavit == 2){
 
             $firstAmount = $amounts[0];
@@ -78,8 +72,9 @@ class AffidavitService
                 }
             }================================== */
 
-            for($i = 0; $i < $countAffidavit; $i++) {
-                $amount = array_shift($bruteAmounts);
+
+
+            for($i = 0; $i < $countAffidavit; $i++){
 
                 $aliquote[$i] = $affidavits[$i]->economicActivity->aliquote;
 
@@ -92,31 +87,61 @@ class AffidavitService
                     $minTax[$i] = $unit->value * $affidavits[$i]->economicActivity->old_min_tax;
                 }
 
-
-
                 $total[$i] = $affidavits[$i]->economicActivity->aliquote * $bruteAmounts[$i] / 100;
-    
-                if ($minTax[$i]==$minTax[$i+1] && $aliquote[$i]==$aliquote[$i+1] && $$total[$i] < $minTax[$i] && $$total[$i+1] < $minTax[$i+1]) {
-                    if($firstAmount >= $secondAmount){
-                        $total2 = $minTax2;
-                    }else{
-                        $total1 = $minTax1;
+            }
+
+
+            for($i = 0; $i < $countAffidavit; $i++) {
+                for ($j = $i+1; $j < $countAffidavit; $j++){
+                    //$amount = array_shift($bruteAmounts);
+        
+                    if ($minTax[$i]==$minTax[$j] && $aliquote[$i]==$aliquote[$j]  && $total[$i] < $minTax[$i]) {
+
+                        
+                        if($bruteAmounts[$i] < $bruteAmounts[$j] && $bruteAmounts[$i] <= $minAmountBrute){
+
+                            $minAmountBrute=$bruteAmounts[$i];
+                            $indicador=$i;
+                            //$total[$i] = $aliquote[$i];
+                        
+                        }elseif ($bruteAmounts[$i] > $bruteAmounts[$j] && $bruteAmounts[$i] >= $minAmountBrute && $bruteAmounts[$j] <= $minAmountBrute){
+                            /*$minAmountBrute=$minTax[$i];
+                            $total[$i] = $minTax[$i];*/
+
+                            $minAmountBrute=$bruteAmounts[$j];
+                            $indicador=$j;
+                        }
+
+
+
+
                     }
-                }
+                    elseif ($minTax[$i]!=$minTax[$j] && $aliquote[$i]==$aliquote[$j]){
 
-                
 
-                if (($countAffidavit > 2) && ($amount == 0.00)) {
+                    }
+
+                    
+
+                /*if (($countAffidavit > 2) && ($amount == 0.00)) {
                     $updateSettlement = $this->calculateTax($month, $affidavits[i], $amount, false);
                 }
                 else {
                     $updateSettlement = $this->calculateTax($month, $affidavits[i], $amount, true);
-                }
-                array_push($totalAmounts, $updateSettlement->amount);
-
+                }*/
+                    
+                }  
             }
 
+            if($minAmountBrute== true){
 
+                
+            }  
+
+
+
+
+            array_push($totalAmounts, $updateSettlement->amount);
         }
 
         return array_sum($totalAmounts);
