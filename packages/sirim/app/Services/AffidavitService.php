@@ -18,14 +18,18 @@ class AffidavitService
         $affidavits = $affidavit->economicActivityAffidavits;
         $bruteAmounts = $amounts;
         $totalAmounts = Array();
+        $minTax= Array();
+        $aliquote= Array();
 
         /*$firstAffidavit=$affidavits[0]->economicActivity;
         $secondAffidavit=$affidavits[1];*/
         /* $secondAffidavit = $affidavits->skip(1)->first();
         $secondAffidavit = $affidavits->skip(1)->take(1)->first();*/
 
+        $countAffidavit= $affidavits->count();
+
        
-        if($affidavits->count() == 2){
+        if($countAffidavit == 2){
 
             $firstAmount = $amounts[0];
             $secondAmount = $amounts[1];
@@ -38,7 +42,7 @@ class AffidavitService
             array_push($totalAmounts, $updateSettlement[0]->amount, $updateSettlement[1]->amount);
         }
         else{      
-            foreach($affidavits as $affidavit) {
+            /*foreach($affidavits as $affidavit) {
                 $amount = array_shift($bruteAmounts);
 
                 if (($affidavits->count() > 2) && ($amount == 0.00)) {
@@ -48,7 +52,71 @@ class AffidavitService
                     $updateSettlement = $this->calculateTax($month, $affidavit, $amount, true);
                 }
                 array_push($totalAmounts, $updateSettlement->amount);
+            }*/
+
+
+            /* ===============================
+             if($month->year->year  >= '2023'){
+                $unit = $this->getPetroPrice($month);
+                $minTax1 = $unit->value * $firstActivity->min_tax;
+                $minTax2 = $unit->value * $secondActivity->min_tax;                       
             }
+            else{
+                $unit = $this->getOldPetroPrice($month);
+                $minTax1 = $unit->value * $firstActivity->old_min_tax;
+                $minTax2 = $unit->value * $secondActivity->old_min_tax;
+            } 
+
+            $total1 = $firstActivity->aliquote * $firstAmount / 100;
+            $total2 = $secondActivity->aliquote * $secondAmount / 100;
+
+            if ($minTax1==$minTax2 && $firstActivity->aliquote==$secondActivity->aliquote && $total1 < $minTax1 && $total2 < $minTax2) {
+                if($firstAmount >= $secondAmount){
+                    $total2 = $minTax2;
+                }else{
+                    $total1 = $minTax1;
+                }
+            }================================== */
+
+            for($i = 0; $i < $countAffidavit; $i++) {
+                $amount = array_shift($bruteAmounts);
+
+                $aliquote[$i] = $affidavits[$i]->economicActivity->aliquote;
+
+                if($month->year->year  >= '2023'){
+                    $unit = $this->getPetroPrice($month);
+                    $minTax[$i] = $unit->value * $affidavits[$i]->economicActivity->min_tax;                 
+                }
+                else{
+                    $unit = $this->getOldPetroPrice($month);
+                    $minTax[$i] = $unit->value * $affidavits[$i]->economicActivity->old_min_tax;
+                }
+
+
+
+                $total[$i] = $affidavits[$i]->economicActivity->aliquote * $bruteAmounts[$i] / 100;
+    
+                if ($minTax[$i]==$minTax[$i+1] && $aliquote[$i]==$aliquote[$i+1] && $$total[$i] < $minTax[$i] && $$total[$i+1] < $minTax[$i+1]) {
+                    if($firstAmount >= $secondAmount){
+                        $total2 = $minTax2;
+                    }else{
+                        $total1 = $minTax1;
+                    }
+                }
+
+                
+
+                if (($countAffidavit > 2) && ($amount == 0.00)) {
+                    $updateSettlement = $this->calculateTax($month, $affidavits[i], $amount, false);
+                }
+                else {
+                    $updateSettlement = $this->calculateTax($month, $affidavits[i], $amount, true);
+                }
+                array_push($totalAmounts, $updateSettlement->amount);
+
+            }
+
+
         }
 
         return array_sum($totalAmounts);
