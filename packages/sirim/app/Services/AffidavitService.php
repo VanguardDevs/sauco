@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Affidavit;
 use App\Models\EconomicActivityAffidavit;
+use App\Models\EconomicActivity;
 use App\Models\TaxUnit;
 use App\Models\PetroPrice;
 use Carbon\Carbon;
@@ -18,25 +19,56 @@ class AffidavitService
         $affidavits = $affidavit->economicActivityAffidavits;
         $bruteAmounts = $amounts;
         $totalAmounts = Array();
-        $minTax= Array();
-        $aliquote= Array();
-        $minAmountBrute=$bruteAmounts[0];
-        $countAffidavit= $affidavits->count();
-      
-        if($countAffidavit == 2){
+        $economicActivities=Array();
 
-            $firstAmount = $amounts[0];
-            $secondAmount = $amounts[1];
+        
 
-            $firstAffidavit = $affidavits[0];
-            $secondAffidavit = $affidavits[1];
-            
-            $updateSettlement = $this->calculateNewTax($month, $firstAffidavit, $secondAffidavit, $firstAmount, $secondAmount, true);
+        //$economicActivity= EconomicActivity::whereId($affidavits->economic_activity_id);
 
-            array_push($totalAmounts, $updateSettlement[0]->amount, $updateSettlement[1]->amount);
+        foreach ($affidavits as $a) {
+            $economicActivity= EconomicActivity::whereId($a->economic_activity_id);
+            array_push($economicActivities, $economicActivity);
+        }
+
+        dd($economicActivities);
+
+        $minAmount = min($amounts);
+        $higherMinTax = max($economicActivity->min_tax);
+
+        
+
+
+        if($affidavits->count() > 1 && $affidavits->count() < 11){
+            if($affidavits->count() == 2){
+
+                $firstAmount = $amounts[0];
+                $secondAmount = $amounts[1];
+
+                $firstAffidavit = $affidavits[0];
+                $secondAffidavit = $affidavits[1];
+                
+                $updateSettlement = $this->calculateTaxOnTwo($month, $firstAffidavit, $secondAffidavit, $firstAmount, $secondAmount, true);
+
+            }
+            elseif($affidavits->count() == 3){
+
+                $firstAmount = $amounts[0];
+                $secondAmount = $amounts[1];
+                $thirdAmount = $amounts[2];
+
+                $firstAffidavit = $affidavits[0];
+                $secondAffidavit = $affidavits[1];
+                $thirdAffidavit = $affidavits[2];
+                
+                $updateSettlement = $this->calculateTaxOnThree($month, $firstAffidavit, $secondAffidavit, $thirdAffidavit, $firstAmount, $secondAmount, $thirdAmount, $higherMinTax, $minAmount, true);
+            }
+
+            for($i = 0; $i < $affidavits->count(); $i++){
+                array_push($totalAmounts, $updateSettlement[$i]->amount);
+            }
         }
         else{      
-            /*foreach($affidavits as $affidavit) {
+            foreach($affidavits as $affidavit) {
                 $amount = array_shift($bruteAmounts);
 
                 if (($affidavits->count() > 2) && ($amount == 0.00)) {
@@ -46,102 +78,7 @@ class AffidavitService
                     $updateSettlement = $this->calculateTax($month, $affidavit, $amount, true);
                 }
                 array_push($totalAmounts, $updateSettlement->amount);
-            }*/
-
-
-            /* ===============================
-             if($month->year->year  >= '2023'){
-                $unit = $this->getPetroPrice($month);
-                $minTax1 = $unit->value * $firstActivity->min_tax;
-                $minTax2 = $unit->value * $secondActivity->min_tax;                       
             }
-            else{
-                $unit = $this->getOldPetroPrice($month);
-                $minTax1 = $unit->value * $firstActivity->old_min_tax;
-                $minTax2 = $unit->value * $secondActivity->old_min_tax;
-            } 
-
-            $total1 = $firstActivity->aliquote * $firstAmount / 100;
-            $total2 = $secondActivity->aliquote * $secondAmount / 100;
-
-            if ($minTax1==$minTax2 && $firstActivity->aliquote==$secondActivity->aliquote && $total1 < $minTax1 && $total2 < $minTax2) {
-                if($firstAmount >= $secondAmount){
-                    $total2 = $minTax2;
-                }else{
-                    $total1 = $minTax1;
-                }
-            }================================== */
-
-
-
-            for($i = 0; $i < $countAffidavit; $i++){
-
-                $aliquote[$i] = $affidavits[$i]->economicActivity->aliquote;
-
-                if($month->year->year  >= '2023'){
-                    $unit = $this->getPetroPrice($month);
-                    $minTax[$i] = $unit->value * $affidavits[$i]->economicActivity->min_tax;                 
-                }
-                else{
-                    $unit = $this->getOldPetroPrice($month);
-                    $minTax[$i] = $unit->value * $affidavits[$i]->economicActivity->old_min_tax;
-                }
-
-                $total[$i] = $affidavits[$i]->economicActivity->aliquote * $bruteAmounts[$i] / 100;
-            }
-
-
-            for($i = 0; $i < $countAffidavit; $i++) {
-                for ($j = $i+1; $j < $countAffidavit; $j++){
-                    //$amount = array_shift($bruteAmounts);
-        
-                    if ($minTax[$i]==$minTax[$j] && $aliquote[$i]==$aliquote[$j]  && $total[$i] < $minTax[$i]) {
-
-                        
-                        if($bruteAmounts[$i] < $bruteAmounts[$j] && $bruteAmounts[$i] <= $minAmountBrute){
-
-                            $minAmountBrute=$bruteAmounts[$i];
-                            $indicador=$i;
-                            //$total[$i] = $aliquote[$i];
-                        
-                        }elseif ($bruteAmounts[$i] > $bruteAmounts[$j] && $bruteAmounts[$i] >= $minAmountBrute && $bruteAmounts[$j] <= $minAmountBrute){
-                            /*$minAmountBrute=$minTax[$i];
-                            $total[$i] = $minTax[$i];*/
-
-                            $minAmountBrute=$bruteAmounts[$j];
-                            $indicador=$j;
-                        }
-
-
-
-
-                    }
-                    elseif ($minTax[$i]!=$minTax[$j] && $aliquote[$i]==$aliquote[$j]){
-
-
-                    }
-
-                    
-
-                /*if (($countAffidavit > 2) && ($amount == 0.00)) {
-                    $updateSettlement = $this->calculateTax($month, $affidavits[i], $amount, false);
-                }
-                else {
-                    $updateSettlement = $this->calculateTax($month, $affidavits[i], $amount, true);
-                }*/
-                    
-                }  
-            }
-
-            if($minAmountBrute== true){
-
-                
-            }  
-
-
-
-
-            array_push($totalAmounts, $updateSettlement->amount);
         }
 
         return array_sum($totalAmounts);
@@ -214,7 +151,7 @@ class AffidavitService
 
 
 
-    public function calculateNewTax(Month $month, EconomicActivityAffidavit $firstAffidavit, EconomicActivityAffidavit $secondAffidavit, $firstAmount, $secondAmount, $update = false)
+    public function calculateTaxOnTwo(Month $month, EconomicActivityAffidavit $firstAffidavit, EconomicActivityAffidavit $secondAffidavit, $firstAmount, $secondAmount, $update = false)
     {
         $currentYear = Carbon::now()->year;
 
@@ -224,22 +161,13 @@ class AffidavitService
         $secondActivity = $secondAffidavit->economicActivity;
 
         if ($update) {
+            $unit = $this->getPetroPrice($month);
+            $minTax1 = $unit->value * $firstActivity->min_tax;
+            $minTax2 = $unit->value * $secondActivity->min_tax;                       
 
-            if($month->year->year  >= '2023'){
-                $unit = $this->getPetroPrice($month);
-                $minTax1 = $unit->value * $firstActivity->min_tax;
-                $minTax2 = $unit->value * $secondActivity->min_tax;                       
-            }
-            else{
-                $unit = $this->getOldPetroPrice($month);
-                $minTax1 = $unit->value * $firstActivity->old_min_tax;
-                $minTax2 = $unit->value * $secondActivity->old_min_tax;
-            } 
 
             $total1 = $firstActivity->aliquote * $firstAmount / 100;
             $total2 = $secondActivity->aliquote * $secondAmount / 100;
-
-            
 
             if ($minTax1==$minTax2 && $firstActivity->aliquote==$secondActivity->aliquote && $total1 < $minTax1 && $total2 < $minTax2) {
                 if($firstAmount >= $secondAmount){
@@ -272,6 +200,95 @@ class AffidavitService
     }
 
 
+    public function calculateTaxOnThree(Month $month, EconomicActivityAffidavit $firstAffidavit, EconomicActivityAffidavit $secondAffidavit, 
+    EconomicActivityAffidavit $thirdAffidavit, $firstAmount, $secondAmount, $thirdAmount, $higherMinTax, $minAmount, $update = false)
+    {
+        $currentYear = Carbon::now()->year;
+
+        $total1 = 0.00;
+        $total2 = 0.00;
+        $total3 = 0.00;
+        $firstActivity = $firstAffidavit->economicActivity;
+        $secondActivity = $secondAffidavit->economicActivity;
+        $thirdActivity = $thirdAffidavit->economicActivity;
+
+        if ($update) {
+
+            $unit = $this->getPetroPrice($month);
+            $minTax1 = $unit->value * $firstActivity->min_tax;
+            $minTax2 = $unit->value * $secondActivity->min_tax;
+            $minTax3 = $unit->value * $thirdActivity->min_tax;                        
+    
+            $total1 = $firstActivity->aliquote * $firstAmount / 100;
+            $total2 = $secondActivity->aliquote * $secondAmount / 100;
+            $total3 = $thirdActivity->aliquote * $thirdAmount / 100;
+
+            //if ($minTax1==$minTax2 && $minTax2==$minTax3 && $firstActivity->aliquote==$secondActivity->aliquote 
+           // && $secondActivity->aliquote==$thirdActivity->aliquote && $total1 < $minTax1 && $total2 < $minTax2 && $total3 < $minTax3) {
+                
+                switch ($minAmount) {
+                    case $firstAmount:
+                        $total1 = $minTax1;
+                        break;
+                    case $secondAmount:
+                        $total2 = $minTax2;
+                        break;
+                    case $thirdAmount:
+                        $total3 = $minTax3;
+                        break;
+                }         
+            /*}
+            elseif(($minTax1=!$minTax2 || $minTax2=!$minTax3 || $minTax1=!$minTax3)&& ($firstActivity->aliquote==$secondActivity->aliquote && 
+            $secondActivity->aliquote==$thirdActivity->aliquote)){
+                switch ([$minAmount, $higherMinTax]) {
+                    case[$firstAmount, $minTax1]:
+                        $total1 = $minTax1;
+                        break;
+                    case[$secondAmount, $minTax2]:
+                        $total2 = $minTax2;
+                        break;
+                    case[$thirdAmount, $minTax3]:
+                        $total3 = $minTax3;
+                        break;
+                }
+
+            }
+            else{
+                switch ($higherMinTax) {
+                    case $minTax1:
+                        $total1 = $minTax1;
+                        break;
+                    case $secondAmount:
+                        $total2 = $minTax2;
+                        break;
+                    case $thirdAmount:
+                        $total3 = $minTax3;
+                        break;
+                }
+
+            }*/
+        
+        }
+
+        $firstAffidavit->update([
+            'amount' => $total1,
+            'brute_amount' => $firstAmount
+        ]);
+
+        $secondAffidavit->update([
+            'amount' => $total2,
+            'brute_amount' => $secondAmount
+        ]);
+
+        $thirdAffidavit->update([
+            'amount' => $total3,
+            'brute_amount' => $thirdAmount
+        ]);
+
+        return [$firstAffidavit, $secondAffidavit, $thirdAffidavit];
+    }
+
+
 
 
 /*Cuando las 2 actividades poseen min_tax y alicuota iguales, y ambas califican para minimo tributable se aplica el 
@@ -289,7 +306,7 @@ MINIMO TRIBUTABLE se aplica el MINIMO a la actividad con Mayor min_tax y a la ot
 MINIMO a la actividad de MENOR INGRESO y las otras actividades por ALICUOTA*/
 
 /*Cuando el min_tax es diferente en al menos una actividad pero la Alicuota es igual para todas 
-las actividades, se liquida por MINIMO la actividad con MAYOR min_tax y la actividad que DECLARA MENOS
+las actividades, se liquida por MINIMO la actividad con MAYOR min_tax que DECLARA MENOS
 el resto se cobra por alicuota */
 
 
