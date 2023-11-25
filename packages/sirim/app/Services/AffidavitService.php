@@ -21,22 +21,9 @@ class AffidavitService
         $totalAmounts = Array();
         $economicActivities=Array();
 
-        
-
-        //$economicActivity= EconomicActivity::whereId($affidavits->economic_activity_id);
-
-        foreach ($affidavits as $a) {
-            $economicActivity= EconomicActivity::whereId($a->economic_activity_id);
-            array_push($economicActivities, $economicActivity);
-        }
-
-        dd($economicActivities);
-
         $minAmount = min($amounts);
-        $higherMinTax = max($economicActivity->min_tax);
 
-        
-
+        $index = array_search($minAmount, $amounts);
 
         if($affidavits->count() > 1 && $affidavits->count() < 11){
             if($affidavits->count() == 2){
@@ -49,22 +36,16 @@ class AffidavitService
                 
                 $updateSettlement = $this->calculateTaxOnTwo($month, $firstAffidavit, $secondAffidavit, $firstAmount, $secondAmount, true);
 
+                for($i = 0; $i < $affidavits->count(); $i++){
+                    array_push($totalAmounts, $updateSettlement[$i]->amount);
+                }
             }
-            elseif($affidavits->count() == 3){
+            elseif($affidavits->count() >= 3){
+                $updateSettlement = $this->calculateTaxOnMany($month, $affidavits, $amounts, $minAmount, $index, true);
 
-                $firstAmount = $amounts[0];
-                $secondAmount = $amounts[1];
-                $thirdAmount = $amounts[2];
-
-                $firstAffidavit = $affidavits[0];
-                $secondAffidavit = $affidavits[1];
-                $thirdAffidavit = $affidavits[2];
-                
-                $updateSettlement = $this->calculateTaxOnThree($month, $firstAffidavit, $secondAffidavit, $thirdAffidavit, $firstAmount, $secondAmount, $thirdAmount, $higherMinTax, $minAmount, true);
-            }
-
-            for($i = 0; $i < $affidavits->count(); $i++){
-                array_push($totalAmounts, $updateSettlement[$i]->amount);
+                for ($i = 0; $i < $affidavits->count(); $i++) {
+                    array_push($totalAmounts, $updateSettlement[$i]->amount);
+                }
             }
         }
         else{      
@@ -113,34 +94,29 @@ class AffidavitService
         $total = 0.00;
         $activity = $affidavit->economicActivity;
 
-        if ($activity->code == '123456' && $amount != 0.00) {
-            $total = $amount * $activity->aliquote / 100;
-        } else {
-            if ($update) {
+        if ($update) {
 
-                if($activity->charging_method_id == 1) {
-                    $unit = TaxUnit::latest()->first();
+            if($activity->charging_method_id == 1) {
+                $unit = TaxUnit::latest()->first();
+            }
+            else{
+
+                if($month->year->year  == $currentYear){
+                    $unit = $this->getPetroPrice($month);
+                    $minTax = $unit->value * $activity->min_tax;                       
                 }
                 else{
-
-                    if($month->year->year  == $currentYear){
-                        $unit = $this->getPetroPrice($month);
-                        $minTax = $unit->value * $activity->min_tax;                       
-                    }
-                    else{
-                        $unit = $this->getOldPetroPrice($month);
-                        $minTax = $unit->value * $activity->old_min_tax;
-                    } 
-                }
-                $total = $activity->aliquote * $amount / 100;
-
-                if ($total < $minTax || $amount == 0.00) {
-                    $total = $minTax;
-                }
-
+                    $unit = $this->getOldPetroPrice($month);
+                    $minTax = $unit->value * $activity->old_min_tax;
+                } 
             }
-        }
+            $total = $activity->aliquote * $amount / 100;
 
+            if ($total < $minTax || $amount == 0.00) {
+                $total = $minTax;
+            }
+
+        }
         $affidavit->update([
             'amount' => $total,
             'brute_amount' => $amount
@@ -154,9 +130,6 @@ class AffidavitService
     public function calculateTaxOnTwo(Month $month, EconomicActivityAffidavit $firstAffidavit, EconomicActivityAffidavit $secondAffidavit, $firstAmount, $secondAmount, $update = false)
     {
         $currentYear = Carbon::now()->year;
-
-        $total1 = 0.00;
-        $total2 = 0.00;
         $firstActivity = $firstAffidavit->economicActivity;
         $secondActivity = $secondAffidavit->economicActivity;
 
@@ -164,7 +137,6 @@ class AffidavitService
             $unit = $this->getPetroPrice($month);
             $minTax1 = $unit->value * $firstActivity->min_tax;
             $minTax2 = $unit->value * $secondActivity->min_tax;                       
-
 
             $total1 = $firstActivity->aliquote * $firstAmount / 100;
             $total2 = $secondActivity->aliquote * $secondAmount / 100;
@@ -176,14 +148,21 @@ class AffidavitService
                     $total1 = $minTax1;
                 }
             }
-            elseif($minTax1=!$minTax2 && ($firstActivity->aliquote==$secondActivity->aliquote || $firstActivity->aliquote=!$secondActivity->aliquote) && $total1 < $minTax1 && $total2 < $minTax2){
-                if($minTax1 >= $minTax2){
+            elseif($firstActivity->aliquote!=$secondActivity->aliquote && $total1 < $minTax1 && $total2 < $minTax2){
+                if($minTax1 > $minTax2){
                     $total1 = $minTax1;
                 }else{
                     $total2 = $minTax2;
                 }
-
             }
+            #Preguntar si se cobra un minimo cuando las dos actividades declaran altas cantidades
+            /*else{
+                if($firstAmount >= $secondAmount){
+                    $total2 = $minTax2;
+                }else{
+                    $total1 = $minTax1;
+                }
+            }*/
         }
 
         $firstAffidavit->update([
@@ -200,92 +179,27 @@ class AffidavitService
     }
 
 
-    public function calculateTaxOnThree(Month $month, EconomicActivityAffidavit $firstAffidavit, EconomicActivityAffidavit $secondAffidavit, 
-    EconomicActivityAffidavit $thirdAffidavit, $firstAmount, $secondAmount, $thirdAmount, $higherMinTax, $minAmount, $update = false)
+    public function calculateTaxOnMany(Month $month, $affidavits, $amounts, $minAmount, $index, $update = false)
     {
-        $currentYear = Carbon::now()->year;
+        $unit = $this->getPetroPrice($month);
+        $count= $affidavits->count();
 
-        $total1 = 0.00;
-        $total2 = 0.00;
-        $total3 = 0.00;
-        $firstActivity = $firstAffidavit->economicActivity;
-        $secondActivity = $secondAffidavit->economicActivity;
-        $thirdActivity = $thirdAffidavit->economicActivity;
+        for ($i = 0; $i < $count; $i++) {
+            $minTax = $unit->value * $affidavits[$i]->economicActivity->min_tax;
+            $total = $affidavits[$i]->economicActivity->aliquote * $amounts[$i] / 100;
 
-        if ($update) {
-
-            $unit = $this->getPetroPrice($month);
-            $minTax1 = $unit->value * $firstActivity->min_tax;
-            $minTax2 = $unit->value * $secondActivity->min_tax;
-            $minTax3 = $unit->value * $thirdActivity->min_tax;                        
-    
-            $total1 = $firstActivity->aliquote * $firstAmount / 100;
-            $total2 = $secondActivity->aliquote * $secondAmount / 100;
-            $total3 = $thirdActivity->aliquote * $thirdAmount / 100;
-
-            //if ($minTax1==$minTax2 && $minTax2==$minTax3 && $firstActivity->aliquote==$secondActivity->aliquote 
-           // && $secondActivity->aliquote==$thirdActivity->aliquote && $total1 < $minTax1 && $total2 < $minTax2 && $total3 < $minTax3) {
-                
-                switch ($minAmount) {
-                    case $firstAmount:
-                        $total1 = $minTax1;
-                        break;
-                    case $secondAmount:
-                        $total2 = $minTax2;
-                        break;
-                    case $thirdAmount:
-                        $total3 = $minTax3;
-                        break;
-                }         
-            /*}
-            elseif(($minTax1=!$minTax2 || $minTax2=!$minTax3 || $minTax1=!$minTax3)&& ($firstActivity->aliquote==$secondActivity->aliquote && 
-            $secondActivity->aliquote==$thirdActivity->aliquote)){
-                switch ([$minAmount, $higherMinTax]) {
-                    case[$firstAmount, $minTax1]:
-                        $total1 = $minTax1;
-                        break;
-                    case[$secondAmount, $minTax2]:
-                        $total2 = $minTax2;
-                        break;
-                    case[$thirdAmount, $minTax3]:
-                        $total3 = $minTax3;
-                        break;
-                }
-
+            if($i==$index){
+                $total = $minTax;
             }
-            else{
-                switch ($higherMinTax) {
-                    case $minTax1:
-                        $total1 = $minTax1;
-                        break;
-                    case $secondAmount:
-                        $total2 = $minTax2;
-                        break;
-                    case $thirdAmount:
-                        $total3 = $minTax3;
-                        break;
-                }
-
-            }*/
-        
+   
+            $affidavits[$i]->update([
+                'amount' => $total,
+                'brute_amount' => $amounts[$i]
+            ]);
+            
         }
 
-        $firstAffidavit->update([
-            'amount' => $total1,
-            'brute_amount' => $firstAmount
-        ]);
-
-        $secondAffidavit->update([
-            'amount' => $total2,
-            'brute_amount' => $secondAmount
-        ]);
-
-        $thirdAffidavit->update([
-            'amount' => $total3,
-            'brute_amount' => $thirdAmount
-        ]);
-
-        return [$firstAffidavit, $secondAffidavit, $thirdAffidavit];
+        return $affidavits;
     }
 
 
