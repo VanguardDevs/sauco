@@ -116,7 +116,14 @@ class LicenseController extends Controller
 
     public function makeLicense(CorrelativeType $type, Taxpayer $taxpayer)
     {
-        $currYear = Year::where('year', Carbon::now()->year)->first();
+        
+        if(Carbon::now()->year == '2023'){
+            $currYear = Year::where('year', '2024')->first();
+        }
+        else{
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+        }
+        
         $correlativeNum = CorrelativeNumber::getNum();
         // Maybe for other kind of licenses, I would inject
         // Ordinances in this method and make licences without searching for
@@ -124,7 +131,7 @@ class LicenseController extends Controller
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         
 
-        if($currYear->year == '2023'){
+        if(Carbon::now()->year == '2023'){
             $emissionDate = Carbon::now()->addYears(1)->startOfYear();
             $expirationDate = Carbon::now()->addYears(3)->endOfYear();
         }
@@ -162,10 +169,15 @@ class LicenseController extends Controller
 
     public function renovate(License $license)
     {
-        $currYear = Year::where('year', Carbon::now()->year)->first();
+        if(Carbon::now()->year == '2023'){
+            $currYear = Year::where('year', '2024')->first();
+        }
+        else{
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+        }
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
 
-        if($currYear->year == '2023'){
+        if(Carbon::now()->year == '2023'){
             $emissionDate = Carbon::now()->addYears(1)->startOfYear();
             $expirationDate = Carbon::now()->addYears(3)->endOfYear();
         }
