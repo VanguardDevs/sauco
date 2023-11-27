@@ -116,14 +116,30 @@ class LicenseController extends Controller
 
     public function makeLicense(CorrelativeType $type, Taxpayer $taxpayer)
     {
-        $currYear = Year::where('year', Carbon::now()->year)->first();
+        
+        if(Carbon::now()->year == '2023'){
+            $currYear = Year::where('year', '2024')->first();
+        }
+        else{
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+        }
+        
         $correlativeNum = CorrelativeNumber::getNum();
         // Maybe for other kind of licenses, I would inject
         // Ordinances in this method and make licences without searching for
         // a model
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
-        $emissionDate = Carbon::now();
-        $expirationDate = $emissionDate->copy()->addYears(1);
+        
+
+        if(Carbon::now()->year == '2023'){
+            $emissionDate = Carbon::now()->addYears(1)->startOfYear();
+            $expirationDate = Carbon::now()->addYears(3)->endOfYear();
+        }
+        else{
+            $emissionDate = Carbon::now()->startOfYear();
+            $expirationDate = Carbon::now()->addYears(2)->endOfYear();  
+        }
+
 
         $correlativeNumber = CorrelativeNumber::create([
             'num' => $correlativeNum
@@ -153,11 +169,23 @@ class LicenseController extends Controller
 
     public function renovate(License $license)
     {
-        $currYear = Year::where('year', Carbon::now()->year)->first();
+        if(Carbon::now()->year == '2023'){
+            $currYear = Year::where('year', '2024')->first();
+        }
+        else{
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+        }
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
-        $emissionDate = Carbon::now();
-        $expirationDate = Carbon::now()->endOfYear();
 
+        if(Carbon::now()->year == '2023'){
+            $emissionDate = Carbon::now()->addYears(1)->startOfYear();
+            $expirationDate = Carbon::now()->addYears(3)->endOfYear();
+        }
+        else{
+            $emissionDate = Carbon::now()->startOfYear();
+            $expirationDate = Carbon::now()->addYears(2)->endOfYear();  
+        }
+        
         $correlative = $license->correlative;
         $correlativeNumber = $correlative->correlativeNumber;
         $newCorrelative = Correlative::create([
