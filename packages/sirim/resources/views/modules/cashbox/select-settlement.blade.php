@@ -21,11 +21,11 @@
         <!-- form start -->
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <!--<div class="col-md-6">
                     <a href="{{ $row->id }}/group" class="btn btn-secondary btn-lg">
                         <i class="fas fa-layer-group"></i>AGRUPADA                    
                     </a> 
-                </div>
+                </div>-->
                 <div class="col-md-6">
                     <a href="{{ $row->id }}/normal" class="btn btn-secondary btn-lg">
                         <i class="fas fa-stream"></i>DESGLOSADA

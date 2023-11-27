@@ -156,13 +156,13 @@ class AffidavitService
                 }
             }
             #Preguntar si se cobra un minimo cuando las dos actividades declaran altas cantidades
-            /*else{
-                if($firstAmount >= $secondAmount){
+            else{
+                if($firstAmount >= $secondAmount && $total2 < $minTax2){
                     $total2 = $minTax2;
-                }else{
+                }elseif($secondAmount >= $firstAmount && $total1 < $minTax1){
                     $total1 = $minTax1;
                 }
-            }*/
+            }
         }
 
         $firstAffidavit->update([
