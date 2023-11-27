@@ -155,7 +155,6 @@ class AffidavitService
                     $total2 = $minTax2;
                 }
             }
-            #Preguntar si se cobra un minimo cuando las dos actividades declaran altas cantidades
             else{
                 if($firstAmount >= $secondAmount && $total2 < $minTax2){
                     $total2 = $minTax2;
@@ -188,7 +187,7 @@ class AffidavitService
             $minTax = $unit->value * $affidavits[$i]->economicActivity->min_tax;
             $total = $affidavits[$i]->economicActivity->aliquote * $amounts[$i] / 100;
 
-            if($i==$index){
+            if($i==$index && $total < $minTax){
                 $total = $minTax;
             }
    
