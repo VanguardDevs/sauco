@@ -118,6 +118,12 @@
                 margin-top: 2px;
                 z-index: -1;
             }
+            #sello {
+                float: right;
+                margin-top: -1px;
+                margin-bottom: -35px;
+                margin-right: 5px;
+            }
             #stamp {
                 font-size: 8.5px;
                 border-style: dotted;
@@ -256,7 +262,7 @@
                         </tbody>
                     </table>
                 </div>
-
+                @if($year>'2023')
                 <div id="stamp" style=" z-index: 2;">
                     <span class="row" id="stamp-info">Art. 5. Ordenanza ISAE, El Presente</span>
                     <span class="row" id="stamp-info">documento deberá ser exhibido en un</span>
@@ -266,6 +272,11 @@
                     <span class="row" id="additional-stamp-info">mantenimiento pagadera durante los treinta</span>
                     <span class="row" id="additional-stamp-info">(30) días previos a los 2 años sucesivos.</span>  
                 </div>
+                @else
+                <div id="sello" style=" z-index: 2;">
+                    <img src="{{ asset('/assets/images/selloAE.png') }}" height="65px" width="163px"/>
+                </div>
+                @endif
                 <br>
                 <br>
                 <div class="bottom text-center" style="z-index: 1;">

@@ -290,11 +290,12 @@ class LicenseController extends Controller
                              $correlative->year->year.'-'
                              .$correlative->correlativeNumber->num;
 
+        $year=$correlative->year->year;
         $representation = $license->representation->person;
         $signature = Signature::latest()->first();
         $qrLicenseString = 'Nº: '.$license->num.', Registro: '.$num.', Empresa:'.$taxpayer->name;
 
-        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString'];
+        $vars = ['license', 'taxpayer', 'num', 'representation', 'licenseCorrelative', 'signature', 'qrLicenseString', 'year'];
         $license->update(['downloaded_at' => Carbon::now()]);
 
         return PDF::loadView('modules.licenses.pdf.economic-activity-license', compact($vars))
