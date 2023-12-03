@@ -160,6 +160,9 @@ class LicenseController extends Controller
     {
         $expirationYear =Carbon::parse($license->expiration_date)->format('Y');
         $expirationDay =Carbon::parse($license->expiration_date)->format('d-m');
+        $expirationDt =Carbon::parse($license->expiration_date);
+        $dateOrdinance=Carbon::parse("08-11-2023");
+        $dateExpiredLicense=Carbon::parse("31-12-2022");
 
         $correlative = $license->correlative;
         $correlativeNumber = $correlative->correlativeNumber;
@@ -170,8 +173,21 @@ class LicenseController extends Controller
             $expirationDate = Carbon::now()->addYears(3)->endOfYear();
             
         }
-        elseif($license->expiration_date < '2023-11-08' && $correlative->correlative_type_id==1){
-
+        elseif($expirationDt->lt($dateOrdinance) && $expirationDt->gt($dateExpiredLicense) && $correlative->correlative_type_id=='1'){
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+            $emissionDate = Carbon::now();
+            $expirationDate = Carbon::parse($license->expiration_date)->addYears(1);
+        }
+        elseif($expirationDt->lt($dateOrdinance) && $expirationDt->gt($dateExpiredLicense) && $correlative->correlative_type_id=='2'){
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+            if(Carbon::now()->year== '2023'){
+                $emissionDate = Carbon::now();
+                $expirationDate = Carbon::now()->addYears(1)->endOfYear();
+            }
+            else{
+                $emissionDate = Carbon::now()->startOfYear();
+                $expirationDate = Carbon::now()->endOfYear();
+            }
         }
         else{
             $currYear = Year::where('year', Carbon::now()->year)->first();
@@ -179,6 +195,10 @@ class LicenseController extends Controller
             $expirationDate = Carbon::now()->addYears(2)->endOfYear(); 
              
         }
+        #Que se hace con las licencias que se vencieron en 2022?
+        #Licencias que vencen a mediados del año proximo
+        #Licencias que se vencieron a mediados de este año
+
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
         
         $newCorrelative = Correlative::create([
