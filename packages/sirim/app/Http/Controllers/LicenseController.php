@@ -173,30 +173,25 @@ class LicenseController extends Controller
             $expirationDate = Carbon::now()->addYears(3)->endOfYear();
             
         }
-        elseif($expirationDt->lt($dateOrdinance) && $expirationDt->gt($dateExpiredLicense) && $correlative->correlative_type_id=='1'){
+        elseif($expirationDay == '31-12' && Carbon::now()->year > $expirationYear && $expirationYear!= '2022'){
             $currYear = Year::where('year', Carbon::now()->year)->first();
-            $emissionDate = Carbon::now();
-            $expirationDate = Carbon::parse($license->expiration_date)->addYears(1);
+            $emissionDate = Carbon::now()->startOfYear();
+            $expirationDate = Carbon::now()->addYears(2)->endOfYear();
+            
         }
-        elseif($expirationDt->lt($dateOrdinance) && $expirationDt->gt($dateExpiredLicense) && $correlative->correlative_type_id=='2'){
+        elseif($expirationDt->lt($dateOrdinance) && $expirationDt->gt($dateExpiredLicense)){
             $currYear = Year::where('year', Carbon::now()->year)->first();
-            if(Carbon::now()->year== '2023'){
-                $emissionDate = Carbon::now();
-                $expirationDate = Carbon::now()->addYears(1)->endOfYear();
-            }
-            else{
-                $emissionDate = Carbon::now()->startOfYear();
-                $expirationDate = Carbon::now()->endOfYear();
-            }
+            $emissionDate = Carbon::parse($license->expiration_date);
+            $expirationDate = Carbon::parse($license->expiration_date)->addYears(1);
         }
         else{
             $currYear = Year::where('year', Carbon::now()->year)->first();
-            $emissionDate = Carbon::now()->startOfYear();
-            $expirationDate = Carbon::now()->addYears(2)->endOfYear(); 
-             
+            $emissionDate = Carbon::parse($license->expiration_date);
+            $expirationDate = Carbon::parse($license->expiration_date)->addYears(3);
+              
         }
         #Que se hace con las licencias que se vencieron en 2022?
-        #Licencias que vencen a mediados del año proximo
+        #Licencias que vencen a mediados del año proximo 
         #Licencias que se vencieron a mediados de este año
 
         $ordinance = Ordinance::whereDescription('ACTIVIDADES ECONÓMICAS')->first();
