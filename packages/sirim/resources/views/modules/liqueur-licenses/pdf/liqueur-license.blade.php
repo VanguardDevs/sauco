@@ -222,7 +222,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="font-size: 12px;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
+                        <td colspan="2" style="font-size: 13px; color: red;;"><strong>HORARIO DE TRABAJO:</strong> {{ $liqueur->work_hours }}</td>
                     </tr>
                     </tbody>
                 </table>
