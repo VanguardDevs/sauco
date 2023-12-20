@@ -116,9 +116,11 @@ class LicenseController extends Controller
 
     public function makeLicense(CorrelativeType $type, Taxpayer $taxpayer)
     {
-        
- 
         $currYear = Year::where('year', Carbon::now()->year)->first();
+
+        if($currYear->id==5){
+            $currYear = Year::where('year', Carbon::now()->addYears(1)->year)->first();
+        }
 
         $correlativeNum = CorrelativeNumber::getNum();
         // Maybe for other kind of licenses, I would inject

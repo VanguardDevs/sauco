@@ -34,6 +34,6 @@ class CorrelativeNumber extends Model
 
     public function scopeLastCorrelative($query)
     {
-        return $query->latest()->first();
+        return $query->orderBy('num', 'desc')->first();
     }
 }
