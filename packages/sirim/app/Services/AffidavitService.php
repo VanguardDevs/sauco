@@ -112,7 +112,7 @@ class AffidavitService
             }
             $total = $activity->aliquote * $amount / 100;
 
-            if ($total < $minTax || $amount == 0.00) {
+            if ($total < $minTax || $amount == 0.00 || $activity->code=='3.08.12' || $activity->code=='3.08.13') {
                 $total = $minTax;
             }
 
@@ -155,6 +155,13 @@ class AffidavitService
                     $total2 = $minTax2;
                 }
             }
+            elseif($firstActivity->code=='3.08.12' || $firstActivity->code=='3.08.13'|| $secondActivity->code=='3.08.12' || $secondActivity->code=='3.08.13'){
+                if($firstActivity->code=='3.08.12'|| $firstActivity->code=='3.08.13'){
+                    $total1 = $minTax1;
+                }elseif($secondActivity->code=='3.08.12'|| $secondActivity->code=='3.08.13'){
+                    $total2 = $minTax2;
+                }
+            }
             else{
                 if($firstAmount >= $secondAmount && $total2 < $minTax2){
                     $total2 = $minTax2;
@@ -187,7 +194,7 @@ class AffidavitService
             $minTax = $unit->value * $affidavits[$i]->economicActivity->min_tax;
             $total = $affidavits[$i]->economicActivity->aliquote * $amounts[$i] / 100;
 
-            if($i==$index && $total < $minTax){
+            if(($i==$index && $total < $minTax) || ($affidavits[$i]->economicActivity->code=='3.08.12' || $affidavits[$i]->economicActivity->code=='3.08.13')){
                 $total = $minTax;
             }
    
