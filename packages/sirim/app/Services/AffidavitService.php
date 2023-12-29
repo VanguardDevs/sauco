@@ -194,7 +194,7 @@ class AffidavitService
             $minTax = $unit->value * $affidavits[$i]->economicActivity->min_tax;
             $total = $affidavits[$i]->economicActivity->aliquote * $amounts[$i] / 100;
 
-            if(($i==$index && $total < $minTax) || ($affidavits[$i]->economicActivity->code=='3.08.12' || $affidavits[$i]->economicActivity->code=='3.08.13')){
+            if($i==$index && $total < $minTax){
                 $total = $minTax;
             }
    
