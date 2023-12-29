@@ -401,6 +401,7 @@ class LicenseController extends Controller
             ->join('liqueurs', 'licenses.id', '=', 'liqueurs.license_id')
             ->where('licenses.taxpayer_id', $taxpayer->id)
             ->where('ordinance_id', 6)
+            ->where('licenses.deleted_at', null)
             ->where('licenses.expiration_date', '<=', Carbon::now()->addDays(45))
             ->groupBy('licenses.num', 'licenses.id')
             ->having('licenses.num', '>', 1)
@@ -571,6 +572,11 @@ class LicenseController extends Controller
         $currYear = Year::where('year', Carbon::now()->year)->first();
         $ordinance = Ordinance::whereDescription('BEBIDAS ALCOHÓLICAS')->first();
 
+        $correlative=Correlative::whereId($license->correlative_id)->first();
+
+        $license->active = false;
+        $license->save();
+
         // Make amount
         $concept = Concept::whereCode('OTA.2023.059')->first();
         $petro = PetroPrice::latest()->first()->value;
@@ -599,6 +605,7 @@ class LicenseController extends Controller
 
         $payment->liquidations()->sync($liquidation);
 
+        $license->update();
 
         // Create new license and update dates
         $emissionDate = Carbon::now();
@@ -617,6 +624,10 @@ class LicenseController extends Controller
         $newLicense->update();
         $liquidation->update(['liquidable_id' => $newLicense->id]);
 
+        if($correlative->correlative_type_id==1){
+            $correlative->update(['correlative_type_id' => 2]);
+        }
+        
         $requirementTaxpayer = RequirementTaxpayer::whereTaxpayerId($taxpayer->id)
             ->where('active', true)
             ->where('requirement_id', '3')
