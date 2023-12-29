@@ -112,7 +112,7 @@ class AffidavitService
             }
             $total = $activity->aliquote * $amount / 100;
 
-            if ($total < $minTax || $amount == 0.00) {
+            if ($total < $minTax || $amount == 0.00 || $activity->code=='3.08.12' || $activity->code=='3.08.13') {
                 $total = $minTax;
             }
 
@@ -152,6 +152,13 @@ class AffidavitService
                 if($minTax1 > $minTax2){
                     $total1 = $minTax1;
                 }else{
+                    $total2 = $minTax2;
+                }
+            }
+            elseif($firstActivity->code=='3.08.12' || $firstActivity->code=='3.08.13'|| $secondActivity->code=='3.08.12' || $secondActivity->code=='3.08.13'){
+                if($firstActivity->code=='3.08.12'|| $firstActivity->code=='3.08.13'){
+                    $total1 = $minTax1;
+                }elseif($secondActivity->code=='3.08.12'|| $secondActivity->code=='3.08.13'){
                     $total2 = $minTax2;
                 }
             }
