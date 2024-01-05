@@ -191,6 +191,11 @@ class LicenseController extends Controller
             $emissionDate = Carbon::parse($license->expiration_date);
             $expirationDate = Carbon::parse($license->expiration_date)->addYears(1);
         }
+        elseif($expirationDt->lt($dateOrdinance) && $expirationDt->lt($dateExpiredLicense)){
+            $currYear = Year::where('year', Carbon::now()->year)->first();
+                $emissionDate = Carbon::now()->startOfYear();
+                $expirationDate = Carbon::now()->addYears(2)->endOfYear();
+        }
         else{
             $currYear = Year::where('year', Carbon::now()->year)->first();
             $emissionDate = Carbon::parse($license->expiration_date);
