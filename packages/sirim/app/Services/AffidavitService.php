@@ -89,8 +89,6 @@ class AffidavitService
 
     public function calculateTax(Month $month, EconomicActivityAffidavit $affidavit, $amount, $update = false)
     {
-        $currentYear = Carbon::now()->year;
-
         $total = 0.00;
         $activity = $affidavit->economicActivity;
 
@@ -100,15 +98,9 @@ class AffidavitService
                 $unit = TaxUnit::latest()->first();
             }
             else{
+                $unit = $this->getPetroPrice($month);
+                $minTax = $unit->value * $activity->min_tax;                       
 
-                if($month->year->year  == $currentYear){
-                    $unit = $this->getPetroPrice($month);
-                    $minTax = $unit->value * $activity->min_tax;                       
-                }
-                else{
-                    $unit = $this->getOldPetroPrice($month);
-                    $minTax = $unit->value * $activity->old_min_tax;
-                } 
             }
             $total = $activity->aliquote * $amount / 100;
 
