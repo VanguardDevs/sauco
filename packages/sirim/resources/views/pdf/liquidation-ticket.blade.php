@@ -65,7 +65,11 @@
                 @if($liquidation->credit()->exists())
                 <span>CRÉDITO: </span>{{ $liquidation->credit->pretty_amount }} Bs<br>
                 @endif
+                @if($liquidation->liquidable_type)
                 <span>USUARIO: </span>{{$liquidation->liquidable->user->full_name}}
+                @else
+                <span>USUARIO: </span>{{$liquidation->user->full_name}}
+                @endif
             </p>
         </div>
     </body>

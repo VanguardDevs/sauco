@@ -136,7 +136,11 @@
                             <span class="strong">
                                 Recaudador:
                             </span>
-                            {{ $liquidation->liquidable->user->full_name }}
+                            @if($liquidation->liquidable_type)
+                            {{$liquidation->liquidable->user->full_name}}
+                            @else
+                            {{$liquidation->user->full_name}}
+                            @endif
                         </td>
                     </tr>
                     @if($liquidation->deduction()->exists())
