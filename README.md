@@ -4,11 +4,11 @@
 
 ## Requisitos de instalación
 
-- PHP ^8.0
-- Composer ^2.1 
-- Apache2 ^2.4
-- NodeJS ^14.17.6
-- Architectura 64bit
+-   PHP ^8.0
+-   Composer ^2.1
+-   Apache2 ^2.4
+-   NodeJS ^14.17.6
+-   Architectura 64bit
 
 ## Estructura del proyecto
 
@@ -45,6 +45,7 @@ Revisar [README](https://github.com/jodaz/sauco/tree/main/packages/maintenance#r
 
 ## Contribuidores
 
-- [jodaz](https://github.com/jodaz)
-- [ELNOOB3100](https://github.com/ELNOOB3100)
-- [Papelonin](https://github.com/Papelonin)
+-   [Luisandra Sifontes](https://github.com/Luisandra29)
+-   [jodaz](https://github.com/jodaz)
+-   [ELNOOB3100](https://github.com/ELNOOB3100)
+-   [Papelonin](https://github.com/Papelonin)
